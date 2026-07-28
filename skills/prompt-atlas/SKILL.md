@@ -41,6 +41,7 @@ Run five stages. Move backward only to close the first direction-changing gap; d
 4. **Compile**
    - Produce one self-contained, consumer-ready Intent Contract in short, natural engineer-to-engineer prose. Do not expose the five labels unless requested.
    - Make it minimum-sufficient: keep a sentence only when it changes a foundation, preserves necessary evidence, or materially improves the consumer's completion quality. Point to rich sources instead of replaying their contents.
+   - Keep the default artifact out of spec form: express the work in a few connected sentences, not phases, ordered implementation steps, command lists, or acceptance checklists. Render detailed execution machinery only for an explicitly selected carrier that needs it.
    - Treat the carrier as presentation: use the user's requested carrier, otherwise keep the contract route-neutral. A direct executor or an explicit spec / issue / execution workflow must be able to consume the same semantics without reconstructing intent.
    - Refuse premature solutioning: do not select architecture, prescribe implementation, define a full acceptance model, or decompose tickets.
    - Apply [references/context-engineering.md](references/context-engineering.md) as an internal compression filter.
@@ -49,7 +50,7 @@ Run five stages. Move backward only to close the first direction-changing gap; d
 5. **Validate**
    - Confirm that Goal, Current Context, Boundary, Immediate Task, and Success / Stop describe the requested work rather than Prompt Atlas's own process.
    - If the next agent must repeat repo or domain investigation to learn what the requirement means, return to Enrich. Investigation that only chooses how to implement the settled requirement may remain downstream.
-   - Run the subtraction test: remove every sentence and execution mechanism whose absence would not change requirement understanding, protected boundaries, evidence, or completion behavior. A carrier-imposed limit may add a hard cap; Prompt Atlas itself uses no arbitrary character target.
+   - Run the subtraction test: remove every sentence and execution mechanism whose absence would not change requirement understanding, protected boundaries, evidence, or completion behavior. Return to Compile when a routine brief exceeds the output budget or reads like a specification.
    - Confirm that every material territory claim is supported, every remaining unknown has a bounded effect, and the artifact is accurate, self-contained, and finished in the requested form.
    - When the target repo owns a verification policy or another rich completion specification, confirm that Success / Stop carries the complete applicable gate set and evidence-state semantics; one omitted required gate keeps the take incomplete.
    - `complete`: return the artifact.
@@ -63,6 +64,8 @@ For ambiguous, high-stakes, multi-stage, or agentic work, read [references/found
 While intent is unclear, ask only the next intent-changing question. Optionally precede it with one sentence confirming the current understanding; do not emit an analysis report.
 
 When all five foundations are sufficiently clear, finish the current request with one concise intent brief or directly usable prompt, according to what the user asked for. If a missing foundation could change direction, continue intake instead. If a human-held contradiction makes completion impossible here, state that blocker and the one decision needed. Do not append a proposed solution, spec, plan, or implementation checklist.
+
+For Chinese output, target roughly 100–200 characters by default and keep routine Intent Takes within 1,000 characters; use equivalent brevity in other languages. This is a compression budget, not permission to omit a material foundation, boundary, or blocker. Exceed it only when genuine semantic complexity or an explicitly selected carrier makes the extra context necessary.
 
 Only when the user explicitly asks to learn from or compare revisions, show a brief diagnosis and the clarified intent. Never provide several competing final artifacts unless requested.
 
