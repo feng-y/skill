@@ -4,8 +4,7 @@ Use this carrier only when the user asks to hand the completed Intent Take to a 
 
 ## Location and delivery
 
-- Create one Markdown file in the operating system's temporary directory, never in the current workspace. On Unix, use a unique path under a validated `${TMPDIR:-/tmp}` rather than a stable filename.
-- Treat the file as ephemeral and keep it out of version control.
+- Save the Markdown file to the temporary directory of the user's operating system, not the current workspace.
 - Return the absolute file path in the final response without repeating the document's contents.
 
 ## Document content
