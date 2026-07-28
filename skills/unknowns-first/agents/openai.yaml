@@ -1,0 +1,7 @@
+interface:
+  display_name: "Unknowns First"
+  short_description: "Contain unknown-driven engineering failures"
+  default_prompt: "Use $unknowns-first to run the smallest unknown loop: intake map-vs-territory risk, probe, choose L1/L2/L3, keep implementation notes when reality diverges, and verify claims with proof."
+
+policy:
+  allow_implicit_invocation: true
