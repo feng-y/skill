@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: Turn a one-sentence goal or scattered cross-turn hints into a concise, consumer-ready Intent Contract covering goal, current context, boundary, immediate task, and success or stop conditions. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when a broader workflow explicitly needs intent intake before direct, autonomous, spec, issue, or execution work. Do not substitute an intent brief for execution the user already requested.
+description: Stably compile a one-sentence goal or scattered cross-turn hints into a concise, consumer-ready Intent Contract covering goal, current context, boundary, immediate task, and success or stop conditions. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when a broader workflow explicitly needs intent intake before direct, autonomous, spec, issue, or execution work. Do not substitute an intent brief for execution the user already requested.
 ---
 
 # Prompt Atlas
@@ -42,14 +42,16 @@ Choose the output mode from the user's request:
    - Preserve an unresolved human contradiction as a blocker rather than inventing a compromise.
 
 4. **Compile**
-   - Write one minimum-sufficient, self-contained brief in natural engineer-to-engineer prose. Use visible headings only when requested.
-   - Keep decisions and real invariants, express intent instead of imitating examples, give each fact one home, and reference rich artifacts instead of replaying them.
+   - Compile deterministically: the same resolved input must yield the same semantic commitments, order, and execution-protection choices. Wording may vary.
+   - Render in this fixed order: desired change → current facts and bounded uncertainty → protected boundary → work to complete now → completion or blocker. These are semantic slots, not required headings.
+   - Merge adjacent slots only when no meaning is lost. Never reorder or silently omit a material slot; give each fact one home and return one artifact without competing variants or intake analysis.
+   - Write the result as minimum-sufficient, self-contained engineer-to-engineer prose. Keep decisions and real invariants, express intent instead of imitating examples, and reference rich artifacts instead of replaying them.
    - Keep the default artifact out of spec form: no phases, implementation sequence, ticket decomposition, command inventory, or full acceptance checklist.
-   - For direct or autonomous work, read [execution-readiness.md](references/execution-readiness.md) and select only protections whose absence could change completion behavior.
+   - For direct or autonomous work, read [execution-readiness.md](references/execution-readiness.md), select only protections whose absence could change completion behavior, and place each under the semantic slot it constrains rather than adding another section.
    - If the user requests a fresh-session handoff, save the concise contract as Markdown in the operating system's temporary directory—not the workspace—reference existing artifacts, redact sensitive context, add `Suggested skills`, and return the absolute path.
 
 5. **Validate**
-   - Confirm the five semantics describe the requested work, material hints are represented, territory claims have evidence, and remaining uncertainty has bounded effect.
+   - Confirm the artifact maps back to all five semantics in order, every material hint appears once, territory claims have evidence, and remaining uncertainty has bounded effect.
    - Return to Enrich only when a consumer would otherwise have to rediscover requirement meaning; downstream implementation investigation is allowed.
    - Remove any sentence or mechanism whose absence would not change intent, protected boundaries, evidence, or completion behavior.
    - Finish as `complete`, continue with the one useful question, or state the blocker. Do not emit the intake analysis.
