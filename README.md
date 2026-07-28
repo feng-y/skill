@@ -27,7 +27,3 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 - `prompt-atlas` — accumulate the user's scattered hints, clarify the real intent, and stop before solution design or specification.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-
-## Learning sources
-
-- [Towards Automating Eval Engineering](sources/0001-towards-automating-eval-engineering.md) — repo- and trace-informed eval construction, iterative verifier design, Harbor tasks, and continual improvement loops.
