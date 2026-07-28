@@ -94,4 +94,3 @@ The important human contribution is not merely approving generated test cases. I
 - How should the system distinguish agent failure, environment failure, and verifier failure?
 - Which dependencies must remain live, and which should be simulated for cost, safety, privacy, or reproducibility?
 - How can eval suites detect reward hacking and drift as the product changes?
-
