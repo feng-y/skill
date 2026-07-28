@@ -25,5 +25,5 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `prompt-atlas` — intake the user's real intent, enrich only decision-changing context, and produce a concise task contract.
+- `prompt-atlas` — accumulate the user's scattered hints, clarify the real intent, and stop before solution design or specification.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.

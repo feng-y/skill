@@ -1,54 +1,59 @@
 ---
 name: prompt-atlas
-description: Intake a user's real intent and turn it into a concise, human-written, verifiable task contract. Use when the user has a loose idea, incomplete task description, ongoing engineering context, or existing prompt that needs its true goal/current context/boundary/immediate task/success or stop condition recovered before producing a directly sendable prompt for ChatGPT, Codex, Claude Code, or another strong model.
+description: Clarify a user's ambiguous intent through lightweight intake and produce a concise, human-written intent brief. Use when the user has a loose idea, incomplete requirement, ongoing engineering context, or existing prompt whose real goal/current context/boundary/immediate task/success or stop condition is not yet clear. Stop at shared intent; do not choose a solution, write a spec, plan implementation, or execute the work.
 ---
 
 # Prompt Atlas
 
-Perform intent intake before prompt drafting. Recover what the user is actually trying to change, why the task exists now, what is already true, which boundary matters, what this turn should accomplish, and what makes it safe to stop. Then express that intent as a compact contract covering Goal, Current Context, Boundary, Immediate Task, and Success / Stop Condition.
+Perform intent intake. Recover what the user is actually trying to change, why the need exists now, what is already true, which boundary matters, what the next engagement should clarify or accomplish, and when the intent is clear enough to hand off.
 
-Write like an engineer briefing a capable colleague. Give the model the right problem space and leave judgment, exploration, and tool choice to it unless a fixed mechanism is genuinely required.
+The result is shared understanding expressed through Goal, Current Context, Boundary, Immediate Task, and Success / Stop Condition. It is not a solution, specification, implementation plan, ticket set, or completed task.
 
 ## Workflow
 
-1. Take in the whole available intent surface: the user's latest request, relevant prior discussion, current artifact or prompt, target model, and actual work state. Preserve quoted source text.
-2. Reconstruct the five foundations internally. Separate:
+1. Take in the whole available intent surface: the user's latest request, relevant prior discussion, current artifact or prompt, target model, actual work state, and scattered hints across turns. Preserve quoted source text.
+2. Accumulate hints as intent evidence. Notice concrete facts, preferences, examples, rejections, corrections, and repeated concerns. Connect compatible hints across turns, but do not promote every hint into a requirement:
+   - a concrete correction overrides an earlier tentative interpretation;
+   - an example reveals direction or taste unless the user makes it a rule;
+   - a rejected direction clarifies the boundary;
+   - repeated consistent hints strengthen the inferred intent;
+   - conflicting material hints require the next human question.
+3. Reconstruct the five foundations internally and identify the first ambiguity that separates materially different user intents. Separate:
    - user-held intent and tradeoffs;
    - facts the agent can discover from the repo or evidence;
-   - assumptions that would materially change the goal, boundary, or completion verdict.
-3. Close only route-changing intent gaps. Discover inspectable facts directly; ask one concise question only when the answer belongs to the user and different answers would produce materially different contracts.
-4. When prompt, docs, memory, and repo reality may diverge, invoke `unknowns-first` if available:
+   - assumptions that would materially change the goal, boundary, immediate task, or stopping point.
+4. Close intent gaps one at a time. Discover inspectable facts directly; ask one concise, human question when the answer belongs to the user. Continue intake across turns until the remaining ambiguity can safely be left to later exploration.
+5. When prompt, docs, memory, and repo reality may diverge, invoke `unknowns-first` if available:
    - use its L1 Target / Territory / Unknown / Proof gate silently by default;
    - use at most one focused L2 probe when it can materially improve Current Context;
-   - enter L3 only when the user asks for a full map or coupled unknowns genuinely block the contract.
-5. Feed only verified, decision-changing territory facts back into Current Context. Preserve unresolved route-changing unknowns as a boundary or stop condition; do not dump the unknown analysis into the final prompt.
-6. Once intent is stable enough, remove model-expanded reasoning, long checklists, framework names, repeated process instructions, unnecessary tool order, and fake invariants.
-7. Add only context and boundaries that materially affect judgment. Avoid replacing the model's judgment with a prewritten execution script.
-8. Produce natural, continuous Markdown at the density of a practical engineer-to-engineer brief. Do not expose the five foundations as headings unless a formal contract or downstream parser genuinely needs them.
+   - enter L3 only when the user asks for a full map or coupled unknowns genuinely block intent clarification.
+6. Feed only verified, intent-changing territory facts back into Current Context. Do not turn context discovery into solution design.
+7. Refuse premature solutioning. Do not select architecture, prescribe implementation, define a full acceptance model, decompose tickets, or silently cross from clarification into design or execution.
+8. When the intent is stable enough, express it as short, natural engineer-to-engineer prose. Leave solution space open and retain only the boundaries necessary to prevent drift.
 
 For ambiguous, high-stakes, multi-stage, or agentic work, read [references/foundation.md](references/foundation.md).
 
 ## Output
 
-If intent is sufficiently clear, return one directly sendable prompt with no prefatory diagnosis, rubric, or explanation. Do not append commentary after it.
+While intent is unclear, ask only the next intent-changing question. Optionally precede it with one sentence confirming the current understanding; do not emit an analysis report.
 
-If a human-held intent choice is still missing, ask only that question and do not manufacture a final prompt around an arbitrary assumption.
+When intent is sufficiently clear, return one concise intent brief or directly sendable prompt. Do not append a proposed solution, spec, plan, or implementation checklist.
 
-Only when the user explicitly asks to learn from or compare revisions, show a brief diagnosis, a minimal rewrite, and one final prompt. Never provide several competing final prompts unless requested.
+Only when the user explicitly asks to learn from or compare revisions, show a brief diagnosis and the clarified intent. Never provide several competing final artifacts unless requested.
 
 ## Quality bar
 
-- Lead with the intended outcome and current reality, not a prescribed task list.
+- Optimize for user-agent alignment, not textual polish or apparent completeness.
+- Lead with the intended change and current reality, not a prescribed task list.
 - Recover intent from the whole conversation; do not treat the latest sentence as the entire requirement when prior context changes it.
+- Preserve the signal in fragmented hints without turning examples or passing reactions into hard requirements.
 - Use `unknowns-first` to improve factual context, not to replace intent intake or expand every request into an unknown map.
-- Include only context that changes judgment; let the model inspect the available repo evidence.
+- Include only context that changes the meaning or boundary of the request.
 - State what must remain invariant and what differences are acceptable.
-- Bound the current turn without expanding every possible check.
-- Define completion and stopping in terms of the task's real verdict or observable evidence.
+- Make the Immediate Task the next requested engagement, not a hidden implementation plan.
+- Define Success / Stop as “intent is sufficiently shared and bounded,” not as a future solution's full acceptance criteria.
 - Use `always`, `never`, `must`, and `only` only for genuine invariants.
-- Prefer “what outcome and semantic boundary matter” over “run these fifteen checks.”
-- Enumerate expected outputs only when the task genuinely benefits from a structured verdict.
-- Keep the final prompt short enough that a strong model can still exercise judgment.
+- Preserve uncertainty that belongs to later investigation; remove only ambiguity that would make the agent solve the wrong problem.
 
 ## Source boundary
 

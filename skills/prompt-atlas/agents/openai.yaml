@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
-  short_description: "先接收真实意图并补充关键上下文，再生成自然可验证的任务合同"
-  default_prompt: "Use $prompt-atlas to intake my intent, enrich only decision-changing context, and produce one concise task contract."
+  short_description: "整合用户跨轮次零散 hint，澄清 intent 后在方案与 SPEC 前停下"
+  default_prompt: "Use $prompt-atlas to gather my scattered hints and clarify the intent without proposing a solution or spec."
