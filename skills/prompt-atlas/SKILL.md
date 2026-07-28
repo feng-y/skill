@@ -15,7 +15,7 @@ Compile five minimum semantics:
 - **Immediate Task** — what the consumer should complete now without prescribing the implementation;
 - **Success / Stop** — the outcome and proportional evidence that fulfill the work, stop expansion, or expose a real blocker.
 
-Embed them naturally rather than as a form. Prompt Atlas must work standalone. It may inspect current repo evidence for this task, but it does not build a durable repo-identity harness, select an architectural evolution path, write a spec, plan implementation, or execute the work.
+Keep the five semantics distinct and ordered. Visible headings are optional; prose style is secondary to semantic stability. Prompt Atlas must work standalone. It may inspect current repo evidence for this task, but it does not build a durable repo-identity harness, select an architectural evolution path, write a spec, plan implementation, or execute the work.
 
 Choose the output mode from the user's request:
 
@@ -44,7 +44,7 @@ Choose the output mode from the user's request:
 4. **Compile**
    - Compile deterministically: the same resolved input must yield the same semantic commitments, order, and execution-protection choices. Wording may vary.
    - Render in this fixed order: desired change → current facts and bounded uncertainty → protected boundary → work to complete now → completion or blocker. These are semantic slots, not required headings.
-   - Merge adjacent slots only when no meaning is lost. Never reorder or silently omit a material slot; give each fact one home and return one artifact without competing variants or intake analysis.
+   - Keep every slot distinct; do not merge slots. Never reorder or silently omit a material slot; give each fact one home and return one artifact without competing variants or intake analysis.
    - Write the result as minimum-sufficient, self-contained engineer-to-engineer prose. Keep decisions and real invariants, express intent instead of imitating examples, and reference rich artifacts instead of replaying them.
    - Keep the default artifact out of spec form: no phases, implementation sequence, ticket decomposition, command inventory, or full acceptance checklist.
    - For direct or autonomous work, read [execution-readiness.md](references/execution-readiness.md), select only protections whose absence could change completion behavior, and place each under the semantic slot it constrains rather than adding another section.
