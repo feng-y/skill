@@ -22,7 +22,7 @@ Apply these six shifts after intent is clear enough to hand off. They shape the 
 
 5. **Manual memory → distilled current intent**
    - Use conversation history and available memory as intake evidence, but do not replay the history in the final brief.
-   - Carry forward only stable current intent. Do not assume auto-memory exists; durable team truth still belongs in reviewable, version-controlled sources.
+   - Carry forward only stable current intent. Do not assume auto-memory exists or treat memory as current repo truth; durable team truth still belongs in reviewable, version-controlled sources.
 
 6. **Simple prose specs → rich references**
    - Prefer high-fidelity references such as code, tests, mockups, artifacts, traces, and rubrics when they clarify meaning better than paraphrase.

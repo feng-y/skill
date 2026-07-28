@@ -1,6 +1,6 @@
 # Prompt Foundation
 
-Use these five foundations as the minimum completeness contract for intent intake. They are not optional, visible headings, or a form, and they do not constitute a solution or spec.
+Use these five foundations as the minimum completeness contract and skeleton for intent intake. They are not the only source of context, optional fields, visible headings, or a form, and they do not constitute a solution or spec.
 
 ## Intent intake
 
@@ -18,14 +18,22 @@ Do not ask the user for repo facts an agent can inspect. Ask only about human-he
 
 Treat hints according to their evidential role. Preserve explicit facts and corrections, use examples to infer direction rather than mandatory form, use rejections to sharpen boundaries, and ask about material contradictions. Do not expose this classification unless the user asks how the intent was reconstructed.
 
-When the task depends on repo or runtime reality, use `unknowns-first` as a context-enhancement gate:
+Use available context in this closing order:
+
+1. synthesize the current conversation, relevant project context, and memory into candidate intent;
+2. verify discoverable territory facts through the repo, runtime, documents, or connected sources;
+3. ask the user only for a human-owned decision or a contradiction that evidence cannot resolve.
+
+Authority is typed rather than global. The user's latest explicit correction is authoritative about desired intent. Current repo, config, tests, and runtime evidence are authoritative about territory. Memory and prior descriptions are useful hints but cannot override either.
+
+When the task depends on repo or runtime reality, use `unknowns-first` as the default context supplement:
 
 - identify Target / Territory / Unknown / Proof;
-- probe only the first unknown that could materially change the contract;
-- add verified facts to Current Context;
+- close one material territory unknown at a time, then re-evaluate the five foundations;
+- add verified facts to Current Context, Boundary, or Success / Stop Condition as appropriate;
 - leave unresolved intent-changing unknowns as the next user question or an explicit handoff boundary.
 
-Do not expose the gate, a full unknown taxonomy, or the probe sequence in the final prompt unless the unknown map itself is the requested artifact.
+Use another relevant skill or tool when it can supply missing domain or artifact context. In every case, fold back only the facts that change the intent contract. Do not expose the supplement's framework, a full unknown taxonomy, or the probe sequence in the final prompt unless that map itself is the requested artifact.
 
 ## Five foundations
 
@@ -60,7 +68,7 @@ The intent is ready when the user and agent agree on the problem, desired change
 
 1. Recover the intent behind the request or existing prompt.
 2. Find the first missing foundation that could make the agent solve the wrong problem.
-3. Close user-held ambiguities through one question at a time; close territory facts through minimal evidence.
+3. Close user-held ambiguities through one question at a time; close territory or domain facts through `unknowns-first` or another relevant context supplement.
 4. Stop before solution selection, specification, planning, or execution.
 5. Express the clarified intent as natural, human Markdown.
 
