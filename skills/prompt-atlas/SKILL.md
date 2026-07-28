@@ -40,6 +40,7 @@ Run five stages. Move backward only to close the first direction-changing gap; d
 
 4. **Compile**
    - Produce one self-contained, consumer-ready Intent Contract in short, natural engineer-to-engineer prose. Do not expose the five labels unless requested.
+   - Make it minimum-sufficient: keep a sentence only when it changes a foundation, preserves necessary evidence, or materially improves the consumer's completion quality. Point to rich sources instead of replaying their contents.
    - Treat the carrier as presentation: use the user's requested carrier, otherwise keep the contract route-neutral. A direct executor or an explicit spec / issue / execution workflow must be able to consume the same semantics without reconstructing intent.
    - Refuse premature solutioning: do not select architecture, prescribe implementation, define a full acceptance model, or decompose tickets.
    - Apply [references/context-engineering.md](references/context-engineering.md) as an internal compression filter.
@@ -47,7 +48,8 @@ Run five stages. Move backward only to close the first direction-changing gap; d
 
 5. **Validate**
    - Confirm that Goal, Current Context, Boundary, Immediate Task, and Success / Stop describe the requested work rather than Prompt Atlas's own process.
-   - Run the consumer-replay test: if the next agent must repeat repo or domain investigation to learn what the requirement means, return to Enrich. Investigation that only chooses how to implement the settled requirement may remain downstream.
+   - If the next agent must repeat repo or domain investigation to learn what the requirement means, return to Enrich. Investigation that only chooses how to implement the settled requirement may remain downstream.
+   - Run the subtraction test: remove every sentence and execution mechanism whose absence would not change requirement understanding, protected boundaries, evidence, or completion behavior. A carrier-imposed limit may add a hard cap; Prompt Atlas itself uses no arbitrary character target.
    - Confirm that every material territory claim is supported, every remaining unknown has a bounded effect, and the artifact is accurate, self-contained, and finished in the requested form.
    - When the target repo owns a verification policy or another rich completion specification, confirm that Success / Stop carries the complete applicable gate set and evidence-state semantics; one omitted required gate keeps the take incomplete.
    - `complete`: return the artifact.
