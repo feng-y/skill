@@ -11,7 +11,7 @@ Compile five minimum semantics:
 
 - **Goal** — the real problem and desired change;
 - **Current Context** — only current facts, evidence, and bounded uncertainty that affect judgment;
-- **Boundary** — invariants, acceptable differences, scope, and approval limits;
+- **Boundary** — invariants, frozen evaluation rules, acceptable differences, scope, and approval limits;
 - **Immediate Task** — what the consumer should complete now without prescribing the implementation;
 - **Success / Stop** — the outcome and proportional evidence that fulfill the work, stop expansion, or expose a real blocker.
 
@@ -26,20 +26,22 @@ Choose the output mode from the user's request:
 
 1. **Capture**
    - Start equally well from a one-sentence goal or scattered hints across turns.
-   - Treat current corrections as overrides, examples as direction unless made mandatory, rejections as boundary evidence, and repetition as stronger evidence rather than more output.
-   - Separate desired result, suggested means, and hard constraint. Keep means open unless the user makes them binding.
+   - Resolve user-held intent in this order: latest explicit correction or rejection → current explicit requirements → compatible earlier decisions and constraints → examples and repeated hints → Memory. Replace superseded meaning instead of accumulating it.
+   - For a solution-shaped request, recover the change it is meant to cause. Keep the named means open when suggested; preserve it in Immediate Task or Boundary when the user explicitly requires it.
+   - Separate desired result, suggested means, and hard constraint.
    - Use conversation, project context, and available Memory as intent evidence, never as proof of current repo state. When relevant ChatGPT context is already available, read [chatgpt-memory.md](references/chatgpt-memory.md).
 
 2. **Enrich**
    - Classify the first material gap by its closer: user-held intent, inspectable territory, or another domain capability.
    - For engineering work, use `unknowns-first` when available. Otherwise apply its light gate directly: Target / Territory / first route-changing Unknown / minimum Proof.
-   - Close only task-level unknowns that could change one of the five semantics or a necessary execution protection. Use the smallest sufficient chain through code, config, tests, runtime, traces, or another authoritative source.
+   - Treat a hint or unknown as material only when changing or removing it would alter one of the five semantics, the closure state, or an execution-protection choice.
+   - Close only material task-level unknowns. Use the smallest sufficient chain through code, config, tests, runtime, traces, or another authoritative source.
+   - Verify current facts whose falsity would change the contract. Capture a baseline when success compares, preserves, migrates, regresses, counts, or claims performance; if it cannot be measured safely now, make the check an execution precondition and state what a mismatch blocks.
    - Keep broader repo identity work and implementation choices out of intake. Fold supported conclusions, not investigation transcripts, into the contract.
-   - If evidence is unavailable, keep a bounded conditional when direction remains clear; otherwise state the exact blocker.
 
 3. **Resolve**
-   - Ask one concise question only when the answer belongs to the user and would change direction. Do not ask for facts that territory evidence can supply.
-   - Preserve an unresolved human contradiction as a blocker rather than inventing a compromise.
+   - Close each material gap once: inspect territory when evidence can decide; ask one concise question when only the user can make a direction-changing choice; keep one bounded conditional when direction and safe action remain clear; block when a contradiction or missing decision prevents a safe contract; otherwise complete.
+   - Use a reversible default only when it changes neither Goal nor Boundary. Record its evidence state and cost of being wrong in the owning slot; never default a user-owned direction change.
 
 4. **Compile**
    - Compile deterministically: the same resolved input must yield the same semantic commitments, order, and execution-protection choices. Wording may vary.
@@ -47,6 +49,7 @@ Choose the output mode from the user's request:
    - Keep every slot distinct; do not merge slots. Never reorder or silently omit a material slot; give each fact one home and return one artifact without competing variants or intake analysis.
    - Write the result as minimum-sufficient, self-contained engineer-to-engineer prose. Keep decisions and real invariants, express intent instead of imitating examples, and reference rich artifacts instead of replaying them.
    - Keep the default artifact out of spec form: no phases, implementation sequence, ticket decomposition, command inventory, or full acceptance checklist.
+   - For repo-changing work, carry an explicit write boundary when multiple edit surfaces, shared state, unrelated user changes, or likely scope drift make implicit scope unsafe. Prefer verified writable paths or ownership over a blacklist.
    - For direct or autonomous work, read [execution-readiness.md](references/execution-readiness.md), select only protections whose absence could change completion behavior, and place each under the semantic slot it constrains rather than adding another section.
    - If the user requests a fresh-session handoff, save the concise contract as Markdown in the operating system's temporary directory—not the workspace—reference existing artifacts, redact sensitive context, add `Suggested skills`, and return the absolute path.
 
@@ -54,7 +57,7 @@ Choose the output mode from the user's request:
    - Confirm the artifact maps back to all five semantics in order, every material hint appears once, territory claims have evidence, and remaining uncertainty has bounded effect.
    - Return to Enrich only when a consumer would otherwise have to rediscover requirement meaning; downstream implementation investigation is allowed.
    - Remove any sentence or mechanism whose absence would not change intent, protected boundaries, evidence, or completion behavior.
-   - Finish as `complete`, continue with the one useful question, or state the blocker. Do not emit the intake analysis.
+   - Finish in exactly one state: complete contract, one direction-changing question, contract with one bounded conditional, or exact blocker. Do not emit the intake analysis.
 
 ## Output
 
