@@ -7,7 +7,7 @@ description: Clarify a user's ambiguous intent through lightweight intake and pr
 
 Perform intent intake. Recover what the user is actually trying to change, why the need exists now, what is already true, which boundary matters, what the next engagement should clarify or accomplish, and when the intent is clear enough to hand off.
 
-The result is shared understanding expressed through Goal, Current Context, Boundary, Immediate Task, and Success / Stop Condition. It is not a solution, specification, implementation plan, ticket set, or completed task.
+The result is shared understanding expressed through Goal, Current Context, Boundary, Immediate Task, and Success / Stop Condition. These five foundations are the minimum completeness contract for intent intake, even when the final prose does not expose them as headings. The result is not a solution, specification, implementation plan, ticket set, or completed task.
 
 ## Workflow
 
@@ -18,7 +18,7 @@ The result is shared understanding expressed through Goal, Current Context, Boun
    - a rejected direction clarifies the boundary;
    - repeated consistent hints strengthen the inferred intent;
    - conflicting material hints require the next human question.
-3. Reconstruct the five foundations internally and identify the first ambiguity that separates materially different user intents. Separate:
+3. Reconstruct the five foundations internally as a mandatory completeness gate and identify the first ambiguity that separates materially different user intents. Separate:
    - user-held intent and tradeoffs;
    - facts the agent can discover from the repo or evidence;
    - assumptions that would materially change the goal, boundary, immediate task, or stopping point.
@@ -29,7 +29,9 @@ The result is shared understanding expressed through Goal, Current Context, Boun
    - enter L3 only when the user asks for a full map or coupled unknowns genuinely block intent clarification.
 6. Feed only verified, intent-changing territory facts back into Current Context. Do not turn context discovery into solution design.
 7. Refuse premature solutioning. Do not select architecture, prescribe implementation, define a full acceptance model, decompose tickets, or silently cross from clarification into design or execution.
-8. When the intent is stable enough, express it as short, natural engineer-to-engineer prose. Leave solution space open and retain only the boundaries necessary to prevent drift.
+8. Before handoff, read [references/context-engineering.md](references/context-engineering.md) and apply its six context-shaping shifts. Use them as an internal compression filter, not as visible sections or an audit report.
+9. If the clarified intent hands off a repo modification or other execution task, read [references/conditional-execution-hints.md](references/conditional-execution-hints.md) and carry only the applicable execution hints into the brief.
+10. Hand off only when all five foundations are sufficiently clear that the receiving agent will not need to guess the user's direction. Express them as short, natural engineer-to-engineer prose, leave solution space open, and retain only the boundaries necessary to prevent drift.
 
 For ambiguous, high-stakes, multi-stage, or agentic work, read [references/foundation.md](references/foundation.md).
 
@@ -37,7 +39,7 @@ For ambiguous, high-stakes, multi-stage, or agentic work, read [references/found
 
 While intent is unclear, ask only the next intent-changing question. Optionally precede it with one sentence confirming the current understanding; do not emit an analysis report.
 
-When intent is sufficiently clear, return one concise intent brief or directly sendable prompt. Do not append a proposed solution, spec, plan, or implementation checklist.
+When all five foundations are sufficiently clear, return one concise intent brief or directly sendable prompt. If a missing foundation could change direction, continue intake instead. Do not append a proposed solution, spec, plan, or implementation checklist.
 
 Only when the user explicitly asks to learn from or compare revisions, show a brief diagnosis and the clarified intent. Never provide several competing final artifacts unless requested.
 
@@ -48,8 +50,10 @@ Only when the user explicitly asks to learn from or compare revisions, show a br
 - Recover intent from the whole conversation; do not treat the latest sentence as the entire requirement when prior context changes it.
 - Preserve the signal in fragmented hints without turning examples or passing reactions into hard requirements.
 - Use `unknowns-first` to improve factual context, not to replace intent intake or expand every request into an unknown map.
+- Apply context engineering after intent clarification: preserve meaning while removing fake rules, example overfitting, unnecessary upfront context, repetition, and replayed history.
 - Include only context that changes the meaning or boundary of the request.
 - State what must remain invariant and what differences are acceptable.
+- Add execution defaults only when the clarified task needs them; do not append a generic boilerplate to every intent brief.
 - Make the Immediate Task the next requested engagement, not a hidden implementation plan.
 - Define Success / Stop as “intent is sufficiently shared and bounded,” not as a future solution's full acceptance criteria.
 - Use `always`, `never`, `must`, and `only` only for genuine invariants.

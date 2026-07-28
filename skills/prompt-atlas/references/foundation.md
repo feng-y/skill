@@ -1,6 +1,6 @@
 # Prompt Foundation
 
-Use these five foundations to clarify intent. They are not visible headings or a form, and they do not constitute a solution or spec.
+Use these five foundations as the minimum completeness contract for intent intake. They are not optional, visible headings, or a form, and they do not constitute a solution or spec.
 
 ## Intent intake
 
@@ -36,6 +36,8 @@ Do not expose the gate, a full unknown taxonomy, or the probe sequence in the fi
 5. **Success / Stop Condition** — State when shared intent is clear enough to hand off and when further clarification would become design or specification.
 
 Embed these five elements naturally. A good prompt normally reads as a few connected paragraphs, not as `Goal / Context / Boundary / Task / Done` fields.
+
+Do not hand off while a missing foundation would force the receiving agent to guess the user's direction. A foundation may remain concise or contain an explicit unknown, but its effect on intent must be understood.
 
 ## Intent brief, not solution or spec
 
