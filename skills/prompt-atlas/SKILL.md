@@ -46,6 +46,7 @@ Run five stages. Move backward only to close the first direction-changing gap; d
    - Refuse premature solutioning: do not select architecture, prescribe implementation, define a full acceptance model, or decompose tickets.
    - Apply [references/context-engineering.md](references/context-engineering.md) as an internal compression filter.
    - If the result may be consumed directly for execution, apply the applicable [execution-quality profile](references/conditional-execution-hints.md). Keep portable quality semantics in a route-neutral contract; add carrier-specific mechanics only when that consumer is selected.
+   - If the user asks a fresh agent or session to continue, or asks to save the result outside the workspace, apply the [temporary Intent Take carrier](references/temporary-handoff.md).
 
 5. **Validate**
    - Confirm that Goal, Current Context, Boundary, Immediate Task, and Success / Stop describe the requested work rather than Prompt Atlas's own process.
@@ -65,7 +66,7 @@ While intent is unclear, ask only the next intent-changing question. Optionally 
 
 When all five foundations are sufficiently clear, finish the current request with one concise intent brief or directly usable prompt, according to what the user asked for. If a missing foundation could change direction, continue intake instead. If a human-held contradiction makes completion impossible here, state that blocker and the one decision needed. Do not append a proposed solution, spec, plan, or implementation checklist.
 
-For Chinese output, target roughly 100–200 characters by default and keep routine Intent Takes within 1,000 characters; use equivalent brevity in other languages. This is a compression budget, not permission to omit a material foundation, boundary, or blocker. Exceed it only when genuine semantic complexity or an explicitly selected carrier makes the extra context necessary.
+Intent Take is naturally short because it completes requirement understanding while leaving specification, solution, decomposition, and execution detail outside its boundary. For Chinese output, target roughly 100–200 characters by default and keep routine Intent Takes within 1,000 characters; use equivalent brevity in other languages. This is a compression budget, not permission to omit a material foundation, boundary, or blocker.
 
 Only when the user explicitly asks to learn from or compare revisions, show a brief diagnosis and the clarified intent. Never provide several competing final artifacts unless requested.
 
