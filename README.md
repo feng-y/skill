@@ -25,5 +25,5 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `prompt-atlas` — accumulate the user's scattered hints, clarify the real intent, and stop before solution design or specification.
+- `prompt-atlas` — accumulate scattered hints into a consumer-ready Intent Contract that can drive direct work or a spec / issue / execution workflow.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.

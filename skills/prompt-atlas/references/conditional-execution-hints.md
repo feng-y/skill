@@ -1,42 +1,50 @@
-# Conditional execution hints
+# Execution-quality profile
 
-Use these hints only when the clarified intent is being handed to an agent for repo modification or another execution task. Select the ones that materially protect this request and blend them into natural prose. Do not append all four as boilerplate.
+Apply this profile when the Intent Contract may be executed directly. Select only the protections that materially improve completion quality for this task and blend portable semantics into the contract. Carrier mechanics such as named progress files belong only in a selected autonomous or long-running carrier.
 
-## Completion and scope
+## Establish reality
 
-Use when the user expects the receiving agent to carry the request through implementation rather than stop at analysis, diagnosis, design, or review:
+- Inspect the actual repo, target ref, worktree, commands, tests, configs, runtime, and existing rich specifications needed to understand the work.
+- Record a measured baseline when regression, migration, cleanup, performance, coverage, or count-based completion depends on it.
+- Embed an exact command only after it has been verified in the current environment. When access is unavailable, make the missing baseline or command a precise execution precondition rather than an invented fact.
+- Keep laws and intelligence distinct: a verified invariant or user decision is binding; a likely approach remains an evidence-tagged hypothesis.
 
-> Complete the request, keeping the modification scope aligned with the user's intent.
+## Protect the work
 
-Do not use this wording to silently authorize external writes, rollout, deployment, or other actions outside the clarified boundary.
+- State the achieved result, not “analyze,” “try,” or another activity, as the execution objective.
+- Name the allowed scope and protected neighboring behavior when drift would be costly. Preserve existing user changes and repo invariants unless the intent explicitly changes them.
+- Give routine implementation judgment to the executor. Reserve escalation for contradictions, missing authority, or ambiguity that changes the intended result or crosses an approval boundary.
+- For exploration, close on a decision or bounded finding with evidence and remaining uncertainty, not fake implementation metrics.
 
-## Behavior and invariants
+## Prove completion
 
-Use for refactors, migrations, fixes, cleanup, or other changes where behavior preservation is implied:
+- Use proportional evidence that exercises the requested behavior: relevant tests, build or lint checks, config/reference searches, replay or trace comparison, runtime observation, or a richer existing specification.
+- When the repo owns a verification policy, map the change to its complete gate set. Account for every applicable minimum gate, upgrade gate, block condition, and no-evidence state; do not replace a mandatory replay, build, route, or contract gate with a merely similar check.
+- Freeze a meaningful baseline when the evaluator could otherwise pass by weakening the target. State positive preservation criteria first; add narrow anti-shortcut constraints only for plausible reward-hacking paths such as skipping tests, loosening assertions, mocking the subject under test, deleting coverage, or retaining a hidden duplicate.
+- Add a negative or fault-path check when a silent failure, false-green check, or disabled signal is a material risk.
+- Treat evidence limits honestly. A passing build does not prove semantic equivalence when replay, trace, or behavior evidence is the real proof.
 
-> Preserve existing behavior and repo invariants unless the task explicitly requires changing them.
+## Sustain autonomous work
 
-Omit or narrow it when changing behavior is itself the intent. Name any known acceptable differences rather than forcing false equivalence.
+- For work likely to outlive one context window, include a small durable progress record containing the current objective, completed evidence, next action, and unresolved blocker. Require a resumed executor to read it before repeating work.
+- Use a separate blocker record only when work can continue safely around an unresolved dependency; a contradiction that invalidates the intended result stops the affected work.
+- Set evidence-based retry or rollback limits when repeated failure could waste substantial time or degrade a known baseline.
+- Omit continuity machinery for work that comfortably fits one run.
 
-## Evidence
+## Coordinate parallel work
 
-Use when correctness must be established against a repo:
+Apply only when the user authorizes parallel execution:
 
-> Use the tests, checks, and other evidence available in the current repo to gain enough confidence that the change is correct.
+- give every executor the same global intent and completion semantics;
+- assign non-overlapping write boundaries and a single owner for shared files or generated artifacts;
+- define the integration seam and require evidence to be rerun after shared-state changes;
+- keep discovery evidence from silently authorizing edits in another executor's area.
 
-Keep the evidence bar proportional to risk. Do not invent fixed commands before the receiving agent inspects the repo.
+## Selection
 
-## Routine judgment and escalation
-
-Use for agentic execution when the user wants routine decisions handled autonomously:
-
-> Make routine execution decisions independently; stop for confirmation only when an ambiguity would materially change the implementation direction.
-
-This does not waive approval for destructive, irreversible, production, financial, security, or externally consequential actions.
-
-## Selection rule
-
-- Pure intent clarification: include none.
-- Research, diagnosis, or review: usually include only the relevant evidence and escalation meaning, rewritten for that work type.
-- Repo implementation: commonly include scope, applicable invariants, evidence, and autonomy.
-- Explicit behavior change: do not add a generic behavior-preservation rule; preserve only unaffected invariants.
+- Pure clarification: no execution profile.
+- Research, diagnosis, or review: reality, proportional evidence, honest uncertainty, and the relevant escalation boundary.
+- Repo implementation: reality, scope, invariants, evidence, autonomy, and plausible anti-shortcut protections.
+- Long autonomous work: add progress, blocker, retry, and resume semantics.
+- Parallel work: add coordination only after user authorization.
+- Explicit behavior change: preserve unaffected invariants; do not impose generic behavior equivalence on the behavior being changed.

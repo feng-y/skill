@@ -2,7 +2,7 @@
 
 Use this adapter only when ChatGPT has already made relevant memory, project context, files, or connected-app context available to the current response. It has two jobs:
 
-1. compile task-relevant meaning into a portable intent brief;
+1. compile task-relevant meaning into the current requested intent brief or prompt;
 2. when the user explicitly asks to preserve stable intent-taking lessons, fold them back into the skill's canonical files.
 
 It does not store raw memory or provide a Memory API.
@@ -21,7 +21,7 @@ It does not store raw memory or provide a Memory API.
 - **Current Context**: use prior decisions and project history as leads, then verify current repo, document, or runtime facts.
 - **Boundary**: reuse stable preferences, rejected directions, approval limits, and known invariants only when relevant now.
 - **Immediate Task**: derive it primarily from the current request; do not resurrect an old task from memory.
-- **Success / Stop Condition**: reuse stable expectations about handoff depth or output style, but do not invent task acceptance criteria.
+- **Success / Stop Condition**: reuse stable expectations about what fulfills the requested work, what evidence matters, and where scope should stop, but do not invent a full acceptance specification.
 
 Memory adds evidence to these foundations; it does not create a sixth field.
 
@@ -46,7 +46,7 @@ Route each lesson to one authoritative home:
 - five-foundation meaning and intake criteria → `references/foundation.md`;
 - ChatGPT-specific Memory consumption → this file;
 - context compression and reference use → `references/context-engineering.md`;
-- execution-handoff defaults → `references/conditional-execution-hints.md`.
+- directly usable execution-prompt defaults → `references/conditional-execution-hints.md`.
 
 Before writing, distinguish:
 

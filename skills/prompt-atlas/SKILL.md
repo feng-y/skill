@@ -1,42 +1,58 @@
 ---
 name: prompt-atlas
-description: Clarify a user's ambiguous intent through lightweight intake and produce a concise, human-written intent brief. Use when the user has a loose idea, incomplete requirement, ongoing engineering context, or existing prompt whose real goal/current context/boundary/immediate task/success or stop condition is not yet clear. Stop at shared intent; do not choose a solution, write a spec, plan implementation, or execute the work.
+description: Clarify a user's ambiguous intent through lightweight intake and produce a concise, consumer-ready Intent Contract covering goal, current context, boundary, immediate task, and success or stop conditions. Use when the user has a loose idea, incomplete requirement, ongoing engineering context, or existing prompt that should be directly executable or consumable by a spec, issue, or execution workflow. Stop before choosing a solution, writing a spec, planning implementation, or executing the work.
 ---
 
 # Prompt Atlas
 
-Perform intent intake. Recover what the user is actually trying to change, why the need exists now, what is already true, which boundary matters, what the next engagement should clarify or accomplish, and when the intent is clear enough to hand off.
+Perform intent intake. Recover what the user is actually trying to change, why the need exists now, what is already true, which boundary matters, what work should happen now, and what outcome or blocker closes the request.
 
-The result is shared understanding expressed through Goal, Current Context, Boundary, Immediate Task, and Success / Stop Condition. These five foundations are the minimum completeness contract for intent intake, even when the final prose does not expose them as headings. They are the intake skeleton, not the only context source: use `unknowns-first` and other relevant context-discovery capabilities to supplement inspectable facts instead of making the user supply everything. The result is not a solution, specification, implementation plan, ticket set, or completed task.
+The result is a consumer-ready Intent Contract expressed through Goal, Current Context, Boundary, Immediate Task, and Success / Stop Condition. These five foundations are the minimum completeness contract for intent intake, even when the final prose does not expose them as headings. They describe the requested work, not Prompt Atlas's own intake loop. The contract may be consumed directly to complete the request or transformed by a known workflow into a spec, issues, or execution loop; do not make it depend on an unspecified later stage. Use `unknowns-first` and other relevant context-discovery capabilities to supplement inspectable facts instead of making the user supply everything.
 
-## Workflow
+Prompt Atlas is the semantic core of Intent Take. Its primary completion criterion is finished requirement understanding, not a particular container. Default to a consumer-neutral contract; when the user explicitly requests a goal brief or another carrier, render the same completed intent into that carrier without letting the carrier's mechanics replace or postpone intent completion. Prompt Atlas retains the execution-quality capabilities needed by those consumers—verified baselines, scope controls, evidence, continuity, blockers, and incentive-safe evaluation—behind conditional profiles instead of forcing one heavy template onto every request.
 
-1. Take in the whole available intent surface: the user's latest request, relevant prior discussion, current artifact or prompt, target model, actual work state, and scattered hints across turns. Preserve quoted source text.
-2. Accumulate hints as intent evidence. Notice concrete facts, preferences, examples, rejections, corrections, and repeated concerns. Connect compatible hints across turns, but do not promote every hint into a requirement:
-   - a concrete correction overrides an earlier tentative interpretation;
-   - an example reveals direction or taste unless the user makes it a rule;
-   - a rejected direction clarifies the boundary;
-   - repeated consistent hints strengthen the inferred intent;
-   - conflicting material hints require the next human question.
-   Use conversation history, project context, and available memory as sources of prior intent, not as proof of current repo or runtime state.
-   When running in ChatGPT with relevant memory, project context, files, or connected-app context available, read [references/chatgpt-memory.md](references/chatgpt-memory.md) and apply its compile-time adapter. Do not assume those sources or a queryable Memory API exist on other surfaces.
-3. Reconstruct the five foundations internally as a mandatory completeness gate and identify the first ambiguity that separates materially different user intents. Classify each material gap by its proper closer:
-   - user-held intent and tradeoffs;
-   - repo, runtime, document, or evidence facts a context-discovery capability can establish;
-   - domain context another relevant skill or tool can supply;
-   - assumptions that would materially change the goal, boundary, immediate task, or stopping point.
-4. Close gaps through the proper supplier, one at a time. Use available context-discovery capabilities for inspectable facts before asking the user. Ask one concise, human question only when the answer belongs to the user. Continue until remaining uncertainty can safely be left to later exploration.
-5. For engineering intent that depends on prompt, docs, memory, repo, config, tests, or runtime reality, use `unknowns-first` as the default context supplement:
-   - run its L1 Target / Territory / Unknown / Proof gate silently for each material territory-dependent gap;
-   - take one focused L2 move at a time, fold back the result, and reclassify the next gap;
-   - enter L3 only when the user asks for a full map or coupled unknowns genuinely block intent clarification.
-6. When another relevant skill or tool can supply required domain context, use it with the same boundary: retrieve only what can change the intent contract, then return control to Prompt Atlas.
-7. Feed verified, intent-changing facts into the applicable foundation. Do not expose the supplement's framework or let its downstream workflow turn intake into solution design.
-8. Refuse premature solutioning. Do not select architecture, prescribe implementation, define a full acceptance model, decompose tickets, or silently cross from clarification into design or execution.
-9. Before handoff, read [references/context-engineering.md](references/context-engineering.md) and apply its six context-shaping shifts. Use them as an internal compression filter, not as visible sections or an audit report.
-10. If the clarified intent hands off a repo modification or other execution task, read [references/conditional-execution-hints.md](references/conditional-execution-hints.md) and carry only the applicable execution hints into the brief.
-11. Hand off only when all five foundations are sufficiently clear that the receiving agent will not need to guess the user's direction. Express them as short, natural engineer-to-engineer prose, leave solution space open, and retain only the boundaries necessary to prevent drift.
-    Make the brief self-contained across agent boundaries: compile any material memory-derived context into the five foundations rather than telling a receiving agent to access ChatGPT Memory.
+## Intent Take Loop
+
+Run five stages. Move backward only to close the first direction-changing gap; do not restart the whole intake.
+
+1. **Capture**
+   - Read the latest request, relevant conversation, current artifact, actual work state, and scattered hints across turns. Preserve quoted source text.
+   - Treat corrections as overrides, examples as direction unless made mandatory, rejections as boundary evidence, and repeated compatible hints as stronger intent evidence.
+   - Separate the desired result, a suggested means, and a hard constraint. Preserve the result as intent; keep the means as a hypothesis unless the user makes it mandatory; require a user decision or territory evidence before treating a constraint as law.
+   - Use conversation history, project context, and available memory as intent evidence, not as proof of current repo or runtime state. On ChatGPT surfaces with relevant Memory context already available, apply [references/chatgpt-memory.md](references/chatgpt-memory.md).
+   - Exit only after every source hint is represented as intent, context, boundary, or a typed unknown, and all five foundations have a draft.
+
+2. **Enrich**
+   - Classify the first material gap by its proper closer: user-held intent, inspectable territory, or relevant domain capability.
+   - For engineering territory, use `unknowns-first` as the default supplement: run L1 silently, take one focused L2 move at a time, and use L3 only when the user asks for a full map or coupled unknowns block the contract.
+   - Use another relevant skill or tool when it can supply required domain context.
+   - Close each inspectable unknown that could change a foundation by following the smallest sufficient evidence chain through code, config, tests, runtime, traces, target ref, or another authoritative source. Finding a likely file or writing “verify whether” is not closure.
+   - For migrations, refactors, shared-boundary changes, and behavior-preserving work, run one `unknowns-first` blindspot pass before exit. Account for the touched responsibility surface—producer, representation or accessor, current owners, active consumers, production bindings, target-ref state, and proportional proof—or mark an element as evidenced out of scope.
+   - Fold the supported conclusion—not the search transcript—into the applicable foundation. Keep design and implementation choices open after the requirement's meaning is settled.
+   - When required evidence is unavailable, decide whether a bounded conditional still leaves the work unambiguous; otherwise record the exact evidence blocker instead of delegating unfinished intent discovery to the consumer.
+   - Exit only when every discoverable foundation-changing unknown and every in-scope blindspot surface has a supported conclusion, and a consumer will not need to repeat context discovery to understand the requirement.
+
+3. **Resolve**
+   - Ask one concise human question only when the answer belongs to the user and would change Goal, Boundary, Immediate Task, or Success / Stop.
+   - Fold the answer into the draft, then return only to the affected Capture or Enrich step.
+   - If a human-held contradiction cannot be resolved, preserve one explicit blocker rather than inventing a compromise.
+   - Exit when no user-held direction-changing ambiguity remains.
+
+4. **Compile**
+   - Produce one self-contained, consumer-ready Intent Contract in short, natural engineer-to-engineer prose. Do not expose the five labels unless requested.
+   - Treat the carrier as presentation: use the user's requested carrier, otherwise keep the contract route-neutral. A direct executor or an explicit spec / issue / execution workflow must be able to consume the same semantics without reconstructing intent.
+   - Refuse premature solutioning: do not select architecture, prescribe implementation, define a full acceptance model, or decompose tickets.
+   - Apply [references/context-engineering.md](references/context-engineering.md) as an internal compression filter.
+   - If the result may be consumed directly for execution, apply the applicable [execution-quality profile](references/conditional-execution-hints.md). Keep portable quality semantics in a route-neutral contract; add carrier-specific mechanics only when that consumer is selected.
+
+5. **Validate**
+   - Confirm that Goal, Current Context, Boundary, Immediate Task, and Success / Stop describe the requested work rather than Prompt Atlas's own process.
+   - Run the consumer-replay test: if the next agent must repeat repo or domain investigation to learn what the requirement means, return to Enrich. Investigation that only chooses how to implement the settled requirement may remain downstream.
+   - Confirm that every material territory claim is supported, every remaining unknown has a bounded effect, and the artifact is accurate, self-contained, and finished in the requested form.
+   - When the target repo owns a verification policy or another rich completion specification, confirm that Success / Stop carries the complete applicable gate set and evidence-state semantics; one omitted required gate keeps the take incomplete.
+   - `complete`: return the artifact.
+   - `continue`: return to Enrich or Resolve for the first missing direction-changing fact; expose only the one useful question when user input is required.
+   - `blocked`: state the contradiction or missing human decision that prevents a valid contract and stop.
 
 For ambiguous, high-stakes, multi-stage, or agentic work, read [references/foundation.md](references/foundation.md).
 
@@ -44,7 +60,7 @@ For ambiguous, high-stakes, multi-stage, or agentic work, read [references/found
 
 While intent is unclear, ask only the next intent-changing question. Optionally precede it with one sentence confirming the current understanding; do not emit an analysis report.
 
-When all five foundations are sufficiently clear, return one concise intent brief or directly sendable prompt. If a missing foundation could change direction, continue intake instead. Do not append a proposed solution, spec, plan, or implementation checklist.
+When all five foundations are sufficiently clear, finish the current request with one concise intent brief or directly usable prompt, according to what the user asked for. If a missing foundation could change direction, continue intake instead. If a human-held contradiction makes completion impossible here, state that blocker and the one decision needed. Do not append a proposed solution, spec, plan, or implementation checklist.
 
 Only when the user explicitly asks to learn from or compare revisions, show a brief diagnosis and the clarified intent. Never provide several competing final artifacts unless requested.
 
@@ -52,22 +68,13 @@ Only when the user explicitly asks to learn from or compare revisions, show a br
 
 - Optimize for user-agent alignment, not textual polish or apparent completeness.
 - Lead with the intended change and current reality, not a prescribed task list.
-- Recover intent from the whole conversation; do not treat the latest sentence as the entire requirement when prior context changes it.
-- Preserve the signal in fragmented hints without turning examples or passing reactions into hard requirements.
-- Treat `unknowns-first` and similar capabilities as context suppliers to the five foundations, not as optional commentary or replacements for intent intake.
-- Ask the user for intent and tradeoffs; discover territory and domain facts through the appropriate supplement when available.
 - Apply typed authority: the user's current correction wins for intent; current repo, config, tests, and runtime evidence win for territory. Do not let remembered context overwrite either.
-- Treat ChatGPT Memory as a conditional intent source, not a sixth foundation, a portable dependency, or durable repo truth.
-- Never leave another agent with a reference to unavailable private memory. Pass the distilled meaning needed for this task.
-- When the user asks to preserve stable intent-taking lessons learned through Memory, apply the fold-back routing in [references/chatgpt-memory.md](references/chatgpt-memory.md) so the skill—not private source history—becomes the cross-agent memory.
-- Apply context engineering after intent clarification: preserve meaning while removing fake rules, example overfitting, unnecessary upfront context, repetition, and replayed history.
 - Include only context that changes the meaning or boundary of the request.
 - State what must remain invariant and what differences are acceptable.
-- Add execution defaults only when the clarified task needs them; do not append a generic boilerplate to every intent brief.
-- Make the Immediate Task the next requested engagement, not a hidden implementation plan.
-- Define Success / Stop as “intent is sufficiently shared and bounded,” not as a future solution's full acceptance criteria.
+- Make the Immediate Task the concrete work the Intent Contract asks its consumer to complete now, not Prompt Atlas's formatting activity, an undefined later stage, or a hidden implementation plan.
+- Match completion semantics to the work: execution intent closes on an achieved result with evidence; exploration intent closes on a bounded decision or finding with remaining uncertainty made explicit. Do not force fake metrics onto work whose value requires judgment.
 - Use `always`, `never`, `must`, and `only` only for genuine invariants.
-- Preserve uncertainty that belongs to later investigation; remove only ambiguity that would make the agent solve the wrong problem.
+- Preserve uncertainty that belongs to solution choice or implementation. Close inspectable uncertainty that changes requirement meaning; keep an unresolved item only when its effect is bounded or its unavailable evidence is the explicit blocker.
 
 ## Source boundary
 

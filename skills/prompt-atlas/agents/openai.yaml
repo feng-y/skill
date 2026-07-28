@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
-  short_description: "整合用户跨轮次零散 hint，澄清 intent 后在方案与 SPEC 前停下"
-  default_prompt: "Use $prompt-atlas to gather my scattered hints and clarify the intent without proposing a solution or spec."
+  short_description: "整合零散 hint，产出可直接执行或继续推导的 Intent Contract"
+  default_prompt: "Use $prompt-atlas to turn my scattered hints into a consumer-ready Intent Contract without choosing an implementation route or expanding it into a spec."

@@ -1,6 +1,6 @@
 # Context engineering filter
 
-Apply these six shifts after intent is clear enough to hand off. They shape the final context; they are not six visible sections and do not extend intent intake into solution design.
+Apply these six shifts after intent is clear enough to finalize the current requested output. They shape the final context; they are not six visible sections and do not extend intent intake into solution design.
 
 ## Six shifts
 
@@ -14,10 +14,11 @@ Apply these six shifts after intent is clear enough to hand off. They shape the 
 
 3. **Upfront context → progressive disclosure**
    - Inline only the context needed to understand the intent and avoid the wrong problem.
-   - Point to repo files, artifacts, or later discovery surfaces for task-specific depth rather than preloading everything.
+   - Inline the supported conclusion and point to repo files, artifacts, or later discovery surfaces for task-specific depth rather than preloading everything.
+   - Progressive disclosure may defer evidence detail, not a discoverable conclusion needed to know what the requirement means.
 
 4. **Repetition → one clear home**
-   - Merge repeated hints into one authoritative statement and resolve contradictions before handoff.
+   - Merge repeated hints into one authoritative statement and resolve contradictions before completing the current request.
    - Keep tool semantics beside the tool, repo truth in its owning source, and do not repeat them in the intent brief unless they change this request.
 
 5. **Manual memory → distilled current intent**
@@ -27,7 +28,7 @@ Apply these six shifts after intent is clear enough to hand off. They shape the 
 
 6. **Simple prose specs → rich references**
    - Prefer high-fidelity references such as code, tests, mockups, artifacts, traces, and rubrics when they clarify meaning better than paraphrase.
-   - Prompt Atlas stops before specification: references constrain the intended problem and evidence space, not the implementation solution.
+   - Prompt Atlas stops before specification: references settle the intended problem and evidence space without choosing the implementation solution.
 
 ## Guardrails
 
