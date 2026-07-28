@@ -51,17 +51,17 @@ Choose the output mode from the user's request:
    - Write the result as minimum-sufficient, self-contained engineer-to-engineer prose. Keep decisions and real invariants, express intent instead of imitating examples, and reference rich artifacts instead of replaying them.
    - Keep the default artifact out of spec form: no phases, implementation sequence, ticket decomposition, command inventory, or full acceptance checklist.
    - For repo-changing work, carry an explicit write boundary when multiple edit surfaces, shared state, unrelated user changes, or likely scope drift make implicit scope unsafe. Prefer verified writable paths or ownership over a blacklist.
-   - For direct or autonomous work, read [execution-readiness.md](references/execution-readiness.md), select only protections whose absence could change completion behavior, and place each under the semantic slot it constrains rather than adding another section.
+   - When the requested result needs a correctness or completion claim, read [completion-trust.md](references/completion-trust.md). Compile only the material Proof obligation, Integrity boundary, and self-attestation policy into their owning slots rather than adding another section.
    - If the user requests a fresh-session handoff, save the concise contract as Markdown in the operating system's temporary directory—not the workspace—reference existing artifacts, redact sensitive context, add `Suggested skills`, and return the absolute path.
 
 5. **Validate**
    - Confirm the artifact maps back to all five semantics in order, every material hint appears once, territory claims have evidence, and remaining uncertainty has bounded effect.
    - Return to Enrich only when a consumer would otherwise have to rediscover requirement meaning; downstream implementation investigation is allowed.
    - Remove any sentence or mechanism whose absence would not change intent, protected boundaries, evidence, or completion behavior.
-   - Finish the current pass in exactly one state: complete contract, probe with its next evidence check, one direction-changing question, contract with one bounded conditional, or exact blocker. Do not emit the intake analysis.
+   - Finish the current pass in exactly one state: complete contract, contract ready for independent acceptance, probe with its next evidence check, one direction-changing question, contract with one bounded conditional, or exact blocker. Do not emit the intake analysis.
 
 ## Output
 
 In Artifact mode, return one concise Intent Contract or the requested carrier. For Chinese output, target roughly 100–200 characters and keep routine takes within 1,000 characters; exceed the budget only for material boundaries, evidence, or blockers. In Embedded mode, continue the caller's workflow after intake.
 
-Apply typed authority: the current user statement owns intent; current repo, config, tests, and runtime evidence own territory. Preserve existing behavior and repo invariants unless the request changes them. Execution intent closes on an achieved result with evidence; exploration intent closes on a bounded decision or finding with remaining uncertainty explicit. Keep solution uncertainty open after requirement meaning is settled.
+Apply typed authority: the current user statement owns intent; current repo, config, tests, and runtime evidence own territory. Preserve existing behavior and repo invariants unless the request changes them. Execution intent closes on an achieved result with trusted evidence; when self-attestation is forbidden, the executor closes only at `ready for independent acceptance` until external judgment passes. Exploration intent closes on a bounded decision or finding with remaining uncertainty explicit. Keep solution uncertainty open after requirement meaning is settled.
