@@ -7,6 +7,9 @@ Use this only when ChatGPT has already supplied relevant Memory, project context
 - The current request owns intent; current repo, config, tests, and runtime evidence own territory. Treat Memory as a candidate hint beneath both.
 - Map relevant Memory into Goal, Current Context, Boundary, Immediate Task, or Success / Stop; do not create a sixth field.
 - Reuse stable motivations, decisions, rejected directions, preferences, and completion expectations only when they change this task.
+- Recalled repo facts enter Current Context only as inferred facts until current territory verifies them.
+- If Memory keeps a prior decision, default, or rejection relevant, preserve its attribution and consequence in the owning slot rather than burying it as background.
+- Do not reopen a settled remembered user decision in a clarification harvest unless current user input or current territory evidence creates a real contradiction.
 - Derive Immediate Task primarily from the current request. Verify remembered repo facts before relying on them.
 - If Memory conflicts with the current request, follow the current request. Ask one question only when two still-relevant hints imply different directions.
 
