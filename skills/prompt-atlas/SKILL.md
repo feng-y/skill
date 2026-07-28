@@ -40,7 +40,8 @@ Choose the output mode from the user's request:
    - Keep broader repo identity work and implementation choices out of intake. Fold supported conclusions, not investigation transcripts, into the contract.
 
 3. **Resolve**
-   - Close each material gap once: inspect territory when evidence can decide; ask one concise question when only the user can make a direction-changing choice; keep one bounded conditional when direction and safe action remain clear; block when a contradiction or missing decision prevents a safe contract; otherwise complete.
+   - Choose exactly one terminal for the current intake step: `probe` when one territory check can decide; `ask` when only the user can make a direction-changing choice; `bounded conditional` when direction and safe action remain clear without the missing evidence; `blocker` when a contradiction or missing decision prevents a safe contract.
+   - After a probe, return to Enrich with the evidence and reclassify. When no material gap remains, compile.
    - Use a reversible default only when it changes neither Goal nor Boundary. Record its evidence state and cost of being wrong in the owning slot; never default a user-owned direction change.
 
 4. **Compile**
@@ -57,7 +58,7 @@ Choose the output mode from the user's request:
    - Confirm the artifact maps back to all five semantics in order, every material hint appears once, territory claims have evidence, and remaining uncertainty has bounded effect.
    - Return to Enrich only when a consumer would otherwise have to rediscover requirement meaning; downstream implementation investigation is allowed.
    - Remove any sentence or mechanism whose absence would not change intent, protected boundaries, evidence, or completion behavior.
-   - Finish in exactly one state: complete contract, one direction-changing question, contract with one bounded conditional, or exact blocker. Do not emit the intake analysis.
+   - Finish the current pass in exactly one state: complete contract, probe with its next evidence check, one direction-changing question, contract with one bounded conditional, or exact blocker. Do not emit the intake analysis.
 
 ## Output
 
