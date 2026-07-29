@@ -28,7 +28,7 @@ Use detailed guidance only when it becomes relevant: [chatgpt-memory.md](referen
 
 ### 1. Recover
 
-Read the current request with relevant corrections, prior decisions, examples, conversation, and Memory. The current user owns intent; current repo, config, tests, runtime, and other authoritative evidence own territory. Conversation and Memory may recover intent or suggest facts but do not override current evidence. Latest explicit corrections supersede older meaning rather than accumulating beside it. Recover the desired change separately from suggested means and hard boundaries, including any user-stated priority needed to judge competing constraints.
+Read the current request with relevant corrections, prior decisions, examples, conversation context, and available Memory. The current user owns intent; current repo, config, tests, runtime, and other authoritative evidence own territory. Conversation and Memory may recover intent or suggest facts but do not override current evidence. Latest explicit corrections supersede older meaning rather than accumulating beside it. Recover the desired change separately from suggested means and hard boundaries, including any user-stated priority needed to judge competing constraints.
 
 ### 2. Ground
 
@@ -44,7 +44,7 @@ Write one minimum-sufficient, self-contained Intent Contract in this order: desi
 
 Preserve material uncertainty, recommendations, defaults, proof gaps, handoff obligations, and any material priority between competing user-owned constraints where a consumer can recover their owner, basis, and effect. For repo-changing work, make write scope explicit when multiple edit surfaces, shared state, unrelated user changes, or likely scope drift make implicit scope unsafe.
 
-Prompt Atlas is done when the next consumer can continue without re-deriving what the user means, reopening superseded intent, or re-framing an already-visible user decision. Downstream work may enrich implementation knowledge, but without contradictory evidence it must not reopen settled intent, demote a hard boundary into a suggestion, or turn an unresolved proof gap into completion.
+Prompt Atlas is done when the next consumer can continue without re-deriving what the user means, reopening superseded intent, re-framing an already-visible user decision, or recreating an evidence-backed recommendation Atlas should already have surfaced. Downstream work may enrich implementation knowledge, but without contradictory evidence it must not reopen settled intent, demote a hard boundary into a suggestion, or turn an unresolved proof gap into completion.
 
 When intake cannot compile yet, expose only the next useful outcome: a focused `probe`, a human `ask`, a bounded conditional or default, a named capability handoff, or the exact blocker. Do not emit the intake analysis. Exploration-oriented intent may close on a bounded decision or finding with remaining uncertainty explicit; correctness or completion claims must carry the trust obligations selected by `completion-trust`.
 
