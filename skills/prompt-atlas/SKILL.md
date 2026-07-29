@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: Stably compile a one-sentence goal or scattered, evolving cross-turn hints into a consumer-ready Intent Contract or requested carrier. Support human-driven iterative intent alignment across separate invocations by preserving settled semantics, incorporating new user authority, and refreshing territory grounding from authoritative evidence. In explicit Artifact mode, render stable intent as a strongly structured agent-facing contract with Goal, Context, Decisions, Constraints, Task, Success Criteria, Output, and Handoff. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when a broader workflow explicitly needs intent intake before direct, design, planning, issue, or execution work. Explicit /prompt-atlas use returns the compiled artifact as the terminal result of this invocation.
+description: Stably compile a one-sentence goal or scattered, evolving cross-turn hints into a consumer-ready Intent Contract or requested carrier. Support human-driven iterative intent alignment across separate invocations by preserving settled semantics, incorporating new user authority, and refreshing territory grounding from authoritative evidence. In explicit Artifact mode, render stable intent as a strongly structured agent-facing contract with Goal, Context, Decisions, Constraints, Task, Success Criteria, Output, and Handoff. Hand off only when remaining uncertainty can no longer materially change the settled intent contract. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when a broader workflow explicitly needs intent intake before direct, design, planning, issue, or execution work. Explicit /prompt-atlas use returns the compiled artifact as the terminal result of this invocation.
 ---
 
 # Prompt Atlas
@@ -44,7 +44,11 @@ As the normal interaction budget, aim for one compact round with no more than fi
 
 ### 4. Compile and validate
 
-Compile the best current intent when the five internal semantics are stable enough for the next consumer. Before treating the artifact as stable, verify that every explicit user-owned requested outcome is still represented with the same authority or has been explicitly superseded by the user. Omission, silent weakening, deferral, or extraction into a later task is semantic drift. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents.
+Compile the best current intent when the five internal semantics appear ready for the next consumer. Before treating the artifact as stable, verify that every explicit user-owned requested outcome is still represented with the same authority or has been explicitly superseded by the user. Omission, silent weakening, deferral, or extraction into a later task is semantic drift.
+
+Then classify every material remaining uncertainty before Handoff. If resolving an uncertainty could materially change **Goal, Decisions, Constraints or approval scope, Task, Success Criteria, or Output**, intent is not yet stable: settle it through authoritative grounding when evidence can answer it; otherwise expose the smallest Human decision and stop. Do not ask merely because a downstream fact or implementation choice is unknown. Uncertainty may pass downstream when resolving it changes only territory facts, implementation choices, or solution How while leaving those settled contract semantics intact.
+
+Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents.
 
 For stable Artifact mode, emit these canonical headings in this exact order regardless of response language; localize the section contents, not the field names:
 
