@@ -1,27 +1,19 @@
 # Intent Contract quality
 
-Use this reference when compiling or validating an Intent Contract. Add detail only when it improves downstream goal attainment or preserves stability; this is a quality reference, not a second intake workflow.
+Use this reference when contract quality is not obvious. Add detail only when it improves downstream goal attainment or preserves stability; this is a quality reference, not a second intake workflow.
 
 ## Goal attainment
 
-A contract is sufficient when the next consumer can act correctly without re-deriving what the user means. The five semantics should carry only what can change downstream judgment:
+A contract is sufficient when the next consumer can act correctly without re-deriving what the user means. Across the five semantics, preserve only what can change downstream judgment: the actual outcome rather than suggested means, material facts and uncertainty, authoritative boundaries and user-owned priorities, the work to do now without pre-solving downstream choices, and result-oriented closure backed by trusted evidence or a real blocker.
 
-- **Goal** — the intended outcome, why it matters when that affects judgment, and the separation between result and suggested means.
-- **Current Context** — material facts, evidence, baselines, and uncertainty; keep verified, inferred, and unmeasured states distinguishable, and treat territory claims carried from prior context as inferred until current evidence verifies them.
-- **Boundary** — hard invariants, acceptable differences, approval or write limits, protected proof rules, and user-owned priorities when material. Advice stays advisory.
-- **Immediate Task** — what should be completed now at the right abstraction level, without pre-solving implementation choices that belong downstream.
-- **Success / Stop** — the achieved result and trusted evidence that would close the work, or a real blocker that prevents safe closure. A success criterion is not evidence that success has already been achieved.
-
-Prefer material context over broad background, preserve implementation freedom where multiple paths satisfy the same intent, and surface user-owned decisions instead of silently choosing them. Carry enough proof obligation to prevent plausible false success, while leaving concrete verifier mechanics to the owning downstream capability. Interaction and output budgets are normal operating envelopes; exceed them when fitting the budget would materially reduce correctness, intent fidelity, or goal attainment.
-
-More fields, context, constraints, or prose do not improve the contract unless they change downstream judgment or remove a material failure mode.
+Prefer material context over broad background. Preserve implementation freedom where multiple paths satisfy the same intent. Surface material user-owned decisions instead of silently choosing them. More fields, context, constraints, or prose do not improve the contract unless they change downstream judgment or remove a material failure mode.
 
 ## Stability
 
-Compression, handoff, and later evidence may enrich the contract but must not silently change ownership or state:
+Compression, handoff, and later evidence may enrich the contract but must not silently change authority or state:
 
-- user-settled intent, corrections, priorities, and user-owned boundaries change only with new user authority;
-- territory facts and constraints belong to current authoritative evidence and may change with better evidence without rewriting user intent;
+- settled user intent, corrections, priorities, and user-owned boundaries change only with new user authority;
+- territory facts and constraints follow current authoritative evidence and may change with better evidence without rewriting user intent;
 - recommendations remain advisory and reversible defaults remain visibly unconfirmed;
 - unknowns, inferences, and proof gaps do not become current facts or completion claims through rewriting;
 - superseded meaning is replaced rather than accumulated beside current intent;
