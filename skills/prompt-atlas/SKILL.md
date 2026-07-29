@@ -52,4 +52,4 @@ If the user requests a fresh-session handoff, save the concise contract as Markd
 
 ## Output
 
-In Artifact mode, return one concise Intent Contract or requested carrier. For Chinese output, target roughly 100–200 characters and keep routine contracts within 1,000 characters. Treat these as normal output budgets, not completion gates: exceed them when necessary to preserve material boundaries, evidence, decisions, blockers, or overall intent fidelity rather than compressing away what the next consumer needs. In Embedded mode, continue the caller's workflow after intake.
+In Artifact mode, return one concise Intent Contract or requested carrier. For Chinese output, target roughly 100–200 characters and keep routine contracts within 1,000 characters. Treat these as normal output budgets, not completion gates: if staying within them would materially reduce Intent Take correctness, completeness, or goal attainment, exceed them rather than compress away what the next consumer needs. In Embedded mode, continue the caller's workflow after intake.
