@@ -5,7 +5,7 @@ description: Stably compile a one-sentence goal or scattered cross-turn hints in
 
 # Prompt Atlas
 
-Perform request-scoped Intent Take. Recover what the user is actually trying to change, ground the context that matters, surface only decisions that genuinely belong to the user, and leave the next consumer a concise contract that does not require rediscovering requirement meaning.
+Perform request-scoped Intent Take. Recover what the user is actually trying to change, ground the context that matters, resolve only decisions that genuinely belong to the user, and leave the next consumer a concise contract that does not require rediscovering requirement meaning.
 
 Compile five minimum semantics:
 
@@ -22,48 +22,34 @@ Choose the output mode from the request:
 - **Artifact mode** — return the completed Intent Contract or requested carrier.
 - **Embedded mode** — establish the contract internally, then return control to the calling workflow instead of replacing the requested work with a prompt.
 
-## Judgment rules
-
-- **Typed authority:** the current user owns intent; current repo, config, tests, runtime, and other authoritative evidence own territory. Conversation and Memory may recover intent or suggest facts, but they do not override current evidence.
-- **Intent before means:** recover the change a solution-shaped request is trying to cause. Treat a named approach as a suggestion unless the user makes it a boundary.
-- **Reality before clarification:** investigate only unknowns whose answer could materially change Goal, Boundary, Immediate Task, Success / Stop, or the safe route. For engineering work, use `unknowns-first` when available instead of duplicating its territory / proof gate. Prompt Atlas must still work standalone: when that capability is unavailable, apply the same reality-first judgment directly at lightweight scope rather than inventing certainty or asking the user for facts the environment can answer.
-- **Judgment before grammar:** use the surrounding context and evidence to decide what matters. Do not classify, enumerate, or expose internal intake state when the same decision can be made directly and safely.
-- **Progressive disclosure:** load detailed guidance only when needed. Use [chatgpt-memory.md](references/chatgpt-memory.md) when relevant Memory is actually available, and [completion-trust.md](references/completion-trust.md) when the contract needs a correctness or completion claim.
+Use detailed guidance only when it becomes relevant: [chatgpt-memory.md](references/chatgpt-memory.md) for available Memory and [completion-trust.md](references/completion-trust.md) for correctness or completion claims.
 
 ## Intent Take
 
 ### 1. Recover
 
-Read the current request together with relevant corrections, prior decisions, examples, and context. Latest explicit corrections win over older compatible intent. Replace superseded meaning rather than accumulating it. Separate desired result, suggested means, and hard constraints. When current requirements compete, preserve any user-stated priority or tradeoff order needed for the next consumer to judge correctly; if that priority is material and genuinely user-owned but still missing, resolve it as a human decision rather than inventing one.
+Read the current request with relevant corrections, prior decisions, examples, conversation context, and available Memory. The current user owns intent; current authoritative evidence owns territory. Conversation and Memory may recover intent or suggest facts but do not override current evidence. Latest explicit corrections supersede older meaning rather than accumulating beside it. Recover the desired change separately from suggested means and hard boundaries, including any user-stated priority needed to judge competing constraints.
 
 ### 2. Ground
 
-Close only material task-level uncertainty. Prefer the smallest authoritative check through code, config, tests, runtime, traces, references, or another appropriate capability. Capture a baseline when the requested change compares, preserves, migrates, regresses, counts, or claims performance; carry its source, evidence state, and what a mismatch would change or block. If evidence is unavailable, keep the uncertainty visible with its practical effect instead of inventing certainty.
-
-For engineering work, let `unknowns-first` handle map-versus-territory discovery and proof escalation when available. Prompt Atlas consumes its conclusion; it does not mirror its state machine. Broader repo identity and implementation investigation remain downstream unless they are necessary to know what the user means.
+Investigate only unknowns whose answers could materially change Goal, Boundary, Immediate Task, Success / Stop, or the safe route. Prefer the smallest authoritative check and rich existing references. For engineering work, let `unknowns-first` own map-versus-territory discovery and proof escalation when available and consume its conclusion rather than mirroring its state machine; when unavailable, apply the same reality-first judgment directly at lightweight scope. Capture a sourced baseline whenever the requested change is judged relative to current behavior or measurement, and keep its evidence state and the consequence of mismatch explicit. Preserve material uncertainty instead of inventing certainty or asking the user for facts the environment can settle. Broader repo identity and implementation investigation remain downstream unless they are necessary to know what the user means.
 
 ### 3. Resolve human decisions
 
-Ask only when the remaining material choice genuinely belongs to the user and available evidence cannot settle it. Gather already-visible related choices together rather than drip-feeding questions. Aim to keep one clarification round to five questions or fewer as a cognitive-load budget. Before exceeding that budget, ground further, combine decisions that genuinely share one judgment, and use reversible defaults only where independently safe. Exceed the budget only when fewer questions would materially reduce the correctness or completeness of Intent Take; do not hide decisions, silently guess, or manufacture grouping merely to satisfy the number.
-
-Render the smallest sufficient decision surface: what is established, what evidence cannot decide, why the judgment belongs to the user, and what materially changes between the viable choices. For a sharp decision, prefer 2–4 materially distinct options with their consequences; use an open question only when the choices cannot be bounded honestly. When evidence supports a preferred choice, include one concise recommendation with its basis and main tradeoff. Recommendations remain advisory until the user confirms them.
-
-Do not silently make a direction-changing decision for the user. A reversible default is allowed only when it does not change Goal or a user-owned Boundary, the cost of being wrong is bounded and reversible, and the mismatch can be detected; mark it visibly as an unconfirmed Atlas default with its basis and consequence.
+Resolve only material decisions that available evidence cannot settle and that genuinely belong to the user. As the normal interaction budget, aim for one compact round with no more than five questions; for each question, prefer 2–4 materially distinct options and one concise recommendation with its basis. Include only the context needed to make the choice well. If staying within that budget would materially reduce Intent Take correctness, completeness, or goal attainment, exceed it rather than omit a necessary user decision; exceeding the budget is not itself a failure. Do not silently choose a direction or present an Atlas recommendation or default as confirmed user intent. Use a reversible default only when it leaves Goal and user-owned Boundary unchanged, the cost of being wrong is bounded and reversible, and a mismatch is detectable; mark it visibly as unconfirmed with its basis and consequence.
 
 ### 4. Compile and validate
 
-Write one minimum-sufficient, self-contained Intent Contract in this order: desired change → current context → protected boundary → work now → success or stop. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. Keep the default artifact out of spec form: no phases, implementation sequence, ticket decomposition, command inventory, or execution-loop mechanics.
+Write one minimum-sufficient, self-contained Intent Contract in this order: desired change → current context → protected boundary → work now → success or stop. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. Keep it an intent contract rather than a downstream spec or execution plan.
 
-Preserve material uncertainty, recommendations, defaults, proof gaps, handoff obligations, and any material priority between competing user-owned constraints where a consumer can recover their owner, basis, and effect. Never present an Atlas recommendation or default as confirmed user intent. For repo-changing work, make the write scope explicit when multiple edit surfaces, shared state, unrelated user changes, or likely scope drift make implicit scope unsafe.
+Preserve material uncertainty, recommendations, defaults, proof gaps, handoff obligations, and any material priority between competing user-owned constraints where a consumer can recover their owner, basis, and effect. For repo-changing work, make write scope explicit when multiple edit surfaces, shared state, unrelated user changes, or likely scope drift make implicit scope unsafe.
 
 Prompt Atlas is done when the next consumer can continue without re-deriving what the user means, reopening superseded intent, re-framing an already-visible user decision, or recreating an evidence-backed recommendation Atlas should already have surfaced. Downstream work may enrich implementation knowledge, but without contradictory evidence it must not reopen settled intent, demote a hard boundary into a suggestion, or turn an unresolved proof gap into completion.
 
-When intake cannot compile yet, expose only the next useful outcome: a focused `probe`, a human `ask`, a bounded conditional/default, a named capability handoff, or the exact blocker. Do not emit the intake analysis.
-
-For execution-oriented intent, completion requires trusted evidence and an achieved-result criterion rather than mere work performed; when independent acceptance is required, stop at `ready for independent acceptance`. Exploration-oriented intent may close on a bounded decision or finding with remaining uncertainty explicit.
+When intake cannot compile yet, expose only the next useful outcome: a focused `probe`, a human `ask`, a bounded conditional or default, a named capability handoff, or the exact blocker. Do not emit the intake analysis. Exploration-oriented intent may close on a bounded decision or finding with remaining uncertainty explicit; correctness or completion claims must carry the trust obligations selected by `completion-trust`.
 
 If the user requests a fresh-session handoff, save the concise contract as Markdown in the operating system temporary directory, reference existing artifacts rather than copying them, redact sensitive context, add `Suggested skills`, and return the absolute path.
 
 ## Output
 
-In Artifact mode, return one concise Intent Contract or requested carrier. For Chinese output, target roughly 100–200 characters and keep routine takes within 1,000 characters; exceed the budget only for material boundaries, evidence, decisions, or blockers. In Embedded mode, continue the caller's workflow after intake.
+In Artifact mode, return one concise Intent Contract or requested carrier. For Chinese output, target roughly 100–200 characters and keep routine contracts within 1,000 characters. Treat these as normal output budgets, not completion gates: if staying within them would materially reduce Intent Take correctness, completeness, or goal attainment, exceed them rather than compress away what the next consumer needs. In Embedded mode, continue the caller's workflow after intake.
