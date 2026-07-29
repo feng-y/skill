@@ -22,7 +22,7 @@ Choose the output mode from the invocation:
 - **Artifact mode** — the default for explicit `/prompt-atlas` use and direct requests to clarify, consolidate, prepare, hand off, or rewrite a requirement. Return the completed Intent Contract or requested carrier and stop this invocation. Optionally include one concise next-capability hint when useful.
 - **Embedded mode** — only when another capability or workflow explicitly invokes Prompt Atlas as an intake sub-capability. Return the compiled artifact to that caller and stop the Prompt Atlas invocation. Do not infer Embedded mode merely because the user's ultimate task could later be planned or executed.
 
-Use detailed guidance only when it becomes relevant: [contract-anatomy.md](references/contract-anatomy.md) for goal attainment and contract stability, and [completion-trust.md](references/completion-trust.md) for correctness or completion claims.
+Use detailed guidance only when it becomes relevant: [contract-anatomy.md](references/contract-anatomy.md) for intent-artifact goal attainment and stability, and [completion-trust.md](references/completion-trust.md) for correctness or completion claims.
 
 ## Intent Take
 
