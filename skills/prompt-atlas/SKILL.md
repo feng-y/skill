@@ -28,7 +28,7 @@ Use detailed guidance only when it becomes relevant: [contract-anatomy.md](refer
 
 ### 1. Recover
 
-Read the current request with relevant corrections, prior decisions, examples, and available task context. The current user owns intent; current authoritative evidence owns territory. Prior context may recover intent or suggest facts but does not override current evidence. Latest explicit corrections supersede older meaning. Recover the desired change separately from suggested means and hard boundaries, including any user-stated priority needed to judge competing constraints.
+Recover from the current request, relevant corrections, prior decisions, and examples. The current user owns intent; current authoritative evidence owns territory. Prior context may recover intent or suggest facts but does not override current evidence. Latest explicit corrections supersede older meaning. Recover the desired change separately from suggested means and hard boundaries, including any user-stated priority needed to judge competing constraints.
 
 ### 2. Ground
 
