@@ -4,9 +4,9 @@ Use this reference when intent-artifact quality is not obvious. Add detail only 
 
 ## Goal attainment
 
-An artifact is sufficient when the next consumer can act correctly without re-deriving what the user means. Across the five internal semantics, preserve only what can change downstream judgment: the actual outcome rather than suggested means, material facts and uncertainty, authoritative boundaries and user-owned priorities, the work to do now without pre-solving downstream choices, and result-oriented closure backed by trusted evidence or a real blocker.
+An artifact is sufficient when the next consumer can act correctly without re-deriving what the user means. Preserve only what can change downstream judgment: the desired end state, relevant territory reality and uncertainty, Human authority, hard constraints and approvals, the current instruction, trusted completion evidence, required delivery shape, and downstream handoff.
 
-A repo-scoped artifact is incomplete when an authoritative local constraint or acceptance rule can materially change Boundary, proof obligation, route, or completion but is left for the next consumer to rediscover. Preserve the governing requirement, not its downstream execution procedure.
+A repo-scoped artifact is incomplete when an authoritative local constraint or acceptance rule can materially change Constraints, required evidence, route, or completion but is left for the next consumer to rediscover. Preserve the governing requirement, not its downstream execution procedure.
 
 Prompt Atlas supports iterative alignment but does not own continuation across turns. Each invocation should produce the best current artifact or the smallest useful decision surface and stop. A later user turn may improve intent fidelity when it supplies new user authority. New territory evidence, changed external constraints, or downstream results may improve grounding or expose mismatch, infeasibility, or missing proof, but do not by themselves change user-owned intent. Repeated self-refinement on the same information may improve consistency, completeness, or expression, but is quality review rather than evidence of intent convergence.
 
@@ -16,32 +16,37 @@ Prefer material context over broad background. Preserve implementation freedom w
 
 ## Agent-facing structure
 
-In explicit Artifact mode, structure is part of contract correctness rather than presentation preference. The stable carrier uses this semantic order, localized to the response language:
+In explicit Artifact mode, structure is part of contract correctness rather than presentation preference. Use stable canonical field names across languages and localize the values. The carrier uses this exact semantic order:
 
-1. **Why this work exists / 这活为什么干** — problem, motivation, desired end state;
-2. **Confirmed decisions / 已确认的决策** — only material user-confirmed choices;
-3. **Boundaries / 界限** — invariants, scope/approval limits, and protected oracle/evaluation rules that downstream must not weaken or bypass;
-4. **Current reality & material unknowns / 当前事实与关键未知** — grounded facts, evidence state, residual uncertainty;
-5. **This task / 本次要完成** — requested outcomes for this pass without patch decomposition;
-6. **Done when / 完成条件** — observable completion result and required evidence;
-7. **Handoff** — `Route`, `Reason`, and `Use`.
+1. **Goal** — desired end state and real problem to solve;
+2. **Context** — relevant motivation, current territory facts, evidence state, and material unknowns;
+3. **Decisions** — only material Human-confirmed choices or approvals;
+4. **Constraints** — hard boundaries, invariants, acceptable differences, scope/approval limits, and protected judging/oracle rules;
+5. **Task** — what this pass must accomplish now without implementation decomposition;
+6. **Success Criteria** — observable conditions and required evidence needed to claim completion;
+7. **Output** — required downstream deliverable/response shape, or an explicit statement that no additional format constraint applies;
+8. **Handoff** — `Route`, `Reason`, and `Use`.
 
-These sections encode different authority and must not be flattened into one prose summary. In particular:
+These fields encode different roles and authority and must not be flattened into one prose summary:
 
-- user decisions must not be mixed with model recommendations;
-- territory facts must not become boundaries merely because they make implementation inconvenient;
-- **Boundaries** protects invariants and judging rules, while **Done when** states the actual result/evidence required to close the work;
-- proof obligations must not be weakened into generic build/lint activity.
+- **Goal** answers “what state should be true when this succeeds?”; motivation belongs in **Context**;
+- **Context** may challenge feasibility but does not silently become intent, a Human decision, or a constraint;
+- **Decisions** contains only Human authority, never model recommendations, guesses, reversible defaults, or repo facts;
+- **Constraints** defines what downstream may not violate or cross; implementation inconvenience is not a constraint;
+- **Task** is the current instruction and may be narrower than Goal, but cannot silently weaken Goal;
+- **Success Criteria** defines both observable completion and the evidence required to support the claim; target state and proof state remain distinguishable;
+- **Output** defines delivery shape, not correctness, and must not invent formatting requirements when none were requested;
+- **Handoff** tells the Human where the complete contract goes next and how to pass it.
 
-For example, “replay/diff may not be replaced by build-only evidence” is a protected judging rule and may belong in **Boundaries**; “the affected replay/diff paths pass with no unexpected difference” is a completion condition and belongs in **Done when**.
+For verification, keep protected judging rules separate from completion evidence. For example, “replay/diff may not be replaced by build-only evidence” belongs in **Constraints**; “the affected replay/diff paths pass with no unexpected difference” belongs in **Success Criteria**.
 
-This structure is intentionally an intent-side projection of a strong execution contract. Do not import downstream-owned sections such as Task 0, concrete patch sequencing, exact verification command order, retry/rollback loops, progress files, or execution rules. Material invariants belong in **Boundaries**; governing proof results belong in **Done when**; concrete execution procedure belongs to the next capability.
+This structure aligns with current frontier-model prompting practice: explicit goal, relevant context, constraints, required evidence, success criteria, and output format; Prompt Atlas adds **Decisions** to preserve Human authority and **Handoff** to preserve downstream consumption. Do not import downstream-owned workflow sections such as Task 0, concrete patch sequencing, exact command order, retry/rollback loops, progress files, or execution rules.
 
-A stable Artifact-mode result should be usable as one complete input unit. Do not require the Human to extract a paragraph, rename sections, or decide which subset to paste downstream. This fixed structure applies only after intent and required grounding are stable enough for handoff; unresolved Human decisions, blocking probes, or real blockers should remain the smaller decision/probe/blocker output rather than being padded into the seven-section contract. Embedded mode may use a caller-owned schema.
+A stable Artifact-mode result should be usable as one complete input unit. Do not require the Human to extract a paragraph, rename sections, or decide which subset to paste downstream. This fixed structure applies only after intent and required grounding are stable enough for handoff; unresolved Human decisions, blocking probes, or real blockers remain the smaller decision/probe/blocker output rather than being padded into the full contract. Embedded mode may use a caller-owned schema.
 
 ## Handoff quality
 
-The Handoff removes the Human's final routing and usage guess without becoming a workflow transition. Always expose three subfields:
+The Handoff removes the Human's final routing and usage guess without becoming a workflow transition. Always expose:
 
 - **Route** — `Direct Execute` or `Wayfinder`;
 - **Reason** — why the residual uncertainty fits that route;
@@ -49,7 +54,7 @@ The Handoff removes the Human's final routing and usage guess without becoming a
 
 Choose **Direct Execute** when no material architecture or solution commitment must be made before execution; ordinary implementation choices and local structural edits may remain for the executor. `Use` should explicitly say to pass the entire contract as the execution agent's task input. When unattended execution is useful, Leader may consume that same full contract to compile a `/goal` taskbook; Leader is an optional carrier under Direct Execute, not a third route class.
 
-Choose **Wayfinder** when execution first requires a material commitment about architecture, responsibility boundaries, structural decomposition, interfaces, migration strategy, or another solution choice that materially shapes How. `Use` should explicitly say to pass the entire contract to Wayfinder as design input and preserve settled What while Wayfinder resolves How.
+Choose **Wayfinder** when execution first requires a material commitment about architecture, responsibility boundaries, structural decomposition, interfaces, migration strategy, or another solution choice that materially shapes How. `Use` should explicitly say to pass the entire contract to Wayfinder as design input and preserve settled Goal, Decisions, and Constraints while Wayfinder resolves How.
 
 Route by residual uncertainty, not by task size. When intent or required grounding is not stable enough to hand off, return the decision surface, probe, or blocker instead of forcing either route.
 
@@ -59,18 +64,19 @@ A useful Handoff is brief and auditable. It must not restate the whole contract,
 
 Compression, handoff, later evidence, and subsequent alignment turns may enrich the artifact but must not silently change authority or state:
 
-- Goal, explicit requested outcomes, user-owned priorities, confirmed decisions, and user-owned boundaries change only with new user authority;
+- Goal, explicit requested outcomes, user-owned priorities, confirmed Decisions, and user-owned Constraints change only with new user authority;
 - still-valid settled semantics from a prior Atlas artifact provide the baseline for a later alignment turn; inferred, unknown, or unverified state remains such until authority or evidence changes it;
-- territory facts and constraints follow current authoritative evidence and may change with better evidence without rewriting user-owned intent;
-- downstream results or feedback may reveal mismatch, infeasibility, or missing evidence, but do not by themselves override a confirmed user decision or requested outcome;
+- territory facts follow current authoritative evidence and may change with better evidence without rewriting user-owned intent;
+- downstream results or feedback may reveal mismatch, infeasibility, or missing evidence, but do not by themselves override a confirmed decision or requested outcome;
 - recommendations remain advisory and reversible defaults remain visibly unconfirmed;
 - unknowns, inferences, and proof gaps do not become current facts or completion claims through rewriting or repeated self-review;
 - superseded meaning is replaced rather than accumulated beside current intent;
 - downstream implementation judgment stays downstream unless the user makes it part of intent or authoritative territory evidence makes it a real constraint;
-- target conditions, current proof state, and accepted completion remain distinguishable.
+- target conditions, current proof state, and accepted completion remain distinguishable;
+- Output changes only when the user or named consumer changes the required delivery shape, not because Atlas prefers a different presentation.
 
 Shortening, self-review, carrier adaptation, or handoff guidance removes redundancy and improves usability; it does not create new authority. None may change settled intent, erase uncertainty, weaken proof obligations, or blur the distinction between target and current state.
 
-The artifact is consumer-ready when the next consumer does not need to reinterpret the goal, rediscover a settled decision or governing acceptance requirement, infer who owns a material constraint, guess whether an explicit requested outcome was silently deferred, guess what is verified versus unresolved, or guess how to consume the artifact. These distinctions should be explicit in the fixed section structure rather than merely recoverable from prose.
+The artifact is consumer-ready when the next consumer does not need to reinterpret Goal, rediscover a settled Decision or governing acceptance requirement, infer who owns a Constraint, guess whether an explicit requested outcome was silently deferred, guess what evidence is required, infer the desired Output, or guess how to consume the artifact. These distinctions should be explicit in the fixed section structure rather than merely recoverable from prose.
 
 When correctness or completion is material, apply [completion-trust.md](completion-trust.md).
