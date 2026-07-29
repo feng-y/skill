@@ -37,7 +37,7 @@ For example, “replay/diff may not be replaced by build-only evidence” is a p
 
 This structure is intentionally an intent-side projection of a strong execution contract. Do not import downstream-owned sections such as Task 0, concrete patch sequencing, exact verification command order, retry/rollback loops, progress files, or execution rules. Material invariants belong in **Boundaries**; governing proof results belong in **Done when**; concrete execution procedure belongs to the next capability.
 
-A stable Artifact-mode result should be usable as one complete input unit. Do not require the Human to extract a paragraph, rename sections, or decide which subset to paste downstream.
+A stable Artifact-mode result should be usable as one complete input unit. Do not require the Human to extract a paragraph, rename sections, or decide which subset to paste downstream. This fixed structure applies only after intent and required grounding are stable enough for handoff; unresolved Human decisions, blocking probes, or real blockers should remain the smaller decision/probe/blocker output rather than being padded into the seven-section contract. Embedded mode may use a caller-owned schema.
 
 ## Handoff quality
 
