@@ -40,7 +40,7 @@ Resolve only material decisions that available evidence cannot settle and that g
 
 ### 4. Compile and validate
 
-Write one minimum-sufficient, self-contained Intent Contract in this order: desired change → current context → protected boundary → work now → success or stop. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. Keep it an intent contract rather than a downstream spec or execution plan, and use `contract-anatomy` when deeper goal-attainment or handoff-stability judgment is needed.
+Write one minimum-sufficient, self-contained Intent Contract in this order: desired change → current context → protected boundary → work now → success or stop. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. Keep it an intent contract rather than a downstream spec or execution plan.
 
 For repo-changing work, make write scope explicit when implicit scope is unsafe. Prompt Atlas is done when the next consumer can continue without re-deriving what the user means. Downstream work may enrich implementation knowledge and current evidence, but settled user intent changes only with new user authority; contradictory territory evidence may reopen assumptions, feasibility, or route, not user intent. A proof gap cannot become completion through handoff.
 
