@@ -46,7 +46,7 @@ As the normal interaction budget, aim for one compact round with no more than fi
 
 Compile the best current intent when the five internal semantics appear ready for the next consumer. Before treating the artifact as stable, verify that every explicit user-owned requested outcome is still represented with the same authority or has been explicitly superseded by the user. Omission, silent weakening, deferral, or extraction into a later task is semantic drift.
 
-Then classify every material remaining uncertainty before Handoff. If resolving an uncertainty could materially change **Goal, Decisions, Constraints or approval scope, Task, Success Criteria, or Output**, intent is not yet stable: settle it through authoritative grounding when evidence can answer it; otherwise expose the smallest Human decision and stop. Do not ask merely because a downstream fact or implementation choice is unknown. Uncertainty may pass downstream when resolving it changes only territory facts, implementation choices, or solution How while leaving those settled contract semantics intact.
+Before Handoff, apply one stability test: **could any material remaining uncertainty, once resolved, change Goal, Decisions, Constraints or approval scope, Task, Success Criteria, or Output?** If yes, intent is not yet stable: settle it through authoritative grounding when evidence can answer it; otherwise expose the smallest Human decision and stop. If no, the remaining uncertainty may pass downstream. Do not ask merely because a territory fact, implementation choice, or solution How is still unknown.
 
 Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents.
 
