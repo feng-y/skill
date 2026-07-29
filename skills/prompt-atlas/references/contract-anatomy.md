@@ -7,7 +7,7 @@ Use this reference when compiling or validating an Intent Contract. Add detail o
 A contract is sufficient when the next consumer can act correctly without re-deriving what the user means. The five semantics should carry only what can change downstream judgment:
 
 - **Goal** — the intended outcome, why it matters when that affects judgment, and the separation between result and suggested means.
-- **Current Context** — material facts, evidence, baselines, and uncertainty; keep verified, inferred, and unmeasured states distinguishable.
+- **Current Context** — material facts, evidence, baselines, and uncertainty; keep verified, inferred, and unmeasured states distinguishable, and treat territory claims carried from prior context as inferred until current evidence verifies them.
 - **Boundary** — hard invariants, acceptable differences, approval or write limits, protected proof rules, and user-owned priorities when material. Advice stays advisory.
 - **Immediate Task** — what should be completed now at the right abstraction level, without pre-solving implementation choices that belong downstream.
 - **Success / Stop** — the achieved result and trusted evidence that would close the work, or a real blocker that prevents safe closure. A success criterion is not evidence that success has already been achieved.
