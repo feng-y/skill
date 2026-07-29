@@ -44,8 +44,8 @@ For each invocation, compile the best current intent into one minimum-sufficient
 
 For a stable Artifact-mode result, append one concise **Handoff Hint** based on the remaining uncertainty:
 
-- **Direct Execute** — choose this when the remaining uncertainty is implementation-level and can be resolved during execution without making a material architecture or solution choice that could change responsibility boundaries, structure, interfaces, migration strategy, Goal, Boundary, or proof obligation. The hint should say that the artifact can be used directly as execution input and briefly state why no design pass is needed.
-- **Wayfinder** — choose this when intent and protected boundaries are stable but a material architecture or solution choice still remains. The hint should say that the artifact should be used as Wayfinder design input to resolve How without reopening settled What.
+- **Direct Execute** — choose this when the remaining uncertainty is implementation-level and execution does not first require a material architecture or solution commitment about responsibility boundaries, structural decomposition, interfaces, migration strategy, or another design decision that can materially change how the intent should be realized. The hint should say that the artifact can be used directly as execution input and briefly state why no separate design pass is needed.
+- **Wayfinder** — choose this when intent and protected boundaries are stable but a material architecture or solution commitment still has to be made before execution. The hint should say that the artifact should be used as Wayfinder design input to resolve How without reopening settled What.
 
 Do not use task size alone to choose between these routes. Do not expose Leader as a separate top-level route; if unattended execution is desired, Leader may consume a Direct Execute artifact as an execution carrier. The Handoff Hint may explain this only when it is directly useful. It never starts the next capability.
 
