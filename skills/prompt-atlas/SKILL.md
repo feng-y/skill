@@ -44,9 +44,9 @@ For engineering work, let `unknowns-first` handle map-versus-territory discovery
 
 ### 3. Resolve human decisions
 
-Ask only when the remaining material choice genuinely belongs to the user and available evidence cannot settle it. Gather already-visible related choices together rather than drip-feeding questions.
+Ask only when the remaining material choice genuinely belongs to the user and available evidence cannot settle it. Gather already-visible related choices together rather than drip-feeding questions. Keep one clarification round to at most five questions. Before exceeding that budget, ground further, combine decisions that share one judgment, or use a safe reversible default where allowed. If more than five irreducible user-owned decisions still remain, narrow the current contract instead of transferring an oversized decision burden to the user or silently guessing the rest.
 
-Render the smallest sufficient decision surface: what is established, what evidence cannot decide, why the judgment belongs to the user, and what materially changes between the viable choices. When evidence naturally supports a small set of options, present them with their consequences. When it supports a preferred choice, include one concise recommendation with its basis and main tradeoff. Recommendations remain advisory until the user confirms them.
+Render the smallest sufficient decision surface: what is established, what evidence cannot decide, why the judgment belongs to the user, and what materially changes between the viable choices. For a sharp decision, prefer 2–4 materially distinct options with their consequences; use an open question only when the choices cannot be bounded honestly. When evidence supports a preferred choice, include one concise recommendation with its basis and main tradeoff. Recommendations remain advisory until the user confirms them.
 
 Do not silently make a direction-changing decision for the user. A reversible default is allowed only when it does not change Goal or a user-owned Boundary, the cost of being wrong is bounded and reversible, and the mismatch can be detected; mark it visibly as an unconfirmed Atlas default with its basis and consequence.
 
