@@ -44,6 +44,22 @@ This structure aligns with current frontier-model prompting practice: explicit g
 
 A stable Artifact-mode result should be usable as one complete input unit. Do not require the Human to extract a paragraph, rename sections, or decide which subset to paste downstream. This fixed structure applies only after intent and required grounding are stable enough for handoff; unresolved Human decisions, blocking probes, or real blockers remain the smaller decision/probe/blocker output rather than being padded into the full contract. Embedded mode may use a caller-owned schema.
 
+## Intent stability
+
+A contract is stable only when no material remaining uncertainty can still change the settled intent envelope. Before Handoff, classify the uncertainty by consequence rather than by size or difficulty:
+
+- if resolving it could materially change **Goal, Decisions, Constraints or approval scope, Task, Success Criteria, or Output**, the contract is not stable; use authoritative grounding when evidence can settle it, otherwise return the smallest Human decision and stop;
+- if resolving it changes only territory facts, implementation choices, or solution How while leaving those settled semantics intact, it may pass downstream.
+
+Do not convert every unknown into a question. The gate is about **who owns the consequence**. A downstream executor may discover facts or choose implementation details. Prompt Atlas must retain uncertainties whose resolution would redefine what the Human is asking to accomplish, what authority has been granted, or what counts as done.
+
+Examples:
+
+- “production dedup hit rate is unknown” can remain a downstream fact when the settled Task is only to design how to measure it; “should this pass merely design the measurement or actually instrument and run it?” changes Task, Constraints, Success Criteria, and possibly Output, so it requires Human alignment before Handoff;
+- discovering additional consumers of a user-requested removal does not itself require a question when the same outcome can still be achieved inside settled scope and approval; ask only when preserving that outcome would cross Human authority or materially redefine the contract.
+
+The stability gate is not another workflow stage or output section. It is the completion test for Prompt Atlas's existing alignment work.
+
 ## Handoff quality
 
 The Handoff removes the Human's final routing and usage guess without becoming a workflow transition. Always expose:
