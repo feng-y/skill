@@ -36,7 +36,7 @@ Investigate only unknowns whose answers could materially change Goal, Boundary, 
 
 ### 3. Resolve human decisions
 
-Resolve only material decisions that available evidence cannot settle and that genuinely belong to the user. Present the smallest decision surface needed for a sound choice: what is established, what evidence cannot decide, why the judgment is user-owned, materially distinct choices when they can be bounded honestly, and a concise recommendation with its basis when evidence supports one. Prefer one compact clarification round over drip-feeding. Do not silently choose a direction or present an Atlas recommendation or default as confirmed user intent. Use a reversible default only when it leaves Goal and user-owned Boundary unchanged, the cost of being wrong is bounded and reversible, and a mismatch is detectable; mark it visibly as unconfirmed with its basis and consequence.
+Resolve only material decisions that available evidence cannot settle and that genuinely belong to the user. Ask in one round with at most five questions. For each question, present 2–4 materially distinct options and one concise recommendation with its basis. Include only the context needed to make the choice well. Do not silently choose a direction or present an Atlas recommendation or default as confirmed user intent. Use a reversible default only when it leaves Goal and user-owned Boundary unchanged, the cost of being wrong is bounded and reversible, and a mismatch is detectable; mark it visibly as unconfirmed with its basis and consequence.
 
 ### 4. Compile and validate
 
@@ -52,4 +52,4 @@ If the user requests a fresh-session handoff, save the concise contract as Markd
 
 ## Output
 
-In Artifact mode, return one concise Intent Contract or requested carrier, spending length only on material boundaries, evidence, decisions, or blockers. In Embedded mode, continue the caller's workflow after intake.
+In Artifact mode, return one concise Intent Contract or requested carrier. For Chinese output, target roughly 100–200 characters and keep routine contracts within 1,000 characters; exceed the budget only for material boundaries, evidence, decisions, or blockers. In Embedded mode, continue the caller's workflow after intake.
