@@ -20,21 +20,32 @@ In explicit Artifact mode, structure is part of contract correctness rather than
 
 1. **Why this work exists / 这活为什么干** — problem, motivation, desired end state;
 2. **Confirmed decisions / 已确认的决策** — only material user-confirmed choices;
-3. **Boundaries / 界限** — invariants, scope/approval limits, protected acceptance constraints;
+3. **Boundaries / 界限** — invariants, scope/approval limits, and protected oracle/evaluation rules that downstream must not weaken or bypass;
 4. **Current reality & material unknowns / 当前事实与关键未知** — grounded facts, evidence state, residual uncertainty;
 5. **This task / 本次要完成** — requested outcomes for this pass without patch decomposition;
-6. **Done when / 完成条件** — result and proof obligations, not executor command sequence;
+6. **Done when / 完成条件** — observable completion result and required evidence;
 7. **Handoff** — `Route`, `Reason`, and `Use`.
 
-These sections encode different authority and must not be flattened into one prose summary. In particular, user decisions must not be mixed with model recommendations, territory facts must not become boundaries merely because they make implementation inconvenient, and proof obligations must not be weakened into generic build/lint activity.
+These sections encode different authority and must not be flattened into one prose summary. In particular:
 
-This structure is intentionally an intent-side projection of a strong execution contract. Do not import downstream-owned sections such as Task 0, concrete patch sequencing, exact verification command order, retry/rollback loops, progress files, or execution rules. Material invariants belong in **Boundaries**; governing proof obligations belong in **Done when**; concrete execution procedure belongs to the next capability.
+- user decisions must not be mixed with model recommendations;
+- territory facts must not become boundaries merely because they make implementation inconvenient;
+- **Boundaries** protects invariants and judging rules, while **Done when** states the actual result/evidence required to close the work;
+- proof obligations must not be weakened into generic build/lint activity.
+
+For example, “replay/diff may not be replaced by build-only evidence” is a protected judging rule and may belong in **Boundaries**; “the affected replay/diff paths pass with no unexpected difference” is a completion condition and belongs in **Done when**.
+
+This structure is intentionally an intent-side projection of a strong execution contract. Do not import downstream-owned sections such as Task 0, concrete patch sequencing, exact verification command order, retry/rollback loops, progress files, or execution rules. Material invariants belong in **Boundaries**; governing proof results belong in **Done when**; concrete execution procedure belongs to the next capability.
 
 A stable Artifact-mode result should be usable as one complete input unit. Do not require the Human to extract a paragraph, rename sections, or decide which subset to paste downstream.
 
 ## Handoff quality
 
-The Handoff removes the Human's final routing and usage guess without becoming a workflow transition.
+The Handoff removes the Human's final routing and usage guess without becoming a workflow transition. Always expose three subfields:
+
+- **Route** — `Direct Execute` or `Wayfinder`;
+- **Reason** — why the residual uncertainty fits that route;
+- **Use** — exactly how to pass the **entire contract** to the next consumer.
 
 Choose **Direct Execute** when no material architecture or solution commitment must be made before execution; ordinary implementation choices and local structural edits may remain for the executor. `Use` should explicitly say to pass the entire contract as the execution agent's task input. When unattended execution is useful, Leader may consume that same full contract to compile a `/goal` taskbook; Leader is an optional carrier under Direct Execute, not a third route class.
 
@@ -42,7 +53,7 @@ Choose **Wayfinder** when execution first requires a material commitment about a
 
 Route by residual uncertainty, not by task size. When intent or required grounding is not stable enough to hand off, return the decision surface, probe, or blocker instead of forcing either route.
 
-A useful Handoff is brief and auditable: name the route, state the reason in terms of remaining uncertainty, and provide a concrete consumption instruction. It must not restate the whole contract, invent a new requirement, weaken a proof obligation, or import the downstream capability's plan.
+A useful Handoff is brief and auditable. It must not restate the whole contract, invent a new requirement, weaken a proof obligation, or import the downstream capability's plan.
 
 ## Stability
 
