@@ -14,6 +14,10 @@ Prefer material context over broad background. Preserve implementation freedom w
 
 When a target consumer or carrier is known, adapt representation to how that consumer can use the intent directly. This may change ordering, density, framing, or references, but not settled meaning, authority, uncertainty, boundaries, proof obligations, or responsibility ownership. A Leader input, Wayfinder brief, plan prompt, final model prompt, and generic Intent Contract may therefore look different while carrying the same material intent.
 
+For a stable Artifact-mode result, the handoff hint should remove the Human's final routing guess without becoming a workflow transition. Choose **Direct Execute** when no material design choice remains and execution can resolve the remaining implementation detail without changing settled intent, responsibility boundaries, structure, interfaces, migration strategy, or proof obligation. Choose **Wayfinder** when intent is stable but a material architecture or solution choice still has to be made before execution. Route by residual uncertainty, not by task size. Leader is an optional carrier for Direct Execute, not a third route class. When intent or required grounding is not stable enough to hand off, return the decision surface, probe, or blocker instead of forcing either route.
+
+A useful handoff hint is brief and auditable: name the route, state the reason in terms of the remaining uncertainty, and tell the Human how to consume the artifact. It must not restate the whole contract, invent a new requirement, weaken a proof obligation, or import the downstream capability's plan.
+
 ## Stability
 
 Compression, handoff, later evidence, and subsequent alignment turns may enrich the artifact but must not silently change authority or state:
@@ -28,8 +32,8 @@ Compression, handoff, later evidence, and subsequent alignment turns may enrich 
 - downstream implementation judgment stays downstream unless the user makes it part of intent or authoritative territory evidence makes it a real constraint;
 - target conditions, current proof state, and accepted completion remain distinguishable.
 
-Shortening, self-review, or carrier adaptation removes redundancy and improves expression; it does not create new authority. None may change settled intent, erase uncertainty, weaken proof obligations, or blur the distinction between target and current state.
+Shortening, self-review, carrier adaptation, or handoff guidance removes redundancy and improves usability; it does not create new authority. None may change settled intent, erase uncertainty, weaken proof obligations, or blur the distinction between target and current state.
 
-The artifact is consumer-ready when the next consumer does not need to reinterpret the goal, rediscover a settled decision or governing acceptance requirement, infer who owns a material constraint, or guess what is verified versus unresolved. These distinctions must remain recoverable but need not become extra output fields.
+The artifact is consumer-ready when the next consumer does not need to reinterpret the goal, rediscover a settled decision or governing acceptance requirement, infer who owns a material constraint, or guess what is verified versus unresolved. In Artifact mode, a stable result is handoff-ready when the Human also does not need to infer whether the remaining work is execution-ready or still requires material design. These distinctions must remain recoverable but need not become extra output fields.
 
 When correctness or completion is material, apply [completion-trust.md](completion-trust.md).
