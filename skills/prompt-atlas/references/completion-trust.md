@@ -11,6 +11,15 @@ Apply these decisions in order:
 3. **Integrity boundary** — when a cheaper false pass is plausible, select and freeze the applicable dimensions in Boundary: **Judge** (rules, thresholds, assertions), **Population** (samples, paths, coverage surface), **Object** (the real subject rather than a narrower or mocked substitute), and **Metric** (definition, range, comparison baseline). A result obtained by violating one does not satisfy Success.
 4. **Self-attestation policy** — allow executor-declared completion only when Proof directly reaches the target, the gate has failure sensitivity, plausible shortcuts are frozen, and risk is low with narrow scope. Otherwise require independent acceptance, especially for indirect proof, remaining gameability, migrations or behavior preservation, user-visible critical paths, proof designed by the executor, or completion that depends on overall user intent. When required, the executor may reach `ready for independent acceptance`, not `complete`, until the external judgment passes.
 
+## Target versus current acceptance state
+
+Keep the definition of success separate from evidence that it has already been achieved:
+
+- **Success / Stop** defines what would count as trusted closure; it does not by itself claim the target is currently satisfied.
+- **Current Context** carries whether relevant completion evidence is verified, inferred, unmeasured, or still pending a named proof obligation.
+- When independent acceptance is required, execution may satisfy its own work and become `ready for independent acceptance`; do not compile that state as `complete` before the external judgment passes.
+- A downstream consumer must be able to distinguish a future acceptance condition, current proof status, and final accepted completion without reinterpreting the contract.
+
 ## Placement grammar
 
 - **Current Context** — existing gates, their strength or false-green risk, relevant baselines with source and evidence state, available independent verifier, and whether the relevant facts are verified, inferred, or still unmeasured.
