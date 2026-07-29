@@ -1,11 +1,11 @@
 ---
 name: prompt-atlas
-description: Stably compile a one-sentence goal or scattered cross-turn hints into a concise, consumer-ready Intent Contract covering goal, current context, boundary, immediate task, and success or stop conditions. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when a broader workflow explicitly needs intent intake before direct, autonomous, spec, issue, or execution work. Explicit /prompt-atlas use returns the contract as the terminal result of this invocation.
+description: Adaptively converge a one-sentence goal or scattered, evolving cross-turn hints into a stable, consumer-ready Intent Contract or requested prompt/carrier covering goal, current context, boundary, immediate task, and success or stop conditions. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when a broader workflow explicitly needs intent intake before direct, autonomous, spec, issue, or execution work. Explicit /prompt-atlas use returns the compiled artifact as the terminal result of this invocation.
 ---
 
 # Prompt Atlas
 
-Perform request-scoped Intent Take. Recover what the user is actually trying to change, ground the context that matters, resolve only decisions that genuinely belong to the user, and leave the next consumer a concise contract that does not require rediscovering requirement meaning.
+Perform request-scoped Intent Take. Recover what the user is actually trying to change, ground the context that matters, resolve only decisions that genuinely belong to the user, and leave the next consumer a concise artifact that does not require rediscovering requirement meaning.
 
 Compile five minimum semantics:
 
@@ -15,12 +15,12 @@ Compile five minimum semantics:
 - **Immediate Task** — what should be completed now without prescribing the implementation;
 - **Success / Stop** — the outcome and evidence that close the work, or what real blocker prevents closure; prefer achieved-result criteria over activity or work-volume criteria.
 
-Keep these semantics distinct and recoverable, but do not turn them into a form unless the user asks. Prompt Atlas owns intent understanding and contract delivery, not architecture choice, implementation planning, execution, or a durable repo-identity harness. Intent Take terminates at contract delivery; a next-capability hint is non-executable routing metadata, not a transition into downstream work.
+Keep these semantics distinct and recoverable, but do not turn them into a form unless the user asks. Prompt Atlas owns intent understanding, convergence across alignment turns, and carrier compilation—not architecture choice, implementation planning, execution, or a durable repo-identity harness. Each Intent Take invocation terminates at artifact delivery; a next-capability hint is non-executable routing metadata, not a transition into downstream work.
 
 Choose the output mode from the invocation:
 
 - **Artifact mode** — the default for explicit `/prompt-atlas` use and direct requests to clarify, consolidate, prepare, hand off, or rewrite a requirement. Return the completed Intent Contract or requested carrier and stop this invocation. Optionally include one concise next-capability hint when useful.
-- **Embedded mode** — only when another capability or workflow explicitly invokes Prompt Atlas as an intake sub-capability. Return the compiled contract to that caller and stop the Prompt Atlas invocation. Do not infer Embedded mode merely because the user's ultimate task could later be planned or executed.
+- **Embedded mode** — only when another capability or workflow explicitly invokes Prompt Atlas as an intake sub-capability. Return the compiled artifact to that caller and stop the Prompt Atlas invocation. Do not infer Embedded mode merely because the user's ultimate task could later be planned or executed.
 
 Use detailed guidance only when it becomes relevant: [contract-anatomy.md](references/contract-anatomy.md) for goal attainment and contract stability, and [completion-trust.md](references/completion-trust.md) for correctness or completion claims.
 
@@ -28,7 +28,7 @@ Use detailed guidance only when it becomes relevant: [contract-anatomy.md](refer
 
 ### 1. Recover
 
-Recover from the current request, relevant corrections, prior decisions, and examples. The current user owns intent; current authoritative evidence owns territory. Latest explicit corrections supersede older meaning. Recover the desired change separately from suggested means and hard boundaries, including any user-stated priority needed to judge competing constraints.
+Recover from the current request, relevant corrections, prior decisions, and examples. When a prior Atlas contract or alignment result is available, use its still-valid settled semantics as the baseline rather than restarting from raw history. The current user owns intent; current authoritative evidence owns territory. Latest explicit corrections supersede older meaning. Recover the desired change separately from suggested means and hard boundaries, including any user-stated priority needed to judge competing constraints.
 
 ### 2. Ground
 
@@ -40,14 +40,14 @@ Resolve only material decisions that available evidence cannot settle and that g
 
 ### 4. Compile and validate
 
-Write one minimum-sufficient, self-contained Intent Contract in this order: desired change → current context → protected boundary → work now → success or stop. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. Keep it an intent contract rather than a downstream spec or execution plan. A next-capability hint may identify where the contract should go next, but it does not trigger that capability within this invocation.
+Once remaining uncertainty would not materially change Goal, Boundary, Success / Stop, or downstream route, compile one minimum-sufficient, self-contained artifact from the five semantics. If a target consumer or carrier is named, adapt organization, density, and context packaging for that consumer while preserving intent authority, material uncertainty, boundaries, and proof obligations. Carrier adaptation must not import the consumer's architecture, planning, execution, or verification procedure into Prompt Atlas. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. A next-capability hint may identify where the artifact should go next, but it does not trigger that capability within this invocation.
 
 For repo-changing work, make write scope explicit when implicit scope is unsafe. Prompt Atlas is done when the next consumer can continue without re-deriving what the user means. Downstream work may enrich implementation knowledge and current evidence, but settled user intent changes only with new user authority; contradictory territory evidence may reopen assumptions, feasibility, or route, not user intent. A proof gap cannot become completion through handoff.
 
-When intake cannot compile yet, expose only the next useful outcome: a focused `probe`, a human `ask`, a bounded conditional or default, a named capability handoff, or the exact blocker. Do not emit the intake analysis. Exploration-oriented intent may close on a bounded decision or finding with remaining uncertainty explicit; correctness or completion claims must carry the trust obligations selected by `completion-trust`.
+When material intent uncertainty still prevents stable compilation, expose only the next useful alignment outcome: a focused `probe`, a human `ask`, a bounded conditional or default, a named capability handoff, or the exact blocker. Do not emit the intake analysis. Exploration-oriented intent may close on a bounded decision or finding with remaining uncertainty explicit; correctness or completion claims must carry the trust obligations selected by `completion-trust`.
 
-If the user requests a fresh-session handoff, save the concise contract as Markdown in the operating system temporary directory, reference existing artifacts rather than copying them, redact sensitive context, add `Suggested skills`, and return the absolute path.
+If the user requests a fresh-session handoff, save the concise artifact as Markdown in the operating system temporary directory, reference existing artifacts rather than copying them, redact sensitive context, add `Suggested skills`, and return the absolute path.
 
 ## Output
 
-In Artifact mode, return one concise Intent Contract or requested carrier. For Chinese output, target roughly 100–200 characters and keep routine contracts within 1,000 characters. Treat these as normal output budgets, not completion gates: exceed them when fitting the budget would materially reduce goal attainment or stability. In Embedded mode, return the contract to the caller. In both modes, contract delivery ends the Prompt Atlas invocation.
+In Artifact mode, return one concise Intent Contract or requested carrier. For Chinese output, target roughly 100–200 characters and keep routine artifacts within 1,000 characters. Treat these as normal output budgets, not completion gates: exceed them when fitting the budget would materially reduce goal attainment or stability. In Embedded mode, return the compiled artifact to the caller. In both modes, artifact delivery ends the Prompt Atlas invocation.
