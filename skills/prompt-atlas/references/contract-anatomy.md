@@ -45,14 +45,15 @@ The contract is not improved by adding more context, constraints, or prose unles
 
 ## 4. Downstream acceptance
 
-A consumer-ready contract makes these states recoverable without reopening intake:
+A consumer-ready contract makes these semantics recoverable without reopening intake; they need not become extra output fields:
 
-- **Settled** — user intent, corrections, hard boundaries, and confirmed priorities that downstream work should not re-litigate without new owning-authority input or contradictory territory evidence that changes feasibility or route.
+- **User-settled** — current intent, corrections, confirmed priorities, and user-owned boundaries. Only new user authority changes them.
+- **Territory-constrained** — current facts or hard constraints owned by repo, config, tests, runtime, policy, or other authoritative evidence. Contradictory authoritative evidence may revise them without rewriting user intent.
 - **Flexible** — implementation choices and recommendations the downstream consumer may adapt while preserving Goal and Boundary.
 - **Unresolved** — remaining user-owned decisions, material unknowns, proof gaps, or blockers whose owner and consequence are explicit.
 - **Evidence state** — whether a material claim is verified, inferred, unmeasured, or awaiting a named proof obligation.
 
-The next consumer may enrich implementation knowledge and current evidence, but should not need to ask what the user meant, rediscover a settled decision, infer whether a constraint is hard, or guess whether a completion criterion has already been satisfied.
+The next consumer may enrich implementation knowledge and current evidence, but should not need to ask what the user meant, rediscover a settled decision, infer who owns a constraint, or guess whether a completion criterion has already been satisfied.
 
 When correctness or completion is material, apply [completion-trust.md](completion-trust.md) so the contract also carries the necessary proof integrity and independent-acceptance obligations.
 
