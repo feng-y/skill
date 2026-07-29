@@ -42,7 +42,7 @@ For verification, keep protected judging rules separate from completion evidence
 
 This structure aligns with current frontier-model prompting practice: explicit goal, relevant context, constraints, required evidence, success criteria, and output format; Prompt Atlas adds **Decisions** to preserve Human authority and **Handoff** to preserve downstream consumption. Do not import downstream-owned workflow sections such as Task 0, concrete patch sequencing, exact command order, retry/rollback loops, progress files, or execution rules.
 
-A stable Artifact-mode result should be usable as one complete input unit. Do not require the Human to extract a paragraph, rename sections, or decide which subset to paste downstream. This fixed structure applies only after intent and required grounding are stable enough for handoff; unresolved Human decisions, blocking probes, or real blockers remain the smaller decision/probe/blocker output rather than being padded into the full contract. Embedded mode may use a caller-owned schema.
+A stable Artifact-mode result should be usable as one self-contained input unit in a fresh consumer session. Do not require the Human to extract a paragraph, rename sections, or decide which subset to paste downstream. This fixed structure applies only after intent and required grounding are stable enough for handoff; unresolved Human decisions, blocking probes, or real blockers remain the smaller decision/probe/blocker output rather than being padded into the full contract. Embedded mode may use a caller-owned schema.
 
 ## Handoff quality
 
@@ -52,7 +52,7 @@ The Handoff removes the Human's final routing and usage guess without becoming a
 - **Reason** — why the residual uncertainty fits that route;
 - **Use** — exactly how to pass the **entire contract** to the next consumer.
 
-Choose **Direct Execute** when no material architecture or solution commitment must be made before execution; ordinary implementation choices and local structural edits may remain for the executor. `Use` should explicitly say to pass the entire contract as the execution agent's task input. When unattended execution is useful, Leader may consume that same full contract to compile a `/goal` taskbook; Leader is an optional carrier under Direct Execute, not a third route class.
+Choose **Direct Execute** when no material architecture or solution commitment must be made before execution; ordinary implementation choices and local structural edits may remain for the executor. `Use` should explicitly say to start a fresh execution session in the target operating context and pass the entire contract as that session's task input for direct execution; no `/goal` or intermediate planning artifact is required. When unattended execution is useful, Leader may consume that same full contract to compile a `/goal` taskbook; Leader is an optional carrier under Direct Execute, not a third route class.
 
 Choose **Wayfinder** when execution first requires a material commitment about architecture, responsibility boundaries, structural decomposition, interfaces, migration strategy, or another solution choice that materially shapes How. `Use` should explicitly say to pass the entire contract to Wayfinder as design input and preserve settled Goal, Decisions, and Constraints while Wayfinder resolves How.
 
