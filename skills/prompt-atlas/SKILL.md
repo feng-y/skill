@@ -22,13 +22,13 @@ Choose the output mode from the request:
 - **Artifact mode** — return the completed Intent Contract or requested carrier.
 - **Embedded mode** — establish the contract internally, then return control to the calling workflow instead of replacing the requested work with a prompt.
 
-Use detailed guidance only when it becomes relevant: [contract-anatomy.md](references/contract-anatomy.md) for goal attainment and handoff stability; [completion-trust.md](references/completion-trust.md) for correctness or completion claims; and [chatgpt-memory.md](references/chatgpt-memory.md) when relevant Memory is available.
+Use detailed guidance only when it becomes relevant: [contract-anatomy.md](references/contract-anatomy.md) for goal attainment and handoff stability, and [completion-trust.md](references/completion-trust.md) for correctness or completion claims.
 
 ## Intent Take
 
 ### 1. Recover
 
-Read the current request with relevant corrections, prior decisions, examples, conversation context, and available Memory. The current user owns intent; current authoritative evidence owns territory. Conversation and Memory may recover intent or suggest facts but do not override current evidence. Latest explicit corrections supersede older meaning. Recover the desired change separately from suggested means and hard boundaries, including any user-stated priority needed to judge competing constraints.
+Read the current request with relevant corrections, prior decisions, examples, and available task context. The current user owns intent; current authoritative evidence owns territory. Prior context may recover intent or suggest facts but does not override current evidence. Latest explicit corrections supersede older meaning. Recover the desired change separately from suggested means and hard boundaries, including any user-stated priority needed to judge competing constraints.
 
 ### 2. Ground
 
