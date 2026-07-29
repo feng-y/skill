@@ -28,11 +28,11 @@ Use detailed guidance only when it becomes relevant: [chatgpt-memory.md](referen
 
 ### 1. Recover
 
-Read the current request with relevant corrections, prior decisions, examples, conversation context, and available Memory. The current user owns intent; current repo, config, tests, runtime, and other authoritative evidence own territory. Conversation and Memory may recover intent or suggest facts but do not override current evidence. Latest explicit corrections supersede older meaning rather than accumulating beside it. Recover the desired change separately from suggested means and hard boundaries, including any user-stated priority needed to judge competing constraints.
+Read the current request with relevant corrections, prior decisions, examples, conversation context, and available Memory. The current user owns intent; current authoritative evidence owns territory. Conversation and Memory may recover intent or suggest facts but do not override current evidence. Latest explicit corrections supersede older meaning rather than accumulating beside it. Recover the desired change separately from suggested means and hard boundaries, including any user-stated priority needed to judge competing constraints.
 
 ### 2. Ground
 
-Investigate only unknowns whose answers could materially change Goal, Boundary, Immediate Task, Success / Stop, or the safe route. Prefer the smallest authoritative check and rich existing references. For engineering work, let `unknowns-first` own map-versus-territory discovery and proof escalation when available and consume its conclusion rather than mirroring its state machine; when unavailable, apply the same reality-first judgment directly at lightweight scope. Capture a sourced baseline when the task compares, preserves, migrates, regresses, counts, or claims performance, and keep its evidence state and the consequence of mismatch explicit. Preserve material uncertainty instead of inventing certainty or asking the user for facts the environment can settle. Broader repo identity and implementation investigation remain downstream unless they are necessary to know what the user means.
+Investigate only unknowns whose answers could materially change Goal, Boundary, Immediate Task, Success / Stop, or the safe route. Prefer the smallest authoritative check and rich existing references. For engineering work, let `unknowns-first` own map-versus-territory discovery and proof escalation when available and consume its conclusion rather than mirroring its state machine; when unavailable, apply the same reality-first judgment directly at lightweight scope. Capture a sourced baseline whenever the requested change is judged relative to current behavior or measurement, and keep its evidence state and the consequence of mismatch explicit. Preserve material uncertainty instead of inventing certainty or asking the user for facts the environment can settle. Broader repo identity and implementation investigation remain downstream unless they are necessary to know what the user means.
 
 ### 3. Resolve human decisions
 
@@ -40,7 +40,7 @@ Resolve only material decisions that available evidence cannot settle and that g
 
 ### 4. Compile and validate
 
-Write one minimum-sufficient, self-contained Intent Contract in this order: desired change → current context → protected boundary → work now → success or stop. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. Keep the default artifact out of spec form: no phases, implementation sequence, ticket decomposition, command inventory, or execution-loop mechanics.
+Write one minimum-sufficient, self-contained Intent Contract in this order: desired change → current context → protected boundary → work now → success or stop. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. Keep it an intent contract rather than a downstream spec or execution plan.
 
 Preserve material uncertainty, recommendations, defaults, proof gaps, handoff obligations, and any material priority between competing user-owned constraints where a consumer can recover their owner, basis, and effect. For repo-changing work, make write scope explicit when multiple edit surfaces, shared state, unrelated user changes, or likely scope drift make implicit scope unsafe.
 
@@ -52,4 +52,4 @@ If the user requests a fresh-session handoff, save the concise contract as Markd
 
 ## Output
 
-In Artifact mode, return one concise Intent Contract or requested carrier. For Chinese output, target roughly 100–200 characters and keep routine takes within 1,000 characters; exceed the budget only for material boundaries, evidence, decisions, or blockers. In Embedded mode, continue the caller's workflow after intake.
+In Artifact mode, return one concise Intent Contract or requested carrier, spending length only on material boundaries, evidence, decisions, or blockers. In Embedded mode, continue the caller's workflow after intake.
