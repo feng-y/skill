@@ -22,7 +22,7 @@ Choose the output mode from the request:
 - **Artifact mode** — return the completed Intent Contract or requested carrier.
 - **Embedded mode** — establish the contract internally, then return control to the calling workflow instead of replacing the requested work with a prompt.
 
-Use detailed guidance only when it becomes relevant: [contract-anatomy.md](references/contract-anatomy.md) for contract completeness, stability, goal attainment, and downstream readiness; [completion-trust.md](references/completion-trust.md) for correctness or completion claims; and [chatgpt-memory.md](references/chatgpt-memory.md) when relevant Memory is available.
+Use detailed guidance only when it becomes relevant: [contract-anatomy.md](references/contract-anatomy.md) for goal attainment and handoff stability; [completion-trust.md](references/completion-trust.md) for correctness or completion claims; and [chatgpt-memory.md](references/chatgpt-memory.md) when relevant Memory is available.
 
 ## Intent Take
 
