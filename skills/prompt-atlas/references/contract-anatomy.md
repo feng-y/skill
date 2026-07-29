@@ -25,7 +25,3 @@ Shortening removes redundancy, not authority, uncertainty, priority, proof oblig
 The contract is consumer-ready when the next consumer does not need to reinterpret the goal, rediscover a settled decision, infer who owns a material constraint, or guess what is verified versus unresolved. These distinctions must remain recoverable but need not become extra output fields.
 
 When correctness or completion is material, apply [completion-trust.md](completion-trust.md).
-
-## Final check
-
-Repair the contract if the next consumer still has to reinterpret the user's goal, a material decision or constraint has no recoverable owner, a fact, recommendation, default, or proof gap can be mistaken for another, implementation is constrained without authority, material intent was compressed away, or Success / Stop describes work performed rather than the result and evidence that matter.
