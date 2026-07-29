@@ -36,4 +36,4 @@ When correctness or completion is material, apply [completion-trust.md](completi
 
 ## Final check
 
-Repair the contract if the next consumer still has to reinterpret the user's goal, a material decision or constraint has no recoverable owner, state classes can be confused, implementation is constrained without authority, material intent was compressed away, or Success / Stop describes work performed rather than the result and evidence that matter.
+Repair the contract if the next consumer still has to reinterpret the user's goal, a material decision or constraint has no recoverable owner, a fact, recommendation, default, or proof gap can be mistaken for another, implementation is constrained without authority, material intent was compressed away, or Success / Stop describes work performed rather than the result and evidence that matter.
