@@ -36,7 +36,7 @@ Investigate only unknowns whose answers could materially change Goal, Boundary, 
 
 ### 3. Resolve human decisions
 
-Resolve only material decisions that available evidence cannot settle and that genuinely belong to the user. Present the smallest decision surface needed for a sound choice: what is established, what evidence cannot decide, why the judgment is user-owned, materially distinct choices when they can be bounded honestly, and a concise recommendation when evidence supports one. Prefer one compact clarification round over drip-feeding. Do not silently choose a direction or present an Atlas recommendation or default as confirmed user intent. Use a reversible default only when it leaves Goal and user-owned Boundary unchanged, the cost of being wrong is bounded and reversible, and a mismatch is detectable; mark it visibly as unconfirmed with its basis and consequence.
+Resolve only material decisions that available evidence cannot settle and that genuinely belong to the user. Present the smallest decision surface needed for a sound choice: what is established, what evidence cannot decide, why the judgment is user-owned, materially distinct choices when they can be bounded honestly, and a concise recommendation with its basis when evidence supports one. Prefer one compact clarification round over drip-feeding. Do not silently choose a direction or present an Atlas recommendation or default as confirmed user intent. Use a reversible default only when it leaves Goal and user-owned Boundary unchanged, the cost of being wrong is bounded and reversible, and a mismatch is detectable; mark it visibly as unconfirmed with its basis and consequence.
 
 ### 4. Compile and validate
 
