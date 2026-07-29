@@ -56,7 +56,7 @@ Write one minimum-sufficient, self-contained Intent Contract in this order: desi
 
 Preserve material uncertainty, recommendations, defaults, proof gaps, and handoff obligations where a consumer can recover their owner, basis, and effect. Never present an Atlas recommendation or default as confirmed user intent.
 
-Prompt Atlas is done when the next consumer can continue without re-deriving what the user means, reopening superseded intent, or asking for a direction-setting decision Atlas should already have surfaced. A strong Leader-style intake should not need to redo real-change recovery, intent-vs-means separation, user decision framing, or evidence-backed recommendation.
+Prompt Atlas is done when the next consumer can continue without re-deriving what the user means, reopening superseded intent, re-framing an already-visible user decision, or recreating an evidence-backed recommendation Atlas should already have surfaced.
 
 When intake cannot compile yet, expose only the next useful outcome: a focused `probe`, a human `ask`, a bounded conditional/default, a named capability handoff, or the exact blocker. Do not emit the intake analysis.
 
