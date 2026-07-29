@@ -8,7 +8,7 @@ A contract is sufficient when the next consumer can act correctly without re-der
 
 A repo-scoped contract is incomplete when an authoritative local constraint or acceptance rule can materially change Boundary, proof obligation, route, or completion but is left for the next consumer to rediscover. Preserve the governing requirement, not its downstream execution procedure.
 
-Prefer material context over broad background. Preserve implementation freedom where multiple paths satisfy the same intent. Surface material user-owned decisions instead of silently choosing them. More fields, context, constraints, or prose do not improve the contract unless they change downstream judgment or remove a material failure mode. The contract may identify the next owner or capability, but must not absorb that owner's planning, implementation, verification execution, or other downstream work.
+Prefer material context over broad background. Preserve implementation freedom where multiple paths satisfy the same intent. Surface material user-owned decisions instead of silently choosing them. More fields, context, constraints, or prose do not improve the contract unless they change downstream judgment or remove a material failure mode. The contract may identify the next owner or capability, but must not absorb that owner's planning, implementation, verification execution, or other downstream work; naming the destination does not start it.
 
 ## Stability
 
