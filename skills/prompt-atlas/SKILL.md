@@ -11,7 +11,7 @@ Compile five minimum semantics:
 
 - **Goal** — the real problem and desired change;
 - **Current Context** — only current facts, evidence, and bounded uncertainty that affect judgment;
-- **Boundary** — invariants, acceptable differences, scope, approval limits, and any user-owned priority needed to resolve competing constraints;
+- **Boundary** — invariants, acceptable differences, scope, approval limits, protected evaluation or proof rules when material, and any user-owned priority needed to resolve competing constraints;
 - **Immediate Task** — what should be completed now without prescribing the implementation;
 - **Success / Stop** — the outcome and evidence that close the work, or what real blocker prevents closure; prefer achieved-result criteria over activity or work-volume criteria.
 
@@ -26,7 +26,7 @@ Choose the output mode from the request:
 
 - **Typed authority:** the current user owns intent; current repo, config, tests, runtime, and other authoritative evidence own territory. Conversation and Memory may recover intent or suggest facts, but they do not override current evidence.
 - **Intent before means:** recover the change a solution-shaped request is trying to cause. Treat a named approach as a suggestion unless the user makes it a boundary.
-- **Reality before clarification:** investigate only unknowns whose answer could materially change Goal, Boundary, Immediate Task, Success / Stop, or the safe route. For engineering work, use `unknowns-first` when available instead of duplicating its territory / proof gate.
+- **Reality before clarification:** investigate only unknowns whose answer could materially change Goal, Boundary, Immediate Task, Success / Stop, or the safe route. For engineering work, use `unknowns-first` when available instead of duplicating its territory / proof gate. Prompt Atlas must still work standalone: when that capability is unavailable, apply the same reality-first judgment directly at lightweight scope rather than inventing certainty or asking the user for facts the environment can answer.
 - **Judgment before grammar:** use the surrounding context and evidence to decide what matters. Do not classify, enumerate, or expose internal intake state when the same decision can be made directly and safely.
 - **Progressive disclosure:** load detailed guidance only when needed. Use [chatgpt-memory.md](references/chatgpt-memory.md) when relevant Memory is actually available, and [completion-trust.md](references/completion-trust.md) when the contract needs a correctness or completion claim.
 
@@ -38,9 +38,9 @@ Read the current request together with relevant corrections, prior decisions, ex
 
 ### 2. Ground
 
-Close only material task-level uncertainty. Prefer the smallest authoritative check through code, config, tests, runtime, traces, references, or another appropriate capability. Capture a baseline when the requested change compares, preserves, migrates, regresses, counts, or claims performance. If evidence is unavailable, keep the uncertainty visible with its practical effect instead of inventing certainty.
+Close only material task-level uncertainty. Prefer the smallest authoritative check through code, config, tests, runtime, traces, references, or another appropriate capability. Capture a baseline when the requested change compares, preserves, migrates, regresses, counts, or claims performance; carry its source, evidence state, and what a mismatch would change or block. If evidence is unavailable, keep the uncertainty visible with its practical effect instead of inventing certainty.
 
-For engineering work, let `unknowns-first` handle map-versus-territory discovery and proof escalation. Prompt Atlas consumes its conclusion; it does not mirror its state machine. Broader repo identity and implementation investigation remain downstream unless they are necessary to know what the user means.
+For engineering work, let `unknowns-first` handle map-versus-territory discovery and proof escalation when available. Prompt Atlas consumes its conclusion; it does not mirror its state machine. Broader repo identity and implementation investigation remain downstream unless they are necessary to know what the user means.
 
 ### 3. Resolve human decisions
 
@@ -54,9 +54,9 @@ Do not silently make a direction-changing decision for the user. A reversible de
 
 Write one minimum-sufficient, self-contained Intent Contract in this order: desired change → current context → protected boundary → work now → success or stop. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. Keep the default artifact out of spec form: no phases, implementation sequence, ticket decomposition, command inventory, or execution-loop mechanics.
 
-Preserve material uncertainty, recommendations, defaults, proof gaps, handoff obligations, and any material priority between competing user-owned constraints where a consumer can recover their owner, basis, and effect. Never present an Atlas recommendation or default as confirmed user intent.
+Preserve material uncertainty, recommendations, defaults, proof gaps, handoff obligations, and any material priority between competing user-owned constraints where a consumer can recover their owner, basis, and effect. Never present an Atlas recommendation or default as confirmed user intent. For repo-changing work, make the write scope explicit when multiple edit surfaces, shared state, unrelated user changes, or likely scope drift make implicit scope unsafe.
 
-Prompt Atlas is done when the next consumer can continue without re-deriving what the user means, reopening superseded intent, re-framing an already-visible user decision, or recreating an evidence-backed recommendation Atlas should already have surfaced.
+Prompt Atlas is done when the next consumer can continue without re-deriving what the user means, reopening superseded intent, re-framing an already-visible user decision, or recreating an evidence-backed recommendation Atlas should already have surfaced. Downstream work may enrich implementation knowledge, but without contradictory evidence it must not reopen settled intent, demote a hard boundary into a suggestion, or turn an unresolved proof gap into completion.
 
 When intake cannot compile yet, expose only the next useful outcome: a focused `probe`, a human `ask`, a bounded conditional/default, a named capability handoff, or the exact blocker. Do not emit the intake analysis.
 
