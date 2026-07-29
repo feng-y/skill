@@ -6,7 +6,9 @@ Use this reference when contract quality is not obvious. Add detail only when it
 
 A contract is sufficient when the next consumer can act correctly without re-deriving what the user means. Across the five semantics, preserve only what can change downstream judgment: the actual outcome rather than suggested means, material facts and uncertainty, authoritative boundaries and user-owned priorities, the work to do now without pre-solving downstream choices, and result-oriented closure backed by trusted evidence or a real blocker.
 
-Prefer material context over broad background. Preserve implementation freedom where multiple paths satisfy the same intent. Surface material user-owned decisions instead of silently choosing them. More fields, context, constraints, or prose do not improve the contract unless they change downstream judgment or remove a material failure mode.
+A repo-scoped contract is incomplete when an authoritative local constraint or acceptance rule can materially change Boundary, proof obligation, route, or completion but is left for the next consumer to rediscover. Preserve the governing requirement, not its downstream execution procedure.
+
+Prefer material context over broad background. Preserve implementation freedom where multiple paths satisfy the same intent. Surface material user-owned decisions instead of silently choosing them. More fields, context, constraints, or prose do not improve the contract unless they change downstream judgment or remove a material failure mode. The contract may identify the next owner or capability, but must not absorb that owner's planning, implementation, verification execution, or other downstream work; naming the destination does not start it.
 
 ## Stability
 
@@ -22,6 +24,6 @@ Compression, handoff, and later evidence may enrich the contract but must not si
 
 Shortening removes redundancy, not authority, uncertainty, priority, proof obligation, or the distinction between target and current state.
 
-The contract is consumer-ready when the next consumer does not need to reinterpret the goal, rediscover a settled decision, infer who owns a material constraint, or guess what is verified versus unresolved. These distinctions must remain recoverable but need not become extra output fields.
+The contract is consumer-ready when the next consumer does not need to reinterpret the goal, rediscover a settled decision or governing acceptance requirement, infer who owns a material constraint, or guess what is verified versus unresolved. These distinctions must remain recoverable but need not become extra output fields.
 
 When correctness or completion is material, apply [completion-trust.md](completion-trust.md).

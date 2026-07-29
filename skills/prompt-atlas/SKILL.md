@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: Stably compile a one-sentence goal or scattered cross-turn hints into a concise, consumer-ready Intent Contract covering goal, current context, boundary, immediate task, and success or stop conditions. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when a broader workflow explicitly needs intent intake before direct, autonomous, spec, issue, or execution work. Do not substitute an intent brief for execution the user already requested.
+description: Stably compile a one-sentence goal or scattered cross-turn hints into a concise, consumer-ready Intent Contract covering goal, current context, boundary, immediate task, and success or stop conditions. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when a broader workflow explicitly needs intent intake before direct, autonomous, spec, issue, or execution work. Explicit /prompt-atlas use returns the contract as the terminal result of this invocation.
 ---
 
 # Prompt Atlas
@@ -15,12 +15,12 @@ Compile five minimum semantics:
 - **Immediate Task** — what should be completed now without prescribing the implementation;
 - **Success / Stop** — the outcome and evidence that close the work, or what real blocker prevents closure; prefer achieved-result criteria over activity or work-volume criteria.
 
-Keep these semantics distinct and recoverable, but do not turn them into a form unless the user asks. Prompt Atlas owns intent understanding, not architecture choice, implementation planning, execution, or a durable repo-identity harness.
+Keep these semantics distinct and recoverable, but do not turn them into a form unless the user asks. Prompt Atlas owns intent understanding and contract delivery, not architecture choice, implementation planning, execution, or a durable repo-identity harness. Intent Take terminates at contract delivery; a next-capability hint is non-executable routing metadata, not a transition into downstream work.
 
-Choose the output mode from the request:
+Choose the output mode from the invocation:
 
-- **Artifact mode** — return the completed Intent Contract or requested carrier.
-- **Embedded mode** — establish the contract internally, then return control to the calling workflow instead of replacing the requested work with a prompt.
+- **Artifact mode** — the default for explicit `/prompt-atlas` use and direct requests to clarify, consolidate, prepare, hand off, or rewrite a requirement. Return the completed Intent Contract or requested carrier and stop this invocation. Optionally include one concise next-capability hint when useful.
+- **Embedded mode** — only when another capability or workflow explicitly invokes Prompt Atlas as an intake sub-capability. Return the compiled contract to that caller and stop the Prompt Atlas invocation. Do not infer Embedded mode merely because the user's ultimate task could later be planned or executed.
 
 Use detailed guidance only when it becomes relevant: [contract-anatomy.md](references/contract-anatomy.md) for goal attainment and contract stability, and [completion-trust.md](references/completion-trust.md) for correctness or completion claims.
 
@@ -32,7 +32,7 @@ Recover from the current request, relevant corrections, prior decisions, and exa
 
 ### 2. Ground
 
-Investigate only unknowns whose answers could materially change Goal, Boundary, Immediate Task, Success / Stop, or the safe route. Prefer the smallest authoritative check and rich existing references. For engineering work, let `unknowns-first` own map-versus-territory discovery and proof escalation when available; otherwise apply the same reality-first judgment at lightweight scope. Capture a sourced baseline whenever the requested change is judged relative to current behavior or measurement, and keep its evidence state and mismatch consequence explicit. Preserve material uncertainty instead of inventing certainty or asking the user for facts the environment can settle. Broader repo identity and implementation investigation remain downstream unless needed to know what the user means.
+Investigate only unknowns whose answers could materially change Goal, Boundary, Immediate Task, Success / Stop, or the safe route. Prefer the smallest authoritative check and rich existing references. For repo-scoped work, include governing repo-local constraints or acceptance rules when they can materially change Boundary, Success / Stop, proof obligation, or route; these are contract facts rather than downstream implementation detail. For engineering work, let `unknowns-first` own map-versus-territory discovery and proof escalation when available; otherwise apply the same reality-first judgment at lightweight scope. Capture a sourced baseline whenever the requested change is judged relative to current behavior or measurement, and keep its evidence state and mismatch consequence explicit. Preserve material uncertainty instead of inventing certainty or asking the user for facts the environment can settle. Broader repo identity and implementation investigation remain downstream unless needed to know what the user means.
 
 ### 3. Resolve human decisions
 
@@ -40,7 +40,7 @@ Resolve only material decisions that available evidence cannot settle and that g
 
 ### 4. Compile and validate
 
-Write one minimum-sufficient, self-contained Intent Contract in this order: desired change → current context → protected boundary → work now → success or stop. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. Keep it an intent contract rather than a downstream spec or execution plan.
+Write one minimum-sufficient, self-contained Intent Contract in this order: desired change → current context → protected boundary → work now → success or stop. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. Keep it an intent contract rather than a downstream spec or execution plan. A next-capability hint may identify where the contract should go next, but it does not trigger that capability within this invocation.
 
 For repo-changing work, make write scope explicit when implicit scope is unsafe. Prompt Atlas is done when the next consumer can continue without re-deriving what the user means. Downstream work may enrich implementation knowledge and current evidence, but settled user intent changes only with new user authority; contradictory territory evidence may reopen assumptions, feasibility, or route, not user intent. A proof gap cannot become completion through handoff.
 
@@ -50,4 +50,4 @@ If the user requests a fresh-session handoff, save the concise contract as Markd
 
 ## Output
 
-In Artifact mode, return one concise Intent Contract or requested carrier. For Chinese output, target roughly 100–200 characters and keep routine contracts within 1,000 characters. Treat these as normal output budgets, not completion gates: exceed them when fitting the budget would materially reduce goal attainment or stability. In Embedded mode, continue the caller's workflow after intake.
+In Artifact mode, return one concise Intent Contract or requested carrier. For Chinese output, target roughly 100–200 characters and keep routine contracts within 1,000 characters. Treat these as normal output budgets, not completion gates: exceed them when fitting the budget would materially reduce goal attainment or stability. In Embedded mode, return the contract to the caller. In both modes, contract delivery ends the Prompt Atlas invocation.
