@@ -1,25 +1,25 @@
-# Intent Contract quality
+# Intent artifact quality
 
-Use this reference when contract quality is not obvious. Add detail only when it improves downstream goal attainment or preserves stability; this is a quality reference, not a second intake workflow.
+Use this reference when intent-artifact quality is not obvious. Add detail only when it improves downstream goal attainment or preserves stability; this is a quality reference, not a second intake workflow.
 
 ## Goal attainment
 
-A contract is sufficient when the next consumer can act correctly without re-deriving what the user means. Across the five semantics, preserve only what can change downstream judgment: the actual outcome rather than suggested means, material facts and uncertainty, authoritative boundaries and user-owned priorities, the work to do now without pre-solving downstream choices, and result-oriented closure backed by trusted evidence or a real blocker.
+An artifact is sufficient when the next consumer can act correctly without re-deriving what the user means. Across the five semantics, preserve only what can change downstream judgment: the actual outcome rather than suggested means, material facts and uncertainty, authoritative boundaries and user-owned priorities, the work to do now without pre-solving downstream choices, and result-oriented closure backed by trusted evidence or a real blocker.
 
-A repo-scoped contract is incomplete when an authoritative local constraint or acceptance rule can materially change Boundary, proof obligation, route, or completion but is left for the next consumer to rediscover. Preserve the governing requirement, not its downstream execution procedure.
+A repo-scoped artifact is incomplete when an authoritative local constraint or acceptance rule can materially change Boundary, proof obligation, route, or completion but is left for the next consumer to rediscover. Preserve the governing requirement, not its downstream execution procedure.
 
-Adaptive convergence is a stopping judgment, not a required loop. Continue alignment only while remaining user-owned uncertainty could materially change Goal, Boundary, Success / Stop, or downstream route; otherwise compile the best current intent. More rounds do not improve the artifact by themselves.
+Adaptive convergence is a stopping judgment, not a required loop. Continue alignment only while remaining user-owned uncertainty could materially change Goal, Boundary, Immediate Task, Success / Stop, or downstream route; otherwise compile the best current intent. More rounds do not improve the artifact by themselves.
 
-Prefer material context over broad background. Preserve implementation freedom where multiple paths satisfy the same intent. Surface material user-owned decisions instead of silently choosing them. More fields, context, constraints, or prose do not improve the contract unless they change downstream judgment or remove a material failure mode. The contract may identify the next owner or capability, but must not absorb that owner's planning, implementation, verification execution, or other downstream work; naming the destination does not start it.
+Prefer material context over broad background. Preserve implementation freedom where multiple paths satisfy the same intent. Surface material user-owned decisions instead of silently choosing them. More fields, context, constraints, or prose do not improve the artifact unless they change downstream judgment or remove a material failure mode. The artifact may identify the next owner or capability, but must not absorb that owner's planning, implementation, verification execution, or other downstream work; naming the destination does not start it.
 
 When a target consumer or carrier is known, adapt representation to how that consumer can use the intent directly. This may change ordering, density, framing, or references, but not settled meaning, authority, uncertainty, boundaries, proof obligations, or responsibility ownership. A Leader input, Wayfinder brief, plan prompt, final model prompt, and generic Intent Contract may therefore look different while carrying the same material intent.
 
 ## Stability
 
-Compression, handoff, later evidence, and subsequent alignment turns may enrich the contract but must not silently change authority or state:
+Compression, handoff, later evidence, and subsequent alignment turns may enrich the artifact but must not silently change authority or state:
 
 - settled user intent, corrections, priorities, and user-owned boundaries change only with new user authority;
-- a prior Atlas artifact provides the semantic baseline for the next alignment turn; new authority or evidence reopens only what it actually changes;
+- still-valid settled semantics from a prior Atlas artifact provide the baseline for the next alignment turn; inferred, unknown, or unverified state remains such until evidence changes it;
 - territory facts and constraints follow current authoritative evidence and may change with better evidence without rewriting user intent;
 - recommendations remain advisory and reversible defaults remain visibly unconfirmed;
 - unknowns, inferences, and proof gaps do not become current facts or completion claims through rewriting;
