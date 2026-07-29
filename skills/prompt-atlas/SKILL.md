@@ -11,9 +11,9 @@ Compile five minimum semantics:
 
 - **Goal** — the real problem and desired change;
 - **Current Context** — only current facts, evidence, and bounded uncertainty that affect judgment;
-- **Boundary** — invariants, acceptable differences, scope, and approval limits;
+- **Boundary** — invariants, acceptable differences, scope, approval limits, and any user-owned priority needed to resolve competing constraints;
 - **Immediate Task** — what should be completed now without prescribing the implementation;
-- **Success / Stop** — what evidence or bounded result closes the work, or what real blocker prevents closure.
+- **Success / Stop** — the outcome and evidence that close the work, or what real blocker prevents closure; prefer achieved-result criteria over activity or work-volume criteria.
 
 Keep these semantics distinct and recoverable, but do not turn them into a form unless the user asks. Prompt Atlas owns intent understanding, not architecture choice, implementation planning, execution, or a durable repo-identity harness.
 
@@ -34,7 +34,7 @@ Choose the output mode from the request:
 
 ### 1. Recover
 
-Read the current request together with relevant corrections, prior decisions, examples, and context. Latest explicit corrections win over older compatible intent. Replace superseded meaning rather than accumulating it. Separate desired result, suggested means, and hard constraints.
+Read the current request together with relevant corrections, prior decisions, examples, and context. Latest explicit corrections win over older compatible intent. Replace superseded meaning rather than accumulating it. Separate desired result, suggested means, and hard constraints. When current requirements compete, preserve any user-stated priority or tradeoff order needed for the next consumer to judge correctly; if that priority is material and genuinely user-owned but still missing, resolve it as a human decision rather than inventing one.
 
 ### 2. Ground
 
@@ -54,13 +54,13 @@ Do not silently make a direction-changing decision for the user. A reversible de
 
 Write one minimum-sufficient, self-contained Intent Contract in this order: desired change → current context → protected boundary → work now → success or stop. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents. Keep the default artifact out of spec form: no phases, implementation sequence, ticket decomposition, command inventory, or execution-loop mechanics.
 
-Preserve material uncertainty, recommendations, defaults, proof gaps, and handoff obligations where a consumer can recover their owner, basis, and effect. Never present an Atlas recommendation or default as confirmed user intent.
+Preserve material uncertainty, recommendations, defaults, proof gaps, handoff obligations, and any material priority between competing user-owned constraints where a consumer can recover their owner, basis, and effect. Never present an Atlas recommendation or default as confirmed user intent.
 
 Prompt Atlas is done when the next consumer can continue without re-deriving what the user means, reopening superseded intent, re-framing an already-visible user decision, or recreating an evidence-backed recommendation Atlas should already have surfaced.
 
 When intake cannot compile yet, expose only the next useful outcome: a focused `probe`, a human `ask`, a bounded conditional/default, a named capability handoff, or the exact blocker. Do not emit the intake analysis.
 
-For execution-oriented intent, completion requires trusted evidence; when independent acceptance is required, stop at `ready for independent acceptance`. Exploration-oriented intent may close on a bounded decision or finding with remaining uncertainty explicit.
+For execution-oriented intent, completion requires trusted evidence and an achieved-result criterion rather than mere work performed; when independent acceptance is required, stop at `ready for independent acceptance`. Exploration-oriented intent may close on a bounded decision or finding with remaining uncertainty explicit.
 
 If the user requests a fresh-session handoff, save the concise contract as Markdown in the operating system temporary directory, reference existing artifacts rather than copying them, redact sensitive context, add `Suggested skills`, and return the absolute path.
 
