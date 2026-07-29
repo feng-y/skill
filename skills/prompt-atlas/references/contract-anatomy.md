@@ -20,13 +20,13 @@ Do not add information merely to make a field look complete. Missing detail is a
 
 Compression, handoff, and later enrichment must preserve semantic ownership and evidence state:
 
-- settled user intent remains settled unless contradictory current evidence or a new user correction changes it;
-- a hard boundary does not degrade into advice, and advice does not become a hard boundary without user authority;
+- settled user intent remains settled until the user corrects it; contradictory territory evidence may invalidate assumptions, feasibility, or route, but must not silently rewrite the user's intended outcome;
+- a hard boundary does not degrade into advice, and advice does not become a hard boundary without authority from the source that owns that decision or territory;
 - a recommendation remains advisory until confirmed;
 - a reversible default remains visibly unconfirmed;
 - an unknown, inference, or proof gap does not become a current fact or completion claim through rewriting;
 - superseded meaning is replaced rather than accumulated beside current intent;
-- downstream implementation judgment stays downstream unless the user explicitly promotes it into intent or boundary.
+- downstream implementation judgment stays downstream unless the user makes it part of intent or authoritative territory evidence makes it a real constraint.
 
 Shortening removes redundancy, not authority, uncertainty, priority, proof obligation, or the distinction between target state and current state.
 
@@ -47,7 +47,7 @@ The contract is not improved by adding more context, constraints, or prose unles
 
 A consumer-ready contract makes these states recoverable without reopening intake:
 
-- **Settled** — user intent, corrections, hard boundaries, and confirmed priorities that downstream work should not re-litigate without contradictory evidence.
+- **Settled** — user intent, corrections, hard boundaries, and confirmed priorities that downstream work should not re-litigate without new owning-authority input or contradictory territory evidence that changes feasibility or route.
 - **Flexible** — implementation choices and recommendations the downstream consumer may adapt while preserving Goal and Boundary.
 - **Unresolved** — remaining user-owned decisions, material unknowns, proof gaps, or blockers whose owner and consequence are explicit.
 - **Evidence state** — whether a material claim is verified, inferred, unmeasured, or awaiting a named proof obligation.
@@ -63,6 +63,6 @@ Before handing off, reject or repair the contract if any of these are true:
 - the next consumer still has to reinterpret the user's real goal;
 - a material decision or constraint has no recoverable owner;
 - current fact, inference, recommendation, default, and proof gap can be mistaken for one another;
-- the contract forces an implementation choice that is not actually user-owned;
+- the contract forces an implementation choice that is not actually user-owned or territory-constrained;
 - the artifact is concise only because material intent or evidence was compressed away;
 - Success / Stop describes work performed rather than the result or trusted evidence that matters.
