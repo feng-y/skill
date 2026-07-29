@@ -25,5 +25,5 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `prompt-atlas` — turn a one-sentence goal or scattered hints into a consumer-ready Intent Contract that can drive direct work or a spec / issue / execution workflow. When a runtime already provides prior conversation, project, or memory context, Prompt Atlas consumes it as prior context under the same authority and evidence rules rather than through a product-specific adapter.
+- `prompt-atlas` — turn a one-sentence goal or scattered hints into a consumer-ready Intent Contract that can drive direct work or a spec / issue / execution workflow. Runtime-provided conversation, project, or memory context is consumed as ordinary prior context under the same authority and evidence rules; Prompt Atlas has no product-specific context adapter.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
