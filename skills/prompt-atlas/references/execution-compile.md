@@ -1,227 +1,131 @@
 # Execution Compile
 
-Use this reference when Stage 2 graph shape, branch closure, AFK continuity, or HITL placement is not obvious. Execution Compile consumes Stable Intent IR and emits one executable carrier. It does not reopen intent and does not execute the graph.
+Use this reference when Stage 2 needs more detail on graph shape, branch closure, AFK continuity, or Leader capability coverage. Execution Compile consumes Stable Intent IR and emits one executable carrier; it does not reopen intent or run the graph.
 
-## Objective
+## Outcome
 
-Compile the smallest truthful structure that lets a capable executor keep making correct progress without using Human interaction as orchestration.
+Produce the smallest truthful structure that lets a capable executor keep making correct progress without using Human interaction as orchestration.
 
-Optimize for:
+Preserve:
 
-- longer autonomous execution span;
-- real parallelism where independence exists;
-- local verification and local recovery;
-- recoverability across context interruption when needed;
-- preservation of Goal, Why, authority, and proof integrity;
-- HITL only where a material execution branch cannot be closed safely from settled intent or evidence.
+- the **Why / design intent** that guides unforeseen choices;
+- the complete **Goal** and settled authority;
+- grounded execution reality;
+- real work dependencies and ownership;
+- task-specific proof needed for trusted completion;
+- enough recovery semantics for the work to continue through failure or interruption.
 
-Do not optimize for task count, field count, a visually rich DAG, or maximum up-front planning.
+Graph complexity follows dependency, coordination, proof, isolation, and recovery needs—not task size or a desire to plan everything up front.
 
-## Lowering, not append
+## Lowering
 
-Stable Intent IR is source semantics. The executable carrier is a lower-level representation.
+Stable Intent is source semantics. Lower it into execution semantics rather than repeating it:
 
-Execution Compile should transform intent semantics into the places where they constrain runtime judgment:
+- Why → judgment anchor;
+- Goal → global end condition;
+- territory facts → State and node context;
+- Human decisions / hard constraints → invariants;
+- material execution decisions → closed branches with basis;
+- success / proof semantics → local proof and Global Gate;
+- output requirements → Delivery.
 
-- Why / design intent becomes a judgment anchor;
-- Goal becomes the global end condition;
-- grounded reality becomes execution State and node context;
-- Human decisions and hard constraints become graph invariants;
-- material execution decisions become closed branches with their basis;
-- success and proof semantics become local checks and the Global Gate;
-- output requirements become Delivery.
-
-Do not print a complete Intent Contract and then add Tasks, Graph, or Loop below it. Avoid duplicate Goal, constraint, or success authorities.
+The final carrier has one authority for Goal, boundaries, and completion.
 
 ## Ground execution reality
 
-Intent grounding establishes meaning; Stage 2 must separately ground enough execution reality to avoid compiling fiction.
+Intent grounding establishes meaning; Stage 2 grounds the territory needed for orchestration.
 
-Before fixing the first graph, inspect the smallest authoritative surface that can determine:
+Inspect the smallest authoritative surface that can determine the actual execution target, work boundaries, governing specs/tests/schemas, material baselines, real dependencies, and critical commands or verifiers. Prefer references to rich existing artifacts over restating them.
 
-- the actual repo/workspace or carrier binding;
-- real work surfaces and ownership boundaries;
-- governing specifications, tests, schemas, traces, or acceptance paths;
-- baselines whose values matter to success;
-- whether critical commands/verifiers actually exist and behave as assumed;
-- dependencies that are real rather than inferred from prose order.
+A command, baseline, gate, or environment is verified only when evidence supports that claim. If a prerequisite is unverified, make its check initial ready work when safe progress can continue; otherwise expose the true blocker.
 
-Run or inspect critical checks when accessible. If the environment is unavailable, keep that fact explicit. Compile verification of an unverified prerequisite as initial ready work when safe execution can continue; otherwise expose the true blocker. Never state a command, baseline, or gate as verified because it is plausible.
+Execution grounding may change graph shape, node boundaries, dependencies, proof topology, or execution decisions. It may not change Stable Intent.
 
-Prefer rich references over copying their content. Execution grounding may change graph shape, node boundaries, dependencies, proof topology, or execution decisions, but it may not reinterpret Stable Intent.
+## Close material branches
 
-## Decision closure
+Close a branch before execution when different choices would materially change the execution graph—for example Task / Issue boundaries, dependency/order, verification ownership or acceptance path, scope, architecture responsibility, or the Global Gate.
 
-Before materializing the graph, look for choices that would otherwise make an executor stop mid-run because different answers produce materially different execution structures.
+Use Stable Intent, governing constraints, and authoritative evidence first. If materially different graphs remain equally compatible, use pre-execution HITL. Batch related decisions rather than turning Human turns into scheduling.
 
-A branch is material when choosing differently changes one or more of:
+When another Human turn is explicitly unavailable, a visibly unconfirmed default may keep execution moving only if it preserves settled Goal and boundaries and is reversible or reliably mismatch-detectable. Record the assumption and consequence. Otherwise return `Status: Execution Decision`.
 
-- Task / Issue boundaries;
-- real dependencies or ordering;
-- verification ownership or the acceptance path;
-- implementation scope;
-- architecture direction or responsibility placement;
-- the shape of the Global Gate.
+Local reversible How remains executor-owned. Keep binding invariants distinct from non-binding guidance.
 
-Close such branches from settled intent, governing constraints, and authoritative evidence when possible. Record the basis so a later executor does not reopen a settled choice.
+## Build the graph
 
-Use pre-execution HITL only when materially different graphs remain compatible with the stable intent and available evidence does not select among them. This is not limited to choices with obvious risk or a universally better answer; the point is to remove a branch that would otherwise interrupt AFK execution. When several such branches exist, batch the useful decision surface rather than using Human turns as a scheduler.
+A **Task / Issue node** is a bounded unit that can be started, observed, and locally judged. Give it only:
 
-If an executable carrier is explicitly required without another Human turn, an unconfirmed default may keep AFK execution possible only when the alternatives preserve settled Goal and boundaries, the default is bounded and reversible or its mismatch is reliably detectable, and the carrier labels both the assumption and consequence. Such a default remains an execution assumption, not Human authority; otherwise return `Status: Execution Decision`.
-
-Do not escalate local How: helper naming, small code organization, exact patch order, reversible implementation details, or another choice whose alternatives do not materially change the graph remain executor-owned.
-
-Keep law and guidance distinct. Human-confirmed decisions, governing constraints, and evidence-grounded invariants are binding; recommendations, promising starting points, or implementation hints remain non-binding unless their semantics are required for correctness.
-
-## Graph construction
-
-A graph is orchestration, not a decorative task list.
-
-### Node
-
-A Task / Issue node is a bounded unit that can be started, progressed, observed, and locally judged. Give it only what it needs:
-
-- **Outcome** — what state this node should establish;
-- **Context** — only facts or references needed for this work;
+- **Outcome** — state it establishes;
+- **Context** — facts or references needed for this work;
 - **Dependencies** — upstream results it actually consumes;
-- **Boundaries** — applicable invariants or scope limits;
-- **Verify** — evidence that makes this node locally done.
+- **Boundaries** — applicable invariants;
+- **Verify** — task-specific evidence that makes the node locally done.
 
-A node may be implementation, migration, research, probe, synthesis, cleanup, or another bounded work unit. Do not decompose into mechanical code-edit steps unless those steps have independent dependency or verification meaning.
+An **edge** represents real dependency, evidence flow, or a required gate. Independent work should stay independent.
 
-### Edge
+A **checkpoint** decides local completion and normally routes failure back to the node for repair. The **Global Gate** judges the complete Goal; a collection of local PASS results is not automatically global completion.
 
-Create an edge only for real dependency, evidence flow, or a required gate. If B does not consume A's result, do not serialize B after A merely because prose would say “then.” Independent work may fan out.
+A **Human Gate** exists only when new evidence exposes a material branch that current intent/evidence cannot close. Park that node and continue independent ready work. The graph is truly blocked only when no safe ready work remains.
 
-When parallel branches can mutate shared surfaces, compile enough ownership to keep AFK execution safe:
+For parallel branches that touch shared mutable surfaces, make ownership explicit: prefer disjoint write domains, assign one owner per shared surface, make joins clear, and invalidate downstream proof when an upstream change makes it stale. This is orchestration semantics, not a fixed agent count.
 
-- keep write domains disjoint where possible;
-- assign one owner to each shared mutable surface;
-- make joins and handoff evidence explicit;
-- re-run or invalidate downstream evidence when upstream changes make it stale.
+Keep the initial graph small. The runtime may add, remove, split, merge, or reroute remaining nodes as evidence changes the current execution theory; trustworthy completed work stays complete unless new evidence invalidates it.
 
-This defines orchestration semantics, not agent count. Runtime topology remains executor-owned unless the user fixed it.
+## Runtime and continuity
 
-### Checkpoint
+Each ready node uses the simplest evidence-driven loop that fits the task: act, observe the result, evaluate against its local outcome, then continue, repair, or revise How.
 
-A local checkpoint decides whether a node is done or routes it back for repair. Local PASS unlocks downstream work; local FAIL should normally stay inside the node loop.
+Do not add generic review or double-check stages merely because the task is non-trivial. Verification structure exists when the Goal or governing proof semantics require it; see [completion-trust.md](completion-trust.md).
 
-### Global Gate
+Failure, difficulty, or an unexpected repo fact is not by itself HITL. The graph should keep advancing other ready work and revise remaining structure from evidence.
 
-The Global Gate evaluates the complete Goal, not task count. Every required node being locally done is not sufficient when the overall behavioral, structural, or proof obligation is still unmet.
+When work may outlive one context, require recoverable semantic state:
 
-### Human Gate
-
-A Human Gate exists only when new evidence exposes a material branch that cannot be closed from settled intent, governing constraints, or authoritative evidence. Do not put a Human Gate between ordinary tasks.
-
-A Human-gated or externally blocked node does not stop independent ready work. Park it, preserve its evidence and missing decision, and continue elsewhere. The whole graph is blocked only when no safe ready work remains.
-
-## Small and lazy graph
-
-Compile only graph structure that is useful before execution starts. A simple task may be:
-
-`Work → Verify → Global Gate`
-
-A larger task may expose several independent nodes, joins, or a verification branch. Do not predict an entire implementation when later evidence can determine the remaining structure more accurately.
-
-The runtime may add, remove, split, merge, or reroute remaining nodes when evidence changes the current execution theory. Preserve trustworthy completed work unless new evidence invalidates it.
-
-Graph complexity should follow real dependency, coordination, proof, isolation, or recovery need—not task size or a generic “complex task” threshold.
-
-## Loop semantics
-
-Each ready node runs a local evidence-driven loop:
-
-`Act → Observe → Evaluate → Next`
-
-When local verification fails, first diagnose, change How, gather missing evidence, or locally replan. Failure, difficulty, or an unexpected repo fact is not by itself a reason for HITL.
-
-The graph runtime repeatedly:
-
-1. selects ready work;
-2. executes the node loop;
-3. records resulting evidence and state;
-4. parks blocked/Human-gated nodes while other work remains ready;
-5. updates the remaining graph when evidence invalidates current assumptions;
-6. evaluates whether the Global Gate is satisfied.
-
-Continue while the Goal is not proven and safe evidence-producing work remains inside settled boundaries. Complete only on trusted global completion. Block only when no safe next action remains or required evidence/authority is genuinely unavailable.
-
-## Continuity
-
-AFK execution may outlive one context even when the graph is small. When interruption or handoff is plausible, the carrier should require recoverable execution state at the semantic level:
-
-- trustworthy completed nodes and their evidence;
-- current graph changes that remain valid;
-- parked blockers or Human decisions with exact missing input;
+- trustworthy completed nodes and evidence;
+- still-valid graph changes;
+- parked blockers/decisions and the exact missing input;
 - next ready work and unresolved Goal conditions.
 
-Do not mandate `PROGRESS.md`, `BLOCKED.md`, a database, or another storage mechanism unless the runtime or task requires it. The capability requirement is resumability without redoing trusted work or inventing state after context loss.
+The storage mechanism is runtime-specific; resumability is the capability.
 
 ## Research and decision work
 
-Research/selection graphs use the same execution model but different completion semantics:
-
-- nodes may gather sources, test a hypothesis, compare options, reproduce a claim, or synthesize evidence;
-- conclusions carry provenance or reproducible evidence rather than arbitrary numeric hard goals;
-- fabricated citations, unrun “measurements,” or unsupported certainty are invalid proof;
-- material counterevidence and residual unknowns remain visible;
-- evidence that a path is a dead end may be a valid completed node and useful final result;
-- explicit time/source budgets are honored when supplied; otherwise stop on the best supported answer when further work no longer changes material uncertainty enough to justify cost.
-
-## AFK and HITL
-
-A useful execution graph reduces Human involvement through four mechanisms:
-
-1. **Decision closure** — material branches are resolved before they interrupt execution.
-2. **Graph completeness** — the executor can discover ready work and real dependencies without asking what to do next.
-3. **Verification closure** — nodes and the Goal have explicit evidence-based completion semantics.
-4. **Recovery closure** — local failure, partial blocking, and context interruption route to repair, other ready work, or recovery rather than immediately back to the Human.
-
-Do not use HITL as scheduling. A good Human interaction should be explainable as: “this unresolved choice materially changes the graph, and current intent/evidence cannot close it.”
+Use the same graph model with different proof semantics. Nodes may gather sources, test hypotheses, compare options, reproduce claims, or synthesize evidence. Conclusions retain provenance, counterevidence, and material residual unknowns. A well-supported dead end can be a useful completed result. Respect explicit time/source budgets; otherwise stop when further work no longer changes the decision materially enough to justify the cost.
 
 ## Leader capability floor
 
-Leader-style taskbooks are a useful execution-coverage reference, not a required serialization. Prompt Atlas should preserve the behavior that makes them AFK-capable while keeping realization runtime-selectable.
+Leader is a semantic coverage reference, not a serialization template.
 
 | Leader capability | Prompt Atlas execution semantic |
 | --- | --- |
 | “这活为什么干” | Purpose / Why judgment anchor + Goal |
 | 先实测仓库、命令、基线 | Execution grounding + verified/unverified State |
-| “我替领导拍的板” | Decision closure; unresolved material branch → pre-execution HITL or visibly unconfirmed bounded default |
-| 白名单/禁区；法与情报分家 | Boundaries + explicit binding-vs-guidance distinction |
+| “我替领导拍的板” | Material branch closure; unresolved branch → HITL or safe visibly-unconfirmed default |
+| 白名单/禁区；法与情报分家 | Boundaries + binding-vs-guidance distinction |
 | 任务 N + 依赖顺序 | Task / Issue nodes + real dependency edges |
-| 每任务机器可判验收 | Local Verify / checkpoint |
+| 每任务机器可判验收 | Local task-specific proof / checkpoint |
 | 防作弊、反向验证 | Protected proof semantics + failure sensitivity |
 | 最终完成条件 | Trusted Global Gate; local done ≠ global completion |
-| 某项卡住继续别的 | Park blocked/Human-gated node; continue independent ready work |
-| PROGRESS/BLOCKED 断点续跑 | Recoverable semantic state; storage mechanism left to runtime |
-| 多 agent 地界/共享写点/接缝 | Parallel write ownership + explicit joins + stale-evidence invalidation |
+| 某项卡住继续别的 | Park blocked/Human-gated node; continue ready work |
+| PROGRESS/BLOCKED 断点续跑 | Recoverable semantic state; storage left to runtime |
+| 多 agent 地界/共享写点/接缝 | Parallel ownership + joins + stale-evidence invalidation |
 | 探索型来源/死路/预算 | Evidence-bearing research graph + provenance/residual unknowns |
 | 管理者暗卷/独立验收 | Independent accepting boundary outside executor-visible proof when required |
 
-This matrix is a semantic capability floor, not an empirical parity claim. Behavioral equivalence still requires representative paired execution evals.
+This is a capability floor, not an empirical parity claim. Behavioral parity still requires paired executions.
 
-The following Leader mechanics are deliberately not semantic requirements: a fixed Task 0, a mandatory `PROGRESS.md`/`BLOCKED.md`, exactly three failed attempts before changing strategy, a fixed agent topology, exact command order, or the `/goal` 4000-character envelope. Preserve their capability—grounding, recovery, continuity, failure sensitivity, ownership, and carrier limits when actually imposed—without hard-coding one runtime realization.
+Leader mechanisms such as a fixed Task 0, mandatory progress filenames, exactly three failures before changing strategy, fixed agent topology, exact command order, or `/goal`'s carrier limit are runtime realizations. Preserve the underlying grounding, recovery, continuity, failure-sensitivity, ownership, or envelope requirement only when the actual task/runtime needs it.
 
-## Review checkpoint
+## Carrier quality
 
-Do not claim Leader parity from this document alone. A capability review is complete only when every Leader semantic above has one explicit Atlas owner and no capability is dismissed merely as “the executor can probably infer it.” A behavioral review still needs paired probes that compare the compiled carriers and resulting execution, including at least one blocked/continuation case, one preservation-sensitive verification case, one parallel/shared-surface case, and one exploration/decision case.
+A fresh executor should be able to recover, without replaying the conversation:
 
-## Executable carrier quality
+- why the work exists and what final state is required;
+- what is known, unverified, or already proven;
+- which material branches and boundaries are settled;
+- what work is ready and which real dependencies exist;
+- what task-specific evidence closes important nodes and the complete Goal;
+- what can continue when one branch blocks and what state must survive interruption;
+- what must be delivered.
 
-A fresh executor should be able to answer, without reconstructing prior conversation:
-
-- Why are we doing this, and what direction should guide unforeseen choices?
-- What final state must be true?
-- What relevant state and proof already exist, and what is still unverified?
-- Which material branches are already settled, and on what basis?
-- What work is currently known, which nodes depend on which, and what is ready now?
-- What may not drift, and which guidance remains optional?
-- How is each important node verified, and what proves the complete Goal?
-- If one node blocks, what independent work can continue?
-- What state must survive a context interruption?
-- How should failure, new evidence, graph revision, HITL, completion, and true blocking behave?
-- What must be delivered at the end?
-
-If the artifact answers these with less structure, keep it smaller. If omitting one would create drift, false completion, unnecessary HITL, or loss of AFK continuity, keep it explicit.
+Use less structure when those semantics remain clear. Keep detail only when its absence would create drift, false completion, unnecessary HITL, or loss of AFK continuity.
