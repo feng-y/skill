@@ -15,7 +15,7 @@ Explicit requested outcomes are not disposable implementation suggestions. Groun
 Emit `Status: Executable`, then:
 
 1. **Goal** — complete desired end state;
-2. **State** — current territory and proof reality;
+2. **State** — consumer-resolvable execution target plus current territory and proof reality;
 3. **Decisions** — confirmed Human authority;
 4. **Constraints** — what cannot drift or be crossed;
 5. **Loop** — action progression and dynamic task organization;
@@ -33,6 +33,8 @@ Do not flatten the fields:
 - Control changes the execution carrier or next action, not the completion bar.
 
 Protected judging rules belong in Constraints; evidence produced under those rules belongs in Evaluation. For example, “replay/diff may not be replaced by build-only evidence” is a Constraint, while “affected replay/diff paths show no unexpected difference” is Evaluation.
+
+For repo-changing work, State must let a fresh consumer locate or materialize the intended target. Record the repo/workspace root, or a repository identity plus revision and materialization instruction. If the carrier itself binds a workspace, state that assumption explicitly. A commit hash, branch, or filename without a resolvable target is insufficient.
 
 ## Outcome shape
 
@@ -53,7 +55,7 @@ Choose inside Control; do not add a top-level route:
 
 Escalate only on observed need. Collapse back when extra structure no longer changes correctness, coordination, or recovery. Agent count, model choice, exact parallelism, and workflow implementation remain runtime decisions unless the user made them part of intent.
 
-Independent challenge is orthogonal to these three forms. Trigger it from proof risk: executor-designed acceptance, a plausible false pass, behavior-preserving migration, architecture work with material residual risk, a critical user path, or a governing requirement. Do not require a verifier for every routine change.
+Independent challenge is orthogonal to these three forms. Trigger it from proof risk: executor-designed acceptance, a plausible false pass, behavior-preserving migration, architecture work with material residual risk, a critical user path, or a governing requirement. When triggered, identify the available accepting boundary in Evaluation or Control; the executor stops at `ready for independent acceptance`, and only that boundary can produce global `MET`. Do not require a verifier for every routine change.
 
 If the runtime parallelizes, give concurrent writers non-overlapping ownership, assign one owner to shared artifacts, and re-establish evidence invalidated by later integration. Do not precompile a multi-agent topology when no such execution choice has been made.
 

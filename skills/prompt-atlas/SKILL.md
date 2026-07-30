@@ -45,6 +45,7 @@ Investigate only unknowns that can materially change Goal, State, Decisions, Con
 For repo work:
 
 - include governing local constraints and acceptance paths that can change execution or completion;
+- preserve a consumer-resolvable execution target: the current repo/workspace root, or a repository identity plus revision and materialization instruction. If the caller's carrier already binds the workspace, state that dependency explicitly; a commit hash or filename alone is not a locator;
 - capture a sourced baseline when success is relative to current behavior or measurement;
 - run critical commands when accessible; otherwise mark them `unverified` rather than presenting them as facts;
 - distinguish verified fact, inference, and unknown;
@@ -68,6 +69,7 @@ Before emitting, check that:
 
 - every explicit requested outcome is still present or explicitly superseded;
 - facts, inferences, unknowns, recommendations, and Human decisions retain their authority;
+- the next consumer can locate or materialize the intended execution target from the artifact plus any explicitly named carrier binding;
 - critical commands and baselines are labeled by evidence state;
 - the selected control form is the least complex one that can preserve coordination and recovery;
 - local task completion cannot be mistaken for global `MET`;
@@ -79,11 +81,11 @@ Before emitting, check that:
 Emit `Status: Executable`, then these canonical headings in this exact order. Localize values, not field names:
 
 1. **Goal** — the complete desired end state, not a work list.
-2. **State** — relevant baseline, facts and provenance, evidence/proof state, starting references, completed work, material unknowns, and whether critical gates are verified or unverified. Identify whether the Goal seeks a changed state or a decision-grade answer when that changes evaluation.
+2. **State** — the consumer-resolvable execution target or explicit carrier binding, relevant baseline, facts and provenance, evidence/proof state, starting references, completed work, material unknowns, and whether critical gates are verified or unverified. Identify whether the Goal seeks a changed state or a decision-grade answer when that changes evaluation.
 3. **Decisions** — only material choices and approvals explicitly confirmed by the user. State “none beyond the request” rather than inventing one.
 4. **Constraints** — hard boundaries, invariants, accepted differences, scope/approval limits, priorities needed to resolve conflict, and protected Judge/Population/Object/Metric rules. For repo-changing work, make write scope explicit when leaving it implicit creates material expansion risk. Do not turn convenience into law.
 5. **Loop** — `Act → Observe → Evaluate → Next`. Give the first useful direction and authority to create or update the minimum task organization, perform local verification, execute unblocked work, and revise How from evidence. Do not freeze a speculative patch sequence.
-6. **Evaluation** — the full Goal condition and direct evidence required for global `MET`. For structured work, distinguish local done evidence from the global Gate. Each iteration returns `MET` or `UNMET` with a short evidence-based reason; compromised or insufficient proof is `UNMET`.
+6. **Evaluation** — the full Goal condition and direct evidence required for global `MET`. For structured work, distinguish local done evidence from the global Gate. Each iteration returns `MET` or `UNMET` with a short evidence-based reason; compromised or insufficient proof is `UNMET`. When governing or risk-triggered independent acceptance is part of trusted completion, name the accepting boundary: executor evidence can reach only `ready for independent acceptance`, and global `MET` requires that boundary's result.
 7. **Output** — the requested deliverable, or the normal deliverable plus a concise receipt. A completion receipt maps Goal conditions to actual evidence and resulting State. A block receipt names unmet conditions, attempted evidence-producing paths, the exact missing authority/evidence, and what would unblock work.
 8. **Control** — start, repeat, replan, State update, complexity escalation, complete, and block rules. Start with the least complex sufficient control form; escalate only when coordination, isolation, recovery, or independent challenge requires it. Repeat while `UNMET` and safe evidence-producing work remains. Replan when a path stops reducing uncertainty or remaining Goal conditions. Complete only on trusted global `MET`; block only when no safe next action remains inside settled authority and any explicit budget.
 
