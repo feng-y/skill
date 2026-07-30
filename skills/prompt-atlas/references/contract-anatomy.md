@@ -1,82 +1,85 @@
-# Intent artifact quality
+# Intent IR quality
 
-Use this reference when intent-artifact quality is not obvious. Add detail only when it improves downstream goal attainment or preserves stability; this is a quality reference, not a second intake workflow.
+Use this reference when Intent Take stability, authority, or compression is not obvious. This is a quality reference for Stage 1, not an execution workflow.
 
-## Goal attainment
+## Intent sufficiency
 
-An artifact is sufficient when the next consumer can act correctly without re-deriving what the user means. Preserve only what can change downstream judgment: the desired end state, relevant territory reality and uncertainty, Human authority, hard constraints and approvals, the current instruction, trusted completion evidence, required delivery shape, and downstream handoff.
+Stable Intent IR is sufficient when Execution Compile no longer needs to rediscover what the user means. Preserve only semantics that can change downstream judgment:
 
-A repo-scoped artifact is incomplete when an authoritative local constraint or acceptance rule can materially change Constraints, required evidence, route, or completion but is left for the next consumer to rediscover. Preserve the governing requirement, not its downstream execution procedure.
+- the desired end state and explicit requested outcomes;
+- the underlying problem or design intent when it guides choices beyond literal task wording;
+- relevant territory reality, evidence state, and material uncertainty;
+- Human-confirmed decisions, priorities, approvals, and hard boundaries;
+- the observable result and trusted proof obligations that define success;
+- any requested delivery shape that materially constrains the result.
 
-Prompt Atlas supports iterative alignment but does not own continuation across turns. Each invocation should produce the best current artifact or the smallest useful decision surface and stop. A later user turn may improve intent fidelity when it supplies new user authority. New territory evidence, changed external constraints, or downstream results may improve grounding or expose mismatch, infeasibility, or missing proof, but do not by themselves change user-owned intent. Repeated self-refinement on the same information may improve consistency, completeness, or expression, but is quality review rather than evidence of intent convergence.
+Do not preserve broad background, superseded discussion, rejected alternatives, or implementation detail merely because they appeared in conversation. Preserve rationale when losing it would make a later executor choose a locally valid but directionally wrong solution.
 
-Explicit requested outcomes are part of intent authority, not disposable implementation suggestions. Grounding may add prerequisites, widen necessary implementation or verification scope within existing user-owned boundaries and approval limits, expose higher cost, or prove an outcome infeasible; it must not silently turn “do this now” into “defer this,” “split this out,” or “do a weaker version.” If preserving the outcome requires crossing a user-owned boundary or approval limit, or evidence otherwise cannot resolve the conflict while preserving the outcome, the artifact is not stable until the user resolves the material choice or the result honestly closes on a blocker with no meaningful choice available. A stable artifact must preserve every explicit user-owned outcome with its original authority unless later user authority supersedes it.
+## Authority and territory
 
-Prefer material context over broad background. Preserve implementation freedom where multiple paths satisfy the same intent. Surface material user-owned decisions instead of silently choosing them. More context or prose does not improve the artifact unless it changes downstream judgment or removes a material failure mode. The artifact may identify the next owner or capability, but must not absorb that owner's planning, implementation, verification execution, or other downstream work; naming the destination does not start it.
+The current user owns intent. Current authoritative evidence owns territory.
 
-## Agent-facing structure
+Explicit requested outcomes are authoritative until the user supersedes them. Grounding may add prerequisites, widen necessary implementation or verification scope inside settled boundaries, expose higher cost, or prove infeasibility; it must not silently weaken, defer, split out, or replace an explicit requested outcome.
 
-In explicit Artifact mode, structure is part of contract correctness rather than presentation preference. Use stable canonical field names across languages and localize the values. The carrier uses this exact semantic order:
+Territory facts may change with better evidence without rewriting user-owned intent. Recommendations, inferences, defaults, and unknowns remain distinguishable from confirmed decisions and verified facts. Repeated rewriting on unchanged information may improve expression or consistency but creates no new authority.
 
-1. **Goal** — desired end state and real problem to solve;
-2. **Context** — relevant motivation, current territory facts, evidence state, and material unknowns;
-3. **Decisions** — only material Human-confirmed choices or approvals;
-4. **Constraints** — hard boundaries, invariants, acceptable differences, scope/approval limits, and protected judging/oracle rules;
-5. **Task** — what this pass must accomplish now without implementation decomposition;
-6. **Success Criteria** — observable conditions and required evidence needed to claim completion;
-7. **Output** — required downstream deliverable/response shape, or an explicit statement that no additional format constraint applies;
-8. **Handoff** — `Route`, `Reason`, and `Use`.
+When evidence conflicts with an explicit outcome, investigate enough to determine whether the outcome can still be preserved by adding prerequisites, widening necessary scope inside settled authority, or strengthening proof. Ask only when preserving the outcome requires a material Human-owned change in outcome, accepted behavior, scope or priority, approval, or protected proof rule. If evidence proves infeasibility and no meaningful Human choice remains, return the blocker rather than a false decision.
 
-These fields encode different roles and authority and must not be flattened into one prose summary:
+## Why / design intent
 
-- **Goal** answers “what state should be true when this succeeds?”; motivation belongs in **Context**;
-- **Context** may challenge feasibility but does not silently become intent, a Human decision, or a constraint;
-- **Decisions** contains only Human authority, never model recommendations, guesses, reversible defaults, or repo facts;
-- **Constraints** defines what downstream may not violate or cross; implementation inconvenience is not a constraint;
-- **Task** is the current instruction and may be narrower than Goal, but cannot silently weaken Goal;
-- **Success Criteria** defines both observable completion and the evidence required to support the claim; target state and proof state remain distinguishable;
-- **Output** defines delivery shape, not correctness, and must not invent formatting requirements when none were requested;
-- **Handoff** tells the Human where the complete contract goes next and how to pass it.
+Goal and rationale have different roles:
 
-For verification, keep protected judging rules separate from completion evidence. For example, “replay/diff may not be replaced by build-only evidence” belongs in **Constraints**; “the affected replay/diff paths pass with no unexpected difference” belongs in **Success Criteria**.
+- **Goal** defines what should be true when the work succeeds.
+- **Why / design intent** explains the underlying problem or desired structural direction that should guide judgment when several unforeseen paths satisfy the literal Goal.
 
-This structure aligns with current frontier-model prompting practice: explicit goal, relevant context, constraints, required evidence, success criteria, and output format; Prompt Atlas adds **Decisions** to preserve Human authority and **Handoff** to preserve downstream consumption. Do not import downstream-owned workflow sections such as Task 0, concrete patch sequencing, exact command order, retry/rollback loops, progress files, or execution rules.
+Carry only decision-relevant rationale. A useful test is: if a capable executor encounters an unplanned but valid branch, would this rationale change which path best preserves the user's intent? If yes, keep it. If not, drop it as conversation history.
 
-A stable Artifact-mode result should be usable as one complete input unit. Do not require the Human to extract a paragraph, rename sections, or decide which subset to paste downstream. This fixed structure applies only after intent and required grounding are stable enough for handoff; unresolved Human decisions, blocking probes, or real blockers remain the smaller decision/probe/blocker output rather than being padded into the full contract. Embedded mode may use a caller-owned schema.
+## Unknowns
 
-## Handoff quality
+Do not ask merely because territory is incomplete. Separate:
 
-The Handoff removes the Human's final routing and usage guess without becoming a workflow transition. Always expose:
+- **territory unknowns** that repo investigation, measurement, or later execution can settle;
+- **executor-owned How** that can remain open without changing the intent;
+- **Human-owned intent gaps** whose resolution changes the requested outcome, accepted behavior, scope or priority, approval, or protected proof rule.
 
-- **Route** — `Direct Execute` or `Wayfinder`;
-- **Reason** — why the residual uncertainty fits that route;
-- **Use** — exactly how to pass the **entire contract** to the next consumer.
+Only the last category blocks Intent Take convergence. A wider necessary implementation surface or stronger verification obligation does not create a new Human decision when it remains inside settled boundaries.
 
-Choose **Direct Execute** when no material architecture or solution commitment must be made before execution; ordinary implementation choices and local structural edits may remain for the executor. `Use` should explicitly say to pass the entire contract as the execution agent's task input. When unattended execution is useful, Leader may consume that same full contract to compile a `/goal` taskbook; Leader is an optional carrier under Direct Execute, not a third route class.
+## Stable Intent IR
 
-Choose **Wayfinder** when execution first requires a material commitment about architecture, responsibility boundaries, structural decomposition, interfaces, migration strategy, or another solution choice that materially shapes How. `Use` should explicitly say to pass the entire contract to Wayfinder as design input and preserve settled Goal, Decisions, and Constraints while Wayfinder resolves How.
+Stable Intent IR is an internal compiler boundary, not necessarily the final user-facing artifact. It should make these roles recoverable without forcing a fixed serialized schema:
 
-Route by residual uncertainty, not by task size. When intent or required grounding is not stable enough to hand off, return the decision surface, probe, or blocker instead of forcing either route.
+- Purpose / Why
+- Goal and explicit requested outcomes
+- grounded Context / State relevant to meaning
+- Human Decisions
+- Constraints / Boundaries
+- Success and proof semantics
+- requested Output semantics when material
 
-A useful Handoff is brief and auditable. It must not restate the whole contract, invent a new requirement, weaken a proof obligation, or import the downstream capability's plan.
+Execution Compile consumes these semantics and may reorganize, compress, or lower them into a different executable representation. It must preserve authority and meaning, but it should not copy the Intent IR verbatim and append execution sections.
 
-## Stability
+## Unresolved output
 
-Compression, handoff, later evidence, and subsequent alignment turns may enrich the artifact but must not silently change authority or state:
+When Intent Take is not stable, return the smallest useful continuation surface rather than a padded executable artifact. Preserve the current best intent so the next turn does not have to reconstruct settled meaning, then expose only what blocks convergence, for example:
 
-- Goal, explicit requested outcomes, user-owned priorities, confirmed Decisions, and user-owned Constraints change only with new user authority;
-- still-valid settled semantics from a prior Atlas artifact provide the baseline for a later alignment turn; inferred, unknown, or unverified state remains such until authority or evidence changes it;
-- territory facts follow current authoritative evidence and may change with better evidence without rewriting user-owned intent;
-- downstream results or feedback may reveal mismatch, infeasibility, or missing evidence, but do not by themselves override a confirmed decision or requested outcome;
+- **Current Intent** — the settled Goal, important Why, and boundaries so far;
+- **Open Decision / Probe / Blocker** — the one material gap preventing stable compilation;
+- **Why it matters** — what user-owned semantic would change;
+- **Options** — only when a Human choice is actually needed, with materially distinct alternatives and a concise recommendation.
+
+A later invocation should use still-valid settled semantics as its baseline. New user authority may change intent; new authoritative evidence may improve grounding. Rewriting alone cannot promote uncertainty into settled intent.
+
+## Stability invariants
+
+Across compression, later alignment turns, and Execution Compile:
+
+- Goal and explicit requested outcomes change only with new user authority;
+- confirmed Decisions and user-owned Constraints retain their authority until superseded;
+- territory facts follow current authoritative evidence;
 - recommendations remain advisory and reversible defaults remain visibly unconfirmed;
-- unknowns, inferences, and proof gaps do not become current facts or completion claims through rewriting or repeated self-review;
+- proof gaps never become completion claims through rewriting;
 - superseded meaning is replaced rather than accumulated beside current intent;
-- downstream implementation judgment stays downstream unless the user makes it part of intent or authoritative territory evidence makes it a real constraint;
-- target conditions, current proof state, and accepted completion remain distinguishable;
-- Output changes only when the user or named consumer changes the required delivery shape, not because Atlas prefers a different presentation.
+- downstream implementation judgment remains downstream unless it changes a user-owned semantic;
+- target state, current evidence state, and accepted completion remain distinguishable.
 
-Shortening, self-review, carrier adaptation, or handoff guidance removes redundancy and improves usability; it does not create new authority. None may change settled intent, erase uncertainty, weaken proof obligations, or blur the distinction between target and current state.
-
-The artifact is consumer-ready when the next consumer does not need to reinterpret Goal, rediscover a settled Decision or governing acceptance requirement, infer who owns a Constraint, guess whether an explicit requested outcome was silently deferred, guess what evidence is required, infer the desired Output, or guess how to consume the artifact. These distinctions should be explicit in the fixed section structure rather than merely recoverable from prose.
-
-When correctness or completion is material, apply [completion-trust.md](completion-trust.md).
+When correctness or completion is material, apply [completion-trust.md](completion-trust.md). When Stable Intent IR is ready to lower, apply [execution-compile.md](execution-compile.md).
