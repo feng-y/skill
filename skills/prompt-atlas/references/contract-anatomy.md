@@ -1,85 +1,98 @@
-# Intent IR quality
+# Stable Intent IR
 
-Use this reference when Intent Take stability, authority, or compression is not obvious. This is a quality reference for Stage 1, not an execution workflow.
+Use this reference when Stage 1 intent quality or stability is not obvious. This is a quality reference for Intent Take, not a second workflow and not the executable carrier.
 
-## Intent sufficiency
+## Purpose
 
-Stable Intent IR is sufficient when Execution Compile no longer needs to rediscover what the user means. Preserve only semantics that can change downstream judgment:
+Intent Take should converge on source semantics that Execution Compile can lower without rediscovering what the user means or silently inventing authority.
 
-- the desired end state and explicit requested outcomes;
-- the underlying problem or design intent when it guides choices beyond literal task wording;
-- relevant territory reality, evidence state, and material uncertainty;
-- Human-confirmed decisions, priorities, approvals, and hard boundaries;
-- the observable result and trusted proof obligations that define success;
-- any requested delivery shape that materially constrains the result.
+Preserve only information that can change downstream judgment:
 
-Do not preserve broad background, superseded discussion, rejected alternatives, or implementation detail merely because they appeared in conversation. Preserve rationale when losing it would make a later executor choose a locally valid but directionally wrong solution.
+- the desired end state and the real problem being solved;
+- decision-relevant Why / design intent;
+- current territory facts, provenance, evidence state, and material unknowns;
+- Human-confirmed choices, priorities, approvals, and boundaries;
+- the current task scope when it differs from the broader Goal;
+- what observable result and proof would count as success;
+- requested delivery semantics when material.
 
-## Authority and territory
+Do not carry conversation history, rejected reasoning, or implementation detail merely because it appeared earlier.
 
-The current user owns intent. Current authoritative evidence owns territory.
+## Authority
 
-Explicit requested outcomes are authoritative until the user supersedes them. Grounding may add prerequisites, widen necessary implementation or verification scope inside settled boundaries, expose higher cost, or prove infeasibility; it must not silently weaken, defer, split out, or replace an explicit requested outcome.
+Keep authority classes distinct:
 
-Territory facts may change with better evidence without rewriting user-owned intent. Recommendations, inferences, defaults, and unknowns remain distinguishable from confirmed decisions and verified facts. Repeated rewriting on unchanged information may improve expression or consistency but creates no new authority.
+- **User-owned intent** — Goal, explicit requested outcomes, confirmed decisions, user-owned priorities, scope/approval boundaries, and protected proof requirements change only with new user authority.
+- **Territory reality** — authoritative code, tests, traces, schemas, artifacts, measurements, and other evidence may revise facts, feasibility, necessary work inside settled boundaries, and proof obligations without rewriting intent.
+- **Inference / recommendation** — useful for judgment but not settled authority.
+- **Unknown** — remains unknown until evidence or Human authority resolves it.
 
-When evidence conflicts with an explicit outcome, investigate enough to determine whether the outcome can still be preserved by adding prerequisites, widening necessary scope inside settled authority, or strengthening proof. Ask only when preserving the outcome requires a material Human-owned change in outcome, accepted behavior, scope or priority, approval, or protected proof rule. If evidence proves infeasibility and no meaningful Human choice remains, return the blocker rather than a false decision.
+Explicit requested outcomes are not disposable implementation suggestions. Grounding may expose prerequisites, wider necessary implementation or verification scope inside settled boundaries, higher cost, or infeasibility; it must not silently weaken, defer, split out, or replace an authoritative outcome.
 
 ## Why / design intent
 
-Goal and rationale have different roles:
+Preserve rationale when it can guide unforeseen execution choices. A useful Why explains the underlying problem, undesirable structural property, or desired direction beyond the literal surface change.
 
-- **Goal** defines what should be true when the work succeeds.
-- **Why / design intent** explains the underlying problem or desired structural direction that should guide judgment when several unforeseen paths satisfy the literal Goal.
+For example, “delete five fixed SessionData dict members” is a target change; “remote dict should not require a growing fixed SessionData staging layer” is a design intent that helps reject a superficially compliant replacement cache.
 
-Carry only decision-relevant rationale. A useful test is: if a capable executor encounters an unplanned but valid branch, would this rationale change which path best preserves the user's intent? If yes, keep it. If not, drop it as conversation history.
+Do not preserve rationale that only explains how the conversation arrived here.
 
-## Unknowns
+## Grounding
 
-Do not ask merely because territory is incomplete. Separate:
+Ground only unknowns needed to know what the user means, whether an explicit outcome is feasible inside settled authority, or what proof semantics must be preserved. Prefer the smallest authoritative check and references to rich existing artifacts.
 
-- **territory unknowns** that repo investigation, measurement, or later execution can settle;
-- **executor-owned How** that can remain open without changing the intent;
-- **Human-owned intent gaps** whose resolution changes the requested outcome, accepted behavior, scope or priority, approval, or protected proof rule.
+For repo work:
 
-Only the last category blocks Intent Take convergence. A wider necessary implementation surface or stronger verification obligation does not create a new Human decision when it remains inside settled boundaries.
+- include governing local constraints or acceptance paths when they change meaning or proof obligation;
+- capture a sourced baseline when success is relative to current behavior or measurement;
+- distinguish verified facts, inference, and unknowns;
+- if evidence challenges an explicit outcome, first determine whether prerequisites, wider necessary work, or stronger proof can preserve it inside settled boundaries;
+- leave broader work-surface discovery, dependency mapping, implementation design, and execution command validation to Execution Compile unless needed for intent stability.
 
-## Stable Intent IR
+## Human decisions
 
-Stable Intent IR is an internal compiler boundary, not necessarily the final user-facing artifact. It should make these roles recoverable without forcing a fixed serialized schema:
+Ask only when available evidence cannot settle a material choice that changes user-owned outcome, accepted behavior, scope or priority, approval, or a protected proof rule.
 
-- Purpose / Why
-- Goal and explicit requested outcomes
-- grounded Context / State relevant to meaning
-- Human Decisions
-- Constraints / Boundaries
-- Success and proof semantics
-- requested Output semantics when material
+Do not ask because:
 
-Execution Compile consumes these semantics and may reorganize, compress, or lower them into a different executable representation. It must preserve authority and meaning, but it should not copy the Intent IR verbatim and append execution sections.
+- the same outcome requires more implementation work;
+- repo discovery widens necessary scope inside already settled boundaries;
+- implementation How has several reasonable options;
+- the executor will need to decompose or replan work.
+
+When a Human choice is needed, expose the smallest useful surface with materially distinct options and a concise recommendation. A bounded conditional/default may be shown only as visibly unconfirmed when it preserves Goal and confirmed boundaries, is reversible or safely detectable if wrong, and does not impersonate Human authority. Rewriting or repetition cannot turn that default into a confirmed decision.
+
+If authoritative evidence proves the requested outcome infeasible and no meaningful Human choice remains, return the exact blocker rather than manufacturing a decision.
+
+## Stability test
+
+Stable Intent IR is sufficient when Execution Compile no longer needs to rediscover:
+
+- what problem is actually being solved and why;
+- what complete outcome must remain true;
+- which choices and boundaries are Human-authoritative;
+- which facts are verified versus inferred or unknown;
+- what success and trusted proof mean;
+- what requested delivery semantics must survive lowering.
+
+Implementation discovery, task decomposition, dependency mapping, local architecture How, execution topology, command order, retry policy, and runtime state do not make intent unstable unless resolving them would change the user-owned semantics above.
 
 ## Unresolved output
 
-When Intent Take is not stable, return the smallest useful continuation surface rather than a padded executable artifact. Preserve the current best intent so the next turn does not have to reconstruct settled meaning, then expose only what blocks convergence, for example:
+When intent is not stable, return the best current intent snapshot plus only the smallest decision, focused probe, bounded conditional/default, or blocker needed for another alignment turn. Do not pad unresolved intent into an executable contract.
 
-- **Current Intent** — the settled Goal, important Why, and boundaries so far;
-- **Open Decision / Probe / Blocker** — the one material gap preventing stable compilation;
-- **Why it matters** — what user-owned semantic would change;
-- **Options** — only when a Human choice is actually needed, with materially distinct alternatives and a concise recommendation.
+A later turn may converge the intent when it adds new user authority or authoritative territory evidence. Self-review on unchanged information can improve consistency or wording but cannot promote inference, recommendation, default, or uncertainty into settled intent.
 
-A later invocation should use still-valid settled semantics as its baseline. New user authority may change intent; new authoritative evidence may improve grounding. Rewriting alone cannot promote uncertainty into settled intent.
+## Boundary with Execution Compile
 
-## Stability invariants
+Stable Intent IR is compiler input, not the first half of the final taskbook.
 
-Across compression, later alignment turns, and Execution Compile:
+Execution Compile may:
 
-- Goal and explicit requested outcomes change only with new user authority;
-- confirmed Decisions and user-owned Constraints retain their authority until superseded;
-- territory facts follow current authoritative evidence;
-- recommendations remain advisory and reversible defaults remain visibly unconfirmed;
-- proof gaps never become completion claims through rewriting;
-- superseded meaning is replaced rather than accumulated beside current intent;
-- downstream implementation judgment remains downstream unless it changes a user-owned semantic;
-- target state, current evidence state, and accepted completion remain distinguishable.
+- ground implementation territory needed for a truthful graph;
+- close material execution branches from intent, constraints, and evidence;
+- derive Task / Issue boundaries and dependencies;
+- lower proof semantics into verifier topology and a Global Gate;
+- create AFK/recovery/continuity semantics.
 
-When correctness or completion is material, apply [completion-trust.md](completion-trust.md). When Stable Intent IR is ready to lower, apply [execution-compile.md](execution-compile.md).
+It may not reinterpret Goal, silently alter Human authority, or print the full Intent IR and then append an execution section. The final executor-facing artifact should contain only the lowered semantics that matter to execution judgment.
