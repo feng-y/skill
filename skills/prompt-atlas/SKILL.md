@@ -26,9 +26,9 @@ Recover the current request from the user's latest authority, still-valid prior 
 
 Ground only what can change intent meaning, feasibility inside settled boundaries, or success/proof semantics. Prefer the smallest authoritative check and rich existing references. Keep verified fact, inference, recommendation, and unknown distinct.
 
-Ask the Human only for a material choice that evidence cannot settle and that changes user-owned outcome, accepted behavior, scope/priority, approval, or a protected proof rule. Implementation alternatives that preserve those semantics remain downstream judgment. A recommendation or reversible default never becomes Human authority through rewriting.
+Before declaring intent stable, actively scan for unresolved Human-owned choices. Resolve reality/context unknowns from authoritative evidence when possible and use that grounding to reduce the decision surface. Do not ask about unknowns evidence can settle or local implementation How. But if a remaining material choice changes user-owned outcome, accepted behavior, scope/priority, approval, or a protected proof rule, surface the smallest useful decision set to the Human with materially distinct options, consequences, and a concise recommendation. Do not erase such a choice through inference, recommendation, or an implicit default.
 
-Intent is stable when Execution Compile no longer needs to rediscover the problem, complete outcome, authoritative choices/boundaries, material factual uncertainty, or what trusted success means. If it is not stable, return the current intent plus only the smallest decision, probe, conditional/default, or blocker needed to continue alignment.
+Intent is stable when Execution Compile no longer needs to rediscover the problem, complete outcome, authoritative choices/boundaries, material factual uncertainty, or what trusted success means, and no material Human-owned choice remains unresolved. If it is not stable, return the current intent plus only the smallest decision, probe, conditional/default, or blocker needed to continue alignment. When the remaining surface is Human-owned, ask it rather than hiding it behind a passive unresolved state.
 
 When stable, treat the result as **Stable Intent IR** and continue to Stage 2.
 
@@ -59,7 +59,7 @@ For research or decision work, use evidence-bearing probe/source/synthesis nodes
 
 Emit one terminal state and stop:
 
-- **`Status: Unresolved Intent`** — current best intent plus the smallest remaining alignment surface.
+- **`Status: Unresolved Intent`** — current best intent plus the smallest remaining alignment surface; ask explicitly when that surface is a Human-owned material decision.
 - **`Status: Execution Decision`** — Stable Intent exists, but a material execution branch still needs closure and no safe unconfirmed execution default applies.
 - **`Status: Executable`** — one lowered executor-facing carrier.
 
