@@ -1,62 +1,40 @@
-# Completion trust
+# Completion Trust
 
-Use this reference when the requested result needs a material correctness or completion claim. Intent Take preserves what must be proven; Execution Compile lowers that proof obligation into verifier nodes, local checks, and the Global Gate. The executor runs visible checks but must not weaken their protected semantics or self-certify evidence that requires an independent boundary.
+Use this reference only when the Goal or governing repo contract makes correctness/completion proof material. It is not a generic instruction to add another review, re-check, or verifier to every task.
 
-## Stage 1 — preserve proof semantics
+Intent Take preserves **what must be proven**. Execution Compile decides whether that obligation has orchestration meaning as local proof, a verifier node, or the Global Gate. The executor runs the visible proof but cannot weaken its semantics or self-certify evidence that requires an independent boundary.
 
-Intent Take should identify and preserve the proof obligation that follows from the user's Goal and governing repo reality:
+## Proof semantics
 
-1. **Direct proof** — prefer evidence that demonstrates the intended behavior or result: a target test, replay or trace, contract comparison, known input/output, runtime observation, or reproducible manual check. When an authoritative repo-local acceptance path already governs the claimed property, preserve it rather than replacing it with a weaker convenient proxy. Build, lint, coverage, and similar signals are supporting evidence unless they directly prove the target property.
-2. **Failure sensitivity** — when a gate is new, changed, proxy-only, silent on failure, or otherwise capable of false-green, preserve the requirement that it demonstrate the ability to distinguish right from wrong.
-3. **Integrity boundary** — when a cheaper false pass is plausible, preserve the applicable **Judge**, **Population**, **Object**, and **Metric** dimensions so downstream work cannot narrow or substitute them silently. This includes protecting the acceptance surface from shortcuts such as weakening assertions, shrinking covered inputs, substituting a mock/narrower object, changing thresholds, bypassing failure propagation, or reducing a baseline when those would invalidate the claimed property.
-4. **Independent acceptance need** — when executor self-attestation would be weak or gameable, preserve that completion requires an independent accepting boundary rather than letting executor-designed evidence become final proof.
+Preserve the minimum proof properties needed for the claim:
 
-Intent Take does not need to decide the exact command sequence, retry pattern, or verifier implementation when those are execution How.
+1. **Directness** — prefer evidence that demonstrates the intended behavior/result. Existing authoritative acceptance paths outrank convenient proxies such as build, lint, or coverage when those proxies do not prove the target property.
+2. **Failure sensitivity** — when a new or changed gate could false-pass, require evidence that it can distinguish right from wrong.
+3. **Integrity boundary** — when a cheaper false pass is plausible, freeze the material **Judge, Population, Object, and Metric** so downstream work cannot silently weaken assertions, shrink coverage, substitute a narrower/mock object, alter thresholds, bypass failure propagation, or reduce a protected baseline.
+4. **Independent acceptance** — when executor self-attestation remains gameable or incomplete, final completion belongs to a fresh/independent accepting boundary.
 
-## Stage 2 — compile verification structure
+Intent Take need not choose exact commands, retry patterns, or verifier implementation when those are execution How.
 
-Execution Compile maps preserved proof semantics into the execution graph:
+## Lower into the graph
 
-- attach local proof to the Task / Issue node whose outcome it establishes;
-- create separate verification nodes when proof must observe multiple upstream results or needs fresh context / independent judgment;
-- keep the **Global Gate** distinct from local node completion;
-- bind protected Judge / Population / Object / Metric semantics into Boundaries and Verification so a cheaper substitute cannot complete the Goal;
-- preserve sourced baselines and non-regression obligations when success depends on comparison with current behavior;
-- make a newly created or materially changed gate demonstrate failure sensitivity when false-green is plausible;
-- when independent acceptance is required, cap executor-owned evidence at `ready for independent acceptance`; only the independent boundary can satisfy global completion.
+Execution Compile attaches proof where it matters:
 
-Verification topology should follow what must be proven, not a generic always-review stage. A simple task may have one local check plus the Global Gate. A behavior-preserving migration may require replay/diff, roundtrip proof, negative/failure-sensitivity evidence, or an independent acceptance node when governing coverage is incomplete.
+- local proof belongs to the node whose outcome it establishes;
+- a separate verifier node exists only when proof spans upstream results or genuinely needs fresh/independent judgment;
+- the Global Gate stays distinct from local completion;
+- protected Judge / Population / Object / Metric and non-regression semantics stay binding;
+- executor-owned evidence stops at `ready for independent acceptance` when another boundary owns final judgment.
+
+Verification topology follows the property being proven, not a default always-review workflow.
 
 ## Visible-contract boundary
 
-A genuinely hidden oracle, manager-side spot check, fresh-context challenge, or other acceptance mechanism whose strength depends on the executor not seeing it must stay outside the executor-visible carrier. Prompt Atlas may compile the requirement for independent acceptance and the property/boundary it must judge, but it must not expose the hidden cases or let the executor author the decisive oracle and then call itself complete.
+A hidden oracle, manager-side spot check, fresh-context challenge, or other mechanism whose strength depends on executor independence stays outside the executor-visible carrier. Prompt Atlas may state the property and accepting boundary; it must not expose hidden cases or let the executor author the decisive oracle and then certify itself.
 
-If the runtime/harness cannot provide the required independent boundary, the executable graph may end at `ready for independent acceptance`; it must not fabricate parity with hidden or fresh-context verification.
+If the runtime/harness cannot provide a required independent boundary, the graph may end at `ready for independent acceptance`; it must not claim equivalent proof.
 
-## Runtime trust rules
+## Runtime truth
 
-During execution:
+Insufficient, compromised, narrowed, skipped, fabricated, or stale proof is `UNMET`. A local PASS can unlock dependent work without proving the whole Goal. Failed proof returns to evidence-producing work or replanning while safe work remains. Environment unavailability stays explicit. Upstream changes invalidate downstream evidence when the change affects what that evidence proved.
 
-- insufficient, compromised, narrowed, skipped, fabricated, or stale proof is `UNMET`;
-- local PASS unlocks dependent work but does not imply global completion;
-- a failed verifier routes back to evidence-producing work or replanning while safe work remains;
-- environment unavailability must remain explicit; it cannot be converted into a passing claim;
-- when upstream changes invalidate downstream evidence, that evidence must be re-established before it can support completion;
-- the executor may revise implementation How and the remaining graph, but may not silently weaken the proof obligation or integrity boundary.
-
-## Leader anti-false-green coverage
-
-Leader's concrete anti-cheat rules are one realization of the same trust semantics: protect the oracle, keep coverage/baselines from shrinking, prove changed checks can actually fail, and use an independent judge when executor self-attestation is gameable. Prompt Atlas preserves those capabilities semantically instead of requiring one fixed list of forbidden tactics for every task.
-
-## Placement
-
-The final executable carrier should make trust semantics visible where they affect judgment:
-
-- **State** — existing gates, baselines, proof state, available verifier, and verified/inferred/unmeasured status;
-- **Decisions** — material verification ownership or branch choices already closed, with basis;
-- **Boundaries** — protected Judge / Population / Object / Metric and any governing no-bypass or non-regression rule;
-- **Graph** — verifier nodes and dependencies where verification has real orchestration meaning;
-- **Verification** — local proof obligations, failure sensitivity, independent acceptance boundary, and the Global Gate;
-- **Runtime** — failed or stale proof returns to work; only trusted Global Gate satisfaction completes.
-
-Do not compile fixed retry counts, arbitrary failure-round budgets, mandatory progress files, or verifier topology that the task does not need. Those are execution mechanisms, not proof semantics.
+Leader's concrete anti-cheat and reverse-validation rules are one realization of these semantics. Prompt Atlas preserves the same capability through proof directness, failure sensitivity, integrity boundaries, non-regression, and independent acceptance rather than imposing one fixed forbidden-tactics list on every task.
