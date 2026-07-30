@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: Two-stage compiler for turning a raw or evolving request into an executable agent handoff. Intent Take converges on Stable Intent without inventing Human authority. Execution Compile lowers that intent into the smallest truthful execution graph that can run with minimal Human orchestration. Use for requirement clarification, prompt/task preparation, handoff, or when another workflow needs stable intent or an executable task carrier.
+description: Two-stage compiler for turning a raw or evolving request into an executable agent handoff. Intent Take converges on Stable Intent without inventing Human authority. Execution Compile lowers that intent into the smallest truthful executable control carrier: a grounded graph plus the runtime, recovery, and acceptance semantics needed to execute it with minimal Human orchestration. Use for requirement clarification, prompt/task preparation, handoff, or when another workflow needs stable intent or an executable task carrier.
 ---
 
 # Prompt Atlas
@@ -8,7 +8,7 @@ description: Two-stage compiler for turning a raw or evolving request into an ex
 Prompt Atlas has two stages:
 
 1. **Intent Take** — establish what should be achieved, why it matters, what is authoritative, and what would count as success.
-2. **Execution Compile** — lower Stable Intent into a small, grounded execution graph with the decisions, dependencies, proof boundaries, and runtime semantics needed for AFK execution.
+2. **Execution Compile** — lower Stable Intent into a small, grounded executable control carrier with the decisions, graph, proof boundaries, runtime routes, recovery semantics, and acceptance contract needed for AFK execution.
 
 Stable Intent is source semantics, not the first half of the final taskbook. Execution Compile transforms it into an executor-facing representation; it does not append execution prose to an Intent Contract or reinterpret settled intent.
 
@@ -17,7 +17,7 @@ Trust a capable frontier model with routine implementation How, local self-corre
 Use progressive disclosure:
 
 - [contract-anatomy.md](references/contract-anatomy.md) when intent authority, goal closure, or stability is unclear;
-- [execution-compile.md](references/execution-compile.md) when graph shape, branch closure, AFK continuity, or Leader capability coverage needs judgment;
+- [execution-compile.md](references/execution-compile.md) when graph shape, branch closure, runtime behavior, AFK continuity, or Leader capability coverage needs judgment;
 - [completion-trust.md](references/completion-trust.md) when completion can false-pass or needs an independent acceptance boundary.
 
 ## Stage 1 — Intent Take
@@ -40,26 +40,28 @@ When stable, treat the result as **Stable Intent IR** and continue to Stage 2.
 
 ## Stage 2 — Execution Compile
 
-Execution Compile ends when it produces one executable carrier. It does not run the graph or own live execution state.
+Execution Compile ends when it produces one executable control carrier. It compiles the graph and its runtime contract, but it does not execute the carrier or own live execution state.
 
-First ground enough execution reality to make the graph truthful: identify the actual target/workspace, work surfaces, governing specs or tests, material baselines, real dependencies, and critical commands/verifiers when accessible. Keep unavailable or unverified evidence explicit rather than turning plausibility into fact.
+First ground enough execution reality to make the carrier truthful: identify the actual target/workspace, work surfaces, governing specs or tests, material baselines, real dependencies, and critical commands/verifiers when accessible. Keep unavailable or unverified evidence explicit rather than turning plausibility into fact.
 
 If execution grounding shows that Stable Intent cannot be preserved inside its confirmed boundaries, or exposes a new Human-owned choice about Goal, accepted behavior, scope/priority, approval, or protected proof, return `Status: Unresolved Intent` with the conflict, evidence, and smallest decision surface, then re-enter Intent Take. Do not misclassify an intent change as an execution branch.
 
 Close execution branches that would otherwise interrupt AFK work when different answers materially change task boundaries, dependencies, verification ownership/path, scope, architecture direction, or the Global Gate while preserving Stable Intent. Resolve them from Stable Intent, governing constraints, and evidence when possible. If materially different graphs remain equally valid, return `Status: Execution Decision`; local reversible How stays executor-owned. A visibly unconfirmed execution default is allowed only when the caller explicitly requires an executable carrier without another Human turn and the default preserves settled Goal/boundaries while being reversible or reliably mismatch-detectable.
 
-Compile the **smallest useful graph**:
+Compile the **smallest useful executable control carrier**:
 
 - Task / Issue nodes are bounded outcomes with only the context, real dependencies, applicable boundaries, and proof needed to judge them locally.
-- Edges represent real dependency or evidence flow, not prose order.
+- Edges represent real dependency, evidence, invalidation, or routing flow when that distinction changes execution—not prose order.
+- Node-local act / observe / evaluate / repair loops are runtime semantics; do not expand retries or routine self-correction into duplicate graph nodes.
+- Runtime routes distinguish local repair, evidence-driven revision of the remaining graph, and escalation to Human or Intent authority.
 - The Global Gate judges the complete Goal; local done is not global completion.
 - Human gates exist only for newly exposed material execution branches that intent/evidence cannot close without changing Stable Intent.
 
 Add parallel ownership, partial-block behavior, continuity state, or separate verifier nodes only when the task actually needs them. Independent work may continue while another node is blocked. Trusted completed work survives replanning unless new evidence invalidates it.
 
-The runtime progresses ready work through an evidence-driven loop: act, observe, evaluate, then continue, repair locally, or revise the remaining graph. A failed check is work-state, not automatically HITL. Completion requires the task-specific proof carried by the Global Gate; generic extra review or re-check steps are not a default requirement.
+The runtime interprets the carrier and progresses ready work through an evidence-driven loop: act, observe, evaluate, then continue, repair locally, or revise the remaining graph. These routes are part of the compiled control contract rather than behavior the executor must reinvent. A failed check is work-state, not automatically HITL. Completion requires the task-specific proof carried by the Global Gate; generic extra review or re-check steps are not a default requirement.
 
-The executable carrier should make the following semantics recoverable without replaying the conversation: **Purpose, Goal, grounded State, closed Decisions, Graph, Boundaries, task-specific Verification, material Runtime/continuity semantics, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
+The executable carrier should make the following semantics recoverable without replaying the conversation: **Purpose, Goal, grounded State, closed Decisions, Graph, Boundaries, task-specific Verification, material Runtime/continuity semantics, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
 
 For research or decision work, use evidence-bearing probe/source/synthesis nodes and judge completion by provenance, counterevidence, residual unknowns, and decision usefulness rather than inventing code-style metrics.
 
@@ -71,4 +73,4 @@ Emit one terminal state and stop:
 - **`Status: Execution Decision`** — Stable Intent remains valid, but a material execution branch still needs closure and no safe unconfirmed execution default applies.
 - **`Status: Executable`** — one lowered executor-facing carrier.
 
-For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Keep the artifact dense and readable; omit details that do not change executor judgment, but never compress away a requested outcome, authority distinction, material graph branch, or trusted proof obligation.
+For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Keep the artifact dense and readable; omit details that do not change executor judgment, but never compress away a requested outcome, authority distinction, material graph branch, runtime route, recovery requirement, or trusted proof obligation.
