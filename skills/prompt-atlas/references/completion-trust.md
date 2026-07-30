@@ -44,6 +44,10 @@ During execution:
 - when upstream changes invalidate downstream evidence, that evidence must be re-established before it can support completion;
 - the executor may revise implementation How and the remaining graph, but may not silently weaken the proof obligation or integrity boundary.
 
+## Leader anti-false-green coverage
+
+Leader's concrete anti-cheat rules are one realization of the same trust semantics: protect the oracle, keep coverage/baselines from shrinking, prove changed checks can actually fail, and use an independent judge when executor self-attestation is gameable. Prompt Atlas preserves those capabilities semantically instead of requiring one fixed list of forbidden tactics for every task.
+
 ## Placement
 
 The final executable carrier should make trust semantics visible where they affect judgment:
