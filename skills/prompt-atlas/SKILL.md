@@ -1,79 +1,117 @@
 ---
 name: prompt-atlas
-description: Stably compile a one-sentence goal or scattered, evolving cross-turn hints into a consumer-ready Intent Contract or requested carrier. Support human-driven iterative intent alignment across separate invocations by preserving settled semantics, incorporating new user authority, and refreshing territory grounding from authoritative evidence. In explicit Artifact mode, render stable intent as a strongly structured agent-facing contract with Goal, Context, Decisions, Constraints, Task, Success Criteria, Output, and Handoff. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when a broader workflow explicitly needs intent intake before direct, design, planning, issue, or execution work. Explicit /prompt-atlas use returns the compiled artifact as the terminal result of this invocation.
+description: Compile a one-sentence goal or scattered, evolving cross-turn hints into an executable agent-facing artifact through two distinct stages. Intent Take recovers and grounds what the user actually wants, preserves settled authority across invocations, and returns a compact unresolved intent surface when a material Human decision still blocks convergence. Once intent is stable, Execution Compile lowers that intent into a small AFK-oriented execution graph with closed material branches, task or issue nodes, real dependencies, verification gates, and evidence-driven loop semantics. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when another workflow needs intent intake or an executable task carrier.
 ---
 
 # Prompt Atlas
 
-Perform request-scoped Intent Take. Recover what the user is actually trying to change, ground the context that matters, resolve only decisions that genuinely belong to the user, and leave the next consumer a contract that does not require rediscovering requirement meaning, authority, constraints, or completion criteria.
+Prompt Atlas is a two-stage compiler:
 
-Compile five minimum semantics internally:
+1. **Intent Take** — converge on what should be achieved and what must not drift.
+2. **Execution Compile** — lower stable intent into a small executable graph that a capable agent can run with minimal Human orchestration.
 
-- **Goal** — the desired end state and real problem being solved;
-- **Current Context** — only current facts, evidence, motivation, and bounded uncertainty that affect judgment;
-- **Boundary** — invariants, acceptable differences, scope, approval limits, protected evaluation or proof rules when material, and any user-owned priority needed to resolve competing constraints;
-- **Immediate Task** — what should be completed now without prescribing implementation procedure;
-- **Success / Stop** — the observable result and evidence that close the work, or what real blocker prevents closure.
+Keep the stages separate. Stable Intent is compiler input to Execution Compile, not a prose section that gets an execution appendix. Intent Take does not plan implementation. Execution Compile does not reinterpret settled intent.
 
-Keep these semantics distinct during reasoning. In Artifact mode, do not collapse a stable result into free-form prose merely for human editability. Compile it into the fixed agent-facing contract below. Structure is part of contract correctness: current frontier-model guidance favors explicit goals, relevant context, constraints, success/evidence requirements, output expectations, and clear separation rather than requiring the next agent to infer those roles from prose. Prompt Atlas adds Decisions and Handoff to preserve Human authority and downstream consumption.
+Assume current frontier models can investigate repositories, choose local implementation How, self-correct, and verify routine work. Compile only semantics that are costly to reconstruct, likely to cause drift, or useful for longer AFK execution. Do not encode generic reasoning procedures, fixed retry counts, fixed agent counts, speculative patch sequences, or workflow ceremony.
 
-Prompt Atlas owns intent understanding and carrier compilation, including explicit Human authority where it materially affects downstream judgment. It does not own architecture choice, implementation planning, execution, or a durable repo-identity harness. New user authority may revise user-owned intent; territory evidence may revise facts, feasibility, necessary scope, proof state, or route without silently rewriting that intent. Repeated self-refinement on unchanged information is quality review, not new intent. Each invocation terminates after delivering either a stable structured artifact with Handoff or the smallest useful unresolved decision/probe/blocker. Handoff is explicit consumption guidance, not a transition into downstream work.
+Use [contract-anatomy.md](references/contract-anatomy.md) when intent stability or authority is not obvious, [execution-compile.md](references/execution-compile.md) when graph shape or HITL placement is not obvious, and [completion-trust.md](references/completion-trust.md) when a material correctness or completion claim needs stronger proof.
 
-Choose the output mode from the invocation:
+## Stage 1 — Intent Take
 
-- **Artifact mode** — default for explicit `/prompt-atlas` use and direct requests to clarify, consolidate, prepare, hand off, or rewrite a requirement. When stable, return the fixed agent-facing contract with Handoff and stop. When stable compilation is not possible, return only the smallest necessary decision surface, probe, bounded conditional/default, or blocker and stop.
-- **Embedded mode** — only when another capability or workflow explicitly invokes Prompt Atlas as an intake sub-capability. Return the compiled intent in the caller's requested carrier or schema and stop Prompt Atlas. Do not infer Embedded mode merely because the ultimate task could later be designed or executed; let the caller own downstream routing unless it asks for a handoff judgment.
+### Recover
 
-Use detailed guidance only when relevant: [contract-anatomy.md](references/contract-anatomy.md) for contract goal attainment and stability, and [completion-trust.md](references/completion-trust.md) for correctness or completion claims.
+Recover from the current request, relevant corrections, prior decisions, examples, and any still-valid Atlas artifact. The current user owns intent; current authoritative evidence owns territory; the latest explicit correction supersedes older meaning.
 
-## Intent Take
+Separate desired outcomes from suggested means and hard constraints. Preserve every explicit requested outcome with its original authority unless the user supersedes it. Evidence may expose prerequisites, wider necessary work inside settled boundaries, stronger proof, or infeasibility; it may not silently weaken, defer, split out, or replace the requested outcome.
 
-### 1. Recover
+Preserve rationale that can change downstream judgment. Keep the underlying problem or design intent when it helps an executor choose correctly among unforeseen but valid implementation paths. Do not carry conversational history merely because it occurred.
 
-Recover from the current request, relevant corrections, prior decisions, and examples. When a prior Atlas artifact exists, use still-valid settled semantics as the baseline rather than restarting from raw history. The current user owns intent; current authoritative evidence owns territory. Latest explicit corrections supersede older meaning. Only new user authority may change Goal, user-owned priorities, confirmed decisions, user-owned boundaries, or an explicit requested end state. Better territory evidence may update Context, feasibility, proof obligations, route, or necessary implementation and verification scope without silently rewriting those user-owned semantics. Treat explicit requested outcomes as authoritative until the user supersedes them; do not silently downgrade, defer, split out, or replace one because grounding reveals risk or extra work. Recover desired outcomes separately from suggested means and hard constraints.
+### Ground
 
-### 2. Ground
+Investigate only unknowns whose answers can materially change the Goal, user-owned Decisions, Constraints, Success semantics, feasibility, or whether intent is stable enough to compile. Prefer the smallest authoritative check and rich existing references such as code, tests, traces, schemas, artifacts, and rubrics.
 
-Investigate only unknowns whose answers could materially change Goal, Constraints, Task, Success Criteria, or safe route. Prefer the smallest authoritative check and rich existing references. When territory evidence challenges an explicit user-owned outcome, investigate enough to characterize the conflict and determine whether the outcome can still be satisfied by adding prerequisites, widening necessary scope within current user-owned boundaries and approval limits, or strengthening proof. If satisfying it would cross such a boundary or approval limit, preserve that conflict for Human resolution rather than silently expanding authority. For repo-scoped work, include governing repo-local constraints or acceptance rules when they can materially change Constraints, Success Criteria, required evidence, or route; preserve the governing requirement, not downstream execution procedure. Capture a sourced baseline whenever the requested change is judged relative to current behavior or measurement, and keep evidence state and mismatch consequence explicit. Preserve material uncertainty instead of inventing certainty or asking the user for facts the environment can settle. Broader implementation investigation remains downstream unless needed to know what the user means or whether a user-owned outcome is actually feasible.
+For repo work, preserve governing local constraints and acceptance paths when they can change meaning or proof obligations. Capture a sourced baseline when success is relative to current behavior or measurement. Distinguish verified fact, inference, and unknown. Broader implementation discovery remains downstream unless it is needed to understand the request or determine whether the requested outcome is feasible.
 
-### 3. Resolve human decisions
+### Resolve Human-owned intent
 
-Resolve only material decisions that available evidence cannot settle and that genuinely belong to the user. If grounding cannot resolve a conflict while preserving an explicit user-owned outcome, surface the conflict with the material evidence, materially distinct options, and one concise recommendation before weakening, deferring, splitting, replacing, or otherwise changing that outcome. If authoritative evidence already proves the outcome infeasible within the settled Constraints and no meaningful user choice remains, return the blocker rather than posing a false question. Do not ask merely because satisfying the same outcome requires more implementation work, broader necessary scope, or stronger verification when those consequences remain inside settled user-owned boundaries and approval limits; absorb them when evidence makes them clear. If a required consequence crosses user-owned scope or approval authority, ask.
+Ask only when evidence cannot settle a material choice whose resolution changes user-owned outcome, accepted behavior, scope or priority, approval, or a protected proof rule. Do not ask merely because the same outcome requires more work, wider necessary implementation scope inside settled boundaries, or a local implementation choice.
 
-As the normal interaction budget, aim for one compact round with no more than five questions. For each question, prefer 2–4 materially distinct options and one concise recommendation with its basis. If that budget would materially reduce goal attainment or stability, exceed it rather than omit a necessary user decision. Do not silently choose a direction or present a recommendation/default as confirmed user intent. A reversible default is allowed only when it leaves Goal and user-owned Constraints unchanged, the cost of being wrong is bounded and reversible, and mismatch is detectable; never use a default to change an explicit requested end state. Mark it visibly as unconfirmed. When a Human decision is required, expose the smallest useful decision surface and stop; do not manufacture another internal round by answering it on the user's behalf.
+Normally expose the smallest useful decision surface with materially distinct options and a concise recommendation. Do not silently convert a recommendation, reversible default, or model preference into confirmed user intent. If authoritative evidence proves the requested outcome infeasible and no meaningful Human choice remains, return the exact blocker rather than a false question.
 
-### 4. Compile and validate
+### Intent readiness
 
-Compile the best current intent when the five internal semantics are stable enough for the next consumer. Before treating the artifact as stable, verify that every explicit user-owned requested outcome is still represented with the same authority or has been explicitly superseded by the user. Omission, silent weakening, deferral, or extraction into a later task is semantic drift. Prefer rich existing references—code, tests, traces, artifacts, schemas, rubrics—over replaying their contents.
+Intent is stable when a downstream compiler no longer needs to rediscover what the user means, what problem is being solved, which outcomes and boundaries are authoritative, or what result and proof would count as success. Ordinary implementation discovery, decomposition, local architecture choices, and execution replanning do not make intent unresolved.
 
-For stable Artifact mode, emit these canonical headings in this exact order regardless of response language; localize the section contents, not the field names:
+When intent is not stable, stop after returning the best current intent plus the smallest unresolved Human decision, focused probe, bounded conditional/default, or exact blocker. Further convergence requires new user authority or new authoritative territory evidence; repeated rewriting alone cannot promote uncertainty into settled intent.
 
-1. **Goal** — desired end state. State what should be true when the work succeeds, not merely why the work is useful and not an implementation checklist.
-2. **Context** — only relevant motivation, current territory facts, evidence state, and material unknowns. Keep fact, inference, and unknown distinguishable. Do not hide constraints or Human decisions here.
-3. **Decisions** — only material choices explicitly confirmed by the user, including approvals that downstream must not reopen. Do not put model recommendations, reversible defaults, guesses, or territory facts here. If there are no additional confirmed decisions beyond the explicit request, state that briefly rather than inventing one.
-4. **Constraints** — hard boundaries, invariants, acceptable differences, scope/approval limits, user-owned priorities when needed, and protected oracle/evaluation rules that downstream must not weaken or bypass. Do not turn implementation convenience into a constraint.
-5. **Task** — what this pass must accomplish now. Keep it outcome-oriented and implementation-neutral; do not expand into patch decomposition, task sequencing, exact commands, or executor procedure.
-6. **Success Criteria** — observable conditions and required evidence needed to claim completion. Preserve authoritative acceptance paths such as replay/diff when they govern the claimed property. Distinguish the target result from evidence proving it; do not reduce behavioral proof to convenient proxies such as build/lint alone.
-7. **Output** — required downstream deliverable or response format when the user or named consumer specifies one. If no extra output shape is required, state that the downstream consumer's normal deliverable applies; do not invent formatting requirements.
-8. **Handoff** — make downstream consumption unambiguous with `Route`, `Reason`, and `Use`.
+When intent is stable, treat the resulting semantics as **Stable Intent IR** and continue to Execution Compile. Do not emit a complete Intent Contract and then append execution instructions.
 
-Field boundaries are strict: **Goal** is the end state; **Task** is the current instruction; **Context** is territory reality and motivation; **Decisions** records Human authority; **Constraints** defines what cannot drift or be crossed; **Success Criteria** defines what result/evidence closes the work; **Output** defines delivery shape, not correctness.
+## Stage 2 — Execution Compile
 
-For Handoff routing:
+Execution Compile consumes Stable Intent IR and produces one executable artifact. It is semantic lowering plus orchestration synthesis, not another intent pass.
 
-- **Direct Execute** — choose when remaining uncertainty is implementation-level and execution does not first require a material architecture or solution commitment about responsibility boundaries, structural decomposition, interfaces, migration strategy, or another design choice that materially shapes How. `Use` must explicitly tell the Human to pass the entire contract as the execution agent's task input. When unattended/long-running execution is directly useful, it may additionally say to pass the same complete contract to Leader to compile a `/goal` taskbook. Leader is an execution carrier, not a third top-level route.
-- **Wayfinder** — choose when Goal and Constraints are stable but a material architecture or solution commitment still must be made before execution. `Use` must explicitly tell the Human to pass the entire contract to Wayfinder as design input; Wayfinder resolves How without reopening settled Goal, Decisions, or Constraints.
+### Preserve judgment anchors
 
-Route by residual solution uncertainty, not task size. Handoff must not restate the whole artifact, invent a requirement, weaken a proof obligation, or import the downstream capability's plan. It never starts the next capability.
+Carry forward only intent semantics that affect execution judgment:
 
-The fixed Artifact-mode structure is an intent contract, not an execution taskbook. Do not import Leader-owned Task 0, patch-by-patch sequencing, exact acceptance command order, retry/rollback loops, PROGRESS/BLOCKED mechanics, or execution rules. If a concrete command or procedure is itself user-owned intent, preserve it in the appropriate field; otherwise leave execution procedure downstream.
+- the underlying **Purpose / Why** when it prevents directional drift;
+- the complete **Goal** and requested outcomes;
+- settled Human decisions and hard boundaries;
+- relevant grounded State, baselines, and proof obligations;
+- the required delivery or completion semantics.
 
-For repo-changing work, make write scope explicit in **Constraints** when implicit scope is unsafe. Prompt Atlas is done when the next consumer can continue without re-deriving Goal, Context, Human Decisions, Constraints, Task, completion evidence, expected Output, or how to consume the artifact. Downstream work may enrich implementation knowledge and current evidence, but settled user intent changes only with new user authority. A proof gap cannot become completion through handoff.
+Transform these into the executable representation rather than duplicating the Intent IR verbatim.
 
-When material uncertainty still prevents stable compilation, expose only the next useful alignment outcome: a focused `probe`, a Human `ask`, a bounded conditional/default, or the exact blocker, then stop. Do not emit the fixed downstream contract or Handoff while user-owned intent or required grounding is unresolved. Further intent convergence requires a later invocation with new user authority; new authoritative territory evidence may improve grounding without changing user-owned intent. Without either new signal, additional self-review may improve consistency or expression but must not promote inference, recommendation, default, or uncertainty into settled intent.
+### Close material execution branches
 
-If the user requests a fresh-session handoff, save the same structured artifact as Markdown in the operating system temporary directory, reference existing artifacts rather than copying them, redact sensitive context, add `Suggested skills`, and return the absolute path.
+Before execution, identify unresolved choices whose alternatives would materially produce different task or issue graphs, dependencies, verification paths, scope, or architecture direction. Resolve them from settled intent, governing constraints, and authoritative evidence when possible.
+
+If materially different execution graphs remain equally compatible with the settled intent and current evidence does not select among them, expose that decision as pre-execution HITL and stop. This is branch closure, not Human orchestration. Do not ask for local, reversible implementation How that the executor can choose without changing the graph materially.
+
+Record material closed branches with their basis; distinguish Human-confirmed choices, governing constraints, and evidence-grounded execution decisions from executor-owned How.
+
+### Compile a small execution graph
+
+Compile the minimum graph that is useful to start and remain AFK:
+
+- **Task / Issue nodes** are bounded work units with an outcome, the relevant context, dependencies when real, applicable boundaries, and local verification.
+- **Edges** represent real dependency or evidence flow. Do not serialize independent work merely because prose would say “then.”
+- **Checkpoints** decide local node completion or route work back for repair.
+- **Global Gate** judges the complete Goal; local done must never imply global completion.
+- **Human Gate** appears only for a newly exposed material branch that cannot be safely closed from intent or evidence.
+
+Prefer a small or lazy graph. Do not predict the whole implementation when later evidence can refine it. Independent work may fan out; real dependencies remain ordered; completed trustworthy nodes should not be repeated merely because the remaining graph changes.
+
+### Compile loop semantics
+
+Each ready Task / Issue runs as an evidence-driven loop:
+
+`Act → Observe → Evaluate → Next`
+
+A failed local check routes first to diagnosis, a different How, or local replanning. Failure alone is not HITL. The graph runtime selects ready work, executes node loops, incorporates evidence, and may revise the remaining graph when observations invalidate the current execution theory.
+
+Continue while the Goal is not yet proven and safe evidence-producing work remains inside settled boundaries. Complete only when the Global Gate is satisfied by trusted evidence. Stop for Human input only when continuation exposes a material unresolved branch; stop as blocked only when no safe next action remains or required evidence/authority is genuinely unavailable.
+
+## Executable artifact
+
+Do not optimize for a particular field count. The final carrier must make the following semantics explicit enough that a fresh capable executor can act without re-deriving them:
+
+- **Purpose** — the problem or design intent that should guide judgment when unplanned choices appear;
+- **Goal** — the complete desired end state;
+- **State** — the resolvable execution target, relevant grounded facts, baseline, evidence state, and starting references;
+- **Decisions** — material execution branches already closed, with authority or evidence basis;
+- **Graph** — the current Task / Issue nodes, real dependencies, local completion conditions, and enough initial ready work to start;
+- **Boundaries** — hard scope, behavior, architecture, approval, and protected proof invariants;
+- **Verification** — local proof obligations and the trusted Global Gate, including any required independent acceptance boundary;
+- **Runtime** — node-loop, graph-update, recovery, HITL, completion, and true-block rules;
+- **Delivery** — the requested deliverable or the executor's normal deliverable plus a concise evidence receipt.
+
+The serialization may be compact and task-shaped. Do not add empty ceremony merely to fill headings, but do not compress away a semantic distinction that prevents drift, false completion, unnecessary HITL, or loss of AFK continuity.
+
+For a simple task, the graph may be one work node plus verification and the Global Gate. Add structure only when real dependency, coordination, proof, or recovery needs it. For research or decision work, Task / Issue nodes may be probes, source review, synthesis, or comparison rather than code changes; the same graph and loop semantics apply.
+
+If a fresh-session handoff is requested, save the selected executable artifact unchanged as Markdown in the operating-system temporary directory, reference existing artifacts rather than copying them, redact sensitive context, and return the absolute path.
 
 ## Output
 
-In Artifact mode, stable output uses the eight-section contract above in that order. Section structure is mandatory even when content is brief. In **Handoff**, always emit `Route`, `Reason`, and `Use`; `Use` identifies the full artifact as the unit passed downstream. Keep the body dense and avoid explanatory prose outside the contract. Treat brevity as a budget, not a completion gate: never compress away a required authority distinction, material uncertainty, constraint, evidence obligation, or output requirement. In Embedded mode, honor the caller's carrier/schema while preserving the same intent semantics and authority boundaries. In both modes, delivery ends the Prompt Atlas invocation.
+For unresolved intent or pre-execution branch closure, return only the compact decision/probe/blocker surface needed to continue and stop. For stable work, return exactly one executable artifact produced by Execution Compile, not an Intent Contract plus a second execution appendix. Keep the carrier dense and agent-facing. Brevity is a budget, not permission to omit Purpose, authority, a material graph branch, verification integrity, or a requested outcome.
