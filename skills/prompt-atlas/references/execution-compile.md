@@ -41,9 +41,11 @@ A command, baseline, gate, or environment is verified only when evidence support
 
 Execution grounding may change graph shape, node boundaries, dependencies, proof topology, or execution decisions. It may not change Stable Intent.
 
+If new evidence shows that the settled Goal cannot be preserved inside confirmed boundaries, or that progress requires a new Human-owned choice about outcome, accepted behavior, scope/priority, approval, or protected proof, stop lowering and return `Status: Unresolved Intent` with the conflict, evidence, and smallest decision surface. Re-enter Intent Take while preserving still-valid grounding. Do not disguise an intent repair as an execution branch.
+
 ## Close material branches
 
-Close a branch before execution when different choices would materially change the execution graph—for example Task / Issue boundaries, dependency/order, verification ownership or acceptance path, scope, architecture responsibility, or the Global Gate.
+Close a branch before execution when different choices would materially change the execution graph—for example Task / Issue boundaries, dependency/order, verification ownership or acceptance path, scope, architecture responsibility, or the Global Gate—while all alternatives preserve Stable Intent.
 
 Use Stable Intent, governing constraints, and authoritative evidence first. If materially different graphs remain equally compatible, use pre-execution HITL. Batch related decisions rather than turning Human turns into scheduling.
 
@@ -65,7 +67,7 @@ An **edge** represents real dependency, evidence flow, or a required gate. Indep
 
 A **checkpoint** decides local completion and normally routes failure back to the node for repair. The **Global Gate** judges the complete Goal; a collection of local PASS results is not automatically global completion.
 
-A **Human Gate** exists only when new evidence exposes a material branch that current intent/evidence cannot close. Park that node and continue independent ready work. The graph is truly blocked only when no safe ready work remains.
+A **Human Gate** exists only when new evidence exposes a material execution branch that preserves Stable Intent but current evidence cannot close. Park that node and continue independent ready work. If the new choice would change Goal or Human-owned intent, route back to Intent Take instead. The graph is truly blocked only when no safe ready work remains.
 
 For parallel branches that touch shared mutable surfaces, make ownership explicit: prefer disjoint write domains, assign one owner per shared surface, make joins clear, and invalidate downstream proof when an upstream change makes it stale. This is orchestration semantics, not a fixed agent count.
 
