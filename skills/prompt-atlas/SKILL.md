@@ -74,6 +74,7 @@ Before emitting, check that:
 - the selected control form is the least complex one that can preserve coordination and recovery;
 - local task completion cannot be mistaken for global `MET`;
 - plausible false-pass routes are frozen when completion trust is material;
+- a behavior-preserving change not covered by the governing acceptance path, or another result whose decisive gate is designed by its executor, names an independent accepting boundary before executor evidence can become global `MET`;
 - an `UNMET` reason has a safe route back into work, or the artifact names the exact true blocker.
 
 ## Executable artifact

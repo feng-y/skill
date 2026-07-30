@@ -55,7 +55,7 @@ Choose inside Control; do not add a top-level route:
 
 Escalate only on observed need. Collapse back when extra structure no longer changes correctness, coordination, or recovery. Agent count, model choice, exact parallelism, and workflow implementation remain runtime decisions unless the user made them part of intent.
 
-Independent challenge is orthogonal to these three forms. Trigger it from proof risk: executor-designed acceptance, a plausible false pass, behavior-preserving migration, architecture work with material residual risk, a critical user path, or a governing requirement. When triggered, identify the available accepting boundary in Evaluation or Control; the executor stops at `ready for independent acceptance`, and only that boundary can produce global `MET`. Do not require a verifier for every routine change.
+Independent challenge is orthogonal to these three forms. Trigger it from proof risk: executor-designed acceptance, a plausible false pass, behavior-preserving migration, architecture work with material residual risk, a critical user path, or a governing requirement. A behavior-preserving change outside the governing acceptance path, or another result whose decisive gate is designed by its executor, requires this challenge. Identify the available accepting boundary in Evaluation or Control; the executor stops at `ready for independent acceptance`, and only that boundary can produce global `MET`. Do not require a verifier for every routine change.
 
 If the runtime parallelizes, give concurrent writers non-overlapping ownership, assign one owner to shared artifacts, and re-establish evidence invalidated by later integration. Do not precompile a multi-agent topology when no such execution choice has been made.
 
