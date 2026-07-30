@@ -1,21 +1,40 @@
-# Completion trust
+# Completion Trust
 
-Use this reference when the requested result needs a correctness or completion claim. Intent Take owns the evidence and trust obligations carried in the contract, including any authoritative acceptance path that governs the claimed property; each downstream consumer owns concrete invocation, enforcement, and verifier protocol.
+Use this reference only when the Goal or governing repo contract makes correctness/completion proof material. It is not a generic instruction to add another review, re-check, or verifier to every task.
 
-## Selection grammar
+Intent Take preserves **what must be proven**. Execution Compile decides whether that obligation has orchestration meaning as local proof, a verifier node, or the Global Gate. The executor runs the visible proof but cannot weaken its semantics or self-certify evidence that requires an independent boundary.
 
-Apply these decisions in order:
+## Proof semantics
 
-1. **Proof obligation** — identify evidence that directly demonstrates the intended behavior or result: a target test, replay or trace, contract comparison, known input/output, runtime observation, or reproducible manual check. When an authoritative repo-local acceptance path already governs the claimed property, preserve it as the proof obligation rather than replacing it with a more convenient weaker check. Treat build, lint, coverage, and other proxies only as supporting signals. If direct proof is missing, carry the missing verifier as a required precondition when a named downstream check can settle the claim without changing direction or boundary and safe work remains clear; otherwise carry it as a proof gap. Never promote a missing verifier to a verified current fact.
-2. **Failure sensitivity** — when a gate is new, changed, proxy-only, silent on failure, or otherwise capable of false-green, require evidence that it can distinguish right from wrong. The consumer chooses reverse validation, a known-failure case, red-to-green proof, or another suitable realization.
-3. **Integrity boundary** — when a cheaper false pass is plausible, select and freeze the applicable dimensions in Boundary: **Judge** (rules, thresholds, assertions), **Population** (samples, paths, coverage surface), **Object** (the real subject rather than a narrower or mocked substitute), and **Metric** (definition, range, comparison baseline). A result obtained by violating one does not satisfy Success.
-4. **Self-attestation policy** — allow executor-declared completion only when Proof directly reaches the target, the gate has failure sensitivity, plausible shortcuts are frozen, and risk is low with narrow scope. Otherwise require independent acceptance, especially for indirect proof, remaining gameability, migrations or behavior preservation, user-visible critical paths, proof designed by the executor, or completion that depends on overall user intent. When required, the executor may reach `ready for independent acceptance`, not `complete`, until the external judgment passes.
+Preserve the minimum proof properties needed for the claim:
 
-## Placement grammar
+1. **Directness** — prefer evidence that demonstrates the intended behavior/result. Existing authoritative acceptance paths outrank convenient proxies such as build, lint, or coverage when those proxies do not prove the target property.
+2. **Failure sensitivity** — when a new or changed gate could false-pass, require evidence that it can distinguish right from wrong.
+3. **Integrity boundary** — when a cheaper false pass is plausible, freeze the material **Judge, Population, Object, and Metric** so downstream work cannot silently weaken assertions, shrink coverage, substitute a narrower/mock object, alter thresholds, bypass failure propagation, or reduce a protected baseline.
+4. **Independent acceptance** — when executor self-attestation remains gameable or incomplete, final completion belongs to a fresh/independent accepting boundary.
 
-- **Current Context** — existing gates or governing acceptance paths, their strength or false-green risk, relevant baselines with source and evidence state, available independent verifier, and whether the relevant facts are verified, inferred, or still unmeasured.
-- **Boundary** — write scope and the selected Judge, Population, Object, and Metric invariants.
-- **Immediate Task** — missing proof action, required verification precondition, and artifacts needed for independent acceptance.
-- **Success / Stop** — evidence required for completion, the rule that insufficient or compromised proof cannot complete, whether current execution closure is `complete` or `ready for independent acceptance`, and whether the current step is blocked.
+Intent Take need not choose exact commands, retry patterns, or verifier implementation when those are execution How.
 
-Do not compile retry counts, failure rounds, rollback plans, time or round budgets, continuity protocols, or executor topology. Here, Stop means a true blocker, insufficient trusted evidence, or a boundary against further scope—not how an execution loop limits loss.
+## Lower into the graph
+
+Execution Compile attaches proof where it matters:
+
+- local proof belongs to the node whose outcome it establishes;
+- a separate verifier node exists only when proof spans upstream results or genuinely needs fresh/independent judgment;
+- the Global Gate stays distinct from local completion;
+- protected Judge / Population / Object / Metric and non-regression semantics stay binding;
+- executor-owned evidence stops at `ready for independent acceptance` when another boundary owns final judgment.
+
+Verification topology follows the property being proven, not a default always-review workflow.
+
+## Visible-contract boundary
+
+A hidden oracle, manager-side spot check, fresh-context challenge, or other mechanism whose strength depends on executor independence stays outside the executor-visible carrier. Prompt Atlas may state the property and accepting boundary; it must not expose hidden cases or let the executor author the decisive oracle and then certify itself.
+
+If the runtime/harness cannot provide a required independent boundary, the graph may end at `ready for independent acceptance`; it must not claim equivalent proof.
+
+## Runtime truth
+
+Insufficient, compromised, narrowed, skipped, fabricated, or stale proof is `UNMET`. A local PASS can unlock dependent work without proving the whole Goal. Failed proof returns to evidence-producing work or replanning while safe work remains. Environment unavailability stays explicit. Upstream changes invalidate downstream evidence when the change affects what that evidence proved.
+
+Leader's concrete anti-cheat and reverse-validation rules are one realization of these semantics. Prompt Atlas preserves the same capability through proof directness, failure sensitivity, integrity boundaries, non-regression, and independent acceptance rather than imposing one fixed forbidden-tactics list on every task.
