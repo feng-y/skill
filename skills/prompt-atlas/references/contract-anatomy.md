@@ -41,6 +41,8 @@ Grounding should reduce the Human decision surface, not replace it. Close contex
 
 When the required evidence is accessible in the current turn, perform the focused check rather than returning a research instruction to the Human. Surface a probe as the remaining alignment item only when it cannot be performed now, requires unavailable authority/access, or the caller explicitly requested a probe plan rather than convergence.
 
+Separate an authoritative scope rule from factual membership. The Human may define what qualifies, prioritize categories, or name explicit inclusions/exclusions while expressing only a tentative belief about which concrete entities satisfy that rule. Preserve the rule and explicit decisions as authority; treat tentative membership as a territory hypothesis. Derive the member set from evidence at the first stage where it affects intent or execution judgment, retain enough provenance to defend the classification, and surface only residual cases whose classification depends on Human-owned semantics rather than observable reality.
+
 ## Goal closure
 
 A Goal is closed when existing Human authority establishes one coherent requested end state and the boundary of what this turn is expected to accomplish. It need not settle implementation How or every broader future decision.
