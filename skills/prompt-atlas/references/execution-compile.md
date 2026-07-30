@@ -35,7 +35,7 @@ Stable Intent is source semantics. Lower it into execution semantics rather than
 - interruption risk → recovery contract;
 - output requirements → Delivery.
 
-The final carrier has one authority for Goal, boundaries, and completion.
+The carrier preserves one authoritative source for Goal and boundaries and makes the accepting authority for completion explicit; these authorities may be different.
 
 ## Executable control carrier
 
@@ -114,7 +114,8 @@ Compile runtime-envelope requirements only when material—for example whether H
 
 When work may outlive one context, require recoverable semantic state:
 
-- trustworthy completed nodes and evidence;
+- trustworthy completed nodes and their still-valid evidence;
+- invalidated or stale evidence and why it no longer applies;
 - still-valid graph changes;
 - settled decisions and assumptions still in force;
 - parked blockers/decisions and the exact missing input;
@@ -157,7 +158,7 @@ Leader mechanisms such as a fixed Task 0, mandatory progress filenames, exactly 
 A fresh executor should be able to recover, without replaying the conversation:
 
 - why the work exists and what final state is required;
-- what is known, unverified, or already proven;
+- what is known, unverified, already proven, or invalidated;
 - which material branches and boundaries are settled;
 - what work is ready and which real dependencies exist;
 - how node-local failure, graph invalidation, Human decisions, and intent conflicts route;
