@@ -67,6 +67,8 @@ Close such branches from settled intent, governing constraints, and authoritativ
 
 Use pre-execution HITL only when materially different graphs remain compatible with the stable intent and available evidence does not select among them. This is not limited to choices with obvious risk or a universally better answer; the point is to remove a branch that would otherwise interrupt AFK execution. When several such branches exist, batch the useful decision surface rather than using Human turns as a scheduler.
 
+If an executable carrier is explicitly required without another Human turn, an unconfirmed default may keep AFK execution possible only when the alternatives preserve settled Goal and boundaries, the default is bounded and reversible or its mismatch is reliably detectable, and the carrier labels both the assumption and consequence. Such a default remains an execution assumption, not Human authority; otherwise return `Status: Execution Decision`.
+
 Do not escalate local How: helper naming, small code organization, exact patch order, reversible implementation details, or another choice whose alternatives do not materially change the graph remain executor-owned.
 
 Keep law and guidance distinct. Human-confirmed decisions, governing constraints, and evidence-grounded invariants are binding; recommendations, promising starting points, or implementation hints remain non-binding unless their semantics are required for correctness.
@@ -186,7 +188,7 @@ Leader-style taskbooks are a useful execution-coverage reference, not a required
 | --- | --- |
 | “这活为什么干” | Purpose / Why judgment anchor + Goal |
 | 先实测仓库、命令、基线 | Execution grounding + verified/unverified State |
-| “我替领导拍的板” | Decision closure; unresolved material branch → pre-execution HITL |
+| “我替领导拍的板” | Decision closure; unresolved material branch → pre-execution HITL or visibly unconfirmed bounded default |
 | 白名单/禁区；法与情报分家 | Boundaries + explicit binding-vs-guidance distinction |
 | 任务 N + 依赖顺序 | Task / Issue nodes + real dependency edges |
 | 每任务机器可判验收 | Local Verify / checkpoint |
