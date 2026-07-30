@@ -1,6 +1,6 @@
 # Stable Intent IR
 
-Use this reference when Stage 1 authority or stability is not obvious. Stable Intent is source semantics for Execution Compile, not an executor-facing taskbook.
+Use this reference when Stage 1 authority, Goal closure, or stability is not obvious. Stable Intent is source semantics for Execution Compile, not an executor-facing taskbook.
 
 ## What to preserve
 
@@ -22,7 +22,7 @@ Keep these classes distinct:
 
 - **User-owned intent** — requested outcomes, confirmed decisions, user-owned priorities, scope/approval boundaries, and protected proof requirements. These change only with new user authority.
 - **Territory reality** — authoritative code, tests, traces, schemas, artifacts, measurements, and other evidence. Better evidence may revise facts, feasibility, necessary work inside settled boundaries, and proof obligations without rewriting intent.
-- **Inference / recommendation** — useful judgment, not settled authority.
+- **Inference / recommendation** — useful judgment, including a model-proposed candidate Goal, but not settled authority.
 - **Unknown** — unresolved until evidence or Human authority settles it.
 
 An explicit requested outcome remains authoritative even when grounding reveals more work, stronger proof, or higher cost. If it cannot be preserved inside settled boundaries, surface the conflict rather than silently weakening the outcome.
@@ -33,11 +33,21 @@ Preserve rationale when it helps a later executor choose among unforeseen but va
 
 ## Grounding
 
-Ground the smallest set of unknowns needed to establish meaning, feasibility inside settled authority, or success/proof semantics. Prefer authoritative evidence and rich existing references.
+Ground the smallest set of unknowns needed to establish meaning, feasibility inside settled authority, Goal closure, or success/proof semantics. Prefer authoritative evidence and rich existing references.
 
 For repo work, preserve governing constraints or acceptance paths when they affect meaning or proof, and capture a sourced baseline when success is relative to current behavior. Leave work-surface discovery, dependency mapping, command validation, and implementation design to Execution Compile unless they are required for intent stability.
 
 Grounding should reduce the Human decision surface, not replace it. Close context/reality unknowns from evidence when possible, then rescan what remains. Do not ask the Human for facts that authoritative evidence can settle; do not keep researching merely to avoid surfacing a remaining Human-owned choice.
+
+## Goal closure
+
+A Goal is closed when existing Human authority establishes one coherent requested end state and the boundary of what this turn is expected to accomplish. It need not settle implementation How or every broader future decision.
+
+A prompt may instead expose a problem space: concern, hypothesis, competing questions, possible end states, or active Human deliberation. When missing reality could materially change which Goal is sensible, do not treat every question as requested execution scope and do not choose a Goal merely because one path looks useful.
+
+Reduce only the decision-relevant context unknowns needed to make the choice meaningful. Then return the sharper problem model, the smallest materially distinct candidate Goal or options, their consequences, and a recommendation. A candidate Goal proposed by the model remains inference until a subsequent Human message confirms, selects, or corrects it; self-review, more research, or repeated wording cannot promote it to Stable Intent.
+
+Do not over-block execution. If the Human has already established a complete minimum outcome, preserve it even when broader concerns, later go/no-go decisions, or implementation unknowns remain. Separate those from the current Goal rather than reopening settled authority.
 
 ## Human decisions
 
@@ -47,7 +57,7 @@ When such a choice remains, expose the smallest useful decision surface: materia
 
 More work, wider necessary implementation scope inside settled boundaries, several valid implementation approaches, or future replanning do not by themselves require Human input.
 
-A default is a fallback only when another Human turn is explicitly unavailable and the choice preserves the confirmed Goal/boundaries while being reversible or safely mismatch-detectable. Keep it visibly unconfirmed with its consequence; repetition never turns it into Human authority.
+A default is a fallback only when another Human turn is explicitly unavailable and the choice preserves an already confirmed Goal and boundaries while being reversible or safely mismatch-detectable. It cannot close an unformed Goal. Keep it visibly unconfirmed with its consequence; repetition never turns it into Human authority.
 
 If evidence proves the requested outcome infeasible and there is no meaningful Human choice, return the blocker rather than manufacturing a decision.
 
@@ -61,14 +71,14 @@ Stable Intent is sufficient when Execution Compile no longer needs to rediscover
 - what trusted success means;
 - delivery semantics that must survive lowering.
 
-It also requires that the Human-decision scan finds no unresolved material Human-owned choice. Context unknowns may remain when they do not change those source semantics and can safely be resolved downstream.
+It also requires that the Goal is closed and the Human-decision scan finds no unresolved material Human-owned choice. Context unknowns may remain when they do not change those source semantics and can safely be resolved downstream.
 
 Implementation discovery, decomposition, dependency mapping, local architecture How, execution topology, command order, retries, and runtime state remain Stage 2/runtime concerns unless resolving them would change those source semantics.
 
-When intent is not stable, return the best current intent plus only the smallest remaining alignment surface. If reality is missing, use the smallest focused probe that can reduce it. If a Human-owned material choice remains, ask it explicitly with options, consequences, and recommendation rather than substituting a default or passive `Unresolved` label. New user authority or authoritative evidence can move intent forward; rewriting alone cannot turn uncertainty into fact or authority.
+When intent is not stable, return the best current understanding plus only the smallest remaining alignment surface. If decision-relevant reality is missing, use the smallest focused probe that can reduce it. If Goal closure or another Human-owned material choice remains, ask explicitly with options, consequences, and recommendation. New user authority or authoritative evidence can move intent forward; rewriting alone cannot turn uncertainty into fact or authority.
 
 ## Boundary with Execution Compile
 
-Execution Compile may ground implementation territory, close material execution branches, derive Task / Issue boundaries and dependencies, and lower proof semantics into execution topology. It may not reinterpret Goal or Human authority.
+Execution Compile may ground implementation territory, close material execution branches, derive Task / Issue boundaries and dependencies, and lower proof semantics into execution topology. It may not form, reinterpret, or self-authorize the Goal or Human authority.
 
 The final executable artifact contains only the lowered semantics that matter to execution judgment; it is not Stable Intent followed by an execution appendix.
