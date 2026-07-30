@@ -1,21 +1,49 @@
 # Completion trust
 
-Use this reference when the requested result needs a correctness or completion claim. Intent Take owns the evidence and trust obligations carried in the contract, including any authoritative acceptance path that governs the claimed property; each downstream consumer owns concrete invocation, enforcement, and verifier protocol.
+Use this reference when the requested result needs a material correctness or completion claim. Intent Take preserves what must be proven; Execution Compile lowers that proof obligation into verifier nodes, local checks, and the Global Gate. The executor runs those checks but must not weaken their protected semantics.
 
-## Selection grammar
+## Stage 1 — preserve proof semantics
 
-Apply these decisions in order:
+Intent Take should identify and preserve the proof obligation that follows from the user's Goal and governing repo reality:
 
-1. **Proof obligation** — identify evidence that directly demonstrates the intended behavior or result: a target test, replay or trace, contract comparison, known input/output, runtime observation, or reproducible manual check. When an authoritative repo-local acceptance path already governs the claimed property, preserve it as the proof obligation rather than replacing it with a more convenient weaker check. Treat build, lint, coverage, and other proxies only as supporting signals. If direct proof is missing, carry the missing verifier as a required precondition when a named downstream check can settle the claim without changing direction or boundary and safe work remains clear; otherwise carry it as a proof gap. Never promote a missing verifier to a verified current fact.
-2. **Failure sensitivity** — when a gate is new, changed, proxy-only, silent on failure, or otherwise capable of false-green, require evidence that it can distinguish right from wrong. The consumer chooses reverse validation, a known-failure case, red-to-green proof, or another suitable realization.
-3. **Integrity boundary** — when a cheaper false pass is plausible, select and freeze the applicable dimensions in Boundary: **Judge** (rules, thresholds, assertions), **Population** (samples, paths, coverage surface), **Object** (the real subject rather than a narrower or mocked substitute), and **Metric** (definition, range, comparison baseline). A result obtained by violating one does not satisfy Success.
-4. **Self-attestation policy** — allow executor-declared completion only when Proof directly reaches the target, the gate has failure sensitivity, plausible shortcuts are frozen, and risk is low with narrow scope. Otherwise require independent acceptance, especially for indirect proof, remaining gameability, migrations or behavior preservation, user-visible critical paths, proof designed by the executor, or completion that depends on overall user intent. When required, the executor may reach `ready for independent acceptance`, not `complete`, until the external judgment passes.
+1. **Direct proof** — prefer evidence that demonstrates the intended behavior or result: a target test, replay or trace, contract comparison, known input/output, runtime observation, or reproducible manual check. When an authoritative repo-local acceptance path already governs the claimed property, preserve it rather than replacing it with a weaker convenient proxy. Build, lint, coverage, and similar signals are supporting evidence unless they directly prove the target property.
+2. **Failure sensitivity** — when a gate is new, changed, proxy-only, silent on failure, or otherwise capable of false-green, preserve the requirement that it demonstrate the ability to distinguish right from wrong.
+3. **Integrity boundary** — when a cheaper false pass is plausible, preserve the applicable **Judge**, **Population**, **Object**, and **Metric** dimensions so downstream work cannot narrow or substitute them silently.
+4. **Independent acceptance need** — when executor self-attestation would be weak or gameable, preserve that completion requires an independent accepting boundary rather than letting executor-designed evidence become final proof.
 
-## Placement grammar
+Intent Take does not need to decide the exact command sequence, retry pattern, or verifier implementation when those are execution How.
 
-- **Current Context** — existing gates or governing acceptance paths, their strength or false-green risk, relevant baselines with source and evidence state, available independent verifier, and whether the relevant facts are verified, inferred, or still unmeasured.
-- **Boundary** — write scope and the selected Judge, Population, Object, and Metric invariants.
-- **Immediate Task** — missing proof action, required verification precondition, and artifacts needed for independent acceptance.
-- **Success / Stop** — evidence required for completion, the rule that insufficient or compromised proof cannot complete, whether current execution closure is `complete` or `ready for independent acceptance`, and whether the current step is blocked.
+## Stage 2 — compile verification structure
 
-Do not compile retry counts, failure rounds, rollback plans, time or round budgets, continuity protocols, or executor topology. Here, Stop means a true blocker, insufficient trusted evidence, or a boundary against further scope—not how an execution loop limits loss.
+Execution Compile maps preserved proof semantics into the execution graph:
+
+- attach local proof to the Task / Issue node whose outcome it establishes;
+- create separate verification nodes when proof must observe multiple upstream results or needs fresh context / independent judgment;
+- keep the **Global Gate** distinct from local node completion;
+- bind protected Judge / Population / Object / Metric semantics into Boundaries and Verification so a cheaper substitute cannot complete the Goal;
+- when independent acceptance is required, cap executor-owned evidence at `ready for independent acceptance`; only the named independent boundary can satisfy global completion.
+
+Verification topology should follow what must be proven, not a generic always-review stage. A simple task may have one local check plus the Global Gate. A behavior-preserving migration may require replay/diff, roundtrip proof, negative/failure-sensitivity evidence, or an independent acceptance node when governing coverage is incomplete.
+
+## Runtime trust rules
+
+During execution:
+
+- insufficient, compromised, narrowed, skipped, or fabricated proof is `UNMET`;
+- local PASS unlocks dependent work but does not imply global completion;
+- a failed verifier routes back to evidence-producing work or replanning while safe work remains;
+- environment unavailability must remain explicit; it cannot be converted into a passing claim;
+- the executor may revise implementation How and the remaining graph, but may not silently weaken the proof obligation or integrity boundary.
+
+## Placement
+
+The final executable carrier should make trust semantics visible where they affect judgment:
+
+- **State** — existing gates, baselines, proof state, available verifier, and verified/inferred/unmeasured status;
+- **Decisions** — material verification ownership or branch choices already closed, with basis;
+- **Boundaries** — protected Judge / Population / Object / Metric and any governing no-bypass rule;
+- **Graph** — verifier nodes and dependencies where verification has real orchestration meaning;
+- **Verification** — local proof obligations, failure sensitivity, independent acceptance boundary, and the Global Gate;
+- **Runtime** — failed proof returns to work; only trusted Global Gate satisfaction completes.
+
+Do not compile fixed retry counts, arbitrary failure-round budgets, mandatory progress files, or verifier topology that the task does not need. Those are execution mechanisms, not proof semantics.
