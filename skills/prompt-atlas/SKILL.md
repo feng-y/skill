@@ -46,7 +46,7 @@ First ground enough execution reality to make the carrier truthful: identify the
 
 If execution grounding shows that Stable Intent cannot be preserved inside its confirmed boundaries, or exposes a new Human-owned choice about Goal, accepted behavior, scope/priority, approval, or protected proof, return `Status: Unresolved Intent` with the conflict, evidence, and smallest decision surface, then re-enter Intent Take. Do not misclassify an intent change as an execution branch.
 
-Close execution branches that would otherwise interrupt AFK work when different answers materially change task boundaries, dependencies, verification ownership/path, scope, architecture direction, or the Global Gate while preserving Stable Intent. Resolve them from Stable Intent, governing constraints, and evidence when possible. If materially different graphs remain equally valid, return `Status: Execution Decision`; local reversible How stays executor-owned. A visibly unconfirmed execution default is allowed only when the caller explicitly requires an executable carrier without another Human turn and the default preserves settled Goal/boundaries while being reversible or reliably mismatch-detectable.
+Close execution branches that would otherwise interrupt AFK work when different answers materially change task boundaries, dependencies, verification ownership/path, scope, architecture direction, runtime envelope, recovery requirements, or the Global Gate while preserving Stable Intent. Resolve them from Stable Intent, governing constraints, and evidence when possible. If materially different executable carriers remain equally valid, return `Status: Execution Decision`; local reversible How stays executor-owned. A visibly unconfirmed execution default is allowed only when the caller explicitly requires an executable carrier without another Human turn and the default preserves settled Goal/boundaries while being reversible or reliably mismatch-detectable.
 
 Compile the **smallest useful executable control carrier**:
 
@@ -55,7 +55,7 @@ Compile the **smallest useful executable control carrier**:
 - Node-local act / observe / evaluate / repair loops are runtime semantics; do not expand retries or routine self-correction into duplicate graph nodes.
 - Runtime routes distinguish local repair, evidence-driven revision of the remaining graph, and escalation to Human or Intent authority.
 - The Global Gate judges the complete Goal; local done is not global completion.
-- Human gates exist only for newly exposed material execution branches that intent/evidence cannot close without changing Stable Intent.
+- Human gates exist only for newly exposed material execution branches that preserve Stable Intent but current intent and evidence cannot close.
 
 Add parallel ownership, partial-block behavior, continuity state, or separate verifier nodes only when the task actually needs them. Independent work may continue while another node is blocked. Trusted completed work survives replanning unless new evidence invalidates it.
 
