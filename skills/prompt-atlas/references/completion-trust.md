@@ -1,22 +1,38 @@
 # Completion trust
 
-Use this reference when the requested result needs a correctness or completion claim. Intent Take owns the evidence and trust obligations carried in the contract, including any authoritative acceptance path that governs the claimed property; each downstream consumer owns concrete invocation, enforcement, and verifier protocol.
+Use this reference only when the result needs a material correctness or completion claim. Current models already verify routine work; add only task-specific proof, false-pass, independence, and receipt obligations that change trust.
 
-## Selection grammar
+## Trust decisions
 
-Apply these decisions in order:
+Apply in order:
 
-1. **Proof obligation** — identify evidence that directly demonstrates the intended behavior or result: a target test, replay or trace, contract comparison, known input/output, runtime observation, or reproducible manual check. When an authoritative repo-local acceptance path already governs the claimed property, preserve it as the proof obligation rather than replacing it with a more convenient weaker check. Treat build, lint, coverage, and other proxies only as supporting signals. If direct proof is missing, carry the missing verifier as a required precondition when a named downstream check can settle the claim without changing direction or boundary and safe work remains clear; otherwise carry it as a proof gap. Never promote a missing verifier to a verified current fact.
-   For maintainability, evolvability, architecture quality, or long-horizon codebase health, immediate functional tests and executor/model review are only indirect evidence. Require repo-specific evidence for the claimed structural gain and any material Architecture Intent update. Require Human review or another independent acceptance path only when the user or governing repo rule requires it, or when material residual risk remains after the strongest available direct, failure-sensitive verification.
-2. **Failure sensitivity** — when a gate is new, changed, proxy-only, silent on failure, or otherwise capable of false-green, require evidence that it can distinguish right from wrong. The consumer chooses reverse validation, a known-failure case, red-to-green proof, or another suitable realization.
-3. **Integrity boundary** — when a cheaper false pass is plausible, select and freeze the applicable dimensions in Constraints: **Judge** (rules, thresholds, assertions), **Population** (samples, paths, coverage surface), **Object** (the real subject rather than a narrower or mocked substitute), and **Metric** (definition, range, comparison baseline). A result obtained by violating one cannot receive `MET`.
-4. **Self-attestation policy** — allow executor-declared completion when Proof directly reaches the target, the gate has failure sensitivity, plausible shortcuts are frozen, and remaining risk is controlled. Treat migrations, behavior preservation, user-visible critical paths, executor-designed proof, and architecture work as reasons to strengthen or independently challenge the evidence, not as automatic disqualifiers. Require external acceptance only when the user or governing repo rule requires it, or when material residual risk remains after those checks. When required, the executor may reach `ready for independent acceptance`, not `complete`, until the external judgment passes.
+1. **Direct proof** — identify evidence that reaches the requested behavior or result: a target test, replay/trace, contract comparison, known input/output, runtime observation, decision-grade source set, or reproducible manual check. Preserve a governing repo-local acceptance path instead of replacing it with an easier proxy. Build, lint, coverage, summaries, and model review are supporting signals unless they directly prove the Goal.
+2. **Command and baseline truth** — record whether critical gates and baselines were actually observed. If accessible during intake, run them. Otherwise mark them `unverified` and make verification an initial Loop action. A missing, empty, or false-green command is new State and an `UNMET` reason, not evidence of completion or an automatic excuse to stop.
+3. **Failure sensitivity** — when a gate is new, changed, proxy-only, silent on failure, or plausibly false-green, require evidence that it distinguishes right from wrong. The executor may use a known-failure case, red-to-green check, mutation, reverse validation, or another suitable method. Do not add this branch when the existing authoritative gate is already trustworthy for the claimed property.
+4. **Integrity boundary** — freeze any dimension through which an easier false pass could be manufactured:
+   - **Judge** — rules, assertions, thresholds, or acceptance code;
+   - **Population** — samples, paths, cases, or coverage surface;
+   - **Object** — the real subject rather than a narrower, skipped, or mocked substitute;
+   - **Metric** — definition, range, comparison, and baseline.
 
-## Placement grammar
+   Name only plausible shortcuts. Typical mappings are relaxed assertions or changed acceptance code → Judge; skipped tests or narrowed cases → Population; mocking/substitution → Object; moved thresholds or baselines → Metric. A result obtained by weakening a frozen dimension is `UNMET`.
+   When a baseline is protected, a regressed result remains `UNMET`; restore it, find another valid route, or stop honestly if no route remains inside authority.
+5. **Independent challenge** — executor self-attestation is sufficient when direct proof reaches the target, the gate is failure-sensitive where needed, plausible shortcuts are frozen, and residual risk is controlled. Require a fresh-context verifier or governing external acceptance only when a repo/user rule requires it or material residual risk remains—for example executor-designed proof, a critical user path, behavior-preserving migration, or architecture work whose claimed structural gain lacks strong direct evidence. Until required acceptance passes, the state is `ready for independent acceptance`, not complete.
+6. **Completion receipt** — map each Goal condition to the actual evidence and result that supports it, state material baseline deltas, and disclose remaining uncertainty or compromised checks. A completion sentence without inspectable evidence does not change proof state.
 
-- **State** — existing gates or governing acceptance paths, their strength or false-green risk, relevant baselines with source and evidence state, available independent verifier, and whether relevant facts are verified, inferred, or still unmeasured.
-- **Constraints** — write scope and the selected Judge, Population, Object, and Metric invariants.
-- **Loop** — missing proof actions, required verification prerequisites, and artifacts needed for trusted evaluation or independent acceptance.
-- **Evaluation** — evidence required for `MET`, the rule that insufficient or compromised proof remains `UNMET`, and whether external acceptance is part of the Goal condition.
+For maintainability, evolvability, or architecture quality, immediate functional tests are indirect evidence. Require repo-specific structural evidence for the claimed gain and record any material Architecture Intent delta. Do not claim long-horizon quality from executor opinion alone.
 
-Do not compile retry counts, failure rounds, rollback plans, time or round budgets, or executor topology. An `UNMET` proof state feeds the next loop action; it becomes a blocker only when no safe action can obtain the required evidence inside settled authority.
+## Placement
+
+- **State** — governing gates, verified/unverified command state, baseline and source, false-green risk, proof gaps, and available independent acceptance.
+- **Constraints** — write scope and selected Judge/Population/Object/Metric invariants.
+- **Loop** — actions needed to establish proof, failure sensitivity, or independent acceptance; local evidence produced by structured tasks.
+- **Evaluation** — the global evidence map, the rule that insufficient/compromised proof remains `UNMET`, and whether external acceptance is part of `MET`.
+- **Output** — the completion/block receipt with actual results and remaining uncertainty.
+- **Control** — risk-triggered independent challenge and any explicit proof budget; not a blanket review stage.
+
+Do not compile fixed retry counts, rollback scripts, verifier topology, or generic final-review instructions. An `UNMET` proof state feeds the next useful action; it becomes a blocker only when no safe action can obtain the required evidence inside settled authority.
+
+## Visible-contract boundary
+
+Prompt Atlas can freeze proof rules and require independent acceptance, but it cannot place a genuinely hidden test inside the same executor-visible contract or create fresh context by declaration. Hidden checks and verifier isolation belong to the runtime, harness, governing CI, or a separate accepting agent. If that capability is required but unavailable, report `ready for independent acceptance` or `Status: Unresolved`; do not claim parity through self-review.

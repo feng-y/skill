@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
-  short_description: "把零散目标编译为可直接运行的 Goal Loop Contract"
-  default_prompt: "Use $prompt-atlas to compile this goal or my scattered hints into a consumer-ready executable goal loop, or surface only the unresolved gap that still prevents safe execution."
+  short_description: "把零散目标编译为可控执行、可信完成的 Goal Loop"
+  default_prompt: "Use $prompt-atlas to compile this goal or my scattered hints into the least-complex trustworthy executable goal loop, or surface only the unresolved gap that prevents safe execution."

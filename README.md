@@ -25,5 +25,5 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `prompt-atlas` — turn a one-sentence goal or scattered hints into a consumer-ready executable Goal Loop Contract once intent has converged.
+- `prompt-atlas` — compile a one-sentence goal or scattered hints into the least-complex trustworthy executable Goal Loop Contract.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
