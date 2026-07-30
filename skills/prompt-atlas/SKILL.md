@@ -72,9 +72,9 @@ Do not pretend an unavailable command, environment, baseline, or verifier was ch
 
 Before execution, identify unresolved choices whose alternatives would materially produce different task or issue graphs, dependencies, verification paths, scope, or architecture direction. Resolve them from settled intent, governing constraints, and authoritative evidence when possible.
 
-If materially different execution graphs remain equally compatible with the settled intent and current evidence does not select among them, expose that decision as pre-execution HITL and stop. This is branch closure, not Human orchestration. Do not ask for local, reversible implementation How that the executor can choose without changing the graph materially.
+If materially different execution graphs remain equally compatible with the settled intent and current evidence does not select among them, expose that decision as pre-execution HITL and stop. When the caller explicitly requires an executable carrier without another Human turn, a bounded unconfirmed execution default is allowed only when it preserves settled Goal and boundaries, is reversible or mismatch is reliably detectable, and is labeled as an assumption with its consequence; otherwise return `Status: Execution Decision`. This is branch closure, not Human orchestration. Do not ask for local, reversible implementation How that the executor can choose without changing the graph materially.
 
-Record material closed branches with their basis; distinguish Human-confirmed choices, governing constraints, evidence-grounded execution decisions, and non-binding guidance from executor-owned How.
+Record material closed branches with their basis; distinguish Human-confirmed choices, governing constraints, evidence-grounded execution decisions, visibly unconfirmed defaults, and non-binding guidance from executor-owned How.
 
 ### Compile a small execution graph
 
@@ -127,7 +127,7 @@ If a fresh-session handoff is requested, save the selected executable artifact u
 Emit one terminal state and stop:
 
 - **`Status: Unresolved Intent`** — current best intent plus only the decision, probe, conditional/default, or blocker needed for further Intent Take.
-- **`Status: Execution Decision`** — Stable Intent exists, but one material execution branch still needs closure before a useful graph can be compiled.
+- **`Status: Execution Decision`** — Stable Intent exists, but one material execution branch still needs closure before a useful graph can be compiled and no safe unconfirmed execution default applies.
 - **`Status: Executable`** — one executable artifact produced by Execution Compile.
 
 For `Status: Executable`, do not prepend the Stable Intent IR or append a second execution variant. Keep the carrier dense and agent-facing. Delivery ends Prompt Atlas; the downstream executor owns graph runtime and live state. Brevity is a budget, not permission to omit Purpose, authority, a material graph branch, verification integrity, or a requested outcome.
