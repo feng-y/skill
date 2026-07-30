@@ -37,11 +37,17 @@ Ground the smallest set of unknowns needed to establish meaning, feasibility ins
 
 For repo work, preserve governing constraints or acceptance paths when they affect meaning or proof, and capture a sourced baseline when success is relative to current behavior. Leave work-surface discovery, dependency mapping, command validation, and implementation design to Execution Compile unless they are required for intent stability.
 
+Grounding should reduce the Human decision surface, not replace it. Close context/reality unknowns from evidence when possible, then rescan what remains. Do not ask the Human for facts that authoritative evidence can settle; do not keep researching merely to avoid surfacing a remaining Human-owned choice.
+
 ## Human decisions
 
-Ask only when evidence cannot settle a material choice that changes user-owned outcome, accepted behavior, scope/priority, approval, or a protected proof rule. More work, wider necessary implementation scope inside settled boundaries, several valid implementation approaches, or future replanning do not by themselves require Human input.
+Before declaring intent stable, actively check whether any unresolved choice still belongs to Human authority and would materially change the requested outcome, accepted behavior, scope/priority, approval, or a protected proof rule.
 
-When a Human choice is needed, expose the smallest useful decision surface with materially distinct options and a concise recommendation. A default may remain visibly unconfirmed only when it preserves Goal and confirmed boundaries and is reversible or safely mismatch-detectable; it never becomes Human authority through repetition.
+When such a choice remains, expose the smallest useful decision surface: materially distinct options, the consequence that makes them different, and a concise recommendation. Related unknowns may be resolved or compressed first, but inference, recommendation, or model preference must not silently erase the remaining Human choice.
+
+More work, wider necessary implementation scope inside settled boundaries, several valid implementation approaches, or future replanning do not by themselves require Human input.
+
+A default is a fallback only when another Human turn is explicitly unavailable and the choice preserves the confirmed Goal/boundaries while being reversible or safely mismatch-detectable. Keep it visibly unconfirmed with its consequence; repetition never turns it into Human authority.
 
 If evidence proves the requested outcome infeasible and there is no meaningful Human choice, return the blocker rather than manufacturing a decision.
 
@@ -55,9 +61,11 @@ Stable Intent is sufficient when Execution Compile no longer needs to rediscover
 - what trusted success means;
 - delivery semantics that must survive lowering.
 
+It also requires that the Human-decision scan finds no unresolved material Human-owned choice. Context unknowns may remain when they do not change those source semantics and can safely be resolved downstream.
+
 Implementation discovery, decomposition, dependency mapping, local architecture How, execution topology, command order, retries, and runtime state remain Stage 2/runtime concerns unless resolving them would change those source semantics.
 
-When intent is not stable, return the best current intent plus only the smallest decision, probe, conditional/default, or blocker needed for another alignment turn. New user authority or authoritative evidence can move it forward; rewriting alone cannot turn uncertainty into fact or authority.
+When intent is not stable, return the best current intent plus only the smallest remaining alignment surface. If reality is missing, use the smallest focused probe that can reduce it. If a Human-owned material choice remains, ask it explicitly with options, consequences, and recommendation rather than substituting a default or passive `Unresolved` label. New user authority or authoritative evidence can move intent forward; rewriting alone cannot turn uncertainty into fact or authority.
 
 ## Boundary with Execution Compile
 
