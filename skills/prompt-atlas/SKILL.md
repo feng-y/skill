@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: Compile a one-sentence goal or scattered, evolving cross-turn hints into an executable agent-facing artifact through two distinct stages. Intent Take recovers and grounds what the user actually wants, preserves settled authority across invocations, and returns a compact unresolved intent surface when a material Human decision still blocks convergence. Once intent is stable, Execution Compile lowers that intent into a small AFK-oriented execution graph with closed material branches, task or issue nodes, real dependencies, verification gates, and evidence-driven loop semantics. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when another workflow needs intent intake or an executable task carrier.
+description: Compile a one-sentence goal or scattered, evolving cross-turn hints into an executable agent-facing artifact through two distinct stages. Intent Take recovers and grounds what the user actually wants, preserves settled authority across invocations, and returns a compact unresolved intent surface when a material Human decision still blocks convergence. Once intent is stable, Execution Compile lowers that intent into a small AFK-oriented execution graph with grounded task or issue nodes, closed material branches, real dependencies, verification gates, continuity semantics, and evidence-driven loops. Use when the user asks to clarify, consolidate, prepare, hand off, or rewrite a requirement or prompt, or when another workflow needs intent intake or an executable task carrier.
 ---
 
 # Prompt Atlas
@@ -62,19 +62,25 @@ Carry forward only intent semantics that affect execution judgment:
 
 Transform these into the executable representation rather than duplicating the Intent IR verbatim.
 
+### Ground execution reality
+
+Ground enough execution territory to make the first graph truthful rather than speculative. Locate the actual repo/workspace or carrier binding, inspect the work surfaces and governing specifications that determine node boundaries or dependencies, and verify critical baselines, acceptance paths, or commands when accessible. Prefer references to rich existing specs over copying them.
+
+Do not pretend an unavailable command, environment, baseline, or verifier was checked. Mark it unverified and either compile its verification as initial ready work or expose a real blocker when no safe work can start. This grounding is for orchestration truth; it must not reopen settled Intent.
+
 ### Close material execution branches
 
 Before execution, identify unresolved choices whose alternatives would materially produce different task or issue graphs, dependencies, verification paths, scope, or architecture direction. Resolve them from settled intent, governing constraints, and authoritative evidence when possible.
 
 If materially different execution graphs remain equally compatible with the settled intent and current evidence does not select among them, expose that decision as pre-execution HITL and stop. This is branch closure, not Human orchestration. Do not ask for local, reversible implementation How that the executor can choose without changing the graph materially.
 
-Record material closed branches with their basis; distinguish Human-confirmed choices, governing constraints, and evidence-grounded execution decisions from executor-owned How.
+Record material closed branches with their basis; distinguish Human-confirmed choices, governing constraints, evidence-grounded execution decisions, and non-binding guidance from executor-owned How.
 
 ### Compile a small execution graph
 
 Compile the minimum graph that is useful to start and remain AFK:
 
-- **Task / Issue nodes** are bounded work units with an outcome, the relevant context, dependencies when real, applicable boundaries, and local verification.
+- **Task / Issue nodes** are bounded work units with an outcome, relevant context, real dependencies, applicable boundaries, and local verification.
 - **Edges** represent real dependency or evidence flow. Do not serialize independent work merely because prose would say “then.”
 - **Checkpoints** decide local node completion or route work back for repair.
 - **Global Gate** judges the complete Goal; local done must never imply global completion.
@@ -82,15 +88,19 @@ Compile the minimum graph that is useful to start and remain AFK:
 
 Prefer a small or lazy graph. Do not predict the whole implementation when later evidence can refine it. Independent work may fan out; real dependencies remain ordered; completed trustworthy nodes should not be repeated merely because the remaining graph changes.
 
-### Compile loop semantics
+When parallel work shares mutable surfaces, compile enough ownership to avoid coordination HITL: keep write domains disjoint where possible, give each shared write surface one owner, make joins explicit, and invalidate/re-run evidence when an upstream change makes downstream proof stale. Runtime agent count remains an execution choice unless the user fixed it.
+
+### Compile loop and continuity semantics
 
 Each ready Task / Issue runs as an evidence-driven loop:
 
 `Act → Observe → Evaluate → Next`
 
-A failed local check routes first to diagnosis, a different How, or local replanning. Failure alone is not HITL. The graph runtime selects ready work, executes node loops, incorporates evidence, and may revise the remaining graph when observations invalidate the current execution theory.
+A failed local check routes first to diagnosis, a different How, or local replanning. Failure alone is not HITL. A blocked or Human-gated node is parked while independent ready work continues; the whole graph is blocked only when no safe ready work remains.
 
-Continue while the Goal is not yet proven and safe evidence-producing work remains inside settled boundaries. Complete only when the Global Gate is satisfied by trusted evidence. Stop for Human input only when continuation exposes a material unresolved branch; stop as blocked only when no safe next action remains or required evidence/authority is genuinely unavailable.
+The graph runtime selects ready work, executes node loops, incorporates evidence, and may revise the remaining graph when observations invalidate the current execution theory. If the work may outlive one context, require recoverable execution state at the semantic level—trusted completed nodes and evidence, parked blockers or decisions, and next ready work—without mandating a particular progress file or runtime storage mechanism.
+
+Continue while the Goal is not yet proven and safe evidence-producing work remains inside settled boundaries. Complete only when the Global Gate is satisfied by trusted evidence. Stop for Human input only when continuation truly requires closure of a material unresolved branch; stop as blocked only when no safe next action remains or required evidence/authority is genuinely unavailable.
 
 ## Executable artifact
 
@@ -100,17 +110,17 @@ Do not optimize for a particular field count. The final carrier must make the fo
 - **Goal** — the complete desired end state;
 - **State** — the resolvable execution target, relevant grounded facts, baseline, evidence state, and starting references;
 - **Decisions** — material execution branches already closed, with authority or evidence basis;
-- **Graph** — the current Task / Issue nodes, real dependencies, local completion conditions, and enough initial ready work to start;
-- **Boundaries** — hard scope, behavior, architecture, approval, and protected proof invariants;
+- **Graph** — the current Task / Issue nodes, real dependencies, local completion conditions, ownership where parallel work can collide, and enough initial ready work to start;
+- **Boundaries** — hard scope, behavior, architecture, approval, and protected proof invariants; keep non-binding guidance visibly separate;
 - **Verification** — local proof obligations and the trusted Global Gate, including any required independent acceptance boundary;
-- **Runtime** — node-loop, graph-update, recovery, HITL, completion, and true-block rules;
+- **Runtime** — node-loop, graph-update, partial-block, recovery, continuity, HITL, completion, and true-block rules;
 - **Delivery** — the requested deliverable or the executor's normal deliverable plus a concise evidence receipt.
 
 The serialization may be compact and task-shaped. Do not add empty ceremony merely to fill headings, but do not compress away a semantic distinction that prevents drift, false completion, unnecessary HITL, or loss of AFK continuity.
 
-For a simple task, the graph may be one work node plus verification and the Global Gate. Add structure only when real dependency, coordination, proof, or recovery needs it. For research or decision work, Task / Issue nodes may be probes, source review, synthesis, or comparison rather than code changes; the same graph and loop semantics apply.
+For a simple task, the graph may be one work node plus verification and the Global Gate. Add structure only when real dependency, coordination, proof, or recovery needs it. For research or decision work, compile evidence-bearing probe/source-review/synthesis/comparison nodes; completion should report the best supported answer, provenance, material counterevidence or residual unknowns, and any exhausted direction that was ruled out with evidence rather than forcing code-style hard metrics.
 
-If a fresh-session handoff is requested, save the selected executable artifact unchanged as Markdown in the operating-system temporary directory, reference existing artifacts rather than copying them, redact sensitive context, and return the absolute path.
+If a fresh-session handoff is requested, save the selected executable artifact unchanged as Markdown in the operating-system temporary directory, reference existing artifacts instead of copying them, redact sensitive context, and return the absolute path.
 
 ## Output
 
