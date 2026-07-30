@@ -24,15 +24,15 @@ Use progressive disclosure:
 
 Recover the current request from the user's latest authority, still-valid prior decisions, and relevant context. Preserve explicit requested outcomes unless the user supersedes them. Keep the **Why / design intent** when it will help a later executor choose correctly in situations the prompt cannot predict.
 
-Distinguish missing reality from an unclosed Goal. Evidence can resolve context unknowns; it cannot decide what outcome the Human wants. When the prompt expresses a concern, hypothesis, competing questions, or active deliberation without establishing one authoritative outcome, do not turn that thinking surface into execution scope. Reduce only the context unknowns needed to make the choice meaningful, form the smallest coherent candidate Goal or options, then ask the Human to confirm, select, or correct them. A model-proposed Goal remains inference until a subsequent Human message closes it.
+Distinguish missing reality from an unclosed Goal. Evidence can resolve context unknowns; it cannot decide what outcome the Human wants. When the prompt expresses a concern, hypothesis, competing questions, or active deliberation without establishing one authoritative outcome, do not turn that thinking surface into execution scope. First resolve only the decision-relevant context that is accessible and needed to make the choice meaningful. Then form the smallest coherent candidate Goal or options and ask the Human to confirm, select, or correct them. A model-proposed Goal remains inference until a subsequent Human message closes it. If the required evidence cannot be obtained in this turn, return only the smallest focused probe or blocker needed to continue convergence.
 
 Do not over-apply this gate. If existing Human authority already establishes a complete minimum outcome, broader questions, future decisions, and implementation unknowns do not make that Goal unclosed; preserve the minimum Goal and keep the rest separate.
 
-Ground only what can change intent meaning, feasibility inside settled boundaries, goal closure, or success/proof semantics. Prefer the smallest authoritative check and rich existing references. Keep verified fact, inference, recommendation, and unknown distinct.
+Ground only what can change intent meaning, feasibility inside settled boundaries, Goal closure, or success/proof semantics. Prefer the smallest authoritative check and rich existing references. Keep verified fact, inference, recommendation, and unknown distinct.
 
 Before declaring intent stable, actively scan for unresolved Human-owned choices. Resolve reality/context unknowns from authoritative evidence when possible and use that grounding to reduce the decision surface. Do not ask about unknowns evidence can settle or local implementation How. But if a remaining material choice changes user-owned outcome, accepted behavior, scope/priority, approval, or a protected proof rule, surface the smallest useful decision set to the Human with materially distinct options, consequences, and a concise recommendation. Do not erase such a choice through inference, recommendation, or an implicit default.
 
-Intent is stable when Execution Compile no longer needs to rediscover the problem, complete outcome, authoritative choices/boundaries, material factual uncertainty, or what trusted success means, and no material Human-owned choice remains unresolved. If it is not stable, return the current intent plus only the smallest decision, focused probe, candidate Goal, or blocker needed to continue alignment. When Goal closure or another Human-owned decision remains, ask it explicitly rather than hiding it behind a passive unresolved state.
+Intent is stable when Execution Compile no longer needs to rediscover the problem, complete outcome, authoritative choices/boundaries, any material factual uncertainty that changes those source semantics, or what trusted success means, and no material Human-owned choice remains unresolved. If it is not stable, perform any accessible focused grounding first, then return the current understanding plus only the smallest unresolved decision, candidate Goal, unavailable probe, or blocker. When Goal closure or another Human-owned decision remains, ask it explicitly rather than hiding it behind a passive unresolved state.
 
 When stable, treat the result as **Stable Intent IR** and continue to Stage 2.
 
@@ -42,14 +42,16 @@ Execution Compile ends when it produces one executable carrier. It does not run 
 
 First ground enough execution reality to make the graph truthful: identify the actual target/workspace, work surfaces, governing specs or tests, material baselines, real dependencies, and critical commands/verifiers when accessible. Keep unavailable or unverified evidence explicit rather than turning plausibility into fact.
 
-Close execution branches that would otherwise interrupt AFK work when different answers materially change task boundaries, dependencies, verification ownership/path, scope, architecture direction, or the Global Gate. Resolve them from Stable Intent, governing constraints, and evidence when possible. If materially different graphs remain equally valid, return `Status: Execution Decision`; local reversible How stays executor-owned. A visibly unconfirmed execution default is allowed only when the caller explicitly requires an executable carrier without another Human turn and the default preserves settled Goal/boundaries while being reversible or reliably mismatch-detectable.
+If execution grounding shows that Stable Intent cannot be preserved inside its confirmed boundaries, or exposes a new Human-owned choice about Goal, accepted behavior, scope/priority, approval, or protected proof, return `Status: Unresolved Intent` with the conflict, evidence, and smallest decision surface, then re-enter Intent Take. Do not misclassify an intent change as an execution branch.
+
+Close execution branches that would otherwise interrupt AFK work when different answers materially change task boundaries, dependencies, verification ownership/path, scope, architecture direction, or the Global Gate while preserving Stable Intent. Resolve them from Stable Intent, governing constraints, and evidence when possible. If materially different graphs remain equally valid, return `Status: Execution Decision`; local reversible How stays executor-owned. A visibly unconfirmed execution default is allowed only when the caller explicitly requires an executable carrier without another Human turn and the default preserves settled Goal/boundaries while being reversible or reliably mismatch-detectable.
 
 Compile the **smallest useful graph**:
 
 - Task / Issue nodes are bounded outcomes with only the context, real dependencies, applicable boundaries, and proof needed to judge them locally.
 - Edges represent real dependency or evidence flow, not prose order.
 - The Global Gate judges the complete Goal; local done is not global completion.
-- Human gates exist only for newly exposed material branches that intent/evidence cannot close.
+- Human gates exist only for newly exposed material execution branches that intent/evidence cannot close without changing Stable Intent.
 
 Add parallel ownership, partial-block behavior, continuity state, or separate verifier nodes only when the task actually needs them. Independent work may continue while another node is blocked. Trusted completed work survives replanning unless new evidence invalidates it.
 
@@ -63,8 +65,8 @@ For research or decision work, use evidence-bearing probe/source/synthesis nodes
 
 Emit one terminal state and stop:
 
-- **`Status: Unresolved Intent`** — current understanding plus the smallest focused probe or explicit Human decision needed to close the Goal or another material intent boundary.
-- **`Status: Execution Decision`** — Stable Intent exists, but a material execution branch still needs closure and no safe unconfirmed execution default applies.
+- **`Status: Unresolved Intent`** — current understanding plus the smallest unavailable probe or explicit Human decision needed to close the Goal or repair another material intent boundary.
+- **`Status: Execution Decision`** — Stable Intent remains valid, but a material execution branch still needs closure and no safe unconfirmed execution default applies.
 - **`Status: Executable`** — one lowered executor-facing carrier.
 
 For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Keep the artifact dense and readable; omit details that do not change executor judgment, but never compress away a requested outcome, authority distinction, material graph branch, or trusted proof obligation.
