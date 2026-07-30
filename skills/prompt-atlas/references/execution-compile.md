@@ -204,6 +204,10 @@ This matrix is a semantic capability floor, not an empirical parity claim. Behav
 
 The following Leader mechanics are deliberately not semantic requirements: a fixed Task 0, a mandatory `PROGRESS.md`/`BLOCKED.md`, exactly three failed attempts before changing strategy, a fixed agent topology, exact command order, or the `/goal` 4000-character envelope. Preserve their capability—grounding, recovery, continuity, failure sensitivity, ownership, and carrier limits when actually imposed—without hard-coding one runtime realization.
 
+## Review checkpoint
+
+Do not claim Leader parity from this document alone. A capability review is complete only when every Leader semantic above has one explicit Atlas owner and no capability is dismissed merely as “the executor can probably infer it.” A behavioral review still needs paired probes that compare the compiled carriers and resulting execution, including at least one blocked/continuation case, one preservation-sensitive verification case, one parallel/shared-surface case, and one exploration/decision case.
+
 ## Executable carrier quality
 
 A fresh executor should be able to answer, without reconstructing prior conversation:
