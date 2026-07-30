@@ -48,7 +48,7 @@ When intent is stable, treat the resulting semantics as **Stable Intent IR** and
 
 ## Stage 2 — Execution Compile
 
-Execution Compile consumes Stable Intent IR and produces one executable artifact. It is semantic lowering plus orchestration synthesis, not another intent pass.
+Execution Compile consumes Stable Intent IR and produces one executable artifact. It is semantic lowering plus orchestration synthesis, not another intent pass. Compilation ends when that carrier is delivered: Prompt Atlas does not run the graph, own live execution state, or become the downstream workflow owner.
 
 ### Preserve judgment anchors
 
@@ -114,4 +114,10 @@ If a fresh-session handoff is requested, save the selected executable artifact u
 
 ## Output
 
-For unresolved intent or pre-execution branch closure, return only the compact decision/probe/blocker surface needed to continue and stop. For stable work, return exactly one executable artifact produced by Execution Compile, not an Intent Contract plus a second execution appendix. Keep the carrier dense and agent-facing. Brevity is a budget, not permission to omit Purpose, authority, a material graph branch, verification integrity, or a requested outcome.
+Emit one terminal state and stop:
+
+- **`Status: Unresolved Intent`** — current best intent plus only the decision, probe, conditional/default, or blocker needed for further Intent Take.
+- **`Status: Execution Decision`** — Stable Intent exists, but one material execution branch still needs closure before a useful graph can be compiled.
+- **`Status: Executable`** — one executable artifact produced by Execution Compile.
+
+For `Status: Executable`, do not prepend the Stable Intent IR or append a second execution variant. Keep the carrier dense and agent-facing. Delivery ends Prompt Atlas; the downstream executor owns graph runtime and live state. Brevity is a budget, not permission to omit Purpose, authority, a material graph branch, verification integrity, or a requested outcome.
