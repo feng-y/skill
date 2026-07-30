@@ -120,6 +120,8 @@ The serialization may be compact and task-shaped. Do not add empty ceremony mere
 
 For a simple task, the graph may be one work node plus verification and the Global Gate. Add structure only when real dependency, coordination, proof, or recovery needs it. For research or decision work, compile evidence-bearing probe/source-review/synthesis/comparison nodes; completion should report the best supported answer, provenance, material counterevidence or residual unknowns, and any exhausted direction that was ruled out with evidence rather than forcing code-style hard metrics.
 
+Leader is a semantic capability floor for Stage 2, not a serialization to copy. The executable carrier must cover the corresponding Why/Goal, execution grounding, decision closure, boundaries, bounded work/dependencies, local and global verification, anti-false-green proof, partial blocking, continuity, parallel ownership, exploration evidence, and independent acceptance semantics when those are material. Realization details such as fixed Task 0, progress filenames, retry counts, command order, agent count, or `/goal` character limits remain runtime/task-specific.
+
 If a fresh-session handoff is requested, save the selected executable artifact unchanged as Markdown in the operating-system temporary directory, reference existing artifacts instead of copying them, redact sensitive context, and return the absolute path.
 
 ## Output
