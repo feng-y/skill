@@ -200,7 +200,7 @@ Leader-style taskbooks are a useful execution-coverage reference, not a required
 | 探索型来源/死路/预算 | Evidence-bearing research graph + provenance/residual unknowns |
 | 管理者暗卷/独立验收 | Independent accepting boundary outside executor-visible proof when required |
 
-Do not copy realization details merely for parity: fixed Task 0, fixed retry counts, mandatory progress files, exact patch-by-patch sequencing, fixed agent topology, or command order are justified only when the task itself requires them.
+The following Leader mechanics are deliberately not semantic requirements: a fixed Task 0, a mandatory `PROGRESS.md`/`BLOCKED.md`, exactly three failed attempts before changing strategy, a fixed agent topology, exact command order, or the `/goal` 4000-character envelope. Preserve their capability—grounding, recovery, continuity, failure sensitivity, ownership, and carrier limits when actually imposed—without hard-coding one runtime realization.
 
 ## Executable carrier quality
 
