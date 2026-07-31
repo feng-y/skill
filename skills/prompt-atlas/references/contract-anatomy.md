@@ -43,6 +43,20 @@ When the required evidence is accessible in the current turn, perform the focuse
 
 Separate an authoritative scope rule from factual membership. The Human may define what qualifies, prioritize categories, or name explicit inclusions/exclusions while expressing only a tentative belief about which concrete entities satisfy that rule. Preserve the rule and explicit decisions as authority; treat tentative membership as a territory hypothesis. Derive the member set from evidence at the first stage where it affects judgment: in Intent Take when it could change Goal closure or a Human decision, otherwise in Execution Compile when it determines concrete work. Retain enough provenance to defend each material classification, and surface only residual cases whose classification depends on Human-owned semantics rather than observable reality.
 
+## Unknown routing
+
+Unknown is a mechanism for reducing unnecessary Human questions, not for eliminating Human judgment.
+
+Route it by consequence:
+
+- if evidence can settle it, investigate instead of asking;
+- if it changes only reversible implementation How, preserve it for execution rather than closing it during Intent Take;
+- if it may change execution theory but not Stable Intent, let execution probe and replan;
+- if the remaining material consequence belongs to Human authority, ask the smallest decision needed;
+- if required evidence or authority is unavailable, preserve the exact unknown and the probe or condition that could resolve it.
+
+Do not convert every unknown into HITL. Equally, do not hide a Goal-, boundary-, approval-, priority-, or protected-proof decision behind “the executor can decide.” The purpose is to ask the Human less often and more precisely, not to screen the Human out.
+
 ## Goal closure
 
 A Goal is closed when existing Human authority establishes one coherent requested end state and the boundary of what this turn is expected to accomplish. It need not settle implementation How or every broader future decision.
@@ -100,7 +114,7 @@ When intent is not stable, perform any accessible focused grounding first, then 
 
 ## Boundary with Execution Compile
 
-Execution Compile may ground implementation territory, close material execution branches, derive Task / Issue boundaries and dependencies, and lower proof semantics into execution topology. It may not form, reinterpret, or self-authorize the Goal or Human authority.
+Execution Compile may ground implementation territory, close material execution branches, derive work boundaries and dependencies, and lower proof semantics into execution shape. It may not form, reinterpret, or self-authorize the Goal or Human authority.
 
 If Stage 2 evidence shows that Stable Intent cannot be preserved or requires a new Human-owned Goal/boundary decision, that is an Intent Take re-entry, not an Execution Decision.
 
