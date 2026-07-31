@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
   short_description: "把原始或演进需求编译为稳定意图与可执行任务载体"
-  default_prompt: "Use $prompt-atlas to recover stable intent, ask only when execution would change intent, change a confirmed boundary, or the request still confuses materially different goals, then compile the smallest truthful executable carrier or exact blocker. Do not implement unless the caller explicitly owns compile-and-run continuation."
+  default_prompt: "Use $prompt-atlas to recover stable intent, ask only when execution would change intent, change a confirmed boundary, or the request still confuses materially different goals, then compile the smallest truthful executable carrier or exact blocker with proportional pre-execution settlement. Return the carrier for prompt/brief/taskbook requests; when the caller directly owns execution in the available environment, continue from Status: Executable without another Human start turn."
