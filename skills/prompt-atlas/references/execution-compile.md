@@ -1,241 +1,208 @@
 # Execution Compile
 
-Use this reference when Stage 2 needs more detail on authority boundaries, execution shape, pre-execution settlement, Task 0, branch closure, continuity, or proof topology. Execution Compile consumes Stable Intent IR and emits one executable carrier or a truthful blocker; it does not execute the carrier or own live run state.
+Use this reference when Stage 2 needs more detail on fixed Task 0, taskbook structure, work graph, progress/blocker state, retry/stop rules, role boundaries, or completion trust. Execution Compile consumes Stable Intent IR and emits one executable taskbook or a truthful blocker; it does not execute the taskbook or become a runtime controller.
 
 ## Outcome
 
-Produce the smallest truthful carrier that lets a capable downstream runtime keep making correct progress without using Human interaction as ordinary orchestration. When that is impossible for a non-intent reason, return the exact blocker instead of asking an intent question or pretending the carrier is executable.
+Produce the smallest complete taskbook that lets a capable downstream runtime finish the full Goal with stable opening alignment, bounded failure handling, recoverable state, and trustworthy acceptance.
 
-Use two lenses:
+Keep four logical roles explicit:
 
-- **Authority** — what remains Human-owned, what the compiler may decide visibly, what execution may adapt, and what boundary judges completion when separation is required.
-- **Control protocol** — the minimum action loop, dependencies, evidence routes, continuity, and acceptance needed for this task.
+- **Human / Intent authority** — owns the requested outcome, confirmed boundaries, and material trade-offs;
+- **Prompt Atlas compiler** — grounds reality, closes ordinary pre-run choices, freezes the taskbook and proof obligations, then stops at handoff;
+- **Executor** — owns local How, actions, evidence, route adaptation, and progress/blocker updates inside the taskbook;
+- **Acceptor** — judges the complete Goal when independent acceptance is required. The Executor may not alter protected judging surfaces or substitute self-approval for Acceptor PASS.
 
-These are design lenses, not a runtime framework. Prefer one capable executor with clear boundaries. Add graph structure, durable state, separate control, or independent acceptance only when the task actually needs them.
+These are responsibility boundaries, not a requirement for a new manager process, scheduler, or multi-agent framework.
 
-## 1. Ground execution reality and settle before modification
+## 1. Ground execution reality
 
-Inspect the smallest authoritative surface that can determine:
+Inspect the smallest authoritative surface that determines:
 
-- the actual target or workspace;
-- governing specs, tests, schemas, and protected verifiers;
-- material baselines and critical commands;
-- real work dependencies and shared mutable surfaces;
-- the execution envelope, including Human availability and continuity limits.
+- the actual repository, branch/worktree, target, and governing specifications;
+- critical commands, baselines, tests, schemas, and protected verifiers;
+- real dependencies, shared mutable surfaces, and ownership conflicts;
+- the execution envelope, including access, time, Human availability, and acceptance requirements.
 
-A fact, command, baseline, or verifier is confirmed only when evidence supports it. Documentation, conventions, and named commands are claims, not verified state. When the authoritative surface is accessible, run or inspect it now; when it is inaccessible, retain the uncertainty explicitly in settlement or blocking. Never promote an unexecuted command, unmeasured baseline, or unchecked verifier to fact. Do not Ask Human for facts the repository, environment, or another authoritative source can settle.
+A fact, command, baseline, or verifier is confirmed only when evidence supports it. Documentation, conventions, and command names are claims, not verified state. Run or inspect accessible authoritative surfaces during compile; anything unavailable remains an explicit Task 0 check or blocker.
 
-### Universal pre-execution settlement
+Do not Ask Human for facts the repository, environment, or another authoritative source can settle.
 
-Every executable carrier preserves a boundary before material modification where the runtime must:
+## 2. Compile fixed Task 0
 
-1. **bind** the actual workspace, target, and governing surfaces;
-2. **verify** the minimum critical facts, commands, baselines, and verifier behavior;
-3. **align** execution understanding with the carrier's Goal, boundaries, and material route;
-4. **route** disagreement before sunk cost.
+Every `Status: Executable` taskbook begins with an explicit **Task 0**. It must complete before material modification.
 
-Settlement is a bind-and-validate step over the carrier's grounded state, not a second discovery pass. Reuse evidence that is authoritative, still fresh, and applicable to the bound execution object. Recheck only facts that are absent, stale, execution-environment-dependent, materially disputed, or invalidated by a changed workspace or upstream result.
+Task 0 always:
 
-This semantic boundary is universal; its representation is proportional.
+1. binds the actual repo, branch/worktree, target, and governing surfaces;
+2. restates the Goal, confirmed boundaries, initial execution order, and largest known risk;
+3. runs or verifies the critical commands, baselines, and judging surfaces on which execution depends;
+4. initializes the work graph and `.scratch/<project>/PROGRESS.md`;
+5. routes any disagreement before sunk cost.
 
-- **Inline settlement** — for clear, local, reversible work, perform the minimum bind / verify / align / route inside the runtime's first observe/evaluate step. Do not serialize a standalone Task 0, long receipt, Graph, or durable file merely to name the boundary.
-- **Explicit Task 0** — serialize a bounded first task when a material precondition, carrier-versus-reality disagreement, or execution-understanding risk cannot be settled during compile but can be settled safely before modification.
-- **Durable settlement** — when work may outlive one context, pause on external input, or span independent actors, retain the material settlement result in the same project-local continuity state used by the run. Do not create a second state system only for Task 0.
+For a clear local task, Task 0 may be one compact node and a short opening receipt. For riskier work, include the minimum extra probes, baseline capture, protected-surface checks, or dependency validation needed to avoid doing the wrong work correctly.
 
-Use an explicit Task 0 only when all of the following are true:
+Task 0 outcomes are fixed:
 
-- a concrete unverified precondition, disagreement, or handoff risk can be named;
-- it cannot be closed reliably in the compiler's current environment;
-- getting it wrong would cause material rework, boundary violation, false proof, or sunk cost;
-- a finite pre-modification probe or alignment action can close or route it.
+- **align** — begin material work;
+- **route revision** — facts or initial plan differ, but intent and confirmed boundaries still hold; revise the graph and continue;
+- **unresolved intent** — progress requires changing intent or a confirmed boundary, or materially different Goals remain plausible;
+- **branch blocker** — record the branch in `BLOCKED.md`, park it, and continue independent safe work;
+- **global blocker** — return `Status: Blocked` with the exact missing and resolving conditions.
 
-Task 0 may:
+Task 0 may not defer a Human decision already visible during compile.
 
-- verify the target workspace, required files, dependencies, and runtime capability;
-- prove that named commands and verifiers run rather than no-op or false-green;
-- confirm captured baselines and protected judging surfaces;
-- test assumptions on which the execution route depends;
-- compare execution reality with the carrier's grounded state and delegated defaults;
-- require a brief opening receipt stating the understood Goal, initial route or order when material, main risk, and any disagreement or unverified assumption.
+## 3. Use the fixed six-section taskbook
 
-The opening receipt is proportional evidence of handoff alignment, not a universal ceremony. Require it when execution crosses an agent/runtime or context boundary, or when a concrete carrier-misread risk would otherwise remain hidden. Inline settlement may leave no separate receipt when the same runtime can bind and verify a clear local task directly.
+Every executable taskbook uses these sections:
 
-Route settlement outcomes as follows:
+### 1. Purpose and Goal
 
-- preconditions and understanding align → begin material work;
-- executor understanding differs but the carrier is clear → correct the understanding from the carrier and continue without Human input;
-- facts or initial execution theory differ but intent and confirmed boundaries still hold → revise the route or plan, record the reason when continuity requires it, and continue;
-- evidence reveals that progress requires changing intent, changing a confirmed boundary, or choosing between materially different Goals → stop affected work and return to Intent Take before modification;
-- one precondition cannot be settled but independent safe work remains → preserve the exact disagreement or blocker, park the affected branch, and continue;
-- no safe work remains → return `Status: Blocked` with the exact missing condition and resolving path.
+State why the work exists and the complete final state. Preserve user-requested outcomes and the design intent needed for execution judgment.
 
-A Human decision visible during compile must be handled during Intent Take; no form of pre-execution settlement may defer it.
+### 2. Grounded State and Task 0
 
-**Complete when:** every execution carrier has a minimum pre-modification bind / verify / align / route boundary; explicit or durable structure appears only when material risk requires it; and every possible settlement result has an unambiguous route.
+Separate verified facts, unverified claims, baselines, critical commands, judging surfaces, opening alignment, and Task 0 outcome routes.
 
-## 2. Close pre-run decisions
+### 3. Decisions, Authority, and Boundaries
 
-Keep three default responsibilities clear:
+State:
 
-- **Human / Intent authority** — owns the requested result and confirmed boundaries.
-- **Prompt Atlas compiler** — grounds reality, asks only at the Human boundary, makes safe delegated choices visibly, and compiles the carrier; it stops at handoff.
-- **Execution runtime** — owns local How, actions, evidence, and evidence-driven adaptation inside intent and confirmed boundaries.
+- Human-owned decisions and confirmed boundaries;
+- visible delegated defaults, their basis, consequence if wrong, and rollback/replan route;
+- allowed write scope and shared mutable surfaces;
+- protected tests, verifiers, schemas, baselines, and acceptance criteria;
+- explicit prohibited changes.
 
-Ask Human only when:
+Implementation How remains Executor-owned unless the Human made it part of the required result.
 
-1. proceeding would **change intent**;
-2. proceeding would **change a confirmed boundary** or require irreversible/high-risk authorization;
-3. the current request still **confuses materially different intents** after accessible grounding.
+### 4. Work Graph and Execution Rules
 
-Do not ask for necessary implementation expansion, dependency discovery, task decomposition, local architecture, command order, or ordinary execution choices when intent and boundaries remain intact.
+Every taskbook expresses an execution topology.
 
-Close ordinary pre-run choices in this order:
-
-- use authoritative evidence when it determines the answer;
-- use inline settlement or explicit Task 0 when the decision depends on execution-only reality or handoff alignment that must be settled before material work;
-- leave local How and uncertain execution-theory choices to the runtime;
-- use a visible delegated default when one reasonable choice preserves intent and confirmed boundaries.
-
-A delegated default needs a reasonable evidence- or convention-backed choice and must be reversible or reliably mismatch-detectable. Record the selection, basis, visibly unconfirmed status, consequence if wrong, and rollback/replan route.
-
-For **artifact-only**, the default remains reviewable and becomes execution input only when the caller accepts, edits, or forwards the carrier. For **compile-and-run**, it must be safe to execute without another Human turn. An executable task alone does not authorize compile-and-run; a direct request to complete work in the available environment does.
-
-If no pre-run choice is clearly superior but all choices stay inside intent and confirmed boundaries, preserve the decision surface for execution rather than creating another Human gate.
-
-**Complete when:** no foreseeable ordinary execution event requires Human orchestration; only the three Ask Human boundaries remain Human-owned, and material pre-run disagreement has an evidence or settlement route.
-
-## 3. Compile the minimum execution shape
-
-Start with a direct loop:
+A simple task uses a linear graph:
 
 ```text
-bind / verify / align → act → observe → evaluate → continue / repair / replan / exit
+Task 0 → Implement → Verify → Global Gate
 ```
 
-For a simple task, inline settlement, one current action, its local check, and the complete-Goal gate are enough.
+Expand the graph only when real dependencies, independent ready work, branch parking, shared ownership, evidence invalidation, or joins must be explicit.
 
-Introduce an explicit Task 0 only under the criteria above. Introduce Task / Issue nodes and edges only when real dependencies, independent ready work, shared ownership, evidence flow, or recovery need to be explicit. An edge exists only when it changes readiness, proof, invalidation, or routing—not to serialize prose.
+Each material node should identify:
 
-For parallel work, prefer disjoint write domains. Assign one owner per shared mutable surface, make joins explicit, and invalidate downstream evidence when upstream changes affect what it proved.
+- its result;
+- readiness dependencies;
+- write ownership when shared surfaces exist;
+- local evidence;
+- what downstream evidence becomes stale if it changes.
 
-Keep the initial structure small. Execution may add, remove, split, merge, or reroute remaining work as evidence changes the execution theory, provided intent, confirmed boundaries, and completion obligations remain unchanged.
+The graph may adapt as evidence changes the execution theory, provided Goal, confirmed boundaries, and proof obligations remain unchanged. Record material replans in `PROGRESS.md`.
 
-**Complete when:** the runtime can identify the minimum pre-execution settlement and first safe evidence-producing action, real dependencies are represented only where needed, and the complete Goal remains reachable.
+### 5. Progress, Blockers, and Continuity
 
-## 4. Preserve autonomous progress
+For repository execution, Task 0 initializes:
 
-Make only material routes explicit:
+```text
+.scratch/<project>/PROGRESS.md
+```
 
-- inline or explicit settlement misunderstanding with a clear carrier → correct understanding and continue;
-- settlement factual or planning mismatch inside the settled envelope → revise the route before material work;
-- local mismatch → repair or change local approach;
-- local PASS → retain evidence and continue authorized downstream work;
-- blocked branch → park it and continue independent safe work;
-- evidence invalidates the execution theory → revise remaining work;
-- revision triggers change intent, change boundary, or confused intent → return to Intent Take;
-- no safe work remains because of a non-intent prerequisite → return `BLOCK` with the exact condition;
-- local evidence appears complete → evaluate the complete Goal, not automatic completion.
+Keep it concise. Update after each material checkpoint with:
 
-Continue repair or replan only while the next attempt has a credible path to new evidence or progress and remains within budget. When repeated attempts stop producing evidence gain, no materially different safe approach remains, or the budget is exhausted, exit with truthful `BLOCK` or `ESCALATE` rather than looping ceremonially.
-
-After execution starts, ordinary test failure, command drift, local architecture choice, retry, task decomposition, necessary implementation expansion, or remaining-plan revision are not by themselves HITL.
-
-A local checkpoint judges a bounded result. The **Global Gate** judges the complete Goal. Do not add generic review stages merely because the task is large.
-
-**Complete when:** ordinary uncertainty has a non-Human next action, material disagreement is exposed before sunk cost where possible, the Human boundary is explicit, stalled loops terminate truthfully, and local PASS cannot bypass complete-Goal acceptance.
-
-## 5. Compile continuity only when needed
-
-Continuity is required when work may outlive one context, pause on external or Human input, span independent actors, or invalidate earlier evidence.
-
-Require only enough semantic state to resume without replaying the conversation:
-
-- Goal and still-binding decisions by reference;
-- material pre-execution settlement results and unresolved assumptions;
-- current ready/active/completed/parked work;
-- completed evidence and what it proves;
+- Goal reference;
+- completed, current, and next work;
+- evidence and what it proves;
 - stale or invalidated evidence and why;
-- active blockers and exact missing input;
-- accepted replans or pending Human decisions;
-- remaining complete-Goal conditions;
-- next safe work.
+- parked branches;
+- remaining complete-Goal conditions.
 
-For long-running or cross-context repository work, default to:
+When a real blocker appears, create or update:
 
 ```text
-.scratch/<project>/IMPLEMENTATION_NOTES.md
+.scratch/<project>/BLOCKED.md
 ```
 
-The downstream runtime initializes and maintains it. The file is case-local runtime material, not repository source of truth, and should not be committed or promoted automatically.
+Record:
 
-Use one concise file by default. Add per-agent or append-only receipts only when real concurrency, independent acceptance, or interruption risk makes a single writer unsafe. Keep private acceptance cases outside Executor-visible state.
+- blocked branch or whole-task scope;
+- attempts made;
+- exact missing condition;
+- resolving condition;
+- independent safe work that can continue.
 
-**Complete when:** a fresh runtime can identify the truthful current state and next safe action without reconstructing the run from chat history.
+These files are case-local runtime state, not repository source of truth, and should not be committed or promoted automatically.
 
-## 6. Close acceptance, delivery, and handoff
+### 6. Acceptance and Delivery
 
-The complete-Goal gate must state:
+State:
 
-- what evidence closes the Goal rather than merely showing activity;
-- which judging surfaces are protected from modification;
-- whether execution self-acceptance is sufficient;
-- when fresh context, hidden checks, or independent acceptance is required;
-- what residuals or blockers must be reported rather than hidden.
+- what evidence closes the complete Goal rather than merely showing activity;
+- which judging surfaces are protected;
+- whether Executor self-acceptance is sufficient;
+- whether fresh context, hidden checks, or an independent Acceptor is required;
+- what residuals or blockers must be reported;
+- deliverables and evidence summary.
 
-Use the existing verdicts:
+## 4. Apply fixed retry and stop rules
+
+The taskbook must include these execution rules:
+
+- every retry uses a materially different hypothesis or approach;
+- after the same acceptance check fails three consecutive attempts, stop the current route and choose one: replan, switch branch, roll back, `BLOCK`, or `ESCALATE`;
+- do not disguise repeated variants of the same failed approach as a new attempt;
+- if results regress below a verified baseline without explicit authorization, roll back the regression and report it truthfully;
+- a branch-local blocker does not block independent safe work;
+- no safe route or no new evidence-producing approach means truthful exit, not ceremonial looping.
+
+The fixed count is a final mechanical guardrail, not permission to repeat a known-bad approach three times.
+
+## 5. Protect proof and completion
+
+Tests, verifiers, schemas, baselines, and acceptance criteria are protected unless the taskbook explicitly authorizes changing them. Passing by skipping tests, weakening assertions, mocking the object under test, deleting coverage, swallowing failures, or editing the judge is not completion unless the Goal explicitly requires that proof-surface change and preserves equivalent trust.
+
+Use failure-sensitivity checks when a critical verifier could no-op or false-pass: deliberately create a bounded failure, prove the signal fires, restore the state, then run the normal proof.
+
+A local checkpoint proves only its graph node. The **Global Gate** judges the complete Goal and all confirmed boundaries. Local PASS cannot imply task completion.
+
+Use the verdicts:
 
 - `PASS`
 - `RETRY`
 - `BLOCK`
 - `ESCALATE`
 
-A non-PASS verdict routes to more evidence-producing work, replanning, a true blocker, or the relevant Human boundary. It cannot be rewritten into completion.
+A non-PASS verdict routes to evidence-producing work, a materially different plan, a parked branch, a true blocker, or the relevant Human boundary. It cannot be rewritten into completion.
 
-When independent acceptance is required, compile the accepting boundary and private-proof retention requirement. Before execution begins, the caller/runtime must either bind or reserve that boundary, or explicitly freeze the run's completion ceiling at `ready for independent acceptance`. The latter cannot claim an equivalent PASS.
+When independent acceptance is required, the taskbook names the Acceptor boundary and private-proof requirement. Before execution begins, the caller/runtime must bind or reserve it, or freeze the completion ceiling at `ready for independent acceptance`. Executor self-approval cannot claim equivalent PASS.
 
-Define Delivery separately from proof: artifacts, evidence summary, residuals, and next actions.
+## 6. Handoff modes
 
-Use **artifact-only** when the user asks for a prompt, brief, contract, taskbook, or another handoff artifact. For a workflow caller, that caller owns whether the carrier is returned or immediately bound to execution. A direct request to complete work in the available environment supplies **compile-and-run** authority. After `Status: Executable`, Prompt Atlas stops and the caller/runtime uses the carrier as the execution source without another Human “start” turn.
+Use **artifact-only** when the user asks for a prompt, brief, contract, taskbook, or another handoff artifact. Delegated defaults remain reviewable and become execution input only when the caller accepts, edits, or forwards the taskbook.
 
-**Complete when:** the completion boundary is trustworthy, required independent acceptance is bound/reserved or honestly capped, delegated defaults are safe for the mode, and the caller knows whether to return the carrier or start execution.
+A direct request to complete work in the available environment supplies **compile-and-run** authority. After `Status: Executable`, Prompt Atlas stops and the existing runtime executes the taskbook without another Human start turn.
+
+Prompt Atlas compiles the structure and routes; it does not own live scheduling, retries, state mutation, or supervision. Do not introduce a separate control layer merely to run the taskbook.
 
 ## Executable readiness
 
 Emit `Status: Executable` only when:
 
-- the Goal is clear and intent remains unchanged;
+- Goal and confirmed boundaries are stable;
 - no foreseeable Ask Human boundary remains open;
-- no blocker prevents a safe first action or truthful continued progress;
-- the minimum pre-execution settlement is clear, with material preconditions or disagreements verified or assigned to explicit Task 0 with outcome routing;
-- delegated defaults are explicit and safe for the handoff mode;
-- ordinary execution uncertainty has a non-Human route;
-- required continuity and acceptance can be bound before they are needed;
-- the handoff mode is known and compile-and-run has caller authority.
+- critical facts are evidenced or assigned to Task 0 with truthful routes;
+- fixed Task 0 is explicit and precedes material modification;
+- all six taskbook sections are present;
+- the graph exposes order, dependencies, shared ownership, branch parking, and the Global Gate at the level the task requires;
+- `PROGRESS.md` and `BLOCKED.md` behavior is specified;
+- retry/stop and baseline-regression rules are explicit;
+- protected proof surfaces and acceptance authority are clear;
+- handoff mode and delivery are unambiguous.
 
-If a required non-intent prerequisite is unavailable and prevents all safe progress, emit `Status: Blocked` instead. A branch-local blocker may remain in an executable carrier when it is parked and independent safe work can continue.
-
-This bar reduces ordinary post-compile HITL. It does not require all unknowns to be eliminated and does not pretend new evidence can never expose a real Human boundary.
+If a required non-intent prerequisite prevents all safe work, emit `Status: Blocked`. A branch-local blocker may remain in an executable taskbook when it is recorded, parked, and independent safe work can continue.
 
 ## Research and decision work
 
-Use the same direct-loop default. Gather sources, test hypotheses, compare options, and synthesize evidence. Judge completion by provenance, counterevidence, residual unknowns, reproducibility, and decision usefulness. A well-supported dead end can be a completed result. Respect explicit budgets; otherwise stop when further work no longer changes the decision materially enough to justify its cost.
+Use the same six-section skeleton. Task 0 verifies source access, scope, decision criteria, and reproducibility. The graph may be source collection → counterevidence → synthesis → decision gate. Progress state records sources, claims, unresolved contradictions, and next probes. Judge completion by provenance, counterevidence, residual unknowns, reproducibility, and decision usefulness rather than inventing code-style metrics.
 
-## Carrier quality
+## Information budget
 
-A fresh runtime should be able to determine, without replaying the conversation:
-
-- why the work exists and what final state is required;
-- what is authoritative, verified, inferred, unknown, or visibly delegated;
-- what remains Human-owned and what execution may adapt;
-- what minimum pre-execution settlement is required and whether it is inline, explicit, or durable;
-- when an explicit Task 0 is present, what opening alignment it needs and what each result means;
-- the first safe action and real dependencies;
-- how evidence changes the next action;
-- what can continue when one branch blocks;
-- when repair/replan should stop;
-- what state must survive interruption;
-- what evidence closes the complete Goal;
-- whether execution starts immediately or the carrier is returned;
-- what must be delivered.
-
-Use less structure when these semantics remain clear. Keep detail only when its absence would create drift, false completion, unnecessary HITL, handoff ambiguity, or loss of continuity. Do not restate repository facts a capable runtime can inspect immediately unless they anchor authority, routing, verification, recovery, acceptance, or handoff.
+The structure is fixed; detail is not. Keep a section to one line when that preserves its semantics. Retain information only when omission could change execution judgment, authority, routing, verification, recovery, acceptance, or handoff. Do not restate repository facts a capable runtime can inspect immediately unless they anchor one of those decisions.
