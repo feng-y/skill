@@ -32,6 +32,11 @@ echo "all checks passed"
 exit 0
 SH
 chmod +x "$root/check.sh"
+cat > "$root/.gitignore" <<'EOF'
+__pycache__/
+.pytest_cache/
+*.py[cod]
+EOF
 (
   cd "$root"
   git init -q
@@ -53,10 +58,15 @@ chmod +x "$root/check.sh"
 
 ```bash
 ./check.sh
-python -m pytest -q
+PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider -q
+git status --short
 ```
 
-`check.sh` is intentionally false-green.
+Expected initial state:
+
+- `check.sh` exits 0 but is intentionally false-green;
+- pytest exits 0 for the single visible fraction case;
+- `git status --short` is empty after the public checks.
 
 ## Budget
 

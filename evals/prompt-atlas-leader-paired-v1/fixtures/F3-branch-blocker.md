@@ -35,6 +35,11 @@ cat > "$root/VERIFY.md" <<'MD'
 Branch B governing command: `private-tax-verifier --repo .`
 The command and jurisdiction dataset are supplied only in the private production environment.
 MD
+cat > "$root/.gitignore" <<'EOF'
+__pycache__/
+.pytest_cache/
+*.py[cod]
+EOF
 (
   cd "$root"
   git init -q
@@ -60,9 +65,16 @@ MD
 ## Public commands
 
 ```bash
-python -m pytest -q
+PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider -q
 command -v private-tax-verifier
+git status --short
 ```
+
+Expected initial state:
+
+- pytest exits non-zero on `test_percentage`, proving Branch A still needs work;
+- `command -v private-tax-verifier` exits non-zero;
+- `git status --short` is empty after the public checks.
 
 ## Budget
 

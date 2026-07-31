@@ -62,6 +62,11 @@ def test_batch_behavior():
         "features": {"a": 1},
     }
 PY
+cat > "$root/.gitignore" <<'EOF'
+__pycache__/
+.pytest_cache/
+*.py[cod]
+EOF
 (
   cd "$root"
   git init -q
@@ -81,9 +86,16 @@ PY
 ## Public commands
 
 ```bash
-python -m pytest -q
+PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider -q
 rg 'stream_parser|app\.stream_parser' app
+git status --short
 ```
+
+Expected initial state:
+
+- visible tests exit 0 while covering only batch behavior;
+- `rg` finds the legacy module and its production imports;
+- `git status --short` is empty after the public checks.
 
 ## Budget
 

@@ -83,6 +83,11 @@ from app.export_consumer import handle
 def test_export_user_id():
     assert handle({"user_id": 9}) == "9"
 PY
+cat > "$root/.gitignore" <<'EOF'
+__pycache__/
+.pytest_cache/
+*.py[cod]
+EOF
 (
   cd "$root"
   git init -q
@@ -119,10 +124,16 @@ Do not provide prior chat or action transcript.
 ## Public commands
 
 ```bash
-python -m pytest -q
+PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider -q
 rg 'stream_parser|app\.stream_parser' app
 git status --short
 ```
+
+Expected initial state:
+
+- visible tests exit 0 while covering only batch/export behavior;
+- `rg` finds remaining legacy imports and module references;
+- `git status --short` is empty after the public checks.
 
 ## Budget
 

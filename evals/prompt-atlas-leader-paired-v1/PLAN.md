@@ -17,6 +17,24 @@ The exact synthetic repositories, task inputs, protected surfaces, forced events
 
 Do not replace these tasks with later-selected examples. Any fixture correction creates a new fixture version and invalidates earlier runs for that fixture.
 
+## Fixture infrastructure self-check
+
+Before freezing an EVA run, execute:
+
+```bash
+python evals/prompt-atlas-leader-paired-v1/validate-fixtures.py
+```
+
+The self-check must PASS before either arm starts. It verifies:
+
+- every repository generator executes and creates a committed Git repository;
+- every public oracle-manifest hash matches its registered text;
+- public commands return the preregistered initial result;
+- Python bytecode and pytest caches do not dirty the worktree;
+- the private verifier required by F3 remains unavailable.
+
+Fixture generators include only Python-cache ignore rules. They do not ignore `.scratch`, so F4 can still detect accidentally committed or hidden continuity state.
+
 ## Compared snapshots
 
 Freeze before execution:
@@ -105,6 +123,7 @@ Token/time efficiency is secondary to correctness and trust. A cheaper run that 
 Create `RESULTS.md` only after all valid runs exist. It must contain:
 
 - exact snapshot, fixture, generated-repository, environment-image, and private-oracle hashes;
+- fixture self-check output and tool versions;
 - model/tool versions and arm order/randomization seed;
 - one row per arm with links to retained artifacts;
 - primary metrics and oracle verdict;
