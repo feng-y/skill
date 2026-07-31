@@ -75,6 +75,18 @@ Compile the smallest useful carrier:
 - require recoverable semantic state only when work may outlive one context or span independent actors;
 - judge the complete Goal at a Global Gate; local done is not global completion.
 
+### Execution discipline
+
+Keep execution stable with five rules rather than a fixed workflow:
+
+- before material work, verify the bound target, critical commands or baselines, and judging surfaces on which the route depends;
+- keep protected tests, verifiers, schemas, and acceptance criteria unchanged unless the carrier explicitly authorizes changing them;
+- after failure, retry only with a materially different hypothesis or approach; otherwise replan, park the affected branch, or report the blocker;
+- treat local checks as evidence for the current change only; claim completion only after rechecking the complete Goal and all confirmed boundaries;
+- preserve a short recoverable progress note only when work may outlive the current context.
+
+These rules improve execution stability and completion without requiring a fixed Task 0, retry count, taskbook shape, progress file, Graph, or role topology.
+
 For long-running or cross-context repository work, the carrier may require the downstream runtime to maintain project-local continuity under `.scratch/<project>/IMPLEMENTATION_NOTES.md`. Prompt Atlas compiles the requirement; the runtime creates and updates the file. When pre-execution settlement is material to resumption, its result belongs in that same continuity state.
 
 `Status: Executable` means the Goal is clear, no foreseeable Ask Human boundary remains open, no blocker prevents a safe first action or truthful continued progress, delegated defaults are explicit and safe for the handoff mode, and every ordinary execution uncertainty has a non-Human route such as inline settlement, Task 0, probe, repair, branch parking, replan, retry, or truthful blocking.
