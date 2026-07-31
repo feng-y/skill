@@ -34,6 +34,8 @@ Every executable carrier preserves a boundary before material modification where
 3. **align** execution understanding with the carrier's Goal, boundaries, and material route;
 4. **route** disagreement before sunk cost.
 
+Settlement is a bind-and-validate step over the carrier's grounded state, not a second discovery pass. Reuse evidence that is authoritative, still fresh, and applicable to the bound execution object. Recheck only facts that are absent, stale, execution-environment-dependent, materially disputed, or invalidated by a changed workspace or upstream result.
+
 This semantic boundary is universal; its representation is proportional.
 
 - **Inline settlement** — for clear, local, reversible work, perform the minimum bind / verify / align / route inside the runtime's first observe/evaluate step. Do not serialize a standalone Task 0, long receipt, Graph, or durable file merely to name the boundary.
