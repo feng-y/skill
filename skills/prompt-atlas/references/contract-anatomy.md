@@ -23,13 +23,13 @@ Keep these classes distinct:
 - **User-owned intent** — requested outcome, accepted behavior, confirmed decisions, and boundaries. These change only with new user authority.
 - **Territory reality** — authoritative code, tests, traces, schemas, artifacts, measurements, and other evidence. Better evidence may revise facts, feasibility, necessary implementation work, and proof obligations without rewriting intent.
 - **Inference / recommendation** — useful model judgment, including a candidate Goal or delegated default, but not Human-confirmed authority.
-- **Unknown** — unresolved until evidence, execution, a visible delegated default, or Human authority settles its consequence.
+- **Unknown** — unresolved until evidence, Task 0, execution, a visible delegated default, or Human authority settles its consequence.
 
 An explicit requested outcome remains authoritative even when grounding reveals more work, stronger proof, or higher cost. Surface a true conflict rather than silently weakening it.
 
 ## Why / design intent
 
-Preserve rationale when it helps execution choose correctly in cases the prompt cannot predict. A design direction is Human-owned when the Human made it part of the desired result or boundary. Routine architecture choices remain implementation How when they preserve that meaning.
+Preserve rationale when it helps execution choose correctly in cases the taskbook cannot predict. A design direction is Human-owned when the Human made it part of the desired result or boundary. Routine architecture choices remain implementation How when they preserve that meaning.
 
 ## Grounding
 
@@ -39,9 +39,9 @@ For repo work, preserve governing constraints or acceptance paths when they affe
 
 Grounding should reduce the Human decision surface, not replace it. Do not ask the Human for facts authoritative evidence can settle, and do not keep researching merely to avoid a real Human decision.
 
-Every executable handoff retains a minimum pre-execution settlement boundary before material modification. Execution Compile decides whether the runtime can perform that bind / verify / align / route check inline, must serialize it as explicit Task 0, or must retain its material result in continuity state. Task 0 may expose a Human boundary that was impossible to see earlier, but no settlement form may postpone one already visible during compile.
+Every executable handoff lowers into a taskbook with an explicit **Task 0** before material modification. Task 0 is a fixed opening checkpoint, not a second discovery pass. It may reuse compiler evidence that is authoritative, still fresh, and applicable to the bound repo, worktree, target, and execution environment. Recheck facts that are absent, stale, execution-environment-dependent, disputed, or invalidated by workspace or upstream changes.
 
-When a required fact or disagreement is accessible now, perform the focused check during compile. When it depends on execution-only reality, leave it to proportional pre-execution settlement rather than turning it into a Human question.
+When a required fact or disagreement is accessible now, perform the focused check during compile. When it depends on execution-only reality, preserve it as an explicit Task 0 check rather than turning it into a Human question. Task 0 may expose a Human boundary that was impossible to see earlier, but it may not postpone one already visible during compile.
 
 When the Human defines a scope or classification rule but is unsure which concrete entities satisfy it, preserve the rule as authority and derive membership from evidence. Ask again only when the residual classification depends on Human meaning rather than observable reality.
 
@@ -64,11 +64,11 @@ Unknown exists to reduce unnecessary Human questions, not eliminate Human judgme
 Route it in this order:
 
 - evidence can settle it during compile → investigate;
-- it depends on execution-only reality but can be settled safely before material modification → preserve a pre-execution settlement route; keep it inline for clear local work, serialize explicit Task 0 for material disagreement or risk, and retain the result durably only when continuity needs it;
-- it changes only local implementation How or execution theory → let execution choose, experiment, or replan;
+- it depends on execution-only reality but can be settled safely before material modification → assign it to explicit Task 0 with align, route-revision, branch-blocker, global-blocker, and unresolved-intent outcomes;
+- it changes only local implementation How or execution theory → let execution choose, experiment, or replan inside the frozen intent and proof envelope;
 - a reasonable choice preserves intent and boundaries and is reversible or reliably mismatch-detectable → visible delegated default;
 - it reaches one of the Ask Human boundaries → ask the smallest useful question;
-- required evidence or authority is inaccessible but independent safe work remains → preserve the blocker and park the affected branch;
+- required evidence or authority is inaccessible but independent safe work remains → preserve the blocker, record it, and park the affected branch;
 - required evidence, access, or capability is inaccessible and no safe route remains → return `Status: Blocked` with the exact resolving condition.
 
 A delegated default is visibly unconfirmed. Record its basis, consequence if wrong, and detection or rollback route. It may close ordinary orchestration; it may not silently change intent or confirmed boundaries.
@@ -87,7 +87,7 @@ When an Ask Human boundary remains, expose the smallest decision surface: materi
 
 More work, wider necessary implementation scope, several valid implementation approaches, or future replanning do not by themselves require Human input.
 
-A delegated default is allowed when it preserves intent and confirmed boundaries, has a reasonable evidence- or convention-backed choice, and is reversible or safely mismatch-detectable. For **artifact-only**, it remains reviewable until the caller accepts, edits, or forwards the carrier. For **compile-and-run**, it must be safe to execute without another Human turn.
+A delegated default is allowed when it preserves intent and confirmed boundaries, has a reasonable evidence- or convention-backed choice, and is reversible or safely mismatch-detectable. For **artifact-only**, it remains reviewable until the caller accepts, edits, or forwards the taskbook. For **compile-and-run**, it must be safe to execute without another Human turn.
 
 If evidence proves the requested result infeasible and there is no meaningful Human choice, return the blocker rather than manufacturing a decision.
 
@@ -114,14 +114,16 @@ Stable Intent is sufficient when Execution Compile no longer needs to rediscover
 - what trusted success means;
 - delivery semantics that must survive lowering.
 
-It also requires that none of the three Ask Human conditions remains. Context and execution unknowns may remain when they can be investigated, handled by proportional pre-execution settlement, delegated visibly, or resolved downstream without changing intent or boundaries.
+It also requires that none of the three Ask Human conditions remains. Context and execution unknowns may remain when they can be investigated during compile, assigned to fixed Task 0, delegated visibly, or resolved downstream without changing intent or boundaries.
 
-Implementation discovery, decomposition, dependency mapping, architecture How, command order, retries, and runtime state remain Stage 2/runtime concerns unless they trigger an Ask Human boundary.
+Implementation discovery, decomposition, dependency mapping, architecture How, command order, retries, graph adaptation, and runtime state remain Stage 2/runtime concerns unless they trigger an Ask Human boundary.
 
 ## Boundary with Execution Compile
 
-Execution Compile may ground implementation territory, compile the minimum pre-execution settlement, serialize explicit Task 0 for material execution-only risk, close ordinary execution branches with evidence or visible delegated defaults, derive work dependencies, and lower proof semantics into execution shape. It may not silently change intent or confirmed boundaries.
+Execution Compile may ground implementation territory, compile the fixed six-section taskbook, assign execution-only checks to Task 0, derive the initial work graph, specify progress/blocker state and stop rules, close ordinary branches with evidence or visible delegated defaults, and lower proof semantics into execution shape.
 
-If Stage 2 or pre-execution settlement evidence triggers **change intent**, **change boundary**, or **confused intent**, return to Intent Take before affected modification. If a non-intent prerequisite is unavailable, park only the affected branch while safe work remains; otherwise return `Status: Blocked`.
+It freezes the Goal, Human authority, confirmed boundaries, protected proof surfaces, completion obligations, and handoff mode. It does **not** freeze implementation How or the remaining graph: the Executor may revise, split, merge, reorder, or park remaining work as evidence changes the execution theory inside that envelope.
+
+If Stage 2 or Task 0 evidence triggers **change intent**, **change boundary**, or **confused intent**, return to Intent Take before affected modification. If a non-intent prerequisite is unavailable, park only the affected branch while safe work remains; otherwise return `Status: Blocked`.
 
 The final executable artifact contains only the lowered semantics that matter to execution judgment; it is not Stable Intent followed by an execution appendix.
