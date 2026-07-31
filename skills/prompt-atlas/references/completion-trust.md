@@ -36,7 +36,7 @@ When independent acceptance is required, the carrier must identify:
 - where private or hidden proof is retained outside Executor-visible state;
 - the latest point by which an actual Acceptor or equivalent runtime boundary must be bound.
 
-The caller/runtime binds or reserves that boundary before execution begins. If the runtime cannot provide it, execution may still produce visible evidence but must stop at `ready for independent acceptance`; it cannot substitute Executor self-attestation or claim an equivalent PASS.
+Before execution begins, the caller/runtime must either bind or reserve the required independent boundary, or explicitly freeze the run's completion ceiling at `ready for independent acceptance`. The latter may still produce visible evidence, but it cannot substitute Executor self-attestation or claim an equivalent PASS.
 
 ## Visible-contract boundary
 
