@@ -1,18 +1,18 @@
 # Completion Trust
 
-Use when completion can false-pass or needs fresh or independent acceptance.
+Use when a task can appear complete without proving the requested result.
 
-Proof must be:
+## Proof rules
 
-1. **direct** — demonstrate the required behavior, not a convenient proxy;
-2. **failure-sensitive** — a critical verifier can be shown to fail when the property is broken;
-3. **intact** — Judge, Population, Object, Metric, baselines, and failure propagation cannot be silently weakened;
-4. **independent when required** — Executor self-attestation is not final acceptance.
+- **Prove the property directly.** Build, lint, coverage, or activity are not substitutes when they do not establish the Goal.
+- **Prove the judge can fail.** When a critical check could no-op or false-pass, create a bounded failure, show the signal, restore the state, then run the normal proof.
+- **Freeze the judge.** The Executor may not weaken assertions, shrink the judged population, substitute a mock for the real object, lower thresholds, bypass failure propagation, skip tests, or edit acceptance criteria unless Stable Intent explicitly requires that change and preserves equivalent trust.
+- **Preserve baselines.** A cheaper result below an evidenced baseline is regression, not completion, unless explicitly authorized.
 
-Skipping tests, weakening assertions, narrowing coverage, mocking away the object, swallowing failures, or editing the judge is not completion unless explicitly required and equally trustworthy.
+Attach local proof to each task. Local PASS may unlock dependent work; it does not close the complete Goal. Upstream changes invalidate downstream evidence when they affect what it proved.
 
-Attach proof to the work it proves. Use `Task 0 → Execute with local proof → Global Gate`; add a separate `Verify` node only for integration, cross-result, hidden, fresh, or independent proof.
+## Independent acceptance
 
-Local PASS may unlock dependent work; only the Global Gate closes the Goal. If required independent acceptance is unavailable, stop at `ready for independent acceptance`, not `PASS`.
+Use a fresh or independent Acceptor when Executor self-attestation remains gameable or incomplete. Keep hidden cases and private proof outside the Executor-visible taskbook. Bind or reserve the accepting boundary before execution; if it is unavailable, the highest honest result is `ready for independent acceptance`, not `PASS`.
 
-Compromised, fabricated, skipped, or stale proof is unmet. Upstream changes invalidate downstream proof when they affect what it established.
+Compromised, fabricated, skipped, or stale proof is unmet. Non-PASS routes to new evidence, a materially different plan, a truthful blocker, or the relevant Human boundary; it is never rewritten as completion.
