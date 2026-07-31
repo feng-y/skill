@@ -1,6 +1,6 @@
 # Execution Compile
 
-Use this reference when Stage 2 needs more detail on authority boundaries, execution shape, branch closure, Task 0, continuity, or proof topology. Execution Compile consumes Stable Intent IR and emits one executable carrier or a truthful blocker; it does not execute the carrier or own live run state.
+Use this reference when Stage 2 needs more detail on authority boundaries, execution shape, pre-execution settlement, Task 0, branch closure, continuity, or proof topology. Execution Compile consumes Stable Intent IR and emits one executable carrier or a truthful blocker; it does not execute the carrier or own live run state.
 
 ## Outcome
 
@@ -13,7 +13,7 @@ Use two lenses:
 
 These are design lenses, not a runtime framework. Prefer one capable executor with clear boundaries. Add graph structure, durable state, separate control, or independent acceptance only when the task actually needs them.
 
-## 1. Ground execution reality
+## 1. Ground execution reality and settle before modification
 
 Inspect the smallest authoritative surface that can determine:
 
@@ -25,9 +25,27 @@ Inspect the smallest authoritative surface that can determine:
 
 A fact, command, baseline, or verifier is confirmed only when evidence supports it. Do not Ask Human for facts the repository, environment, or another authoritative source can settle.
 
-### Task 0
+### Universal pre-execution settlement
 
-Use **Task 0** when a critical precondition, carrier-versus-reality disagreement, or likely executor misunderstanding cannot be settled during compile but can be settled safely before material modification. Do not add it to a simple task when no material pre-run uncertainty exists.
+Every executable carrier preserves a boundary before material modification where the runtime must:
+
+1. **bind** the actual workspace, target, and governing surfaces;
+2. **verify** the minimum critical facts, commands, baselines, and verifier behavior;
+3. **align** execution understanding with the carrier's Goal, boundaries, and material route;
+4. **route** disagreement before sunk cost.
+
+This semantic boundary is universal; its representation is proportional.
+
+- **Inline settlement** — for clear, local, reversible work, perform the minimum bind / verify / align / route inside the runtime's first observe/evaluate step. Do not serialize a standalone Task 0, long receipt, Graph, or durable file merely to name the boundary.
+- **Explicit Task 0** — serialize a bounded first task when a material precondition, carrier-versus-reality disagreement, or execution-understanding risk cannot be settled during compile but can be settled safely before modification.
+- **Durable settlement** — when work may outlive one context, pause on external input, or span independent actors, retain the material settlement result in the same project-local continuity state used by the run. Do not create a second state system only for Task 0.
+
+Use an explicit Task 0 only when all of the following are true:
+
+- a concrete unverified precondition, disagreement, or handoff risk can be named;
+- it cannot be closed reliably in the compiler's current environment;
+- getting it wrong would cause material rework, boundary violation, false proof, or sunk cost;
+- a finite pre-modification probe or alignment action can close or route it.
 
 Task 0 may:
 
@@ -38,18 +56,20 @@ Task 0 may:
 - compare execution reality with the carrier's grounded state and delegated defaults;
 - require a brief opening receipt stating the understood Goal, initial route or order when material, main risk, and any disagreement or unverified assumption.
 
-The opening receipt is an alignment signal, not a new approval ceremony or mandatory durable file. It lets a misunderstanding be corrected before sunk cost. Task 0 may expose a true Human decision earlier than ordinary execution would, but it must not postpone a change-intent, change-boundary, or confused-intent decision already visible during compile.
+The opening receipt is proportional evidence of handoff alignment, not a universal ceremony. Require it when execution crosses an agent/runtime or context boundary, or when a concrete carrier-misread risk would otherwise remain hidden. Inline settlement may leave no separate receipt when the same runtime can bind and verify a clear local task directly.
 
-Route Task 0 outcomes as follows:
+Route settlement outcomes as follows:
 
-- preconditions and understanding align → retain the opening receipt and begin material work;
+- preconditions and understanding align → begin material work;
 - executor understanding differs but the carrier is clear → correct the understanding from the carrier and continue without Human input;
-- facts or initial execution theory differ but intent and confirmed boundaries still hold → revise the route or plan, record the reason, and continue;
+- facts or initial execution theory differ but intent and confirmed boundaries still hold → revise the route or plan, record the reason when continuity requires it, and continue;
 - evidence reveals that progress requires changing intent, changing a confirmed boundary, or choosing between materially different Goals → stop affected work and return to Intent Take before modification;
 - one precondition cannot be settled but independent safe work remains → preserve the exact disagreement or blocker, park the affected branch, and continue;
 - no safe work remains → return `Status: Blocked` with the exact missing condition and resolving path.
 
-**Complete when:** the carrier identifies every material pre-run precondition or disagreement that must be settled, the opening alignment needed to expose misunderstanding, and a non-ambiguous route for each possible result.
+A Human decision visible during compile must be handled during Intent Take; no form of pre-execution settlement may defer it.
+
+**Complete when:** every execution carrier has a minimum pre-modification bind / verify / align / route boundary; explicit or durable structure appears only when material risk requires it; and every possible settlement result has an unambiguous route.
 
 ## 2. Close pre-run decisions
 
@@ -70,42 +90,42 @@ Do not ask for necessary implementation expansion, dependency discovery, task de
 Close ordinary pre-run choices in this order:
 
 - use authoritative evidence when it determines the answer;
-- use Task 0 when the decision depends on execution-only reality or handoff alignment that must be settled before material work;
+- use inline settlement or explicit Task 0 when the decision depends on execution-only reality or handoff alignment that must be settled before material work;
 - leave local How and uncertain execution-theory choices to the runtime;
 - use a visible delegated default when one reasonable choice preserves intent and confirmed boundaries.
 
 A delegated default needs a reasonable evidence- or convention-backed choice and must be reversible or reliably mismatch-detectable. Record the selection, basis, visibly unconfirmed status, consequence if wrong, and rollback/replan route.
 
-For **artifact-only**, the default remains reviewable and becomes execution input only when the caller accepts, edits, or forwards the carrier. For **compile-and-run**, it must be safe to execute without another Human turn. An executable task alone does not authorize compile-and-run.
+For **artifact-only**, the default remains reviewable and becomes execution input only when the caller accepts, edits, or forwards the carrier. For **compile-and-run**, it must be safe to execute without another Human turn. An executable task alone does not authorize compile-and-run; a direct request to complete work in the available environment does.
 
 If no pre-run choice is clearly superior but all choices stay inside intent and confirmed boundaries, preserve the decision surface for execution rather than creating another Human gate.
 
-**Complete when:** no foreseeable ordinary execution event requires Human orchestration; only the three Ask Human boundaries remain Human-owned, and material pre-run disagreement has an evidence or Task 0 route.
+**Complete when:** no foreseeable ordinary execution event requires Human orchestration; only the three Ask Human boundaries remain Human-owned, and material pre-run disagreement has an evidence or settlement route.
 
 ## 3. Compile the minimum execution shape
 
 Start with a direct loop:
 
 ```text
-act → observe → evaluate → continue / repair / replan / exit
+bind / verify / align → act → observe → evaluate → continue / repair / replan / exit
 ```
 
-For a simple task, one current action, its local check, and the complete-Goal gate are enough.
+For a simple task, inline settlement, one current action, its local check, and the complete-Goal gate are enough.
 
-Introduce Task / Issue nodes and edges only when real dependencies, independent ready work, shared ownership, evidence flow, or recovery need to be explicit. An edge exists only when it changes readiness, proof, invalidation, or routing—not to serialize prose.
+Introduce an explicit Task 0 only under the criteria above. Introduce Task / Issue nodes and edges only when real dependencies, independent ready work, shared ownership, evidence flow, or recovery need to be explicit. An edge exists only when it changes readiness, proof, invalidation, or routing—not to serialize prose.
 
 For parallel work, prefer disjoint write domains. Assign one owner per shared mutable surface, make joins explicit, and invalidate downstream evidence when upstream changes affect what it proved.
 
 Keep the initial structure small. Execution may add, remove, split, merge, or reroute remaining work as evidence changes the execution theory, provided intent, confirmed boundaries, and completion obligations remain unchanged.
 
-**Complete when:** the runtime can identify the first safe evidence-producing action, real dependencies are represented only where needed, and the complete Goal remains reachable.
+**Complete when:** the runtime can identify the minimum pre-execution settlement and first safe evidence-producing action, real dependencies are represented only where needed, and the complete Goal remains reachable.
 
 ## 4. Preserve autonomous progress
 
 Make only material routes explicit:
 
-- Task 0 misunderstanding with a clear carrier → correct understanding and continue;
-- Task 0 factual or planning mismatch inside the settled envelope → revise the route before material work;
+- inline or explicit settlement misunderstanding with a clear carrier → correct understanding and continue;
+- settlement factual or planning mismatch inside the settled envelope → revise the route before material work;
 - local mismatch → repair or change local approach;
 - local PASS → retain evidence and continue authorized downstream work;
 - blocked branch → park it and continue independent safe work;
@@ -129,6 +149,7 @@ Continuity is required when work may outlive one context, pause on external or H
 Require only enough semantic state to resume without replaying the conversation:
 
 - Goal and still-binding decisions by reference;
+- material pre-execution settlement results and unresolved assumptions;
 - current ready/active/completed/parked work;
 - completed evidence and what it proves;
 - stale or invalidated evidence and why;
@@ -172,7 +193,7 @@ When independent acceptance is required, compile the accepting boundary and priv
 
 Define Delivery separately from proof: artifacts, evidence summary, residuals, and next actions.
 
-Default to **artifact-only**. Use **compile-and-run** only when the caller explicitly requests or owns execution continuation and a runtime is available. After `Status: Executable`, Prompt Atlas stops and that caller immediately uses the carrier as the execution source without another Human “start” turn.
+Use **artifact-only** when the user asks for a prompt, brief, contract, taskbook, or another handoff artifact. For a workflow caller, that caller owns whether the carrier is returned or immediately bound to execution. A direct request to complete work in the available environment supplies **compile-and-run** authority. After `Status: Executable`, Prompt Atlas stops and the caller/runtime uses the carrier as the execution source without another Human “start” turn.
 
 **Complete when:** the completion boundary is trustworthy, required independent acceptance is bound/reserved or honestly capped, delegated defaults are safe for the mode, and the caller knows whether to return the carrier or start execution.
 
@@ -183,11 +204,11 @@ Emit `Status: Executable` only when:
 - the Goal is clear and intent remains unchanged;
 - no foreseeable Ask Human boundary remains open;
 - no blocker prevents a safe first action or truthful continued progress;
-- material pre-run preconditions or disagreements are verified or assigned to Task 0 with explicit outcome routing;
+- the minimum pre-execution settlement is clear, with material preconditions or disagreements verified or assigned to explicit Task 0 with outcome routing;
 - delegated defaults are explicit and safe for the handoff mode;
 - ordinary execution uncertainty has a non-Human route;
 - required continuity and acceptance can be bound before they are needed;
-- the handoff mode is known and compile-and-run has explicit caller authority.
+- the handoff mode is known and compile-and-run has caller authority.
 
 If a required non-intent prerequisite is unavailable and prevents all safe progress, emit `Status: Blocked` instead. A branch-local blocker may remain in an executable carrier when it is parked and independent safe work can continue.
 
@@ -204,7 +225,8 @@ A fresh runtime should be able to determine, without replaying the conversation:
 - why the work exists and what final state is required;
 - what is authoritative, verified, inferred, unknown, or visibly delegated;
 - what remains Human-owned and what execution may adapt;
-- whether Task 0 is required, what opening alignment it needs, and what each result means;
+- what minimum pre-execution settlement is required and whether it is inline, explicit, or durable;
+- when an explicit Task 0 is present, what opening alignment it needs and what each result means;
 - the first safe action and real dependencies;
 - how evidence changes the next action;
 - what can continue when one branch blocks;
