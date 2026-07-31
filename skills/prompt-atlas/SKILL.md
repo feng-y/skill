@@ -34,7 +34,7 @@ Ask Human only when one of these boundaries is reached:
 - **change boundary** — proceeding would cross or relax confirmed scope, constraints, approval, protected proof, or require an irreversible/high-risk authorization;
 - **confused intent** — materially different Goal interpretations remain plausible after accessible grounding.
 
-Do not ask for facts evidence can settle, necessary implementation expansion inside settled boundaries, architecture How, task decomposition, or ordinary execution choices. Treat unknown as a routing signal: investigate factual unknowns, leave local How to execution, let Execution Compile make safe visible defaults, and Ask Human only at the boundaries above.
+Do not ask for facts evidence can settle, necessary implementation expansion inside settled boundaries, architecture How, task decomposition, or ordinary execution choices. Treat unknown as a routing signal: investigate factual unknowns, assign execution-only checks to Task 0, leave local How to execution, let Execution Compile make safe visible defaults, and Ask Human only at the boundaries above.
 
 A safe delegated default must preserve the current intent and boundaries, have a reasonable evidence- or convention-backed choice, and be reversible or reliably mismatch-detectable. Keep it visibly unconfirmed with its basis, consequence if wrong, and rollback or replan route. It may close execution orchestration; it may not silently change what the Human asked for.
 
@@ -53,8 +53,8 @@ Execution Compile ends when it produces one executable taskbook or a truthful no
 Keep four logical roles explicit:
 
 - **Human / Intent authority** — owns the requested result, confirmed boundaries, and material trade-offs;
-- **Prompt Atlas compiler** — grounds reality, closes ordinary pre-run choices, freezes the taskbook and proof obligations, then stops at handoff;
-- **Executor** — performs local How, gathers evidence, adapts the route, and maintains progress/blocker state inside the taskbook;
+- **Prompt Atlas compiler** — grounds reality, closes ordinary pre-run choices, freezes the Goal, Human authority, confirmed boundaries, protected proof surfaces, completion obligations, and handoff mode, then stops at handoff;
+- **Executor** — performs local How, gathers evidence, adapts the remaining graph inside the frozen envelope, and maintains progress/blocker state;
 - **Acceptor** — judges the complete Goal when independent acceptance is required. The Executor cannot alter protected judging surfaces or claim the Acceptor's PASS.
 
 Roles are responsibility boundaries, not a requirement to create a new controller or always use multiple agents.
@@ -69,41 +69,44 @@ At minimum it must:
 
 - bind the actual repo, branch/worktree, target, and governing surfaces;
 - restate the Goal, confirmed boundaries, initial execution order, and largest known risk;
-- run or verify the critical commands, baselines, and judging surfaces on which the route depends;
+- confirm the critical commands, baselines, and judging surfaces on which the route depends;
 - initialize the execution graph and progress state;
 - route disagreement before sunk cost.
+
+Task 0 may reuse compiler evidence that is authoritative, still fresh, and applicable to the bound repo, worktree, target, and execution environment. Re-run or re-inspect only facts that are absent, stale, environment-dependent, disputed, or invalidated by workspace or upstream changes.
 
 For a clear local task, Task 0 may be one compact item and a short opening receipt. For riskier work, it may include more probes, baseline capture, protected-surface checks, or dependency validation. It must never defer a Human decision already visible during compile.
 
 Task 0 routes are fixed:
 
 - reality and understanding align → begin material work;
-- facts or route differ but intent and confirmed boundaries hold → revise the graph and continue;
+- facts or route differ but intent and confirmed boundaries hold → revise the remaining graph and continue;
 - progress requires changing intent or a confirmed boundary, or intent becomes confused → return `Status: Unresolved Intent`;
 - a non-intent prerequisite blocks all safe work → return `Status: Blocked` with the exact missing condition;
 - one branch blocks but independent safe work remains → record it in `BLOCKED.md`, park that branch, and continue.
 
 ### Fixed taskbook skeleton
 
-Every executable carrier uses these six sections. Keep each section as short as the task allows, but do not omit the semantics.
+Every executable taskbook uses these six sections. Keep each section as short as the task allows, but do not omit the semantics.
 
 1. **Purpose and Goal** — why the work exists and the complete final state.
-2. **Grounded State and Task 0** — verified facts, unverified claims, baselines, critical commands, opening alignment, and Task 0 routes.
+2. **Grounded State and Task 0** — verified facts, unverified claims, baselines, critical commands, opening alignment, fresh-evidence reuse, and Task 0 routes.
 3. **Decisions, Authority, and Boundaries** — Human-owned decisions, visible delegated defaults, allowed scope, protected surfaces, and prohibited changes.
-4. **Work Graph and Execution Rules** — tasks, dependencies, owners for shared mutable surfaces, local checks, retry/stop rules, and the Global Gate. A simple task uses a linear graph: `Task 0 → Implement → Verify → Global Gate`.
+4. **Work Graph and Execution Rules** — tasks, dependencies, owners for shared mutable surfaces, local proof, retry/stop rules, and the Global Gate. A simple task uses `Task 0 → Execute with local proof → Global Gate`; add an explicit `Verify` node only when proof spans results or requires integration, freshness, hidden checks, or independence.
 5. **Progress, Blockers, and Continuity** — required state files, current/completed/parked work, evidence, blockers, invalidated evidence, and next safe action.
 6. **Acceptance and Delivery** — complete-Goal proof, independent acceptance boundary when required, residuals, and deliverables.
 
-Serialize information only when omitting it could change execution judgment, authority, routing, verification, recovery, acceptance, or handoff. The skeleton is stable; implementation How remains task-shaped.
+Serialize information only when omitting it could change execution judgment, authority, routing, verification, recovery, acceptance, or handoff. The skeleton is stable; implementation How and the remaining work graph are task-shaped and evidence-adaptive inside the frozen envelope.
 
 ### Execution stability rules
 
 The taskbook must carry these rules:
 
-- before material work, Task 0 verifies the bound target, critical commands/baselines, and judging surfaces;
+- before material work, Task 0 confirms the bound target, critical commands/baselines, and judging surfaces, reusing still-valid compile evidence;
 - tests, verifiers, schemas, baselines, and acceptance criteria are protected unless the taskbook explicitly authorizes changing them;
 - every retry must use a materially different hypothesis or approach;
-- after the same acceptance check fails three consecutive attempts, the current route must stop: replan, switch branch, roll back, or report `BLOCK`/`ESCALATE`;
+- after three consecutive failed attempts against the same acceptance condition within the same active route, that route must stop: replan, switch branch, roll back, or report `BLOCK`/`ESCALATE`;
+- a known-bad approach stops immediately; the count is a final guardrail, not permission to repeat it;
 - if results regress below the verified baseline without explicit authorization, roll back the regression and report it truthfully;
 - local PASS proves only the current node; completion requires the complete Goal to pass the Global Gate;
 - required independent acceptance cannot be replaced by Executor self-approval.
@@ -116,7 +119,7 @@ For repository execution, Task 0 initializes:
 .scratch/<project>/PROGRESS.md
 ```
 
-Keep it concise and update it after each material checkpoint with: Goal reference, completed/current/next work, evidence and what it proves, remaining complete-Goal conditions, and any stale evidence.
+Keep it concise and update it after each material checkpoint with: Goal reference, completed/current/next work, material graph revisions, evidence and what it proves, remaining complete-Goal conditions, and any stale evidence.
 
 When a real blocker appears, create or update:
 
@@ -134,7 +137,7 @@ Record the blocked branch, attempts made, exact missing condition, resolving con
 - no foreseeable Ask Human boundary remains open;
 - Task 0 can begin safely and has complete routes;
 - the six-section taskbook is complete;
-- the work graph exposes real order, dependencies, shared ownership, and the Global Gate;
+- the initial work graph exposes real order, dependencies, shared ownership, proof placement, and the Global Gate;
 - progress/blocker state and retry/stop rules are specified;
 - delegated defaults are visible and safe for the handoff mode;
 - acceptance, independent acceptance when required, and delivery are unambiguous.
@@ -148,7 +151,8 @@ Before emitting a terminal state, confirm:
 - no unresolved **change intent**, **change boundary**, or **confused intent** condition remains;
 - every critical fact is evidenced or has a truthful Task 0 or blocking route;
 - local implementation How has not been promoted into Human-owned intent;
-- the six sections, fixed Task 0, graph, progress/blocker rules, and stop conditions are present;
+- the six sections, fixed Task 0, initial graph, progress/blocker rules, and stop conditions are present;
+- the frozen envelope is explicit while implementation How and remaining graph adaptation stay Executor-owned;
 - acceptance closes the complete Goal without relying on a manipulable false-green path;
 - handoff authority and artifact-only versus compile-and-run continuation are unambiguous.
 
