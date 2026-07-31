@@ -23,7 +23,7 @@ Inspect the smallest authoritative surface that can determine:
 - real work dependencies and shared mutable surfaces;
 - the execution envelope, including Human availability and continuity limits.
 
-A fact, command, baseline, or verifier is confirmed only when evidence supports it. Do not Ask Human for facts the repository, environment, or another authoritative source can settle.
+A fact, command, baseline, or verifier is confirmed only when evidence supports it. Documentation, conventions, and named commands are claims, not verified state. When the authoritative surface is accessible, run or inspect it now; when it is inaccessible, retain the uncertainty explicitly in settlement or blocking. Never promote an unexecuted command, unmeasured baseline, or unchecked verifier to fact. Do not Ask Human for facts the repository, environment, or another authoritative source can settle.
 
 ### Universal pre-execution settlement
 
@@ -238,4 +238,4 @@ A fresh runtime should be able to determine, without replaying the conversation:
 - whether execution starts immediately or the carrier is returned;
 - what must be delivered.
 
-Use less structure when these semantics remain clear. Keep detail only when its absence would create drift, false completion, unnecessary HITL, handoff ambiguity, or loss of continuity.
+Use less structure when these semantics remain clear. Keep detail only when its absence would create drift, false completion, unnecessary HITL, handoff ambiguity, or loss of continuity. Do not restate repository facts a capable runtime can inspect immediately unless they anchor authority, routing, verification, recovery, acceptance, or handoff.
