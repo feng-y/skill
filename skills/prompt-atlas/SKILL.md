@@ -70,7 +70,7 @@ Compile the smallest useful carrier:
 
 For long-running or cross-context repository work, the carrier may require the downstream runtime to maintain project-local continuity under `.scratch/<project>/IMPLEMENTATION_NOTES.md`. Prompt Atlas compiles the requirement; the runtime creates and updates the file.
 
-`Status: Executable` means the Goal is clear, no foreseeable Ask Human boundary or hard blocker remains open, delegated defaults are explicit and safe for the handoff mode, and every ordinary execution uncertainty has a non-Human route such as Task 0, probe, repair, branch parking, replan, retry, or truthful blocking.
+`Status: Executable` means the Goal is clear, no foreseeable Ask Human boundary remains open, no blocker prevents a safe first action or truthful continued progress, delegated defaults are explicit and safe for the handoff mode, and every ordinary execution uncertainty has a non-Human route such as Task 0, probe, repair, branch parking, replan, retry, or truthful blocking.
 
 The carrier should make the following recoverable without replaying the conversation: **Purpose, Goal, grounded State, settled and delegated Decisions, Authority, minimum execution structure, Boundaries, Verification, Continuity, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
 
