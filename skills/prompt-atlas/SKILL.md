@@ -46,7 +46,7 @@ Settle everything accessible without asking: real workspace, governing specs/tes
 
 When a Human boundary remains, ask the smallest useful set, preferably one round of at most five decisions with options and a recommendation. Do not ask for facts, decomposition, architecture How, command order, or ordinary execution choices.
 
-A delegated default must be marked unconfirmed and include its basis, cost if wrong, and detection or rollback route. Obtain Human approval before splitting one Goal into parallel taskbooks.
+A delegated default must be marked unconfirmed and include its basis, cost if wrong, and detection or rollback route.
 
 ### 3. Write the taskbook
 
