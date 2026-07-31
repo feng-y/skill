@@ -8,7 +8,7 @@ Produce the smallest truthful carrier that lets a capable downstream runtime kee
 
 Use two lenses:
 
-- **Authority** — what remains Human-owned, what execution may adapt inside Stable Intent, and what boundary judges completion when separation is required.
+- **Authority** — what remains Human-owned, what the compiler may decide visibly on the Human's behalf, what execution may adapt inside Stable Intent, and what boundary judges completion when separation is required.
 - **Control protocol** — the minimum action loop, dependencies, evidence routes, continuity, and acceptance needed for this task.
 
 These are design lenses, not a runtime framework. Prefer a simple executor with clear boundaries. Add graph structure, durable state, separate control, or independent acceptance only when the task actually needs them.
@@ -30,30 +30,49 @@ Treat unknown as a routing signal:
 - factual unknown → inspect or probe;
 - local implementation unknown → let execution choose or experiment;
 - execution-theory unknown → learn and replan inside Stable Intent;
-- residual material Human-owned uncertainty → ask;
+- safely delegable pre-run choice → compiler selects a visible default;
+- non-delegable Human-owned uncertainty → ask;
 - inaccessible required evidence or authority → block truthfully after safe work is exhausted.
 
 Grounding may change candidate work boundaries, dependencies, proof topology, or continuity needs. It may not change Stable Intent.
 
 **Complete when:** every carrier-shaping factual claim is verified, visibly unverified, or converted into an initial probe or exact blocker.
 
-## 2. Close pre-run authority decisions
+## 2. Close pre-run decisions
 
 Keep three default responsibilities clear:
 
 - **Human / Intent authority** — owns Goal, accepted behavior, Human-owned scope or priority, approval, and protected proof rules.
-- **Prompt Atlas compiler** — grounds current reality, closes foreseeable pre-run decisions, and compiles the carrier; it stops at handoff.
+- **Prompt Atlas compiler** — grounds current reality, asks only for non-delegable decisions, closes safely delegable choices visibly, and compiles the carrier; it stops at handoff.
 - **Execution runtime** — owns local How, actions, evidence, and evidence-driven adaptation of the remaining plan inside Stable Intent and protected boundaries.
 
 Completion may be judged by the execution runtime for narrow low-risk work. Use a separate or fresh **acceptance boundary** only when governing rules or proof risk require independence.
 
 Do not create a separate control owner merely because execution may revise a plan or Graph. Add one only when the actual environment requires protected centralized control—for example, conflicting concurrent writers, high-risk shared state, or a governing approval boundary. Even then, describe the needed boundary rather than prescribing an agent topology.
 
-Close a branch before execution when different answers materially change the Goal-preserving execution envelope, scope authority, protected proof, irreversible action, or another decision that the runtime cannot safely infer or reverse. Use Stable Intent, governing constraints, and evidence first. Batch related Human-owned choices into the smallest pre-run decision surface.
+Close a branch before execution when different answers materially change the Goal-preserving execution envelope, scope authority, protected proof, irreversible action, or another decision that the runtime cannot safely infer or reverse. Use Stable Intent, governing constraints, and evidence first.
 
-If materially different carriers remain equally acceptable, return `Status: Execution Decision` unless the caller explicitly permits a visible, reversible, reliably mismatch-detectable default. If evidence exposes a new Human-owned choice or shows that the Goal cannot be preserved inside confirmed boundaries, return `Status: Unresolved Intent`.
+A choice is safely delegable when all of the following hold:
 
-**Complete when:** no foreseeable ordinary execution event requires Human orchestration; local reversible How and evidence-driven replanning remain execution-owned.
+- the Goal and Human-owned boundaries are already closed;
+- the choice does not change accepted behavior, approval, protected proof, or an irreversible/high-risk authorization;
+- evidence, repository convention, or stated priorities support a reasonable preferred choice;
+- the choice is reversible or a mismatch can be detected early enough to limit harm;
+- the consequence of a wrong choice is bounded and reportable.
+
+Record each delegated decision with:
+
+- the selected default;
+- its basis;
+- its visibly unconfirmed status;
+- the consequence if wrong;
+- the mismatch signal and rollback or replan route.
+
+For **artifact-only**, a broader visible recommended default may be carried because the caller can review or change it before execution. For **compile-and-run**, the default itself must be safe to execute without another Human turn. An executable task alone does not authorize compile-and-run.
+
+Batch the remaining non-delegable Human-owned choices into the smallest pre-run decision surface. If a material branch cannot be closed by evidence, execution freedom, or a safe delegated default, return `Status: Execution Decision`. If evidence exposes a new Human-owned Goal/boundary choice or shows that the Goal cannot be preserved inside confirmed boundaries, return `Status: Unresolved Intent`.
+
+**Complete when:** no foreseeable ordinary execution event requires Human orchestration; delegated decisions are explicit and safe for the handoff mode; local reversible How and evidence-driven replanning remain execution-owned.
 
 ## 3. Compile the minimum execution shape
 
@@ -84,6 +103,8 @@ Make only the material routes explicit:
 - revision would change Human-owned Intent, approval, or protected proof → return to Intent Take;
 - local evidence appears complete → evaluate the complete Goal, not automatic completion.
 
+Continue a repair or replan only while the next attempt has a credible path to new evidence or progress and remains within the available budget. When repeated attempts stop producing evidence gain, no materially different safe approach remains, or the budget is exhausted, exit with the truthful `BLOCK` or `ESCALATE` route instead of looping ceremonially.
+
 After execution starts, Human interaction is reserved for genuinely new authority boundaries:
 
 - new evidence changes Human-owned Intent or approval;
@@ -94,7 +115,7 @@ Test failure, command drift, local architecture choice, retry, task decompositio
 
 A local checkpoint judges a bounded result. The **Global Gate** judges the complete Goal. Do not add generic review stages merely because the task is large; add proof structure only when the Goal, mutable surface, or governing verifier requires it.
 
-**Complete when:** ordinary uncertainty has a non-Human next action, a genuine authority crossing has a Human route, and local PASS cannot bypass complete-Goal acceptance.
+**Complete when:** ordinary uncertainty has a non-Human next action, a genuine authority crossing has a Human route, stalled loops terminate truthfully, and local PASS cannot bypass complete-Goal acceptance.
 
 ## 5. Compile continuity only when needed
 
@@ -161,26 +182,24 @@ When independent acceptance is required, compile the accepting boundary and priv
 
 Define Delivery separately from proof: artifacts, evidence summary, residuals, and next actions.
 
-Define the handoff mode:
-
-- **artifact-only** — return the carrier for external use;
-- **compile-and-run** — after `Status: Executable`, Prompt Atlas stops and the caller immediately uses the carrier as the execution source without another Human “start” turn.
+Default to **artifact-only**. Use **compile-and-run** only when the caller explicitly requests or owns execution continuation and an execution runtime is available. After `Status: Executable`, Prompt Atlas stops and that caller immediately uses the carrier as the execution source without another Human “start” turn.
 
 In compile-and-run mode, the same physical agent may compile and execute sequentially, but execution follows the carrier rather than continuing compilation by improvisation.
 
-**Complete when:** the completion boundary is trustworthy, any required independent acceptance is bound/reserved or honestly capped, and the caller knows whether to return the carrier or start execution.
+**Complete when:** the completion boundary is trustworthy, any required independent acceptance is bound/reserved or honestly capped, delegated decisions are safe for the selected mode, and the caller knows whether to return the carrier or start execution.
 
 ## Executable readiness
 
 Emit `Status: Executable` only when:
 
 - Stable Intent remains valid;
-- every foreseeable material Human-owned decision exposed by current intent and evidence is closed or validly defaulted;
+- every foreseeable non-delegable Human-owned decision exposed by current intent and evidence is closed;
+- every delegated default is explicit and safe for the selected handoff mode;
 - every ordinary execution uncertainty has a non-Human route;
 - the first safe evidence-producing action is clear;
 - required continuity can be bound before it is needed;
 - required independent acceptance is bound/reserved, or completion is explicitly capped at `ready for independent acceptance`;
-- the handoff mode is known.
+- the handoff mode is known and compile-and-run has explicit caller authority.
 
 This bar reduces ordinary post-compile HITL. It does not require all unknowns to be eliminated and does not pretend new runtime evidence can never expose a new authority boundary.
 
@@ -193,11 +212,12 @@ Use the same direct-loop default. Gather sources, test hypotheses, compare optio
 A fresh downstream runtime should be able to determine, without replaying the conversation:
 
 - why the work exists and what final state is required;
-- what is authoritative, verified, inferred, or unknown;
+- what is authoritative, verified, inferred, unknown, or visibly delegated;
 - what remains Human-owned and what execution may adapt;
 - the first safe action and any real dependencies;
 - how evidence changes the next action;
 - what can continue when one branch blocks;
+- when continued repair/replan should stop;
 - what state must survive interruption;
 - what evidence closes the complete Goal;
 - whether execution starts immediately or the carrier is returned;
