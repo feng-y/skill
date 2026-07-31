@@ -6,6 +6,8 @@ Use only when it is unclear whether the request contains one executable Goal.
 
 Concerns, hypotheses, comparisons, mixed questions, conflicting outcomes, and broad verbs such as improve, simplify, optimize, clean up, or modernize usually describe a problem space. Ground enough evidence to reveal the real choice, but do not turn a plausible model recommendation into Human authority.
 
+Separate **outcome** from **means**. A named architecture, tool, migration, or implementation may be only the Human's current hypothesis about how to reach the result. Treat it as required only when the Human explicitly makes that choice part of the end state or a confirmed boundary.
+
 ## Authority
 
 Keep distinct:
