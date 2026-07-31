@@ -1,217 +1,40 @@
 # Execution Compile
 
-Use this reference when Stage 2 needs more detail on fixed Task 0, taskbook structure, work graph, progress/blocker state, retry/stop rules, role boundaries, or completion trust. Execution Compile consumes Stable Intent IR and emits one executable taskbook or a truthful blocker; it does not execute the taskbook or become a runtime controller.
+Use this reference only for Stage 2 edge cases. The main skill is the source of truth for the six-section taskbook and execution rules.
 
-## Outcome
+## Task 0
 
-Produce the smallest complete taskbook that lets a capable downstream runtime finish the full Goal with stable opening alignment, bounded failure handling, recoverable state, and trustworthy acceptance.
+Task 0 is fixed; its weight is not. A clear local task may need only one compact opening item. Riskier work may add baseline capture, dependency checks, or verifier failure-sensitivity.
 
-Keep four logical roles explicit:
+Task 0 binds the actual execution object and validates the taskbook before material change. Reuse evidence only when it is authoritative, fresh, and applicable to the same repo, worktree, target, and environment. Recheck missing, stale, disputed, environment-dependent, or invalidated facts.
 
-- **Human / Intent authority** — owns the requested outcome, confirmed boundaries, and material trade-offs;
-- **Prompt Atlas compiler** — grounds reality, closes ordinary pre-run choices, freezes the Goal, Human authority, confirmed boundaries, protected proof surfaces, completion obligations, and handoff mode, then stops at handoff;
-- **Executor** — owns local How, actions, evidence, remaining-graph adaptation, and progress/blocker updates inside the frozen envelope;
-- **Acceptor** — judges the complete Goal when independent acceptance is required. The Executor may not alter protected judging surfaces or substitute self-approval for Acceptor PASS.
+If reality differs:
 
-These are responsibility boundaries, not a requirement for a new manager process, scheduler, or multi-agent framework.
+- revise the remaining graph when Goal and confirmed boundaries still hold;
+- return to Intent Take when progress would change intent or a confirmed boundary;
+- park only the blocked branch when independent safe work remains;
+- otherwise emit `Status: Blocked` with the exact resolving condition.
 
-## 1. Ground execution reality
+A Human decision visible during compile may not be deferred to Task 0.
 
-Inspect the smallest authoritative surface that determines:
+## Graph and ownership
 
-- the actual repository, branch/worktree, target, and governing specifications;
-- critical commands, baselines, tests, schemas, and protected verifiers;
-- real dependencies, shared mutable surfaces, and ownership conflicts;
-- the execution envelope, including access, time, Human availability, and acceptance requirements.
-
-A fact, command, baseline, or verifier is confirmed only when evidence supports it. Documentation, conventions, and command names are claims, not verified state. Run or inspect accessible authoritative surfaces during compile; anything unavailable remains an explicit Task 0 check or blocker.
-
-Do not Ask Human for facts the repository, environment, or another authoritative source can settle.
-
-## 2. Compile fixed Task 0
-
-Every `Status: Executable` taskbook begins with an explicit **Task 0**. It must complete before material modification.
-
-Task 0 always:
-
-1. binds the actual repo, branch/worktree, target, and governing surfaces;
-2. restates the Goal, confirmed boundaries, initial execution order, and largest known risk;
-3. confirms the critical commands, baselines, and judging surfaces on which execution depends;
-4. initializes the work graph and `.scratch/<project>/PROGRESS.md`;
-5. routes any disagreement before sunk cost.
-
-Task 0 is a fixed opening checkpoint, not a second discovery pass. Reuse compiler evidence that is authoritative, still fresh, and applicable to the bound repo, worktree, target, and execution environment. Re-run or re-inspect only facts that are absent, stale, environment-dependent, disputed, or invalidated by workspace or upstream changes.
-
-For a clear local task, Task 0 may be one compact node and a short opening receipt. For riskier work, include the minimum extra probes, baseline capture, protected-surface checks, or dependency validation needed to avoid doing the wrong work correctly.
-
-Task 0 outcomes are fixed:
-
-- **align** — begin material work;
-- **route revision** — facts or initial plan differ, but intent and confirmed boundaries still hold; revise the remaining graph and continue;
-- **unresolved intent** — progress requires changing intent or a confirmed boundary, or materially different Goals remain plausible;
-- **branch blocker** — record the branch in `BLOCKED.md`, park it, and continue independent safe work;
-- **global blocker** — return `Status: Blocked` with the exact missing and resolving conditions.
-
-Task 0 may not defer a Human decision already visible during compile.
-
-## 3. Use the fixed six-section taskbook
-
-Every executable taskbook uses these sections:
-
-### 1. Purpose and Goal
-
-State why the work exists and the complete final state. Preserve user-requested outcomes and the design intent needed for execution judgment.
-
-### 2. Grounded State and Task 0
-
-Separate verified facts, unverified claims, baselines, critical commands, judging surfaces, opening alignment, reusable fresh evidence, required rechecks, and Task 0 outcome routes.
-
-### 3. Decisions, Authority, and Boundaries
-
-State:
-
-- Human-owned decisions and confirmed boundaries;
-- visible delegated defaults, their basis, consequence if wrong, and rollback/replan route;
-- allowed write scope and shared mutable surfaces;
-- protected tests, verifiers, schemas, baselines, and acceptance criteria;
-- explicit prohibited changes.
-
-Implementation How remains Executor-owned unless the Human made it part of the required result.
-
-### 4. Work Graph and Execution Rules
-
-Every taskbook expresses an execution topology.
-
-A simple task uses:
+Every taskbook has a graph, but not every graph is elaborate.
 
 ```text
 Task 0 → Execute with local proof → Global Gate
 ```
 
-Add an explicit `Verify` node only when proof spans multiple results, must run after integration, or requires fresh context, hidden checks, or an independent Acceptor:
+Add nodes and edges only when they change readiness, write ownership, evidence, invalidation, joins, or branch routing. Use one owner for a shared mutable surface. Upstream changes invalidate downstream evidence only when they affect what it proved.
 
-```text
-Task 0 → Implement → Verify → Global Gate
-```
+The compiler freezes Goal, Human authority, confirmed boundaries, protected proof surfaces, completion obligations, and handoff mode. The Executor may revise, split, merge, reorder, or park remaining work inside that envelope and records material changes in `PROGRESS.md`.
 
-Expand the graph further only when real dependencies, independent ready work, branch parking, shared ownership, evidence invalidation, or joins must be explicit.
+## State and stopping
 
-Each material node should identify:
+For repository execution, `PROGRESS.md` preserves completed/current/next work, evidence, stale evidence, parked branches, and remaining Goal conditions. `BLOCKED.md` exists only for a real blocker and records attempts, the exact missing condition, its resolving condition, and safe work that can continue. Both stay under `.scratch/<project>/` and are not committed.
 
-- its result;
-- readiness dependencies;
-- write ownership when shared surfaces exist;
-- local evidence;
-- what downstream evidence becomes stale if it changes.
+A retry must change the hypothesis or approach. A known-bad path stops immediately. Three consecutive failures against the same acceptance condition in the same route force replan, branch switch, rollback, `BLOCK`, or `ESCALATE`.
 
-The compiler freezes the Goal, Human authority, confirmed boundaries, protected proof surfaces, completion obligations, and handoff mode. The Executor may revise, split, merge, reorder, or park remaining work as evidence changes the execution theory inside that envelope. Record material replans in `PROGRESS.md`.
+Local proof unlocks dependent work; only the Global Gate closes the Goal. If required independent acceptance is unavailable, completion stops at `ready for independent acceptance`.
 
-### 5. Progress, Blockers, and Continuity
-
-For repository execution, Task 0 initializes:
-
-```text
-.scratch/<project>/PROGRESS.md
-```
-
-Keep it concise. Update after each material checkpoint with:
-
-- Goal reference;
-- completed, current, and next work;
-- material graph revisions;
-- evidence and what it proves;
-- stale or invalidated evidence and why;
-- parked branches;
-- remaining complete-Goal conditions.
-
-When a real blocker appears, create or update:
-
-```text
-.scratch/<project>/BLOCKED.md
-```
-
-Record:
-
-- blocked branch or whole-task scope;
-- attempts made;
-- exact missing condition;
-- resolving condition;
-- independent safe work that can continue.
-
-These files are case-local runtime state, not repository source of truth, and should not be committed or promoted automatically.
-
-### 6. Acceptance and Delivery
-
-State:
-
-- what evidence closes the complete Goal rather than merely showing activity;
-- which judging surfaces are protected;
-- whether Executor self-acceptance is sufficient;
-- whether fresh context, hidden checks, or an independent Acceptor is required;
-- what residuals or blockers must be reported;
-- deliverables and evidence summary.
-
-## 4. Apply fixed retry and stop rules
-
-The taskbook must include these execution rules:
-
-- every retry uses a materially different hypothesis or approach;
-- after three consecutive failed attempts against the same acceptance condition within the same active route, stop that route and choose one: replan, switch branch, roll back, `BLOCK`, or `ESCALATE`;
-- a known-bad approach stops immediately; the count is a final guardrail, not permission to repeat it;
-- do not disguise repeated variants of the same failed approach as a new attempt;
-- if results regress below a verified baseline without explicit authorization, roll back the regression and report it truthfully;
-- a branch-local blocker does not block independent safe work;
-- no safe route or no new evidence-producing approach means truthful exit, not ceremonial looping.
-
-## 5. Protect proof and completion
-
-Tests, verifiers, schemas, baselines, and acceptance criteria are protected unless the taskbook explicitly authorizes changing them. Passing by skipping tests, weakening assertions, mocking the object under test, deleting coverage, swallowing failures, or editing the judge is not completion unless the Goal explicitly requires that proof-surface change and preserves equivalent trust.
-
-Use failure-sensitivity checks when a critical verifier could no-op or false-pass: deliberately create a bounded failure, prove the signal fires, restore the state, then run the normal proof.
-
-A local checkpoint proves only its graph node. The **Global Gate** judges the complete Goal and all confirmed boundaries. Local PASS cannot imply task completion.
-
-Use the verdicts:
-
-- `PASS`
-- `RETRY`
-- `BLOCK`
-- `ESCALATE`
-
-A non-PASS verdict routes to evidence-producing work, a materially different plan, a parked branch, a true blocker, or the relevant Human boundary. It cannot be rewritten into completion.
-
-When independent acceptance is required, the taskbook names the Acceptor boundary and private-proof requirement. Before execution begins, the caller/runtime must bind or reserve it, or freeze the completion ceiling at `ready for independent acceptance`. Executor self-approval cannot claim equivalent PASS.
-
-## 6. Handoff modes
-
-Use **artifact-only** when the user asks for a prompt, brief, contract, taskbook, or another handoff artifact. Delegated defaults remain reviewable and become execution input only when the caller accepts, edits, or forwards the taskbook.
-
-A direct request to complete work in the available environment supplies **compile-and-run** authority. After `Status: Executable`, Prompt Atlas stops and the existing runtime executes the taskbook without another Human start turn.
-
-Prompt Atlas compiles the structure and routes; it does not own live scheduling, retries, state mutation, or supervision. Do not introduce a separate control layer merely to run the taskbook.
-
-## Executable readiness
-
-Emit `Status: Executable` only when:
-
-- Goal and confirmed boundaries are stable;
-- no foreseeable Ask Human boundary remains open;
-- critical facts are evidenced or assigned to Task 0 with truthful routes;
-- fixed Task 0 is explicit and precedes material modification;
-- all six taskbook sections are present;
-- the initial graph exposes order, dependencies, shared ownership, proof placement, branch parking, and the Global Gate at the level the task requires;
-- the frozen envelope and permitted remaining-graph adaptation are explicit;
-- `PROGRESS.md` and `BLOCKED.md` behavior is specified;
-- retry/stop and baseline-regression rules are explicit;
-- protected proof surfaces and acceptance authority are clear;
-- handoff mode and delivery are unambiguous.
-
-If a required non-intent prerequisite prevents all safe work, emit `Status: Blocked`. A branch-local blocker may remain in an executable taskbook when it is recorded, parked, and independent safe work can continue.
-
-## Research and decision work
-
-Use the same six-section skeleton. Task 0 verifies source access, scope, decision criteria, and reproducibility while reusing still-valid compile evidence. The graph may be source collection → counterevidence → synthesis → decision gate. Progress state records sources, claims, unresolved contradictions, and next probes. Judge completion by provenance, counterevidence, residual unknowns, reproducibility, and decision usefulness rather than inventing code-style metrics.
-
-## Information budget
-
-The structure is fixed; detail is not. Keep a section to one line when that preserves its semantics. Retain information only when omission could change execution judgment, authority, routing, verification, recovery, acceptance, or handoff. Do not restate repository facts a capable runtime can inspect immediately unless they anchor one of those decisions.
+Keep the taskbook small enough to close as one execution effort. If it cannot, split it into independently completable taskbooks rather than growing the graph without bound.
