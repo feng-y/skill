@@ -46,12 +46,12 @@ When stable, treat the result as **Stable Intent IR** and continue to Stage 2.
 
 ## Stage 2 — Execution Compile
 
-Execution Compile ends when it produces one executable carrier and stops. Use two coupled lenses:
+Execution Compile ends when it produces one executable carrier or a truthful non-intent blocker and stops. Use two coupled lenses:
 
 - **Authority** — what remains Human-owned, what the compiler may decide visibly, what execution may adapt, and what boundary judges completion when separation is required.
 - **Control protocol** — the minimum action loop, dependencies, evidence routes, continuity, and acceptance needed for this task.
 
-Ground enough execution reality to identify the actual workspace, governing specs/tests, material baselines, dependencies, and critical verifiers. If a carrier-shaping fact cannot be checked during compile but can be checked safely before modification, make it **Task 0** rather than asking Human or pretending it is true.
+Ground enough execution reality to identify the actual workspace, governing specs/tests, material baselines, dependencies, and critical verifiers. If a carrier-shaping fact cannot be checked during compile but can be checked safely before modification, make it **Task 0** rather than asking Human or pretending it is true. If required evidence, access, or capability is unavailable and no safe Task 0 or independent work route exists, return `Status: Blocked` with the exact missing condition.
 
 If grounding or a future Task 0 result would require changing intent, changing a confirmed boundary, or resolving confused intent, return `Status: Unresolved Intent`. Otherwise keep factual mismatch, implementation discovery, and execution-theory changes inside execution through probe, repair, replan, or truthful blocking.
 
@@ -70,7 +70,7 @@ Compile the smallest useful carrier:
 
 For long-running or cross-context repository work, the carrier may require the downstream runtime to maintain project-local continuity under `.scratch/<project>/IMPLEMENTATION_NOTES.md`. Prompt Atlas compiles the requirement; the runtime creates and updates the file.
 
-`Status: Executable` means the Goal is clear, no foreseeable Ask Human boundary remains open, delegated defaults are explicit and safe for the handoff mode, and every ordinary execution uncertainty has a non-Human route such as Task 0, probe, repair, branch parking, replan, retry, or truthful blocking.
+`Status: Executable` means the Goal is clear, no foreseeable Ask Human boundary or hard blocker remains open, delegated defaults are explicit and safe for the handoff mode, and every ordinary execution uncertainty has a non-Human route such as Task 0, probe, repair, branch parking, replan, retry, or truthful blocking.
 
 The carrier should make the following recoverable without replaying the conversation: **Purpose, Goal, grounded State, settled and delegated Decisions, Authority, minimum execution structure, Boundaries, Verification, Continuity, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
 
@@ -81,6 +81,7 @@ For research or decision work, use evidence-bearing probe/source/synthesis work 
 Emit one terminal state and stop:
 
 - **`Status: Unresolved Intent`** — current understanding plus the smallest probe or Human decision needed because intent would change, a confirmed boundary would change, or intent remains confused.
+- **`Status: Blocked`** — Stable Intent is clear, but required evidence, access, capability, or another non-intent prerequisite is unavailable and no safe execution route remains; include the exact blocker and resolving condition.
 - **`Status: Executable`** — one lowered executor-facing carrier that satisfies the readiness condition above. Execution-time facts and ordinary choices remain routed inside the carrier rather than creating another compile-time Human decision state.
 
 Default to **artifact-only** unless the caller explicitly requests or owns execution continuation. An executable task alone does not authorize automatic execution. In artifact-only mode, delegated defaults remain visibly reviewable and become execution input only when the caller accepts, edits, or forwards the carrier. For a **compile-and-run** caller with an available execution runtime, `Status: Executable` is the handoff boundary: Prompt Atlas stops, the caller binds the carrier as the execution source, and execution continues without another Human “start” turn.
