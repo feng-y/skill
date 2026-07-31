@@ -27,23 +27,29 @@ A fact, command, baseline, or verifier is confirmed only when evidence supports 
 
 ### Task 0
 
-Use **Task 0** only when a carrier-shaping fact cannot be verified during compile but can be checked safely before modification. Typical checks include:
+Use **Task 0** when a critical precondition, carrier-versus-reality disagreement, or likely executor misunderstanding cannot be settled during compile but can be settled safely before material modification. Do not add it to a simple task when no material pre-run uncertainty exists.
 
-- target workspace and required files exist;
-- named commands run rather than no-op or false-green;
-- captured baselines still match;
-- governing verifier and protected surfaces are intact;
-- assumed dependency or runtime capability is available.
+Task 0 may:
 
-Task 0 is an execution preflight, not deferred intent clarification. Its result routes as follows:
+- verify the target workspace, required files, dependencies, and runtime capability;
+- prove that named commands and verifiers run rather than no-op or false-green;
+- confirm captured baselines and protected judging surfaces;
+- test assumptions on which the execution route depends;
+- compare execution reality with the carrier's grounded state and delegated defaults;
+- require a brief opening receipt stating the understood Goal, initial route or order when material, main risk, and any disagreement or unverified assumption.
 
-- fact matches → continue;
-- fact differs but intent and confirmed boundaries still hold → revise the plan and continue;
-- fact differs and would require changing intent or a confirmed boundary, or reveals confused intent → return to Intent Take;
-- verification is unavailable → park the affected branch and continue independent safe work;
-- verification is unavailable and no safe work remains → return `Status: Blocked` with the exact missing condition and how it can be resolved.
+The opening receipt is an alignment signal, not a new approval ceremony or mandatory durable file. It lets a misunderstanding be corrected before sunk cost. Task 0 may expose a true Human decision earlier than ordinary execution would, but it must not postpone a change-intent, change-boundary, or confused-intent decision already visible during compile.
 
-**Complete when:** every carrier-shaping factual claim is verified, visibly unverified, converted into Task 0, or exposed as an exact blocker.
+Route Task 0 outcomes as follows:
+
+- preconditions and understanding align → retain the opening receipt and begin material work;
+- executor understanding differs but the carrier is clear → correct the understanding from the carrier and continue without Human input;
+- facts or initial execution theory differ but intent and confirmed boundaries still hold → revise the route or plan, record the reason, and continue;
+- evidence reveals that progress requires changing intent, changing a confirmed boundary, or choosing between materially different Goals → stop affected work and return to Intent Take before modification;
+- one precondition cannot be settled but independent safe work remains → preserve the exact disagreement or blocker, park the affected branch, and continue;
+- no safe work remains → return `Status: Blocked` with the exact missing condition and resolving path.
+
+**Complete when:** the carrier identifies every material pre-run precondition or disagreement that must be settled, the opening alignment needed to expose misunderstanding, and a non-ambiguous route for each possible result.
 
 ## 2. Close pre-run decisions
 
@@ -64,6 +70,7 @@ Do not ask for necessary implementation expansion, dependency discovery, task de
 Close ordinary pre-run choices in this order:
 
 - use authoritative evidence when it determines the answer;
+- use Task 0 when the decision depends on execution-only reality or handoff alignment that must be settled before material work;
 - leave local How and uncertain execution-theory choices to the runtime;
 - use a visible delegated default when one reasonable choice preserves intent and confirmed boundaries.
 
@@ -73,7 +80,7 @@ For **artifact-only**, the default remains reviewable and becomes execution inpu
 
 If no pre-run choice is clearly superior but all choices stay inside intent and confirmed boundaries, preserve the decision surface for execution rather than creating another Human gate.
 
-**Complete when:** no foreseeable ordinary execution event requires Human orchestration; only the three Ask Human boundaries remain Human-owned.
+**Complete when:** no foreseeable ordinary execution event requires Human orchestration; only the three Ask Human boundaries remain Human-owned, and material pre-run disagreement has an evidence or Task 0 route.
 
 ## 3. Compile the minimum execution shape
 
@@ -97,6 +104,8 @@ Keep the initial structure small. Execution may add, remove, split, merge, or re
 
 Make only material routes explicit:
 
+- Task 0 misunderstanding with a clear carrier → correct understanding and continue;
+- Task 0 factual or planning mismatch inside the settled envelope → revise the route before material work;
 - local mismatch → repair or change local approach;
 - local PASS → retain evidence and continue authorized downstream work;
 - blocked branch → park it and continue independent safe work;
@@ -111,7 +120,7 @@ After execution starts, ordinary test failure, command drift, local architecture
 
 A local checkpoint judges a bounded result. The **Global Gate** judges the complete Goal. Do not add generic review stages merely because the task is large.
 
-**Complete when:** ordinary uncertainty has a non-Human next action, the Human boundary is explicit, stalled loops terminate truthfully, and local PASS cannot bypass complete-Goal acceptance.
+**Complete when:** ordinary uncertainty has a non-Human next action, material disagreement is exposed before sunk cost where possible, the Human boundary is explicit, stalled loops terminate truthfully, and local PASS cannot bypass complete-Goal acceptance.
 
 ## 5. Compile continuity only when needed
 
@@ -174,7 +183,7 @@ Emit `Status: Executable` only when:
 - the Goal is clear and intent remains unchanged;
 - no foreseeable Ask Human boundary remains open;
 - no blocker prevents a safe first action or truthful continued progress;
-- carrier-shaping facts are verified or assigned to Task 0;
+- material pre-run preconditions or disagreements are verified or assigned to Task 0 with explicit outcome routing;
 - delegated defaults are explicit and safe for the handoff mode;
 - ordinary execution uncertainty has a non-Human route;
 - required continuity and acceptance can be bound before they are needed;
@@ -195,7 +204,7 @@ A fresh runtime should be able to determine, without replaying the conversation:
 - why the work exists and what final state is required;
 - what is authoritative, verified, inferred, unknown, or visibly delegated;
 - what remains Human-owned and what execution may adapt;
-- whether Task 0 is required and what its outcomes mean;
+- whether Task 0 is required, what opening alignment it needs, and what each result means;
 - the first safe action and real dependencies;
 - how evidence changes the next action;
 - what can continue when one branch blocks;
