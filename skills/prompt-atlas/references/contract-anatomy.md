@@ -20,111 +20,105 @@ Conversation history, rejected reasoning, and implementation detail are context 
 
 Keep these classes distinct:
 
-- **User-owned intent** — requested outcomes, accepted behavior, confirmed decisions, core scope and boundaries, Human-owned priorities/trade-offs, approvals, protected proof requirements, and any decision-relevant Why / design direction explicitly made part of the request. These change only with new user authority.
-- **Territory reality** — authoritative code, tests, traces, schemas, artifacts, measurements, and other evidence. Better evidence may revise facts, feasibility, necessary work inside settled boundaries, and proof obligations without rewriting intent.
-- **Inference / recommendation** — useful judgment, including a model-proposed candidate Goal, but not settled authority.
-- **Unknown** — unresolved until evidence, a safe delegated decision, or Human authority settles its material consequence.
+- **User-owned intent** — requested outcome, accepted behavior, confirmed decisions, and boundaries. These change only with new user authority.
+- **Territory reality** — authoritative code, tests, traces, schemas, artifacts, measurements, and other evidence. Better evidence may revise facts, feasibility, necessary implementation work, and proof obligations without rewriting intent.
+- **Inference / recommendation** — useful model judgment, including a candidate Goal or delegated default, but not Human-confirmed authority.
+- **Unknown** — unresolved until evidence, execution, a visible delegated default, or Human authority settles its consequence.
 
-An explicit requested outcome remains authoritative even when grounding reveals more work, stronger proof, or higher cost. If it cannot be preserved inside settled boundaries, surface the conflict rather than silently weakening the outcome.
+An explicit requested outcome remains authoritative even when grounding reveals more work, stronger proof, or higher cost. Surface a true conflict rather than silently weakening it.
 
 ## Why / design intent
 
-Preserve rationale when it helps a later executor choose among unforeseen but valid paths. A useful Why names the underlying problem, undesirable property, or desired direction beyond the literal surface edit. Drop rationale that only narrates how the conversation arrived here.
-
-A design direction is Human-owned only when the Human made it part of the desired result, boundary, or decision-relevant Why. Routine architecture and implementation choices remain downstream How when they preserve those semantics.
+Preserve rationale when it helps execution choose correctly in cases the prompt cannot predict. A design direction is Human-owned when the Human made it part of the desired result or boundary. Routine architecture choices remain implementation How when they preserve that meaning.
 
 ## Grounding
 
-Ground the smallest set of unknowns needed to establish meaning, feasibility inside settled authority, Goal closure, or success/proof semantics. Prefer authoritative evidence and rich existing references.
+Ground the smallest set of unknowns needed to establish Goal meaning, closure, confirmed boundaries, or trusted success. Prefer authoritative evidence and rich existing references.
 
 For repo work, preserve governing constraints or acceptance paths when they affect meaning or proof, and capture a sourced baseline when success is relative to current behavior. Leave work-surface discovery, dependency mapping, command validation, and implementation design to Execution Compile unless they are required for intent stability.
 
-Grounding should reduce the Human decision surface, not replace it. Close context/reality unknowns from evidence when possible, then rescan what remains. Do not ask the Human for facts that authoritative evidence can settle; do not keep researching merely to avoid surfacing a remaining non-delegable Human-owned choice.
+Grounding should reduce the Human decision surface, not replace it. Do not ask the Human for facts authoritative evidence can settle, and do not keep researching merely to avoid a real Human decision.
 
-When the required evidence is accessible in the current turn, perform the focused check rather than returning a research instruction to the Human. Surface a probe as the remaining alignment item only when it cannot be performed now, requires unavailable authority/access, or the caller explicitly requested a probe plan rather than convergence.
+When a required fact is accessible now, perform the focused check. When it is unavailable during compile but safely verifiable before modification, let Execution Compile create Task 0. A factual probe does not become an intent question merely because it is important.
 
-Separate an authoritative scope rule from factual membership. The Human may define what qualifies, prioritize categories, or name explicit inclusions/exclusions while expressing only a tentative belief about which concrete entities satisfy that rule. Preserve the rule and explicit decisions as authority; treat tentative membership as a territory hypothesis. Derive the member set from evidence at the first stage where it affects judgment: in Intent Take when it could change Goal closure or a Human decision, otherwise in Execution Compile when it determines concrete work. Retain enough provenance to defend each material classification, and surface only residual cases whose classification depends on Human-owned semantics rather than observable reality.
+When the Human defines a scope or classification rule but is unsure which concrete entities satisfy it, preserve the rule as authority and derive membership from evidence. Ask again only when the residual classification depends on Human meaning rather than observable reality.
+
+## Ask Human boundary
+
+Ask only when at least one of these is true:
+
+1. **Change intent** — proceeding would change the requested outcome, accepted behavior, or a design direction the Human made part of the result.
+2. **Change boundary** — proceeding would cross or relax confirmed scope, constraints, approval, protected proof, or require irreversible/high-risk authorization.
+3. **Confused intent** — materially different Goal interpretations remain plausible after accessible grounding.
+
+These are consequence tests, not keyword tests. “Scope”, “architecture”, or “core” does not automatically mean Human-owned.
+
+Necessary implementation expansion inside settled intent and boundaries is not a boundary change. Redefining what is in or out of the Goal is. Choosing an architecture that preserves the requested result is How; discarding a requested design direction is an intent change.
 
 ## Unknown routing
 
-Unknown is a mechanism for reducing unnecessary Human questions, not for eliminating Human judgment.
+Unknown exists to reduce unnecessary Human questions, not eliminate Human judgment.
 
-Route it by consequence:
+Route it in this order:
 
-- if evidence can settle it, investigate instead of asking;
-- if it changes only reversible implementation How, preserve it for execution rather than closing it during Intent Take;
-- if it may change execution theory but not Stable Intent, let execution probe and replan;
-- if Goal and all Stable Intent boundaries are settled and a reasonable choice is reversible or reliably mismatch-detectable, let Execution Compile make a **visible delegated decision**;
-- if the remaining material consequence changes the requested outcome, accepted behavior, core scope, core boundaries, Human-owned priority/trade-off, approval, protected proof, or confirmed design intent, ask the smallest Human decision needed;
-- if required evidence or authority is unavailable, preserve the exact unknown and the probe or condition that could resolve it.
+- evidence can settle it → investigate;
+- execution can safely verify it before modification → Task 0;
+- it changes only local implementation How or execution theory → let execution choose, experiment, or replan;
+- a reasonable choice preserves intent and boundaries and is reversible or reliably mismatch-detectable → visible delegated default;
+- it reaches one of the Ask Human boundaries → ask the smallest useful question;
+- required evidence or authority is inaccessible → preserve the exact unknown and its resolving condition.
 
-A delegated decision is not Human-confirmed intent. Record it as visibly unconfirmed with its basis, consequence if wrong, and detection or rollback path. It may close execution orchestration while preserving Human authority.
-
-Necessary implementation expansion inside settled scope and boundaries is not a scope decision. Redefining what is included, excluded, protected, or accepted is intent-shaping even when the change is technically reversible.
-
-Do not convert every unknown into HITL. Equally, do not hide an intent-shaping Goal-, behavior-, scope-, boundary-, trade-off-, approval-, proof-, or confirmed-design decision behind “the compiler chose” or “the executor can decide.” The purpose is to ask the Human less often and more precisely, not to screen the Human out.
+A delegated default is visibly unconfirmed. Record its basis, consequence if wrong, and detection or rollback route. It may close ordinary orchestration; it may not silently change intent or confirmed boundaries.
 
 ## Goal closure
 
-A Goal is closed when existing Human authority establishes one coherent requested end state and the boundary of what this turn is expected to accomplish. It need not settle implementation How or every broader future decision.
+A Goal is closed when existing Human authority establishes one coherent requested end state and what the current work is expected to accomplish. It need not settle implementation How or every broader future decision.
 
-A prompt may instead expose a problem space: concern, hypothesis, competing questions, possible end states, or active Human deliberation. When missing reality could materially change which Goal is sensible, do not treat every question as requested execution scope and do not choose a Goal merely because one path looks useful.
+A prompt may instead expose a problem space: concern, hypothesis, competing questions, possible end states, or active deliberation. Ground only enough context to expose the materially different interpretations, then return the smallest useful choice with consequences and a recommendation. A model-proposed Goal remains inference until the Human confirms, selects, or corrects it.
 
-Reduce only the decision-relevant context unknowns needed to make the choice meaningful. Then return the sharper problem model, the smallest materially distinct candidate Goal or options, their consequences, and a recommendation. A candidate Goal proposed by the model remains inference until a subsequent Human message confirms, selects, or corrects it; self-review, more research, or repeated wording cannot promote it to Stable Intent.
-
-On that subsequent Human message, reconcile it against the candidate and preserved evidence rather than restarting discovery. Confirmation or selection closes that Goal; correction updates it; a partial or still-deliberative response keeps only the remaining decision surface open. Reuse still-valid facts and decisions.
-
-Do not over-block execution. If the Human has already established a complete minimum outcome, broader questions, later go/no-go decisions, or implementation unknowns remain separate from the current Goal rather than reopening settled authority.
+Do not over-block execution. If the Human already established a complete minimum outcome, broader concerns, later go/no-go choices, and implementation unknowns remain separate unless they actually trigger an Ask Human boundary.
 
 ## Human and delegated decisions
 
-Before declaring intent stable, actively check whether any unresolved choice still belongs to Human authority and would materially change the requested outcome, accepted behavior, core scope, core boundaries, Human-owned priority/trade-off, approval, protected proof, or confirmed design intent.
+When an Ask Human boundary remains, expose the smallest decision surface: materially distinct options, why they differ, and a concise recommendation. Inference, recommendation, or a delegated default must not hide that decision.
 
-When such a choice remains, expose the smallest useful decision surface: materially distinct options, the consequence that makes them different, and a concise recommendation. Related unknowns may be resolved or compressed first, but inference, recommendation, delegated choice, or model preference must not silently erase the remaining Human choice.
+More work, wider necessary implementation scope, several valid implementation approaches, or future replanning do not by themselves require Human input.
 
-More work, wider necessary implementation scope inside settled boundaries, several valid implementation approaches, or future replanning do not by themselves require Human input.
+A delegated default is allowed when it preserves intent and confirmed boundaries, has a reasonable evidence- or convention-backed choice, and is reversible or safely mismatch-detectable. For **artifact-only**, it remains reviewable until the caller accepts, edits, or forwards the carrier. For **compile-and-run**, it must be safe to execute without another Human turn.
 
-A delegated default is allowed only after the Goal and all intent-shaping boundaries are closed and when it preserves them, has an evidence-backed or convention-backed preferred choice, and is reversible or safely mismatch-detectable. It cannot form or reinterpret Goal, redefine core scope, relax a core boundary, change a Human-owned trade-off, replace confirmed design intent, or authorize a protected/high-risk action.
-
-For **artifact-only** handoff, the carrier may include a broader visible recommended default because the caller can review or change it before execution. For **compile-and-run**, only a default safe enough to execute without another Human turn may close the branch. In both modes, keep the decision visibly unconfirmed and state its basis, wrong-choice consequence, and mismatch/rollback path.
-
-If evidence proves the requested outcome infeasible and there is no meaningful Human choice, return the blocker rather than manufacturing a decision.
+If evidence proves the requested result infeasible and there is no meaningful Human choice, return the blocker rather than manufacturing a decision.
 
 ## Intent convergence runtime
 
-Intent Take runs as an interactive compile-time convergence loop. It may use available tools and Human turns, but it does not need the later execution Graph or execution continuity state.
+Intent Take runs as an interactive compile-time convergence loop. Across turns, recover only:
 
-Across turns, recover only the semantic state needed to continue:
-
-- the current candidate or confirmed Goal;
+- the candidate or confirmed Goal;
 - Human-confirmed authority and boundaries;
 - still-valid evidence and material unknowns;
-- the smallest remaining Human decision surface or unavailable probe.
+- the smallest remaining Ask Human decision, unavailable probe, or blocker.
 
-Each new Human message or authoritative fact updates that state: reconcile it with the current candidate, preserve still-valid facts and decisions, and remove only the choices that are actually closed. Do not restart discovery merely because a new turn began, and do not retain the whole conversation when these semantics are recoverable directly.
+Reconcile each new Human message or authoritative fact with that state. Preserve still-valid facts and decisions; do not restart discovery merely because a new turn began. Rewriting alone cannot turn inference into authority.
 
-The loop exits only when Stable Intent is reached or the smallest unresolved decision/probe/blocker has been returned. Execution Compile is the next semantic runtime; it is not another iteration of Goal formation.
+The loop exits when Stable Intent is reached or the smallest unresolved decision/probe/blocker has been returned.
 
 ## Stability
 
 Stable Intent is sufficient when Execution Compile no longer needs to rediscover:
 
 - the problem and complete requested outcome;
-- Human-authoritative choices and all intent-shaping boundaries;
+- Human-confirmed boundaries;
 - which material facts are verified, inferred, or unknown;
 - what trusted success means;
 - delivery semantics that must survive lowering.
 
-It also requires that the Goal is closed and the Human-decision scan finds no unresolved non-delegable intent-shaping choice. Context and execution unknowns may remain when they do not change those source semantics and can safely be investigated, delegated, or resolved downstream.
+It also requires that none of the three Ask Human conditions remains. Context and execution unknowns may remain when they can be investigated, handled by Task 0, delegated visibly, or resolved downstream without changing intent or boundaries.
 
-Implementation discovery, decomposition, dependency mapping, local architecture How, execution topology, command order, retries, and runtime state remain Stage 2/runtime concerns unless resolving them would change those source semantics.
-
-When intent is not stable, perform any accessible focused grounding first, then return the best current understanding plus only the smallest remaining alignment surface. If unavailable decision-relevant reality is missing, surface the focused probe or blocker. If Goal closure or another non-delegable intent-shaping decision remains, ask explicitly with options, consequences, and recommendation. New user authority or authoritative evidence can move intent forward; rewriting alone cannot turn uncertainty into fact or authority.
+Implementation discovery, decomposition, dependency mapping, architecture How, command order, retries, and runtime state remain Stage 2/runtime concerns unless they trigger an Ask Human boundary.
 
 ## Boundary with Execution Compile
 
-Execution Compile may ground implementation territory, close material execution branches with evidence or safe visible delegated decisions, derive work boundaries and dependencies inside Stable Intent, and lower proof semantics into execution shape. It may not form, reinterpret, or self-authorize any Stable Intent semantic.
+Execution Compile may ground implementation territory, create Task 0, close ordinary execution branches with evidence or visible delegated defaults, derive work dependencies, and lower proof semantics into execution shape. It may not silently change intent or confirmed boundaries.
 
-If Stage 2 evidence shows that Stable Intent cannot be preserved or requires a new Human decision about Goal, accepted behavior, core scope or boundaries, Human-owned trade-offs, approval, protected proof, or confirmed design intent, that is an Intent Take re-entry, not an Execution Decision.
+If Stage 2 evidence triggers **change intent**, **change boundary**, or **confused intent**, return to Intent Take. Otherwise keep the decision in execution.
 
 The final executable artifact contains only the lowered semantics that matter to execution judgment; it is not Stable Intent followed by an execution appendix.
