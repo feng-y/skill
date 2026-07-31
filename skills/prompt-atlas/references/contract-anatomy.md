@@ -39,7 +39,7 @@ For repo work, preserve governing constraints or acceptance paths when they affe
 
 Grounding should reduce the Human decision surface, not replace it. Do not ask the Human for facts authoritative evidence can settle, and do not keep researching merely to avoid a real Human decision.
 
-When a required fact is accessible now, perform the focused check. When it is unavailable during compile but safely verifiable before modification, let Execution Compile create Task 0. A factual probe does not become an intent question merely because it is important.
+When a required fact or disagreement is accessible now, perform the focused check during compile. When a critical precondition, carrier-versus-reality disagreement, or executor understanding can only be settled in the execution environment but still before material modification, let Execution Compile create Task 0. Task 0 may expose a Human boundary that was impossible to see earlier, but it must not postpone one already visible during compile.
 
 When the Human defines a scope or classification rule but is unsure which concrete entities satisfy it, preserve the rule as authority and derive membership from evidence. Ask again only when the residual classification depends on Human meaning rather than observable reality.
 
@@ -61,8 +61,8 @@ Unknown exists to reduce unnecessary Human questions, not eliminate Human judgme
 
 Route it in this order:
 
-- evidence can settle it → investigate;
-- execution can safely verify it before modification → Task 0;
+- evidence can settle it during compile → investigate;
+- it can only be settled in the execution environment before material modification → Task 0 to verify the precondition, expose disagreement, and align executor understanding;
 - it changes only local implementation How or execution theory → let execution choose, experiment, or replan;
 - a reasonable choice preserves intent and boundaries and is reversible or reliably mismatch-detectable → visible delegated default;
 - it reaches one of the Ask Human boundaries → ask the smallest useful question;
@@ -112,14 +112,14 @@ Stable Intent is sufficient when Execution Compile no longer needs to rediscover
 - what trusted success means;
 - delivery semantics that must survive lowering.
 
-It also requires that none of the three Ask Human conditions remains. Context and execution unknowns may remain when they can be investigated, handled by Task 0, delegated visibly, or resolved downstream without changing intent or boundaries.
+It also requires that none of the three Ask Human conditions remains. Context and execution unknowns may remain when they can be investigated, handled by Task 0 before material modification, delegated visibly, or resolved downstream without changing intent or boundaries.
 
 Implementation discovery, decomposition, dependency mapping, architecture How, command order, retries, and runtime state remain Stage 2/runtime concerns unless they trigger an Ask Human boundary.
 
 ## Boundary with Execution Compile
 
-Execution Compile may ground implementation territory, create Task 0, close ordinary execution branches with evidence or visible delegated defaults, derive work dependencies, and lower proof semantics into execution shape. It may not silently change intent or confirmed boundaries.
+Execution Compile may ground implementation territory, create Task 0 to settle critical preconditions and handoff disagreement, close ordinary execution branches with evidence or visible delegated defaults, derive work dependencies, and lower proof semantics into execution shape. It may not silently change intent or confirmed boundaries.
 
-If Stage 2 evidence triggers **change intent**, **change boundary**, or **confused intent**, return to Intent Take. If a non-intent prerequisite is unavailable, park only the affected branch while safe work remains; otherwise return `Status: Blocked`.
+If Stage 2 or Task 0 evidence triggers **change intent**, **change boundary**, or **confused intent**, return to Intent Take before affected modification. If a non-intent prerequisite is unavailable, park only the affected branch while safe work remains; otherwise return `Status: Blocked`.
 
 The final executable artifact contains only the lowered semantics that matter to execution judgment; it is not Stable Intent followed by an execution appendix.
