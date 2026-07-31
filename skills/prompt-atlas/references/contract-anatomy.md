@@ -66,7 +66,8 @@ Route it in this order:
 - it changes only local implementation How or execution theory → let execution choose, experiment, or replan;
 - a reasonable choice preserves intent and boundaries and is reversible or reliably mismatch-detectable → visible delegated default;
 - it reaches one of the Ask Human boundaries → ask the smallest useful question;
-- required evidence or authority is inaccessible → preserve the exact unknown and its resolving condition.
+- required evidence or authority is inaccessible but independent safe work remains → preserve the blocker and park the affected branch;
+- required evidence, access, or capability is inaccessible and no safe route remains → return `Status: Blocked` with the exact resolving condition.
 
 A delegated default is visibly unconfirmed. Record its basis, consequence if wrong, and detection or rollback route. It may close ordinary orchestration; it may not silently change intent or confirmed boundaries.
 
@@ -119,6 +120,6 @@ Implementation discovery, decomposition, dependency mapping, architecture How, c
 
 Execution Compile may ground implementation territory, create Task 0, close ordinary execution branches with evidence or visible delegated defaults, derive work dependencies, and lower proof semantics into execution shape. It may not silently change intent or confirmed boundaries.
 
-If Stage 2 evidence triggers **change intent**, **change boundary**, or **confused intent**, return to Intent Take. Otherwise keep the decision in execution.
+If Stage 2 evidence triggers **change intent**, **change boundary**, or **confused intent**, return to Intent Take. If a non-intent prerequisite is unavailable, park only the affected branch while safe work remains; otherwise return `Status: Blocked`.
 
 The final executable artifact contains only the lowered semantics that matter to execution judgment; it is not Stable Intent followed by an execution appendix.
