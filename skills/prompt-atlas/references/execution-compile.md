@@ -60,15 +60,17 @@ Ask Human only when:
 
 Do not ask for necessary implementation expansion, dependency discovery, task decomposition, local architecture, command order, or ordinary execution choices when intent and boundaries remain intact.
 
-Before returning `Status: Execution Decision`, try in order:
+Close ordinary pre-run choices in this order:
 
-- authoritative evidence;
-- execution-owned How;
-- a visible delegated default that preserves intent and confirmed boundaries.
+- use authoritative evidence when it determines the answer;
+- leave local How and uncertain execution-theory choices to the runtime;
+- use a visible delegated default when one reasonable choice preserves intent and confirmed boundaries.
 
 A delegated default needs a reasonable evidence- or convention-backed choice and must be reversible or reliably mismatch-detectable. Record the selection, basis, visibly unconfirmed status, consequence if wrong, and rollback/replan route.
 
 For **artifact-only**, the default remains reviewable and becomes execution input only when the caller accepts, edits, or forwards the carrier. For **compile-and-run**, it must be safe to execute without another Human turn. An executable task alone does not authorize compile-and-run.
+
+If no pre-run choice is clearly superior but all choices stay inside intent and confirmed boundaries, preserve the decision surface for execution rather than creating another Human gate.
 
 **Complete when:** no foreseeable ordinary execution event requires Human orchestration; only the three Ask Human boundaries remain Human-owned.
 
