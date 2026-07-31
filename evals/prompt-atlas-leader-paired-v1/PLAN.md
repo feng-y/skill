@@ -25,9 +25,22 @@ Freeze before execution:
 - Leader repository commit, `SKILL.md`, and reference blobs;
 - fixture file blob and generated task-repository initial commit;
 - executor model/version, tool permissions, token/time budget, and runtime configuration;
+- base environment image hash with Bash, Git, Python 3, pytest, and ripgrep versions;
 - private oracle implementation SHA-256 matching the registered public manifest.
 
 Do not use moving `main` references in final evidence.
+
+## Visibility boundary
+
+The evaluator/controller may read `PLAN.md`, `FIXTURES.md`, fixture specifications, public oracle manifests, and private oracle implementations.
+
+Compiler/taskbook and executor sessions receive only:
+
+- the exact fixture task input;
+- the generated task repository and allowed runtime tools;
+- for a resumed F4 executor, the original carrier/taskbook, current task worktree/history, and runtime-created continuity artifacts.
+
+Do not mount or expose this evaluation repository, fixture specification files, public oracle manifests, private cases, private oracle implementation, another arm's artifacts, or evaluator notes to compilers or executors. The public manifest is public for preregistration and auditability, not part of the executor-visible contract.
 
 ## Isolation
 
@@ -40,14 +53,13 @@ B. Leader snapshot       → isolated taskbook session → taskbook → clean ex
 
 Requirements:
 
-- identical generated starting repository for A and B;
-- same executor model and runtime configuration;
+- byte-identical generated starting repository for A and B;
+- same base environment image, executor model, and runtime configuration;
 - same tool permissions and external dependency availability;
 - same token/time/attempt budget;
 - no output sharing between A and B;
 - compiler/taskbook author sessions isolated from executor sessions;
 - accepting oracle isolated from both executors;
-- private cases unavailable to compilers and executors;
 - each run retained with compiler artifact, actions, evidence, final state, and cost.
 
 Run order must be randomized or counterbalanced and recorded before the first arm starts. Environment warming must not favor one arm.
@@ -92,8 +104,8 @@ Token/time efficiency is secondary to correctness and trust. A cheaper run that 
 
 Create `RESULTS.md` only after all valid runs exist. It must contain:
 
-- exact snapshot, fixture, generated-repository, and private-oracle hashes;
-- arm order/randomization seed;
+- exact snapshot, fixture, generated-repository, environment-image, and private-oracle hashes;
+- model/tool versions and arm order/randomization seed;
 - one row per arm with links to retained artifacts;
 - primary metrics and oracle verdict;
 - invalid runs and reasons;
