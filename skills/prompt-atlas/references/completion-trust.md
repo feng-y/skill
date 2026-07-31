@@ -36,5 +36,3 @@ If the runtime/harness cannot provide a required independent boundary, the graph
 ## Runtime truth
 
 Insufficient, compromised, narrowed, skipped, fabricated, or stale proof is `UNMET`. A local PASS can unlock dependent work without proving the whole Goal. Failed proof returns to evidence-producing work or replanning while safe work remains. Environment unavailability stays explicit. Upstream changes invalidate downstream evidence when the change affects what that evidence proved.
-
-Leader's concrete anti-cheat and reverse-validation rules are one realization of these semantics. Prompt Atlas preserves the same capability through proof directness, failure sensitivity, integrity boundaries, non-regression, and independent acceptance rather than imposing one fixed forbidden-tactics list on every task.
