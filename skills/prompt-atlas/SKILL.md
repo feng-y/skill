@@ -30,16 +30,16 @@ Intent is stable when one coherent Goal, its Why, confirmed boundaries, material
 
 Ground the real workspace, governing specs/tests, baselines, dependencies, and critical verifiers. Treat documentation and named commands as claims until evidenced.
 
-Freeze Goal, Human authority, confirmed boundaries, protected proof surfaces, completion obligations, and handoff mode. The Executor owns implementation How and may adapt the remaining graph inside that envelope.
+Human owns intent; Prompt Atlas compiles and stops; Executor owns How; an independent Acceptor owns final judgment when required. Freeze Goal, Human authority, confirmed boundaries, protected proof surfaces, completion obligations, and handoff mode. The Executor may adapt the remaining graph inside that envelope.
 
 Every `Status: Executable` taskbook has six compact sections:
 
-1. Purpose and Goal
-2. Grounded State and Task 0
-3. Decisions, Authority, and Boundaries
-4. Work Graph and Execution Rules
-5. Progress, Blockers, and Continuity
-6. Acceptance and Delivery
+1. **Purpose and Goal** — Why and complete end state.
+2. **Grounded State and Task 0** — evidence, assumptions, baselines, opening checks.
+3. **Decisions, Authority, and Boundaries** — ownership, defaults, allowed and protected scope.
+4. **Work Graph and Execution Rules** — tasks, dependencies, proof, retry, Global Gate.
+5. **Progress, Blockers, and Continuity** — current state, evidence, blockers, next safe work.
+6. **Acceptance and Delivery** — complete-Goal proof, residuals, deliverables.
 
 **Task 0 is always explicit and runs before material modification.** It binds repo/worktree/target, restates Goal/order/risk, confirms critical commands/baselines/judges, initializes graph and progress state, then starts, replans inside the frozen envelope, parks a blocked branch, blocks truthfully, or returns to Intent Take. Reuse fresh authoritative evidence; recheck only missing, stale, disputed, environment-dependent, or invalidated facts.
 
@@ -49,8 +49,8 @@ Execution rules:
 - Protect tests, verifiers, schemas, baselines, and acceptance criteria. Skipping, weakening, mocking away, swallowing failures, or editing the judge is not completion.
 - Every retry needs a materially different hypothesis or approach. Stop known-bad paths immediately; after three failures against the same acceptance condition in the same route, replan, switch branch, roll back, `BLOCK`, or `ESCALATE`.
 - Roll back unauthorized regressions below a verified baseline.
-- Repository work initializes `.scratch/<project>/PROGRESS.md`; create `BLOCKED.md` only for a real blocker. Keep both concise, local, and uncommitted.
-- Local PASS proves only its node. The Global Gate closes the complete Goal and boundaries. Required independent acceptance cannot be replaced by Executor self-approval.
+- Repository work initializes `.scratch/<project>/PROGRESS.md`; create `.scratch/<project>/BLOCKED.md` only for a real blocker. Keep both concise, local, and uncommitted.
+- Local PASS proves only its node. The Global Gate closes the complete Goal and confirmed boundaries. Required independent acceptance cannot be replaced by Executor self-approval.
 
 If one execution effort cannot reasonably close the Goal, split it into independently completable taskbooks instead of growing the graph without bound. For research or decision work, use the same sections and judge completion by provenance, counterevidence, residual unknowns, and decision usefulness.
 
@@ -58,7 +58,7 @@ If one execution effort cannot reasonably close the Goal, split it into independ
 
 Emit one state:
 
-- **`Status: Unresolved Intent`** — smallest remaining Human decision or unavailable probe;
+- **`Status: Unresolved Intent`** — smallest remaining Human decision or probe needed to close intent;
 - **`Status: Blocked`** — exact non-intent blocker and resolving condition;
 - **`Status: Executable`** — one six-section taskbook.
 
