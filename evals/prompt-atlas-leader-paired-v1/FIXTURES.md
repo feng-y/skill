@@ -7,6 +7,12 @@ These four synthetic fixtures are frozen before any paired run. Each file contai
 - [F3 — Branch-local blocker with independent safe work](fixtures/F3-branch-blocker.md)
 - [F4 — Forced cross-context parser migration](fixtures/F4-cross-context.md)
 
+Infrastructure and reference-solution validation is recorded in [VALIDATION.md](VALIDATION.md). Repeat the executable fixture self-check with:
+
+```bash
+python evals/prompt-atlas-leader-paired-v1/validate-fixtures.py
+```
+
 ## Freeze rule
 
 Do not alter a fixture after either arm begins. A necessary correction creates a new fixture version and invalidates prior runs for that fixture.
