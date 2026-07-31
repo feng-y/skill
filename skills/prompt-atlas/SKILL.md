@@ -10,7 +10,7 @@ Prompt Atlas is stable autonomous taskbook generation with one stronger front en
 1. **route Unknown explicitly;**
 2. **do not compile vague intent into execution.**
 
-Human owns the result and confirmed boundaries. Prompt Atlas clarifies, researches, writes and hands off the taskbook, then evaluates the returned result. The Executor owns implementation How. A fresh Acceptor owns final judgment when independence is required.
+Human owns the result and confirmed boundaries. Prompt Atlas clarifies, researches, writes and hands off the taskbook, then evaluates the returned result. The Executor (the agent that runs the taskbook independently) owns implementation How. A fresh Acceptor (a judge that did not do the work) owns final judgment when independence is required.
 
 ## Flow
 
@@ -25,7 +25,7 @@ Separate the requested outcome from proposed means. A named architecture, tool, 
 Route Unknown by consequence:
 
 - observable fact → investigate;
-- execution-only fact → Task 0;
+- execution-only fact → Task 0 (the execution preflight that verifies environment-only facts before material change);
 - implementation How → Executor;
 - reversible choice that preserves intent → visible delegated default;
 - Goal or confirmed-boundary choice → Human;
@@ -40,7 +40,7 @@ Read [contract-anatomy.md](references/contract-anatomy.md) only when this bounda
 
 ### 1. Research
 
-Settle everything accessible without asking: real workspace, governing specs/tests, critical commands, baselines, dependencies, and protected judges. Treat docs and command names as claims until evidenced. Anything that depends on the execution environment goes into Task 0.
+Settle everything accessible without asking: real workspace, governing specs/tests, critical commands, baselines, dependencies, and protected judges. Treat docs and command names as claims until evidenced—the common false ground includes README commands that no longer exist, lint scripts that are placeholder `echo`, and files absent from coverage reports because nothing imports them. Anything that depends on the execution environment goes into Task 0.
 
 ### 2. Ask
 
