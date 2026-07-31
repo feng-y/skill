@@ -172,15 +172,15 @@ Default to **artifact-only**. Use **compile-and-run** only when the caller expli
 Emit `Status: Executable` only when:
 
 - the Goal is clear and intent remains unchanged;
-- no foreseeable Ask Human boundary or hard blocker remains open;
+- no foreseeable Ask Human boundary remains open;
+- no blocker prevents a safe first action or truthful continued progress;
 - carrier-shaping facts are verified or assigned to Task 0;
 - delegated defaults are explicit and safe for the handoff mode;
 - ordinary execution uncertainty has a non-Human route;
-- the first safe evidence-producing action is clear;
 - required continuity and acceptance can be bound before they are needed;
 - the handoff mode is known and compile-and-run has explicit caller authority.
 
-If a required non-intent prerequisite is unavailable and prevents the first safe action, emit `Status: Blocked` instead.
+If a required non-intent prerequisite is unavailable and prevents all safe progress, emit `Status: Blocked` instead. A branch-local blocker may remain in an executable carrier when it is parked and independent safe work can continue.
 
 This bar reduces ordinary post-compile HITL. It does not require all unknowns to be eliminated and does not pretend new evidence can never expose a real Human boundary.
 
