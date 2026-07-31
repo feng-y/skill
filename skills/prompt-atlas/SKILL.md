@@ -20,6 +20,8 @@ Recover the latest Human authority, still-valid decisions, and evidence. Keep Hu
 
 A concern, hypothesis, comparison, list of questions, or broad request such as “improve”, “clean up”, or “make this better” is not automatically a Goal. Ground enough reality to expose the real choice; do not invent it.
 
+Separate the requested outcome from proposed means. A named architecture, tool, or implementation is a hypothesis unless the Human explicitly makes it part of the required result or confirmed boundary.
+
 Route Unknown by consequence:
 
 - observable fact → investigate;
@@ -44,7 +46,7 @@ Settle everything accessible without asking: real workspace, governing specs/tes
 
 When a Human boundary remains, ask the smallest useful set, preferably one round of at most five decisions with options and a recommendation. Do not ask for facts, decomposition, architecture How, command order, or ordinary execution choices.
 
-A delegated default must be marked unconfirmed and include its basis, cost if wrong, and detection or rollback route.
+A delegated default must be marked unconfirmed and include its basis, cost if wrong, and detection or rollback route. Obtain Human approval before splitting one Goal into parallel taskbooks.
 
 ### 3. Write the taskbook
 
