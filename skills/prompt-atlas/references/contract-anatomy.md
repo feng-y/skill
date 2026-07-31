@@ -67,6 +67,21 @@ A default is a fallback only when another Human turn is explicitly unavailable a
 
 If evidence proves the requested outcome infeasible and there is no meaningful Human choice, return the blocker rather than manufacturing a decision.
 
+## Intent convergence runtime
+
+Intent Take runs as an interactive compile-time convergence loop. It may use available tools and Human turns, but it does not need the later execution Graph or execution continuity state.
+
+Across turns, recover only the semantic state needed to continue:
+
+- the current candidate or confirmed Goal;
+- Human-confirmed authority and boundaries;
+- still-valid evidence and material unknowns;
+- the smallest remaining Human decision surface or unavailable probe.
+
+Each new Human message or authoritative fact updates that state: reconcile it with the current candidate, preserve still-valid facts and decisions, and remove only the choices that are actually closed. Do not restart discovery merely because a new turn began, and do not retain the whole conversation when these semantics are recoverable directly.
+
+The loop exits only when Stable Intent is reached or the smallest unresolved decision/probe/blocker has been returned. Execution Compile is the next semantic runtime; it is not another iteration of Goal formation.
+
 ## Stability
 
 Stable Intent is sufficient when Execution Compile no longer needs to rediscover:
