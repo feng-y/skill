@@ -79,6 +79,6 @@ Emit one terminal state and stop:
 
 For an **artifact-only** caller, return the terminal artifact. For a **compile-and-run** caller with an available execution runtime, `Status: Executable` is the handoff boundary: Prompt Atlas stops, the caller binds the carrier as the execution source, and execution continues without another Human “start” turn. The same physical agent may continue, but it must switch from compile judgment to the carrier's execution authority and protocol.
 
-When independent acceptance is required, the carrier must state the accepting boundary and private-proof requirement. Before execution begins, the caller/runtime must bind or reserve that boundary; when it cannot, execution may proceed only to `ready for independent acceptance` and must not claim equivalent completion.
+When independent acceptance is required, the carrier must state the accepting boundary and private-proof requirement. Before execution begins, the caller/runtime must either bind or reserve that boundary, or explicitly freeze the run's completion ceiling at `ready for independent acceptance`. The latter cannot claim an equivalent PASS.
 
 For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Omit details that do not change downstream judgment, but never compress away a requested outcome, authority distinction, material Graph branch, Loop exit, recovery requirement, handoff requirement, or trusted proof obligation.
