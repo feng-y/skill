@@ -1,8 +1,14 @@
 # Prompt Atlas compiler smoke v3 — results
 
-## Evaluated branch
+## Evaluated branch and snapshot
 
 `agent/prompt-atlas-task0-settlement`
+
+- `skills/prompt-atlas/SKILL.md` blob: `1c8b91e2ba6a54bf2d146ac0b13675d0d4fbe436`
+- `skills/prompt-atlas/references/contract-anatomy.md` blob: `5d846bed6fbcd43022fb64e7109ff9bc180d742e`
+- `skills/prompt-atlas/references/execution-compile.md` blob: `6a54a9abde714db2d1f99f3694a1aa52c4807d6f`
+- `skills/prompt-atlas/references/completion-trust.md` blob: `b2af67ae34bdbbc011a1bed742be4ba0fc545fa5`
+- `skills/prompt-atlas/agents/openai.yaml` blob: `2e794ace901c6e575416838821cf222037665c47`
 
 The frozen outputs in `CASES.md` were produced during the implementation conversation after the settlement semantics were rewritten. Inputs, expected invariants, outputs, and scores are retained together so another reviewer can independently re-score the compiler behavior.
 
