@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: Two-stage compiler for turning a raw or evolving request into an executable agent handoff. Intent Take converges on Stable Intent without inventing Human authority. Execution Compile lowers that intent into the smallest truthful carrier with explicit authority boundaries, a grounded execution graph, local convergence loops, recovery needs, and trusted acceptance. Use for requirement clarification, prompt/task preparation, handoff, or when another workflow needs stable intent or an executable task carrier.
+description: Two-stage compiler for turning a raw or evolving request into an executable agent handoff. Intent Take converges on Stable Intent without inventing Human authority. Execution Compile lowers that intent into the smallest truthful carrier with grounded reality, clear Human boundaries, execution freedom, continuity only when needed, and trusted acceptance. Use for requirement clarification, prompt/task preparation, handoff, or when another workflow needs stable intent or an executable task carrier.
 ---
 
 # Prompt Atlas
@@ -17,7 +17,7 @@ Trust a capable frontier model with routine implementation How, local self-corre
 Use progressive disclosure:
 
 - [contract-anatomy.md](references/contract-anatomy.md) when intent authority, Goal closure, or stability is unclear;
-- [execution-compile.md](references/execution-compile.md) when authority boundaries, graph shape, loop boundaries, branch closure, continuity, or acceptance needs judgment;
+- [execution-compile.md](references/execution-compile.md) when execution shape, branch closure, continuity, or acceptance needs judgment;
 - [completion-trust.md](references/completion-trust.md) when completion can false-pass or needs an independent acceptance boundary.
 
 ## Stage 1 — Intent Take
@@ -47,7 +47,7 @@ When stable, treat the result as **Stable Intent IR** and continue to Stage 2.
 Execution Compile ends when it produces one executable carrier and stops. Use two coupled lenses while compiling:
 
 - **Authority** — what remains Human-owned, what the execution runtime may adapt inside Stable Intent, and what boundary judges completion when separation is required.
-- **Control protocol** — how the smallest useful Graph, node-local Loops, evidence routes, continuity, and Global Gate keep execution moving truthfully.
+- **Control protocol** — the minimum execution shape, evidence routes, continuity, and acceptance needed to keep this task moving truthfully.
 
 First ground enough execution reality to identify the actual workspace, work surfaces, governing specs/tests, material baselines, real dependencies, and critical verifiers when accessible. Keep unavailable or unverified evidence explicit.
 
