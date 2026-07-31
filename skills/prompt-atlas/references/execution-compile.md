@@ -152,7 +152,7 @@ Use the existing verdicts:
 
 A non-PASS verdict routes to more evidence-producing work, a controlled Graph revision, a blocker, or the relevant authority boundary. It cannot be rewritten into completion by the Executor or control owner.
 
-When independent acceptance is required, compile both the accepting boundary and the private-proof retention requirement. Before execution begins, the caller/runtime must bind or reserve that boundary. If it cannot, the run may end only at `ready for independent acceptance`, not an equivalent PASS.
+When independent acceptance is required, compile both the accepting boundary and the private-proof retention requirement. Before execution begins, the caller/runtime must either bind or reserve the required independent boundary, or explicitly freeze the run's completion ceiling at `ready for independent acceptance`. The latter cannot claim an equivalent PASS.
 
 Define Delivery separately from proof: what artifacts, evidence summary, residuals, and next actions the caller receives.
 
@@ -163,7 +163,7 @@ Define the caller's handoff mode:
 
 The same physical agent may perform both modes sequentially, but execution begins under the carrier's authority boundaries and control protocol rather than continuing compilation by improvisation.
 
-**Complete when:** an authorized judge can distinguish PASS from false completion using the carrier alone, any required independent boundary can be bound or is truthfully deferred, Delivery is clear, and the caller knows whether to return the carrier or start execution immediately.
+**Complete when:** an authorized judge can distinguish PASS from false completion using the carrier alone, any required independent boundary is bound/reserved or the acceptance ceiling is explicit, Delivery is clear, and the caller knows whether to return the carrier or start execution immediately.
 
 ## Executable readiness
 
@@ -172,7 +172,8 @@ Emit `Status: Executable` only when all of the following hold:
 - Stable Intent remains valid;
 - every foreseeable material Human-owned decision exposed by current intent and evidence is closed or validly defaulted;
 - every ordinary execution uncertainty has a non-Human route such as probe, local repair, branch parking, controlled Graph revision, retry, or truthful blocking;
-- required continuity and acceptance boundaries can be bound before they are needed;
+- required continuity can be bound before it is needed;
+- any required independent acceptance boundary is bound/reserved, or the run's completion ceiling is explicitly limited to `ready for independent acceptance`;
 - the handoff mode is known.
 
 This readiness bar reduces ordinary post-compile HITL; it does not pretend new runtime evidence can never expose a genuinely new authority boundary.
