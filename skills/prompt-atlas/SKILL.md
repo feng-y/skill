@@ -1,67 +1,84 @@
 ---
 name: prompt-atlas
-description: Compile a raw or evolving request into stable intent and a compact executable taskbook. Use when intent, authority, handoff, continuity, or trusted completion must survive into downstream work.
+description: Intent-first specialization of autonomous taskbook generation. It routes Unknown explicitly and never turns a vague request or unresolved intent into executable work. Once intent is stable, it compiles a compact taskbook with grounded facts, Task 0, boundaries, progress, stop rules, and trusted acceptance.
 ---
 
 # Prompt Atlas
 
-Two stages:
+Prompt Atlas keeps the stable taskbook discipline and strengthens its front end in two ways:
 
-1. **Intent Take** — close the Goal, Why, authority, boundaries, and success.
-2. **Execution Compile** — lower Stable Intent into one taskbook or an exact blocker.
+1. **Unknown is routed explicitly.**
+2. **A vague request or vague intent never becomes executable work.**
 
-Read [contract-anatomy.md](references/contract-anatomy.md) for intent edge cases, [execution-compile.md](references/execution-compile.md) for execution edge cases, and [completion-trust.md](references/completion-trust.md) when proof can false-pass or needs independence.
+Use [contract-anatomy.md](references/contract-anatomy.md) when Goal or authority is unclear, [execution-compile.md](references/execution-compile.md) for taskbook shape, and [completion-trust.md](references/completion-trust.md) when proof can false-pass or needs independence.
 
-## Intent Take
+## Stage 1 — Intent Take
 
-Recover the request from the latest Human authority, still-valid decisions, and evidence. Keep Human intent, territory reality, inference, and unknown distinct. Evidence may revise facts, feasibility, implementation work, and proof obligations; it may not rewrite intent.
+Recover the request from the latest Human authority, still-valid decisions, and relevant evidence. Keep four things distinct:
+
+- **Human intent** — requested result, priorities, approvals, and confirmed boundaries;
+- **territory reality** — code, tests, schemas, traces, artifacts, measurements, and other evidence;
+- **inference** — model interpretation or recommendation, not Human authority;
+- **Unknown** — something whose consequence is not settled yet.
+
+Route Unknown instead of treating every gap as a Human question:
+
+- evidence can settle it now → investigate;
+- it depends on the execution environment → put the check in Task 0;
+- it is implementation How → let the Executor decide and verify;
+- one reasonable reversible choice preserves intent → record a visible delegated default and its rollback route;
+- it changes the Goal or a confirmed boundary, or materially different Goals remain plausible → Ask Human;
+- a prerequisite is unavailable but independent work remains → park that part in `BLOCKED.md`;
+- no safe route remains → return `Status: Blocked` with the exact resolving condition.
+
+A concern, aspiration, hypothesis, comparison, list of questions, or broad request such as “improve”, “clean up”, or “make this better” is not automatically a Goal. Ground enough reality to expose the real choice, but do not invent the choice.
 
 Ask Human only when proceeding would:
 
 1. change the requested result;
-2. cross or relax a confirmed boundary or require high-risk authorization;
+2. cross or relax a confirmed boundary or require irreversible/high-risk authority;
 3. choose between materially different Goals that evidence cannot resolve.
 
-Investigate accessible facts; assign execution-only checks to Task 0; leave implementation How to execution. A delegated default must preserve intent and boundaries, be visible, and be reversible or reliably mismatch-detectable.
+Intent is stable only when there is one coherent Human-owned Goal, its Why, confirmed boundaries, material evidence state, trusted success, and delivery. Until then, do **not** emit `Status: Executable`; return `Status: Unresolved Intent` with the current understanding and the smallest useful question or probe.
 
-Intent is stable when one coherent Goal, its Why, confirmed boundaries, material evidence state, trusted success, and delivery are clear, with no Human boundary open.
+## Stage 2 — Execution Compile
 
-## Execution Compile
+Enter only after Stable Intent. Research accessible facts yourself: bind the real workspace, find the governing specs/tests, run or verify critical commands, capture relevant baselines, and mark anything still unverified.
 
-Ground the real workspace, governing specs/tests, baselines, dependencies, and critical verifiers. Treat documentation and named commands as claims until evidenced.
+Compile one compact autonomous taskbook. Its opening tells the Executor that the taskbook is the execution source, to resume from `PROGRESS.md`, why the work matters, the priority order when requirements conflict, and which statements are hard rules versus guidance.
 
-Human owns intent; Prompt Atlas compiles and stops; Executor owns How; an independent Acceptor owns final judgment when required. Freeze Goal, Human authority, confirmed boundaries, protected proof surfaces, completion obligations, and handoff mode. The Executor may adapt the remaining graph inside that envelope.
+Then use six sections, in this order:
 
-Every `Status: Executable` taskbook has six compact sections:
+1. **Delegated decisions** — every unconfirmed default, why it is reasonable, and the cost if wrong.
+2. **Boundaries** — allowed write scope, protected judging surfaces, prohibited side work, and irreversible actions.
+3. **Current state and Task 0** — evidenced facts, baselines, unverified claims, and the opening checks.
+4. **Task N** — ordered work; each task states its result, dependencies, hard constraints, verification command and machine-judgable outcome.
+5. **Rules** — progress/blocker behavior, anti-false-green rules, retry/rollback, and repository discipline.
+6. **Completion conditions** — complete-Goal evidence, boundary preservation, residuals, delivery, and stop budget.
 
-1. **Purpose and Goal** — Why and complete end state.
-2. **Grounded State and Task 0** — evidence, assumptions, baselines, opening checks.
-3. **Decisions, Authority, and Boundaries** — ownership, defaults, allowed and protected scope.
-4. **Work Graph and Execution Rules** — tasks, dependencies, proof, retry, Global Gate.
-5. **Progress, Blockers, and Continuity** — current state, evidence, blockers, next safe work.
-6. **Acceptance and Delivery** — complete-Goal proof, residuals, deliverables.
+**Task 0 is always explicit and runs before material change.** It verifies the bound repo/worktree/target, critical commands, baselines, and judges; writes a short opening receipt with Goal, order, largest risk, and disagreement; then starts, revises the remaining plan inside Stable Intent, parks a blocked branch, blocks truthfully, or returns to Intent Take. Reuse fresh authoritative evidence; recheck only missing, stale, disputed, environment-dependent, or invalidated facts.
 
-**Task 0 is always explicit and runs before material modification.** It binds repo/worktree/target, restates Goal/order/risk, confirms critical commands/baselines/judges, initializes graph and progress state, then starts, replans inside the frozen envelope, parks a blocked branch, blocks truthfully, or returns to Intent Take. Reuse fresh authoritative evidence; recheck only missing, stale, disputed, environment-dependent, or invalidated facts.
+Keep the taskbook executable without ordinary Human orchestration:
 
-Execution rules:
+- maintain `.scratch/<project>/PROGRESS.md`; record real blockers and resolving conditions in `.scratch/<project>/BLOCKED.md`;
+- use the smallest real dependency graph; give shared mutable surfaces one owner and invalidate downstream evidence when upstream changes affect it;
+- protect tests, verifiers, schemas, baselines, and acceptance criteria; skipping, weakening, mocking away, swallowing failures, or editing the judge is not completion;
+- use reverse validation when a critical check could fail silently;
+- every retry must change the hypothesis or approach; stop known-bad paths immediately; three failures against the same acceptance condition in one route force a replan, branch switch, rollback, `BLOCK`, or `ESCALATE`;
+- roll back unauthorized regression below a verified baseline;
+- local PASS proves only its task; complete only when the full Goal and confirmed boundaries pass final acceptance;
+- the Executor may adapt implementation How and remaining work, but may not rewrite Stable Intent or protected proof.
 
-- Smallest graph first: `Task 0 → Execute with local proof → Global Gate`. Add nodes only for real dependencies, ownership, joins, or proof needs.
-- Protect tests, verifiers, schemas, baselines, and acceptance criteria. Skipping, weakening, mocking away, swallowing failures, or editing the judge is not completion.
-- Every retry needs a materially different hypothesis or approach. Stop known-bad paths immediately; after three failures against the same acceptance condition in the same route, replan, switch branch, roll back, `BLOCK`, or `ESCALATE`.
-- Roll back unauthorized regressions below a verified baseline.
-- Repository work initializes `.scratch/<project>/PROGRESS.md`; create `.scratch/<project>/BLOCKED.md` only for a real blocker. Keep both concise, local, and uncommitted.
-- Local PASS proves only its node. The Global Gate closes the complete Goal and confirmed boundaries. Required independent acceptance cannot be replaced by Executor self-approval.
-
-If one execution effort cannot reasonably close the Goal, split it into independently completable taskbooks instead of growing the graph without bound. For research or decision work, use the same sections and judge completion by provenance, counterevidence, residual unknowns, and decision usefulness.
+If one execution effort cannot reasonably close the Goal, split it into independently completable taskbooks. For research or decision work, keep the same discipline but replace implementation metrics with sourced conclusions, counterevidence, reproducibility, residual unknowns, and an explicit research budget.
 
 ## Output
 
-Emit one state:
+Emit one state and stop:
 
-- **`Status: Unresolved Intent`** — smallest remaining Human decision or probe needed to close intent;
-- **`Status: Blocked`** — exact non-intent blocker and resolving condition;
-- **`Status: Executable`** — one six-section taskbook.
+- **`Status: Unresolved Intent`** — current understanding plus the smallest Human decision or probe needed;
+- **`Status: Blocked`** — Stable Intent exists, but a non-intent prerequisite prevents safe progress; include the exact resolving condition;
+- **`Status: Executable`** — one autonomous taskbook.
 
-Return artifacts when asked for a prompt, brief, contract, or taskbook. A direct request to complete work grants compile-and-run authority; the existing runtime continues after `Status: Executable` without another start turn.
+Return the artifact when the user asks for a prompt, brief, contract, or taskbook. A direct request to complete work grants compile-and-run authority: after `Status: Executable`, the existing runtime continues without another start turn.
 
-Prompt Atlas compiles the taskbook. It does not own live scheduling or supervision and does not require a new control layer or multiple agents.
+Prompt Atlas compiles; it does not add a scheduler, manager daemon, or new control layer.
