@@ -1,10 +1,10 @@
 # Execution Compile
 
-Use this reference when Stage 2 needs more detail on authority boundaries, execution shape, branch closure, Task 0, continuity, or proof topology. Execution Compile consumes Stable Intent IR and emits one executable carrier; it does not execute the carrier or own live run state.
+Use this reference when Stage 2 needs more detail on authority boundaries, execution shape, branch closure, Task 0, continuity, or proof topology. Execution Compile consumes Stable Intent IR and emits one executable carrier or a truthful blocker; it does not execute the carrier or own live run state.
 
 ## Outcome
 
-Produce the smallest truthful carrier that lets a capable downstream runtime keep making correct progress without using Human interaction as ordinary orchestration.
+Produce the smallest truthful carrier that lets a capable downstream runtime keep making correct progress without using Human interaction as ordinary orchestration. When that is impossible for a non-intent reason, return the exact blocker instead of asking an intent question or pretending the carrier is executable.
 
 Use two lenses:
 
@@ -40,7 +40,8 @@ Task 0 is an execution preflight, not deferred intent clarification. Its result 
 - fact matches → continue;
 - fact differs but intent and confirmed boundaries still hold → revise the plan and continue;
 - fact differs and would require changing intent or a confirmed boundary, or reveals confused intent → return to Intent Take;
-- verification is unavailable → park the affected branch and continue independent safe work, or return the exact blocker when none remains.
+- verification is unavailable → park the affected branch and continue independent safe work;
+- verification is unavailable and no safe work remains → return `Status: Blocked` with the exact missing condition and how it can be resolved.
 
 **Complete when:** every carrier-shaping factual claim is verified, visibly unverified, converted into Task 0, or exposed as an exact blocker.
 
@@ -101,6 +102,7 @@ Make only material routes explicit:
 - blocked branch → park it and continue independent safe work;
 - evidence invalidates the execution theory → revise remaining work;
 - revision triggers change intent, change boundary, or confused intent → return to Intent Take;
+- no safe work remains because of a non-intent prerequisite → return `BLOCK` with the exact condition;
 - local evidence appears complete → evaluate the complete Goal, not automatic completion.
 
 Continue repair or replan only while the next attempt has a credible path to new evidence or progress and remains within budget. When repeated attempts stop producing evidence gain, no materially different safe approach remains, or the budget is exhausted, exit with truthful `BLOCK` or `ESCALATE` rather than looping ceremonially.
@@ -170,13 +172,15 @@ Default to **artifact-only**. Use **compile-and-run** only when the caller expli
 Emit `Status: Executable` only when:
 
 - the Goal is clear and intent remains unchanged;
-- no foreseeable Ask Human boundary remains open;
-- carrier-shaping facts are verified, assigned to Task 0, or truthfully blocked;
+- no foreseeable Ask Human boundary or hard blocker remains open;
+- carrier-shaping facts are verified or assigned to Task 0;
 - delegated defaults are explicit and safe for the handoff mode;
 - ordinary execution uncertainty has a non-Human route;
 - the first safe evidence-producing action is clear;
 - required continuity and acceptance can be bound before they are needed;
 - the handoff mode is known and compile-and-run has explicit caller authority.
+
+If a required non-intent prerequisite is unavailable and prevents the first safe action, emit `Status: Blocked` instead.
 
 This bar reduces ordinary post-compile HITL. It does not require all unknowns to be eliminated and does not pretend new evidence can never expose a real Human boundary.
 
