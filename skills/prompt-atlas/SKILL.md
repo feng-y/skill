@@ -53,9 +53,9 @@ Execution Compile ends when it produces one executable carrier and stops. Use tw
 
 Ground enough execution reality to identify the actual workspace, governing specs/tests, material baselines, dependencies, and critical verifiers. If a carrier-shaping fact cannot be checked during compile but can be checked safely before modification, make it **Task 0** rather than asking Human or pretending it is true.
 
-If grounding or Task 0 would require changing intent, changing a confirmed boundary, or resolving confused intent, return `Status: Unresolved Intent`. Otherwise keep factual mismatch, implementation discovery, and execution-theory changes inside execution through probe, repair, replan, or truthful blocking.
+If grounding or a future Task 0 result would require changing intent, changing a confirmed boundary, or resolving confused intent, return `Status: Unresolved Intent`. Otherwise keep factual mismatch, implementation discovery, and execution-theory changes inside execution through probe, repair, replan, or truthful blocking.
 
-Before returning `Status: Execution Decision`, close any ordinary pre-run choice with evidence, execution freedom, or a safe visible delegated default. Local reversible How stays executor-owned.
+Close ordinary pre-run choices with evidence, execution freedom, or a safe visible delegated default. A choice that remains uncertain inside stable intent stays executor-owned; it does not create another Human gate.
 
 Compile the smallest useful carrier:
 
@@ -81,8 +81,7 @@ For research or decision work, use evidence-bearing probe/source/synthesis work 
 Emit one terminal state and stop:
 
 - **`Status: Unresolved Intent`** — current understanding plus the smallest probe or Human decision needed because intent would change, a confirmed boundary would change, or intent remains confused.
-- **`Status: Execution Decision`** — Stable Intent remains valid, but a material execution branch cannot be closed by evidence, execution freedom, or a safe visible delegated default.
-- **`Status: Executable`** — one lowered executor-facing carrier that satisfies the readiness condition above.
+- **`Status: Executable`** — one lowered executor-facing carrier that satisfies the readiness condition above. Execution-time facts and ordinary choices remain routed inside the carrier rather than creating another compile-time Human decision state.
 
 Default to **artifact-only** unless the caller explicitly requests or owns execution continuation. An executable task alone does not authorize automatic execution. In artifact-only mode, delegated defaults remain visibly reviewable and become execution input only when the caller accepts, edits, or forwards the carrier. For a **compile-and-run** caller with an available execution runtime, `Status: Executable` is the handoff boundary: Prompt Atlas stops, the caller binds the carrier as the execution source, and execution continues without another Human “start” turn.
 
