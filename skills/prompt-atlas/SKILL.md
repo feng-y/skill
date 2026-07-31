@@ -34,6 +34,8 @@ Before declaring intent stable, scan for unresolved Human-owned choices. Resolve
 
 When the Human defines a scope or classification rule but expresses tentative beliefs about which concrete entities satisfy it, preserve the rule and explicit inclusions/exclusions as authority; treat the membership claim as a territory hypothesis. Derive the concrete member set from evidence at the first stage where it affects judgment—Intent Take when it changes Goal closure or a Human decision, otherwise Execution Compile when it determines concrete work—and ask again only for residual cases whose classification depends on Human-owned semantics rather than repository facts.
 
+Treat Intent Take as a convergence loop across turns: recover the current candidate Goal, confirmed authority, still-valid evidence, and remaining decision surface; reconcile each new Human message or authoritative fact against that state rather than restarting discovery. Rewriting alone cannot promote inference into authority.
+
 Intent is stable when Execution Compile no longer needs to rediscover the problem, complete outcome, authoritative choices/boundaries, any material factual uncertainty that changes those source semantics, or what trusted success means, and no material Human-owned choice remains unresolved. If it is not stable, perform accessible focused grounding first, then return the current understanding plus only the smallest unresolved decision, candidate Goal, unavailable probe, or blocker. When Goal closure or another Human-owned decision remains, ask it explicitly rather than hiding it behind a passive unresolved state.
 
 When stable, treat the result as **Stable Intent IR** and continue to Stage 2.
@@ -61,16 +63,22 @@ Compile the smallest useful carrier:
 
 For long-running or cross-context repository work, the carrier may require the downstream runtime to maintain project-local continuity under `.scratch/<project>/IMPLEMENTATION_NOTES.md`. Prompt Atlas compiles the requirement; the runtime creates and updates the file.
 
+`Status: Executable` means every foreseeable material Human-owned decision exposed by current intent and evidence is closed, and each ordinary execution uncertainty has a non-Human route such as probe, local repair, branch parking, controlled Graph revision, retry, or truthful blocking. New runtime evidence may still expose a genuinely new authority boundary.
+
 The carrier should make the following recoverable without replaying the conversation: **Purpose, Goal, grounded State, closed Decisions, Authority, Graph, Loops, Routes/Gates, Boundaries, Verification, Continuity, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
 
 For research or decision work, use evidence-bearing probe/source/synthesis nodes and judge completion by provenance, counterevidence, residual unknowns, and decision usefulness rather than inventing code-style metrics.
 
-## Output
+## Output and handoff
 
 Emit one terminal state and stop:
 
 - **`Status: Unresolved Intent`** — current understanding plus the smallest unavailable probe or explicit Human decision needed to close the Goal or repair another material intent boundary.
 - **`Status: Execution Decision`** — Stable Intent remains valid, but a material execution branch still needs closure and no safe unconfirmed default applies.
-- **`Status: Executable`** — one lowered executor-facing carrier.
+- **`Status: Executable`** — one lowered executor-facing carrier that satisfies the readiness condition above.
 
-For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Omit details that do not change downstream judgment, but never compress away a requested outcome, authority distinction, material Graph branch, Loop exit, recovery requirement, or trusted proof obligation.
+For an **artifact-only** caller, return the terminal artifact. For a **compile-and-run** caller with an available execution runtime, `Status: Executable` is the handoff boundary: Prompt Atlas stops, the caller binds the carrier as the execution source, and execution continues without another Human “start” turn. The same physical agent may continue, but it must switch from compile judgment to the carrier's execution authority and protocol.
+
+When independent acceptance is required, the carrier must state the accepting boundary and private-proof requirement. Before execution begins, the caller/runtime must bind or reserve that boundary; when it cannot, execution may proceed only to `ready for independent acceptance` and must not claim equivalent completion.
+
+For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Omit details that do not change downstream judgment, but never compress away a requested outcome, authority distinction, material Graph branch, Loop exit, recovery requirement, handoff requirement, or trusted proof obligation.
