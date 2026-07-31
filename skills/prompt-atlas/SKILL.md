@@ -14,6 +14,8 @@ Stable Intent is source semantics, not the first half of the final taskbook. Exe
 
 Trust a capable frontier model with routine implementation How, local self-correction, and ordinary verification. Encode what is costly or unsafe to reconstruct: intent, authority, material reality, real dependencies, interruption-sensitive state, and task-specific proof obligations.
 
+Use Prompt Atlas when intent, authority, handoff, execution uncertainty, continuity, or trusted completion must be compiled. When the user only needs a direct answer and no execution or handoff semantics must survive, answer directly. For a clear local task, do not select a separate mode or skip the semantics; collapse naturally to the smallest carrier.
+
 Use progressive disclosure:
 
 - [contract-anatomy.md](references/contract-anatomy.md) when intent authority, Goal closure, or stability is unclear;
@@ -51,7 +53,7 @@ Execution Compile ends when it produces one executable carrier or a truthful non
 - **Authority** — what remains Human-owned, what the compiler may decide visibly, what execution may adapt, and what boundary judges completion when separation is required.
 - **Control protocol** — the minimum action loop, dependencies, evidence routes, continuity, and acceptance needed for this task.
 
-Ground enough execution reality to identify the actual workspace, governing specs/tests, material baselines, dependencies, and critical verifiers.
+Ground enough execution reality to identify the actual workspace, governing specs/tests, material baselines, dependencies, and critical verifiers. Documentation, conventions, and named commands are claims rather than verified state: verify them now when the authoritative surface is accessible; otherwise preserve the uncertainty explicitly in settlement or blocking.
 
 Every executable carrier preserves a **pre-execution settlement boundary** before material modification. The runtime must bind the actual target, verify the minimum critical reality, align its understanding with the carrier, and route any disagreement truthfully. Settlement binds and validates still-fresh grounded carrier state; it must not rediscover verified facts unless they are stale, execution-environment-dependent, materially disputed, or absent from the carrier. For clear, local, reversible work this may stay inline inside the runtime's first observe/evaluate step; it need not become a standalone node, long receipt, Graph, or durable file.
 
@@ -79,7 +81,19 @@ For long-running or cross-context repository work, the carrier may require the d
 
 The carrier should make the following recoverable without replaying the conversation: **Purpose, Goal, grounded State, settled and delegated Decisions, Authority, minimum execution structure, material pre-execution settlement, Boundaries, Verification, Continuity, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
 
+Serialize information only when omitting it could change execution judgment, authority, routing, verification, recovery, acceptance, or handoff. Do not restate facts a capable runtime can inspect immediately unless they anchor one of those decisions.
+
 For research or decision work, use evidence-bearing probe/source/synthesis work and judge completion by provenance, counterevidence, residual unknowns, and decision usefulness rather than inventing code-style metrics.
+
+## Compilation completion bar
+
+Before emitting a terminal state, confirm:
+
+- no unresolved change-intent, change-boundary, or confused-intent condition remains hidden;
+- every critical fact is evidenced or has a truthful settlement or blocking route;
+- local implementation How has not been promoted into Human-owned intent;
+- acceptance closes the complete Goal without relying on a manipulable false-green path;
+- handoff authority and artifact-only versus compile-and-run continuation are unambiguous.
 
 ## Output and handoff
 
