@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: Two-stage compiler for turning a raw or evolving request into an executable agent handoff. Intent Take converges on Stable Intent without inventing Human authority. Execution Compile lowers that intent into the smallest truthful carrier with grounded reality, clear Human boundaries, execution freedom, continuity only when needed, and trusted acceptance. Use for requirement clarification, prompt/task preparation, handoff, or when another workflow needs stable intent or an executable task carrier.
+description: Two-stage compiler for turning a raw or evolving request into an executable agent handoff. Intent Take converges on Stable Intent without inventing Human authority. Execution Compile lowers that intent into the smallest truthful carrier with grounded reality, clear Human boundaries, execution freedom, proportional pre-execution settlement, continuity only when needed, and trusted acceptance. Use for requirement clarification, prompt/task preparation, handoff, or when another workflow needs stable intent or an executable task carrier.
 ---
 
 # Prompt Atlas
@@ -17,7 +17,7 @@ Trust a capable frontier model with routine implementation How, local self-corre
 Use progressive disclosure:
 
 - [contract-anatomy.md](references/contract-anatomy.md) when intent authority, Goal closure, or stability is unclear;
-- [execution-compile.md](references/execution-compile.md) when execution shape, branch closure, Task 0, continuity, or acceptance needs judgment;
+- [execution-compile.md](references/execution-compile.md) when execution shape, pre-execution settlement, Task 0, branch closure, continuity, or acceptance needs judgment;
 - [completion-trust.md](references/completion-trust.md) when completion can false-pass or needs an independent acceptance boundary.
 
 ## Stage 1 — Intent Take
@@ -51,16 +51,21 @@ Execution Compile ends when it produces one executable carrier or a truthful non
 - **Authority** — what remains Human-owned, what the compiler may decide visibly, what execution may adapt, and what boundary judges completion when separation is required.
 - **Control protocol** — the minimum action loop, dependencies, evidence routes, continuity, and acceptance needed for this task.
 
-Ground enough execution reality to identify the actual workspace, governing specs/tests, material baselines, dependencies, and critical verifiers. When a critical precondition, carrier-versus-reality disagreement, or execution understanding cannot be settled during compile but can be settled before material modification, make it **Task 0**. Task 0 may verify facts and assumptions and require a brief opening alignment on the Goal, initial order, and main risk; it must not defer a Human decision already visible during compile. If required evidence, access, or capability is unavailable and no safe Task 0 or independent work route exists, return `Status: Blocked` with the exact missing condition.
+Ground enough execution reality to identify the actual workspace, governing specs/tests, material baselines, dependencies, and critical verifiers.
 
-If grounding or Task 0 exposes a need to change intent, change a confirmed boundary, or resolve confused intent, return `Status: Unresolved Intent` before affected modification begins. Otherwise use Task 0 to correct executor misunderstanding, reconcile factual or planning mismatch inside the settled envelope, and continue through probe, repair, replan, branch parking, or truthful blocking.
+Every executable carrier preserves a **pre-execution settlement boundary** before material modification. The runtime must bind the actual target, verify the minimum critical reality, align its understanding with the carrier, and route any disagreement truthfully. Settlement binds and validates still-fresh grounded carrier state; it must not rediscover verified facts unless they are stale, execution-environment-dependent, materially disputed, or absent from the carrier. For clear, local, reversible work this may stay inline inside the runtime's first observe/evaluate step; it need not become a standalone node, long receipt, Graph, or durable file.
+
+When a material precondition, carrier-versus-reality disagreement, or execution-understanding risk cannot be settled during compile but can be settled before material modification, serialize that boundary as **Task 0**. Task 0 may verify facts and assumptions and require a brief opening alignment on the Goal, initial order, and main risk; it must not defer a Human decision already visible during compile. When work may outlive one context or span independent actors, retain the settlement result in the compiled continuity state rather than inventing a separate control system. If required evidence, access, or capability is unavailable and no safe settlement or independent work route exists, return `Status: Blocked` with the exact missing condition.
+
+If grounding or pre-execution settlement exposes a need to change intent, change a confirmed boundary, or resolve confused intent, return `Status: Unresolved Intent` before affected modification begins. Otherwise correct clear executor misunderstanding from the carrier, reconcile factual or planning mismatch inside the settled envelope, and continue through probe, repair, replan, branch parking, or truthful blocking.
 
 Close ordinary pre-run choices with evidence, execution freedom, or a safe visible delegated default. A choice that remains uncertain inside stable intent stays executor-owned; it does not create another Human gate.
 
 Compile the smallest useful carrier:
 
 - preserve Purpose, Goal, settled Decisions, visible delegated defaults, and authority boundaries;
-- keep a simple task as one current action when that is enough;
+- keep a simple task as one current action with inline pre-execution settlement when that is enough;
+- add an explicit Task 0 only when material pre-run settlement must be represented;
 - add Task/Issue nodes and dependency/evidence edges only when they improve execution judgment;
 - keep routine act / observe / evaluate / repair work inside the execution runtime;
 - let execution revise remaining work while intent, confirmed boundaries, and proof obligations remain unchanged;
@@ -68,11 +73,11 @@ Compile the smallest useful carrier:
 - require recoverable semantic state only when work may outlive one context or span independent actors;
 - judge the complete Goal at a Global Gate; local done is not global completion.
 
-For long-running or cross-context repository work, the carrier may require the downstream runtime to maintain project-local continuity under `.scratch/<project>/IMPLEMENTATION_NOTES.md`. Prompt Atlas compiles the requirement; the runtime creates and updates the file.
+For long-running or cross-context repository work, the carrier may require the downstream runtime to maintain project-local continuity under `.scratch/<project>/IMPLEMENTATION_NOTES.md`. Prompt Atlas compiles the requirement; the runtime creates and updates the file. When pre-execution settlement is material to resumption, its result belongs in that same continuity state.
 
-`Status: Executable` means the Goal is clear, no foreseeable Ask Human boundary remains open, no blocker prevents a safe first action or truthful continued progress, delegated defaults are explicit and safe for the handoff mode, and every ordinary execution uncertainty has a non-Human route such as Task 0, probe, repair, branch parking, replan, retry, or truthful blocking.
+`Status: Executable` means the Goal is clear, no foreseeable Ask Human boundary remains open, no blocker prevents a safe first action or truthful continued progress, delegated defaults are explicit and safe for the handoff mode, and every ordinary execution uncertainty has a non-Human route such as inline settlement, Task 0, probe, repair, branch parking, replan, retry, or truthful blocking.
 
-The carrier should make the following recoverable without replaying the conversation: **Purpose, Goal, grounded State, settled and delegated Decisions, Authority, minimum execution structure, Boundaries, Verification, Continuity, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
+The carrier should make the following recoverable without replaying the conversation: **Purpose, Goal, grounded State, settled and delegated Decisions, Authority, minimum execution structure, material pre-execution settlement, Boundaries, Verification, Continuity, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
 
 For research or decision work, use evidence-bearing probe/source/synthesis work and judge completion by provenance, counterevidence, residual unknowns, and decision usefulness rather than inventing code-style metrics.
 
@@ -84,8 +89,10 @@ Emit one terminal state and stop:
 - **`Status: Blocked`** — Stable Intent is clear, but required evidence, access, capability, or another non-intent prerequisite is unavailable and no safe execution route remains; include the exact blocker and resolving condition.
 - **`Status: Executable`** — one lowered executor-facing carrier that satisfies the readiness condition above. Execution-time facts and ordinary choices remain routed inside the carrier rather than creating another compile-time Human decision state.
 
-Default to **artifact-only** unless the caller explicitly requests or owns execution continuation. An executable task alone does not authorize automatic execution. In artifact-only mode, delegated defaults remain visibly reviewable and become execution input only when the caller accepts, edits, or forwards the carrier. For a **compile-and-run** caller with an available execution runtime, `Status: Executable` is the handoff boundary: Prompt Atlas stops, the caller binds the carrier as the execution source, and execution continues without another Human “start” turn.
+Default to **artifact-only** when the user asks for a prompt, brief, contract, taskbook, or other handoff artifact. When another workflow calls Prompt Atlas, that caller owns whether the carrier is returned or immediately bound to execution. When the user directly requests completion of work in the available environment, that request supplies compile-and-run authority: `Status: Executable` is the handoff boundary, Prompt Atlas stops, and the caller/runtime continues without another Human “start” turn. Prompt Atlas still does not own live execution state.
+
+In artifact-only mode, delegated defaults remain visibly reviewable and become execution input only when the caller accepts, edits, or forwards the carrier.
 
 When independent acceptance is required, the carrier must state the accepting boundary and private-proof requirement. Before execution begins, the caller/runtime must either bind or reserve that boundary, or explicitly freeze the run's completion ceiling at `ready for independent acceptance`. The latter cannot claim an equivalent PASS.
 
-For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Omit details that do not change downstream judgment, but never compress away a requested outcome, authority distinction, material dependency, delegated default, Task 0, recovery requirement, handoff requirement, or trusted proof obligation.
+For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Omit details that do not change downstream judgment, but never compress away a requested outcome, authority distinction, material dependency, delegated default, material pre-execution settlement, recovery requirement, handoff requirement, or trusted proof obligation.
