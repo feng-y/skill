@@ -42,9 +42,11 @@ One runtime may carry several powers for low-risk work. Colocation does not gran
 
 Close a branch before execution when different answers materially change node outcomes, dependencies, ownership, proof path, runtime envelope, recovery, or the Global Gate. Use Stable Intent, governing constraints, and evidence first. If materially different carriers remain equally acceptable, return `Status: Execution Decision` unless the caller explicitly permits a visible, reversible, reliably mismatch-detectable default.
 
+Batch related Human-owned choices into the smallest pre-run decision surface. Do not emit `Status: Executable` while current evidence still exposes a foreseeable Human decision that ordinary execution would have to ask later.
+
 If evidence exposes a new Human-owned choice or shows that the Goal cannot be preserved inside confirmed boundaries, return `Status: Unresolved Intent`.
 
-**Complete when:** every material branch is closed, explicitly defaulted under the allowed rule, or surfaced in a terminal state; local reversible How remains executor-owned.
+**Complete when:** every material branch is closed, explicitly defaulted under the allowed rule, or surfaced in a terminal state; local reversible How remains executor-owned; no foreseeable ordinary execution event requires Human orchestration.
 
 ## 3. Build the Graph
 
@@ -83,9 +85,11 @@ Make material routes explicit:
 - evidence conflicts with Human-owned Intent → return to Intent Take;
 - complete local evidence → Global Gate, not direct completion.
 
+After execution starts, Human interaction is reserved for genuinely new authority boundaries: new evidence changes Human-owned Intent or approval, an irreversible/high-risk action requires authorization, or no safe ready work remains and progress depends on Human authority. Test failure, command drift, local architecture choice, retry, or a material remaining-Graph revision inside Stable Intent are not by themselves HITL.
+
 A **checkpoint** judges a node. The **Global Gate** judges the complete Goal. Do not add generic review stages merely because the task is large; add proof structure only when the Goal, mutable surface, or governing verifier requires it.
 
-**Complete when:** every material failure or verdict has one truthful next route, Loop exits are locally observable, and local PASS cannot bypass the Global Gate.
+**Complete when:** every material failure or verdict has one truthful next route, Loop exits are locally observable, ordinary execution uncertainty does not default to Human interaction, and local PASS cannot bypass the Global Gate.
 
 ## 5. Compile continuity only when needed
 
@@ -129,7 +133,7 @@ Use less structure when the same semantics remain clear.
 
 **Complete when:** a fresh runtime can identify the current truthful state and next safe action without reconstructing the run from chat history.
 
-## 6. Close acceptance and delivery
+## 6. Close acceptance, delivery, and handoff
 
 The Global Gate carries the proof obligations for the complete Goal. Make explicit:
 
@@ -148,9 +152,30 @@ Use the existing verdicts:
 
 A non-PASS verdict routes to more evidence-producing work, a controlled Graph revision, a blocker, or the relevant authority boundary. It cannot be rewritten into completion by the Executor or control owner.
 
+When independent acceptance is required, compile both the accepting boundary and the private-proof retention requirement. Before execution begins, the caller/runtime must bind or reserve that boundary. If it cannot, the run may end only at `ready for independent acceptance`, not an equivalent PASS.
+
 Define Delivery separately from proof: what artifacts, evidence summary, residuals, and next actions the caller receives.
 
-**Complete when:** an authorized judge can distinguish PASS from false completion using the carrier alone, and the delivery preserves the evidence and residuals needed to trust that judgment.
+Define the caller's handoff mode:
+
+- **artifact-only** — return the carrier for external use;
+- **compile-and-run** — after `Status: Executable`, Prompt Atlas stops and the caller immediately binds the carrier as the execution source without another Human “start” turn.
+
+The same physical agent may perform both modes sequentially, but execution begins under the carrier's authority boundaries and control protocol rather than continuing compilation by improvisation.
+
+**Complete when:** an authorized judge can distinguish PASS from false completion using the carrier alone, any required independent boundary can be bound or is truthfully deferred, Delivery is clear, and the caller knows whether to return the carrier or start execution immediately.
+
+## Executable readiness
+
+Emit `Status: Executable` only when all of the following hold:
+
+- Stable Intent remains valid;
+- every foreseeable material Human-owned decision exposed by current intent and evidence is closed or validly defaulted;
+- every ordinary execution uncertainty has a non-Human route such as probe, local repair, branch parking, controlled Graph revision, retry, or truthful blocking;
+- required continuity and acceptance boundaries can be bound before they are needed;
+- the handoff mode is known.
+
+This readiness bar reduces ordinary post-compile HITL; it does not pretend new runtime evidence can never expose a genuinely new authority boundary.
 
 ## Research and decision work
 
@@ -168,6 +193,7 @@ A fresh downstream runtime should be able to determine, without replaying the co
 - what can continue when one branch blocks;
 - what state must survive interruption;
 - what evidence closes important nodes and the complete Goal;
+- whether execution starts immediately or the carrier is returned;
 - what must be delivered.
 
-Use less structure when these semantics remain clear. Keep detail only when its absence would create drift, false completion, unnecessary HITL, authority confusion, or loss of continuity.
+Use less structure when these semantics remain clear. Keep detail only when its absence would create drift, false completion, unnecessary HITL, authority confusion, handoff ambiguity, or loss of continuity.
