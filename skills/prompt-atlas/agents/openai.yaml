@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
-  short_description: "把原始或演进需求编译为稳定意图与可执行任务书"
-  default_prompt: "Use $prompt-atlas to recover stable intent and ask only when execution would change intent, change a confirmed boundary, or the request still confuses materially different goals. Then emit an exact blocker or a compact six-section execution taskbook with explicit authority, fixed Task 0, a minimal work graph, bounded retry and stop rules, recoverable PROGRESS/BLOCKED state for repository execution, protected proof surfaces, and complete-Goal Global Gate acceptance. Keep implementation How adaptable inside the frozen intent, boundary, and proof envelope. Return the taskbook for prompt/brief/taskbook requests; when the caller directly owns execution in the available environment, continue from Status: Executable without another Human start turn."
+  short_description: "把需求编译为稳定意图与紧凑可执行任务书"
+  default_prompt: "Use $prompt-atlas to recover stable intent, ask only at the three Human boundaries, then emit an exact blocker or a compact six-section taskbook with fixed Task 0, a minimal graph, bounded retry, progress/blocker state, and trusted Global Gate acceptance. Keep implementation How adaptable inside confirmed intent and boundaries."
