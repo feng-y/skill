@@ -27,6 +27,17 @@ Execution Compile attaches proof where it matters:
 
 Verification topology follows the property being proven, not a default always-review workflow.
 
+## Acceptance binding
+
+When independent acceptance is required, the carrier must identify:
+
+- the property and Global Gate owned by the independent boundary;
+- the required freshness, isolation, or separation;
+- where private or hidden proof is retained outside Executor-visible state;
+- the latest point by which an actual Acceptor or equivalent runtime boundary must be bound.
+
+The caller/runtime binds or reserves that boundary before execution begins. If the runtime cannot provide it, execution may still produce visible evidence but must stop at `ready for independent acceptance`; it cannot substitute Executor self-attestation or claim an equivalent PASS.
+
 ## Visible-contract boundary
 
 A hidden oracle, manager-side spot check, fresh-context challenge, or other mechanism whose strength depends on executor independence stays outside the executor-visible carrier. Prompt Atlas may state the property and accepting boundary; it must not expose hidden cases or let the executor author the decisive oracle and then certify itself.
