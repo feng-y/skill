@@ -1,53 +1,34 @@
 # Stable Intent
 
-Use this reference when the request may not yet contain one executable Goal.
+Use only when it is unclear whether the request contains one executable Goal.
 
-## Do not manufacture a Goal
+## Problem space is not a Goal
 
-These are usually problem-space inputs, not execution-ready intent:
-
-- a concern or dissatisfaction;
-- a hypothesis or possible direction;
-- several questions mixed together;
-- a comparison without a decision to make;
-- broad verbs such as improve, simplify, optimize, clean up, modernize, or make robust;
-- conflicting desired outcomes with no priority.
-
-Ground enough evidence to reveal the real choice. Do not turn a plausible model recommendation into Human authority merely because it would make a good taskbook.
+Concerns, hypotheses, comparisons, mixed questions, conflicting outcomes, and broad verbs such as improve, simplify, optimize, clean up, or modernize usually describe a problem space. Ground enough evidence to reveal the real choice, but do not turn a plausible model recommendation into Human authority.
 
 ## Authority
 
-Keep separate:
+Keep distinct:
 
-- **Human intent** — explicit result, accepted behavior, priorities, approvals, and confirmed boundaries;
-- **reality** — evidence that may change facts, feasibility, implementation scope, and proof needs;
+- **Human intent** — requested result, accepted behavior, priorities, approvals, boundaries;
+- **reality** — evidence that may revise facts, feasibility, implementation work, and proof needs;
 - **inference** — model interpretation or recommendation;
 - **Unknown** — an unsettled consequence.
 
-Evidence can show that more work is required or a proposed method is wrong. It cannot silently weaken or replace the requested result.
+Evidence cannot silently weaken or replace Human intent.
 
 ## Unknown routing
-
-Route by consequence:
 
 1. observable fact → investigate;
 2. execution-only fact → Task 0;
 3. implementation How → Executor;
-4. reversible choice that preserves intent → visible delegated default;
+4. reversible choice preserving intent → visible delegated default;
 5. Goal or confirmed-boundary choice → Human;
-6. unavailable prerequisite with independent work → park and record;
-7. unavailable prerequisite with no safe work → `Status: Blocked`.
+6. unavailable prerequisite with independent work → park;
+7. unavailable prerequisite with no safe route → `Status: Blocked`.
 
-A delegated default must state that it is unconfirmed, why it is reasonable, what happens if it is wrong, and how execution detects or reverses it.
+A delegated default states that it is unconfirmed, its basis, cost if wrong, and detection or rollback route.
 
-## Closure test
+## Closure
 
-Stable Intent exists only when a fresh compiler can state, without guessing:
-
-- one coherent Human-owned Goal and Why;
-- what the current effort must complete;
-- confirmed boundaries and priority order;
-- material evidence, inference, and remaining Unknown;
-- trusted success and delivery.
-
-If materially different Goals remain plausible, return `Status: Unresolved Intent` with the current understanding, consequences of the alternatives, a recommendation when useful, and the smallest question or probe needed. Do not emit an executable taskbook.
+Stable Intent requires one Human-owned Goal and Why, current-effort closure, confirmed boundaries and priorities, material evidence state, trusted success, and delivery. If materially different Goals remain plausible, emit `Status: Unresolved Intent` with the current understanding, consequences, recommendation when useful, and the smallest question or probe. Do not emit executable work.
