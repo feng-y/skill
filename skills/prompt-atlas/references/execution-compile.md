@@ -161,7 +161,7 @@ Define the caller's handoff mode:
 - **artifact-only** — return the carrier for external use;
 - **compile-and-run** — after `Status: Executable`, Prompt Atlas stops and the caller immediately binds the carrier as the execution source without another Human “start” turn.
 
-The same physical agent may perform both modes sequentially, but execution begins under the carrier's authority boundaries and control protocol rather than continuing compilation by improvisation.
+In compile-and-run mode, the same physical agent may perform compilation and execution sequentially, but execution begins under the carrier's authority boundaries and control protocol rather than continuing compilation by improvisation.
 
 **Complete when:** an authorized judge can distinguish PASS from false completion using the carrier alone, any required independent boundary is bound/reserved or the acceptance ceiling is explicit, Delivery is clear, and the caller knows whether to return the carrier or start execution immediately.
 
