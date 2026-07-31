@@ -30,15 +30,17 @@ Do not over-apply this gate. If existing Human authority already establishes a c
 
 Ground only what can change intent meaning, feasibility inside settled boundaries, Goal closure, or success/proof semantics. Prefer the smallest authoritative check and rich existing references. Keep verified fact, inference, recommendation, and unknown distinct.
 
-Treat unknown as a routing signal, not a stop condition and not a reason to suppress a necessary question: resolve factual unknowns from evidence, leave reversible implementation How to execution, let Execution Compile close safely delegable pre-run choices visibly, and ask only when the remaining material decision cannot be delegated without changing Human-owned intent or taking unacceptable risk.
+Treat unknown as a routing signal, not a stop condition and not a reason to suppress a necessary question: resolve factual unknowns from evidence, leave reversible implementation How to execution, let Execution Compile close safely delegable pre-run choices visibly, and ask when the remaining material decision would change Stable Intent or cannot be delegated without unacceptable risk.
 
-Before declaring intent stable, scan for unresolved Human-owned choices. Resolve reality/context unknowns from authoritative evidence when possible and use that grounding to reduce the decision surface. Do not ask about unknowns evidence can settle or local implementation How. If a remaining material choice changes user-owned outcome, accepted behavior, scope/priority, approval, or a protected proof rule, surface the smallest useful decision set with materially distinct options, consequences, and a concise recommendation. Do not erase such a choice through inference, recommendation, or an implicit default.
+A decision changes Stable Intent when it changes the requested outcome, accepted behavior, core scope, core boundaries, Human-owned priority or trade-off, approval, protected proof, or a decision-relevant Why / design direction that the Human made part of the request. Reversibility alone does not make such a decision delegable. Necessary implementation expansion inside already-settled scope and boundaries remains execution territory; redefining what is in or out of the Goal does not.
+
+Before declaring intent stable, scan for unresolved Human-owned choices. Resolve reality/context unknowns from authoritative evidence when possible and use that grounding to reduce the decision surface. Do not ask about unknowns evidence can settle or local implementation How. If a remaining material choice changes any Stable Intent semantic above, surface the smallest useful decision set with materially distinct options, consequences, and a concise recommendation. Do not erase such a choice through inference, recommendation, or an implicit default.
 
 When the Human defines a scope or classification rule but expresses tentative beliefs about which concrete entities satisfy it, preserve the rule and explicit inclusions/exclusions as authority; treat the membership claim as a territory hypothesis. Derive the concrete member set from evidence at the first stage where it affects judgment—Intent Take when it changes Goal closure or a Human decision, otherwise Execution Compile when it determines concrete work—and ask again only for residual cases whose classification depends on Human-owned semantics rather than repository facts.
 
 Treat Intent Take as a convergence loop across turns: recover the current candidate Goal, confirmed authority, still-valid evidence, and remaining decision surface; reconcile each new Human message or authoritative fact against that state rather than restarting discovery. Rewriting alone cannot promote inference into authority.
 
-Intent is stable when Execution Compile no longer needs to rediscover the problem, complete outcome, authoritative choices/boundaries, any material factual uncertainty that changes those source semantics, or what trusted success means, and no material Human-owned choice remains unresolved. If it is not stable, perform accessible focused grounding first, then return the current understanding plus only the smallest unresolved decision, candidate Goal, unavailable probe, or blocker. When Goal closure or another non-delegable Human-owned decision remains, ask it explicitly rather than hiding it behind a passive unresolved state.
+Intent is stable when Execution Compile no longer needs to rediscover the problem, complete outcome, authoritative choices/boundaries, any material factual uncertainty that changes those source semantics, or what trusted success means, and no material intent-shaping Human-owned choice remains unresolved. If it is not stable, perform accessible focused grounding first, then return the current understanding plus only the smallest unresolved decision, candidate Goal, unavailable probe, or blocker. When Goal closure or another non-delegable intent-shaping decision remains, ask it explicitly rather than hiding it behind a passive unresolved state.
 
 When stable, treat the result as **Stable Intent IR** and continue to Stage 2.
 
@@ -51,7 +53,7 @@ Execution Compile ends when it produces one executable carrier and stops. Use tw
 
 First ground enough execution reality to identify the actual workspace, work surfaces, governing specs/tests, material baselines, real dependencies, and critical verifiers when accessible. Keep unavailable or unverified evidence explicit.
 
-If grounding shows that Stable Intent cannot be preserved inside confirmed boundaries, or exposes a non-delegable Human-owned choice, return `Status: Unresolved Intent`. Before returning `Status: Execution Decision`, close any safely delegable execution choice with a visible default that preserves Goal and boundaries, states its basis and consequence if wrong, and can be reversed or reliably mismatch-detected. Local reversible How stays executor-owned.
+If grounding shows that Stable Intent cannot be preserved inside confirmed boundaries, or exposes a decision that would change Goal, accepted behavior, core scope or boundaries, Human-owned trade-offs, approval, protected proof, or confirmed design intent, return `Status: Unresolved Intent`. Before returning `Status: Execution Decision`, close any safely delegable execution choice with a visible default that preserves all Stable Intent semantics, states its basis and consequence if wrong, and can be reversed or reliably mismatch-detected. Local reversible How stays executor-owned.
 
 Compile the smallest useful carrier:
 
@@ -59,14 +61,14 @@ Compile the smallest useful carrier:
 - use bounded outcome nodes and real dependency/evidence edges only when they improve execution judgment; a simple task may remain one current action;
 - keep routine act / observe / evaluate / repair work inside the execution runtime or node-local Loops;
 - let the execution runtime revise the remaining plan or Graph from evidence while Stable Intent, protected boundaries, and proof obligations remain unchanged;
-- route Intent conflict or required authority expansion back to Intent Take;
+- route any revision that changes Stable Intent or requires authority expansion back to Intent Take;
 - allow independent ready work to continue when one branch blocks;
 - require recoverable semantic state only when work may outlive one context or span independent actors;
 - judge the complete Goal at a Global Gate; local done is not global completion.
 
 For long-running or cross-context repository work, the carrier may require the downstream runtime to maintain project-local continuity under `.scratch/<project>/IMPLEMENTATION_NOTES.md`. Prompt Atlas compiles the requirement; the runtime creates and updates the file.
 
-`Status: Executable` means every foreseeable non-delegable Human-owned decision exposed by current intent and evidence is closed, every delegated default is explicit and safe for the selected handoff mode, and each ordinary execution uncertainty has a non-Human route such as probe, local repair, branch parking, evidence-driven replanning, retry, or truthful blocking. New runtime evidence may still expose a genuinely new authority boundary.
+`Status: Executable` means every foreseeable non-delegable intent-shaping decision exposed by current intent and evidence is closed, every delegated default is explicit and safe for the selected handoff mode, and each ordinary execution uncertainty has a non-Human route such as probe, local repair, branch parking, evidence-driven replanning, retry, or truthful blocking. New runtime evidence may still expose a genuinely new Stable Intent or authority boundary.
 
 The carrier should make the following recoverable without replaying the conversation: **Purpose, Goal, grounded State, settled and delegated Decisions, Authority, the minimum execution structure, Boundaries, Verification, Continuity, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
 
@@ -76,7 +78,7 @@ For research or decision work, use evidence-bearing probe/source/synthesis work 
 
 Emit one terminal state and stop:
 
-- **`Status: Unresolved Intent`** — current understanding plus the smallest unavailable probe or explicit Human decision needed to close the Goal or repair another material intent boundary.
+- **`Status: Unresolved Intent`** — current understanding plus the smallest unavailable probe or explicit Human decision needed to close the Goal or repair another material Stable Intent boundary.
 - **`Status: Execution Decision`** — Stable Intent remains valid, but a material execution branch cannot be closed by evidence, execution freedom, or a safe visible delegated default.
 - **`Status: Executable`** — one lowered executor-facing carrier that satisfies the readiness condition above.
 
