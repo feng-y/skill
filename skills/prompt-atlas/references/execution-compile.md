@@ -9,8 +9,8 @@ Produce the smallest complete taskbook that lets a capable downstream runtime fi
 Keep four logical roles explicit:
 
 - **Human / Intent authority** — owns the requested outcome, confirmed boundaries, and material trade-offs;
-- **Prompt Atlas compiler** — grounds reality, closes ordinary pre-run choices, freezes the taskbook and proof obligations, then stops at handoff;
-- **Executor** — owns local How, actions, evidence, route adaptation, and progress/blocker updates inside the taskbook;
+- **Prompt Atlas compiler** — grounds reality, closes ordinary pre-run choices, freezes the Goal, Human authority, confirmed boundaries, protected proof surfaces, completion obligations, and handoff mode, then stops at handoff;
+- **Executor** — owns local How, actions, evidence, remaining-graph adaptation, and progress/blocker updates inside the frozen envelope;
 - **Acceptor** — judges the complete Goal when independent acceptance is required. The Executor may not alter protected judging surfaces or substitute self-approval for Acceptor PASS.
 
 These are responsibility boundaries, not a requirement for a new manager process, scheduler, or multi-agent framework.
@@ -36,16 +36,18 @@ Task 0 always:
 
 1. binds the actual repo, branch/worktree, target, and governing surfaces;
 2. restates the Goal, confirmed boundaries, initial execution order, and largest known risk;
-3. runs or verifies the critical commands, baselines, and judging surfaces on which execution depends;
+3. confirms the critical commands, baselines, and judging surfaces on which execution depends;
 4. initializes the work graph and `.scratch/<project>/PROGRESS.md`;
 5. routes any disagreement before sunk cost.
+
+Task 0 is a fixed opening checkpoint, not a second discovery pass. Reuse compiler evidence that is authoritative, still fresh, and applicable to the bound repo, worktree, target, and execution environment. Re-run or re-inspect only facts that are absent, stale, environment-dependent, disputed, or invalidated by workspace or upstream changes.
 
 For a clear local task, Task 0 may be one compact node and a short opening receipt. For riskier work, include the minimum extra probes, baseline capture, protected-surface checks, or dependency validation needed to avoid doing the wrong work correctly.
 
 Task 0 outcomes are fixed:
 
 - **align** — begin material work;
-- **route revision** — facts or initial plan differ, but intent and confirmed boundaries still hold; revise the graph and continue;
+- **route revision** — facts or initial plan differ, but intent and confirmed boundaries still hold; revise the remaining graph and continue;
 - **unresolved intent** — progress requires changing intent or a confirmed boundary, or materially different Goals remain plausible;
 - **branch blocker** — record the branch in `BLOCKED.md`, park it, and continue independent safe work;
 - **global blocker** — return `Status: Blocked` with the exact missing and resolving conditions.
@@ -62,7 +64,7 @@ State why the work exists and the complete final state. Preserve user-requested 
 
 ### 2. Grounded State and Task 0
 
-Separate verified facts, unverified claims, baselines, critical commands, judging surfaces, opening alignment, and Task 0 outcome routes.
+Separate verified facts, unverified claims, baselines, critical commands, judging surfaces, opening alignment, reusable fresh evidence, required rechecks, and Task 0 outcome routes.
 
 ### 3. Decisions, Authority, and Boundaries
 
@@ -80,13 +82,19 @@ Implementation How remains Executor-owned unless the Human made it part of the r
 
 Every taskbook expresses an execution topology.
 
-A simple task uses a linear graph:
+A simple task uses:
+
+```text
+Task 0 → Execute with local proof → Global Gate
+```
+
+Add an explicit `Verify` node only when proof spans multiple results, must run after integration, or requires fresh context, hidden checks, or an independent Acceptor:
 
 ```text
 Task 0 → Implement → Verify → Global Gate
 ```
 
-Expand the graph only when real dependencies, independent ready work, branch parking, shared ownership, evidence invalidation, or joins must be explicit.
+Expand the graph further only when real dependencies, independent ready work, branch parking, shared ownership, evidence invalidation, or joins must be explicit.
 
 Each material node should identify:
 
@@ -96,7 +104,7 @@ Each material node should identify:
 - local evidence;
 - what downstream evidence becomes stale if it changes.
 
-The graph may adapt as evidence changes the execution theory, provided Goal, confirmed boundaries, and proof obligations remain unchanged. Record material replans in `PROGRESS.md`.
+The compiler freezes the Goal, Human authority, confirmed boundaries, protected proof surfaces, completion obligations, and handoff mode. The Executor may revise, split, merge, reorder, or park remaining work as evidence changes the execution theory inside that envelope. Record material replans in `PROGRESS.md`.
 
 ### 5. Progress, Blockers, and Continuity
 
@@ -110,6 +118,7 @@ Keep it concise. Update after each material checkpoint with:
 
 - Goal reference;
 - completed, current, and next work;
+- material graph revisions;
 - evidence and what it proves;
 - stale or invalidated evidence and why;
 - parked branches;
@@ -147,13 +156,12 @@ State:
 The taskbook must include these execution rules:
 
 - every retry uses a materially different hypothesis or approach;
-- after the same acceptance check fails three consecutive attempts, stop the current route and choose one: replan, switch branch, roll back, `BLOCK`, or `ESCALATE`;
+- after three consecutive failed attempts against the same acceptance condition within the same active route, stop that route and choose one: replan, switch branch, roll back, `BLOCK`, or `ESCALATE`;
+- a known-bad approach stops immediately; the count is a final guardrail, not permission to repeat it;
 - do not disguise repeated variants of the same failed approach as a new attempt;
 - if results regress below a verified baseline without explicit authorization, roll back the regression and report it truthfully;
 - a branch-local blocker does not block independent safe work;
 - no safe route or no new evidence-producing approach means truthful exit, not ceremonial looping.
-
-The fixed count is a final mechanical guardrail, not permission to repeat a known-bad approach three times.
 
 ## 5. Protect proof and completion
 
@@ -191,7 +199,8 @@ Emit `Status: Executable` only when:
 - critical facts are evidenced or assigned to Task 0 with truthful routes;
 - fixed Task 0 is explicit and precedes material modification;
 - all six taskbook sections are present;
-- the graph exposes order, dependencies, shared ownership, branch parking, and the Global Gate at the level the task requires;
+- the initial graph exposes order, dependencies, shared ownership, proof placement, branch parking, and the Global Gate at the level the task requires;
+- the frozen envelope and permitted remaining-graph adaptation are explicit;
 - `PROGRESS.md` and `BLOCKED.md` behavior is specified;
 - retry/stop and baseline-regression rules are explicit;
 - protected proof surfaces and acceptance authority are clear;
@@ -201,7 +210,7 @@ If a required non-intent prerequisite prevents all safe work, emit `Status: Bloc
 
 ## Research and decision work
 
-Use the same six-section skeleton. Task 0 verifies source access, scope, decision criteria, and reproducibility. The graph may be source collection → counterevidence → synthesis → decision gate. Progress state records sources, claims, unresolved contradictions, and next probes. Judge completion by provenance, counterevidence, residual unknowns, reproducibility, and decision usefulness rather than inventing code-style metrics.
+Use the same six-section skeleton. Task 0 verifies source access, scope, decision criteria, and reproducibility while reusing still-valid compile evidence. The graph may be source collection → counterevidence → synthesis → decision gate. Progress state records sources, claims, unresolved contradictions, and next probes. Judge completion by provenance, counterevidence, residual unknowns, reproducibility, and decision usefulness rather than inventing code-style metrics.
 
 ## Information budget
 
