@@ -1,129 +1,56 @@
 # Stable Intent IR
 
-Use this reference when Stage 1 authority, Goal closure, or stability is not obvious. Stable Intent is source semantics for Execution Compile, not an executor-facing taskbook.
+Use this reference when Goal closure, authority, or the Human boundary is unclear. Stable Intent is source semantics for Execution Compile, not the first half of the taskbook.
 
-## What to preserve
+## Preserve
 
-Keep only information that can change downstream judgment:
+Keep only what can change downstream judgment:
 
-- the desired end state and underlying problem;
-- decision-relevant **Why / design intent**;
-- current territory facts, provenance, evidence state, and material unknowns;
-- Human-confirmed choices, priorities, approvals, and boundaries;
-- current task scope when it differs from the broader Goal;
-- observable success and trusted proof semantics;
-- requested delivery semantics when material.
+- requested end state and underlying problem;
+- decision-relevant Why or design intent;
+- Human-confirmed decisions, priorities, approvals, and boundaries;
+- material facts with provenance and evidence state;
+- task scope when it differs from the broader Goal;
+- trusted success and delivery semantics.
 
-Conversation history, rejected reasoning, and implementation detail are context only when they still affect one of those semantics.
+Discard conversation history, rejected reasoning, and implementation detail unless they still affect one of those items.
 
 ## Authority
 
-Keep these classes distinct:
+Keep four classes distinct:
 
-- **User-owned intent** — requested outcome, accepted behavior, confirmed decisions, and boundaries. These change only with new user authority.
-- **Territory reality** — authoritative code, tests, traces, schemas, artifacts, measurements, and other evidence. Better evidence may revise facts, feasibility, necessary implementation work, and proof obligations without rewriting intent.
-- **Inference / recommendation** — useful model judgment, including a candidate Goal or delegated default, but not Human-confirmed authority.
-- **Unknown** — unresolved until evidence, Task 0, execution, a visible delegated default, or Human authority settles its consequence.
+- **Human intent** — requested result, accepted behavior, confirmed decisions, and boundaries;
+- **territory reality** — code, tests, schemas, traces, artifacts, and measurements;
+- **inference** — model judgment or recommendation;
+- **unknown** — not yet settled.
 
-An explicit requested outcome remains authoritative even when grounding reveals more work, stronger proof, or higher cost. Surface a true conflict rather than silently weakening it.
+Better evidence may change facts, feasibility, necessary implementation work, and proof obligations. Only new Human authority may change intent or confirmed boundaries.
 
-## Why / design intent
+A design direction is Human-owned only when the Human made it part of the result. Routine architecture remains implementation How when it preserves that meaning.
 
-Preserve rationale when it helps execution choose correctly in cases the taskbook cannot predict. A design direction is Human-owned when the Human made it part of the desired result or boundary. Routine architecture choices remain implementation How when they preserve that meaning.
+## Ask Human
 
-## Grounding
+Ask only when proceeding would:
 
-Ground the smallest set of unknowns needed to establish Goal meaning, closure, confirmed boundaries, or trusted success. Prefer authoritative evidence and rich existing references.
+1. change the requested result;
+2. cross or relax a confirmed boundary or require high-risk authorization;
+3. choose between materially different Goals that accessible evidence cannot resolve.
 
-For repo work, preserve governing constraints or acceptance paths when they affect meaning or proof, and capture a sourced baseline when success is relative to current behavior. Leave work-surface discovery, dependency mapping, command validation, and implementation design to Execution Compile unless they are required for intent stability.
+More work, wider implementation scope, decomposition, architecture How, command order, or replanning do not by themselves require Human input.
 
-Grounding should reduce the Human decision surface, not replace it. Do not ask the Human for facts authoritative evidence can settle, and do not keep researching merely to avoid a real Human decision.
+When a decision is required, expose the smallest real choice with consequences and a recommendation. Do not disguise inference as authority.
 
-Every executable handoff lowers into a taskbook with an explicit **Task 0** before material modification. Task 0 is a fixed opening checkpoint, not a second discovery pass. It may reuse compiler evidence that is authoritative, still fresh, and applicable to the bound repo, worktree, target, and execution environment. Recheck facts that are absent, stale, execution-environment-dependent, disputed, or invalidated by workspace or upstream changes.
+## Route unknowns
 
-When a required fact or disagreement is accessible now, perform the focused check during compile. When it depends on execution-only reality, preserve it as an explicit Task 0 check rather than turning it into a Human question. Task 0 may expose a Human boundary that was impossible to see earlier, but it may not postpone one already visible during compile.
+- evidence can settle it now → investigate;
+- execution-only reality can settle it before modification → put it in Task 0;
+- it affects only implementation How → let execution decide or experiment;
+- one safe reversible choice preserves intent → use a visible delegated default with basis and rollback route;
+- it reaches an Ask Human boundary → ask;
+- evidence or capability is unavailable → park the affected branch if safe work remains, otherwise block truthfully.
 
-When the Human defines a scope or classification rule but is unsure which concrete entities satisfy it, preserve the rule as authority and derive membership from evidence. Ask again only when the residual classification depends on Human meaning rather than observable reality.
+## Stable boundary
 
-## Ask Human boundary
+Intent is stable when one coherent Goal, its Why, confirmed boundaries, material evidence state, trusted success, and delivery semantics are clear, and no Ask Human condition remains.
 
-Ask only when at least one of these is true:
-
-1. **Change intent** — proceeding would change the requested outcome, accepted behavior, or a design direction the Human made part of the result.
-2. **Change boundary** — proceeding would cross or relax confirmed scope, constraints, approval, protected proof, or require irreversible/high-risk authorization.
-3. **Confused intent** — materially different Goal interpretations remain plausible after accessible grounding.
-
-These are consequence tests, not keyword tests. “Scope”, “architecture”, or “core” does not automatically mean Human-owned.
-
-Necessary implementation expansion inside settled intent and boundaries is not a boundary change. Redefining what is in or out of the Goal is. Choosing an architecture that preserves the requested result is How; discarding a requested design direction is an intent change.
-
-## Unknown routing
-
-Unknown exists to reduce unnecessary Human questions, not eliminate Human judgment.
-
-Route it in this order:
-
-- evidence can settle it during compile → investigate;
-- it depends on execution-only reality but can be settled safely before material modification → assign it to explicit Task 0 with align, route-revision, branch-blocker, global-blocker, and unresolved-intent outcomes;
-- it changes only local implementation How or execution theory → let execution choose, experiment, or replan inside the frozen intent and proof envelope;
-- a reasonable choice preserves intent and boundaries and is reversible or reliably mismatch-detectable → visible delegated default;
-- it reaches one of the Ask Human boundaries → ask the smallest useful question;
-- required evidence or authority is inaccessible but independent safe work remains → preserve the blocker, record it, and park the affected branch;
-- required evidence, access, or capability is inaccessible and no safe route remains → return `Status: Blocked` with the exact resolving condition.
-
-A delegated default is visibly unconfirmed. Record its basis, consequence if wrong, and detection or rollback route. It may close ordinary orchestration; it may not silently change intent or confirmed boundaries.
-
-## Goal closure
-
-A Goal is closed when existing Human authority establishes one coherent requested end state and what the current work is expected to accomplish. It need not settle implementation How or every broader future decision.
-
-A prompt may instead expose a problem space: concern, hypothesis, competing questions, possible end states, or active deliberation. Ground only enough context to expose the materially different interpretations, then return the smallest useful choice with consequences and a recommendation. A model-proposed Goal remains inference until the Human confirms, selects, or corrects it.
-
-Do not over-block execution. If the Human already established a complete minimum outcome, broader concerns, later go/no-go choices, and implementation unknowns remain separate unless they actually trigger an Ask Human boundary.
-
-## Human and delegated decisions
-
-When an Ask Human boundary remains, expose the smallest decision surface: materially distinct options, why they differ, and a concise recommendation. Inference, recommendation, or a delegated default must not hide that decision.
-
-More work, wider necessary implementation scope, several valid implementation approaches, or future replanning do not by themselves require Human input.
-
-A delegated default is allowed when it preserves intent and confirmed boundaries, has a reasonable evidence- or convention-backed choice, and is reversible or safely mismatch-detectable. For **artifact-only**, it remains reviewable until the caller accepts, edits, or forwards the taskbook. For **compile-and-run**, it must be safe to execute without another Human turn.
-
-If evidence proves the requested result infeasible and there is no meaningful Human choice, return the blocker rather than manufacturing a decision.
-
-## Intent convergence runtime
-
-Intent Take runs as an interactive compile-time convergence loop. Across turns, recover only:
-
-- the candidate or confirmed Goal;
-- Human-confirmed authority and boundaries;
-- still-valid evidence and material unknowns;
-- the smallest remaining Ask Human decision, unavailable probe, or blocker.
-
-Reconcile each new Human message or authoritative fact with that state. Preserve still-valid facts and decisions; do not restart discovery merely because a new turn began. Rewriting alone cannot turn inference into authority.
-
-The loop exits when Stable Intent is reached or the smallest unresolved decision/probe/blocker has been returned.
-
-## Stability
-
-Stable Intent is sufficient when Execution Compile no longer needs to rediscover:
-
-- the problem and complete requested outcome;
-- Human-confirmed boundaries;
-- which material facts are verified, inferred, or unknown;
-- what trusted success means;
-- delivery semantics that must survive lowering.
-
-It also requires that none of the three Ask Human conditions remains. Context and execution unknowns may remain when they can be investigated during compile, assigned to fixed Task 0, delegated visibly, or resolved downstream without changing intent or boundaries.
-
-Implementation discovery, decomposition, dependency mapping, architecture How, command order, retries, graph adaptation, and runtime state remain Stage 2/runtime concerns unless they trigger an Ask Human boundary.
-
-## Boundary with Execution Compile
-
-Execution Compile may ground implementation territory, compile the fixed six-section taskbook, assign execution-only checks to Task 0, derive the initial work graph, specify progress/blocker state and stop rules, close ordinary branches with evidence or visible delegated defaults, and lower proof semantics into execution shape.
-
-It freezes the Goal, Human authority, confirmed boundaries, protected proof surfaces, completion obligations, and handoff mode. It does **not** freeze implementation How or the remaining graph: the Executor may revise, split, merge, reorder, or park remaining work as evidence changes the execution theory inside that envelope.
-
-If Stage 2 or Task 0 evidence triggers **change intent**, **change boundary**, or **confused intent**, return to Intent Take before affected modification. If a non-intent prerequisite is unavailable, park only the affected branch while safe work remains; otherwise return `Status: Blocked`.
-
-The final executable artifact contains only the lowered semantics that matter to execution judgment; it is not Stable Intent followed by an execution appendix.
+Execution Compile may ground implementation territory and lower Stable Intent into Task 0, a graph, state, stop rules, and proof. It may not change intent or confirmed boundaries. The final taskbook contains only execution-relevant lowered semantics, not Stable Intent followed by an appendix.
