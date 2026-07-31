@@ -89,7 +89,7 @@ For research or decision work, use evidence-bearing probe/source/synthesis work 
 
 Before emitting a terminal state, confirm:
 
-- no unresolved change-intent, change-boundary, or confused-intent condition remains hidden;
+- no unresolved **change intent**, **change boundary**, or **confused intent** condition remains;
 - every critical fact is evidenced or has a truthful settlement or blocking route;
 - local implementation How has not been promoted into Human-owned intent;
 - acceptance closes the complete Goal without relying on a manipulable false-green path;
