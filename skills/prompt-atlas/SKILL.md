@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: Two-stage compiler for turning a raw or evolving request into an executable agent handoff. Intent Take converges on Stable Intent without inventing Human authority. Execution Compile lowers that intent into the smallest truthful executable control carrier: a grounded graph plus the runtime, recovery, and acceptance semantics needed to execute it with minimal Human orchestration. Use for requirement clarification, prompt/task preparation, handoff, or when another workflow needs stable intent or an executable task carrier.
+description: Two-stage compiler for turning a raw or evolving request into an executable agent handoff. Intent Take converges on Stable Intent without inventing Human authority. Execution Compile lowers that intent into the smallest truthful carrier with explicit authority boundaries, a grounded execution graph, local convergence loops, recovery needs, and trusted acceptance. Use for requirement clarification, prompt/task preparation, handoff, or when another workflow needs stable intent or an executable task carrier.
 ---
 
 # Prompt Atlas
@@ -8,16 +8,16 @@ description: Two-stage compiler for turning a raw or evolving request into an ex
 Prompt Atlas has two stages:
 
 1. **Intent Take** — establish what should be achieved, why it matters, what is authoritative, and what would count as success.
-2. **Execution Compile** — lower Stable Intent into a small, grounded executable control carrier with the decisions, graph, proof boundaries, runtime routes, recovery semantics, and acceptance contract needed for AFK execution.
+2. **Execution Compile** — lower Stable Intent into one small, grounded carrier that a capable runtime can execute without using Human interaction as ordinary orchestration.
 
 Stable Intent is source semantics, not the first half of the final taskbook. Execution Compile transforms it into an executor-facing representation; it does not append execution prose to an Intent Contract or reinterpret settled intent.
 
-Trust a capable frontier model with routine implementation How, local self-correction, and ordinary verification. Encode what is costly or unsafe to reconstruct: intent, authority, material reality, real orchestration structure, and task-specific proof obligations.
+Trust a capable frontier model with routine implementation How, local self-correction, and ordinary verification. Encode what is costly or unsafe to reconstruct: intent, authority, material reality, real dependencies, interruption-sensitive state, and task-specific proof obligations.
 
 Use progressive disclosure:
 
-- [contract-anatomy.md](references/contract-anatomy.md) when intent authority, goal closure, or stability is unclear;
-- [execution-compile.md](references/execution-compile.md) when graph shape, branch closure, runtime behavior, AFK continuity, or Leader capability coverage needs judgment;
+- [contract-anatomy.md](references/contract-anatomy.md) when intent authority, Goal closure, or stability is unclear;
+- [execution-compile.md](references/execution-compile.md) when authority boundaries, graph shape, loop boundaries, branch closure, continuity, or acceptance needs judgment;
 - [completion-trust.md](references/completion-trust.md) when completion can false-pass or needs an independent acceptance boundary.
 
 ## Stage 1 — Intent Take
@@ -30,38 +30,38 @@ Do not over-apply this gate. If existing Human authority already establishes a c
 
 Ground only what can change intent meaning, feasibility inside settled boundaries, Goal closure, or success/proof semantics. Prefer the smallest authoritative check and rich existing references. Keep verified fact, inference, recommendation, and unknown distinct.
 
-Before declaring intent stable, actively scan for unresolved Human-owned choices. Resolve reality/context unknowns from authoritative evidence when possible and use that grounding to reduce the decision surface. Do not ask about unknowns evidence can settle or local implementation How. But if a remaining material choice changes user-owned outcome, accepted behavior, scope/priority, approval, or a protected proof rule, surface the smallest useful decision set to the Human with materially distinct options, consequences, and a concise recommendation. Do not erase such a choice through inference, recommendation, or an implicit default.
+Before declaring intent stable, scan for unresolved Human-owned choices. Resolve reality/context unknowns from authoritative evidence when possible and use that grounding to reduce the decision surface. Do not ask about unknowns evidence can settle or local implementation How. If a remaining material choice changes user-owned outcome, accepted behavior, scope/priority, approval, or a protected proof rule, surface the smallest useful decision set with materially distinct options, consequences, and a concise recommendation. Do not erase such a choice through inference, recommendation, or an implicit default.
 
 When the Human defines a scope or classification rule but expresses tentative beliefs about which concrete entities satisfy it, preserve the rule and explicit inclusions/exclusions as authority; treat the membership claim as a territory hypothesis. Derive the concrete member set from evidence at the first stage where it affects judgment—Intent Take when it changes Goal closure or a Human decision, otherwise Execution Compile when it determines concrete work—and ask again only for residual cases whose classification depends on Human-owned semantics rather than repository facts.
 
-Intent is stable when Execution Compile no longer needs to rediscover the problem, complete outcome, authoritative choices/boundaries, any material factual uncertainty that changes those source semantics, or what trusted success means, and no material Human-owned choice remains unresolved. If it is not stable, perform any accessible focused grounding first, then return the current understanding plus only the smallest unresolved decision, candidate Goal, unavailable probe, or blocker. When Goal closure or another Human-owned decision remains, ask it explicitly rather than hiding it behind a passive unresolved state.
+Intent is stable when Execution Compile no longer needs to rediscover the problem, complete outcome, authoritative choices/boundaries, any material factual uncertainty that changes those source semantics, or what trusted success means, and no material Human-owned choice remains unresolved. If it is not stable, perform accessible focused grounding first, then return the current understanding plus only the smallest unresolved decision, candidate Goal, unavailable probe, or blocker. When Goal closure or another Human-owned decision remains, ask it explicitly rather than hiding it behind a passive unresolved state.
 
 When stable, treat the result as **Stable Intent IR** and continue to Stage 2.
 
 ## Stage 2 — Execution Compile
 
-Execution Compile ends when it produces one executable control carrier. It compiles the graph and its runtime contract, but it does not execute the carrier or own live execution state.
+Execution Compile ends when it produces one executable control carrier and stops. Use two coupled lenses while compiling:
 
-First ground enough execution reality to make the carrier truthful: identify the actual target/workspace, work surfaces, governing specs or tests, material baselines, real dependencies, and critical commands/verifiers when accessible. Keep unavailable or unverified evidence explicit rather than turning plausibility into fact.
+- **Authority** — who may change Intent, revise material execution structure, choose node-local How, and judge the complete Goal.
+- **Control protocol** — how Graph, node-local Loops, evidence routes, continuity, and the Global Gate keep execution moving truthfully.
 
-If execution grounding shows that Stable Intent cannot be preserved inside its confirmed boundaries, or exposes a new Human-owned choice about Goal, accepted behavior, scope/priority, approval, or protected proof, return `Status: Unresolved Intent` with the conflict, evidence, and smallest decision surface, then re-enter Intent Take. Do not misclassify an intent change as an execution branch.
+First ground enough execution reality to identify the actual workspace, work surfaces, governing specs/tests, material baselines, real dependencies, and critical verifiers when accessible. Keep unavailable or unverified evidence explicit.
 
-Close execution branches that would otherwise interrupt AFK work when different answers materially change task boundaries, dependencies, verification ownership/path, scope, architecture direction, runtime envelope, recovery requirements, or the Global Gate while preserving Stable Intent. Resolve them from Stable Intent, governing constraints, and evidence when possible. If materially different executable carriers remain equally valid, return `Status: Execution Decision`; local reversible How stays executor-owned. A visibly unconfirmed execution default is allowed only when the caller explicitly requires an executable carrier without another Human turn and the default preserves settled Goal/boundaries while being reversible or reliably mismatch-detectable.
+If grounding shows that Stable Intent cannot be preserved inside confirmed boundaries, or exposes a new Human-owned choice, return `Status: Unresolved Intent`. If Stable Intent remains valid but materially different carriers remain equally acceptable, return `Status: Execution Decision`. Local reversible How stays executor-owned.
 
-Compile the **smallest useful executable control carrier**:
+Compile the smallest useful carrier:
 
-- Task / Issue nodes are bounded outcomes with only the context, real dependencies, applicable boundaries, and proof needed to judge them locally.
-- Edges represent real dependency, evidence, invalidation, or routing flow when that distinction changes execution—not prose order.
-- Node-local act / observe / evaluate / repair loops are runtime semantics; do not expand retries or routine self-correction into duplicate graph nodes.
-- Runtime routes distinguish local repair, evidence-driven revision of the remaining graph, and escalation to Human or Intent authority.
-- The Global Gate judges the complete Goal; local done is not global completion.
-- Human gates exist only for newly exposed material execution branches that preserve Stable Intent but current intent and evidence cannot close.
+- preserve Purpose, Goal, settled Decisions, and authority boundaries;
+- use bounded outcome nodes and real dependency/evidence edges, not prose order;
+- keep routine act / observe / evaluate / repair work inside node-local Loops;
+- route local mismatch to local repair, material execution-theory invalidation to controlled graph revision, and Intent conflict back to Intent Take;
+- allow independent ready work to continue when one branch blocks;
+- require recoverable semantic state only when work may outlive one context or span independent actors;
+- judge the complete Goal at a Global Gate; local done is not global completion.
 
-Add parallel ownership, partial-block behavior, continuity state, or separate verifier nodes only when the task actually needs them. Independent work may continue while another node is blocked. Trusted completed work survives replanning unless new evidence invalidates it.
+For long-running or cross-context repository work, the carrier may require the downstream runtime to maintain project-local continuity under `.scratch/<project>/IMPLEMENTATION_NOTES.md`. Prompt Atlas compiles the requirement; the runtime creates and updates the file.
 
-The runtime interprets the carrier and progresses ready work through an evidence-driven loop: act, observe, evaluate, then continue, repair locally, or revise the remaining graph. These routes are part of the compiled control contract rather than behavior the executor must reinvent. A failed check is work-state, not automatically HITL. Completion requires the task-specific proof carried by the Global Gate; generic extra review or re-check steps are not a default requirement.
-
-The executable carrier should make the following semantics recoverable without replaying the conversation: **Purpose, Goal, grounded State, closed Decisions, Graph, Boundaries, task-specific Verification, material Runtime/continuity semantics, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
+The carrier should make the following recoverable without replaying the conversation: **Purpose, Goal, grounded State, closed Decisions, Authority, Graph, Loops, Routes/Gates, Boundaries, Verification, Continuity, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
 
 For research or decision work, use evidence-bearing probe/source/synthesis nodes and judge completion by provenance, counterevidence, residual unknowns, and decision usefulness rather than inventing code-style metrics.
 
@@ -70,7 +70,7 @@ For research or decision work, use evidence-bearing probe/source/synthesis nodes
 Emit one terminal state and stop:
 
 - **`Status: Unresolved Intent`** — current understanding plus the smallest unavailable probe or explicit Human decision needed to close the Goal or repair another material intent boundary.
-- **`Status: Execution Decision`** — Stable Intent remains valid, but a material execution branch still needs closure and no safe unconfirmed execution default applies.
+- **`Status: Execution Decision`** — Stable Intent remains valid, but a material execution branch still needs closure and no safe unconfirmed default applies.
 - **`Status: Executable`** — one lowered executor-facing carrier.
 
-For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Keep the artifact dense and readable; omit details that do not change executor judgment, but never compress away a requested outcome, authority distinction, material graph branch, runtime route, recovery requirement, or trusted proof obligation.
+For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Omit details that do not change downstream judgment, but never compress away a requested outcome, authority distinction, material Graph branch, Loop exit, recovery requirement, or trusted proof obligation.
