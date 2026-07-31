@@ -21,15 +21,7 @@ Evidence cannot silently weaken or replace Human intent.
 
 ## Unknown routing
 
-1. observable fact → investigate;
-2. execution-only fact → Task 0;
-3. implementation How → Executor;
-4. reversible choice preserving intent → visible delegated default;
-5. Goal or confirmed-boundary choice → Human;
-6. unavailable prerequisite with independent work → park;
-7. unavailable prerequisite with no safe route → `Status: Blocked`.
-
-A delegated default states that it is unconfirmed, its basis, cost if wrong, and detection or rollback route.
+The routing table and delegated-default contract live in [SKILL.md](../SKILL.md). This file adds only the authority model and closure test.
 
 ## Closure
 
