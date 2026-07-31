@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
-  short_description: "把需求编译为稳定意图与紧凑可执行任务书"
-  default_prompt: "Use $prompt-atlas to recover stable intent, ask only at the three Human boundaries, then emit an exact blocker or a compact six-section taskbook with fixed Task 0, a minimal graph, bounded retry, progress/blocker state, and trusted Global Gate acceptance. Keep implementation How adaptable inside confirmed intent and boundaries."
+  short_description: "先收敛意图与 Unknown，再生成可独立执行的任务书"
+  default_prompt: "Use $prompt-atlas. Route Unknown explicitly and do not emit executable work from a vague request or unresolved intent. Once one Human-owned Goal is stable, compile a compact autonomous taskbook with grounded facts, visible defaults, boundaries, fixed Task 0, ordered tasks, PROGRESS/BLOCKED continuity, stop rules, anti-false-green proof, and complete-Goal acceptance."
