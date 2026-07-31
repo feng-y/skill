@@ -2,7 +2,7 @@
 
 Use this reference only when the Goal or governing repo contract makes correctness/completion proof material. It is not a generic instruction to add another review, re-check, or verifier to every task.
 
-Intent Take preserves **what must be proven**. Execution Compile decides whether that obligation has orchestration meaning as local proof, a verifier node, or the Global Gate. The executor runs the visible proof but cannot weaken its semantics or self-certify evidence that requires an independent boundary.
+Intent Take preserves **what must be proven**. Execution Compile decides whether that obligation belongs to local proof, a separate verification step, or the complete-Goal gate. The executor runs the visible proof but cannot weaken its semantics or self-certify evidence that requires an independent boundary.
 
 ## Proof semantics
 
@@ -15,26 +15,35 @@ Preserve the minimum proof properties needed for the claim:
 
 Intent Take need not choose exact commands, retry patterns, or verifier implementation when those are execution How.
 
-## Lower into the graph
+## Lower into execution
 
 Execution Compile attaches proof where it matters:
 
-- local proof belongs to the node whose outcome it establishes;
-- a separate verifier node exists only when proof spans upstream results or genuinely needs fresh/independent judgment;
-- the Global Gate stays distinct from local completion;
+- local proof belongs to the work whose outcome it establishes;
+- a separate verification step exists only when proof spans multiple results or genuinely needs fresh/independent judgment;
+- the complete-Goal gate stays distinct from local completion;
 - protected Judge / Population / Object / Metric and non-regression semantics stay binding;
 - executor-owned evidence stops at `ready for independent acceptance` when another boundary owns final judgment.
 
-Verification topology follows the property being proven, not a default always-review workflow.
+Verification shape follows the property being proven, not a default Graph or always-review workflow.
+
+## Acceptance binding
+
+When independent acceptance is required, the carrier must identify:
+
+- the property and complete-Goal gate owned by the independent boundary;
+- the required freshness, isolation, or separation;
+- where private or hidden proof is retained outside Executor-visible state;
+- the latest point by which an actual Acceptor or equivalent runtime boundary must be bound.
+
+Before execution begins, the caller/runtime must either bind or reserve the required independent boundary, or explicitly freeze the run's completion ceiling at `ready for independent acceptance`. The latter may still produce visible evidence, but it cannot substitute Executor self-attestation or claim an equivalent PASS.
 
 ## Visible-contract boundary
 
 A hidden oracle, manager-side spot check, fresh-context challenge, or other mechanism whose strength depends on executor independence stays outside the executor-visible carrier. Prompt Atlas may state the property and accepting boundary; it must not expose hidden cases or let the executor author the decisive oracle and then certify itself.
 
-If the runtime/harness cannot provide a required independent boundary, the graph may end at `ready for independent acceptance`; it must not claim equivalent proof.
+If the runtime/harness cannot provide a required independent boundary, execution may end at `ready for independent acceptance`; it must not claim equivalent proof.
 
 ## Runtime truth
 
 Insufficient, compromised, narrowed, skipped, fabricated, or stale proof is `UNMET`. A local PASS can unlock dependent work without proving the whole Goal. Failed proof returns to evidence-producing work or replanning while safe work remains. Environment unavailability stays explicit. Upstream changes invalidate downstream evidence when the change affects what that evidence proved.
-
-Leader's concrete anti-cheat and reverse-validation rules are one realization of these semantics. Prompt Atlas preserves the same capability through proof directness, failure sensitivity, integrity boundaries, non-regression, and independent acceptance rather than imposing one fixed forbidden-tactics list on every task.

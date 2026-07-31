@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: Two-stage compiler for turning a raw or evolving request into an executable agent handoff. Intent Take converges on Stable Intent without inventing Human authority. Execution Compile lowers that intent into the smallest truthful executable control carrier: a grounded graph plus the runtime, recovery, and acceptance semantics needed to execute it with minimal Human orchestration. Use for requirement clarification, prompt/task preparation, handoff, or when another workflow needs stable intent or an executable task carrier.
+description: Two-stage compiler for turning a raw or evolving request into an executable agent handoff. Intent Take converges on Stable Intent without inventing Human authority. Execution Compile lowers that intent into the smallest truthful carrier with grounded reality, clear Human boundaries, execution freedom, continuity only when needed, and trusted acceptance. Use for requirement clarification, prompt/task preparation, handoff, or when another workflow needs stable intent or an executable task carrier.
 ---
 
 # Prompt Atlas
@@ -8,69 +8,84 @@ description: Two-stage compiler for turning a raw or evolving request into an ex
 Prompt Atlas has two stages:
 
 1. **Intent Take** — establish what should be achieved, why it matters, what is authoritative, and what would count as success.
-2. **Execution Compile** — lower Stable Intent into a small, grounded executable control carrier with the decisions, graph, proof boundaries, runtime routes, recovery semantics, and acceptance contract needed for AFK execution.
+2. **Execution Compile** — lower Stable Intent into one small, grounded carrier that a capable runtime can execute without using Human interaction as ordinary orchestration.
 
 Stable Intent is source semantics, not the first half of the final taskbook. Execution Compile transforms it into an executor-facing representation; it does not append execution prose to an Intent Contract or reinterpret settled intent.
 
-Trust a capable frontier model with routine implementation How, local self-correction, and ordinary verification. Encode what is costly or unsafe to reconstruct: intent, authority, material reality, real orchestration structure, and task-specific proof obligations.
+Trust a capable frontier model with routine implementation How, local self-correction, and ordinary verification. Encode what is costly or unsafe to reconstruct: intent, authority, material reality, real dependencies, interruption-sensitive state, and task-specific proof obligations.
 
 Use progressive disclosure:
 
-- [contract-anatomy.md](references/contract-anatomy.md) when intent authority, goal closure, or stability is unclear;
-- [execution-compile.md](references/execution-compile.md) when graph shape, branch closure, runtime behavior, AFK continuity, or Leader capability coverage needs judgment;
+- [contract-anatomy.md](references/contract-anatomy.md) when intent authority, Goal closure, or stability is unclear;
+- [execution-compile.md](references/execution-compile.md) when execution shape, branch closure, Task 0, continuity, or acceptance needs judgment;
 - [completion-trust.md](references/completion-trust.md) when completion can false-pass or needs an independent acceptance boundary.
 
 ## Stage 1 — Intent Take
 
 Recover the current request from the user's latest authority, still-valid prior decisions, and relevant context. Preserve explicit requested outcomes unless the user supersedes them. Keep the **Why / design intent** when it will help a later executor choose correctly in situations the prompt cannot predict.
 
-Distinguish missing reality from an unclosed Goal. Evidence can resolve context unknowns; it cannot decide what outcome the Human wants. When the prompt expresses a concern, hypothesis, competing questions, or active deliberation without establishing one authoritative outcome, do not turn that thinking surface into execution scope. First resolve only the decision-relevant context that is accessible and needed to make the choice meaningful. Then form the smallest coherent candidate Goal or options and ask the Human to confirm, select, or correct them. A model-proposed Goal remains inference until a subsequent Human message closes it. If the required evidence cannot be obtained in this turn, return only the smallest focused probe or blocker needed to continue convergence.
+Distinguish missing reality from an unclosed or confused Goal. Evidence can resolve facts; it cannot choose between materially different outcomes the Human may want. When the prompt is still a concern, hypothesis, comparison, or active deliberation, ground only enough context to make the real choice clear, then ask the smallest useful question.
 
-Do not over-apply this gate. If existing Human authority already establishes a complete minimum outcome, broader questions, future decisions, and implementation unknowns do not make that Goal unclosed; preserve the minimum Goal and keep the rest separate.
+Ask Human only when one of these boundaries is reached:
 
-Ground only what can change intent meaning, feasibility inside settled boundaries, Goal closure, or success/proof semantics. Prefer the smallest authoritative check and rich existing references. Keep verified fact, inference, recommendation, and unknown distinct.
+- **change intent** — proceeding would change the requested outcome, accepted behavior, or a design direction the Human made part of the result;
+- **change boundary** — proceeding would cross or relax confirmed scope, constraints, approval, protected proof, or require an irreversible/high-risk authorization;
+- **confused intent** — materially different Goal interpretations remain plausible after accessible grounding.
 
-Before declaring intent stable, actively scan for unresolved Human-owned choices. Resolve reality/context unknowns from authoritative evidence when possible and use that grounding to reduce the decision surface. Do not ask about unknowns evidence can settle or local implementation How. But if a remaining material choice changes user-owned outcome, accepted behavior, scope/priority, approval, or a protected proof rule, surface the smallest useful decision set to the Human with materially distinct options, consequences, and a concise recommendation. Do not erase such a choice through inference, recommendation, or an implicit default.
+Do not ask for facts evidence can settle, necessary implementation expansion inside settled boundaries, architecture How, task decomposition, or ordinary execution choices. Treat unknown as a routing signal: investigate factual unknowns, leave local How to execution, let Execution Compile make safe visible defaults, and Ask Human only at the boundaries above.
 
-When the Human defines a scope or classification rule but expresses tentative beliefs about which concrete entities satisfy it, preserve the rule and explicit inclusions/exclusions as authority; treat the membership claim as a territory hypothesis. Derive the concrete member set from evidence at the first stage where it affects judgment—Intent Take when it changes Goal closure or a Human decision, otherwise Execution Compile when it determines concrete work—and ask again only for residual cases whose classification depends on Human-owned semantics rather than repository facts.
+A safe delegated default must preserve the current intent and boundaries, have a reasonable evidence- or convention-backed choice, and be reversible or reliably mismatch-detectable. Keep it visibly unconfirmed with its basis, consequence if wrong, and rollback or replan route. It may close execution orchestration; it may not silently change what the Human asked for.
 
-Intent is stable when Execution Compile no longer needs to rediscover the problem, complete outcome, authoritative choices/boundaries, any material factual uncertainty that changes those source semantics, or what trusted success means, and no material Human-owned choice remains unresolved. If it is not stable, perform any accessible focused grounding first, then return the current understanding plus only the smallest unresolved decision, candidate Goal, unavailable probe, or blocker. When Goal closure or another Human-owned decision remains, ask it explicitly rather than hiding it behind a passive unresolved state.
+When the Human defines a scope or classification rule but is unsure which concrete entities satisfy it, preserve the rule as authority and derive membership from evidence. Ask again only when the residual classification depends on Human meaning rather than observable reality.
+
+Treat Intent Take as a convergence loop across turns: recover the candidate Goal, confirmed authority, still-valid evidence, and remaining decision surface; reconcile each new Human message or authoritative fact rather than restarting discovery. Rewriting alone cannot promote inference into authority.
+
+Intent is stable when Execution Compile no longer needs to rediscover the problem, complete outcome, confirmed boundaries, or trusted success semantics, and none of the three Ask Human conditions remains. If it is not stable, perform accessible focused grounding first, then return the current understanding plus only the smallest unresolved decision, unavailable probe, or blocker.
 
 When stable, treat the result as **Stable Intent IR** and continue to Stage 2.
 
 ## Stage 2 — Execution Compile
 
-Execution Compile ends when it produces one executable control carrier. It compiles the graph and its runtime contract, but it does not execute the carrier or own live execution state.
+Execution Compile ends when it produces one executable carrier or a truthful non-intent blocker and stops. Use two coupled lenses:
 
-First ground enough execution reality to make the carrier truthful: identify the actual target/workspace, work surfaces, governing specs or tests, material baselines, real dependencies, and critical commands/verifiers when accessible. Keep unavailable or unverified evidence explicit rather than turning plausibility into fact.
+- **Authority** — what remains Human-owned, what the compiler may decide visibly, what execution may adapt, and what boundary judges completion when separation is required.
+- **Control protocol** — the minimum action loop, dependencies, evidence routes, continuity, and acceptance needed for this task.
 
-If execution grounding shows that Stable Intent cannot be preserved inside its confirmed boundaries, or exposes a new Human-owned choice about Goal, accepted behavior, scope/priority, approval, or protected proof, return `Status: Unresolved Intent` with the conflict, evidence, and smallest decision surface, then re-enter Intent Take. Do not misclassify an intent change as an execution branch.
+Ground enough execution reality to identify the actual workspace, governing specs/tests, material baselines, dependencies, and critical verifiers. When a critical precondition, carrier-versus-reality disagreement, or execution understanding cannot be settled during compile but can be settled before material modification, make it **Task 0**. Task 0 may verify facts and assumptions and require a brief opening alignment on the Goal, initial order, and main risk; it must not defer a Human decision already visible during compile. If required evidence, access, or capability is unavailable and no safe Task 0 or independent work route exists, return `Status: Blocked` with the exact missing condition.
 
-Close execution branches that would otherwise interrupt AFK work when different answers materially change task boundaries, dependencies, verification ownership/path, scope, architecture direction, runtime envelope, recovery requirements, or the Global Gate while preserving Stable Intent. Resolve them from Stable Intent, governing constraints, and evidence when possible. If materially different executable carriers remain equally valid, return `Status: Execution Decision`; local reversible How stays executor-owned. A visibly unconfirmed execution default is allowed only when the caller explicitly requires an executable carrier without another Human turn and the default preserves settled Goal/boundaries while being reversible or reliably mismatch-detectable.
+If grounding or Task 0 exposes a need to change intent, change a confirmed boundary, or resolve confused intent, return `Status: Unresolved Intent` before affected modification begins. Otherwise use Task 0 to correct executor misunderstanding, reconcile factual or planning mismatch inside the settled envelope, and continue through probe, repair, replan, branch parking, or truthful blocking.
 
-Compile the **smallest useful executable control carrier**:
+Close ordinary pre-run choices with evidence, execution freedom, or a safe visible delegated default. A choice that remains uncertain inside stable intent stays executor-owned; it does not create another Human gate.
 
-- Task / Issue nodes are bounded outcomes with only the context, real dependencies, applicable boundaries, and proof needed to judge them locally.
-- Edges represent real dependency, evidence, invalidation, or routing flow when that distinction changes execution—not prose order.
-- Node-local act / observe / evaluate / repair loops are runtime semantics; do not expand retries or routine self-correction into duplicate graph nodes.
-- Runtime routes distinguish local repair, evidence-driven revision of the remaining graph, and escalation to Human or Intent authority.
-- The Global Gate judges the complete Goal; local done is not global completion.
-- Human gates exist only for newly exposed material execution branches that preserve Stable Intent but current intent and evidence cannot close.
+Compile the smallest useful carrier:
 
-Add parallel ownership, partial-block behavior, continuity state, or separate verifier nodes only when the task actually needs them. Independent work may continue while another node is blocked. Trusted completed work survives replanning unless new evidence invalidates it.
+- preserve Purpose, Goal, settled Decisions, visible delegated defaults, and authority boundaries;
+- keep a simple task as one current action when that is enough;
+- add Task/Issue nodes and dependency/evidence edges only when they improve execution judgment;
+- keep routine act / observe / evaluate / repair work inside the execution runtime;
+- let execution revise remaining work while intent, confirmed boundaries, and proof obligations remain unchanged;
+- park a blocked branch and continue independent safe work;
+- require recoverable semantic state only when work may outlive one context or span independent actors;
+- judge the complete Goal at a Global Gate; local done is not global completion.
 
-The runtime interprets the carrier and progresses ready work through an evidence-driven loop: act, observe, evaluate, then continue, repair locally, or revise the remaining graph. These routes are part of the compiled control contract rather than behavior the executor must reinvent. A failed check is work-state, not automatically HITL. Completion requires the task-specific proof carried by the Global Gate; generic extra review or re-check steps are not a default requirement.
+For long-running or cross-context repository work, the carrier may require the downstream runtime to maintain project-local continuity under `.scratch/<project>/IMPLEMENTATION_NOTES.md`. Prompt Atlas compiles the requirement; the runtime creates and updates the file.
 
-The executable carrier should make the following semantics recoverable without replaying the conversation: **Purpose, Goal, grounded State, closed Decisions, Graph, Boundaries, task-specific Verification, material Runtime/continuity semantics, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
+`Status: Executable` means the Goal is clear, no foreseeable Ask Human boundary remains open, no blocker prevents a safe first action or truthful continued progress, delegated defaults are explicit and safe for the handoff mode, and every ordinary execution uncertainty has a non-Human route such as Task 0, probe, repair, branch parking, replan, retry, or truthful blocking.
 
-For research or decision work, use evidence-bearing probe/source/synthesis nodes and judge completion by provenance, counterevidence, residual unknowns, and decision usefulness rather than inventing code-style metrics.
+The carrier should make the following recoverable without replaying the conversation: **Purpose, Goal, grounded State, settled and delegated Decisions, Authority, minimum execution structure, Boundaries, Verification, Continuity, Acceptance, and Delivery**. Keep the serialization task-shaped rather than filling empty sections.
 
-## Output
+For research or decision work, use evidence-bearing probe/source/synthesis work and judge completion by provenance, counterevidence, residual unknowns, and decision usefulness rather than inventing code-style metrics.
+
+## Output and handoff
 
 Emit one terminal state and stop:
 
-- **`Status: Unresolved Intent`** — current understanding plus the smallest unavailable probe or explicit Human decision needed to close the Goal or repair another material intent boundary.
-- **`Status: Execution Decision`** — Stable Intent remains valid, but a material execution branch still needs closure and no safe unconfirmed execution default applies.
-- **`Status: Executable`** — one lowered executor-facing carrier.
+- **`Status: Unresolved Intent`** — current understanding plus the smallest probe or Human decision needed because intent would change, a confirmed boundary would change, or intent remains confused.
+- **`Status: Blocked`** — Stable Intent is clear, but required evidence, access, capability, or another non-intent prerequisite is unavailable and no safe execution route remains; include the exact blocker and resolving condition.
+- **`Status: Executable`** — one lowered executor-facing carrier that satisfies the readiness condition above. Execution-time facts and ordinary choices remain routed inside the carrier rather than creating another compile-time Human decision state.
 
-For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Keep the artifact dense and readable; omit details that do not change executor judgment, but never compress away a requested outcome, authority distinction, material graph branch, runtime route, recovery requirement, or trusted proof obligation.
+Default to **artifact-only** unless the caller explicitly requests or owns execution continuation. An executable task alone does not authorize automatic execution. In artifact-only mode, delegated defaults remain visibly reviewable and become execution input only when the caller accepts, edits, or forwards the carrier. For a **compile-and-run** caller with an available execution runtime, `Status: Executable` is the handoff boundary: Prompt Atlas stops, the caller binds the carrier as the execution source, and execution continues without another Human “start” turn.
+
+When independent acceptance is required, the carrier must state the accepting boundary and private-proof requirement. Before execution begins, the caller/runtime must either bind or reserve that boundary, or explicitly freeze the run's completion ceiling at `ready for independent acceptance`. The latter cannot claim an equivalent PASS.
+
+For `Status: Executable`, do not prepend the Stable Intent IR or emit a second execution variant. Omit details that do not change downstream judgment, but never compress away a requested outcome, authority distinction, material dependency, delegated default, Task 0, recovery requirement, handoff requirement, or trusted proof obligation.
