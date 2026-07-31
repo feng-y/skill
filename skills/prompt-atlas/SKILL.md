@@ -10,7 +10,7 @@ Prompt Atlas is stable autonomous taskbook generation with one stronger front en
 1. **route Unknown explicitly;**
 2. **do not compile vague intent into execution.**
 
-Human owns the result and confirmed boundaries. Prompt Atlas clarifies, researches, writes the taskbook, and stops at handoff. The Executor owns implementation How. An independent Acceptor owns final judgment when required.
+Human owns the result and confirmed boundaries. Prompt Atlas clarifies, researches, writes and hands off the taskbook, then evaluates the returned result. The Executor owns implementation How. A fresh Acceptor owns final judgment when independence is required.
 
 ## Flow
 
@@ -54,11 +54,13 @@ Stable Intent, confirmed boundaries, and protected proof remain binding. The Exe
 
 ### 4. Handoff
 
-Return the taskbook when the user asks for a prompt, brief, contract, or taskbook. A direct request to complete work grants compile-and-run authority: after `Status: Executable`, the existing runtime continues without another start turn.
+Return the taskbook when the user asks for a prompt, brief, contract, or taskbook. A direct request to complete work grants compile-and-run authority: after `Status: Executable`, the existing runtime continues without another start turn. Prompt Atlas does not supervise live execution.
 
 ### 5. Acceptance
 
-Local task PASS is not complete-Goal PASS. Protect judges and baselines, use reverse validation when checks can fail silently, and bind fresh or independent acceptance when self-attestation is insufficient. Read [completion-trust.md](references/completion-trust.md) only for these cases.
+When the result returns, rerun the visible acceptance and any fresh/private checks available, then report PASS or the exact residual. If independent judgment is required, bind a fresh Acceptor; if no accepting environment exists, stop at `ready for independent acceptance`.
+
+Local task PASS is not complete-Goal PASS. Protect judges and baselines and use reverse validation when checks can fail silently. Read [completion-trust.md](references/completion-trust.md) only for these cases.
 
 ## Output
 
