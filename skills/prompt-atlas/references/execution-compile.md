@@ -23,6 +23,8 @@ Use an allowed write-scope whitelist. Name protected tests, schemas, acceptance 
 
 Record evidenced facts and baselines; mark unverified claims.
 
+Here, the implementation note means the repository or runtime's existing implementation record, or its normal equivalent; Prompt Atlas does not require a new filename or artifact.
+
 Task 0 runs before material change. It binds repo/worktree/target, verifies critical commands and judges, and detects no-op checks. If its findings change execution, record the evidence and resulting route in the implementation note. If reality differs:
 
 - replan when Goal and boundaries hold;
@@ -61,7 +63,7 @@ The Executor may adapt remaining work inside Stable Intent and protected proof; 
 
 Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, truthful residuals or blockers, and a stop budget or truthful blocker. Local task PASS is not complete-Goal PASS. Bind independent acceptance when required; otherwise cap at `ready for independent acceptance`.
 
-Keep one taskbook small enough to close as one execution effort. Otherwise split it into independently completable taskbooks.
+One taskbook must close the declared delivery in one execution effort. If it cannot, return to Intent Take to narrow the Human-owned delivery; do not split the Goal into multiple taskbooks.
 
 ## Research and decision work
 
