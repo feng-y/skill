@@ -68,7 +68,7 @@ Local task PASS is not complete-Goal PASS. Protect judges and baselines and use 
 
 Emit one state with enough information for the next actor to continue:
 
-- **`Status: Unresolved Intent`** — the current understanding, the unresolved Goal fork or consequence, and the smallest remaining Human decision or evidence probe;
+- **`Status: Unresolved Intent`** — the current understanding, the unresolved Goal fork or material consequence, and the smallest remaining Human decision or evidence probe;
 - **`Status: Blocked`** — the exact non-intent blocker and the condition that would unblock safe progress;
 - **`Status: Executable`** — one grounded autonomous taskbook; when the user asked to complete the work, continue under Handoff after compilation.
 
