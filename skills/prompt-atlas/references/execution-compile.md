@@ -4,10 +4,9 @@ Use only after Stable Intent. Produce one compact taskbook an Executor can run w
 
 ## Opening
 
-State five things briefly:
+State four things briefly:
 
-- this taskbook is the execution source; unresolved items go to `BLOCKED.md` while independent work continues;
-- after interruption, read `PROGRESS.md` and resume;
+- this taskbook is the execution source;
 - Why and the completed world;
 - priority order when requirements conflict;
 - hard rules versus guidance.
@@ -24,7 +23,9 @@ Use an allowed write-scope whitelist. Name protected tests, schemas, acceptance 
 
 Record evidenced facts and baselines; mark unverified claims.
 
-Task 0 runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, and writes Goal, order, largest risk, and disagreement to `PROGRESS.md`. If reality differs:
+Here, the implementation note means the repository or runtime's existing implementation record, or its normal equivalent; Prompt Atlas does not require a new filename or artifact.
+
+Task 0 runs before material change. It binds repo/worktree/target, verifies critical commands and judges, and detects no-op checks. If its findings change execution, record the evidence and resulting route in the implementation note. If reality differs:
 
 - replan when Goal and boundaries hold;
 - park only the affected branch while safe work remains;
@@ -49,20 +50,20 @@ Keep simple work linear. Expand a graph only for real branches, dependencies, sh
 
 ## 5. Rules
 
-- update `PROGRESS.md` after material checkpoints;
-- record blocker, attempts, missing condition, and safe remaining work in `BLOCKED.md`;
+- use one implementation note for material decisions, evidence-changing deviations, replans, and blockers; avoid routine progress narration and separate progress or blocker files;
+- when blocked, record the blocker, relevant evidence or attempts, the resolving condition, and any safe remaining work;
 - do not skip tests, weaken assertions, narrow the judged population, mock away the object, swallow failures, edit the judge, or accept a lower baseline unless Stable Intent requires it;
 - every retry changes the hypothesis or approach; stop known-bad routes immediately; three failures against one acceptance condition in one route force replan, branch switch, rollback, `BLOCK`, or `ESCALATE`;
 - roll back unauthorized regression and report failure truthfully;
 - follow repository branch, PR, and pre-submit rules.
 
-The Executor may adapt remaining work inside Stable Intent and protected proof; record material replans in `PROGRESS.md`.
+The Executor may adapt remaining work inside Stable Intent and protected proof; record material replans in the implementation note.
 
 ## 6. Completion conditions
 
-Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, residuals, `BLOCKED.md` contents including “none”, and a stop budget or truthful blocker. Local task PASS is not complete-Goal PASS. Bind independent acceptance when required; otherwise cap at `ready for independent acceptance`.
+Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, truthful residuals or blockers, and a stop budget or truthful blocker. Local task PASS is not complete-Goal PASS. Bind independent acceptance when required; otherwise cap at `ready for independent acceptance`.
 
-Keep one taskbook small enough to close as one execution effort. Otherwise split it into independently completable taskbooks.
+One taskbook must close the declared delivery in one execution effort. If it cannot, return to Intent Take to narrow the Human-owned delivery; do not split the Goal into multiple taskbooks.
 
 ## Research and decision work
 
