@@ -17,7 +17,7 @@ Keep distinct:
 - **inference** — model interpretation or recommendation;
 - **Unknown** — an unsettled consequence.
 
-Evidence cannot silently weaken or replace Human intent.
+Evidence may prove a proposed route wrong; it cannot silently rewrite what the Human asked for.
 
 ## Unknown routing
 
