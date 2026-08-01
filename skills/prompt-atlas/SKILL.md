@@ -66,10 +66,10 @@ Local task PASS is not complete-Goal PASS. Protect judges and baselines and use 
 
 ## Output
 
-Emit one state:
+Emit one state with enough information for the next actor to continue:
 
-- **`Status: Unresolved Intent`** — the smallest remaining Human decision or probe;
-- **`Status: Blocked`** — the exact non-intent blocker and resolving condition;
-- **`Status: Executable`** — one autonomous taskbook.
+- **`Status: Unresolved Intent`** — the current understanding, the unresolved Goal fork or consequence, and the smallest remaining Human decision or evidence probe;
+- **`Status: Blocked`** — the exact non-intent blocker and the condition that would unblock safe progress;
+- **`Status: Executable`** — one grounded autonomous taskbook; when the user asked to complete the work, continue under Handoff after compilation.
 
 Prompt Atlas does not add a scheduler, manager daemon, workflow owner, or other control layer.
