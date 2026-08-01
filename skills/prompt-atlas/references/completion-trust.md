@@ -13,6 +13,6 @@ Attach local proof to each task. Local PASS may unlock dependent work; it does n
 
 ## Independent acceptance
 
-Use a fresh or independent Acceptor (a judge that did not do the work) when Executor self-attestation remains gameable or incomplete. Keep hidden cases and private proof outside the Executor-visible taskbook. Bind or reserve the accepting boundary before execution; if it is unavailable, the highest honest result is `ready for independent acceptance`, not `PASS`.
+Use an independent Acceptor (a judge that did not do the work) when Executor self-attestation remains gameable or incomplete. Keep hidden cases and private proof outside the Executor-visible taskbook. Bind or reserve the accepting boundary before execution; if it is unavailable, the highest honest result is `ready for independent acceptance`, not `PASS`.
 
 Compromised, fabricated, skipped, or stale proof is unmet. Non-PASS routes to new evidence, a materially different plan, a truthful blocker, or the relevant Human boundary; it is never rewritten as completion.
