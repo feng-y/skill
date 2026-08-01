@@ -60,7 +60,7 @@ Return the taskbook when the user asks for a prompt, brief, contract, or taskboo
 
 ### 5. Acceptance
 
-When the result returns, rerun the visible acceptance and any fresh/private checks available, then report PASS or the exact residual. If independent judgment is required—especially when proof can be gamed—the Executor may supply evidence but cannot be the only judge; bind an independent Acceptor. If no accepting environment exists, stop at `ready for independent acceptance`.
+When the result returns, rerun the visible acceptance and any available private checks, then report PASS or the exact residual. If independent judgment is required—especially when proof can be gamed—the Executor may supply evidence but cannot be the only judge; bind an independent Acceptor. If no accepting environment exists, stop at `ready for independent acceptance`.
 
 Local task PASS is not complete-Goal PASS. Protect judges and baselines and use reverse validation when checks can fail silently. Read [completion-trust.md](references/completion-trust.md) only for these cases.
 
