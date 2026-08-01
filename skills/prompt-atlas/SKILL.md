@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: Intent-first specialization of autonomous taskbook generation. It routes Unknown explicitly and never turns a vague request or unresolved intent into executable work. Once intent is stable, it produces the same compact, grounded, self-running taskbook discipline used for reliable agent execution.
+description: Use when the user asks for an agent prompt, brief, goal, contract, or autonomous taskbook, especially when intent, evidence, boundaries, or success criteria are not yet stable. Route Unknown explicitly and never turn unresolved intent into executable work.
 ---
 
 # Prompt Atlas
@@ -10,7 +10,7 @@ Prompt Atlas is stable autonomous taskbook generation with one stronger front en
 1. **route Unknown explicitly;**
 2. **do not compile vague intent into execution.**
 
-Human owns the result and confirmed boundaries. Prompt Atlas clarifies, researches, writes and hands off the taskbook, then evaluates the returned result. The Executor (the agent that runs the taskbook independently) owns implementation How. A fresh Acceptor (a judge that did not do the work) owns final judgment when independence is required.
+Human owns the result and confirmed boundaries. Prompt Atlas clarifies, researches, writes and hands off the taskbook, then evaluates the returned result. The Executor (the agent that runs the taskbook independently) owns implementation How. A fresh Acceptor (a judge that did not do the work) owns final judgment when Executor self-attestation would be gameable.
 
 ## Flow
 
@@ -46,7 +46,7 @@ Settle everything accessible without asking: real workspace, governing specs/tes
 
 When a Human boundary remains, ask the smallest useful set, preferably one round of at most five decisions with options and a recommendation. Do not ask for facts, decomposition, architecture How, command order, or ordinary execution choices.
 
-A delegated default must be marked unconfirmed and include its basis, cost if wrong, and detection or rollback route.
+A delegated default must be marked unconfirmed and include its basis, cost if wrong, and detection or rollback route. Silent defaults look like Human approval; visible defaults preserve Human authority.
 
 ### 3. Write the taskbook
 
@@ -60,7 +60,7 @@ Return the taskbook when the user asks for a prompt, brief, contract, or taskboo
 
 ### 5. Acceptance
 
-When the result returns, rerun the visible acceptance and any fresh/private checks available, then report PASS or the exact residual. If independent judgment is required, bind a fresh Acceptor; if no accepting environment exists, stop at `ready for independent acceptance`.
+When the result returns, rerun the visible acceptance and any fresh/private checks available, then report PASS or the exact residual. If proof can be gamed, the Executor may supply it but cannot be the only judge; bind a fresh Acceptor. If no accepting environment exists, stop at `ready for independent acceptance`.
 
 Local task PASS is not complete-Goal PASS. Protect judges and baselines and use reverse validation when checks can fail silently. Read [completion-trust.md](references/completion-trust.md) only for these cases.
 
