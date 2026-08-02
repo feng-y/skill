@@ -11,8 +11,20 @@ Use when a task can appear complete without proving the requested result.
 
 Attach local proof to each task. Local PASS may unlock dependent work; it does not close the complete Goal. Upstream changes invalidate downstream evidence when they affect what it proved.
 
+## Private acceptance
+
+Before Handoff, derive and reserve a small private acceptance set—normally two or three checks—against the public Goal, boundaries, and completion properties. Freeze it before execution. Private checks may use unlisted samples or a different observation route, never hidden requirements.
+
+Keep the set outside the Executor-visible taskbook and, where runtime separation permits, in compiler/Acceptor context or another Executor-inaccessible surface. If the runtime cannot hide it from the Executor, do not claim private proof: either execute in a separated context, or treat the checks as visible and require other protected or independent proof where independence remains necessary.
+
+After execution, rerun the visible judges and then the reserved checks before final PASS. A failed private check is an exact residual against the public contract, not a new requirement.
+
 ## Independent acceptance
 
-Use an independent Acceptor (a judge that did not do the work) when Executor self-attestation remains gameable or incomplete. Keep hidden cases and private proof outside the Executor-visible taskbook. Bind or reserve the accepting boundary before execution; if it is unavailable, the highest honest result is `ready for independent acceptance`, not `PASS`.
+An Acceptor is independent when it did not materially implement the work and evaluates the authoritative taskbook, accepting environment, and protected judges directly rather than accepting the Executor's conclusion. Model or provider identity alone neither establishes nor defeats independence.
+
+Use an independent Acceptor when Executor self-attestation remains gameable or incomplete, including when intended-private checks were visible and no other protected judge closes the Goal. Bind it, or reserve the accepting boundary, before execution. Executor implementation notes and evidence are input, not final judgment.
+
+If the required Acceptor or accepting environment is unavailable, return a self-contained acceptance handoff with the authoritative taskbook, Executor result and evidence, visible acceptance, reserved acceptance checks and their visibility, protected judges and baselines, and the required final report—PASS or the exact residual. The highest honest result remains `ready for independent acceptance`, not `PASS`.
 
 Compromised, fabricated, skipped, or stale proof is unmet. Non-PASS routes to new evidence, a materially different plan, a truthful blocker, or the relevant Human boundary; it is never rewritten as completion.
