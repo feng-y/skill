@@ -64,7 +64,7 @@ Return the taskbook when the user asks for a prompt, brief, contract, or taskboo
 
 When the result returns, bind an independent Acceptor if the same agent implemented the work or Executor self-attestation remains gameable or incomplete. Prompt Atlas or that Acceptor reruns the visible acceptance and reserved private checks, then reports PASS or the exact residual. Executor evidence is input, not final judgment.
 
-If no accepting environment exists, stop at `ready for independent acceptance` and return a self-contained acceptance handoff for a non-implementing Acceptor: the authoritative taskbook, Executor result and evidence, visible acceptance, reserved private checks, protected judges and baselines, and the required final report—PASS or the exact residual.
+If the required Acceptor or accepting environment is unavailable, stop at `ready for independent acceptance` and return a self-contained acceptance handoff for a non-implementing Acceptor: the authoritative taskbook, Executor result and evidence, visible acceptance, reserved private checks, protected judges and baselines, and the required final report—PASS or the exact residual.
 
 Local task PASS is not complete-Goal PASS. Protect judges and baselines and use reverse validation when checks can fail silently. Read [completion-trust.md](references/completion-trust.md) only for these cases.
 
