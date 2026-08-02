@@ -21,6 +21,6 @@ After execution, rerun the visible judges and then the reserved private checks b
 
 Use an independent Acceptor (a judge that did not do the work) when the same agent implemented the work or Executor self-attestation remains gameable or incomplete. Bind it, or reserve the accepting boundary, before execution. Executor implementation notes and evidence are input, not final judgment.
 
-If the accepting environment is unavailable, return a self-contained acceptance handoff with the authoritative taskbook, Executor result and evidence, visible acceptance, reserved private checks, protected judges and baselines, and the required final report—PASS or the exact residual. The highest honest result remains `ready for independent acceptance`, not `PASS`.
+If the required Acceptor or accepting environment is unavailable, return a self-contained acceptance handoff with the authoritative taskbook, Executor result and evidence, visible acceptance, reserved private checks, protected judges and baselines, and the required final report—PASS or the exact residual. The highest honest result remains `ready for independent acceptance`, not `PASS`.
 
 Compromised, fabricated, skipped, or stale proof is unmet. Non-PASS routes to new evidence, a materially different plan, a truthful blocker, or the relevant Human boundary; it is never rewritten as completion.
