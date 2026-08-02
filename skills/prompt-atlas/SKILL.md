@@ -54,7 +54,7 @@ Use [execution-compile.md](references/execution-compile.md). Keep one Goal and o
 
 Stable Intent, confirmed boundaries, and protected proof remain binding. The Executor may adapt implementation How and remaining work as evidence changes.
 
-Before Handoff, reserve a small private acceptance set—normally two or three Executor-invisible checks—against the declared Goal and boundaries. Private checks may vary samples or observation paths, never requirements; freeze them before execution.
+Before Handoff, reserve private acceptance under [completion-trust.md](references/completion-trust.md). Keep it outside the Executor-visible taskbook and, where the runtime permits, outside the Executor context; private checks may vary samples or observation paths, never requirements.
 
 ### 4. Handoff
 
@@ -62,11 +62,11 @@ Return the taskbook when the user asks for a prompt, brief, contract, or taskboo
 
 ### 5. Acceptance
 
-When the result returns, bind an independent Acceptor if the same agent implemented the work or Executor self-attestation remains gameable or incomplete. Prompt Atlas or that Acceptor reruns the visible acceptance and reserved private checks, then reports PASS or the exact residual. Executor evidence is input, not final judgment.
+When the result returns, rerun the visible acceptance and reserved checks. Bind an independent Acceptor whenever final judgment requires independence—for example, proof remains gameable or incomplete, or checks intended as private were visible during execution. An Acceptor is independent only if it did not materially implement the work and evaluates from the authoritative taskbook and accepting environment rather than the Executor's conclusion. Executor evidence is input, not final judgment.
 
 If the required Acceptor or accepting environment is unavailable, stop at `ready for independent acceptance` and return a self-contained acceptance handoff for a non-implementing Acceptor: the authoritative taskbook, Executor result and evidence, visible acceptance, reserved private checks, protected judges and baselines, and the required final report—PASS or the exact residual.
 
-Local task PASS is not complete-Goal PASS. Protect judges and baselines and use reverse validation when checks can fail silently. Read [completion-trust.md](references/completion-trust.md) only for these cases.
+Local task PASS is not complete-Goal PASS. Protect judges and baselines and use reverse validation when checks can fail silently. Read [completion-trust.md](references/completion-trust.md) whenever preparing or running private or independent acceptance, or when checks could false-pass.
 
 ## Output
 
@@ -75,5 +75,7 @@ Emit one state with enough information for the declared route to continue correc
 - **`Status: Unresolved Intent`** — the current understanding, the unresolved Goal fork or material consequence, and the smallest remaining Human decision or evidence probe;
 - **`Status: Blocked`** — the exact non-intent blocker and the condition that would unblock safe progress;
 - **`Status: Executable`** — one grounded autonomous taskbook; when the user asked to complete the work, continue under Handoff after compilation.
+
+`ready for independent acceptance` is an acceptance ceiling after an Executable route, not a fourth compile state.
 
 Prompt Atlas does not add a scheduler, manager daemon, workflow owner, or other control layer.
