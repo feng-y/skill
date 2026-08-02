@@ -32,7 +32,7 @@ Task 0 runs before material change. It binds repo/worktree/target, verifies crit
 - block with the exact resolving condition when no safe work remains;
 - return to Intent Take when Goal or a confirmed boundary would change.
 
-Reuse fresh evidence; do not repeat discovery ceremonially.
+Reuse evidence whose basis remains valid; do not repeat discovery ceremonially.
 
 ## 4. Task N
 
@@ -51,7 +51,7 @@ Keep simple work linear. Expand a graph only for real branches, dependencies, sh
 ## 5. Rules
 
 - use one implementation note for material decisions, evidence-changing deviations, replans, and blockers; avoid routine progress narration and separate progress or blocker files;
-- after any interruption, session change, or Executor handoff, read this taskbook and any existing implementation note before acting; recover still-valid decisions, evidence, blockers, and remaining work, and do not repeat still-fresh discovery or completed work;
+- after any interruption, session change, or Executor handoff, read this taskbook and any existing implementation note before acting; recover still-valid decisions, evidence, blockers, and remaining work, and do not repeat discovery or completed work unless an upstream change or new evidence invalidated what it proved;
 - when blocked, record the blocker, relevant evidence or attempts, the resolving condition, and any safe remaining work;
 - do not skip tests, weaken assertions, narrow the judged population, mock away the object, swallow failures, edit the judge, or accept a lower baseline unless Stable Intent requires it;
 - every retry changes the hypothesis or approach; stop known-bad routes immediately; three failures against one acceptance condition in one route force replan, branch switch, rollback, `BLOCK`, or `ESCALATE`;
