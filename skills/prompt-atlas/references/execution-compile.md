@@ -51,6 +51,7 @@ Keep simple work linear. Expand a graph only for real branches, dependencies, sh
 ## 5. Rules
 
 - use one implementation note for material decisions, evidence-changing deviations, replans, and blockers; avoid routine progress narration and separate progress or blocker files;
+- after any interruption, session change, or Executor handoff, read this taskbook and any existing implementation note before acting; recover still-valid decisions, evidence, blockers, and remaining work, and do not repeat still-fresh discovery or completed work;
 - when blocked, record the blocker, relevant evidence or attempts, the resolving condition, and any safe remaining work;
 - do not skip tests, weaken assertions, narrow the judged population, mock away the object, swallow failures, edit the judge, or accept a lower baseline unless Stable Intent requires it;
 - every retry changes the hypothesis or approach; stop known-bad routes immediately; three failures against one acceptance condition in one route force replan, branch switch, rollback, `BLOCK`, or `ESCALATE`;
@@ -63,7 +64,7 @@ The Executor may adapt remaining work inside Stable Intent and protected proof; 
 
 Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, truthful residuals or blockers, and a stop budget or truthful blocker. Local task PASS is not complete-Goal PASS. Bind independent acceptance when required; otherwise cap at `ready for independent acceptance`.
 
-One taskbook must close the declared delivery in one execution effort. If it cannot, return to Intent Take to narrow the Human-owned delivery; do not split the Goal into multiple taskbooks.
+One taskbook must close the declared delivery in one execution effort. One execution effort means one authoritative taskbook and one closed delivery, not one Agent, one session, or one linear run. The Executor may resume sessions, delegate, parallelize, or use a dependency graph when useful while preserving one Goal, clear write ownership, and complete-Goal acceptance. If the delivery cannot close under that contract, return to Intent Take to narrow the Human-owned delivery; do not split the Goal into multiple taskbooks.
 
 ## Research and decision work
 
