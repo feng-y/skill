@@ -54,7 +54,7 @@ Use [execution-compile.md](references/execution-compile.md). Keep one Goal and o
 
 Stable Intent, confirmed boundaries, and protected proof remain binding. The Executor may adapt implementation How and remaining work as evidence changes.
 
-Before Handoff, reserve a small private acceptance set—normally two or three Executor-invisible checks—against the declared Goal and boundaries. Private checks may vary samples or observation paths, never requirements; freeze them before execution. If visible judges already prove the Goal directly and exhaustively, record that instead of inventing filler.
+Before Handoff, reserve a small private acceptance set—normally two or three Executor-invisible checks—against the declared Goal and boundaries. Private checks may vary samples or observation paths, never requirements; freeze them before execution.
 
 ### 4. Handoff
 
@@ -62,9 +62,9 @@ Return the taskbook when the user asks for a prompt, brief, contract, or taskboo
 
 ### 5. Acceptance
 
-When the result returns, bind an independent Acceptor if Prompt Atlas did the work or Executor self-attestation remains gameable or incomplete. Prompt Atlas or that Acceptor reruns the visible acceptance and reserved private checks, then reports PASS or the exact residual. Executor evidence is input, not final judgment.
+When the result returns, bind an independent Acceptor if the same agent implemented the work or Executor self-attestation remains gameable or incomplete. Prompt Atlas or that Acceptor reruns the visible acceptance and reserved private checks, then reports PASS or the exact residual. Executor evidence is input, not final judgment.
 
-If no accepting environment exists, stop at `ready for independent acceptance` and return a self-contained acceptance handoff for a non-implementing Acceptor: the authoritative taskbook, Executor result and evidence, visible acceptance, reserved private checks, protected judges and baselines, and the required PASS or exact-residual report.
+If no accepting environment exists, stop at `ready for independent acceptance` and return a self-contained acceptance handoff for a non-implementing Acceptor: the authoritative taskbook, Executor result and evidence, visible acceptance, reserved private checks, protected judges and baselines, and the required final report—PASS or the exact residual.
 
 Local task PASS is not complete-Goal PASS. Protect judges and baselines and use reverse validation when checks can fail silently. Read [completion-trust.md](references/completion-trust.md) only for these cases.
 
