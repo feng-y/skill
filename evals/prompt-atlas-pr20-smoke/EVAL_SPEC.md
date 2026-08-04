@@ -2,28 +2,30 @@
 
 ## Claim boundary
 
-This is a current-head compiler smoke for PR #20. It tests taskbook structure,
-conditional graph compilation, proportionality, routing, and completion-trust
-regressions.
+This is a current-head contract and compiler smoke for PR #20. It tests taskbook
+structure, conditional graph compilation, proportionality, routing, and
+completion-trust regressions.
 
 - Inputs are self-contained and do not require repository access.
 - Artifacts were compiled in one GPT-5.6 Thinking conversation with each case
   treated as isolated input.
-- `check_artifacts.py` performs deterministic structure and forbidden-shape
-  checks over the frozen outputs.
+- The narrow edge, frugality, and pre-Handoff refinements were checked against all
+  six frozen artifacts; no artifact required a semantic change.
+- `check_artifacts.py` performs deterministic source-contract, structure, and
+  forbidden-shape checks over the current references and frozen outputs.
 - No executor implementation, hidden oracle, statistical sampling, or independent
   model/session isolation was available.
 
 The eval can reject PR #20 for covered compiler regressions. It cannot establish
 production completion rate, broad Leader parity, or execution correctness.
 
-## Evaluated snapshot
+## Evaluated compiler snapshot
 
-- PR head: `be39002e2580ce83f74036e1777f98e9ec5b879d`
+- source head: `66e3bc4344390dc1ce22390d11a1e0bf37efe9d8`
 - `skills/prompt-atlas/SKILL.md`: `9ae3a77ed4b135216921044c7339df92716f5801`
 - `references/contract-anatomy.md`: `81f8b028e0527f69ff34b44d30d62b4b393f8c65`
-- `references/execution-compile.md`: `f4830aee911640096e85e8f6fdc1c9e3c8204bbe`
-- `references/execution-graph.md`: `f7bfabf0dca1c780bcf522aed0f411fd9803d400`
+- `references/execution-compile.md`: `800d0cfb6719af9bd9f4a52fda9d9a891afb3753`
+- `references/execution-graph.md`: `7530fea6fffcea9af3c83ab1f77bbdf85061cd41`
 - `references/completion-trust.md`: `15ff2fb6b9b8441a02649b087cae19437cea70f3`
 
 ## Cases
@@ -87,20 +89,30 @@ private-check contents in the executor-visible taskbook.
    Decisions; Boundaries and Authority; Current Reality and Task 0; Execution;
    Execution Rules and Continuity; Completion and Acceptance.
 2. Simple or broad-linear work remains linear and does not expose Graph language.
-3. Real dependency structure is compiled into ordinary Tasks with only material
+3. A direct dependency edge exists only for result consumption, safe-execution
+   prerequisite, or downstream evidence invalidation; transitive and merely
+   sequential edges are omitted.
+4. Real dependency structure is compiled into ordinary Tasks with only material
    prerequisites, parallel branches, ownership, rejoin, and invalidation.
-4. One Goal remains one authoritative taskbook; no fixed Agent topology or
+5. One Goal remains one authoritative taskbook; no fixed Agent topology or
    multi-taskbook fan-out is introduced.
-5. `None` is used rather than inventing delegated decisions.
-6. Unresolved intent does not become executable work.
-7. A branch-local blocker does not become global Blocked while safe work remains.
-8. False-green proof does not become PASS; independent acceptance and private
+6. `None` is used rather than inventing delegated decisions.
+7. Unresolved intent does not become executable work.
+8. A branch-local blocker does not become global Blocked while safe work remains.
+9. False-green proof does not become PASS; independent acceptance and private
    check visibility remain correct.
+10. The taskbook contains only information needed for future decisions,
+    execution, recovery, or complete-Goal proof; global facts are not repeated per
+    Task and inactive detail is not expanded.
+11. Every Executable artifact exposes a Task that can begin directly or after its
+    required Task 0, and the compiler does not emit scheduler, lease, or fixed
+    Agent topology.
 
 Decision:
 
 - `PASS`: all deterministic checks pass and manual rubric review finds no
   trust-critical regression.
 - `REVISE`: any wrong compile state, section-order failure, unnecessary graph,
-  missing join/ownership/invalidation, multi-taskbook expansion, or false PASS.
+  ungrounded edge, missing ready root, join/ownership/invalidation failure,
+  multi-taskbook expansion, or false PASS.
 - `INCONCLUSIVE`: artifacts or checks cannot be reproduced.
