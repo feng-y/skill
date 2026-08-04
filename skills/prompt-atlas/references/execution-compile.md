@@ -4,6 +4,8 @@ Use only after Stable Intent. Produce one authoritative taskbook an Executor can
 
 Render the final taskbook in the exact order below. Keep each section's authority and evidence role distinct; vary detail with the work, but do not merge, reorder, or hide required content in another section.
 
+For research, selection, or decision work, use the same fixed sections. In Execution, use evidence-producing investigations or decisions instead of implementation Tasks. Evaluate conclusion quality, provenance, counterevidence, and unresolved alternatives; do not add another output section.
+
 ## Contract Header
 
 State six things briefly:
@@ -27,7 +29,7 @@ If no such choice remains, state `None`; do not invent a decision to fill the se
 
 Use an allowed write-scope whitelist. Name protected tests, schemas, acceptance scripts, CI, baselines, and other judges. Call out tempting side work and irreversible actions.
 
-State what the Executor may decide or adapt inside Stable Intent and protected proof. State the route when work would exceed that authority: obtain explicit Human authority for a high-risk or irreversible action, return to Intent Take when the Goal or a confirmed boundary would change, or block when no safe work remains.
+State what the Executor may decide or adapt inside Stable Intent and protected proof. State the route when work would exceed that authority: record a blocker pending explicit Human authority for a high-risk or irreversible action, return to Intent Take when the Goal or a confirmed boundary would change, or block when no safe work remains.
 
 ## 3. Current Reality and Task 0
 
@@ -74,10 +76,8 @@ The Executor may adapt remaining work inside Stable Intent and protected proof; 
 
 Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, truthful residuals or blockers, and a stop budget or truthful blocker. Local Task PASS is not complete-Goal PASS. Bind independent acceptance when required; otherwise cap at `ready for independent acceptance`.
 
-The final report states PASS or non-PASS, the delivered result, the evidence that supports the judgment, exact residuals or blockers, and the next legitimate route. Do not replace evidence with activity narration.
+Do not expose reserved private checks in the taskbook. State visible acceptance and any required independent accepting boundary; private check contents remain under [completion-trust.md](completion-trust.md).
+
+The final report states `PASS`, `ready for independent acceptance`, or the exact non-PASS route; the delivered result; the evidence that supports the judgment; exact residuals or blockers; and the next legitimate route. Do not replace evidence with activity narration.
 
 One taskbook must close the declared delivery in one execution effort. One execution effort means one authoritative taskbook and one closed delivery, not one Agent, one session, or one linear run. The Executor may resume sessions, delegate, parallelize, or use a dependency graph when useful while preserving one Goal, clear write ownership, and complete-Goal acceptance. If the delivery cannot close under that contract, return to Intent Take to narrow the Human-owned delivery; do not split the Goal into multiple taskbooks.
-
-## Research and decision work
-
-Use the same fixed section order with a bounded learning Goal. Replace implementation Tasks with evidence-producing investigations or decisions. Each conclusion needs a source/date or reproducible probe; fabricated citations, unrun “measurements”, and filler findings are failure. A well-evidenced dead end may be valid. Stop at the stated budget and deliver the best-supported conclusion plus unresolved alternatives.
