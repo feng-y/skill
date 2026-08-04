@@ -10,7 +10,7 @@ Prompt Atlas is stable autonomous taskbook generation with one stronger front en
 1. **route Unknown explicitly;**
 2. **do not compile vague intent into execution.**
 
-Human owns the result and confirmed boundaries. Prompt Atlas clarifies, researches, writes and hands off the taskbook, then evaluates the returned result. The Executor (the agent that runs the taskbook independently) owns implementation How. An independent Acceptor (a judge that did not do the work) owns final judgment when independence is required, especially when Executor self-attestation would be gameable.
+Human owns the requested result, acceptance requirements, and confirmed boundaries. Prompt Atlas clarifies, researches, writes and hands off the taskbook, then evaluates the returned result. The Executor (the agent that runs the taskbook independently) owns implementation How and may adapt implementation scope and remaining work inside the stable contract. Execution evidence may revise facts, feasibility, implementation work, and proof needs; it may not silently redefine the requested result. When evidence makes the Goal, acceptance requirements, or a confirmed boundary unsettled, return to Intent Take. An independent Acceptor (a judge that did not do the work) owns final judgment when independence is required, especially when Executor self-attestation would be gameable.
 
 ## Flow
 
@@ -46,15 +46,17 @@ Settle everything accessible without asking: real workspace, governing specs/tes
 
 When a Human boundary remains, ask the smallest useful set, preferably one round of at most five decisions with options and a recommendation. Do not ask for facts, decomposition, architecture How, command order, or ordinary execution choices.
 
-A delegated default must be marked unconfirmed and include its basis, cost if wrong, and detection or rollback route. Silent defaults look like Human approval; visible defaults preserve Human authority.
+A delegated default must be marked unconfirmed and include its basis, cost if wrong, and detection or rollback route. It may resolve only a reversible execution choice; it may not change the Goal, confirmed boundaries, acceptance requirements, or Human authority. Silent defaults look like Human approval; visible defaults preserve Human authority.
 
 ### 3. Write the taskbook
 
-Use [execution-compile.md](references/execution-compile.md). Keep one Goal and one compact taskbook that closes the declared delivery in one execution effort. If it cannot, return to Intent Take to narrow the Human-owned delivery rather than compiling multiple taskbooks or an unbounded graph.
+Use [execution-compile.md](references/execution-compile.md) and preserve its fixed contract order. Keep section semantics strict and detail proportional; expose delegated decisions before execution so the Human can inspect compiler-owned defaults before Handoff.
+
+Keep one Goal and one compact taskbook that closes the declared delivery in one execution effort. If it cannot, return to Intent Take to narrow the Human-owned delivery rather than compiling multiple taskbooks or an unbounded graph.
 
 Stable Intent, confirmed boundaries, and protected proof remain binding. The Executor may adapt implementation How and remaining work as evidence changes.
 
-Before Handoff, reserve private acceptance under [completion-trust.md](references/completion-trust.md). Keep it outside the Executor-visible taskbook and, where the runtime permits, outside the Executor context; private checks may vary samples or observation paths, never requirements.
+Before Handoff, reserve private acceptance under [completion-trust.md](references/completion-trust.md) only when visible proof could false-pass, remain gameable, or fail to close the Goal. Otherwise rely on protected visible judges. Keep any reserved checks outside the Executor-visible taskbook and, where the runtime permits, outside the Executor context; private checks may vary samples or observation paths, never requirements.
 
 ### 4. Handoff
 
@@ -62,9 +64,9 @@ Return the taskbook when the user asks for a prompt, brief, contract, or taskboo
 
 ### 5. Acceptance
 
-When the result returns, rerun the visible acceptance and reserved checks. Bind an independent Acceptor whenever final judgment requires independence—for example, proof remains gameable or incomplete, including because checks intended as private were visible and no other protected judge closes the Goal. An Acceptor is independent only if it did not materially implement the work and evaluates from the authoritative taskbook and accepting environment rather than the Executor's conclusion. Executor evidence is input, not final judgment.
+When the result returns, rerun the visible acceptance and any reserved checks. Bind an independent Acceptor whenever final judgment requires independence—for example, proof remains gameable or incomplete, including because checks intended as private were visible and no other protected judge closes the Goal. An Acceptor is independent only if it did not materially implement the work and evaluates from the authoritative taskbook and accepting environment rather than the Executor's conclusion. Executor evidence is input, not final judgment.
 
-If the required Acceptor or accepting environment is unavailable, stop at `ready for independent acceptance` and return a self-contained acceptance handoff for a non-implementing Acceptor: the authoritative taskbook, Executor result and evidence, visible acceptance, reserved acceptance checks and their visibility, protected judges and baselines, and the required final report—PASS or the exact residual.
+If the required Acceptor or accepting environment is unavailable, stop at `ready for independent acceptance` and return a self-contained acceptance handoff for a non-implementing Acceptor: the authoritative taskbook, Executor result and evidence, visible acceptance, any reserved acceptance checks and their visibility, protected judges and baselines, and the required final report—PASS or the exact residual.
 
 Local task PASS is not complete-Goal PASS. Protect judges and baselines and use reverse validation when checks can fail silently. Read [completion-trust.md](references/completion-trust.md) whenever preparing or running private or independent acceptance, or when checks could false-pass.
 
