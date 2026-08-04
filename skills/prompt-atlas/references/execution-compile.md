@@ -6,7 +6,7 @@ Render the final taskbook in the exact order below. Keep each section's authorit
 
 Compile only information that constrains a future decision, execution step, or complete-Goal proof. Keep large supporting material by reference; state global facts once and Task-local differences only; omit superseded discussion and inactive detail.
 
-For research, selection, or decision work, use the same fixed sections. In Execution, use evidence-producing investigations or decisions instead of implementation Tasks. Each conclusion needs a source/date or reproducible probe; fabricated citations, unrun “measurements”, and filler findings are failure. A well-evidenced dead end may satisfy a bounded learning Goal. Stop at the stated budget and deliver the best-supported conclusion plus counterevidence and unresolved alternatives; do not add another output section.
+For research, selection, or decision work, use the same fixed sections. In Execution, use evidence-producing investigations or decisions instead of implementation Tasks. Each conclusion needs a source/date or reproducible probe; fabricated citations, unrun “measurements”, and filler findings are failure. A well-evidenced dead end may satisfy a bounded learning Goal. State a budget for bounded learning work, stop at it, and deliver the best-supported conclusion plus counterevidence and unresolved alternatives; do not add another output section.
 
 ## Contract Header
 
@@ -18,6 +18,8 @@ State six things briefly:
 - the declared delivery this taskbook closes;
 - priority order when requirements conflict;
 - hard rules versus guidance.
+
+If the Human or task contract sets an execution stop budget, state it here; otherwise do not invent one for routine work.
 
 ## 1. Delegated Decisions
 
@@ -31,7 +33,7 @@ If no such choice remains, state `None`; do not invent a decision to fill the se
 
 State the initial expected write scope and any protected no-write boundaries. The Executor may expand implementation scope when evidence shows it is necessary to close the Goal, provided confirmed boundaries, protected proof, and authority remain unchanged; record material scope expansion. Explicitly bound dependency additions or upgrades, permissions, external-system writes, destructive actions, and other irreversible side effects. Name protected tests, schemas, acceptance scripts, CI, baselines, and other judges. Call out tempting side work and irreversible actions.
 
-State what the Executor may decide or adapt inside Stable Intent and protected proof. State the route when work would exceed that authority: record a blocker pending explicit Human authority for a high-risk or irreversible action, return to Intent Take when the Goal or a confirmed boundary would change, or block when no safe work remains.
+State what the Executor may decide or adapt inside Stable Intent and protected proof. When an action exceeds declared authority, record a blocker pending explicit Human authority; high-risk or irreversible actions always take this route unless explicitly pre-authorized. Return to Intent Take when the requested result, acceptance, or a confirmed boundary becomes unsettled or would change. Block only when no safe work remains.
 
 ## 3. Current Reality and Task 0
 
@@ -39,13 +41,13 @@ Record evidenced facts and baselines; mark unverified claims.
 
 Here, the implementation note means the repository or runtime's existing implementation record, or its normal equivalent; Prompt Atlas does not require a new filename or artifact.
 
-When Task 0 is required, it runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, confirms the understood Goal, and surfaces any material mismatch among that understanding, the taskbook, and execution reality. Record material findings or resulting route changes in the implementation note. If reality or understanding differs:
+When Task 0 is required, it runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, and surfaces material mismatch between the taskbook's execution assumptions and execution reality. Evidence may revise facts, feasibility, implementation scope, plan, and proof needs; it may not redefine the Goal. Record material findings or resulting route changes in the implementation note. If reality differs:
 
-- correct a clear taskbook misunderstanding and continue without Human input;
-- replan when Goal and boundaries hold;
+- correct a clear taskbook misunderstanding that does not alter the requested result, acceptance, or confirmed boundaries, then continue;
+- replan when the stable contract still holds;
 - park only the affected branch while safe work remains;
 - block with the exact resolving condition when no safe work remains;
-- return to Intent Take when Goal or a confirmed boundary would change.
+- return to Intent Take when the requested result, acceptance, or a confirmed boundary becomes unsettled or would change.
 
 Reuse evidence whose basis remains valid; do not repeat discovery ceremonially.
 
@@ -60,7 +62,7 @@ Keep simple work linear. When real branches, dependencies, shared writes, or a j
 ## 5. Execution Rules
 
 - treat Tasks as the current executable plan, not frozen scope; add, remove, split, merge, or reorder remaining Tasks as evidence changes inside Stable Intent, confirmed boundaries, authority, and protected proof;
-- continue from available safe work until complete-Goal evidence exists, no safe work remains, or the stated stop budget is exhausted; analysis, a plan, local PASS, a completed branch, or partial delivery is not a stopping condition;
+- continue from available safe work until complete-Goal evidence exists, no safe work remains, or any stated stop budget is exhausted; analysis, a plan, local PASS, a completed branch, or partial delivery is not a stopping condition;
 - use one implementation note for material decisions, evidence-changing deviations, replans, scope expansion, and blockers; avoid routine progress narration and separate progress or blocker files;
 - when execution resumes and an implementation note is available, read this taskbook and the note before acting; reuse only still-valid decisions and evidence, and do not repeat completed work unless later changes invalidate what it proved;
 - when blocked, record the blocker, relevant evidence or attempts, the resolving condition, and any safe remaining work;
@@ -71,11 +73,11 @@ Keep simple work linear. When real branches, dependencies, shared writes, or a j
 
 ## 6. Completion and Acceptance
 
-Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, truthful residuals or blockers, and a stop budget or truthful blocker. Local Task PASS is not complete-Goal PASS.
+Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, and truthful residuals or blockers. Respect any stated stop budget; if it is exhausted before completion, report the exact non-PASS residual. Local Task PASS is not complete-Goal PASS.
 
 At complete-Goal acceptance, run the full verification required for the declared delivery after relevant work has converged and any branches have rejoined. Reuse still-valid local and integration evidence, but rerun every judge whose proved property may have been invalidated by later changes.
 
-State visible acceptance and any required independent accepting boundary. Keep reserved private checks outside the taskbook; private and independent acceptance follow [completion-trust.md](completion-trust.md). If a required Acceptor or accepting environment is unavailable, cap the result at `ready for independent acceptance`.
+State visible acceptance and any required independent accepting boundary. Reserve private checks only when visible proof could false-pass, remain gameable, or fail to close the Goal; keep any reserved checks outside the taskbook. Private and independent acceptance follow [completion-trust.md](completion-trust.md). If a required Acceptor or accepting environment is unavailable, cap the result at `ready for independent acceptance`.
 
 The final report states `PASS`, `ready for independent acceptance`, or the exact non-PASS route; the delivered result; the evidence that supports the judgment; exact residuals or blockers; and the next legitimate route. Do not replace evidence with activity narration.
 
