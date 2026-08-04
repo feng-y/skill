@@ -17,40 +17,45 @@ covered cases while adding the intended execution-graph compilation behavior:
 - one Goal remains one authoritative taskbook;
 - branch-local blockers, Unresolved Intent, and independent-acceptance ceilings
   retain their prior semantics;
-- taskbook compilation now explicitly omits inactive detail and runtime control
-  mechanisms.
+- taskbook compilation omits inactive detail and runtime control mechanisms;
+- authority boundaries cover dependency, permission, external-write, destructive,
+  and irreversible operations when file scope alone is insufficient;
+- a required Task 0 exposes Executor misunderstanding before material change.
 
 This is not execution evidence, statistical performance evidence, or broad
 Leader parity.
 
 ## Deterministic smoke
 
-Command:
-
-```bash
-python3 evals/prompt-atlas-pr20-smoke/check_artifacts.py
-```
-
-Observed output:
+Frozen artifact smoke previously produced:
 
 ```text
 PR20_SMOKE_PASS cases=6 executable=5 unresolved=1
 ```
 
+The six artifacts and their shape checks did not change in the final alignment.
+The new current-source assertions were executed separately and produced:
+
+```text
+PR20_CURRENT_SOURCE_CONTRACT_PASS checks=9
+```
+
 The current branch could not be cloned directly in the local runner because DNS
-access to GitHub was unavailable. The same current files were read through the
-GitHub connector, reconstructed locally without modification, and the checked-in
-script was executed successfully.
+access to GitHub was unavailable. Current source files were read through the
+GitHub connector. The final two changes were source-contract refinements; no
+artifact was regenerated or claimed as independent model evidence.
 
-The checker verifies:
+The checked-in checker verifies:
 
-- the current references contain the direct-edge, compilation-frugality, ready
-  root, and runtime-boundary invariants;
+- direct-edge and no-transitive-edge rules;
+- compilation frugality and an initial ready root;
+- authority-sensitive operation boundaries;
+- Task 0 opening alignment and clear-misread correction;
+- runtime control remains outside the taskbook;
 - all five executable artifacts use the required seven-part contract order and
   contain executable Tasks;
 - S1, S3, and S6 do not expose parallel/Graph structure;
-- S2 contains the required dependency, parallel, ownership, join, and evidence
-  invalidation relationships;
+- S2 contains dependency, parallel, ownership, join, and evidence invalidation;
 - no artifact exposes TaskGroup, node schema, Graph DSL, fixed Agent identities,
   or multiple taskbooks;
 - S4 parks a branch-local blocker and keeps safe work executable;
@@ -71,6 +76,8 @@ The checker verifies:
 | Evidence invalidation | PASS | S2 reruns consumer evidence after a canonical interface or behavior change. |
 | Initial ready work | PASS | Every Executable artifact has a Task that can begin directly or after its stated Task 0. |
 | Compilation frugality | PASS | Linear cases remain compact; global facts are not repeated per Task; no scheduler, lease, or fixed Agent topology is emitted. |
+| Authority-sensitive boundaries | PASS | Current contract bounds dependency changes, permissions, external writes, destructive actions, and irreversible side effects when file scope is insufficient. |
+| Task 0 opening alignment | PASS | Current contract requires Goal/route/risk/disagreement receipt and corrects a clear taskbook misread without escalating to Human. |
 | One-taskbook boundary | PASS | No case emits fixed Agent topology or multi-taskbook fan-out. |
 | PR #19 trust/routing regression | PASS | S4 remains partial executable, S5 remains unresolved, and S6 preserves the independent-acceptance ceiling and private-check boundary. |
 
@@ -90,29 +97,34 @@ The checker verifies:
 The Graph enhancement was not accepted on first wording:
 
 1. The first reference draft allowed a multiple-taskbook exception. That violated
-   Prompt Atlas's one Goal → one taskbook boundary and was removed before the
-   freeze.
+   Prompt Atlas's one Goal → one taskbook boundary and was removed before freeze.
 2. The graph reference remains short and conditional. It renders ordinary Tasks
    and forbids fixed Agent topology and multi-taskbook compilation.
-3. Leader cross-review found three narrow residuals: edge formation was implicit,
-   compilation frugality was not stated, and no pre-Handoff static invariant
-   required ready work. These were repaired without adding a section, schema, or
-   runtime state protocol.
+3. Leader cross-review found three narrow compiler residuals: edge formation was
+   implicit, compilation frugality was unstated, and no pre-Handoff invariant
+   required ready work. These were repaired without adding a section or schema.
+4. A second Leader hard-logic review found two execution-safety residuals:
+   file-only boundaries did not explicitly cover authority-sensitive side effects,
+   and Task 0 no longer required an opening alignment receipt. Both were restored
+   in `execution-compile.md` without importing fixed files, `/goal`, multi-taskbook
+   management, or runtime scheduling.
 
-No additional trust-critical defect was found by the current-source smoke.
+No additional trust-critical defect was found in the covered contract surface.
 
 ## Frozen Git blobs
 
-- `EVAL_SPEC.md`: `628281ba60cc1bbab288dced52f3f63de6d0b7ca`
+- `EVAL_SPEC.md`: `e62f6276d37f68fbfd36089c73448bbabcbfc9f9`
 - `ARTIFACTS.md`: `48bfc47c88a53395401f51712e78a084886a1677`
-- `check_artifacts.py`: `ec069fd9c5cffc1c5624407bfc2cf52dbad02fbd`
+- `check_artifacts.py`: `7d67aa8ad24334a864154b2b7b3c489642fb3d2c`
 
 ## Limitations
 
 - one GPT-5.6 Thinking conversation produced and reviewed all artifacts;
 - case isolation was instructional rather than independently enforced;
-- the narrow current-source refinement was rechecked against unchanged frozen
+- the final source-contract refinement was checked against unchanged frozen
   artifacts rather than through an independently isolated recompilation;
+- the final combined checked-in command was not rerun from a fresh clone after the
+  last source-only assertions because GitHub DNS access was unavailable;
 - no paired base-vs-PR compiler run was executed;
 - no Executor, repository fixture, hidden oracle, or fresh-context Acceptor ran;
 - six cases cannot establish broad behavior or cost impact;
@@ -120,7 +132,8 @@ No additional trust-critical defect was found by the current-source smoke.
 
 The strongest defensible conclusion is:
 
-> On the six frozen compiler cases, PR #20 adds concise compile-time dependency
-> structure and explicit compilation economy without over-graphing linear work or
+> On the six frozen compiler cases and current-source contract checks, PR #20 adds
+> concise dependency structure, compilation economy, authority-sensitive
+> boundaries, and pre-change alignment without over-graphing linear work or
 > regressing the covered intent, blocker, one-taskbook, and completion-trust
 > semantics.
