@@ -50,7 +50,9 @@ A delegated default must be marked unconfirmed and include its basis, cost if wr
 
 ### 3. Write the taskbook
 
-Use [execution-compile.md](references/execution-compile.md). Keep one Goal and one compact taskbook that closes the declared delivery in one execution effort. If it cannot, return to Intent Take to narrow the Human-owned delivery rather than compiling multiple taskbooks or an unbounded graph.
+Use [execution-compile.md](references/execution-compile.md). Render the final taskbook in its fixed contract order: Contract Header; Delegated Decisions; Boundaries and Authority; Current Reality and Task 0; Execution; Execution Rules and Continuity; Completion and Acceptance. Keep section semantics strict and detail proportional. Put delegated decisions before execution so the Human can inspect and correct compiler-owned defaults before Handoff.
+
+Keep one Goal and one compact taskbook that closes the declared delivery in one execution effort. If it cannot, return to Intent Take to narrow the Human-owned delivery rather than compiling multiple taskbooks or an unbounded graph.
 
 Stable Intent, confirmed boundaries, and protected proof remain binding. The Executor may adapt implementation How and remaining work as evidence changes.
 
