@@ -19,7 +19,7 @@ State six things briefly:
 - priority order when requirements conflict;
 - hard rules versus guidance.
 
-If the Human or task contract sets an execution stop budget, state it here; otherwise do not invent one for routine work.
+If an explicit execution stop budget applies, state it here; otherwise do not invent one for routine work.
 
 ## 1. Delegated Decisions
 
@@ -33,21 +33,21 @@ If no such choice remains, state `None`; do not invent a decision to fill the se
 
 State the initial expected write scope and any protected no-write boundaries. The Executor may expand implementation scope when evidence shows it is necessary to close the Goal, provided confirmed boundaries, protected proof, and authority remain unchanged; record material scope expansion. Explicitly bound dependency additions or upgrades, permissions, external-system writes, destructive actions, and other irreversible side effects. Name protected tests, schemas, acceptance scripts, CI, baselines, and other judges. Call out tempting side work and irreversible actions.
 
-State what the Executor may decide or adapt inside Stable Intent and protected proof. When an action exceeds declared authority, record a blocker pending explicit Human authority; high-risk or irreversible actions always take this route unless explicitly pre-authorized. Return to Intent Take when the requested result, acceptance, or a confirmed boundary becomes unsettled or would change. Block only when no safe work remains.
+State what the Executor may decide or adapt inside Stable Intent and protected proof. When an action exceeds declared authority, record a blocker pending explicit Human authority; high-risk or irreversible actions always take this route unless explicitly pre-authorized. Return to Intent Take when the requested result, acceptance requirements, or a confirmed boundary becomes unsettled or would change. Block only when no safe work remains.
 
 ## 3. Current Reality and Task 0
 
 Record evidenced facts and baselines; mark unverified claims.
 
-Here, the implementation note means the repository or runtime's existing implementation record, or its normal equivalent; Prompt Atlas does not require a new filename or artifact.
+Use the repository or runtime's existing implementation record when available; Prompt Atlas does not require a new filename or artifact.
 
-When Task 0 is required, it runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, and surfaces material mismatch between the taskbook's execution assumptions and execution reality. Evidence may revise facts, feasibility, implementation scope, plan, and proof needs; it may not redefine the Goal. Record material findings or resulting route changes in the implementation note. If reality differs:
+When Task 0 is required, it runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, and surfaces material mismatch between the taskbook's execution assumptions and execution reality. Evidence may revise facts, feasibility, implementation scope, plan, and proof needs; it may not redefine the Goal. Preserve material findings or resulting route changes in the normal implementation record when available, otherwise in execution evidence. If reality differs:
 
-- correct a clear taskbook misunderstanding that does not alter the requested result, acceptance, or confirmed boundaries, then continue;
+- correct a clear taskbook misunderstanding that does not alter the requested result, acceptance requirements, or confirmed boundaries, then continue;
 - replan when the stable contract still holds;
 - park only the affected branch while safe work remains;
 - block with the exact resolving condition when no safe work remains;
-- return to Intent Take when the requested result, acceptance, or a confirmed boundary becomes unsettled or would change.
+- return to Intent Take when the requested result, acceptance requirements, or a confirmed boundary becomes unsettled or would change.
 
 Reuse evidence whose basis remains valid; do not repeat discovery ceremonially.
 
@@ -63,9 +63,9 @@ Keep simple work linear. When real branches, dependencies, shared writes, or a j
 
 - treat Tasks as the current executable plan, not frozen scope; add, remove, split, merge, or reorder remaining Tasks as evidence changes inside Stable Intent, confirmed boundaries, authority, and protected proof;
 - continue from available safe work until complete-Goal evidence exists, no safe work remains, or any stated stop budget is exhausted; analysis, a plan, local PASS, a completed branch, or partial delivery is not a stopping condition;
-- use one implementation note for material decisions, evidence-changing deviations, replans, scope expansion, and blockers; avoid routine progress narration and separate progress or blocker files;
-- when execution resumes and an implementation note is available, read this taskbook and the note before acting; reuse only still-valid decisions and evidence, and do not repeat completed work unless later changes invalidate what it proved;
-- when blocked, record the blocker, relevant evidence or attempts, the resolving condition, and any safe remaining work;
+- preserve material decisions, evidence-changing deviations, replans, scope expansion, and blockers in the repository or runtime's normal implementation record when available; do not create routine progress or blocker artifacts solely for Prompt Atlas;
+- when execution resumes and such a record is available, read this taskbook and the record before acting; reuse only still-valid decisions and evidence, and do not repeat completed work unless later changes invalidate what it proved;
+- when blocked, preserve the blocker, relevant evidence or attempts, the resolving condition, and any safe remaining work;
 - do not skip tests, weaken assertions, narrow the judged population, mock away the object, swallow failures, edit the judge, or accept a lower baseline unless Stable Intent requires it;
 - every retry changes the hypothesis or approach; stop known-bad routes immediately; three failures against one acceptance condition in one route force replan, branch switch, rollback, `BLOCK`, or `ESCALATE`;
 - roll back unauthorized regression and report failure truthfully;
