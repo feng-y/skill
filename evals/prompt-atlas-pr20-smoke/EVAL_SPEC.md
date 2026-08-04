@@ -9,7 +9,7 @@ completion-trust regressions.
 - Inputs are self-contained and do not require repository access.
 - Artifacts were compiled in one GPT-5.6 Thinking conversation with each case
   treated as isolated input.
-- Narrow edge, frugality, boundary-authority, Task 0 alignment, and pre-Handoff
+- Narrow graph, frugality, boundary-authority, Task 0 alignment, and pre-Handoff
   refinements were checked against all six frozen artifacts; no artifact required
   a semantic change.
 - `check_artifacts.py` performs deterministic source-contract, structure, and
@@ -22,10 +22,10 @@ production completion rate, broad Leader parity, or execution correctness.
 
 ## Evaluated compiler snapshot
 
-- source head: `af575c526548fde8f8cd6fc4d606598f284afdc7`
+- source head: `87edd58d927bc1db5454a8845ec0a2ef79c5a392`
 - `skills/prompt-atlas/SKILL.md`: `9ae3a77ed4b135216921044c7339df92716f5801`
 - `references/contract-anatomy.md`: `81f8b028e0527f69ff34b44d30d62b4b393f8c65`
-- `references/execution-compile.md`: `5d723b18787126e2846bceef355dc925e2fdec4e`
+- `references/execution-compile.md`: `f7c5ae7126a56c93cbf3ad1e1fbfaa59682d9893`
 - `references/execution-graph.md`: `7530fea6fffcea9af3c83ab1f77bbdf85061cd41`
 - `references/completion-trust.md`: `15ff2fb6b9b8441a02649b087cae19437cea70f3`
 
@@ -111,10 +111,10 @@ private-check contents in the executor-visible taskbook.
 12. When file scope is insufficient, boundaries also constrain dependency changes,
     permissions, external-system writes, destructive actions, and irreversible
     side effects.
-13. A required Task 0 emits an opening receipt before material change, exposes
-    taskbook/reality/understanding disagreement, corrects a clear taskbook misread
-    without Human input, and preserves the existing replan/park/block/Intent Take
-    routes.
+13. Task 0 remains conditional. When required, it runs before material change,
+    emits an opening receipt, exposes taskbook/reality/understanding disagreement,
+    corrects a clear taskbook misread without Human input, and preserves the
+    existing replan/park/block/Intent Take routes.
 
 Decision:
 
@@ -122,6 +122,6 @@ Decision:
   trust-critical regression.
 - `REVISE`: any wrong compile state, section-order failure, unnecessary graph,
   ungrounded edge, missing ready root, unbounded authority-sensitive operation,
-  missing Task 0 alignment, join/ownership/invalidation failure, multi-taskbook
-  expansion, or false PASS.
+  unconditional or missing Task 0 alignment, join/ownership/invalidation failure,
+  multi-taskbook expansion, or false PASS.
 - `INCONCLUSIVE`: artifacts or checks cannot be reproduced.
