@@ -1,6 +1,6 @@
 ---
 name: northstar
-description: 当用户需要以中文生成 Agent 提示词、brief、Goal、合同或自主任务书时使用，尤其适用于意图、证据、边界或成功标准尚未稳定的场景。显式路由 Unknown，绝不把尚未解决的意图转化为可执行工作。
+description: 当用户需要以中文生成 Agent 提示词、brief、Goal、合同或自主任务书时使用，尤其适用于意图、证据、边界或成功标准尚未稳定的场景。同时安装语言版本时，中文任务书优先使用 Northstar，英文任务书使用 prompt-atlas。显式路由 Unknown，绝不把尚未解决的意图转化为可执行工作。
 ---
 
 # Northstar
