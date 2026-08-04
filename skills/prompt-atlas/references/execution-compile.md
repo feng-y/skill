@@ -58,7 +58,7 @@ Order Tasks by real dependency. Each Task states:
 - reverse validation when failure could be silent;
 - evidence invalidated by upstream change.
 
-Keep simple work linear. Expand a graph only for real branches, dependencies, shared writes, joins, or evidence invalidation. Give every shared mutable surface one owner.
+Keep simple work linear. When real branches, dependencies, shared writes, or a join would be hidden by a linear list, read [execution-graph.md](execution-graph.md) and compile the minimum dependency structure into ordinary Tasks.
 
 ## 5. Execution Rules and Continuity
 
