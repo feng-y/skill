@@ -76,7 +76,7 @@ The Executor may adapt remaining work inside Stable Intent and protected proof; 
 
 Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, truthful residuals or blockers, and a stop budget or truthful blocker. Local Task PASS is not complete-Goal PASS. Bind independent acceptance when required. If that required Acceptor or accepting environment is unavailable, cap the result at `ready for independent acceptance`; otherwise judge completion from the applicable visible and reserved acceptance.
 
-Do not expose reserved private checks in the taskbook. State visible acceptance and any required independent accepting boundary; private check contents remain under [completion-trust.md](completion-trust.md).
+Do not expose reserved private checks in the taskbook. State visible acceptance and any required independent accepting boundary; private check contents remain outside the taskbook and follow the lifecycle in [completion-trust.md](completion-trust.md).
 
 The final report states `PASS`, `ready for independent acceptance`, or the exact non-PASS route; the delivered result; the evidence that supports the judgment; exact residuals or blockers; and the next legitimate route. Do not replace evidence with activity narration.
 
