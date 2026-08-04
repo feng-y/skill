@@ -9,8 +9,9 @@ completion-trust regressions.
 - Inputs are self-contained and do not require repository access.
 - Artifacts were compiled in one GPT-5.6 Thinking conversation with each case
   treated as isolated input.
-- The narrow edge, frugality, and pre-Handoff refinements were checked against all
-  six frozen artifacts; no artifact required a semantic change.
+- Narrow edge, frugality, boundary-authority, Task 0 alignment, and pre-Handoff
+  refinements were checked against all six frozen artifacts; no artifact required
+  a semantic change.
 - `check_artifacts.py` performs deterministic source-contract, structure, and
   forbidden-shape checks over the current references and frozen outputs.
 - No executor implementation, hidden oracle, statistical sampling, or independent
@@ -21,10 +22,10 @@ production completion rate, broad Leader parity, or execution correctness.
 
 ## Evaluated compiler snapshot
 
-- source head: `66e3bc4344390dc1ce22390d11a1e0bf37efe9d8`
+- source head: `af575c526548fde8f8cd6fc4d606598f284afdc7`
 - `skills/prompt-atlas/SKILL.md`: `9ae3a77ed4b135216921044c7339df92716f5801`
 - `references/contract-anatomy.md`: `81f8b028e0527f69ff34b44d30d62b4b393f8c65`
-- `references/execution-compile.md`: `800d0cfb6719af9bd9f4a52fda9d9a891afb3753`
+- `references/execution-compile.md`: `5d723b18787126e2846bceef355dc925e2fdec4e`
 - `references/execution-graph.md`: `7530fea6fffcea9af3c83ab1f77bbdf85061cd41`
 - `references/completion-trust.md`: `15ff2fb6b9b8441a02649b087cae19437cea70f3`
 
@@ -107,12 +108,20 @@ private-check contents in the executor-visible taskbook.
 11. Every Executable artifact exposes a Task that can begin directly or after its
     required Task 0, and the compiler does not emit scheduler, lease, or fixed
     Agent topology.
+12. When file scope is insufficient, boundaries also constrain dependency changes,
+    permissions, external-system writes, destructive actions, and irreversible
+    side effects.
+13. A required Task 0 emits an opening receipt before material change, exposes
+    taskbook/reality/understanding disagreement, corrects a clear taskbook misread
+    without Human input, and preserves the existing replan/park/block/Intent Take
+    routes.
 
 Decision:
 
 - `PASS`: all deterministic checks pass and manual rubric review finds no
   trust-critical regression.
 - `REVISE`: any wrong compile state, section-order failure, unnecessary graph,
-  ungrounded edge, missing ready root, join/ownership/invalidation failure,
-  multi-taskbook expansion, or false PASS.
+  ungrounded edge, missing ready root, unbounded authority-sensitive operation,
+  missing Task 0 alignment, join/ownership/invalidation failure, multi-taskbook
+  expansion, or false PASS.
 - `INCONCLUSIVE`: artifacts or checks cannot be reproduced.
