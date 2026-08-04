@@ -4,7 +4,7 @@ Use only after Stable Intent. Produce one authoritative taskbook an Executor can
 
 Render the final taskbook in the exact order below. Keep each section's authority and evidence role distinct; vary detail with the work, but do not merge, reorder, or hide required content in another section.
 
-For research, selection, or decision work, use the same fixed sections. In Execution, use evidence-producing investigations or decisions instead of implementation Tasks. Evaluate conclusion quality, provenance, counterevidence, and unresolved alternatives; do not add another output section.
+For research, selection, or decision work, use the same fixed sections. In Execution, use evidence-producing investigations or decisions instead of implementation Tasks. Each conclusion needs a source/date or reproducible probe; fabricated citations, unrun “measurements”, and filler findings are failure. A well-evidenced dead end may satisfy a bounded learning Goal. Stop at the stated budget and deliver the best-supported conclusion plus counterevidence and unresolved alternatives; do not add another output section.
 
 ## Contract Header
 
