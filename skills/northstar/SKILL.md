@@ -10,7 +10,7 @@ Northstar 做两件事：
 1. **把 Unknown 分清去向；**
 2. **意图没定准，不编译成执行。**
 
-四个角色：**Human** 说明要什么，并对结果、验收要求和已确认边界拍板；**Northstar** 调研、澄清、写任务书、交付并验收返回结果；**Executor** 独立执行任务书，拥有 implementation How，可以在稳定合同内根据证据调整实现范围和剩余工作；需要独立判断时，由未参与实现的 **Acceptor** 作最终验收。证据可以推翻事实判断、可行性、实现计划和证明方式，但不能悄悄改掉 Human 要的结果。Goal、验收要求或已确认边界重新变得不确定时，回到 Intent Take。
+四个角色：**Human** 说明要什么，并对结果、验收要求和已确认边界拍板；**Northstar** 调研、澄清、写任务书、交付并验收返回结果；**Executor** 独立执行任务书，拥有 implementation How，可以在稳定合同内根据证据调整实现范围和剩余工作；需要独立判断时，由未参与实现的 **Acceptor** 作最终验收。证据可以修正事实判断、可行性、实现计划和证明方式，但不能悄悄改掉 Human 要的结果。Goal、验收要求或已确认边界重新变得不确定时，回到 Intent Take。
 
 ## 流程
 
@@ -52,11 +52,11 @@ Intent 稳定，意味着这些事情已经清楚：唯一且由 Human 拥有的
 
 按 [execution-compile.md](references/execution-compile.md) 的固定合同顺序写任务书。各节职责不能混，细节多少随任务而变；委托决策必须放在执行之前，让 Human 在 Handoff 前看见 Northstar 代为选择了什么。
 
-一本任务书只承载一个 Goal，并在一次执行工作中关闭一个明确交付。如果做不到，就回到 Intent Take 缩小 Human 本次要的交付，不拆成多本任务书，也不编译无边界 Graph。
+一本任务书只承载一个 Goal，并在一次执行工作中完成并证明一个明确交付。如果做不到，就回到 Intent Take 缩小 Human 本次要的交付，不拆成多本任务书，也不编译无边界 Graph。
 
-Stable Intent、已确认边界和受保护的证明要求始终具有约束力。证据变化时，Executor 可以调整 implementation How 和剩余工作。
+Stable Intent、已确认边界和不可削弱的证明要求仍然具有约束力。证据变化时，Executor 可以调整 implementation How 和剩余工作。
 
-Handoff 前，只有在可见证明可能假通过、可被钻空子或不足以关闭 Goal 时，才按 [completion-trust.md](references/completion-trust.md) 预留私有验收；否则依赖受保护的可见判定器。预留检查不进入 Executor 可见的任务书；runtime 能隔离上下文时，也不进入 Executor 上下文。私有检查可以换样本或观察路径，不能增加隐藏要求。
+Handoff 前，只有在可见证明可能假通过、可被钻空子或不足以证明 Goal 已完成时，才按 [completion-trust.md](references/completion-trust.md) 预留私有验收；否则依赖受保护的可见判定器。预留检查不进入 Executor 可见的任务书；runtime 能隔离上下文时，也不进入 Executor 上下文。私有检查可以采用任务书未列出的样本或不同观察路径，不能增加隐藏要求。
 
 ### 4. 交付（Handoff）
 
@@ -64,7 +64,7 @@ Handoff 前，只有在可见证明可能假通过、可被钻空子或不足以
 
 ### 5. 验收（Acceptance）
 
-结果返回后，重跑可见验收和所有已预留检查。当 Executor 自证可能被钻空子、证据不完整或不足以关闭 Goal 时，绑定独立 Acceptor；本应私有的检查已经对 Executor 可见、又没有其他受保护判定器能关闭 Goal，也属于这种情况。
+结果返回后，重跑可见验收和所有已预留检查。当 Executor 自证可能被钻空子、证据不完整或不足以证明 Goal 已完成时，绑定独立 Acceptor；本应私有的检查已经对 Executor 可见、又没有其他受保护判定器能证明 Goal 完成，也属于这种情况。
 
 Acceptor 只有在未实质参与实现，并直接依据权威任务书、验收环境和受保护判定器重新判断时，才算独立。Executor 的结论和证据只是验收输入，不是最终判定。
 
