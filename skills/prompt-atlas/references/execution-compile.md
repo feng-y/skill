@@ -39,7 +39,7 @@ Record evidenced facts and baselines; mark unverified claims.
 
 Here, the implementation note means the repository or runtime's existing implementation record, or its normal equivalent; Prompt Atlas does not require a new filename or artifact.
 
-Task 0 runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, and emits a short opening receipt: the understood Goal, initial route or order when material, largest current risk, and any disagreement between the taskbook, execution reality, or Executor understanding. If its findings or receipt change execution, record the evidence and resulting route in the implementation note. If reality or understanding differs:
+When Task 0 is required, it runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, and emits a short opening receipt: the understood Goal, initial route or order when material, largest current risk, and any disagreement between the taskbook, execution reality, or Executor understanding. If its findings or receipt change execution, record the evidence and resulting route in the implementation note. If reality or understanding differs:
 
 - correct a clear taskbook misunderstanding and continue without Human input;
 - replan when Goal and boundaries hold;
