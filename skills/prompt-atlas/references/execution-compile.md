@@ -1,25 +1,35 @@
 # Autonomous Taskbook
 
-Use only after Stable Intent. Produce one compact taskbook an Executor can run without ordinary Human orchestration.
+Use only after Stable Intent. Produce one authoritative taskbook an Executor can run without ordinary Human orchestration.
 
-## Opening
+Render the final taskbook in the exact order below. Keep each section's authority and evidence role distinct; vary detail with the work, but do not merge, reorder, or hide required content in another section.
 
-State four things briefly:
+## Contract Header
+
+State six things briefly:
 
 - this taskbook is the execution source;
+- the one Human-owned Goal;
 - Why and the completed world;
+- the declared delivery this taskbook closes;
 - priority order when requirements conflict;
 - hard rules versus guidance.
 
-## 1. Delegated decisions
+## 1. Delegated Decisions
 
-For each unconfirmed choice: question → default → basis → cost if wrong → detection or rollback. Defaults may close orchestration, never change Stable Intent.
+Place compiler-owned defaults here, before boundaries and execution, so the Human can inspect and correct them before Handoff.
 
-## 2. Boundaries
+For each unconfirmed reversible choice that preserves Stable Intent: decision → default → basis → cost if wrong → detection or rollback. Defaults may close an execution branch; they may not change the Goal, confirmed boundaries, acceptance requirements, or Human authority.
+
+If no such choice remains, state `None`; do not invent a decision to fill the section.
+
+## 2. Boundaries and Authority
 
 Use an allowed write-scope whitelist. Name protected tests, schemas, acceptance scripts, CI, baselines, and other judges. Call out tempting side work and irreversible actions.
 
-## 3. Current state and Task 0
+State what the Executor may decide or adapt inside Stable Intent and protected proof. State the route when work would exceed that authority: obtain explicit Human authority for a high-risk or irreversible action, return to Intent Take when the Goal or a confirmed boundary would change, or block when no safe work remains.
+
+## 3. Current Reality and Task 0
 
 Record evidenced facts and baselines; mark unverified claims.
 
@@ -34,9 +44,9 @@ Task 0 runs before material change. It binds repo/worktree/target, verifies crit
 
 Reuse evidence whose basis remains valid; do not repeat discovery ceremonially.
 
-## 4. Task N
+## 4. Execution
 
-Order by real dependency. Each task states:
+Order Tasks by real dependency. Each Task states:
 
 - observable result and starting point;
 - dependencies and write ownership;
@@ -48,7 +58,7 @@ Order by real dependency. Each task states:
 
 Keep simple work linear. Expand a graph only for real branches, dependencies, shared writes, joins, or evidence invalidation. Give every shared mutable surface one owner.
 
-## 5. Rules
+## 5. Execution Rules and Continuity
 
 - use one implementation note for material decisions, evidence-changing deviations, replans, and blockers; avoid routine progress narration and separate progress or blocker files;
 - after any interruption, session change, or Executor handoff, read this taskbook and any existing implementation note before acting; recover still-valid decisions, evidence, blockers, and remaining work, and do not repeat discovery or completed work unless an upstream change or new evidence invalidated what it proved;
@@ -60,12 +70,14 @@ Keep simple work linear. Expand a graph only for real branches, dependencies, sh
 
 The Executor may adapt remaining work inside Stable Intent and protected proof; record material replans in the implementation note.
 
-## 6. Completion conditions
+## 6. Completion and Acceptance
 
-Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, truthful residuals or blockers, and a stop budget or truthful blocker. Local task PASS is not complete-Goal PASS. Bind independent acceptance when required; otherwise cap at `ready for independent acceptance`.
+Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, truthful residuals or blockers, and a stop budget or truthful blocker. Local Task PASS is not complete-Goal PASS. Bind independent acceptance when required; otherwise cap at `ready for independent acceptance`.
+
+The final report states PASS or non-PASS, the delivered result, the evidence that supports the judgment, exact residuals or blockers, and the next legitimate route. Do not replace evidence with activity narration.
 
 One taskbook must close the declared delivery in one execution effort. One execution effort means one authoritative taskbook and one closed delivery, not one Agent, one session, or one linear run. The Executor may resume sessions, delegate, parallelize, or use a dependency graph when useful while preserving one Goal, clear write ownership, and complete-Goal acceptance. If the delivery cannot close under that contract, return to Intent Take to narrow the Human-owned delivery; do not split the Goal into multiple taskbooks.
 
 ## Research and decision work
 
-Use the same structure with a bounded learning goal. Each conclusion needs a source/date or reproducible probe; fabricated citations, unrun “measurements”, and filler findings are failure. A well-evidenced dead end may be valid. Stop at the stated budget and deliver the best-supported conclusion plus unresolved alternatives.
+Use the same fixed section order with a bounded learning Goal. Replace implementation Tasks with evidence-producing investigations or decisions. Each conclusion needs a source/date or reproducible probe; fabricated citations, unrun “measurements”, and filler findings are failure. A well-evidenced dead end may be valid. Stop at the stated budget and deliver the best-supported conclusion plus unresolved alternatives.
