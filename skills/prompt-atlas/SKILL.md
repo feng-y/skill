@@ -46,11 +46,11 @@ Settle everything accessible without asking: real workspace, governing specs/tes
 
 When a Human boundary remains, ask the smallest useful set, preferably one round of at most five decisions with options and a recommendation. Do not ask for facts, decomposition, architecture How, command order, or ordinary execution choices.
 
-A delegated default must be marked unconfirmed and include its basis, cost if wrong, and detection or rollback route. Silent defaults look like Human approval; visible defaults preserve Human authority.
+A delegated default must be marked unconfirmed and include its basis, cost if wrong, and detection or rollback route. It may resolve only a reversible execution choice; it may not change the Goal, confirmed boundaries, acceptance requirements, or Human authority. Silent defaults look like Human approval; visible defaults preserve Human authority.
 
 ### 3. Write the taskbook
 
-Use [execution-compile.md](references/execution-compile.md). Render the final taskbook in its fixed contract order: Contract Header; Delegated Decisions; Boundaries and Authority; Current Reality and Task 0; Execution; Execution Rules and Continuity; Completion and Acceptance. Keep section semantics strict and detail proportional. Put delegated decisions before execution so the Human can inspect and correct compiler-owned defaults before Handoff.
+Use [execution-compile.md](references/execution-compile.md) and preserve its fixed contract order. Keep section semantics strict and detail proportional; expose delegated decisions before execution so the Human can inspect compiler-owned defaults before Handoff.
 
 Keep one Goal and one compact taskbook that closes the declared delivery in one execution effort. If it cannot, return to Intent Take to narrow the Human-owned delivery rather than compiling multiple taskbooks or an unbounded graph.
 
