@@ -77,7 +77,7 @@ Require complete-Goal evidence, boundary and judge preservation, actual command 
 
 At complete-Goal acceptance, run the full verification required for the declared delivery after relevant work has converged and any branches have rejoined. Reuse still-valid local and integration evidence, but rerun every judge whose proved property may have been invalidated by later changes.
 
-State visible acceptance and any required independent accepting boundary. Reserve private checks only when visible proof could false-pass, remain gameable, or fail to close the Goal; keep any reserved checks outside the taskbook. Private and independent acceptance follow [completion-trust.md](completion-trust.md). If a required Acceptor or accepting environment is unavailable, cap the result at `ready for independent acceptance`.
+State visible acceptance and any required independent accepting boundary. Private and independent acceptance follow [completion-trust.md](completion-trust.md). If a required Acceptor or accepting environment is unavailable, cap the result at `ready for independent acceptance`.
 
 The final report states `PASS`, `ready for independent acceptance`, or the exact non-PASS route; the delivered result; the evidence that supports the judgment; exact residuals or blockers; and the next legitimate route. Do not replace evidence with activity narration.
 
