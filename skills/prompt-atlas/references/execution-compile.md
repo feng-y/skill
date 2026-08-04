@@ -1,6 +1,6 @@
 # Autonomous Taskbook
 
-Use only after Stable Intent. Produce one authoritative taskbook an Executor can run without ordinary Human orchestration.
+Use only after Stable Intent. Produce one compact authoritative taskbook an Executor can run without ordinary Human orchestration.
 
 Render the final taskbook in the exact order below. Keep each section's authority and evidence role distinct; vary detail with the work, but do not merge, reorder, or hide required content in another section.
 
@@ -23,7 +23,7 @@ State six things briefly:
 
 Place compiler-owned defaults here, before boundaries and execution, so the Human can inspect and correct them before Handoff.
 
-For each unconfirmed reversible choice that preserves Stable Intent: decision → default → basis → cost if wrong → detection or rollback. Defaults may close an execution branch; they may not change the Goal, confirmed boundaries, acceptance requirements, or Human authority.
+Render each delegated default allowed by `SKILL.md` as: decision → default → basis → cost if wrong → detection or rollback.
 
 If no such choice remains, state `None`; do not invent a decision to fill the section.
 
@@ -39,7 +39,7 @@ Record evidenced facts and baselines; mark unverified claims.
 
 Here, the implementation note means the repository or runtime's existing implementation record, or its normal equivalent; Prompt Atlas does not require a new filename or artifact.
 
-When Task 0 is required, it runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, and emits a short opening receipt: the understood Goal, initial route or order when material, largest current risk, and any disagreement between the taskbook, execution reality, or Executor understanding. If its findings or receipt change execution, record the evidence and resulting route in the implementation note. If reality or understanding differs:
+When Task 0 is required, it runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, confirms the understood Goal, and surfaces any material route, risk, or disagreement between the taskbook, execution reality, and Executor understanding. Record only findings that change execution in the implementation note. If reality or understanding differs:
 
 - correct a clear taskbook misunderstanding and continue without Human input;
 - replan when Goal and boundaries hold;
@@ -77,9 +77,9 @@ The Executor may adapt remaining work inside Stable Intent and protected proof; 
 
 ## 6. Completion and Acceptance
 
-Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, truthful residuals or blockers, and a stop budget or truthful blocker. Local Task PASS is not complete-Goal PASS. Bind independent acceptance when required. If that required Acceptor or accepting environment is unavailable, cap the result at `ready for independent acceptance`; otherwise judge completion from the applicable visible and reserved acceptance.
+Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, truthful residuals or blockers, and a stop budget or truthful blocker. Local Task PASS is not complete-Goal PASS.
 
-Do not expose reserved private checks in the taskbook. State visible acceptance and any required independent accepting boundary; private check contents remain outside the taskbook and follow the lifecycle in [completion-trust.md](completion-trust.md).
+State visible acceptance and any required independent accepting boundary. Keep reserved private checks outside the taskbook; private and independent acceptance follow [completion-trust.md](completion-trust.md). If a required Acceptor or accepting environment is unavailable, cap the result at `ready for independent acceptance`.
 
 The final report states `PASS`, `ready for independent acceptance`, or the exact non-PASS route; the delivered result; the evidence that supports the judgment; exact residuals or blockers; and the next legitimate route. Do not replace evidence with activity narration.
 
