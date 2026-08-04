@@ -12,9 +12,12 @@ for phrase in (
 ):
     assert phrase in graph_contract, phrase
 
+assert "Task 0 runs before material change." not in compile_contract
+
 for phrase in (
     "Compile only information that constrains a future decision",
     "dependency changes, permissions, external-system writes",
+    "When Task 0 is required, it runs before material change",
     "emits a short opening receipt",
     "correct a clear taskbook misunderstanding",
     "at least one Task or required Task 0 can start immediately",
