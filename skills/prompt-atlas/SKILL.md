@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: Use when the final agent prompt, brief, Goal, contract, or autonomous taskbook should be written in English, regardless of the user's conversation language. If the final artifact should be written in Chinese, use northstar instead. Especially useful when intent, evidence, boundaries, or success criteria are not yet stable. Route Unknown explicitly and never turn unresolved intent into executable work.
+description: Use when the user asks for an agent prompt, brief, goal, contract, or autonomous taskbook, especially when intent, evidence, boundaries, or success criteria are not yet stable. Route Unknown explicitly and never turn unresolved intent into executable work.
 ---
 
 # Prompt Atlas
