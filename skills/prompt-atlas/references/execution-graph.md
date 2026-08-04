@@ -1,9 +1,9 @@
 # Execution Graph
 
-Use only when a linear Task list would hide real branches, dependencies, shared writes, or a join.
+Use only when a linear Task list would hide true dependency or parallelism.
 
-Add a direct dependency only when a downstream Task consumes an upstream result or requires its completion for safe execution. Do not add transitive or merely sequential dependencies. When a later upstream change could invalidate downstream evidence without blocking parallel work, mark the required re-verification at the join instead of creating a dependency.
+- `depends on`: only for result consumption or safe-execution prerequisites.
+- `may run in parallel`: when no dependency or write conflict exists.
+- `reverify at join`: when later change may invalidate evidence without blocking parallel work.
 
-Expose only material prerequisites, parallel branches, re-verification at joins, and an explicit join or terminal route. The ordinary Task contract remains authoritative for write ownership and evidence validity.
-
-Render the graph as ordinary Tasks. Use brief relationship phrases such as `depends on`, `may run in parallel`, `reverify at join`, and `after both pass`. Do not expose a node schema or graph terminology unless the task itself requires them. Do not prescribe a fixed Agent topology or compile multiple taskbooks.
+Every branch must rejoin or end in an explicit terminal route. Omit transitive and merely sequential edges. Ownership and evidence rules stay in the ordinary Task contract. Do not introduce a graph schema, fixed Agent topology, or multiple taskbooks.
