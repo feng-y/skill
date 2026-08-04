@@ -32,7 +32,7 @@ Human 拥有期望结果、验收要求和已确认边界。Northstar 负责澄�
 - 前置条件暂不可用但仍有独立工作 → 暂停该分支并记录；
 - 前置条件暂不可用且没有安全工作 → `Status: Blocked`。
 
-只有在继续推进会改变期望结果、跨越或放宽已确认边界或高风险权限边界，或者必须在证据无法裁决的多个实质不同 Goal 之间做选择时，才询问 Human。
+只有在继续推进会改变期望结果、跨越或放宽已确认边界、触及高风险权限，或者必须在证据无法裁决的多个实质不同 Goal 之间做选择时，才询问 Human。
 
 只有当以下内容清楚时，Intent 才稳定：一个一致且由 Human 拥有的 Goal、它的 Why、已确认边界、重要证据状态、可信成功定义以及交付物。否则返回 `Status: Unresolved Intent`，给出当前理解以及最小有效问题或探针。**绝不从未解决的意图中输出可执行工作。**
 
@@ -54,7 +54,7 @@ Human 拥有期望结果、验收要求和已确认边界。Northstar 负责澄�
 
 保持一个 Goal 和一本紧凑任务书，并在一次执行工作中关闭声明的交付。如果做不到，返回 Intent Take 缩小由 Human 拥有的交付，而不是编译多本任务书或无边界 Graph。
 
-Stable Intent、已确认边界与受保护证明仍然具有约束力。Executor 可以随着证据变化调整 implementation How 与剩余工作。
+Stable Intent、已确认边界与受保护的证明要求仍然具有约束力。Executor 可以随着证据变化调整 implementation How 与剩余工作。
 
 Handoff 前，仅在可见证明可能误判 PASS、容易被操纵或无法关闭 Goal 时，依据 [completion-trust.md](references/completion-trust.md) 预留私有验收。否则依赖受保护的可见判定器。将预留检查保留在 Executor 可见任务书之外；runtime 允许时，也应保留在 Executor 上下文之外。私有检查可以采用不同样本或观察路径，但绝不能加入隐藏要求。
 
@@ -64,9 +64,9 @@ Handoff 前，仅在可见证明可能误判 PASS、容易被操纵或无法关�
 
 ### 5. 验收（Acceptance）
 
-结果返回后，重新运行可见验收以及所有预留检查。当最终判断需要独立性时绑定独立 Acceptor，例如证明仍然容易被操纵或不完整，包括本应私有的检查已对 Executor 可见，并且没有其他受保护判定器可以关闭 Goal。只有未实质参与实现，并且依据权威任务书和验收环境而非 Executor 结论进行判断的 Acceptor，才具备独立性。Executor 证据只是输入，不是最终判断。
+结果返回后，重新运行可见验收以及任何已预留检查。当最终判断需要独立性时绑定独立 Acceptor，例如证明仍然容易被操纵或不完整，包括本应私有的检查已对 Executor 可见，并且没有其他受保护判定器可以关闭 Goal。只有未实质参与实现，并且依据权威任务书和验收环境而非 Executor 结论进行判断的 Acceptor，才具备独立性。Executor 证据只是输入，不是最终判断。
 
-如果所需 Acceptor 或验收环境不可用，停止在 `ready for independent acceptance`，并向未参与实现的 Acceptor 返回一份自包含验收交接：权威任务书、Executor 结果与证据、可见验收、所有预留验收检查及其可见性、受保护判定器与基线，以及所需最终报告——`PASS` 或准确残留项。
+如果所需 Acceptor 或验收环境不可用，停止在 `ready for independent acceptance`，并向未参与实现的 Acceptor 返回一份自包含验收交接：权威任务书、Executor 结果与证据、可见验收、任何已预留验收检查及其可见性、受保护判定器与基线，以及所需最终报告——`PASS` 或准确残留项。
 
 局部 Task PASS 不等于完整 Goal PASS。保护判定器与基线；当检查可能静默失效时使用反向验证。凡涉及私有或独立验收，或检查可能误判 PASS，均应阅读 [completion-trust.md](references/completion-trust.md)。
 
