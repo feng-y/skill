@@ -4,6 +4,8 @@ Use only after Stable Intent. Produce one authoritative taskbook an Executor can
 
 Render the final taskbook in the exact order below. Keep each section's authority and evidence role distinct; vary detail with the work, but do not merge, reorder, or hide required content in another section.
 
+Compile only information that constrains a future decision, execution step, recovery action, or complete-Goal proof. Keep large supporting material by reference; state global facts once and Task-local differences only; omit superseded discussion and inactive detail.
+
 For research, selection, or decision work, use the same fixed sections. In Execution, use evidence-producing investigations or decisions instead of implementation Tasks. Each conclusion needs a source/date or reproducible probe; fabricated citations, unrun “measurements”, and filler findings are failure. A well-evidenced dead end may satisfy a bounded learning Goal. Stop at the stated budget and deliver the best-supported conclusion plus counterevidence and unresolved alternatives; do not add another output section.
 
 ## Contract Header
@@ -79,5 +81,7 @@ Require complete-Goal evidence, boundary and judge preservation, actual command 
 Do not expose reserved private checks in the taskbook. State visible acceptance and any required independent accepting boundary; private check contents remain outside the taskbook and follow the lifecycle in [completion-trust.md](completion-trust.md).
 
 The final report states `PASS`, `ready for independent acceptance`, or the exact non-PASS route; the delivered result; the evidence that supports the judgment; exact residuals or blockers; and the next legitimate route. Do not replace evidence with activity narration.
+
+Before Handoff, verify one Goal and one declared delivery; at least one Task or required Task 0 can start immediately; every dependency is grounded; each shared mutable surface has one owner; every branch rejoins or has an explicit terminal route; and complete-Goal proof remains possible. Do not compile scheduler, lease, or fixed Agent topology.
 
 One taskbook must close the declared delivery in one execution effort. One execution effort means one authoritative taskbook and one closed delivery, not one Agent, one session, or one linear run. The Executor may resume sessions, delegate, parallelize, or use a dependency graph when useful while preserving one Goal, clear write ownership, and complete-Goal acceptance. If the delivery cannot close under that contract, return to Intent Take to narrow the Human-owned delivery; do not split the Goal into multiple taskbooks.
