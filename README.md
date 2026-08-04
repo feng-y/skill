@@ -16,6 +16,8 @@ Install all skills:
 npx skills@latest add feng-y/skill --all
 ```
 
+`--all` installs both language variants. Use `prompt-atlas` for English taskbooks and `northstar` for Chinese taskbooks.
+
 Install one skill:
 
 ```bash
@@ -26,6 +28,6 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `prompt-atlas` — recover stable intent from a one-sentence goal or scattered hints, then compile the smallest truthful executable carrier or exact blocker for a downstream agent/runtime.
-- `northstar` — Chinese-language edition of `prompt-atlas`, preserving the same intent, taskbook, execution-boundary, and acceptance semantics.
+- `prompt-atlas` — recover stable intent from a one-sentence goal or scattered hints, then compile the smallest truthful executable carrier or exact blocker for a downstream agent/runtime. Use when the taskbook should be written in English.
+- `northstar` — complete Chinese-language edition of `prompt-atlas`, preserving the same intent, taskbook, execution-boundary, and acceptance semantics. Use when the taskbook should be written in Chinese.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
