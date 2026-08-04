@@ -23,7 +23,7 @@ State six things briefly:
 
 Place compiler-owned defaults here, before boundaries and execution, so the Human can inspect and correct them before Handoff.
 
-Render each delegated default allowed by `SKILL.md` as: decision → default → basis → cost if wrong → detection or rollback.
+Render each permitted delegated default as: decision → default → basis → cost if wrong → detection or rollback.
 
 If no such choice remains, state `None`; do not invent a decision to fill the section.
 
