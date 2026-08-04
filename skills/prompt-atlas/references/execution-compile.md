@@ -39,7 +39,7 @@ Record evidenced facts and baselines; mark unverified claims.
 
 Here, the implementation note means the repository or runtime's existing implementation record, or its normal equivalent; Prompt Atlas does not require a new filename or artifact.
 
-When Task 0 is required, it runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, confirms the understood Goal, and surfaces any material route, risk, or disagreement between the taskbook, execution reality, and Executor understanding. Record only findings that change execution in the implementation note. If reality or understanding differs:
+When Task 0 is required, it runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, confirms the understood Goal, and surfaces any material mismatch among that understanding, the taskbook, and execution reality. Record material findings or resulting route changes in the implementation note. If reality or understanding differs:
 
 - correct a clear taskbook misunderstanding and continue without Human input;
 - replan when Goal and boundaries hold;
@@ -51,15 +51,7 @@ Reuse evidence whose basis remains valid; do not repeat discovery ceremonially.
 
 ## 4. Execution
 
-Order Tasks by real dependency. Each Task states:
-
-- observable result and starting point;
-- dependencies and write ownership;
-- hard constraints;
-- verification command or evidence procedure;
-- machine-judgable PASS condition;
-- reverse validation when failure could be silent;
-- evidence invalidated by upstream change.
+Order Tasks by real dependency. Every Task states its observable result, verification command or evidence procedure, and machine-judgable PASS condition. Add only material starting points, dependencies and write ownership, hard constraints, reverse validation for silent failure, and upstream evidence-invalidation conditions.
 
 Keep simple work linear. When real branches, dependencies, shared writes, or a join would be hidden by a linear list, read [execution-graph.md](execution-graph.md) and compile the minimum dependency structure into ordinary Tasks.
 
