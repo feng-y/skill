@@ -14,7 +14,11 @@ for phrase in (
 
 for phrase in (
     "Compile only information that constrains a future decision",
+    "dependency changes, permissions, external-system writes",
+    "emits a short opening receipt",
+    "correct a clear taskbook misunderstanding",
     "at least one Task or required Task 0 can start immediately",
+    "authority-sensitive operations are bounded",
     "Do not compile scheduler, lease, or fixed Agent topology",
 ):
     assert phrase in compile_contract, phrase
