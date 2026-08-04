@@ -29,7 +29,7 @@ If no such choice remains, state `None`; do not invent a decision to fill the se
 
 ## 2. Boundaries and Authority
 
-Use an allowed write-scope whitelist. When file scope is insufficient, also bound dependency changes, permissions, external-system writes, destructive actions, and other irreversible side effects. Name protected tests, schemas, acceptance scripts, CI, baselines, and other judges. Call out tempting side work and irreversible actions.
+State the initial expected write scope and any protected no-write boundaries. The Executor may expand implementation scope when evidence shows it is necessary to close the Goal, provided confirmed boundaries, protected proof, and authority remain unchanged; record material scope expansion. Explicitly bound dependency additions or upgrades, permissions, external-system writes, destructive actions, and other irreversible side effects. Name protected tests, schemas, acceptance scripts, CI, baselines, and other judges. Call out tempting side work and irreversible actions.
 
 State what the Executor may decide or adapt inside Stable Intent and protected proof. State the route when work would exceed that authority: record a blocker pending explicit Human authority for a high-risk or irreversible action, return to Intent Take when the Goal or a confirmed boundary would change, or block when no safe work remains.
 
@@ -51,13 +51,17 @@ Reuse evidence whose basis remains valid; do not repeat discovery ceremonially.
 
 ## 4. Execution
 
-Order Tasks by real dependency. Every Task states its observable result, verification command or evidence procedure, and machine-judgable PASS condition. Add only material starting points, dependencies and write ownership, hard constraints, reverse validation for silent failure, and upstream evidence-invalidation conditions.
+Order Tasks by real dependency. Every Task states its observable result, the cheapest sufficient local evidence, and a decisive local PASS condition. For code changes, local proof normally reaches the affected unit-test or equivalent targeted-test boundary; if that boundary is unavailable, state why and use the closest direct probe. Make PASS machine-judgable where the work permits; otherwise use explicit evidence and decision criteria. Add only material starting points, dependencies and write ownership, hard constraints, reverse validation for silent failure, and upstream evidence-invalidation conditions.
+
+Place broader compilation, integration, replay, or end-to-end verification at the smallest boundary whose combined behavior it proves—after a coherent set of Tasks, before dependent work consumes the result, or when branches rejoin. Do not repeat expensive whole-system verification per Task; run it earlier only when a Task changes a system-wide contract or delaying the check would materially increase recovery cost. Reuse still-valid evidence; invalidate and rerun only the proof whose property later changes may have affected.
 
 Keep simple work linear. When real branches, dependencies, shared writes, or a join would be hidden by a linear list, read [execution-graph.md](execution-graph.md) and compile the minimum dependency structure into ordinary Tasks.
 
 ## 5. Execution Rules and Continuity
 
-- use one implementation note for material decisions, evidence-changing deviations, replans, and blockers; avoid routine progress narration and separate progress or blocker files;
+- treat Tasks as the current executable plan, not frozen scope; add, remove, split, merge, or reorder remaining Tasks as evidence changes inside Stable Intent, confirmed boundaries, authority, and protected proof;
+- continue from available safe work until complete-Goal evidence exists, no safe work remains, or the stated stop budget is exhausted; analysis, a plan, local PASS, a completed branch, or partial delivery is not a stopping condition;
+- use one implementation note for material decisions, evidence-changing deviations, replans, scope expansion, and blockers; avoid routine progress narration and separate progress or blocker files;
 - after any interruption, session change, or Executor handoff, read this taskbook and any existing implementation note before acting; recover still-valid decisions, evidence, blockers, and remaining work, and do not repeat discovery or completed work unless an upstream change or new evidence invalidated what it proved;
 - when blocked, record the blocker, relevant evidence or attempts, the resolving condition, and any safe remaining work;
 - do not skip tests, weaken assertions, narrow the judged population, mock away the object, swallow failures, edit the judge, or accept a lower baseline unless Stable Intent requires it;
@@ -65,11 +69,11 @@ Keep simple work linear. When real branches, dependencies, shared writes, or a j
 - roll back unauthorized regression and report failure truthfully;
 - follow repository branch, PR, and pre-submit rules.
 
-The Executor may adapt remaining work inside Stable Intent and protected proof; record material replans in the implementation note.
-
 ## 6. Completion and Acceptance
 
 Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, truthful residuals or blockers, and a stop budget or truthful blocker. Local Task PASS is not complete-Goal PASS.
+
+At complete-Goal acceptance, run the full verification required for the declared delivery after relevant work has converged and any branches have rejoined. Reuse still-valid local and integration evidence, but rerun every judge whose proved property may have been invalidated by later changes.
 
 State visible acceptance and any required independent accepting boundary. Keep reserved private checks outside the taskbook; private and independent acceptance follow [completion-trust.md](completion-trust.md). If a required Acceptor or accepting environment is unavailable, cap the result at `ready for independent acceptance`.
 
