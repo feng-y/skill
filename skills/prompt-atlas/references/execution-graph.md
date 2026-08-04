@@ -2,9 +2,11 @@
 
 Use only when work has real branches, dependencies, shared writes, or a join that linear task order would hide.
 
+Add a direct edge only when a downstream Task consumes an upstream result, requires its completion for safe execution, or must be reverified when that result changes. Do not add transitive or merely sequential edges.
+
 Compile the minimum dependency structure:
 
-- order Tasks by real dependency;
+- order Tasks by those direct dependencies;
 - mark only material prerequisites and parallel branches;
 - give each shared mutable surface one owner;
 - end with a Task or completion gate that rejoins the branches and verifies the whole Goal;
