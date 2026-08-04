@@ -1,7 +1,23 @@
 from pathlib import Path
 import re
 
+root = Path(__file__).resolve().parents[2]
 text = Path(__file__).with_name("ARTIFACTS.md").read_text()
+compile_contract = (root / "skills/prompt-atlas/references/execution-compile.md").read_text()
+graph_contract = (root / "skills/prompt-atlas/references/execution-graph.md").read_text()
+
+for phrase in (
+    "consumes an upstream result",
+    "Do not add transitive or merely sequential edges",
+):
+    assert phrase in graph_contract, phrase
+
+for phrase in (
+    "Compile only information that constrains a future decision",
+    "at least one Task or required Task 0 can start immediately",
+    "Do not compile scheduler, lease, or fixed Agent topology",
+):
+    assert phrase in compile_contract, phrase
 
 case_pattern = re.compile(r"^## (S\d+) — .*?\n\n```markdown\n(.*?)\n```", re.M | re.S)
 cases = dict(case_pattern.findall(text))
@@ -22,6 +38,7 @@ for name in ("S1", "S2", "S3", "S4", "S6"):
     assert body.startswith("Status: Executable"), name
     positions = [body.index(h) for h in headings]
     assert positions == sorted(positions), (name, positions)
+    assert "### Task " in body, name
     assert "multiple taskbooks" not in body.lower(), name
     assert "node schema" not in body.lower(), name
     assert "taskgroup" not in body.lower(), name
