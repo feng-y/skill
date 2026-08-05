@@ -10,13 +10,13 @@ Discover and select skills interactively:
 npx skills@latest add feng-y/skill
 ```
 
-Install all skills:
+Install all skills (currently installs both Prompt Atlas and Northstar):
 
 ```bash
 npx skills@latest add feng-y/skill --all
 ```
 
-Northstar is currently being reviewed as the Chinese replacement for Prompt Atlas. While both directories remain for comparison, install one of them explicitly rather than installing both. Once the rewrite is stable, only the selected version should remain.
+Northstar is currently being reviewed as the Chinese replacement for Prompt Atlas. While both directories remain for comparison, install one of them explicitly for active use rather than installing both. Once the rewrite is stable, only the selected version should remain.
 
 Install one skill:
 
