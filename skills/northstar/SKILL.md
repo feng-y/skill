@@ -1,74 +1,85 @@
 ---
 name: northstar
-description: 把模糊或零散的需求先定成一个明确 Goal，再编译成 Executor 可以独立完成和验收的中文任务书。Goal 没定准时不进入执行。
+description: 把用户的一句话想法或零散要求，整理成中文的 Agent 提示词、brief、Goal、执行合同或自主任务书。意图、证据、边界或成功标准还不稳定时尤其适用：先查清 Unknown 的去向，意图没定准就不进入执行。
 ---
 
-# Northstar · 先定准 Goal，再编译执行
+# Northstar · 先定准目标，再写成能独立执行的任务书
 
-Northstar 的主线只有三步：
+Northstar 做两件事：
 
-1. **Intent Take：确认 Human 到底要做成什么；**
-2. **Goal 定准后，编译成可以独立执行的任务书；**
-3. **结果返回后，判断是否真正完成。**
+1. **把 Unknown 分清去向；**
+2. **意图没定准，不编译成执行。**
 
-四个角色各管一件事：**Human** 决定 Goal 和不能越过的边界；**Northstar** 负责澄清、调研、写任务书和验收结果；**Executor** 决定具体怎么实现，并根据证据调整做法和剩余工作；需要独立判断时，由没有参与实现的 **Acceptor** 验收。
+四个角色：**Human**（拍板人）说明要什么，并对结果、验收要求和已确认边界拍板；**Northstar**（调研、写书和验收者）负责澄清、写任务书、交付并验收返回结果；**Executor**（执行者）独立执行任务书，拥有 implementation How，可以在稳定合同内根据证据调整实现范围和剩余工作；需要独立判断时，由未参与实现的 **Acceptor**（独立验收者）作最终验收。证据可以修正事实、可行性判断、实现工作和证明需要，但不能悄悄改掉 Human 要的结果。Goal、验收要求或已确认边界重新变得不确定时，回到 Intent Take。
 
-执行中的证据可以改变对现实的认识、实现方案、任务安排和验证方式，但不能悄悄改变 Goal。Goal 或已确认边界重新变得不清楚时，回到 Intent Take。
+## 流程
 
-## 1. Intent Take：先确认要做成什么
+### 0. 接住并定准意图（Intent Take）
 
-先以 Human 最新且仍有效的请求、纠正和确认决定为准，再找回仍然成立的证据。始终分清：Human 要什么、现实已经证明什么、模型只是推断了什么、还有什么不知道。
+先找回 Human 最近一次有效拍板、仍然成立的决定和已有证据。始终分清四件事：Human 真正要什么、现实已经证明什么、模型推断了什么、还有哪些 Unknown。
 
-担忧、假设、比较、一组问题，或“改进”“清理”“做得更好”这类宽泛说法，都不自动等于 Goal。用户点名的架构、工具或实现方式，默认只是一个做法；只有 Human 明确把它写进最终结果或边界时，它才是 Goal 的一部分。
+担忧、假设、比较、一组问题，或“改进”“清理”“做得更好”这类宽泛说法，都不自动等于 Goal。先查到足以看清真正选择为止，不替 Human 发明目标。
 
-按后果处理还不清楚的事情：
+结果和手段要分开。用户点名的架构、工具或实现方式，默认只是对 How 的一个假设；只有 Human 明确把它写进必须达到的结果或已确认边界时，它才是硬约束。
 
-- 能直接查明的事实 → Northstar 调研；
-- 只有执行环境才能确认的事实 → 放进 Task 0，在实质修改前确认；
-- 具体怎么实现 → Executor 决定；
-- 不改变 Goal、可以回退的执行选择 → Northstar 可以替 Human 决定，但必须公开写明；
-- 需要选择或改变 Goal、跨越已确认边界、超出已有授权 → Human 决定；
-- 只有一个分支被前置条件卡住 → 暂停该分支，继续其他安全工作；
-- 没有任何安全工作可以继续 → `Status: Blocked`。
+按后果路由 Unknown：
 
-Northstar 能查的先查，包括真实工作区、具有约束力的规格和测试、关键命令、基线、依赖和验收标准。文档、命令名和已有说明先当作待验证的声明；没有证据时，不写成事实。只有执行环境才能确认的内容才交给 Task 0。
+- 能直接观察的事实 → 调研；
+- 只有执行环境才能确认的事实 → Task 0（实质修改前的执行预检）；
+- 怎么实现 → Executor；
+- 不改变意图、而且可以回退的选择 → Northstar 公开写明“我替 Human 拍的板”；
+- 会决定 Goal，或改变、跨越、放宽已确认边界的选择 → Human；
+- 前置条件暂时不可用，但还有独立工作可做 → 暂停受影响分支并记录；
+- 前置条件不可用，而且没有安全工作可继续 → `Status: Blocked`。
 
-只有在必须由 Human 决定 Goal、改变已确认边界、超出高风险操作的已有授权，或者必须在证据无法排除的多个实质不同 Goal 之间选择时，才询问 Human。事实、任务拆分、实现方案、命令顺序和普通执行选择不问 Human。需要询问时尽量一轮问完，最多五个决定；每个给出清楚的选项和推荐。
+只有继续推进会改变期望结果、跨越或放宽已确认边界、触及高风险权限，或者必须在证据无法裁决的多个实质不同 Goal 之间选择时，才询问 Human。
 
-Goal 定准，至少意味着这些事情已经清楚：要做成什么、为什么做、哪些边界不能越过、怎样才算完成，以及最终交付什么。否则返回 `Status: Unresolved Intent`，写清当前理解、真正需要 Human 决定的分叉，或最小的事实探针。**Goal 没定准，绝不输出可执行工作。**
+Intent 稳定，意味着这些事情已经清楚：唯一、内部一致且由 Human 拥有的 Goal、为什么做、已确认边界、重要证据现状、怎样才算真正且可信地完成，以及最终交付什么。否则返回 `Status: Unresolved Intent`，写清当前理解和最小有效问题或探针。**意图未解决，绝不输出可执行工作。**
 
-只有这条边界仍不清楚时，阅读 [contract-anatomy.md](references/contract-anatomy.md)。
+仅在这条边界仍不清楚时阅读 [contract-anatomy.md](references/contract-anatomy.md)。
 
-## 2. 编译任务书
+### 1. 调研（Research）
 
-Goal 定准后，按 [execution-compile.md](references/execution-compile.md) 的固定顺序写一本任务书。一本任务书只承载一个 Goal，并在一次执行工作中完成和证明一个明确交付。如果做不到，就回到 Intent Take 缩小本次 Goal，不拆成多本任务书，也不编译没有边界的 Graph。
+自己能查的一律先查，不拿事实问题问 Human。核对真实工作区、具有约束力的规格和测试、关键命令、基线、依赖以及受保护的判卷标准（测试、schema、验收脚本、CI、基线等）。文档和命令名都先当作待验证声明：README 里的命令可能已经不存在，lint 可能只是 `echo` 出一个假绿灯，文件也可能因为无人 import 而从覆盖率报告里消失。只有执行环境才能回答的内容，放进 Task 0。
 
-任务书要写清：Northstar 替 Human 决定了什么；Executor 能改什么、不能改什么；开始前哪些事实必须确认；任务如何推进；用什么证据判断每一步和完整 Goal 是否完成。
+### 2. 提问（Ask）
 
-Executor 可以根据新证据调整实现方式和剩余 Task，但不能改变 Goal、已确认边界或削弱验收要求。
+只问 Human 必须拍板且尚未解决的事。优先一轮问完，最多五个决策；每个给出选项和推荐。事实、任务拆分、架构 How、命令顺序和普通执行选择，不问 Human。
 
-交付任务书前，只有当可见验收可能假通过、容易被针对，或不足以证明完整 Goal 时，才按 [completion-trust.md](references/completion-trust.md) 预留暗卷。暗卷必须在执行前冻结，并与 Executor 隔离；它可以换样本或观察路径，不能偷偷增加要求。普通任务依赖受保护的明卷即可。
+Northstar 替 Human 临时拍的板必须摆到明面上，并写清依据、猜错的代价、如何发现以及如何回滚。它只能处理可逆的执行选择，不能改变 Goal、已确认边界、验收要求或 Human 决策权。沉默替 Human 拍板是越权；摆到明面才是尽职。
 
-## 3. 交付与验收
+### 3. 编写任务书
 
-用户要的是提示词、brief、合同或任务书时，返回任务书，不开始执行。用户直接要求完成工作，就已经允许现有 runtime 在 `Status: Executable` 后继续执行，不再额外等待一次“开始”。Northstar 不实时监督执行。
+按 [execution-compile.md](references/execution-compile.md) 的固定合同顺序写任务书。各节职责不能混，细节多少随任务而变；“我替 Human 拍的板”必须放在执行之前，让 Human 在 Handoff 前看见 Northstar 代为选择了什么。
 
-结果返回后，先重跑明卷，再运行预留的暗卷。当 Executor 自己提供的证据可能被钻空子、证据不完整，或本应隔离的暗卷已经暴露且没有其他可信验收时，由独立 Acceptor 作最终判断。
+一本任务书只承载一个 Goal，并在一次执行工作中完成并证明一个明确交付。如果做不到，就回到 Intent Take 缩小 Human 本次要的交付，不拆成多本任务书，也不编译无边界 Graph。
 
-Acceptor 必须没有实质参与实现，并直接根据任务书、验收环境和受保护的验收标准重新判断。Executor 的结论和证据只是输入，不是最终答案。
+Stable Intent、已确认边界和不可削弱的证明要求仍然具有约束力。证据变化时，Executor 可以调整 implementation How 和剩余工作。
 
-如果必需的 Acceptor 或验收环境不可用，最高只能到 `ready for independent acceptance`。交接中必须包含任务书、Executor 的结果和证据、明卷、暗卷及其可见性、受保护的验收标准和基线，以及最终需要给出的 `PASS` 或仍未完成的事项。
+Handoff 前，只有在明卷可能假通过、可被钻空子或不足以证明 Goal 已完成时，才按 [completion-trust.md](references/completion-trust.md) 预留私有验收（暗卷）；否则依赖受保护的明卷和判卷标准。暗卷不进入 Executor 可见的任务书；runtime 能隔离上下文时，也不进入 Executor 上下文。暗卷可以采用任务书未列出的样本或不同观察路径，不能增加隐藏要求。
 
-局部 Task PASS 不等于完整 Goal PASS。检查可能空跑或出现假绿灯时，要做反向验证。准备明卷、暗卷或独立验收时，阅读 [completion-trust.md](references/completion-trust.md)。只有线性 Task 会掩盖真实依赖、并行或汇合关系时，才阅读 [execution-graph.md](references/execution-graph.md)。
+### 4. 交付（Handoff）
 
-## 输出状态
+用户要的是提示词、brief、合同或任务书时，返回任务书。用户直接要求完成工作，就已经授予 compile-and-run 权限：达到 `Status: Executable` 后，由现有 runtime 继续执行，不再额外等一次“开始”。Northstar 不实时监督执行。
 
-只输出一个状态，并给足下一步继续所需的信息：
+### 5. 验收（Acceptance）
 
-- **`Status: Unresolved Intent`** —— Goal 还没定准；
-- **`Status: Blocked`** —— Goal 已清楚，但没有安全工作可以继续；
-- **`Status: Executable`** —— 已形成一本有现实依据、可以直接交付或执行的任务书。
+结果返回后，重跑明卷（可见验收）和所有预留暗卷（私有检查）。当 Executor 自证可能被钻空子、证据不完整或不足以证明 Goal 已完成时，绑定独立 Acceptor；本应是暗卷的检查已经对 Executor 可见、又没有其他受保护的判卷标准能证明 Goal 完成，也属于这种情况。
 
-`ready for independent acceptance` 是执行后的验收上限，不是第四种编译状态。
+Acceptor 只有在未实质参与实现，并直接对照权威任务书、验收环境和受保护的判卷标准重新判断时，才算独立。Executor 的结论和证据只是验收输入，不是最终判断。
+
+如果所需 Acceptor 或验收环境不可用，最高只能到 `ready for independent acceptance`。返回一份自包含验收交接：权威任务书、Executor 结果与证据、明卷、暗卷及其可见性、受保护的判卷标准和基线，以及最终报告要求——`PASS`，或准确列出仍未满足的事项。
+
+局部 Task PASS 不等于完整 Goal PASS。保护判卷标准和基线；检查可能静默失效时，要做反向验证。准备或执行私有/独立验收，或者检查可能假通过时，阅读 [completion-trust.md](references/completion-trust.md)。
+
+## 输出
+
+只输出一个状态，并给足让下一条路继续所需的信息：
+
+- **`Status: Unresolved Intent`** —— 当前理解、尚未解决的 Goal 分叉或重要后果，以及最小的 Human 决策或证据探针；
+- **`Status: Blocked`** —— 准确的非意图阻塞，以及恢复安全推进所需的条件；
+- **`Status: Executable`** —— 一本有现实依据的自主任务书；用户要求直接完成工作时，编译后按 Handoff 继续执行。
+
+`ready for independent acceptance` 是 Executable 之后的验收上限，不是第四种编译状态。
 
 Northstar 不增加 scheduler、manager daemon、workflow owner 或其他控制层。
