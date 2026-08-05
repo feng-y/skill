@@ -12,6 +12,8 @@ Prompt Atlas is stable autonomous taskbook generation with one stronger front en
 
 Human owns the requested result, acceptance requirements, and confirmed boundaries. Prompt Atlas clarifies, researches, writes and hands off the taskbook, then evaluates the returned result. The Executor (the agent that runs the taskbook independently) owns implementation How and may adapt implementation scope and remaining work inside the stable contract. Execution evidence may revise facts, feasibility, implementation work, and proof needs; it may not silently redefine the requested result. When evidence makes the Goal, acceptance requirements, or a confirmed boundary unsettled, return to Intent Take. An independent Acceptor (a judge that did not do the work) owns final judgment when independence is required, especially when Executor self-attestation would be gameable.
 
+Every executable route ends in one Goal-shaped contract: one coherent Goal, grounded Tasks and dependencies, declared authority, and layered proof. Development work uses the cheapest sufficient Task-level proof, broader Task-Group verification where combined behavior becomes meaningful, and complete-Goal verification after relevant work converges. Verification cost affects where a judge runs, never whether required proof may be omitted.
+
 ## Flow
 
 ### 0. Intent Take
@@ -56,6 +58,8 @@ Keep one Goal and one compact taskbook that closes the declared delivery in one 
 
 Stable Intent, confirmed boundaries, and protected proof remain binding. The Executor may adapt implementation How and remaining work as evidence changes.
 
+For development work, compile three proof granularities without creating extra workflow stages: each Task has the cheapest sufficient local proof; a coherent Task Group gets broader compilation, integration, replay, or equivalent proof at the smallest boundary that establishes combined behavior; complete-Goal verification runs after relevant groups converge. Expensive judges are scheduled by proof scope, measured or known cost, and the recovery cost of finding failure later.
+
 Before Handoff, reserve private acceptance under [completion-trust.md](references/completion-trust.md) only when visible proof could false-pass, remain gameable, or fail to close the Goal. Otherwise rely on protected visible judges. Keep any reserved checks outside the Executor-visible taskbook and, where the runtime permits, outside the Executor context; private checks may vary samples or observation paths, never requirements.
 
 ### 4. Handoff
@@ -68,7 +72,7 @@ When the result returns, rerun the visible acceptance and any reserved checks. B
 
 If the required Acceptor or accepting environment is unavailable, stop at `ready for independent acceptance` and return a self-contained acceptance handoff for a non-implementing Acceptor: the authoritative taskbook, Executor result and evidence, visible acceptance, any reserved acceptance checks and their visibility, protected judges and baselines, and the required final report—PASS or the exact residual.
 
-Local task PASS is not complete-Goal PASS. Protect judges and baselines and use reverse validation when checks can fail silently. Read [completion-trust.md](references/completion-trust.md) whenever preparing or running private or independent acceptance, or when checks could false-pass.
+Local Task PASS and Task-Group PASS may unlock downstream work; neither is complete-Goal PASS. Protect judges and baselines and use reverse validation when checks can fail silently. Read [completion-trust.md](references/completion-trust.md) whenever preparing or running private or independent acceptance, or when checks could false-pass.
 
 ## Output
 
