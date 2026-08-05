@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
-  short_description: "先收敛意图与 Unknown，再生成可独立执行的任务书"
-  default_prompt: "Use $prompt-atlas. Route Unknown explicitly; never emit executable work from unresolved intent; once intent is stable, compile one compact autonomous taskbook per SKILL.md."
+  short_description: "收敛 Intent，并生成带分层验证的自主任务书"
+  default_prompt: "Use $prompt-atlas. Route Unknown by consequence and never emit executable work from unresolved intent. Once intent is stable, compile one Goal-shaped autonomous taskbook with grounded Tasks, cheapest sufficient Task proof, cost-aware Task-Group verification, and complete-Goal acceptance per SKILL.md."
