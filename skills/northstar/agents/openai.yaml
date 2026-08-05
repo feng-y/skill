@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "先定准目标与 Unknown，再生成可独立执行的中文任务书"
-  default_prompt: "使用 $northstar。先区分 Human intent、现实、推断与 Unknown；意图未解决时绝不输出可执行工作；Intent 稳定后，按照 SKILL.md 编写一本紧凑、权威、可独立执行的中文任务书。"
+  short_description: "先定准 Goal，再编译成可独立执行和验收的中文任务书"
+  default_prompt: "使用 $northstar。先通过 Intent Take 确认一个由 Human 决定的 Goal；Goal 没定准时不要生成可执行工作。Goal 定准后，按照 SKILL.md 编译一本可以独立执行和验收的中文任务书。"
