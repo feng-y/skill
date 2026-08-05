@@ -40,7 +40,7 @@ Intent 稳定，意味着这些事情已经清楚：唯一、内部一致且由 
 
 ### 1. 调研（Research）
 
-自己能查的一律先查，不拿事实问题问 Human。核对真实工作区、具有约束力的规格和测试、关键命令、基线、依赖以及受保护判定器。文档和命令名都先当作待验证声明：README 里的命令可能已经不存在，lint 可能只是 `echo` 出一个假绿灯，文件也可能因为无人 import 而从覆盖率报告里消失。只有执行环境才能回答的内容，放进 Task 0。
+自己能查的一律先查，不拿事实问题问 Human。核对真实工作区、具有约束力的规格和测试、关键命令、基线、依赖以及受保护的验收判据。文档和命令名都先当作待验证声明：README 里的命令可能已经不存在，lint 可能只是 `echo` 出一个假绿灯，文件也可能因为无人 import 而从覆盖率报告里消失。只有执行环境才能回答的内容，放进 Task 0。
 
 ### 2. 提问（Ask）
 
@@ -56,7 +56,7 @@ Intent 稳定，意味着这些事情已经清楚：唯一、内部一致且由 
 
 Stable Intent、已确认边界和不可削弱的证明要求仍然具有约束力。证据变化时，Executor 可以调整 implementation How 和剩余工作。
 
-Handoff 前，只有在可见证明可能假通过、可被钻空子或不足以证明 Goal 已完成时，才按 [completion-trust.md](references/completion-trust.md) 预留私有验收；否则依赖受保护的可见判定器。预留检查不进入 Executor 可见的任务书；runtime 能隔离上下文时，也不进入 Executor 上下文。私有检查可以采用任务书未列出的样本或不同观察路径，不能增加隐藏要求。
+Handoff 前，只有在可见证明可能假通过、可被钻空子或不足以证明 Goal 已完成时，才按 [completion-trust.md](references/completion-trust.md) 预留私有验收；否则依赖受保护的可见验收判据。预留检查不进入 Executor 可见的任务书；runtime 能隔离上下文时，也不进入 Executor 上下文。私有检查可以采用任务书未列出的样本或不同观察路径，不能增加隐藏要求。
 
 ### 4. 交付（Handoff）
 
@@ -64,13 +64,13 @@ Handoff 前，只有在可见证明可能假通过、可被钻空子或不足以
 
 ### 5. 验收（Acceptance）
 
-结果返回后，重跑可见验收和所有已预留检查。当 Executor 自证可能被钻空子、证据不完整或不足以证明 Goal 已完成时，绑定独立 Acceptor；本应私有的检查已经对 Executor 可见、又没有其他受保护判定器能证明 Goal 完成，也属于这种情况。
+结果返回后，重跑可见验收和所有已预留检查。当 Executor 自证可能被钻空子、证据不完整或不足以证明 Goal 已完成时，绑定独立 Acceptor；本应私有的检查已经对 Executor 可见、又没有其他受保护的验收判据能证明 Goal 完成，也属于这种情况。
 
-Acceptor 只有在未实质参与实现，并直接依据权威任务书、验收环境和受保护判定器重新判断时，才算独立。Executor 的结论和证据只是验收输入，不是最终判定。
+Acceptor 只有在未实质参与实现，并直接依据权威任务书、验收环境和受保护的验收判据重新判断时，才算独立。Executor 的结论和证据只是验收输入，不是最终判定。
 
-如果所需 Acceptor 或验收环境不可用，最高只能到 `ready for independent acceptance`。返回一份自包含验收交接：权威任务书、Executor 结果与证据、可见验收、预留检查及其可见性、受保护判定器和基线，以及最终报告要求——`PASS` 或准确残留项。
+如果所需 Acceptor 或验收环境不可用，最高只能到 `ready for independent acceptance`。返回一份自包含验收交接：权威任务书、Executor 结果与证据、可见验收、预留检查及其可见性、受保护的验收判据和基线，以及最终报告要求——`PASS` 或准确残留项。
 
-局部 Task PASS 不等于完整 Goal PASS。保护判定器和基线；检查可能静默失效时，要做反向验证。准备或执行私有/独立验收，或者检查可能假通过时，阅读 [completion-trust.md](references/completion-trust.md)。
+局部 Task PASS 不等于完整 Goal PASS。保护验收判据和基线；检查可能静默失效时，要做反向验证。准备或执行私有/独立验收，或者检查可能假通过时，阅读 [completion-trust.md](references/completion-trust.md)。
 
 ## 输出
 
