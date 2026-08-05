@@ -67,7 +67,7 @@ A **Task Group** is a coherent set of Tasks that together establish one combined
 
 Place broader compilation, integration, replay, or end-to-end verification at the smallest Task-Group boundary whose combined behavior it proves—after a coherent set of Tasks, before dependent work consumes the result, or when branches rejoin. Do not repeat expensive whole-system verification per Task. When a judge costs multiple minutes or otherwise dominates iteration time, use a measured or reliably known approximate cost when available and schedule it by comparing the cost of running now with the likely recovery cost of finding failure later. Run it earlier when a Task changes a system-wide contract, many downstream Tasks will consume the result, local proof cannot cover the material integration risk, a branch is about to fan out, or delaying the check would materially increase recovery cost. Reuse still-valid evidence; invalidate and rerun only the proof whose property later changes may have affected.
 
-Keep simple work linear. When real branches, dependencies, shared writes, a Task Group, or a join would be hidden by a linear list, read [execution-graph.md](execution-graph.md) and compile the minimum dependency structure into ordinary Tasks.
+Keep simple work linear. Read [execution-graph.md](execution-graph.md) when a linear list would hide real branches, dependencies, shared writes, a Task Group, or a join, or when Stable Intent and the delivery are bounded but downstream work can only be stated truthfully after current work runs. In the first case, compile the minimum dependency structure into ordinary Tasks; in the second, record unresolved areas in Execution instead of placeholder Tasks.
 
 ## 5. Execution Rules
 
