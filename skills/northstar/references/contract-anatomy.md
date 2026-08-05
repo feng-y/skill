@@ -17,9 +17,11 @@
 
 证据可以证明某条建议路线走不通，但不能替 Human 改变 Goal。
 
-## Unknown 怎么走
+## Context 与 Unknown
 
-Unknown 的顶级路由在 [SKILL.md](../SKILL.md)。本文件只处理其中会影响 Goal、验收要求或已确认边界、因而需要 Intent Take 的 Unknown；其他 Unknown 不应被吸收到这里。
+Intent Take 只补足形成 Goal 所需的最小 context：最新且仍有效的 Human 表达、会改变选择的现实证据、已确认边界和验收要求。Context 已经足以区分不同 Goal 时就停止扩展；不要为了建立全面背景而把无关上下游带进来。
+
+Unknown 是判断未决事项影响和责任主体的机制。会影响 Goal、验收要求或已确认边界的 Unknown 留在 Intent Take；可查事实、执行环境事实、实现选择和可回退决定，分别按 [SKILL.md](../SKILL.md) 交给调研、Task 0、Executor 或 Northstar 处理。
 
 ## 什么时候才算目标定准
 
