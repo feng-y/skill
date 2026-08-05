@@ -34,6 +34,8 @@ Route Unknown by consequence:
 - unavailable prerequisite with independent work → park and record;
 - unavailable prerequisite with no safe work → `Status: Blocked`.
 
+Routing assigns consequence and authority; it does not by itself close the Unknown. Use the smallest closure operation that makes the next judgment possible: `Research` reads existing reality; `Prototype` makes an abstract question concrete enough to judge; `Grilling` obtains a decision from the Human who owns it after available evidence is gathered; closure `Task` means a necessary enabling action when observation or discussion cannot proceed. These operations may chain. They are not fixed Task types or another workflow, and they never replace Human authority.
+
 Ask Human only when proceeding would change the requested result, cross or relax a confirmed boundary or high-risk authority, or choose between materially different Goals that evidence cannot resolve.
 
 Intent is stable only when one coherent Human-owned Goal, its Why, confirmed boundaries, material evidence state, trusted success, and delivery are clear. Otherwise return `Status: Unresolved Intent` with the current understanding and the smallest useful question or probe. **Never emit executable work from unresolved intent.**
@@ -54,9 +56,9 @@ A delegated default must be marked unconfirmed and include its basis, cost if wr
 
 Use [execution-compile.md](references/execution-compile.md) and preserve its fixed contract order. Keep section semantics strict and detail proportional; expose delegated decisions before execution so the Human can inspect compiler-owned defaults before Handoff.
 
-Keep one Goal and one compact taskbook that closes the declared delivery in one execution effort. If it cannot, return to Intent Take to narrow the Human-owned delivery rather than compiling multiple taskbooks or an unbounded graph.
+Keep one Goal and one compact taskbook that closes the declared delivery in one execution effort. This requires a bounded delivery and a credible route to complete-Goal proof, not prior knowledge of every downstream Task. If no bounded route exists, return to Intent Take to narrow the Human-owned delivery rather than compiling multiple taskbooks or an unbounded graph.
 
-Stable Intent, confirmed boundaries, and protected proof remain binding. The Executor may adapt implementation How and remaining work as evidence changes.
+Stable Intent, confirmed boundaries, and protected proof remain binding. When downstream work can only be discovered by executing current work, use [execution-graph.md](references/execution-graph.md) to compile a bounded progressive graph. State only work whose result, real dependencies, authority, and proof are currently clear. Keep the rest as unresolved areas instead of placeholder Tasks, advance the current frontier, and refresh the remaining graph from returned evidence. An unresolved area may remain in execution only while its current consequence does not require choosing or changing the Goal, acceptance requirements, or a confirmed boundary; return to Intent Take as soon as that changes. The Executor may adapt implementation How and remaining work as evidence changes.
 
 For development work, compile three proof granularities without creating extra workflow stages: each Task has the cheapest sufficient local proof; a coherent Task Group gets broader compilation, integration, replay, or equivalent proof at the smallest boundary that establishes combined behavior; complete-Goal verification runs after relevant groups converge. Expensive judges are scheduled by proof scope, measured or known cost, and the recovery cost of finding failure later.
 
