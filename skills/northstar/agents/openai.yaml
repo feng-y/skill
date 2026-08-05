@@ -1,0 +1,4 @@
+interface:
+  display_name: "Northstar"
+  short_description: "收敛 Intent，并生成带分层验证的中文任务书"
+  default_prompt: "使用 $northstar。沿 Intent Take、任务书编译、Handoff 和 Acceptance 的 Flow 推进。按 SKILL.md 的 judgment，只补足当前节点所需的最小 context；遇到 Unknown 时判断其影响并交给正确主体处理。Goal 定准后，编译一本包含有现实依据的 Task、成本最低且足够的 Task 局部证明、成本感知的 Task Group 组合验证和完整 Goal 验收的中文自主任务书。"
