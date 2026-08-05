@@ -1,0 +1,4 @@
+interface:
+  display_name: "Northstar"
+  short_description: "先定准目标与 Unknown，再生成可独立执行的中文任务书"
+  default_prompt: "使用 $northstar。显式路由 Unknown；意图未解决时绝不输出可执行工作；Intent 稳定后，按照 SKILL.md 编写一本紧凑、权威、可独立执行的中文任务书。"
