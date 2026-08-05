@@ -90,7 +90,7 @@ Prompt Atlas does not supervise live execution.
 
 When the result returns, rerun the visible acceptance and any reserved checks.
 
-Bind an independent Acceptor whenever final judgment requires independence. For example, proof can remain gameable or incomplete because checks intended as private were visible and no other protected judge closes the Goal.
+Bind an independent Acceptor whenever final judgment requires independence. For example, proof can remain gameable or incomplete. This includes cases where checks intended as private were visible and no other protected judge closes the Goal.
 
 An Acceptor is independent only if it did not materially implement the work. It must evaluate from the authoritative taskbook and accepting environment rather than the Executor's conclusion. Executor evidence is input, not final judgment.
 
