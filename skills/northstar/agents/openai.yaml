@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
   short_description: "以 Unknown 显式路由为顶级控制，定准 Goal 后生成中文任务书"
-  default_prompt: "使用 $northstar。以 Unknown 显式路由为顶级控制：任何阶段出现 Unknown 都按 SKILL.md 路由；Intent Take 只处理会影响 Goal、验收要求或已确认边界的 Unknown。Goal 没定准时不要生成可执行工作；Goal 定准后编译一本可独立执行、包含完整验收合同的中文任务书。"
+  default_prompt: "使用 $northstar。Unknown 显式路由是顶级控制：任何阶段出现 Unknown 都先按 SKILL.md 的后果路由处理；Intent Take 只处理会影响 Goal、验收要求或已确认边界的 Unknown。Goal 没定准时不要生成可执行工作；Goal 定准后编译一本可独立执行、包含完整验收合同的中文任务书。"
