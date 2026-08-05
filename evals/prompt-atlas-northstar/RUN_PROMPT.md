@@ -5,14 +5,20 @@ Paste the block below into a new conversation.
 ```text
 执行 Prompt Atlas / Northstar clean-session taskbook 验证。
 
-必须先联网或使用 GitHub 工具，完整读取以下两个文件：
+必须先完整读取：
 
 1. https://github.com/feng-y/skill/blob/northstar-chinese-edition/evals/prompt-atlas-northstar/VALIDATION_PLAN.md
-2. https://github.com/feng-y/skill/blob/northstar-chinese-edition/evals/prompt-atlas-northstar/SOURCE_INDEX.md
+2. https://github.com/feng-y/skill/blob/northstar-chinese-edition/evals/prompt-atlas-northstar/OFFLINE_SOURCE_INDEX.md
 
-先按 SOURCE_INDEX.md 加载 P1–P5、N1–N5、L1–L2 共 12 个权威源，并输出 source-load table。可以使用 GitHub connector、网页或 raw fallback；不要把相对路径当成已加载内容。
+读取计划和索引后，不要返回进度说明，也不要说“12 个源尚未加载”。必须在同一轮继续打开 OFFLINE_SOURCE_INDEX.md 中的三个固定 bundle：
 
-只有 12 个源全部 LOADED 后，才严格执行 VALIDATION_PLAN.md 的 8 个案例：分别生成 Leader、Prompt Atlas、Northstar 三个独立候选，再统一按 12 个维度评分。不要修改仓库或 PR，不使用其他对话背景，不预设结论。
+- B-P：包含 P1–P5
+- B-N：包含 N1–N5
+- B-L：包含 L1–L2
 
-最终输出计划规定的完整报告，并明确本轮能证明什么、不能证明什么。如果任何源无法加载，只报告失败的具体 URL 和工具限制，不得编造评测结果。
+三个 bundle 全部 LOADED，就等于 12 个权威源全部加载。先输出三行 bundle source-load table，然后立即继续执行 VALIDATION_PLAN.md 的全部 8 个案例；不要停下来等待确认。
+
+对每个案例分别生成 Leader、Prompt Atlas、Northstar 三个独立候选，再统一按 12 个维度评分。不要修改仓库或 PR，不使用其他对话背景，不预设结论。候选生成前不得把 bundle 内容改写成摘要来代替原文。
+
+最终输出计划规定的完整报告，并明确本轮能证明什么、不能证明什么。只有在实际尝试三个 bundle URL 后仍无法打开某一个时，才报告失败的 bundle URL 和工具限制；不得把 bundle 内的单个源直接标记为未加载，也不得编造评测结果。
 ```
