@@ -137,7 +137,7 @@ repo 证据无法裁决、且会形成长期业务承诺或高代价兼容边界
 
 ### 7. Verify
 
-仅对 `Design ready` 读取 `verification.md`。验证层使用 Brooks-Lint 架构标准，不再定义自有改进维度：
+仅对 `Design ready` 读取 `verification.md`。直接使用本 Skill 内置并冻结的 Brooks 架构约束；**禁止调用、加载、路由到或依赖任何外部 Brooks / brooks-lint Skill、配置、报告模板、Health Score 或 workflow。**
 
 - 扫描 `R1 Cognitive Overload`、`R2 Change Propagation`、`R3 Knowledge Duplication`、`R4 Accidental Complexity`、`R5 Dependency Disorder`、`R6 Domain Model Distortion`；
 - 每个适用 finding 写 `Severity → Symptom → Source → Consequence → Remedy → How to verify`；
