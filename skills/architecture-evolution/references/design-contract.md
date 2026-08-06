@@ -89,14 +89,18 @@ Status: Design ready
 - Performance / observability:
 - Essential and acceptable differences:
 
-## Improvement verification
-| Dimension | Before | Expected after | How to verify |
-| --- | --- | --- | --- |
-| Business semantic integrity | | | |
-| Variation containment | | | |
-| Capability cohesion | | | |
-| Unidirectional dependency | | | |
-| Real replacement | | | |
+## Brooks verification
+
+| Risk | Severity | Symptom | Source | Consequence | Remedy in target design | How to verify | Residual / tradeoff |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| R5 Dependency Disorder | | | | | | | |
+| R6 Domain Model Distortion | | | | | | | |
+| R2 Change Propagation | | | | | | | |
+| R3 Knowledge Duplication | | | | | | | |
+| R4 Accidental Complexity | | | | | | | |
+| R1 Cognitive Overload | | | | | | | |
+
+- Brooks verdict: PASS / RETRY
 
 ## Real Evolution challenge
 - False unification:
@@ -118,5 +122,8 @@ Status: Design ready
 - 一个主要架构断点、一个推荐设计；
 - `Observed / Inferred / Unknown` 不混写；
 - `Delete` 必须具体；没有物理删除时，写明消失的平行业务语义、调用者知识、重复判断或反向依赖；
-- improvement 必须是可观察 delta，不能只写“统一”“解耦”或模式名；
+- Brooks verification 必须扫描 R1–R6；适用 finding 使用 `Severity → Symptom → Source → Consequence → Remedy → How to verify`；
+- `Source` 引用 Brooks risk code 及对应经典原则或 smell；
+- `No finding` 也要写最关键 false-positive guard；
+- 不生成 Health Score；未完成实现和全仓库扫描时，分数没有可信含义；
 - 实现顺序属于下游任务书。
