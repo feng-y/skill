@@ -16,7 +16,7 @@ North Star：**让一个真实变化集中到正确 owner，让稳定主流程�
 1. 先只用本文件绑定目标并读取代码现实；
 2. 出现结构候选时再读 [rules.md](references/rules.md)；
 3. 只有 `Design ready` 才读 [design-contract.md](references/design-contract.md) 和 [verification.md](references/verification.md)；
-4. [validation.md](references/validation.md) 只用于 Skill smoke/eval，正常运行禁止读取。
+4. [validation.md](references/validation.md) 只用于显式 smoke/eval 请求，正常架构分析禁止读取。
 
 ## 何时使用
 
