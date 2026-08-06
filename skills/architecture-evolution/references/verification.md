@@ -22,7 +22,7 @@ Before / Expected after / How to verify
 2. target owner 与 seam 解决的是根因，不只是症状；
 3. 至少一个可观察负担减少；
 4. 复杂度没有转移到 helper、adapter 或调用者；
-5. 真实业务差异与 Protected behavior 被保留；
+5. 真实业务差异与 `Protected behavior` 被保留；
 6. replacement 是当前可描述的结果，不是假想未来灵活性。
 
 否则修改设计，或返回 `No architecture change`、`Research required`、`Decision required`。
