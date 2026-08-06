@@ -15,9 +15,8 @@ North Star：**让一个真实变化集中到正确 owner，让稳定主流程�
 
 1. 先只用本文件绑定目标并读取代码现实；
 2. 出现结构候选时再读 [rules.md](references/rules.md)；
-3. 准备输出时读 [design-contract.md](references/design-contract.md)；
-4. 只有 `Design ready` 才读 [verification.md](references/verification.md)；
-5. [validation.md](references/validation.md) 只用于 Skill smoke/eval，正常运行禁止读取。
+3. 只有 `Design ready` 才读 [design-contract.md](references/design-contract.md) 和 [verification.md](references/verification.md)；
+4. [validation.md](references/validation.md) 只用于 Skill smoke/eval，正常运行禁止读取。
 
 ## 何时使用
 
@@ -126,13 +125,22 @@ repo 证据无法裁决、且会形成长期或高代价边界承诺时，返回
 
 ## Output
 
-读取 `design-contract.md`，只返回一个状态及该状态的最小充分内容：
+只返回一个状态。
 
-- `Status: No architecture change`
-- `Status: Research required`
-- `Status: Decision required`
-- `Status: Design ready`
+### `Status: No architecture change`
 
-只有 `Design ready` 输出完整 Architecture Design Contract。每个 `Design ready` 必须给出具体 `Delete`；若没有物理代码删除，必须明确消失的调用者知识、重复判断或无效依赖。
+只输出：`Target`、`Observed evidence`、为什么不是架构问题、最小 `Local change boundary`。禁止输出 target seam 或 Design Delta。
+
+### `Status: Research required`
+
+只输出：`Target`、已确认的 `Observed / Inferred`、一个会改变设计的 `Unknown`、最小证据探针及其影响字段。Unknown 关闭前不设计 target seam。
+
+### `Status: Decision required`
+
+只输出：`Target`、已确认事实、所有方案共享的边界、Human-owned 取舍、少量选项和一个推荐。不要伪造唯一设计。
+
+### `Status: Design ready`
+
+读取 `design-contract.md` 与 `verification.md`，输出完整 Architecture Design Contract。必须给出具体 `Delete`；若没有物理代码删除，明确消失的调用者知识、重复判断或无效依赖。
 
 由 Northstar 调用时，本 Skill 只返回设计判断和实现约束；Goal、授权、任务书、执行和完整验收仍由 Northstar 负责。
