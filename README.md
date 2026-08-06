@@ -32,4 +32,4 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 - `prompt-atlas` — current English baseline for recovering stable intent and compiling one truthful autonomous taskbook or exact blocker.
 - `northstar` — Chinese rewrite and rename candidate for `prompt-atlas`, preserving the same intent, execution-boundary, taskbook, and acceptance semantics.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `architecture-evolution` — diagnose one architecture smell and design a bounded, evidence-backed responsibility and seam change.
+- `architecture-evolution` — unify split business semantics and abstractions, form cohesive capability ownership and unidirectional policy dependencies, and make obsolete paths removable.
