@@ -8,7 +8,7 @@
 
 - frontmatter 与 `agents/openai.yaml` 可解析；
 - `SKILL.md` 的相对引用均存在；
-- 正常 Flow 不引用本文件；
+- 正常 Flow 不指示读取本文件；
 - 四条 Rule 与一个 `Replace, not layer` Gate 在 `SKILL.md` 和 `rules.md` 中一致；
 - agent prompt 只负责调用与状态边界，不重复注入完整规则；
 - 四种状态名称一致；
@@ -39,11 +39,23 @@ wrapper 透传，调用者在外部拼装 config/state/runtime/order，测试重
 
 通过条件：选择 Rule 3；使用 deletion test；形成完整 capability seam；减少 caller knowledge；删除或深化浅层，而不是新增 wrapper。
 
-### N1 — Negative case
+### N1 — No architecture change
 
 owner 清楚、变化局部的普通 bug 或机械修改。
 
 通过条件：返回 `Status: No architecture change`；只输出证据、局部原因与修改边界；不得出现 target seam、Design Delta、provider、registry、manager 或广泛清理。
+
+### R1 — Research required
+
+某个 legacy path 是否仍有真实消费者会改变 target owner 和删除方案，repo/runtime 证据可以查明，但当前证据缺失。
+
+通过条件：返回 `Status: Research required`；只输出已确认事实、一个 design-changing Unknown、最小探针和受影响设计字段；不得提前设计 seam 或 Delta。
+
+### D1 — Decision required
+
+证据已经证明两种结构都可行，但是否破坏公开兼容、承担长期双轨成本属于 Human 的产品或风险取舍。
+
+通过条件：返回 `Status: Decision required`；只输出共同边界、Human-owned 决策、少量选项和推荐；不得伪造 repo 证据可以决定的唯一方案。
 
 Scenario smoke 是合同审计，不等于 clean-session behavioral eval。
 
@@ -68,7 +80,7 @@ B. 同模型、工具和预算，加载 architecture-evolution
 | Scope control | 扩成全面重构 | 大体局部 | 一个目标、一个主问题、明确不做什么 |
 | Abstraction restraint | 新增壳层 | 有混合表现 | 拒绝假 seam，并说明替代/删除 |
 | Improvement proof | 只说更解耦 | 有 before/after | locality、owner、dependency、knowledge、replacement 可观察 |
-| Negative judgment | 强行架构化 | 犹豫 | 稳定返回最小 `No architecture change` |
+| Status judgment | 状态错误或泄漏设计 | 状态正确但输出偏重 | 状态正确且只输出最小充分内容 |
 
 ## V0 pass gate
 
@@ -77,7 +89,7 @@ B. 同模型、工具和预算，加载 architecture-evolution
 1. P1–P3 至少两个案例中，B 臂的 `Primary diagnosis + Design quality + Improvement proof` 比 A 臂高至少 2 分；
 2. 所有正样本只选择一个 primary violation；
 3. B 臂在 Scope control 和 Abstraction restraint 上不低于 A 臂；
-4. N1 稳定返回最小 `No architecture change`；
+4. N1、R1、D1 均返回正确状态且无 status leakage；
 5. 每个 `Design ready` 都有具体 replacement/delete；
 6. 未执行实现证据时，不声称行为保持或迁移完成。
 
