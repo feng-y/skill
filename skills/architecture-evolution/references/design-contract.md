@@ -1,117 +1,86 @@
 # Architecture Design Contract
 
-Choose exactly one status and emit only the section for that status. Do not fill a complete design template when evidence is insufficient or architecture work is unnecessary.
+只选择一个状态，并只输出该状态需要的信息。证据不足或无需架构调整时，不填写完整设计模板。
 
 ## Status: No architecture change
-
-Use when the evidence supports a local implementation issue rather than a responsibility, variation, dependency, or seam problem.
 
 ```markdown
 Status: No architecture change
 
 ## Target
-
 - Target:
 - Trigger:
 - Scope:
 
 ## Observed evidence
+<证明 owner 与变化边界已经足够局部的事实>
 
-Facts showing ownership and change boundaries are already local enough.
-
-## Why this is not an architecture problem
-
-Explain why the candidate signals do not establish a rule violation. Include the counterexample considered.
+## Why local
+<为什么候选 signal 不构成规则违反；包含检查过的反例>
 
 ## Local change boundary
-
-State the smallest implementation area that should change and what should remain untouched.
+<最小修改区域，以及明确不应扩大到的结构>
 ```
 
-Do not output a target seam, responsibility redesign, or `Keep / Move / Merge / Delete` section.
+禁止输出 target seam、责任重构或 Design Delta。
 
 ## Status: Research required
-
-Use when a repo or runtime fact can materially change the owner, seam, dependency direction, compatibility boundary, or design verdict.
 
 ```markdown
 Status: Research required
 
 ## Target
-
 - Target:
 - Trigger:
 - Scope:
 
 ## Confirmed reality
-
 ### Observed
-
-Facts already supported by evidence.
-
 ### Inferred
 
-Only conclusions that remain valid across the unresolved alternatives.
-
 ## Design-changing Unknown
-
 - Unknown:
 - Why it changes the design:
 - Current alternatives:
 
-## Minimum evidence probe
-
+## Minimum probe
 - Probe:
 - Evidence source:
-- Which design field it can change:
-- Next status after the result:
+- Design field affected:
+- Next status after result:
 ```
 
-Do not invent the target seam or full Design Delta before the Unknown closes.
+Unknown 关闭前，不设计 target seam 或完整 Delta。
 
 ## Status: Decision required
-
-Use when repo evidence cannot decide a Human-owned long-term or high-cost boundary commitment.
 
 ```markdown
 Status: Decision required
 
 ## Target
-
 - Target:
 - Trigger:
 - Scope:
 
 ## Confirmed reality
-
 ### Observed
-
-Facts supported by evidence.
-
 ### Common design boundary
 
-Only architecture conclusions shared by all viable options.
-
 ## Human-owned decision
-
 - Decision:
-- Why evidence cannot decide it:
+- Why repo evidence cannot decide it:
 
 ## Options
-
-| Option | Boundary/ownership consequence | Cost/risk | Reversibility |
+| Option | Boundary / ownership consequence | Cost / risk | Reversibility |
 | --- | --- | --- | --- |
 
 ## Recommendation
-
-Give one recommendation, its basis, and the consequence of choosing differently.
+<一个推荐、依据，以及选择其他方案的后果>
 ```
 
-Do not manufacture a single complete design while the decision is open.
+只写各选项共享的已确认边界，不伪造唯一设计。
 
 ## Status: Design ready
-
-Use only when the primary rule violation, root cause, target owner, seam, and observable improvement are sufficiently grounded.
 
 ```markdown
 # Architecture Design Contract
@@ -119,127 +88,93 @@ Use only when the primary rule violation, root cause, target owner, seam, and ob
 Status: Design ready
 
 ## Target
-
 - Target:
 - Trigger:
 - Scope:
 - Out of scope:
 
 ## Current reality
-
 ### Observed
-
-Facts directly supported by code, call paths, config, tests, runtime evidence, history, or current ADRs.
+<代码、调用、配置、测试、历史或 ADR 可直接证明的事实>
 
 ### Inferred
-
-Architecture interpretation supported by the observations.
+<由证据支持的架构解释>
 
 ### Residual Unknown
-
-Only items that do not change the selected design. State their implementation or verification impact.
+<不会改变当前设计，只影响实现或验证的事项>
 
 ## Primary rule violation
-
 - Rule:
 - Evidence:
-- Why this is architectural rather than a local implementation issue:
-- Root-cause responsibility / variation / seam error:
+- Why architectural:
+- Root cause:
 - Counterexample checked:
 - Confidence:
 
 ## Secondary signals
-
-At most two. State why they are not primary and why they are deferred.
+<最多两个；说明为什么不在本轮处理>
 
 ## Target design
-
 ### Responsibility map
-
-| Responsibility | Owner | Input | Output | Owned truth/state | Must not own |
+| Responsibility | Owner | Input | Output | Owned truth / state | Must not own |
 | --- | --- | --- | --- | --- | --- |
 
 ### Variation ownership
-
 | Variation | Current locations | Target owner | Handling |
 | --- | --- | --- | --- |
 
 ### Dependency direction
-
-Describe the stable flow, stable contract, and volatile implementation direction. Name any forbidden edge that should disappear.
+<稳定主流程、稳定 contract、易变 implementation，以及应消失的依赖边>
 
 ### Target seam
-
-- Interface/capability:
-- Callers still need to know:
-- Callers no longer need to know:
-- Behavior/state/order hidden behind the seam:
+- Capability:
+- Callers still know:
+- Callers no longer know:
+- Hidden behavior / state / order:
 - Why this seam is real now:
 
 ## Design delta
-
 ### Keep
-
-What remains canonical.
-
 ### Move
-
-Which responsibility, state, or decision moves from where to where.
-
 ### Merge
-
-Which duplicate interpretations or shallow modules become one capability.
-
 ### Delete
-
-Which switch, wrapper, special entry, fact source, compatibility branch, old test surface, caller knowledge, or invalid dependency should disappear.
-
 ### Do not change
 
-Protected scope that prevents redesign drift.
-
 ## Protected behavior
-
-List implementation obligations that the design does not permit to drift:
-
-- input/output semantics;
-- error behavior;
-- configuration compatibility;
-- ordering and lifecycle;
-- side effects and external contracts;
-- necessary performance or observability boundary.
-
-State acceptable differences separately. Do not claim these behaviors are already verified unless evidence was actually run.
+- Input / output:
+- Errors:
+- Config compatibility:
+- Order / lifecycle:
+- Side effects / external contracts:
+- Performance / observability boundary:
+- Acceptable differences:
 
 ## Improvement verification
-
 | Dimension | Before | Expected after | How to verify |
 | --- | --- | --- | --- |
 | Change locality | | | |
 | Ownership concentration | | | |
 | Dependency stability | | | |
 | Caller knowledge | | | |
-| Replacement/deletion | | | |
+| Replacement | | | |
 
 ## Challenge result
-
-- New wrapper/layer risk:
+- New layer risk:
 - Speculative abstraction risk:
-- Real business difference preservation:
-- Complexity relocation check:
+- Real difference preserved:
+- Complexity relocation:
 - Old path still carrying weight:
-- ADR/compatibility conflict:
+- ADR / compatibility conflict:
 
 ## Next handoff
-
-State the single recommended design and the smallest implementation boundary that can prove it.
+<单一推荐设计，以及能够证明它的最小实现边界>
 ```
 
-## Output discipline
+## Discipline
 
-- One primary rule violation, not a smell inventory.
-- One recommended design for `Design ready`.
-- Evidence and inference remain separate.
-- Every `Design ready` must contain a concrete `Delete`. When no physical code is deleted, name the caller knowledge, duplicate decision, or invalid dependency that disappears.
-- Improvement verification describes observable deltas, not “cleaner,” “more elegant,” “more SOLID,” or pattern names.
-- Implementation sequencing belongs in the downstream taskbook, not here.
+- 一个主要规则违反，不输出 smell 清单；
+- `Design ready` 只给一个推荐设计；
+- `Observed / Inferred / Unknown` 不混写；
+- 每个 `Design ready` 必须有具体 `Delete`；没有物理删除时，写明消失的调用者知识、重复判断或无效依赖；
+- improvement 只能写可观察 delta，不能只写“更优雅”“更 SOLID”；
+- 实现顺序属于下游任务书，不写进本合同。
