@@ -10,6 +10,17 @@ Signals → Diagnosis → Counterexample → Design move → Improvement proof
 
 Signal 不是结论；设计模式也不是结论。
 
+## Primary rule selection
+
+优先选择最接近根因的一条：
+
+- **同一个责任或变化散落多处** → Rule 1；
+- **稳定主流程知道具体实现差异** → Rule 2；
+- **调用者在 seam 外重组一项完整能力** → Rule 3；
+- **一个模块绑定多个独立变化原因** → Rule 4。
+
+其他命中项只作为 secondary signal。不要因为一种设计能同时改善多项指标，就同时声明多个 primary rule。
+
 ## Rule 1 — 一个责任或变化维度只有一个 owner
 
 **Signals**
