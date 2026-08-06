@@ -1,6 +1,6 @@
 # Architecture Evolution Rules
 
-These rules turn broad architecture slogans into evidence-backed diagnosis and design. Use the first three as primary architecture rules. Use the final two as design gates that reject false improvement.
+These rules turn broad architecture slogans into evidence-backed diagnosis and design. Use the first four as primary architecture rules. Use the final rule as a design gate that rejects false improvement.
 
 For every rule, move through:
 
@@ -144,7 +144,7 @@ Apply the deletion test: if deleting the module merely removes indirection, it i
 - tests verify observable capability through the same seam callers use;
 - complexity becomes local rather than reappearing in helpers or callers.
 
-## Gate 4 — Different change reasons must not be falsely bound together
+## Rule 4 — Independent change reasons have independent responsibility boundaries
 
 ### Intent
 
@@ -163,6 +163,10 @@ One module mixes several of:
 - runtime lifecycle and resource ownership.
 
 Different changes edit disjoint parts of the same module or require unrelated reviewers and tests.
+
+### Likely diagnosis
+
+The module boundary follows current execution order or file history rather than one coherent reason to change. Primary and auxiliary responsibilities are falsely bound.
 
 ### Counterexamples
 
@@ -187,7 +191,7 @@ Do not split every concern into a public module:
 - unrelated changes stop modifying the same responsibility surface;
 - state and lifecycle are owned where they are actually needed.
 
-## Gate 5 — Replace, do not layer
+## Design Gate — Replace, do not layer
 
 ### Intent
 
@@ -214,7 +218,7 @@ Temporary coexistence can be legitimate during a migration, but the design must 
 
 ### Design move
 
-Every design must specify:
+Every `Design ready` result must specify:
 
 - `Keep` — current responsibilities and contracts that remain;
 - `Move` — responsibility or state moving to a new owner;
