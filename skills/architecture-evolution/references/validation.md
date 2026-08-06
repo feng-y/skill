@@ -61,7 +61,7 @@ Scenario smoke 是合同审计，不等于 clean-session behavioral eval。
 
 ## 3. Paired behavioral eval
 
-对同一个任务和 repo snapshot 运行：
+在支持隔离 clean session 的 runtime 中，对同一个任务和 repo snapshot 运行：
 
 ```text
 A. 同模型，不加载 architecture-evolution
