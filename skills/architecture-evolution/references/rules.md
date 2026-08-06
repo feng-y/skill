@@ -1,234 +1,142 @@
 # Architecture Evolution Rules
 
-These rules turn broad architecture slogans into evidence-backed diagnosis and design. Use the first four as primary architecture rules. Use the final rule as a design gate that rejects false improvement.
+只在已经出现结构候选时读取。一次只选一个主要违反点。
 
-For every rule, move through:
+固定判断链：
 
 ```text
 Signals → Diagnosis → Counterexample → Design move → Improvement proof
 ```
 
-A signal is not a conclusion. Choose one primary violation per run.
+Signal 不是结论；设计模式也不是结论。
 
-## Rule 1 — One responsibility or variation has one owner
+## Rule 1 — 一个责任或变化维度只有一个 owner
 
-### Intent
+**Signals**
 
-A stable responsibility, business fact, or variation dimension should have one canonical place that interprets and owns it. Other modules consume its result instead of repeating the interpretation.
+- 同类需求反复修改固定的一组模块；
+- provider/family/mode 判断散落多处；
+- 同一配置、状态、能力或业务事实被多次解释；
+- 多条路径可能对同一事实得出不同结果。
 
-### Signals
+**Diagnosis**
 
-- one feature repeatedly changes the same set of modules;
-- provider/family/mode switches appear in several responsibilities;
-- the same config, capability, state, or business rule is interpreted more than once;
-- multiple modules each hold a partial view required to assemble one decision;
-- a new implementation requires edits in factory, executor, parser, metrics, and callers;
-- two paths can disagree about the same fact.
+责任、事实或变化维度没有 authoritative owner，多个局部模块都在解释它。
 
-### Likely diagnosis
+**Counterexample**
 
-Responsibility or variation ownership is split. The system has several local interpreters instead of one canonical owner.
+相似语法可能承担不同责任，例如外部格式解析、输入校验、运行时选择和标签上报。必须先说明谁拥有事实，其他位置只是 projection 或 guard。
 
-### Counterexamples
+**Design move**
 
-Do not merge merely because syntax is similar. Separate checks may express different responsibilities:
+为该责任或变化维度指定一个 owner；其他模块消费稳定结果、capability 或 metadata，不再重复解释。只抽公共 helper、enum 或 registry 名单，但保留分散判断，不算解决。
 
-- parsing an external format versus choosing a runtime provider;
-- validating an input versus enforcing an authoritative business rule;
-- reporting a family label versus selecting family behavior;
-- defensive fast-fail checks that deliberately mirror, but do not own, the rule.
+**Improvement proof**
 
-State which layer is authoritative and why the other copies are projections or guards.
+解释位置减少；新增一个代表性 variant 只修改 owner 和必要 adapter；冲突事实源消失。
 
-### Design move
+## Rule 2 — 稳定主流程不依赖易变实现细节
 
-- name the responsibility or variation precisely;
-- assign one owner of the decision, state, or truth;
-- make other modules consume a stable result, capability, or metadata;
-- remove duplicate interpretation rather than centralizing only the enum or helper function;
-- keep projections clearly non-authoritative.
+**Signals**
 
-### Improvement proof
+- core flow import、构造或判断具体实现；
+-公共 contract 暴露 provider 专属配置、类型或生命周期；
+- common 模块依赖场景模块，或双方互相依赖；
+- 替换实现必须修改稳定执行流程。
 
-- number of interpretation sites decreases;
-- a new variant changes one owner and bounded adapters, not the stable flow;
-- conflicting truth sources disappear;
-- callers no longer reconstruct the same decision.
+**Diagnosis**
 
-## Rule 2 — Stable flow does not depend on volatile implementation detail
+依赖方向跟随当前文件布局或构造顺序，而不是稳定性与责任；易变细节泄漏进稳定路径。
 
-### Intent
+**Counterexample**
 
-Code that expresses the stable business or execution flow should depend on a stable contract. Provider, family, storage, transport, deployment, or optimization details depend toward that contract, not the reverse.
+具体类型可能本身就是稳定领域 contract；单一且完全内部的实现不一定需要 seam；性能关键路径可以使用具体表示，但必须局部、显式且不向调用者扩散。
 
-### Signals
+**Design move**
 
-- core flow imports or switches on concrete implementation types;
-- public contracts expose provider-specific config or runtime objects;
-- a stable module constructs, initializes, or orders concrete implementations;
-- common code depends on a scenario-specific module;
-- both sides include or call each other;
-- an abstraction is defined by the provider in a way that forces the consumer to depend on provider details;
-- tests require the real implementation because no meaningful stable seam exists.
+从稳定消费者的需要定义 contract；实现选择、构造和专属配置留在实现 owner 一侧。只有真实 variation、生产/测试 adapter 或当前替代需求证明 seam 有价值时才引入 seam。
 
-### Likely diagnosis
+**Improvement proof**
 
-The dependency direction follows current code layout or construction order rather than stability and responsibility. Volatile detail leaks into the stable decision path.
+新增或替换实现不修改稳定主流程；core 不再知道具体类型；依赖变成单向，且没有新增透传层。
 
-### Counterexamples
+## Rule 3 — 模块隐藏复杂度，调用者不重组能力
 
-Do not invert every dependency mechanically:
+**Signals**
 
-- a concrete type may itself be the durable domain contract;
-- a single internal implementation may not justify a public seam;
-- an implementation detail that never varies and is fully hidden may remain internal;
-- performance-critical paths may deliberately use concrete representation, but the tradeoff must be explicit and local.
+- wrapper 基本一对一透传；
+- 调用者必须按隐含顺序调用多个方法；
+- 调用者自行拼装 config、state、runtime、type 或 adapter；
+- 测试重复内部编排或穿透私有状态；
+- interface 复杂度接近 implementation。
 
-### Design move
+**Diagnosis**
 
-- define the contract from the stable consumer's needs;
-- keep provider-specific construction and selection behind an owner surface;
-- pass capability or result, not implementation internals;
-- keep implementation-specific configuration on the implementation side;
-- add a seam only when real production/test adapters or current variation prove it is useful.
+seam 围绕文件或类，而不是一项完整能力；复杂度被暴露或搬家，没有被隐藏。
 
-### Improvement proof
+**Counterexample**
 
-- adding or replacing an implementation does not modify stable flow;
-- concrete type knowledge disappears from core decisions;
-- dependency graph becomes directional without a new pass-through layer;
-- public surface contains domain needs rather than provider mechanics.
+小型纯函数可以拥有完整 contract；外部 transport adapter 可以很薄；有时编排确实属于更高层 owner。行数不是 depth。
 
-## Rule 3 — A module hides complexity; callers do not reassemble capability
+使用 deletion test：删除模块后，如果只是少一层间接调用，它可能是浅模块；如果必要知识重新散回多个调用者，它才在创造 leverage。
 
-### Intent
+**Design move**
 
-A module earns its existence when callers can invoke a coherent capability through a small interface while behavior, state, order, error handling, and implementation choices remain inside.
+围绕调用者真正需要的完整能力放置 seam，把顺序、状态迁移、校验和错误转换收进模块；缩小公开方法、参数和特殊入口；合并浅模块或删除 middle man。
 
-### Signals
+**Improvement proof**
 
-- wrappers mostly forward parameters and methods one-to-one;
-- callers invoke several methods in a required but undocumented order;
-- callers fetch config, runtime state, type, token, manager, and adapter separately, then assemble behavior;
-- interface complexity approaches implementation complexity;
-- many pure helpers were extracted for testability, while integration bugs remain in orchestration;
-- tests pierce private state or duplicate internal call sequences;
-- deleting a module would make complexity vanish rather than reappear in callers.
+调用者需要的步骤和概念减少；测试通过同一个 seam 验证可观察行为；复杂度集中而非转移。
 
-### Likely diagnosis
+## Rule 4 — 独立变化原因具有独立责任边界
 
-The seam is placed around files or classes, not around a coherent capability. Complexity is exposed or relocated instead of hidden.
+**Signals**
 
-### Counterexamples
+一个模块混合多种独立变化原因，例如：
 
-- small pure functions can be valuable when their contract is complete and composition is genuinely the caller's responsibility;
-- a thin adapter may be correct at an external transport seam;
-- orchestration may belong to a higher-level owner when lower-level modules intentionally expose primitives;
-- line count is not depth.
+- 业务语义；
+- 输入适配或序列化；
+- provider 选择与构造；
+- metrics、tracing、debug；
+- cache、batch、内存或延迟优化；
+- compatibility fallback；
+- runtime lifecycle 与资源 owner。
 
-Apply the deletion test: if deleting the module merely removes indirection, it is likely shallow; if required knowledge spreads back across callers, it may be earning its keep.
+不同需求总是修改模块中互不相关的区域，或需要不同验证与 owner。
 
-### Design move
+**Diagnosis**
 
-- identify the complete capability callers actually need;
-- move ordering, state transitions, validation, and error translation behind one seam;
-- reduce methods, parameters, special cases, and required external knowledge;
-- keep test-only seams internal;
-- merge shallow modules when their separation creates caller reconstruction;
-- delete middle layers that add no leverage.
+模块边界跟随执行顺序或历史堆积，而不是一个连贯的 reason to change；主责任与辅助责任被错误绑定。
 
-### Improvement proof
+**Counterexample**
 
-- callers use fewer steps and concepts;
-- public interface shrinks while behavior remains available;
-- tests verify observable capability through the same seam callers use;
-- complexity becomes local rather than reappearing in helpers or callers.
+不要把每个 concern 升级成 public module。观测和优化可以是主能力的私有 collaborator；为了同一个 invariant 必须共同变化的步骤仍然是内聚的；文件大不是证据。
 
-## Rule 4 — Independent change reasons have independent responsibility boundaries
+**Design move**
 
-### Intent
+先用一句话定义主责任。其余内容分类为 intrinsic behavior、internal implementation、adapter、observer、policy、compatibility boundary 或 removable history。优先私有组合，只拆真实独立的 owner、生命周期或验证边界。
 
-Responsibilities that change for independent reasons should not share one owner, lifecycle, or mutable state merely because they currently execute together.
+**Improvement proof**
 
-### Signals
+主 owner 不再需要“同时还负责”；辅助逻辑不参与业务决策；无关变化不再修改同一责任面。
 
-One module mixes several of:
+## Design Gate — Replace, not layer
 
-- business semantics;
-- input adaptation or serialization;
-- provider selection and object construction;
-- metrics, tracing, logging, debug dump;
-- caching, batching, memory layout, latency optimization;
-- compatibility fallback or migration state;
-- runtime lifecycle and resource ownership.
+`Design ready` 只有在减少现有负担时才成立。
 
-Different changes edit disjoint parts of the same module or require unrelated reviewers and tests.
+拒绝：
 
-### Likely diagnosis
+- 新 wrapper/interface/manager 与旧 canonical path 并存；
+- registry 只集中名字，判断仍然散落；
+- 目标文件变小，但复杂度转移到 helper 或调用者；
+- 只有假想未来收益，今天没有任何知识、重复判断、无效依赖或历史路径消失。
 
-The module boundary follows current execution order or file history rather than one coherent reason to change. Primary and auxiliary responsibilities are falsely bound.
+临时双轨只在以下内容明确时允许：当前 authoritative path、迁移证据、删除条件和最大 residual boundary。
 
-### Counterexamples
+每个 `Design ready` 必须写：
 
-Do not split every concern into a public module:
+```text
+Keep / Move / Merge / Delete / Do not change
+```
 
-- observation may remain a private internal collaborator;
-- a performance optimization may belong inside the capability because callers must not see it;
-- code that changes together to preserve one invariant may be cohesive even if it has several steps;
-- physical file size is not evidence by itself.
-
-### Design move
-
-- state the primary responsibility in one sentence;
-- classify other concerns as intrinsic behavior, internal implementation, adapter, observer, policy, compatibility boundary, or removable history;
-- separate only when the change boundary, ownership, or verification surface is genuinely independent;
-- prefer private composition before creating public layers.
-
-### Improvement proof
-
-- the primary owner can be described without “and also” chains;
-- auxiliary concerns no longer influence business decisions;
-- unrelated changes stop modifying the same responsibility surface;
-- state and lifecycle are owned where they are actually needed.
-
-## Design Gate — Replace, do not layer
-
-### Intent
-
-An architecture design is an improvement only when it reduces knowledge, duplication, invalid dependency, or historical structure. A new layer is not progress by itself.
-
-### Rejection signals
-
-- the old path remains canonical while a new wrapper sits beside it;
-- a new interface has one adapter and no current test or variation need;
-- a registry centralizes names but decisions still remain scattered;
-- code moved, but old facts, state, and special entry points remain live;
-- the target file shrinks while helpers and callers inherit the same complexity;
-- both old and new tests remain because the new seam cannot express the real behavior;
-- the design promises future flexibility but removes nothing today.
-
-### Counterexamples
-
-Temporary coexistence can be legitimate during a migration, but the design must state:
-
-- which path is authoritative now;
-- what evidence allows traffic/consumers to move;
-- the deletion condition;
-- the maximum residual boundary.
-
-### Design move
-
-Every `Design ready` result must specify:
-
-- `Keep` — current responsibilities and contracts that remain;
-- `Move` — responsibility or state moving to a new owner;
-- `Merge` — duplicate interpretation or shallow modules becoming one capability;
-- `Delete` — old switches, paths, wrappers, facts, tests, or entry points that should disappear;
-- `Do not change` — protected scope preventing redesign drift.
-
-### Improvement proof
-
-- at least one concrete knowledge burden, duplicate decision, invalid edge, or obsolete path is removed;
-- the new seam replaces rather than shadows the old one;
-- temporary migration residue has an explicit exit condition;
-- no improvement claim relies only on cleaner naming, new types, or a tidier diagram.
+至少一个具体负担必须消失；新 seam 必须替代旧结构，而不是遮住它。
