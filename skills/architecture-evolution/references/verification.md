@@ -1,12 +1,14 @@
-# Verify One Architecture Design
+# Brooks Architecture Constraints
 
-只在 `Status: Design ready` 前读取。使用 Brooks-Lint 的架构标准验证目标设计，不再定义另一套改进维度。
+只在 `Status: Design ready` 前读取。
 
-验证的是设计假设，不是实现结果；未完成全仓库扫描时，不生成 Health Score。
+本文件把 Brooks 架构约束直接保留在 `architecture-evolution` 内部。**禁止调用、加载、路由到或依赖任何外部 Brooks / brooks-lint Skill、配置、报告模板、Health Score 或 workflow。**
+
+这里验证设计假设，不验证实现结果。
 
 ## Standard
 
-扫描 Brooks 六类 production-code decay risks：`R1–R6`。
+固定扫描六类架构衰退风险：`R1–R6`。
 
 遵守 Iron Law：
 
@@ -37,7 +39,7 @@
 ## Output
 
 ```markdown
-## Brooks verification
+## Brooks constraints
 
 | Risk | Severity | Symptom | Source | Consequence | Remedy in target design | How to verify | Residual / tradeoff |
 | --- | --- | --- | --- | --- | --- | --- | --- |
