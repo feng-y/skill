@@ -1,13 +1,122 @@
 # Architecture Design Contract
 
-Use this output after diagnosis. Keep it short enough to guide implementation, but complete enough that Northstar or an Executor does not need to rediscover the architecture judgment.
+Choose exactly one status and emit only the section for that status. Do not fill a complete design template when evidence is insufficient or architecture work is unnecessary.
 
-Do not turn it into a repo-wide architecture report or an implementation task list.
+## Status: No architecture change
+
+Use when the evidence supports a local implementation issue rather than a responsibility, variation, dependency, or seam problem.
+
+```markdown
+Status: No architecture change
+
+## Target
+
+- Target:
+- Trigger:
+- Scope:
+
+## Observed evidence
+
+Facts showing ownership and change boundaries are already local enough.
+
+## Why this is not an architecture problem
+
+Explain why the candidate signals do not establish a rule violation. Include the counterexample considered.
+
+## Local change boundary
+
+State the smallest implementation area that should change and what should remain untouched.
+```
+
+Do not output a target seam, responsibility redesign, or `Keep / Move / Merge / Delete` section.
+
+## Status: Research required
+
+Use when a repo or runtime fact can materially change the owner, seam, dependency direction, compatibility boundary, or design verdict.
+
+```markdown
+Status: Research required
+
+## Target
+
+- Target:
+- Trigger:
+- Scope:
+
+## Confirmed reality
+
+### Observed
+
+Facts already supported by evidence.
+
+### Inferred
+
+Only conclusions that remain valid across the unresolved alternatives.
+
+## Design-changing Unknown
+
+- Unknown:
+- Why it changes the design:
+- Current alternatives:
+
+## Minimum evidence probe
+
+- Probe:
+- Evidence source:
+- Which design field it can change:
+- Next status after the result:
+```
+
+Do not invent the target seam or full Design Delta before the Unknown closes.
+
+## Status: Decision required
+
+Use when repo evidence cannot decide a Human-owned long-term or high-cost boundary commitment.
+
+```markdown
+Status: Decision required
+
+## Target
+
+- Target:
+- Trigger:
+- Scope:
+
+## Confirmed reality
+
+### Observed
+
+Facts supported by evidence.
+
+### Common design boundary
+
+Only architecture conclusions shared by all viable options.
+
+## Human-owned decision
+
+- Decision:
+- Why evidence cannot decide it:
+
+## Options
+
+| Option | Boundary/ownership consequence | Cost/risk | Reversibility |
+| --- | --- | --- | --- |
+
+## Recommendation
+
+Give one recommendation, its basis, and the consequence of choosing differently.
+```
+
+Do not manufacture a single complete design while the decision is open.
+
+## Status: Design ready
+
+Use only when the primary rule violation, root cause, target owner, seam, and observable improvement are sufficiently grounded.
 
 ```markdown
 # Architecture Design Contract
 
-Status: No architecture change | Design ready | Research required | Decision required
+Status: Design ready
 
 ## Target
 
@@ -26,9 +135,9 @@ Facts directly supported by code, call paths, config, tests, runtime evidence, h
 
 Architecture interpretation supported by the observations.
 
-### Unknown
+### Residual Unknown
 
-Only items that can change ownership, seam, compatibility, dependency direction, or verification. For each item, name the next closer: repo research, runtime probe, Human decision, or stop.
+Only items that do not change the selected design. State their implementation or verification impact.
 
 ## Primary rule violation
 
@@ -83,7 +192,7 @@ Which duplicate interpretations or shallow modules become one capability.
 
 ### Delete
 
-Which switch, wrapper, special entry, fact source, compatibility branch, or old test surface should disappear.
+Which switch, wrapper, special entry, fact source, compatibility branch, old test surface, caller knowledge, or invalid dependency should disappear.
 
 ### Do not change
 
@@ -121,22 +230,16 @@ State acceptable differences separately. Do not claim these behaviors are alread
 - Old path still carrying weight:
 - ADR/compatibility conflict:
 
-## Decision or next handoff
+## Next handoff
 
-For `Design ready`, state the single recommended design and the smallest implementation boundary that can prove it.
-
-For `Research required`, state the exact evidence probe and which design field it can change.
-
-For `Decision required`, state the Human-owned tradeoff, available options, recommendation, and why repo evidence cannot decide.
-
-For `No architecture change`, state why the evidence supports a local change instead.
+State the single recommended design and the smallest implementation boundary that can prove it.
 ```
 
 ## Output discipline
 
 - One primary rule violation, not a smell inventory.
-- One recommended design, unless a real Human-owned tradeoff remains.
+- One recommended design for `Design ready`.
 - Evidence and inference remain separate.
-- `Delete` cannot be empty without an explicit explanation of what knowledge burden or invalid edge is still removed.
+- Every `Design ready` must contain a concrete `Delete`. When no physical code is deleted, name the caller knowledge, duplicate decision, or invalid dependency that disappears.
 - Improvement verification describes observable deltas, not “cleaner,” “more elegant,” “more SOLID,” or pattern names.
 - Implementation sequencing belongs in the downstream taskbook, not here.
