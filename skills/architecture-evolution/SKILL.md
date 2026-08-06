@@ -137,15 +137,15 @@ repo 证据无法裁决、且会形成长期业务承诺或高代价兼容边界
 
 ### 7. Verify
 
-仅对 `Design ready` 读取 `verification.md`，验证：
+仅对 `Design ready` 读取 `verification.md`。验证层使用 Brooks-Lint 架构标准，不再定义自有改进维度：
 
-- business semantic integrity；
-- variation containment；
-- capability cohesion；
-- dependency direction；
-- real replacement。
+- 扫描 `R1 Cognitive Overload`、`R2 Change Propagation`、`R3 Knowledge Duplication`、`R4 Accidental Complexity`、`R5 Dependency Disorder`、`R6 Domain Model Distortion`；
+- 每个适用 finding 写 `Severity → Symptom → Source → Consequence → Remedy → How to verify`；
+- 无 finding 的风险也写 `No finding` 和最关键 false-positive guard；
+- Remedy 必须已经体现在目标设计中；
+- 输出 `Brooks verdict: PASS / RETRY`。
 
-每项必须写 `Before / Expected after / How to verify`。未执行实现证据时，不得声称行为保持、迁移完成或旧路径已经删除。
+这里不生成 Health Score：尚未实现和完成全仓库扫描时，分数没有可信含义。未执行实现证据时，不得声称行为保持、迁移完成或旧路径已经删除。
 
 ## Output
 
@@ -165,6 +165,6 @@ repo 证据无法裁决、且会形成长期业务承诺或高代价兼容边界
 
 ### `Status: Design ready`
 
-读取 `design-contract.md` 与 `verification.md`，输出完整 Architecture Design Contract。必须给出具体 `Delete`；若没有物理代码删除，明确消失的平行业务语义、调用者知识、重复判断或反向依赖。
+读取 `design-contract.md` 与 `verification.md`，输出完整 Architecture Design Contract。必须给出具体 `Delete`；若没有物理代码删除，明确消失的平行业务语义、调用者知识、重复判断或反向依赖。Brooks verification 必须为 `PASS`。
 
 由 Northstar 调用时，本 Skill 只返回设计判断和实现约束；Goal、授权、任务书、执行和完整验收仍由 Northstar 负责。
