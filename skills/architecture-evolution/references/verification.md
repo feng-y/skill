@@ -1,75 +1,30 @@
 # Verify One Architecture Design
 
-Use this during a normal Architecture Evolution run. It checks whether the proposed design improves the target structure. It does not evaluate the Skill itself and does not prove implementation correctness.
+只在 `Status: Design ready` 前读取。它验证设计假设，不验证实现正确性。
 
-## Verification dimensions
+对每个适用维度写：
 
-For each applicable dimension, write `Before / Expected after / How to verify`.
+```text
+Before / Expected after / How to verify
+```
 
-### Change locality
+| Dimension | 核心问题 | 可用证据 |
+| --- | --- | --- |
+| Change locality | 同类变化是否需要更少的模块、判断和测试？ | 代表性 variant 的修改位置；调用者是否仍协调同一行为 |
+| Ownership concentration | 一个责任、事实、状态或变化是否只有一个 authoritative owner？ | 重复解释/状态读取是否消失；projection 与 guard 是否明确 |
+| Dependency stability | 稳定主流程是否只依赖稳定需要？ | 应删除的 import/include/call；core 中具体 provider/family 判断 |
+| Caller knowledge | 调用者是否少知道步骤、状态、顺序、配置和实现类型？ | 方法/参数、调用序列、外部拼装和测试穿透的 before/after |
+| Replacement | 什么现有负担变得不再需要？ | switch、重复判断、wrapper、旧入口、事实源、无效依赖；双轨退出条件 |
 
-Ask whether the same future change would require fewer modules, decisions, and tests.
+`Design ready` 必须同时满足：
 
-Useful evidence:
+1. 主要规则违反有直接证据；
+2. target owner 与 seam 解决的是根因，不只是症状；
+3. 至少一个可观察负担减少；
+4. 复杂度没有转移到 helper、adapter 或调用者；
+5. 真实业务差异与 Protected behavior 被保留；
+6. replacement 是当前可描述的结果，不是假想未来灵活性。
 
-- current and target interpretation sites;
-- current and target files/modules touched by adding one representative variant;
-- whether callers still coordinate the same behavior.
+否则修改设计，或返回 `No architecture change`、`Research required`、`Decision required`。
 
-### Ownership concentration
-
-Ask whether one responsibility, truth, state, or variation now has one authoritative owner.
-
-Useful evidence:
-
-- duplicate rules or state readers that disappear;
-- authoritative owner and remaining projections/guards;
-- whether two paths can still disagree about the same fact.
-
-### Dependency stability
-
-Ask whether stable flow depends only on stable needs rather than concrete implementation details.
-
-Useful evidence:
-
-- forbidden import/include/call edges removed;
-- concrete provider/family checks removed from stable flow;
-- implementation-specific config and lifecycle retained on the implementation side.
-
-### Caller knowledge
-
-Ask whether callers need to know fewer concepts, steps, states, ordering rules, special entry points, or implementation types.
-
-Useful evidence:
-
-- public methods/parameters before and after;
-- required call sequence before and after;
-- internal state/config no longer assembled by callers;
-- tests no longer reproducing internal orchestration.
-
-### Replacement
-
-Ask what existing structure becomes unnecessary.
-
-Useful evidence:
-
-- switches, duplicate decisions, wrappers, legacy entries, fact sources, or old test surfaces that can be deleted;
-- an invalid dependency or caller knowledge burden that disappears even when no file is deleted;
-- for temporary coexistence, the authoritative path, migration evidence, and explicit deletion condition.
-
-## Decision rule
-
-A design is ready only when:
-
-1. the primary rule violation has direct evidence;
-2. the target owner and seam address the diagnosed root cause;
-3. at least one observable burden decreases;
-4. the design does not merely relocate complexity;
-5. real business differences and protected behavior remain explicit;
-6. replacement is concrete rather than promised as future flexibility.
-
-If these cannot be shown, revise the design or return `No architecture change`, `Research required`, or `Decision required`.
-
-## Claim boundary
-
-This verifies the architecture design hypothesis only. A later implementation must separately prove behavior, compatibility, migration completion, and actual deletion with repository or runtime evidence.
+本文件只支持架构设计判断。实现阶段仍需单独证明行为、兼容、迁移完成和实际删除。
