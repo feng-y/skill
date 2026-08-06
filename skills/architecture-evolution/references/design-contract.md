@@ -89,7 +89,7 @@ Status: Design ready
 - Performance / observability:
 - Essential and acceptable differences:
 
-## Brooks verification
+## Brooks constraints
 
 | Risk | Severity | Symptom | Source | Consequence | Remedy in target design | How to verify | Residual / tradeoff |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -122,8 +122,9 @@ Status: Design ready
 - 一个主要架构断点、一个推荐设计；
 - `Observed / Inferred / Unknown` 不混写；
 - `Delete` 必须具体；没有物理删除时，写明消失的平行业务语义、调用者知识、重复判断或反向依赖；
-- Brooks verification 必须扫描 R1–R6；适用 finding 使用 `Severity → Symptom → Source → Consequence → Remedy → How to verify`；
+- Brooks constraints 必须扫描 R1–R6；适用 finding 使用 `Severity → Symptom → Source → Consequence → Remedy → How to verify`；
 - `Source` 引用 Brooks risk code 及对应经典原则或 smell；
 - `No finding` 也要写最关键 false-positive guard；
+- 不调用或依赖外部 Brooks / brooks-lint Skill；
 - 不生成 Health Score；未完成实现和全仓库扫描时，分数没有可信含义；
 - 实现顺序属于下游任务书。
