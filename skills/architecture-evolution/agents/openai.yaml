@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
   short_description: "识别架构坏味道，并设计可验证的责任与边界改进"
-  default_prompt: "使用 $architecture-evolution。绑定一个真实模块或变更热点，先从代码、调用、状态、配置、测试和历史恢复当前现实，并严格区分 Observed、Inferred 与 Unknown。按三条核心规则和两个设计 Gate 选择一个主要架构问题：责任/变化维度单一 owner、稳定主流程不依赖易变实现、模块隐藏复杂度且调用者不重组能力、不同变化原因不被错误绑定、以及新设计必须替代旧结构而非再包一层。输出一个 Architecture Design Contract：根因、目标责任、变化归属、依赖方向、target seam、Keep/Move/Merge/Delete/Do not change，以及可观察的 before/after 改进验证。没有足够证据时返回 No architecture change；不要默认进入全仓库重设计、复杂 workflow 或模式套用。"
+  default_prompt: "使用 $architecture-evolution。绑定一个真实模块或变更热点，先从代码、调用、状态、配置、测试和历史恢复当前现实，并严格区分 Observed、Inferred 与 Unknown。按四条核心规则选择一个主要架构问题：责任/变化维度单一 owner、稳定主流程不依赖易变实现、模块隐藏复杂度且调用者不重组能力、独立变化原因具有独立责任边界；再用 Replace, not layer Gate 拒绝新增壳层。根据证据只返回一个状态：No architecture change、Research required、Decision required 或 Design ready。只有 Design ready 才输出完整 Architecture Design Contract，包括根因、目标责任、变化归属、依赖方向、target seam、Keep/Move/Merge/Delete/Do not change、Protected behavior，以及可观察的 before/after 改进验证。不要默认进入全仓库重设计、复杂 workflow 或模式套用。"
