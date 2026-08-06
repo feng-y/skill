@@ -9,7 +9,8 @@
 - frontmatter 与 `agents/openai.yaml` 可解析；
 - `SKILL.md` 的相对引用均存在；
 - 正常 Flow 不引用本文件；
-- 四条 Rule 与一个 `Replace, not layer` Gate 在 Skill、rules、agent prompt 中一致；
+- 四条 Rule 与一个 `Replace, not layer` Gate 在 `SKILL.md` 和 `rules.md` 中一致；
+- agent prompt 只负责调用与状态边界，不重复注入完整规则；
 - 四种状态名称一致；
 - 非 `Design ready` 状态不会输出 target seam 或 Design Delta；
 - Northstar 仍拥有 Goal、授权、任务书、执行与完整验收。
