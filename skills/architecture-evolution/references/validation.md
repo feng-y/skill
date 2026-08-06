@@ -1,6 +1,6 @@
-# Validate Architecture Evolution
+# Evaluate Architecture Evolution
 
-This file validates whether the Skill improves architecture diagnosis and design. It does not claim that any implementation has preserved behavior.
+This file evaluates whether the Skill improves architecture diagnosis and design. It is not part of a normal Architecture Evolution run. Runtime design verification lives in [verification.md](verification.md).
 
 The primary test is paired comparison on the same repository snapshot and task:
 
@@ -57,7 +57,7 @@ Shape:
 
 Expected Skill behavior:
 
-- selects Gate 4 only after identifying independent change reasons;
+- selects Rule 4 only after identifying independent change reasons;
 - keeps intrinsic behavior and private implementation inside the main capability;
 - separates only the responsibilities with real ownership or verification independence;
 - avoids one-module-per-concern overdesign.
@@ -92,8 +92,8 @@ Shape:
 Expected Skill behavior:
 
 - returns `Status: No architecture change`;
-- recommends a local implementation boundary;
-- does not invent a provider, registry, interface, manager, or broad cleanup.
+- emits only evidence, why this is local, and the local change boundary;
+- does not emit a target seam, architecture Delta, provider, registry, interface, manager, or broad cleanup.
 
 ## Pass conditions for V0
 
@@ -102,8 +102,8 @@ The Skill is worth retaining when all conditions hold:
 1. On at least two of P1–P3, the Skill arm improves the combined `Primary diagnosis + Design quality + Improvement proof` score by at least 2 points over the base arm.
 2. On all positive cases, the Skill arm names one primary violation rather than returning an unranked smell inventory.
 3. The Skill arm does not score lower on scope control or abstraction restraint on any case.
-4. N1 returns `No architecture change`; forcing an architecture redesign is a V0 failure.
-5. Every `Design ready` output contains a non-vague `Delete` or explicitly proves which caller knowledge or invalid dependency disappears instead.
+4. N1 returns `No architecture change` with the status-specific minimal output; forcing or sketching an architecture redesign is a V0 failure.
+5. Every `Design ready` output contains a non-vague `Delete` or explicitly names the caller knowledge or invalid dependency that disappears.
 6. Claims remain bounded to design quality; no output claims behavior preservation without executed evidence.
 
 ## Failure patterns to record
@@ -117,7 +117,8 @@ When a probe fails, classify the failure before changing the Skill:
 - `false abstraction` — new interfaces/layers did not remove knowledge or old paths;
 - `difference collapse` — real business differences were merged;
 - `false positive` — a local task was upgraded into architecture work;
-- `unverifiable gain` — benefits were stated without observable before/after checks.
+- `unverifiable gain` — benefits were stated without observable before/after checks;
+- `status leakage` — a non-ready status still emits speculative target design content.
 
 Only add or rewrite a rule after the same failure pattern appears in more than one representative case. Do not expand the Skill to cover a one-off miss.
 
