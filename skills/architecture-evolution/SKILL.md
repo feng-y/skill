@@ -76,18 +76,14 @@ Unknown 必须改变下一步：继续查证、降级结论、返回 Human 决�
 
 ### 3. Diagnose：按有限规则诊断
 
-读取 [rules.md](references/rules.md)，依次检查三条核心规则与两个设计 Gate：
-
-#### 核心规则
+读取 [rules.md](references/rules.md)，依次检查四条核心规则和一个设计 Gate：
 
 1. **一个责任或变化维度只有一个 owner。**
 2. **稳定主流程不依赖易变实现细节。**
 3. **模块隐藏复杂度，调用者不在 seam 外重新组装能力。**
+4. **独立变化原因具有独立责任边界。**
 
-#### 设计 Gate
-
-4. **不同变化原因不得被错误绑定在同一责任面。**
-5. **新设计必须替代旧结构，而不是再包一层。**
+设计 Gate：**新设计必须替代旧结构，而不是再包一层。**
 
 选择一个 `Primary rule violation`。每个结论都必须包含：
 
@@ -101,9 +97,11 @@ Observed signal
 
 代码形态只是信号。例如多处 `switch family` 不能自动推出多态；先确认这些判断是否真的重复解释同一个变化维度，还是分别承担不同业务语义。
 
+如果证据只支持局部实现问题，直接返回 `No architecture change`。如果会改变设计的事实仍可通过 repo/runtime 查明，返回 `Research required`，不要提前设计 seam。
+
 ### 4. Design：形成一个推荐目标设计
 
-先回答四个问题：
+只在根因已经足够稳定时继续。先回答四个问题：
 
 1. **谁拥有主责任？**
 2. **谁拥有主要变化维度？**
@@ -118,7 +116,7 @@ Observed signal
 - `Target seam`：调用者仍需知道什么、不再需要知道什么；
 - `Design delta`：`Keep / Move / Merge / Delete / Do not change`。
 
-默认只给一个推荐设计。只有当前 seam 存在两个以上真实、长期且证据无法裁决的取舍时，才给少量候选或返回 `Status: Decision required`。
+默认只给一个推荐设计。只有当前 seam 存在两个以上真实、长期且证据无法裁决的取舍时，才返回 `Status: Decision required`。
 
 不要用模式名代替设计。`factory`、`strategy`、`adapter`、`registry`、`observer` 只有在责任与变化归属已经成立后，才可能成为实现手段。
 
@@ -137,15 +135,15 @@ Observed signal
 
 挑战失败时，修改或撤销设计，不为保持原结论而补解释。
 
-### 6. Verify：验证“设计确实改善”
+### 6. Verify：验证设计假设
 
-读取 [validation.md](references/validation.md)。至少比较：
+读取 [verification.md](references/verification.md)，比较：
 
 - **Change locality**：同类变化需要修改和理解的位置是否减少；
 - **Ownership concentration**：同一责任、事实或变化判断是否收敛到一个 owner；
 - **Dependency stability**：稳定主流程是否不再知道具体实现差异；
-- **Knowledge surface**：调用者必须知道的状态、顺序、配置和特殊入口是否减少；
-- **Replacement**：哪些旧 switch、重复判断、wrapper、入口或事实源能够删除。
+- **Caller knowledge**：调用者必须知道的状态、顺序、配置和特殊入口是否减少；
+- **Replacement**：哪些旧 switch、重复判断、wrapper、入口、事实源或无效依赖能够消失。
 
 不能只写“更符合高内聚/低耦合”。每项改善必须有 `Before / Expected after / How to verify`。
 
@@ -153,23 +151,15 @@ Observed signal
 
 ## 输出
 
-按 [design-contract.md](references/design-contract.md) 输出一份轻量、可交给 Northstar 或 Executor 的 Architecture Design Contract。
-
-一次输出只包含：
-
-- 一个目标；
-- 一个主要规则违反；
-- 最多两个次要信号；
-- 一个推荐目标设计；
-- 一份明确的 Design Delta；
-- 一套设计改进验证；
-- 会改变设计的 Unknown 或 Human 决策。
+按 [design-contract.md](references/design-contract.md) 根据状态输出最小充分信息。
 
 只返回一个状态：
 
-- **`Status: No architecture change`**：证据不足以支持架构调整，局部实现更合适；
-- **`Status: Design ready`**：根因、目标责任、seam、delta 和验证已经明确；
-- **`Status: Research required`**：存在可通过 repo/runtime 证据解决、且会改变设计的 Unknown；
-- **`Status: Decision required`**：存在 repo 证据无法裁决、会形成长期或高代价边界承诺的 Human 取舍。
+- **`Status: No architecture change`**：输出目标、证据、为什么不是架构问题，以及推荐的局部修改边界；不要输出目标 seam 或架构 Delta。
+- **`Status: Research required`**：输出已确认事实、会改变设计的 Unknown、最小证据探针及其可能改变的设计字段；不要提前编造目标结构。
+- **`Status: Decision required`**：输出已确认事实、Human-owned 取舍、选项、推荐和后果；只描述已经被证据支持的共同设计边界。
+- **`Status: Design ready`**：输出完整 Architecture Design Contract：一个主要规则违反、一个推荐设计、Design Delta、Protected behavior 和改进验证。
+
+每个 `Design ready` 必须给出具体 `Delete`；若没有物理代码删除，必须明确哪个调用者知识、重复判断或无效依赖将被消除。
 
 本 Skill 不新增 scheduler、manager、固定 Agent 拓扑或第二套执行 Flow。由 Northstar 调用时，它只返回设计判断与实现约束；Goal、授权、任务书编译、执行和完整验收仍由 Northstar 的既有 Flow 负责。
