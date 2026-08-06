@@ -40,7 +40,7 @@ Signal 不是结论；设计模式也不是结论。
 **Signals**
 
 - core flow import、构造或判断具体实现；
--公共 contract 暴露 provider 专属配置、类型或生命周期；
+- 公共 contract 暴露 provider 专属配置、类型或生命周期；
 - common 模块依赖场景模块，或双方互相依赖；
 - 替换实现必须修改稳定执行流程。
 
