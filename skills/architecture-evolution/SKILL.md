@@ -9,6 +9,8 @@ North Star：**让同一业务只有一套 canonical semantics 和一个稳定�
 
 本 Skill 从一个真实架构热点完成业务判断、目标设计和设计验证；不拥有新的 workflow，不替 Northstar 改写 Goal，也不默认执行重构。
 
+本文中的 `module` 是尺度无关的责任单元，可以是 class、package、service 或跨层 capability，不等于单个文件。
+
 ## Context loading
 
 按需加载，不把全部 reference 注入每次运行：
@@ -113,7 +115,7 @@ Observed evidence → Structural consequence → Primary break → Root cause �
 - `Stable abstraction`：调用者依赖的完整 contract；
 - `Variation points`：每项本质差异由谁处理，如何隔离；
 - `Cohesive module`：能力、状态、生命周期和内部 collaborator 的归属；
-- `Dependency direction`：policy → stable capability → implementation；
+- `Dependency direction`：源码依赖为 `policy → contract ← implementation`；运行控制向下，result/evidence 向上；
 - `Design delta`：`Keep / Move / Merge / Delete / Do not change`。
 
 先统一业务，再形成抽象；先定义 capability 与 invariant，再决定 class、factory、strategy、adapter 或 registry。
