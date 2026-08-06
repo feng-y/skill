@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
-  short_description: "识别架构坏味道，并设计可验证的责任与边界改进"
-  default_prompt: "使用 $architecture-evolution 分析当前指定模块或变更热点。只补足会改变架构判断的代码事实，按 Skill 的渐进披露读取 references，并只返回一个状态。证据不足或无需架构调整时使用最小输出；只有 Design ready 才加载并输出完整 Architecture Design Contract。"
+  short_description: "统一业务与抽象，收敛模块责任和单向依赖"
+  default_prompt: "使用 $architecture-evolution 分析当前指定业务能力、模块或架构热点。先恢复业务现实并判断哪些路径属于同一业务，再区分本质差异与历史偶然差异；按 Skill 的渐进披露读取 references，并只返回一个状态。只有 Design ready 才加载并输出完整 Architecture Design Contract。"
