@@ -69,9 +69,9 @@ Status: Design ready
 | --- | --- | --- | --- | --- |
 
 ### Dependency direction
-- Policy → stable capability → implementation:
+- Source dependency: `policy → contract ← implementation`
+- Runtime control: policy invokes downward; result / evidence returns upward
 - Composition owner:
-- Upward result / evidence path:
 - Forbidden edges to remove:
 
 ## Design delta
