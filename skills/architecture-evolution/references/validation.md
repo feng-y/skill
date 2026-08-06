@@ -1,135 +1,99 @@
 # Evaluate Architecture Evolution
 
-This file evaluates whether the Skill improves architecture diagnosis and design. It is not part of a normal Architecture Evolution run. Runtime design verification lives in [verification.md](verification.md).
+本文件只用于 Skill smoke/eval，正常运行禁止读取。运行时设计验证见 [verification.md](verification.md)。
 
-The primary test is paired comparison on the same repository snapshot and task:
+## 1. Static smoke
 
-```text
-A. Base model without architecture-evolution
-B. Same model and tools with architecture-evolution
-```
+冻结当前 branch/head 后检查：
 
-Freeze the task text, repository commit, available docs, model/version, tool permissions, and time/token budget before comparing outputs.
+- frontmatter 与 `agents/openai.yaml` 可解析；
+- `SKILL.md` 的相对引用均存在；
+- 正常 Flow 不引用本文件；
+- 四条 Rule 与一个 `Replace, not layer` Gate 在 Skill、rules、agent prompt 中一致；
+- 四种状态名称一致；
+- 非 `Design ready` 状态不会输出 target seam 或 Design Delta；
+- Northstar 仍拥有 Goal、授权、任务书、执行与完整验收。
 
-## What to score
+任何失败都先修结构，不进入 behavioral eval。
 
-Score each dimension `0`, `1`, or `2`.
+## 2. Scenario smoke
 
-| Dimension | 0 | 1 | 2 |
-| --- | --- | --- | --- |
-| Evidence grounding | mostly taste or labels | some code evidence | precise observed facts separated from inference and Unknown |
-| Primary diagnosis | misses or lists many smells | plausible symptom | identifies one root ownership/seam error and checks a counterexample |
-| Design quality | pattern naming or vague target | useful partial design | explicit responsibility, variation owner, dependency direction, and seam |
-| Scope control | broad cleanup/redesign | mostly bounded | one target, one primary violation, explicit do-not-change boundary |
-| Abstraction restraint | adds layers without proof | mixed | rejects speculative seams and states concrete replacement/deletion |
-| Improvement proof | “cleaner/decoupled” claim | some before/after | observable change-locality, ownership, dependency, caller-knowledge, and deletion checks |
-| Negative-case judgment | forces architecture work | hesitant | correctly returns `No architecture change` with evidence |
-
-A strong result improves diagnosis and design without increasing false-positive architecture work.
-
-## Minimum probe set
-
-Run at least four independent cases. Use real repository cases when possible; synthetic cases are acceptable only when they preserve realistic call, ownership, and compatibility evidence.
+使用相同模型和 repo 证据，至少覆盖：
 
 ### P1 — Variation ownership leak
 
-Shape:
+provider/family/mode 判断散落在构造、执行、配置或调用者中，但至少一个相似判断承担不同语义。
 
-- provider/family/mode decisions are repeated across construction, execution, config, or callers;
-- some repeated syntax represents the same variation, while at least one similar check has a different responsibility.
+通过条件：选择 Rule 1 或 Rule 2；区分重复解释与合法差异；指定一个 variation owner；不机械套多态；写出可消失的判断或事实源。
 
-Expected Skill behavior:
+### P2 — Independent change reasons
 
-- selects Rule 1 or Rule 2;
-- distinguishes repeated interpretation from legitimate separate semantics;
-- assigns a single variation owner;
-- does not mechanically prescribe polymorphism;
-- identifies concrete switches or duplicate facts that can disappear.
+一个模块混合核心语义与 metrics/debug/cache/config/compatibility，其中部分辅助能力应保持为私有实现。
 
-Candidate real case: ModelCurator provider/family branch convergence.
+通过条件：选择 Rule 4；只拆真实独立的 owner、生命周期或验证边界；不做 one-module-per-concern。
 
-### P2 — Mixed primary and auxiliary responsibility
+### P3 — Shallow seam
 
-Shape:
+wrapper 透传，调用者在外部拼装 config/state/runtime/order，测试重复内部编排。
 
-- one module combines core semantics with metrics/debug/cache/config/compatibility;
-- some auxiliary behavior should remain internal rather than becoming a public layer.
+通过条件：选择 Rule 3；使用 deletion test；形成完整 capability seam；减少 caller knowledge；删除或深化浅层，而不是新增 wrapper。
 
-Expected Skill behavior:
+### N1 — Negative case
 
-- selects Rule 4 only after identifying independent change reasons;
-- keeps intrinsic behavior and private implementation inside the main capability;
-- separates only the responsibilities with real ownership or verification independence;
-- avoids one-module-per-concern overdesign.
+owner 清楚、变化局部的普通 bug 或机械修改。
 
-Candidate real case: FeatureStreaming/Predict ParseRequest alignment.
+通过条件：返回 `Status: No architecture change`；只输出证据、局部原因与修改边界；不得出现 target seam、Design Delta、provider、registry、manager 或广泛清理。
 
-### P3 — Shallow seam and consumer reassembly
+Scenario smoke 是合同审计，不等于 clean-session behavioral eval。
 
-Shape:
+## 3. Paired behavioral eval
 
-- wrapper or interface forwards calls;
-- callers assemble config, runtime, type, state, or ordering outside the module;
-- tests mirror internal steps.
+对同一个任务和 repo snapshot 运行：
 
-Expected Skill behavior:
+```text
+A. 同模型，不加载 architecture-evolution
+B. 同模型、工具和预算，加载 architecture-evolution
+```
 
-- selects Rule 3;
-- applies the deletion test;
-- designs a coherent capability seam;
-- reduces caller knowledge and test penetration;
-- removes or deepens the shallow layer instead of adding another wrapper.
+冻结：任务文本、repo commit、可见文档、模型版本、工具权限、token/time budget。两臂不得共享输出。
 
-Candidate real case: Galaxy request responsibility moving from derived classes to the common module.
+每项 `0–2` 分：
 
-### N1 — Negative architecture case
+| Dimension | 0 | 1 | 2 |
+| --- | --- | --- | --- |
+| Evidence grounding | 主要是审美判断 | 有部分证据 | Observed / Inferred / Unknown 清楚分离 |
+| Primary diagnosis | 漏掉或罗列 smell | 找到症状 | 找到一个 root owner/seam 错误并检查反例 |
+| Design quality | 模式名或空泛目标 | 部分可用 | owner、variation、dependency、seam 明确 |
+| Scope control | 扩成全面重构 | 大体局部 | 一个目标、一个主问题、明确不做什么 |
+| Abstraction restraint | 新增壳层 | 有混合表现 | 拒绝假 seam，并说明替代/删除 |
+| Improvement proof | 只说更解耦 | 有 before/after | locality、owner、dependency、knowledge、replacement 可观察 |
+| Negative judgment | 强行架构化 | 犹豫 | 稳定返回最小 `No architecture change` |
 
-Shape:
+## V0 pass gate
 
-- a local bug or small mechanical change has clear ownership and no repeated change pressure;
-- no dependency, caller-knowledge, or responsibility problem is evidenced.
+全部满足才通过：
 
-Expected Skill behavior:
+1. P1–P3 至少两个案例中，B 臂的 `Primary diagnosis + Design quality + Improvement proof` 比 A 臂高至少 2 分；
+2. 所有正样本只选择一个 primary violation；
+3. B 臂在 Scope control 和 Abstraction restraint 上不低于 A 臂；
+4. N1 稳定返回最小 `No architecture change`；
+5. 每个 `Design ready` 都有具体 replacement/delete；
+6. 未执行实现证据时，不声称行为保持或迁移完成。
 
-- returns `Status: No architecture change`;
-- emits only evidence, why this is local, and the local change boundary;
-- does not emit a target seam, architecture Delta, provider, registry, interface, manager, or broad cleanup.
+## Failure taxonomy
 
-## Pass conditions for V0
+- `signal miss`
+- `root-cause miss`
+- `pattern reflex`
+- `scope expansion`
+- `false abstraction`
+- `difference collapse`
+- `false positive`
+- `unverifiable gain`
+- `status leakage`
 
-The Skill is worth retaining when all conditions hold:
-
-1. On at least two of P1–P3, the Skill arm improves the combined `Primary diagnosis + Design quality + Improvement proof` score by at least 2 points over the base arm.
-2. On all positive cases, the Skill arm names one primary violation rather than returning an unranked smell inventory.
-3. The Skill arm does not score lower on scope control or abstraction restraint on any case.
-4. N1 returns `No architecture change` with the status-specific minimal output; forcing or sketching an architecture redesign is a V0 failure.
-5. Every `Design ready` output contains a non-vague `Delete` or explicitly names the caller knowledge or invalid dependency that disappears.
-6. Claims remain bounded to design quality; no output claims behavior preservation without executed evidence.
-
-## Failure patterns to record
-
-When a probe fails, classify the failure before changing the Skill:
-
-- `signal miss` — the relevant code evidence was not found;
-- `root-cause miss` — symptoms were found but ownership/seam diagnosis was wrong;
-- `pattern reflex` — the model jumped to a design pattern;
-- `scope expansion` — one target became broad redesign;
-- `false abstraction` — new interfaces/layers did not remove knowledge or old paths;
-- `difference collapse` — real business differences were merged;
-- `false positive` — a local task was upgraded into architecture work;
-- `unverifiable gain` — benefits were stated without observable before/after checks;
-- `status leakage` — a non-ready status still emits speculative target design content.
-
-Only add or rewrite a rule after the same failure pattern appears in more than one representative case. Do not expand the Skill to cover a one-off miss.
+同一种 failure 在两个代表性案例中重复出现后，才修改 Rule；不要为单个样本继续扩充 Skill。
 
 ## Claim boundary
 
-A static output review can establish only that the Skill produced a better grounded design contract. It cannot establish:
-
-- implementation correctness;
-- behavior equivalence;
-- successful migration or deletion;
-- lower future maintenance cost in production;
-- general superiority over other architecture Skills.
-
-Those claims require implementation, repository verification, and repeated real-task evidence.
+Static/scenario smoke 只能证明合同和文本机制一致；paired eval 只能证明冻结样本上的设计质量差异。实现正确性、行为对等、迁移完成、实际删除和生产维护成本都需要另行验证。
