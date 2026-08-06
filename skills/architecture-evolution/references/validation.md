@@ -10,12 +10,13 @@
 - `SKILL.md` 的相对引用均存在；
 - 正常架构分析不指示读取本文件；
 - 四条设计 Principle 与一个 `Real Evolution` Gate 在 `SKILL.md`、`rules.md` 和 `design-contract.md` 中一致；
-- verification 不定义自有五维体系，直接使用 Brooks R1–R6；
+- verification 不定义自有五维体系，直接使用内置 Brooks R1–R6；
+- 任何运行时文件都不得调用、加载、路由到或依赖外部 Brooks / brooks-lint Skill、配置、报告模板、Health Score 或 workflow；
 - Brooks finding 结构为 `Severity → Symptom → Source → Consequence → Remedy → How to verify`；
 - `No finding` 必须带 false-positive guard；
 - agent prompt 不重复注入完整规则；
 - 四种状态名称一致；
-- 非 `Design ready` 状态不会输出 canonical abstraction、Design Delta 或 Brooks verification；
+- 非 `Design ready` 状态不会输出 canonical abstraction、Design Delta 或 Brooks constraints；
 - Northstar 仍拥有 Goal、授权、任务书、执行与完整验收。
 
 任何失败都先修结构，不进入 behavioral eval。
@@ -33,7 +34,7 @@ FeatureStreaming 与 Predict 各有 ParseRequest 路径，输入输出主体一�
 - 区分 essential 与 accidental differences；
 - 定义一个 canonical business capability；
 - 不把所有差异机械删除，也不保留两套 canonical path；
-- Brooks verification 至少检查 `R6 Domain Model Distortion`、`R2 Change Propagation` 和 `R3 Knowledge Duplication`。
+- Brooks constraints 至少检查 `R6 Domain Model Distortion`、`R2 Change Propagation` 和 `R3 Knowledge Duplication`。
 
 ### P2 — False unified abstraction
 
@@ -46,7 +47,7 @@ FeatureStreaming 与 Predict 各有 ParseRequest 路径，输入输出主体一�
 - 从共同业务需要定义 stable abstraction；
 - 将真实差异放入明确 variation point；
 - 删除 union contract、外部 switch 或特殊入口，不再增加 facade；
-- Brooks verification 至少检查 `R4 Accidental Complexity`、`R3 Knowledge Duplication`、`R2 Change Propagation` 和 `R5 Dependency Disorder`。
+- Brooks constraints 至少检查 `R4 Accidental Complexity`、`R3 Knowledge Duplication`、`R2 Change Propagation` 和 `R5 Dependency Disorder`。
 
 ### P3 — Non-cohesive capability
 
@@ -59,7 +60,7 @@ FeatureStreaming 与 Predict 各有 ParseRequest 路径，输入输出主体一�
 - 区分 intrinsic behavior、private collaborator 与独立责任；
 - 不做 one-module-per-concern；
 - 收回调用顺序、状态与生命周期，减少 caller knowledge；
-- Brooks verification 至少检查 `R1 Cognitive Overload`、`R2 Change Propagation` 和 `R4 Accidental Complexity`。
+- Brooks constraints 至少检查 `R1 Cognitive Overload`、`R2 Change Propagation` 和 `R4 Accidental Complexity`。
 
 ### P4 — Reverse policy dependency
 
@@ -72,19 +73,19 @@ FeatureStreaming 与 Predict 各有 ParseRequest 路径，输入输出主体一�
 - contract 从稳定 policy 的需要定义；
 - implementation 朝 contract 提供能力；
 - 删除至少一条 common→scenario、policy→provider 或隐式反向控制边；
-- Brooks verification 以 `R5 Dependency Disorder` 为主要 finding，并检查其 `R2 Change Propagation` 后果。
+- Brooks constraints 以 `R5 Dependency Disorder` 为主要 finding，并检查其 `R2 Change Propagation` 后果。
 
 ### N1 — No architecture change
 
 owner、业务语义和依赖方向都清楚，只是局部 off-by-one、日志字段或机械迁移。
 
-通过：`No architecture change`；只输出证据、局部原因与修改边界；无 canonical abstraction、Design Delta 或 Brooks verification。
+通过：`No architecture change`；只输出证据、局部原因与修改边界；无 canonical abstraction、Design Delta 或 Brooks constraints。
 
 ### N2 — Legitimately different business
 
 两个 bounded context 使用相似数据结构，但具有不同 invariant、错误语义和生命周期。
 
-通过：不得为了复用强行统一；返回 `No architecture change`，或只指出局部重复但明确排除业务合并。若进入 verification，`R6` 必须应用 bounded-context guard，不得产生 false finding。
+通过：不得为了复用强行统一；返回 `No architecture change`，或只指出局部重复但明确排除业务合并。若进入 constraints scan，`R6` 必须应用 bounded-context guard，不得产生 false finding。
 
 ### N3 — Justified adapter
 
@@ -102,7 +103,7 @@ composition root 显式构造具体 implementation 并注入 policy contract，�
 
 无法从静态代码判断两条 legacy path 是否仍承载相同业务，运行流量、消费者或错误契约证据缺失。
 
-通过：`Research required`；只输出已确认事实、一个会改变 same-business judgment 的 Unknown、最小探针和受影响字段；不提前设计 abstraction 或生成 Brooks finding verdict。
+通过：`Research required`；只输出已确认事实、一个会改变 same-business judgment 的 Unknown、最小探针和受影响字段；不提前设计 abstraction 或生成 Brooks verdict。
 
 ### D1 — Decision required
 
@@ -134,19 +135,20 @@ B. 同模型、工具和预算，加载 architecture-evolution
 | Target architecture | 模式名或空泛目标 | 部分可用 | business、abstraction、module、dependency 相互一致 |
 | Scope control | 全面重构 | 大体局部 | 一个目标、一个主断点、明确不做什么 |
 | Unification restraint | 新增壳层或错误合并 | 混合 | 拒绝 union abstraction，并保留真实业务差异 |
-| Brooks verification | 无风险审计或自造指标 | 部分风险/链路不完整 | R1–R6 全扫描；finding 符合 Iron Law、severity 与 guard；Remedy 已进入设计 |
+| Brooks constraints | 无风险审计或自造指标 | 部分风险/链路不完整 | R1–R6 全扫描；finding 符合 Iron Law、severity 与 guard；Remedy 已进入设计；无外部 Skill 依赖 |
 | Status judgment | 状态错误/泄漏 | 正确但偏重 | 正确且最小充分 |
 
 ## V0 pass gate
 
-1. P1–P4 至少三个案例中，B 臂的 `Business judgment + Primary diagnosis + Target architecture + Brooks verification` 比 A 臂高至少 2 分；
+1. P1–P4 至少三个案例中，B 臂的 `Business judgment + Primary diagnosis + Target architecture + Brooks constraints` 比 A 臂高至少 2 分；
 2. 正样本只选择一个 primary architecture break；
 3. B 臂的 Scope control 和 Unification restraint 不低于 A 臂；
 4. N1–N4、R1、D1 状态和 Brooks guards 正确，无 status leakage；
 5. 每个 `Design ready` 明确 canonical capability、essential differences、stable abstraction、cohesive module、dependency direction 和具体 replacement/delete；
-6. Brooks verification 扫描 R1–R6，主要 finding 有完整 Iron Law 链路，没有未处理的 Critical finding；
+6. Brooks constraints 扫描 R1–R6，主要 finding 有完整 Iron Law 链路，没有未处理的 Critical finding；
 7. 残留 Warning 必须写明业务 tradeoff、owner 和验证边界；
-8. 未执行实现证据时，不声称行为保持、业务完全等价、迁移完成或 finding 已经消失。
+8. 运行时不调用或依赖任何外部 Brooks Skill；
+9. 未执行实现证据时，不声称行为保持、业务完全等价、迁移完成或 finding 已经消失。
 
 失败分类：
 
@@ -160,13 +162,14 @@ B. 同模型、工具和预算，加载 architecture-evolution
 - `brooks coverage miss` — R1–R6 未完整扫描；
 - `iron-law miss` — finding 缺少 Source、Consequence 或设计内 Remedy；
 - `guard miss` — 合理 adapter、composition root 或 bounded context 被误报；
+- `external-brooks-dependency` — 调用、加载、路由到或依赖外部 Brooks Skill；
 - `scope expansion` — 一个热点扩大成全仓库重设计；
 - `false positive` — 局部任务被升级成架构工作；
 - `unverifiable gain` — Remedy 没有具体验证方法；
 - `status leakage` — 非 ready 状态仍输出目标设计或 Brooks verdict。
 
-同一种 failure 在两个代表性案例重复出现后，才修改 Principle 或 verification。不要为了单个 miss 扩大 Skill。
+同一种 failure 在两个代表性案例重复出现后，才修改 Principle 或 constraints。不要为了单个 miss 扩大 Skill。
 
 ## Claim boundary
 
-Static/scenario smoke 只能证明合同和文本机制一致；paired eval 只能证明冻结样本上的设计质量差异。Brooks verification 也只验证目标设计是否处理已识别风险，不证明实现正确、行为对等、迁移完成、实际删除或生产维护成本下降。
+Static/scenario smoke 只能证明合同和文本机制一致；paired eval 只能证明冻结样本上的设计质量差异。Brooks constraints 只验证目标设计是否处理已识别风险，不证明实现正确、行为对等、迁移完成、实际删除或生产维护成本下降。
