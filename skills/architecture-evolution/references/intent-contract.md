@@ -46,12 +46,12 @@ Status: Architecture intent ready
 
 只写与当前 pressure、desired end state 和 primary architecture direction 直接相关的 Brooks constraints，不为覆盖 R1–R6 而制造无关内容。
 
-如果 affected scope 会动态变化，或当前具体样本有助于说明 grounding，可以在 `Success evidence` 后按需追加：
+如果 affected scope 会动态变化，或当前具体样本有助于说明 grounding，可以在 `Success evidence` 后按需追加；两项都只在适用时写，不填 `None`：
 
 ```markdown
 ## Current snapshot evidence
 - Scope derivation: <仅在 affected scope 动态变化时，说明实现验证如何从最终 change surface 与届时 effective binding/config/runtime reality 推导受影响范围>
-- Current snapshot: <当前观察到的具体样本；除非本身是稳定 contract，否则不得冻结为长期验收集合>
+- Current snapshot: <仅在当前样本有助于 grounding 时记录；除非本身是稳定 contract，否则不得冻结为长期验收集合>
 ```
 
 只有真实存在会改变 intent、boundary 或 design obligation 的 material unknown 时，才在 `Success evidence` 前追加：
