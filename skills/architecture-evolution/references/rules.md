@@ -158,9 +158,9 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 4. 选择一个 primary architecture direction；
 5. desired end state 描述结果，不锁死实现模式；
 6. in scope、out of scope 和 must preserve 清楚；
-7. 后续设计 obligations 明确；
+7. 只保留与当前 intent 相关、后续设计真正需要回答的 obligations；
 8. 至少一个可观察的 replacement/exit 目标；
-9. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；
+9. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；不存在时不制造；
 10. success evidence 可验证；
 11. 已检查最重要反例、consumer reassembly 和 materialization guard；
 12. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
