@@ -46,6 +46,19 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 - `R5 Dependency Disorder` — 源码依赖应符合 `policy → contract ← implementation`，底层不能通过 callback、global state 或 registry 反向控制 policy。
 - `R1 Cognitive Overload` — capability/module 应隐藏必要复杂度，让 caller 少知道步骤、状态、顺序和实现类型。
 
+## Optional proof vocabulary
+
+只选择会影响当前 design obligation 的 proof；不要把下面四项机械变成 completion checklist。
+
+| Proof | When relevant | What later evidence should establish |
+| --- | --- | --- |
+| Ownership closure | owner/state/resource 收敛 | fact/state 对 owner 私有、lifetime 正确、consumer 经 owner boundary 使用、无 sidecar truth；有 generation 时不混用 |
+| Mechanical boundary | critical boundary 可机械表达 | dependency/construction/publication/ownership guard 能实际 fail；不能机械表达时允许 evidence-based guard，不新增形式化基础设施 |
+| Stable public test surface | intent 声称 capability boundary 更稳定 | 重要 invariant 可从 public capability behavior 验证，不依赖 private-field、friend access、内部 load-order 或具体 implementation 形状 |
+| Complexity relocation | intent 声称 Real Evolution / caller knowledge 下降 | duplicated policy/fact、consumer reassembly、distributed lifecycle/publication knowledge、sidecar truth 或 reverse-control burden 至少一项真实下降，而非只移动位置或减少 LOC |
+
+字段换位置、getter 换名字、manager 包一层、helper/adaptor 吸收热点 LOC，都不单独构成上述 proof。
+
 ## Guards
 
 - 不同 bounded context 的相似规则不自动统一；
@@ -57,4 +70,4 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 
 ## Boundary
 
-Architecture Evolution 只把相关 Brooks 约束携带到 intent 中，不完成目标设计，也不声称约束已经满足。禁止调用、加载、路由到或依赖任何外部 Brooks / brooks-lint Skill、配置、报告、Health Score 或 workflow。
+Architecture Evolution 只把相关 Brooks 约束和必要 proof expectation 携带到 intent 中，不完成目标设计，也不声称约束已经满足。禁止调用、加载、路由到或依赖任何外部 Brooks / brooks-lint Skill、配置、报告、Health Score 或 workflow。
