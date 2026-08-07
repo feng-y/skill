@@ -33,6 +33,8 @@ Graph 只存在于 Execution 内部，用来表达真实 Task 依赖；Verificat
 11. Human 明确验证要求属于 binding authority；Executor/Northstar 不能自行降级。
 12. 不新增 scheduler、manager daemon、Graph engine/schema、固定 Agent topology 或新的顶层状态。
 
+当前候选 source-level review：**12/12 PASS**。
+
 ## Scenario smoke
 
 ### S1 — Simple local change stays linear
@@ -119,6 +121,8 @@ Executor 报告“已完成，所有测试应该通过”，但没有实际运�
 
 通过：无论是否保留已有 retry guard，都不得因此创建新的 Goal/Graph/Verification/Evidence 层或固定 workflow。是否该调整具体 retry 规则属于独立 case/eval，不由本次结构重构先验决定。
 
+当前候选 source-level review：**14/14 PASS**。
+
 ## Leader-reference smoke
 
 Leader 只作为 frozen reference input，不作为正确性 oracle。
@@ -126,6 +130,8 @@ Leader 只作为 frozen reference input，不作为正确性 oracle。
 - Northstar 应覆盖其有效的 Goal / boundary / Task / verification / evidence 语义，而不是复制 `/goal`、4000 字符、固定文件、固定 agent 拓扑等 runtime 约束。
 - 明卷、暗卷、防假通过和反向验证是否带来增益由 S10–S12 及后续 behavioral case 验证；不能仅因为 Leader 有或没有某机制就判 Northstar 对错。
 - Northstar 相对线性 Task 结构的结构性增强只允许是必要时的 Execution dependency Graph 与 Task Group verification boundary；不得用 Graph 压平其他结构语义。
+
+当前候选 source-level review：**3/3 PASS**。
 
 ## Paired behavioral eval
 
