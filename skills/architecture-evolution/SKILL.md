@@ -83,7 +83,7 @@ Architecture Intent 只回答：
 - **Why now**：当前变化压力和后果；
 - **Desired end state**：完成后业务、调用者或依赖关系有什么不同；
 - **Boundary**：in scope / out of scope / must preserve；
-- **Obligations**：后续设计必须回答的业务统一、variation、ownership、dependency 和 replacement 问题；
+- **Obligations**：只写与当前 intent 相关、后续设计必须回答的业务语义、variation、ownership、consumer knowledge、dependency 或 replacement 问题；
 - **Progressive constraints**：当前方向需要下游逐步吸收的 Brooks 架构设计约束；
 - **Unknown**：如果存在会改变 intent 的 material unknown，说明其风险和最小关闭方式；没有则不制造；
 - **Evidence of success**：什么证据能证明 intent 被正确实现。
