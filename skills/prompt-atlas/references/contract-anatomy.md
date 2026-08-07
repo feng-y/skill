@@ -19,6 +19,8 @@ Keep distinct:
 
 Evidence may prove a proposed route wrong; it cannot silently rewrite what the Human asked for.
 
+Unknown here means uncertainty that can still alter the Stable Intent contract. Ordinary implementation How remains Executor-owned and may stay open after Stable Intent closes.
+
 ## Unknown routing
 
 The routing table and delegated-default contract live in [SKILL.md](../SKILL.md). This file adds only the authority model and closure test.
