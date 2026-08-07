@@ -28,6 +28,24 @@
 
 否则给出局部修改边界，不升级。
 
+## Architecture reality lenses
+
+恢复现实不是画一张统一的结构图。按当前 evidence 分开判断下面几个观察面；只展开会改变 intent 的部分：
+
+1. **Business semantics** — 哪些路径表达同一业务能力，哪些属于不同 bounded context；事实和规则的权威解释在哪里。
+2. **Ownership & lifecycle** — config、runtime resource、state、publication、reload 和 lifetime 由谁真正拥有。
+3. **Consumer knowledge / reassembly** — caller 是否仍需知道并组合 implementation、configuration、ordering、lifecycle、identity 或 access facts 才能使用 capability。
+4. **Source dependency** — source-level contract、policy、implementation 的依赖方向是否稳定。
+5. **Runtime control / consumption** — 谁在运行时选择、构造、驱动和消费 capability；clean type dependency 不自动证明 runtime ownership 正确。
+
+一个观察面整洁不能替另一个观察面作证。例如：single provider type 不等于 single business semantic owner；clean interface 不等于 consumer 已停止 reassembly；clean dependency graph 不等于 runtime ownership 已闭合。
+
+### Consumer reassembly
+
+`Consumer reassembly` 是 cross-cutting signal，不是第五个 architecture direction。
+
+当调用者为了使用一个 capability，仍需重新组合本应属于 capability owner 的 configuration、implementation、lifecycle、ordering、identity 或 access facts，则 capability boundary 尚未闭合。它通常会指向 Stable Abstraction、Cohesive Capability Ownership，以及 R1/R2/R3 的相关设计约束。
+
 ## Four architecture directions
 
 这四个方向必须保留。它们用于构造 intent，而不是要求当前阶段完成目标设计。一个 intent 选择一个 primary direction，其他命中只作为 consequence 或 design obligation。
@@ -54,12 +72,36 @@ Intent 必须指向真实减少，而不是新增一层。至少能提出一个�
 
 - 平行业务语义；
 - 重复事实解释；
-- 调用者内部知识；
+- 调用者内部知识或 capability reassembly；
 - 无效抽象或特殊入口；
 - 反向或循环依赖；
 - 永久兼容分支。
 
 如果只能说“增加 facade/interface/manager/registry”，intent 尚未成立。
+
+## Explain first, materialize later
+
+用于解释现实的 role、provider、primary/support、variation、ownership 或阶段性 distinction，可以先停留在 reasoning vocabulary。发现一个有用概念，不等于应该创建一个新的 type、adapter、provider、layer 或 public seam。
+
+只有当前 evidence 表明新的 seam 会实际收敛 ownership、减少 caller knowledge、承载 essential variation 或建立更稳定的 verification surface 时，才把它交给后续设计物化。否则保留为解释模型或 guard。
+
+## Material unknown falsification
+
+只有会改变 Architecture Intent、Boundary 或 Design Obligation 的 unknown 才是 material unknown。关闭它至少使用下面的控制链：
+
+```text
+Claim at risk
+→ Minimal territory probe
+→ Evidence
+→ Intent changed / retained
+```
+
+- `Claim at risk`：明确哪个 architecture judgment 会被该未知推翻或缩小；
+- `Minimal territory probe`：只调查足以裁决该 claim 的最小事实；
+- `Evidence`：记录代码、runtime、历史或 Human 决定；
+- `Intent changed / retained`：明确 evidence 如何改变或保留 intent/boundary/obligation。
+
+如果 unknown 被命名后不改变任何下一步，它不是 material control signal，不要把它作为正式 blocker 装饰输出。
 
 ## Challenge the intent
 
@@ -70,6 +112,7 @@ Intent 必须指向真实减少，而不是新增一层。至少能提出一个�
 - 是否把历史偶然差异永久化；
 - 是否诱导 union interface、mode flag、额外 wrapper 或 speculative seam；
 - 是否把复杂度转移到 helper、adapter、registry、配置或 caller；
+- consumer reassembly 是否仍存在，只是换了位置；
 - 是否没有真实 replacement/exit；
 - 是否存在代码无法裁决的 Human-owned 业务或兼容决定。
 
@@ -115,7 +158,7 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 6. in scope、out of scope 和 must preserve 清楚；
 7. 后续设计 obligations 明确；
 8. 至少一个可观察的 replacement/exit 目标；
-9. 一个关键 Unknown 已关闭，或明确不会阻止 intent；
+9. 一个关键 material Unknown 已通过 falsification chain 关闭，或明确不会阻止 intent；
 10. success evidence 可验证；
-11. 已检查最重要反例和 guard；
+11. 已检查最重要反例、consumer reassembly 和 materialization guard；
 12. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
