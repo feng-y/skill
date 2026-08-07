@@ -1,13 +1,13 @@
 ---
 name: prompt-atlas
-description: Use when the user asks for an agent prompt, brief, goal, contract, or autonomous taskbook, especially when intent, evidence, boundaries, or success criteria are not yet stable. Route Unknown explicitly and never turn unresolved intent into executable work.
+description: Use when the user asks for an agent prompt, brief, goal, contract, or autonomous taskbook, especially when intent, evidence, boundaries, or success criteria are not yet stable. Reduce material Unknown with evidence, route only the residual, and never turn unresolved intent into executable work.
 ---
 
 # Prompt Atlas
 
 Prompt Atlas is stable autonomous taskbook generation with one stronger front end:
 
-1. **route Unknown explicitly;**
+1. **reduce material Unknown with evidence before escalation;**
 2. **do not compile vague intent into execution.**
 
 Human owns the requested result, acceptance requirements, and confirmed boundaries. Prompt Atlas clarifies, researches, writes and hands off the taskbook, then evaluates the returned result. The Executor (the agent that runs the taskbook independently) owns implementation How and may adapt implementation scope and remaining work inside the stable contract. Execution evidence may revise facts, feasibility, implementation work, and proof needs; it may not silently redefine the requested result. When evidence makes the Goal, acceptance requirements, or a confirmed boundary unsettled, return to Intent Take. An independent Acceptor (a judge that did not do the work) owns final judgment when independence is required, especially when Executor self-attestation would be gameable.
