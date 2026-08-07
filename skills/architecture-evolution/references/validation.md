@@ -23,6 +23,7 @@
 - README usage 与 SKILL.md 的适用边界、三种状态和“只构造 intent”终点一致；
 - README 明确用户不需要预先提供候选、架构原则、Brooks 风险、最终设计或完整证据；
 - README 的例子只提供模块/症状/模糊方向，不要求用户先完成 architecture analysis；
+- README 对目标设计已明确、完整设计、任务书、code review 或直接实现请求明确要求跳过本 Skill；
 - README 不建立固定下游 Skill 或 handoff 链路。
 
 ## Scenario smoke
@@ -180,11 +181,11 @@ README 用户只提供模块/能力并问“下一步最值得推进的架构方
 
 通过：README 应明确回答“不需要”；用户只需给最小 repo 范围和当前担忧，能由 repo/runtime 查到的事实由 Skill 自己查。
 
-### U5 — Already ready for design/execution
+### U5 — Skip when intent is already stable or execution is requested
 
-用户已经有稳定 Architecture Intent、目标 contract、实现边界和成功标准，只想继续设计或实现。
+用户已经有稳定 Architecture Intent、目标 contract、实现边界和成功标准，只想继续设计/实现；或者当前请求本身就是完整设计、任务书、code review 或直接实现。
 
-通过：README 明确应跳过 Architecture Evolution；不得为了使用 Skill 而重新把稳定 intent 打散。
+通过：README 明确应跳过 Architecture Evolution；不得为了使用 Skill 而重新把稳定 intent 打散，也不得把直接执行请求改写成新的 intent 工作流。
 
 ### U6 — Usage does not create workflow coupling
 
@@ -214,14 +215,14 @@ B. 加载 architecture-evolution
 | Challenge quality | 自我确认 | 检查有限 | 主动检查 false unification/speculation/exit/guards |
 | Scope control | 多方向并推 | 大体受控 | 一个 intent，不提前设计或实现 |
 | Status judgment | 状态错误 | 正确但冗长 | 正确且最小充分 |
-| Invocation discipline | 要求用户先做 architecture analysis 或误用已稳定任务 | 大体知道何时调用 | 从最小模糊输入自助恢复 evidence，且在 intent 已稳定时正确退出 |
+| Invocation discipline | 要求用户先做 architecture analysis 或误用已稳定/直接执行任务 | 大体知道何时调用 | 从最小模糊输入自助恢复 evidence，且在 intent 已稳定或请求已进入设计/执行时正确退出 |
 
 ## V0 pass gate
 
 1. P1–P6 中 B 臂的 `Intent discovery + Direction judgment + Intent quality` 比 A 臂高至少 2 分；
 2. B1–B2 中 Brooks constraints 被正确渐进吸收，既不丢失也不机械全扫；
 3. N1–N3、R1–R2、G1–G4 路由和 guards 正确；
-4. U1–U6 usage smoke 全部通过；README 不要求用户预先做候选分析、原则选择或 Brooks 扫描；
+4. U1–U6 usage smoke 全部通过；README 不要求用户预先做候选分析、原则选择或 Brooks 扫描，并正确排除已稳定 intent 与直接设计/执行请求；
 5. 每个 ready 输出只有一个 intent 和一个 primary direction；
 6. intent 描述 outcome，不锁死实现模式；
 7. 至少一个具体 replacement/exit obligation；
@@ -247,6 +248,7 @@ B. 加载 architecture-evolution
 - `status-leakage` — 非 ready 状态输出稳定 intent；
 - `usage-prework` — README 让用户先整理候选、原则、Brooks 风险或完整 evidence 才能调用；
 - `usage-overreach` — README 暗示 Skill 会直接产出完整设计、迁移方案或实现；
-- `usage-coupling` — README 建立固定下游 Skill 或 handoff 协议。
+- `usage-coupling` — README 建立固定下游 Skill 或 handoff 协议；
+- `usage-misroute` — README 把已稳定 intent、完整设计、code review 或直接实现请求重新路由回 Architecture Evolution。
 
 Static/scenario/usage smoke 只证明文本机制一致；paired eval 才能衡量冻结样本上的相对收益。
