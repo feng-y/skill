@@ -159,4 +159,4 @@ B. 当前候选 Northstar
 
 ## Claim boundary
 
-Static/scenario smoke 只能证明文本 contract 对这些 frozen cases 一致；它不能证明模型在 clean session 中会稳定执行这些 judgment。没有可执行 Skill runner 或 isolated model session 时，behavioral eval 必须标记 `NOT RUN`，不得用同会话自评冒充。
+Static/scenario smoke 只能证明文本 contract 对这些 frozen cases 一致；它不能证明模型在 clean session 中会稳定执行这些 judgment。没有可执行 Skill runner 或 isolated model session 时，behavioral eval 必须标记 `NOT RUN`，不得用同会话自评冒充。当前仓库/连接环境没有暴露这样的 runner，因此本 PR 的 behavioral A/B 状态是 `NOT RUN`。
