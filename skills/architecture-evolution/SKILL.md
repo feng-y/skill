@@ -1,6 +1,6 @@
 ---
 name: architecture-evolution
-description: 用于架构方向模糊、只有历史模块或“应该改进什么”这类输入：从真实变化压力和代码现实中构造一个可讨论、可验证的 Architecture Intent，说明应该演化什么、为什么、边界和成功证据。目标设计或实现已经明确时不使用。
+description: 用于架构方向模糊、只有历史模块或“应该改进什么”这类输入：从真实变化压力和代码现实中构造一个可讨论、可验证的 Architecture Intent，说明应该演化什么、为什么、边界、渐进设计约束和成功证据。目标设计或实现已经明确时不使用。
 ---
 
 # Architecture Evolution · 从模糊方向构造架构 Intent
@@ -17,10 +17,11 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 
 1. 先只用本文件恢复变化压力并判断是否存在架构 intent；
 2. 需要区分候选方向、业务边界或架构性质时读取 [rules.md](references/rules.md)；
-3. intent 稳定后读取 [intent-contract.md](references/intent-contract.md)；
-4. [validation.md](references/validation.md) 只用于显式 smoke/eval，正常运行禁止读取。
+3. intent 方向稳定后读取 [brooks-constraints.md](references/brooks-constraints.md)，只吸收与当前方向相关的设计约束；
+4. 最后读取 [intent-contract.md](references/intent-contract.md) 输出稳定 intent；
+5. [validation.md](references/validation.md) 只用于显式 smoke/eval，正常运行禁止读取。
 
-本 Skill 吸收 opportunity finding、improve 和 design grilling 的判断，但不调用或编排外部 Wayfinder、Improve、Grill、Brooks 或 Northstar Skill。
+本 Skill 吸收 opportunity finding、improve 和 design grilling 的判断，并直接保留 Brooks 架构约束；不调用或编排外部 Wayfinder、Improve、Grill、Brooks 或 Northstar Skill。
 
 ## 何时使用
 
@@ -80,14 +81,15 @@ Architecture Intent 只回答：
 - **Desired end state**：完成后业务、调用者或依赖关系有什么不同；
 - **Boundary**：in scope / out of scope / must preserve；
 - **Obligations**：后续设计必须回答的业务统一、variation、ownership、dependency 和 replacement 问题；
+- **Progressive constraints**：当前方向需要下游逐步吸收的 Brooks 架构设计约束；
 - **Unknown**：仍需关闭的一个关键未知；
 - **Evidence of success**：什么证据能证明 intent 被正确实现。
 
 Intent 描述结果，不提前规定 class、factory、strategy、registry 或迁移步骤。
 
-### 4. Challenge the intent
+### 4. Challenge and constrain the intent
 
-用代码现实和内置 Brooks 风险线索校准 intent：
+先用代码现实挑战方向：
 
 - 它是否只是局部修复或审美清理；
 - 是否错误合并不同 bounded context；
@@ -97,7 +99,9 @@ Intent 描述结果，不提前规定 class、factory、strategy、registry 或�
 - 是否能指出旧路径、重复知识、调用者知识或反向依赖将退出；
 - 是否存在 Human-owned 业务或兼容决定。
 
-Brooks R1–R6 在这里是风险提问词汇，不做全量扫描、评分或独立报告。反证改变方向时修改或撤销 intent；未改变时写明关键 guard。
+方向稳定后按需读取 `brooks-constraints.md`。Brooks R1–R6 是后续架构设计需要逐步吸收的约束：intent 阶段只携带与当前 pressure 和 desired end state 直接相关的约束，不做全量扫描、评分、PASS/RETRY 或独立报告。
+
+反证改变方向时修改或撤销 intent；约束不适用时写明关键 guard；约束是否真正满足由后续目标设计、实现和验收证明。
 
 ## Output
 
@@ -105,6 +109,6 @@ Brooks R1–R6 在这里是风险提问词汇，不做全量扫描、评分或�
 
 - **`Status: No architecture intent`** — 当前压力不足，或问题属于局部修改；输出证据和局部边界。
 - **`Status: Intent unresolved`** — 输出当前理解、一个关键 Unknown、最小探针或 Human 决定，以及它会改变什么。
-- **`Status: Architecture intent ready`** — 读取 `intent-contract.md`，输出一个有证据、有边界、可验证的 Architecture Intent。
+- **`Status: Architecture intent ready`** — 读取 `brooks-constraints.md` 与 `intent-contract.md`，输出一个有证据、有边界、携带渐进设计约束且可验证的 Architecture Intent。
 
-本 Skill 的终点是稳定 intent。目标设计、任务书、实现和完整验收属于后续工作。
+本 Skill 的终点是稳定 intent。目标设计负责吸收约束并形成架构决定；任务书、实现和完整验收属于后续工作。
