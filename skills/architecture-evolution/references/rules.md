@@ -71,7 +71,7 @@ ownership 只能扩到 evidence 支持的 invariant 边界。`capability ownersh
 2. **Stable Abstraction with Explicit Variation**
    - 调用者是否依赖实现差异而不是业务能力？
    - 哪些差异可能是 essential，哪些只是历史残留？
-   - stable variation 必须由可观察的 semantic / invariant difference 支撑；provider 名称、class hierarchy、当前 execution shape 或其他 implementation partition 只能作为 evidence，不能自动成为长期 variation taxonomy。
+   - variation 只有在 evidence 证明它对应稳定 semantic / invariant difference 时才进入长期抽象；current implementation partition 本身不构成 variation。
 
 3. **Cohesive Capability Ownership**
    - 完整 capability、invariant、状态和生命周期是否有 owner？
@@ -96,7 +96,7 @@ Intent 必须指向真实减少，而不是新增一层。至少能提出一个�
 
 ## Explain first, materialize later
 
-用于解释现实的 role、provider、consumer slice、primary/support、variation、ownership、class hierarchy、execution shape 或阶段性 distinction，都可以先停留在 reasoning vocabulary。**Observed partition 是 evidence，不是 architecture boundary。** 只有 evidence 表明新的 seam 会承载稳定 semantics/invariant、闭合 ownership、承载 essential variation、形成长期 change boundary 或建立稳定 verification surface 时，才交给后续设计物化；否则保留为解释模型或 guard。
+用于解释现实的 distinction 或 partition 可以先停留在 reasoning vocabulary。**Observed partition 是 evidence，不是 architecture boundary。** 只有 evidence 表明新的 seam 会承载稳定 semantics/invariant、闭合 ownership、承载 essential variation、形成长期 change boundary 或建立稳定 verification surface 时，才交给后续设计物化；否则保留为解释模型或 guard。
 
 ## Material unknown falsification
 
@@ -118,9 +118,9 @@ Claim at risk
 
 ## Evidence lifetime
 
-Success evidence 直接从当前 Architecture Intent 已承诺的结果、invariant、must-preserve、boundary 和 replacement/exit 推导**必须证明什么**；不要再把这些 claim 编译成一套独立 proof-property taxonomy。
+Success evidence 直接从当前 Architecture Intent 已承诺的结果、invariant、must-preserve、boundary 和 replacement/exit 推导**必须证明什么**；不要再把这些 claim 转写成第二套完成条件。
 
-- 具体 build/test/replay/dependency probe 等 evidence provider 由后续 design / implementation 根据 repo verification authority 和最终 change surface 选择；provider 本身是稳定受保护判卷标准，或当前必须点名才能消除歧义时，才在 intent 中固定入口；
+- 具体 evidence provider 由后续 design / implementation 根据 repo verification authority 和最终 change surface 选择；provider 本身是稳定受保护判卷标准，或当前必须点名才能消除歧义时，才在 intent 中固定入口；
 - affected scope 会随 runtime/config/deployment binding、changed boundary/ownership 或时间变化时，必须保留 scope derivation，并在实现验证时按最终 change surface 与届时 effective reality 重新推导；
 - 会动态变化的具体对象列表只能作为 current snapshot evidence，除非它本身就是稳定 contract；
 - replay 只是适用时的一种 evidence provider，不是所有 architecture intent 的固定验收机制。
@@ -139,7 +139,7 @@ Success evidence 直接从当前 Architecture Intent 已承诺的结果、invari
 - consumer reassembly 是否仍存在，只是换了位置；
 - 是否从 capability ownership 无证据推导出更大的 execution / orchestration ownership；
 - 是否为了闭合当前 capability，把相邻 subsystem 的合法 authoritative ownership 也集中进来；
-- 是否在缺少 stable semantic / invariant / change-boundary evidence 时，把 current consumer/provider/class/execution/snapshot partition 冻结成长期 architecture contract；
+- 是否在缺少 stable semantic / invariant / change-boundary evidence 时，把 current implementation/snapshot partition 冻结成长期 architecture contract；
 - 是否没有真实 replacement/exit；
 - 是否存在代码无法裁决的 Human-owned 业务或兼容决定。
 
@@ -187,6 +187,6 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 8. ownership materially shapes intent 时，owner scope 只扩到 evidence 支持的 invariant，并只记录会改变 boundary 的 preserved / adjacent ownership relation；
 9. 至少一个可观察的 replacement/exit 目标；
 10. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；不存在时不制造；
-11. success evidence 直接引用当前 intent 已承诺的关键 claim，不另建 proof-property taxonomy；动态 scope 有 derivation，具体 provider 只在其本身属于稳定判卷标准或必须消除歧义时固定；
+11. success evidence 直接引用当前 intent 已承诺的关键 claim，不再转写第二套完成条件；动态 scope 有 derivation，具体 provider 只在其本身属于稳定判卷标准或必须消除歧义时固定；
 12. 已检查最重要反例、consumer reassembly、owner-scope 和 materialization guard；
 13. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
