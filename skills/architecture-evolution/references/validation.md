@@ -14,9 +14,12 @@
 - 任何运行时文件都不得调用、加载、路由到或依赖外部 Brooks / brooks-lint Skill、配置、报告模板、Health Score 或 workflow；
 - Brooks finding 结构为 `Severity → Symptom → Source → Consequence → Remedy → How to verify`；
 - `No finding` 必须带 false-positive guard；
+- Architecture Design Contract 只有在 `Design ready + Brooks PASS + 用户要求实现` 时才能输出 `Handoff: Ready`；
+- handoff 必须包含 Design source、Goal seed、Target、Architecture decisions、Design delta、Implementation boundary、Protected behavior、Verification obligations 和 Design invalidation triggers；
+- Northstar 的 handoff 入口按需读取 `references/architecture-design-handoff.md`，不得重新裁决架构决定；
 - agent prompt 不重复注入完整规则；
 - 四种状态名称一致；
-- 非 `Design ready` 状态不会输出 canonical abstraction、Design Delta 或 Brooks constraints；
+- 非 `Design ready` 状态不会输出 canonical abstraction、Design Delta、Brooks constraints 或可执行 handoff；
 - Northstar 仍拥有 Goal、授权、任务书、执行与完整验收。
 
 任何失败都先修结构，不进入 behavioral eval。
@@ -75,11 +78,24 @@ FeatureStreaming 与 Predict 各有 ParseRequest 路径，输入输出主体一�
 - 删除至少一条 common→scenario、policy→provider 或隐式反向控制边；
 - Brooks constraints 以 `R5 Dependency Disorder` 为主要 finding，并检查其 `R2 Change Propagation` 后果。
 
+### H1 — Ready handoff to Northstar
+
+目标设计已经 `Design ready`，Brooks constraints 为 `PASS`，用户明确要求开始实现。
+
+通过：
+
+- Architecture Design Contract 输出 `Handoff: Ready` 和全部最小字段；
+- handoff 固化架构决定、Protected behavior、Delete 和 design invalidation triggers，但不编排实现步骤；
+- Northstar 读取 `architecture-design-handoff.md`，把决定编译进现有六节任务书；
+- 用户已要求实现时，Northstar 达到 `Status: Executable` 后直接 compile-and-run，不再次询问是否开始；
+- Task 0 只验证合同与当前 repo reality，没有重新执行 Architecture Evolution；
+- 只影响实现细节的新证据在合同内重新规划；推翻架构前提的新证据返回 Architecture Evolution。
+
 ### N1 — No architecture change
 
 owner、业务语义和依赖方向都清楚，只是局部 off-by-one、日志字段或机械迁移。
 
-通过：`No architecture change`；只输出证据、局部原因与修改边界；无 canonical abstraction、Design Delta 或 Brooks constraints。
+通过：`No architecture change`；只输出证据、局部原因与修改边界；无 canonical abstraction、Design Delta、Brooks constraints 或 handoff。
 
 ### N2 — Legitimately different business
 
@@ -99,17 +115,29 @@ composition root 显式构造具体 implementation 并注入 policy contract，�
 
 通过：`R5 Dependency Disorder` 为 `No finding`，并应用 composition-root guard；不得机械要求 composition root 只依赖 abstraction。
 
+### N5 — Handoff not authorized
+
+目标设计为 `Design ready + Brooks PASS`，但用户只要求设计，或 Brooks verdict 为 `RETRY`。
+
+通过：`Handoff: None`；不得把设计合同伪装为 Northstar 可执行授权，不得自动进入实现。
+
 ### R1 — Research required
 
 无法从静态代码判断两条 legacy path 是否仍承载相同业务，运行流量、消费者或错误契约证据缺失。
 
-通过：`Research required`；只输出已确认事实、一个会改变 same-business judgment 的 Unknown、最小探针和受影响字段；不提前设计 abstraction 或生成 Brooks verdict。
+通过：`Research required`；只输出已确认事实、一个会改变 same-business judgment 的 Unknown、最小探针和受影响字段；不提前设计 abstraction、生成 Brooks verdict 或 handoff。
+
+### R2 — Handoff invalidated by current code
+
+Northstar Task 0 发现当前代码已经改变，证据推翻 same-business judgment、essential difference、canonical contract、module ownership、dependency direction 或 Protected behavior。
+
+通过：停止受影响实现并返回 Architecture Evolution；不得由 Northstar 自行修改目标架构后继续。仍有独立安全工作时可以保留，但不能消费已失效设计。
 
 ### D1 — Decision required
 
 代码证据已恢复，但某个历史兼容行为究竟是长期业务 contract，还是可删除的迁移残留，需要产品/平台 owner 作高代价承诺。
 
-通过：`Decision required`；只输出共同业务边界、Human-owned 决策、少量选项和推荐；不伪造唯一语义、Remedy 或删除承诺。
+通过：`Decision required`；只输出共同业务边界、Human-owned 决策、少量选项和推荐；不伪造唯一语义、Remedy、删除承诺或 handoff。
 
 Scenario smoke 是合同审计，不等于 clean-session behavioral eval。
 
@@ -136,6 +164,7 @@ B. 同模型、工具和预算，加载 architecture-evolution
 | Scope control | 全面重构 | 大体局部 | 一个目标、一个主断点、明确不做什么 |
 | Unification restraint | 新增壳层或错误合并 | 混合 | 拒绝 union abstraction，并保留真实业务差异 |
 | Brooks constraints | 无风险审计或自造指标 | 部分风险/链路不完整 | R1–R6 全扫描；finding 符合 Iron Law、severity 与 guard；Remedy 已进入设计；无外部 Skill 依赖 |
+| Handoff discipline | 无效/越权 handoff | 字段或路由部分正确 | 条件、字段、authority、Task 0 与 invalidation route 全部正确 |
 | Status judgment | 状态错误/泄漏 | 正确但偏重 | 正确且最小充分 |
 
 ## V0 pass gate
@@ -143,12 +172,13 @@ B. 同模型、工具和预算，加载 architecture-evolution
 1. P1–P4 至少三个案例中，B 臂的 `Business judgment + Primary diagnosis + Target architecture + Brooks constraints` 比 A 臂高至少 2 分；
 2. 正样本只选择一个 primary architecture break；
 3. B 臂的 Scope control 和 Unification restraint 不低于 A 臂；
-4. N1–N4、R1、D1 状态和 Brooks guards 正确，无 status leakage；
+4. N1–N5、R1–R2、D1 状态、Brooks guards 和 handoff route 正确，无 status leakage；
 5. 每个 `Design ready` 明确 canonical capability、essential differences、stable abstraction、cohesive module、dependency direction 和具体 replacement/delete；
 6. Brooks constraints 扫描 R1–R6，主要 finding 有完整 Iron Law 链路，没有未处理的 Critical finding；
 7. 残留 Warning 必须写明业务 tradeoff、owner 和验证边界；
 8. 运行时不调用或依赖任何外部 Brooks Skill；
-9. 未执行实现证据时，不声称行为保持、业务完全等价、迁移完成或 finding 已经消失。
+9. `Handoff: Ready` 只在有效条件下产生，Northstar 不重新裁决架构，design invalidation 会返回 Architecture Evolution；
+10. 未执行实现证据时，不声称行为保持、业务完全等价、迁移完成或 finding 已经消失。
 
 失败分类：
 
@@ -163,13 +193,16 @@ B. 同模型、工具和预算，加载 architecture-evolution
 - `iron-law miss` — finding 缺少 Source、Consequence 或设计内 Remedy；
 - `guard miss` — 合理 adapter、composition root 或 bounded context 被误报；
 - `external-brooks-dependency` — 调用、加载、路由到或依赖外部 Brooks Skill；
+- `invalid-handoff` — 非 Design ready、Brooks 未 PASS、无实现授权或字段缺失却输出 Ready；
+- `architecture-rejudgment` — Northstar 重新裁决已确认架构决定；
+- `invalidation-swallowed` — design invalidation 被当作普通重新规划吞掉；
 - `scope expansion` — 一个热点扩大成全仓库重设计；
 - `false positive` — 局部任务被升级成架构工作；
 - `unverifiable gain` — Remedy 没有具体验证方法；
-- `status leakage` — 非 ready 状态仍输出目标设计或 Brooks verdict。
+- `status leakage` — 非 ready 状态仍输出目标设计、Brooks verdict 或 handoff。
 
-同一种 failure 在两个代表性案例重复出现后，才修改 Principle 或 constraints。不要为了单个 miss 扩大 Skill。
+同一种 failure 在两个代表性案例重复出现后，才修改 Principle、constraints 或 handoff。不要为了单个 miss 扩大 Skill。
 
 ## Claim boundary
 
-Static/scenario smoke 只能证明合同和文本机制一致；paired eval 只能证明冻结样本上的设计质量差异。Brooks constraints 只验证目标设计是否处理已识别风险，不证明实现正确、行为对等、迁移完成、实际删除或生产维护成本下降。
+Static/scenario smoke 只能证明合同和文本机制一致；paired eval 只能证明冻结样本上的设计质量差异。Brooks constraints 只验证目标设计是否处理已识别风险，handoff 只传递已确认设计和执行边界；二者都不证明实现正确、行为对等、迁移完成、实际删除或生产维护成本下降。
