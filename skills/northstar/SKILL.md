@@ -52,7 +52,7 @@ Context 增强只服务于把 Intent Take 做完整：补足会改变 Goal、验
 
 自己能查的一律先查，不拿事实问题问 Human。只补足会改变当前判断或任务书的 context；证据已经足以继续时就停止扩展。核对真实工作区、具有约束力的规格和测试、关键命令、基线、依赖以及受保护的判卷标准（测试、schema、验收脚本、CI、基线等）。文档和命令名都先当作待验证声明：README 里的命令可能已经不存在，lint 可能只是 `echo` 出一个假绿灯，文件也可能因为无人 import 而从覆盖率报告里消失。只有执行环境才能回答的内容，放进 Task 0。
 
-Handoff 前读取与预期 change surface 相关的 repo verification authority；由已知 impact/reachability 触发的 mandatory gate 必须编译进任务书，执行期才能确认的 trigger 放进 Task 0，预期 `0-diff` 不得降级已触发 gate。
+Handoff 前先识别本次 verification focus：由 Goal、completion properties、change impact/reachability 和主要 failure risk 决定哪些属性最需要重点证明；再读取相关 repo verification authority。已知事实触发的 mandatory gate 必须编译进任务书，执行期才能确认的 trigger 放进 Task 0，预期 `0-diff` 不得降级已触发 gate。
 
 重要结论必须能回到它的证据。摘要可以携带 claim 和 source pointer，但不会因为被总结或写进交接而自动变成 proof；后续决定或判卷依赖某个属性时，保留对应的权威来源、reference 或可复现观察。
 
@@ -70,21 +70,31 @@ Context 增强只为了把 Goal 和 Task 描述到 Executor 能独立判断、�
 
 编译 Execution 前，先把 Goal 收敛成有限、互不替代的 completion properties，形成 Completion Contract；只保留当前 Goal 必要的完成条件，不固定类别，也不能用一个属性的证据替代另一个。
 
-任务书先写 completion properties 和 mandatory gates；测试、build、replay、symbol/static check 等只是 evidence provider，按证明属性聚合，仅在入口本身是受保护判卷标准、权威基线或能显著消除歧义时点名。
+任务书先写 completion properties，再用 verification focus 编译 mandatory gates 和 evidence provider；verification focus 只是判断，不新增任务书章节或固定字段。具体检查从 repo verification system 中选择，仅在入口本身是受保护判卷标准、权威基线或能显著消除歧义时点名。
 
 一本任务书只承载一个 Goal，并在一次执行工作中完成并证明一个明确交付。如果做不到，就回到 Intent Take 缩小 Human 本次要的交付，不拆成多本任务书，也不编译无边界 Graph。
 
 意图定准后，已确认边界和不可削弱的证明要求仍然具有约束力。证据变化时，Executor 可以调整实现方式和剩余工作。
 
-开发任务要在不增加额外流程阶段的前提下编译三种证明粒度：每个 Task 使用成本最低且足够的局部证明；一组 Task 共同形成模块能力、共享合同或汇合结果时，在最小 Task Group 边界运行编译、集成、replay 或等价组合验证；所有相关 Task Group 收敛后运行完整 Goal 验收。昂贵检查按证明范围、已有实测或可靠成本，以及延迟发现失败的恢复代价安排执行位置。
+开发任务要在不增加额外流程阶段的前提下编译三种证明粒度：每个 Task 使用成本最低且足够的局部证明；一组 Task 共同形成模块能力、共享合同或汇合结果时，在最小 Task Group 边界运行 repo verification system 中覆盖组合属性的更大范围验证；所有相关 Task Group 收敛后运行完整 Goal 验收。昂贵检查按证明范围、已有实测或可靠成本，以及延迟发现失败的恢复代价安排执行位置。
 
 Handoff 前，只有在明卷可能假通过、可被钻空子或不足以证明 Goal 已完成时，才按 [completion-trust.md](references/completion-trust.md) 预留私有验收（暗卷）；否则依赖受保护的明卷和判卷标准。暗卷不进入 Executor 可见的任务书；runtime 能隔离上下文时，也不进入 Executor 上下文。暗卷可以采用任务书未列出的样本或不同观察路径，不能增加隐藏要求。
 
 ### 4. 交付（Handoff）
 
-用户要的是提示词、brief、合同或任务书时，返回任务书。用户直接要求完成工作，就已经授予 compile-and-run 权限：达到 `Status: Executable` 后，由现有 runtime 继续执行，不再额外等一次“开始”。Northstar 不实时监督执行。
+用户只要普通提示词、brief 或合同时照常返回文本。输出 `Status: Executable` 时，把同一份任务书正文写入 OS/runtime 提供的临时目录中的一个 Markdown 文件；路径必须在当前 repo/workspace 之外且不能硬编码 `/tmp`。TUI 可以同时显示正文、摘要和路径，但 Executor 只从该文件启动，不从 conversation 重建；写入失败时可以返回文本，但不得声称已进入执行。
+
+用户直接要求完成工作，就已经授予 compile-and-run 权限：文件写好后，用一个薄 launcher 启动 Executor，不再额外等一次“开始”：
+
+```text
+Read <TASKBOOK_PATH> as the authoritative contract. Execute toward its Goal; Tasks are the current dependency graph, not the completion condition. Loop: observe → run ready work → verify with the repo's applicable verification system → update evidence/graph. Replan as evidence changes without changing Goal, boundaries, authority, or mandatory gates. Stop only when the Completion Contract is proven, no safe work remains, or an explicit budget ends.
+```
+
+launcher 只负责驱动任务书；Northstar 不实时监督执行。Executor 返回后继续进入同一条 Acceptance，由 Northstar 保留 Goal-level 判卷权。
 
 ### 5. 验收（Acceptance）
+
+Northstar 对照同一份权威任务书的 Goal、Completion Contract、已确认边界和 mandatory gates 判卷；Executor 的 `done`、`PASS` 和自带证据都只是验收输入，不是最终 verdict。若 Goal 与边界仍稳定、仍有安全可执行路径，但存在未满足 property、缺失或 stale evidence、未完成 mandatory gate，就把这些 focused gaps 返回给 Executor，继续同一本任务书而不是重编；只有继续推进必须改变 Goal、验收要求、已确认边界、Human 明确优先级或授权时，才回到 Intent Take/Human。
 
 结果返回后，重跑明卷（可见验收）和所有预留暗卷（私有检查）。当 Executor 自证可能被钻空子、证据不完整或不足以证明 Goal 已完成时，绑定独立 Acceptor；本应是暗卷的检查已经对 Executor 可见、又没有其他受保护的判卷标准能证明 Goal 完成，也属于这种情况。
 
