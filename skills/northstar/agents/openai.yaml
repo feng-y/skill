@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
   short_description: "收敛 Goal，并生成带分层验证和真实 Evidence 的中文任务书"
-  default_prompt: "使用 $northstar。先定准 Human-owned Goal；Human 明确验证要求作为 Verification 的 binding input 单独保留。按 Goal → Execution / Graph → Verification → Evidence 编译：Task/Graph 只表达真实执行依赖；保留 Task、Task Group、Goal 三种验证粒度；required verification 根据真实 impact/reachability、repo verification authority 和 Human 明确要求确定，0-diff、cleanup 或 refactor 不得降级已触发验证；最终只依据仍有效且覆盖真实 affected surface 的 Evidence 判断结果。不要创建 Completion Contract、Acceptance layer 或固定 Acceptor 角色。"
+  default_prompt: "使用 $northstar。先定准 Human-owned Goal；Human 明确验证要求作为 Verification 的 binding input 单独保留。按 Goal → Execution / Graph → Verification → Evidence 编译：Handoff Graph 只表达当前证据支持的真实依赖，运行时可按新 Evidence 调整剩余 Task/edge/frontier；保留 Task、Task Group、Goal 三种验证粒度；required verification 根据真实 impact/reachability、repo verification authority 和 Human 明确要求确定，0-diff、cleanup 或 refactor 不得降级已触发验证；最终只依据仍有效、可复核且覆盖真实 affected surface 的 Evidence 判断结果，能访问权威环境时对关键 verification 重新取证。不要创建 Completion Contract、Acceptance layer、Graph engine 或固定 Acceptor 角色。"
