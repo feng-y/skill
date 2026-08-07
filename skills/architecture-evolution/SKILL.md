@@ -1,179 +1,110 @@
 ---
 name: architecture-evolution
-description: 从仓库、模块或已知热点中的真实变化压力出发，发现并选择一个高价值架构演化机会，恢复业务现实，形成能够替代旧结构的目标设计，并用反例挑战与内置 Brooks 约束验证。不用于普通局部 bug、无变化压力的审美清理或全仓库战略重设计。
+description: 用于架构方向模糊、只有历史模块或“应该改进什么”这类输入：从真实变化压力和代码现实中构造一个可讨论、可验证的 Architecture Intent，说明应该演化什么、为什么、边界和成功证据。目标设计或实现已经明确时不使用。
 ---
 
-# Architecture Evolution · 发现机会，推进真实演化
+# Architecture Evolution · 从模糊方向构造架构 Intent
 
-North Star：**发现最值得处理的架构机会，并把其中一个推进为经代码现实、反例和 Brooks 约束验证，能够真正替代旧结构的目标设计。**
+North Star：**把模糊的架构担忧、模块问题或改进方向，收敛成一个有证据、有边界、可继续设计或执行的 Architecture Intent。**
 
-本 Skill 内置两类能力：
+本 Skill 不负责完成目标架构、实现计划或代码改造。它解决的是更早的问题：
 
-- **Opportunity discovery**：从真实变化压力中发现、比较并选择架构热点；
-- **Design evolution**：恢复业务现实，形成目标设计，并对设计做反向挑战和风险验证。
+> 当前真正值得推进的架构意图是什么？
 
-一次只选择并深入一个热点，是 scope-control，不代表调用者必须预先知道热点。输入可以是仓库、模块、业务能力，也可以是已经明确的架构问题。
-
-本文中的 `module` 是尺度无关的责任单元，可以是 class、package、service 或跨层 capability，不等于单个文件。
+输入可以是仓库局部、历史模块、业务能力、反复出现的问题，或一个尚未说清楚的方向。一次只构造一个 intent。
 
 ## Context loading
 
-按需加载：
-
-1. 先只用本文件限定搜索范围并发现变化压力；
-2. 选中结构候选后再读 [rules.md](references/rules.md)；
-3. 只有形成目标设计时才读 [design-contract.md](references/design-contract.md) 和 [verification.md](references/verification.md)；
+1. 先只用本文件恢复变化压力并判断是否存在架构 intent；
+2. 需要区分候选方向、业务边界或架构性质时读取 [rules.md](references/rules.md)；
+3. intent 稳定后读取 [intent-contract.md](references/intent-contract.md)；
 4. [validation.md](references/validation.md) 只用于显式 smoke/eval，正常运行禁止读取。
 
-本 Skill 吸收 opportunity finding、improve 和 design grilling 的判断，但不调用或编排外部 Wayfinder、Improve、Grill 或 Brooks Skill。
+本 Skill 吸收 opportunity finding、improve 和 design grilling 的判断，但不调用或编排外部 Wayfinder、Improve、Grill、Brooks 或 Northstar Skill。
 
 ## 何时使用
 
 使用：
 
-- 用户要求找出一个模块或局部代码库下一步最值得做的架构改进；
-- 同一业务能力因入口、provider、family、团队或历史模块形成多套流程；
-- 公共抽象充满 mode flag、optional 参数、外部 switch 或特殊入口；
-- 一个模块混合多个独立变化原因，或完整能力被拆散给调用者组装；
-- 通用层、Harness、Runtime 或稳定主流程反向依赖具体业务与实现；
-- 新 facade、interface、registry 或 wrapper 没有替代旧路径。
+- “这个历史模块应该往哪个方向改”；
+- “下一步最值得做的架构演化是什么”；
+- 用户给出多个症状，但尚未形成明确目标；
+- 已知热点存在，但还不清楚它是局部修复、结构调整还是业务统一问题；
+- 需要把代码现实转成可确认的架构方向。
 
 跳过：
 
-- 业务语义、owner 和依赖方向清楚的局部 bug 或机械改动；
-- 只有审美不满，没有真实变化、维护或理解压力；
-- 目标设计已经稳定，只需要实现或 code review；
-- 用户要求的是多个平级目标或全仓库战略蓝图。
-
-## Top architecture principles
-
-1. **Business Semantic Integrity** — 同一业务语义统一，不同业务语义显式区分。
-2. **Stable Abstraction with Explicit Variation** — 共同语义进入稳定抽象，真实差异限制在明确变化点。
-3. **Cohesive Capability Ownership** — 一个模块拥有一项完整能力及其 invariant、状态和生命周期。
-4. **Unidirectional Policy Dependency** — 源码依赖为 `policy → contract ← implementation`；底层不能反向定义或控制上层 policy。
-
-共同 Gate：**Real Evolution** — 新结构必须替代并减少旧结构，不能只增加一层。
+- 普通局部 bug、机械迁移或明确 code review；
+- 目标架构、实现边界和成功标准已经稳定；
+- 用户要求完整设计、任务书或直接实现；
+- 没有真实变化、维护、理解或业务压力，只有审美不满。
 
 ## Flow
 
-### 1. Discover
+### 1. Ground the direction
 
-先限定架构搜索地界：
+恢复最小现实：
 
-- `Area`：仓库局部、模块、业务能力或已知热点；
-- `Pressure`：真实需求、重复修改、事故、维护阻塞或理解摩擦；
-- `Scope`：发现和判断所需的最小上下游；
-- `Out of scope`：本轮明确不碰的范围。
-
-再从代码、调用、测试、配置、变更历史、运行证据和仍有效文档中寻找结构机会。优先观察：
-
-- 一条业务规则在多处同步修改；
-- 调用者反复选择路径、实现或调用顺序；
-- 模块同时承受不相关变化；
-- 抽象增加但旧路径没有退出；
-- 稳定层依赖易变场景或 provider；
-- 业务名称、invariant 与代码结构互相冲突。
-
-开放范围最多保留三个有证据的候选。已知热点不默认扩大搜索，只验证它是否是架构问题、是否存在更底层的局部根因。只有审美、文件大小或单次局部修改时，返回 `Status: No architecture opportunity`。
-
-每个候选都必须形成：
-
-```text
-Change pressure → Structural symptom → Consequence → Candidate boundary → Counterexample
-```
-
-### 2. Select one
-
-选择一个本轮热点，不打分。优先选择同时满足以下条件的候选：
-
-- 有重复或高代价的真实变化压力；
-- 一个结构根因产生多个可观察后果；
-- 可以限定最小分析边界；
-- 能说明什么旧路径、重复知识或反向依赖将退出；
-- 现有证据足以继续，或存在成本最低的关键探针。
-
-其余候选只记录一句 defer reason。只有一个有效候选时不虚构比较；不得把多个平级问题拼成一个“大架构改造”。
-
-用户只要求发现和选择时，可返回 `Status: Opportunity selected`；否则继续推进设计。
-
-### 3. Ground business reality
-
-对选中热点恢复：
-
-- 当前入口、主流程与消费者；
-- 输入、输出、错误、状态、生命周期和外部副作用；
-- 业务事实与配置由谁解释；
-- 共同语义、差异和调用者必须知道的实现细节；
-- 当前源码依赖、运行控制和 composition 位置。
+- `Area`：模块、能力或局部代码范围；
+- `Prompt`：用户当前模糊表达、担忧或方向；
+- `Pressure`：需求、重复修改、事故、维护阻塞、调用者知识或理解摩擦；
+- `Evidence`：代码、调用、测试、配置、变更历史、运行事实或仍有效文档；
+- `Boundary`：本轮最小上下游与明确不做什么。
 
 始终分开：
 
 - `Observed`：证据直接证明；
-- `Inferred`：证据支持的架构解释；
-- `Unknown`：会改变业务判断、目标结构或兼容边界的未决事实。
+- `Inferred`：证据支持的解释；
+- `Unknown`：会改变 intent 的未决事实。
 
-能从 repo/runtime 查明的事实自己查。设计关键 Unknown 未关闭时返回 `Research required`。
+没有真实压力时返回 `Status: No architecture intent`。
 
-### 4. Diagnose
+### 2. Discover the intent
 
-先判断路径是否表达同一业务，再区分：
+从压力背后的结构原因寻找方向，而不是从模式名出发。常见方向包括：
 
-- **essential differences**：真实业务、协议、性能、一致性或生命周期要求；
-- **accidental differences**：入口、团队、provider、历史实现或迁移残留。
+- 同一业务存在多套语义或事实解释；
+- 共同语义存在，但实现差异泄漏给调用者；
+- 完整能力没有内聚 owner；
+- 稳定 policy 被易变 implementation 或场景反向牵引；
+- 新抽象持续增加，但旧路径和旧知识没有退出。
 
-读取 `rules.md`，只选择一个 `Primary architecture break`。其他问题作为 consequence：
+需要比较时只保留少量有证据方向，不评分。选择一个最能解释当前压力、边界最清楚、且能说明什么将消失的 intent。已知热点也必须证明它值得升级为架构 intent。
 
-```text
-Observed evidence → Structural consequence → Primary break → Root cause → Counterexample → Confidence
-```
+### 3. Shape the intent
 
-### 5. Design
+Architecture Intent 只回答：
 
-只形成一个推荐设计：
+- **What**：哪项能力或结构应该发生什么方向性变化；
+- **Why now**：当前变化压力和后果；
+- **Desired end state**：完成后业务、调用者或依赖关系有什么不同；
+- **Boundary**：in scope / out of scope / must preserve；
+- **Obligations**：后续设计必须回答的业务统一、variation、ownership、dependency 和 replacement 问题；
+- **Unknown**：仍需关闭的一个关键未知；
+- **Evidence of success**：什么证据能证明 intent 被正确实现。
 
-- canonical business capability；
-- stable abstraction；
-- explicit variation points；
-- cohesive module ownership；
-- `policy → contract ← implementation` 的依赖方向；
-- `Keep / Move / Merge / Delete / Do not change`。
+Intent 描述结果，不提前规定 class、factory、strategy、registry 或迁移步骤。
 
-先统一业务，再形成抽象；先定义 capability 与 invariant，再决定具体模式。无法由证据裁决、且会形成长期业务或兼容承诺时返回 `Decision required`。
+### 4. Challenge the intent
 
-### 6. Grill
+用代码现实和内置 Brooks 风险线索校准 intent：
 
-对推荐设计做反向攻击，而不是为它补解释：
+- 它是否只是局部修复或审美清理；
+- 是否错误合并不同 bounded context；
+- 是否把历史差异误当作长期业务差异；
+- 是否会诱导 union interface、额外 wrapper 或 speculative seam；
+- 是否只是转移复杂度；
+- 是否能指出旧路径、重复知识、调用者知识或反向依赖将退出；
+- 是否存在 Human-owned 业务或兼容决定。
 
-- 是否把不同业务错误统一；
-- 是否用 union interface、mode flag 或 optional 参数遮住旧语义；
-- 是否把每个 concern 都升级成公开模块；
-- 是否只改变类型依赖，callback/global state/registry 仍反向控制 policy；
-- 是否把复杂度搬到 helper、adapter、配置或调用者；
-- 是否存在代码、测试、ADR、兼容事实或迁移现实反驳设计；
-- 删除目标是否真实，还是旧路径仍然 load-bearing。
-
-挑战失败就修改、缩小或撤销设计。
-
-### 7. Verify
-
-只对最终设计读取 `verification.md`。使用本 Skill 内置的 Brooks R1–R6 和 Iron Law；禁止调用或依赖外部 Brooks Skill。
-
-每个适用 finding 使用：
-
-```text
-Severity → Symptom → Source → Consequence → Remedy → How to verify
-```
-
-Remedy 必须已经进入目标设计。未实现和完成代码扫描时，不生成 Health Score，也不声称行为保持、迁移完成或旧路径已删除。
+Brooks R1–R6 在这里是风险提问词汇，不做全量扫描、评分或独立报告。反证改变方向时修改或撤销 intent；未改变时写明关键 guard。
 
 ## Output
 
 只返回一个状态：
 
-- **`Status: No architecture opportunity`** — 搜索范围、变化压力证据、为什么不值得升级为架构工作、局部边界；
-- **`Status: Opportunity selected`** — 仅在用户只要求发现/选择时输出：候选范围、选中热点、选择依据、deferred candidates 和下一步证据边界；
-- **`Status: Research required`** — 已确认事实、一个会改变选择或设计的 Unknown、最小探针及其影响；
-- **`Status: Decision required`** — 已确认边界、Human-owned 取舍、少量选项和推荐；
-- **`Status: Design ready`** — 读取 `design-contract.md` 与 `verification.md`，输出完整 Architecture Design Contract；必须选择一个热点、一个主要断点、一个推荐设计，并给出具体 `Delete` 与 Brooks `PASS`。
+- **`Status: No architecture intent`** — 当前压力不足，或问题属于局部修改；输出证据和局部边界。
+- **`Status: Intent unresolved`** — 输出当前理解、一个关键 Unknown、最小探针或 Human 决定，以及它会改变什么。
+- **`Status: Architecture intent ready`** — 读取 `intent-contract.md`，输出一个有证据、有边界、可验证的 Architecture Intent。
 
-本 Skill 的终点是架构机会选择或目标设计。后续任务书、实现和完整验收属于调用方，不进入本 Skill 的核心定义或输出协议。
+本 Skill 的终点是稳定 intent。目标设计、任务书、实现和完整验收属于后续工作。
