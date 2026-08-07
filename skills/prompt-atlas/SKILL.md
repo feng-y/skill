@@ -26,13 +26,13 @@ Separate the requested outcome from proposed means. A named architecture, tool, 
 
 A material Unknown is uncertainty that can still change the Goal, acceptance requirements, a confirmed boundary, feasibility of the declared delivery, or the proof required to trust success.
 
-Use proportionate evidence to settle factual uncertainty and inform Human-owned choices. Human owns the Goal, acceptance requirements, confirmed boundaries, material priorities that change the requested result, and authorization. The Executor owns implementation judgment inside Stable Intent. Use the cheapest authoritative source available: repository/config/tests/runtime inspection, research, a probe/replay/prototype, or information obtained from another person. Treat input from another person as evidence under the same single Human authority model. Route only what remains:
+Use proportionate evidence to settle factual uncertainty and inform Human-owned choices. Human owns the Goal, acceptance requirements, confirmed boundaries, explicit priorities, and authorization. The Executor owns implementation judgment inside Stable Intent. Use the cheapest authoritative source available: repository/config/tests/runtime inspection, research, a probe/replay/prototype, or information obtained from another person. Treat input from another person as evidence under the same single Human authority model. Route only what remains:
 
 - fact accessible now → investigate;
 - execution-only fact → Task 0 (the execution preflight that verifies environment-only facts before material change);
 - implementation How → Executor;
 - reversible choice that preserves intent → visible delegated default;
-- residual Goal, acceptance, confirmed-boundary, priority, or authority choice → Human;
+- residual choice that changes the Goal, acceptance requirements, a confirmed boundary, an explicit Human priority, or authority → Human;
 - unavailable prerequisite with independent work → park and record;
 - unavailable prerequisite with no safe work → `Status: Blocked`.
 
