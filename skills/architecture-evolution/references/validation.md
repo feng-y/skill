@@ -19,7 +19,11 @@
 - 不存在 Design ready、Architecture Design Contract 或 Northstar handoff；
 - 输出只有 `No architecture intent / Intent unresolved / Architecture intent ready`；
 - intent contract 描述 outcome、boundary、design obligations、progressive constraints、unknown 和 success evidence，不提前编译实现步骤；
-- 不调用外部 Wayfinder、Improve、Grill、Brooks 或 Northstar Skill。
+- 不调用外部 Wayfinder、Improve、Grill、Brooks 或 Northstar Skill；
+- README usage 与 SKILL.md 的适用边界、三种状态和“只构造 intent”终点一致；
+- README 明确用户不需要预先提供候选、架构原则、Brooks 风险、最终设计或完整证据；
+- README 的例子只提供模块/症状/模糊方向，不要求用户先完成 architecture analysis；
+- README 不建立固定下游 Skill 或 handoff 链路。
 
 ## Scenario smoke
 
@@ -150,6 +154,44 @@ vendor adapter 吸收真实外部变化，composition root 只做 wiring。
 
 通过：R4/R5 guard 正确应用，不为了“吸收 Brooks”而删除合理边界。
 
+## Usage smoke
+
+### U1 — Minimal vague input
+
+README 用户只提供一个模块和“边界不对、分支越来越多”的模糊感觉，没有预先整理证据、候选或架构原则。
+
+通过：这是有效用法；Skill 自己检查 repo evidence、恢复 pressure 并判断是否存在 architecture intent。不得要求用户先列 Brooks 风险或选择四个方向。
+
+### U2 — Known hotspot without solution
+
+README 用户指出两条平行路径，但明确不知道应合并、适配还是保持不同。
+
+通过：这是有效用法；Skill 先恢复业务现实和 essential difference，再形成 intent obligations，不把用户列出的三个方向当成预设答案。
+
+### U3 — Broad next-direction request
+
+README 用户只提供模块/能力并问“下一步最值得推进的架构方向是什么”。
+
+通过：这是有效用法；Skill 从真实 change pressure 中构造一个 intent，不从代码审美随机挑一个重构点，也不输出候选项目列表。
+
+### U4 — User should not pre-analyze
+
+用户问“调用前是否需要先整理 Brooks R1–R6、四个架构方向、历史 commit 和候选方案”。
+
+通过：README 应明确回答“不需要”；用户只需给最小 repo 范围和当前担忧，能由 repo/runtime 查到的事实由 Skill 自己查。
+
+### U5 — Already ready for design/execution
+
+用户已经有稳定 Architecture Intent、目标 contract、实现边界和成功标准，只想继续设计或实现。
+
+通过：README 明确应跳过 Architecture Evolution；不得为了使用 Skill 而重新把稳定 intent 打散。
+
+### U6 — Usage does not create workflow coupling
+
+用户读完 README 后询问“Architecture Evolution 是否必须 handoff 到某个特定 Skill”。
+
+通过：答案是否；README 只说明 intent ready 后进入正常下游设计/执行，不规定固定 Skill、状态协议或 handoff contract。
+
 ## Paired behavioral eval
 
 同一模型、repo snapshot 和预算：
@@ -172,18 +214,20 @@ B. 加载 architecture-evolution
 | Challenge quality | 自我确认 | 检查有限 | 主动检查 false unification/speculation/exit/guards |
 | Scope control | 多方向并推 | 大体受控 | 一个 intent，不提前设计或实现 |
 | Status judgment | 状态错误 | 正确但冗长 | 正确且最小充分 |
+| Invocation discipline | 要求用户先做 architecture analysis 或误用已稳定任务 | 大体知道何时调用 | 从最小模糊输入自助恢复 evidence，且在 intent 已稳定时正确退出 |
 
 ## V0 pass gate
 
 1. P1–P6 中 B 臂的 `Intent discovery + Direction judgment + Intent quality` 比 A 臂高至少 2 分；
 2. B1–B2 中 Brooks constraints 被正确渐进吸收，既不丢失也不机械全扫；
 3. N1–N3、R1–R2、G1–G4 路由和 guards 正确；
-4. 每个 ready 输出只有一个 intent 和一个 primary direction；
-5. intent 描述 outcome，不锁死实现模式；
-6. 至少一个具体 replacement/exit obligation；
-7. 相关 Brooks constraints 有 Design constraint、Why applicable、Guard 和 Proof expected；
-8. 未形成目标设计时，不声称 constraint 已满足、行为等价、迁移完成或维护成本下降；
-9. 不调用外部 Skill，不生成完整 Brooks 报告或 Health Score。
+4. U1–U6 usage smoke 全部通过；README 不要求用户预先做候选分析、原则选择或 Brooks 扫描；
+5. 每个 ready 输出只有一个 intent 和一个 primary direction；
+6. intent 描述 outcome，不锁死实现模式；
+7. 至少一个具体 replacement/exit obligation；
+8. 相关 Brooks constraints 有 Design constraint、Why applicable、Guard 和 Proof expected；
+9. 未形成目标设计时，不声称 constraint 已满足、行为等价、迁移完成或维护成本下降；
+10. 不调用外部 Skill，不生成完整 Brooks 报告或 Health Score；README 不创建固定下游 handoff。
 
 ## Failure classes
 
@@ -200,6 +244,9 @@ B. 加载 architecture-evolution
 - `guard-miss` — 合理 bounded context、adapter、composition root 或深模块被误报；
 - `unknown-swallowed` — 关键未知被猜测填补；
 - `premature-design` — intent 阶段输出完整设计或实现步骤；
-- `status-leakage` — 非 ready 状态输出稳定 intent。
+- `status-leakage` — 非 ready 状态输出稳定 intent；
+- `usage-prework` — README 让用户先整理候选、原则、Brooks 风险或完整 evidence 才能调用；
+- `usage-overreach` — README 暗示 Skill 会直接产出完整设计、迁移方案或实现；
+- `usage-coupling` — README 建立固定下游 Skill 或 handoff 协议。
 
-Static/scenario smoke 只证明文本机制一致；paired eval 才能衡量冻结样本上的相对收益。
+Static/scenario/usage smoke 只证明文本机制一致；paired eval 才能衡量冻结样本上的相对收益。
