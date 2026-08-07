@@ -66,4 +66,4 @@ The Skill will ground the direction in repository evidence, distinguish architec
 
 A ready intent describes the desired end state, boundaries, design obligations, an observable replacement/exit target, and the Brooks constraints that later design should absorb progressively. It intentionally does **not** prescribe classes, factories, registries, migration steps, or a complete target architecture.
 
-Skip this Skill when the target architecture, implementation boundary, and success criteria are already clear. At that point, continue with the normal design or execution path rather than reconstructing the intent.
+Skip this Skill when the target architecture, implementation boundary, and success criteria are already clear, or when the current request is specifically for a complete design, taskbook, code review, or direct implementation. Continue with the appropriate design or execution path rather than reconstructing the intent.
