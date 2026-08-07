@@ -86,9 +86,9 @@ Architecture Intent 只回答：
 - **Obligations**：只写与当前 intent 相关、后续设计必须回答的业务语义、variation、ownership、consumer knowledge、dependency 或 replacement 问题；
 - **Progressive constraints**：当前方向需要下游逐步吸收的 Brooks 架构设计约束；
 - **Unknown**：如果存在会改变 intent 的 material unknown，说明其风险和最小关闭方式；没有则不制造；
-- **Evidence of success**：描述稳定验收规则和 proof；会随 production config、deployment binding 或 changed ownership 变化的当前对象，只作为 snapshot evidence，不冻结为长期 contract。
+- **Evidence of success**：描述稳定验收规则和 proof；会随 runtime/config/deployment binding、changed boundary/ownership 或时间变化的当前对象，只作为 snapshot evidence，不冻结为长期 contract。
 
-Intent 描述结果，不提前规定 class、factory、strategy、registry 或迁移步骤。用于解释现实的 role、provider、support、variation 或 ownership distinction，不自动成为新的架构 artifact。涉及 ownership 时，必须区分“当前 capability 要闭合什么”与“request/orchestration 或相邻 subsystem 仍由谁拥有”。
+Intent 描述结果，不提前规定 class、factory、strategy、registry 或迁移步骤。用于解释现实的 role、provider、support、variation 或 ownership distinction，不自动成为新的架构 artifact。涉及 ownership 时，必须区分“当前 capability 要闭合什么”与 request/execution/orchestration、相邻 subsystem 的 ownership relation；只有 evidence 支持时才扩大 owner scope。
 
 ### 4. Challenge and constrain the intent
 
@@ -100,7 +100,7 @@ Intent 描述结果，不提前规定 class、factory、strategy、registry 或�
 - 是否会诱导 union interface、额外 wrapper 或 speculative seam；
 - 是否只是转移复杂度；
 - consumer 是否仍需重组 configuration、implementation、lifecycle、ordering、identity 或 access facts；
-- 是否把 capability ownership 错扩成 request execution / orchestration ownership；
+- 是否从 capability ownership 无证据扩张成更大的 request execution / orchestration ownership；
 - 是否为了闭合当前 capability，吞并了相邻 subsystem 原本正确的 ownership；
 - success evidence 是否把当前动态 app/target/config snapshot 错冻结成长期验收集合；
 - 是否能指出旧路径、重复知识、调用者知识或反向依赖将退出；
