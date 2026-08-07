@@ -73,12 +73,12 @@ Status: Architecture intent ready
 - 必须说明为什么不是局部修改；
 - 四个架构方向必须保留为 intent shaping lenses，并选择一个 primary direction；
 - consumer reassembly 是 cross-cutting signal，不是第五个架构方向；
-- ownership intent 必须界定当前 capability 要闭合的 invariant/contract，同时明确保留 request/orchestration 和相邻 subsystem 的合法 owner；`capability owner ≠ execution owner`，`ownership closure ≠ ownership centralization`；
+- ownership intent 必须界定当前 capability 要闭合的 invariant/contract，并说明它与 request/execution/orchestration 以及相邻 subsystem ownership 的关系；不得从 capability ownership 无证据扩张出更大的 execution ownership，也不得为闭合当前 capability 无证据集中相邻 subsystem 的合法 ownership；
 - 必须保留真实业务差异和 Protected behavior；
 - `Real Evolution` 必须提出至少一个具体退出目标；
 - Material Unknown 存在时必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 进入控制；不存在时不输出该 section，禁止制造；
 - Challenge 必须检查 false unification、历史差异固化、speculative abstraction、复杂度转移、consumer reassembly、owner-scope expansion 和退出真实性；
 - reasoning distinction 不自动成为 type、provider、adapter、layer 或 public seam；
 - Brooks 是下游架构设计逐步吸收的约束；intent 只携带相关约束和必要 proof expectation，不输出全量风险表、Severity、PASS/RETRY 或 Health Score；
-- Success evidence 必须以稳定 acceptance rule 为主；会随 production config、deployment binding、changed ownership 或时间变化的具体对象只作为 current snapshot evidence，并在实现验收时重新推导 affected scope；
+- Success evidence 必须以稳定 acceptance rule 为主；会随 runtime/config/deployment binding、changed boundary/ownership 或时间变化的具体对象只作为 current snapshot evidence，并在实现验收时重新推导 affected scope；
 - 目标设计、任务拆分、迁移步骤和实现属于后续工作。
