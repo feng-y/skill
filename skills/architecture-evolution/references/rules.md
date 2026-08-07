@@ -71,6 +71,7 @@ ownership 只能扩到 evidence 支持的 invariant 边界。`capability ownersh
 2. **Stable Abstraction with Explicit Variation**
    - 调用者是否依赖实现差异而不是业务能力？
    - 哪些差异可能是 essential，哪些只是历史残留？
+   - stable variation 必须由可观察的 semantic / invariant difference 支撑；provider 名称、当前 class hierarchy 或现有 execution shape 只能作为证据线索，不能自动成为长期 variation taxonomy。
 
 3. **Cohesive Capability Ownership**
    - 完整 capability、invariant、状态和生命周期是否有 owner？
@@ -97,6 +98,8 @@ Intent 必须指向真实减少，而不是新增一层。至少能提出一个�
 
 用于解释现实的 role、provider、primary/support、variation、ownership 或阶段性 distinction，可以先停留在 reasoning vocabulary。发现一个有用概念，不等于应该创建一个新的 type、adapter、provider、layer 或 public seam。
 
+减少 consumer knowledge 也不自动要求按当前 consumer 形状创建一组 public view/interface。Intent 应先描述稳定 capability semantics 和 consumer 不再需要知道的内部事实；只有 evidence 证明某个 seam 能承载稳定 invariant、essential variation 或长期 change boundary 时，才交给后续设计物化。
+
 只有当前 evidence 表明新的 seam 会实际收敛 ownership、减少 caller knowledge、承载 essential variation 或建立更稳定的 verification surface 时，才把它交给后续设计物化。否则保留为解释模型或 guard。
 
 ## Material unknown falsification
@@ -119,11 +122,12 @@ Claim at risk
 
 ## Evidence lifetime
 
-Success evidence 要区分**稳定验收规则**与**当前 snapshot evidence**。
+Success evidence 先描述**必须证明的稳定 properties**，再由后续 design / implementation 从 repo verification authority 选择足够的 evidence provider。
 
-- 稳定验收规则描述实现完成时必须成立的 invariant 和 proof；只有 affected scope 会随 runtime/config/deployment binding、changed boundary/ownership 或时间变化时，才同时写明届时的 scope 推导方法；
-- 会动态变化的具体对象列表只能作为 current snapshot evidence，除非它本身就是稳定 contract；
-- 对动态 affected targets，应在实现验收时根据最终 changed boundary/ownership 与届时 effective runtime/config/deployment state 重新推导并覆盖全部受影响对象；replay 是适用时的一种 proof，而不是所有 architecture intent 的固定验收机制。
+- 稳定 properties 可以是 protected behavior、capability invariant、variation/change propagation boundary、replacement/exit 等当前 intent 真正承诺的结果；不要把 build、test、replay、dependency check 等手段本身写成 architecture property；
+- 只有 evidence provider 本身就是稳定受保护的判卷标准，或当前阶段必须点名才能消除验收歧义时，才在 intent 中固定具体入口；否则保留 proof need，让下游按最终 change surface 选择；
+- 只有 affected scope 会随 runtime/config/deployment binding、changed boundary/ownership 或时间变化时，才同时写明届时的 scope 推导方法；会动态变化的具体对象列表只能作为 current snapshot evidence，除非它本身就是稳定 contract；
+- 对动态 affected targets，应在实现验收时根据最终 changed boundary/ownership 与届时 effective runtime/config/deployment state 重新推导并覆盖全部受影响对象；replay 只是适用时的一种 evidence provider，不是所有 architecture intent 的固定验收机制。
 
 当前具体样本可以保留来证明 intent grounded，但必须标明它是 `current evidence`，不能替代稳定 acceptance rule。
 
@@ -137,9 +141,8 @@ Success evidence 要区分**稳定验收规则**与**当前 snapshot evidence**�
 - 是否诱导 union interface、mode flag、额外 wrapper 或 speculative seam；
 - 是否把复杂度转移到 helper、adapter、registry、配置或 caller；
 - consumer reassembly 是否仍存在，只是换了位置；
-- 是否从 capability ownership 无证据推导出更大的 execution / orchestration ownership；
-- 是否为了闭合当前 capability，把相邻 subsystem 的合法 authoritative ownership 也集中进来；
-- success evidence 是否把动态 snapshot 冻结成长期 contract；
+- ownership scope 或 success evidence 是否超出当前 evidence 支持的边界，包括无证据扩大 owner、集中相邻 ownership 或冻结动态 snapshot；
+- 是否把当前 consumer 形状、provider 分类、execution shape 或 evidence-provider 套餐误冻结成稳定 architecture contract；
 - 是否没有真实 replacement/exit；
 - 是否存在代码无法裁决的 Human-owned 业务或兼容决定。
 
@@ -185,8 +188,9 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 6. in scope、out of scope 和 must preserve 清楚；
 7. 只保留与当前 intent 相关、后续设计真正需要回答的 obligations；
 8. ownership materially shapes intent 时，owner scope 只扩到 evidence 支持的 invariant，并只记录会改变 boundary 的 preserved / adjacent ownership relation；
-9. 至少一个可观察的 replacement/exit 目标；
-10. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；不存在时不制造；
-11. success evidence 使用稳定 acceptance rule；只有 affected scope 动态变化时才要求 scope derivation，当前样本只作为 snapshot evidence；
-12. 已检查最重要反例、consumer reassembly、owner-scope 和 materialization guard；
-13. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
+9. stable variation 有 semantic / invariant evidence，不把 provider identity、当前 execution shape 或 consumer 形状直接冻结成 target taxonomy；
+10. 至少一个可观察的 replacement/exit 目标；
+11. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；不存在时不制造；
+12. success evidence 先写 proof properties；具体 evidence provider 只在其本身属于稳定判卷标准或必须消除歧义时固定，动态当前样本只作为 snapshot evidence；
+13. 已检查最重要反例、consumer reassembly、owner-scope 和 materialization guard；
+14. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
