@@ -16,7 +16,7 @@ Install all skills (currently installs Prompt Atlas, Northstar, Unknowns First, 
 npx skills@latest add feng-y/skill --all
 ```
 
-Northstar is currently being reviewed as the Chinese replacement for Prompt Atlas. While both directories remain for comparison, install one of them explicitly for active use rather than installing both. Once the rewrite is stable, only the selected version should remain.
+Prompt Atlas and Northstar are peer skill surfaces. They may share or synchronize mechanisms, but neither owns or contains the other. Because their invocation territory can overlap, install one explicitly for active use unless you are comparing them.
 
 Install one skill:
 
@@ -29,7 +29,7 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 
 ## Skills
 
-- `prompt-atlas` — current English baseline for recovering stable intent and compiling one truthful autonomous taskbook or exact blocker.
-- `northstar` — Chinese rewrite and rename candidate for `prompt-atlas`, preserving the same intent, execution-boundary, taskbook, and acceptance semantics.
+- `prompt-atlas` — English skill for recovering stable intent and compiling one truthful autonomous taskbook or exact blocker.
+- `northstar` — peer Chinese skill with its own control surface; shared mechanisms may be synchronized without making either skill subordinate to the other.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
 - `architecture-evolution` — turn vague architecture concerns and real change pressure into one evidence-backed Architecture Intent, preserving four architecture directions, a Real Evolution exit target, and the Brooks design constraints that downstream architecture work should absorb progressively.
