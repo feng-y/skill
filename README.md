@@ -36,7 +36,7 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 
 ## Architecture Evolution usage
 
-Use `architecture-evolution` when the architecture direction is still fuzzy. You can provide a module, recurring symptoms, a suspected hotspot, or a broad concern such as “what should evolve next?”. You do **not** need to identify the architecture principle, Brooks risk, or final design first.
+Use `architecture-evolution` when the architecture direction is still fuzzy. You can provide a module, recurring symptoms, a suspected hotspot, or a broad concern such as “what should evolve next?”. You do **not** need to identify the architecture principle, Brooks risk, final design, candidate list, or supporting evidence first. Give the relevant repository area and what feels wrong; the Skill should inspect the available code and evidence itself.
 
 Typical inputs:
 
