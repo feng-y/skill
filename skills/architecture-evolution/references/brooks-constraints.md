@@ -12,7 +12,7 @@ Implementation / acceptance → constraints obtain code and test evidence
 
 ## Level 1 — Intent
 
-只识别与当前 pressure、boundary 和 desired end state 直接相关的约束。把它们写入 Architecture Intent 的 `Progressive design constraints`，不要为了覆盖 R1–R6 而制造无关内容。
+只识别与当前 pressure、primary architecture direction、boundary 和 desired end state 直接相关的约束。把它们写入 Architecture Intent 的 `Progressive Brooks constraints`，不要为了覆盖 R1–R6 而制造无关内容。
 
 每项只写：
 
