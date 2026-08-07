@@ -87,7 +87,7 @@ Intent 必须指向真实减少，而不是新增一层。至少能提出一个�
 
 ## Material unknown falsification
 
-只有会改变 Architecture Intent、Boundary 或 Design Obligation 的 unknown 才是 material unknown。关闭它至少使用下面的控制链：
+只有会改变 Architecture Intent、Boundary 或 Design Obligation 的 unknown 才是 material unknown。存在这类 unknown 时，关闭它至少使用下面的控制链：
 
 ```text
 Claim at risk
@@ -101,7 +101,7 @@ Claim at risk
 - `Evidence`：记录代码、runtime、历史或 Human 决定；
 - `Intent changed / retained`：明确 evidence 如何改变或保留 intent/boundary/obligation。
 
-如果 unknown 被命名后不改变任何下一步，它不是 material control signal，不要把它作为正式 blocker 装饰输出。
+如果当前没有 material unknown，不要为了满足输出结构制造一个。若 unknown 被命名后不改变任何下一步，它不是 material control signal，不要把它作为正式 blocker 装饰输出。
 
 ## Challenge the intent
 
@@ -158,7 +158,7 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 6. in scope、out of scope 和 must preserve 清楚；
 7. 后续设计 obligations 明确；
 8. 至少一个可观察的 replacement/exit 目标；
-9. 一个关键 material Unknown 已通过 falsification chain 关闭，或明确不会阻止 intent；
+9. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；
 10. success evidence 可验证；
 11. 已检查最重要反例、consumer reassembly 和 materialization guard；
 12. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
