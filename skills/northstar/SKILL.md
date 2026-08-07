@@ -17,7 +17,7 @@ Verification
 Evidence
 ```
 
-Goal 定义 Human 真正要达到的结果、边界、必须保持什么、Human 明确指定的验证要求和最终交付；不再另建 `Completion Contract` 或 `completion properties`。Execution / Graph 组织怎么推进，Graph 只在真实依赖、分支、共享写入或汇合需要表达时使用，不覆盖原有 Task 语义。Verification 决定验证什么、在哪个粒度验证；Evidence 是验证实际产生、仍然有效的事实。`Handoff` 只是交付动作，结果返回后直接判断 Evidence 是否足以支持 Goal，不增加独立 `Acceptance` 层。
+Goal 定义 Human 真正要达到的结果、边界、必须保持什么和最终交付；不再另建 `Completion Contract` 或 `completion properties`。Execution / Graph 组织怎么推进，Graph 只在真实依赖、分支、共享写入或汇合需要表达时使用，不覆盖原有 Task 语义。Verification 决定验证什么、在哪个粒度验证；Human 明确指定的验证要求是 Verification 的 binding input，Northstar 和 Executor 不得自行降级。Evidence 是 Verification 实际产生、仍然有效的事实。`Handoff` 只是交付动作，结果返回后直接判断 Evidence 是否足以支持 Goal，不增加独立 `Acceptance` 层。
 
 三个稳定角色：**Human** 决定 Goal、已确认边界、明确验证要求、优先级和授权；**Northstar** 负责澄清、调研、写任务书、交付并依据 Evidence 判断结果；**Executor** 在稳定 Goal 和边界内负责 implementation judgment，并可按新证据调整剩余工作。私有或独立判断只是必要时提高 Evidence 可信度的手段，不建立固定 Acceptor 角色。
 
@@ -39,7 +39,7 @@ Goal 定义 Human 真正要达到的结果、边界、必须保持什么、Human
 - 前置条件不可用但仍有安全工作 → 暂停受影响分支；
 - 没有安全工作可继续 → `Status: Blocked`。
 
-Goal 已定准，意味着唯一、内部一致且由 Human 决定的结果、why、已确认边界、关键现实、必须保持的条件、明确验证要求和最终交付已经足以让 Executor 独立判断。否则返回 `Status: Unresolved Intent`，只写当前理解和最小有效问题或探针。**Goal 未解决，不输出可执行工作。**
+Goal 已定准，意味着唯一、内部一致且由 Human 决定的结果、why、已确认边界、关键现实、必须保持的条件和最终交付已经足以让 Executor 独立判断。Human 明确验证要求如果存在，必须另外作为 Verification authority 被准确保留。否则返回 `Status: Unresolved Intent`，只写当前理解和最小有效问题或探针。**Goal 未解决，不输出可执行工作。**
 
 只有 Goal/authority 边界仍不清楚时读取 [contract-anatomy.md](references/contract-anatomy.md)。
 
@@ -61,7 +61,7 @@ Northstar 替 Human 作出的可回退决定必须公开标明仍未确认，并
 
 - **Goal** 直接写成功时必须成立和必须保持的结果；
 - **Execution / Graph** 按真实依赖组织 Task；简单任务保持线性，只有线性列表会掩盖真实关系时才读取 [execution-graph.md](references/execution-graph.md)；
-- **Verification** 保留 Task / Task Group / Goal 三种粒度，并从真实 impact/reachability 和 repo verification authority 推导 required verification；
+- **Verification** 保留 Task / Task Group / Goal 三种粒度，并从真实 impact/reachability、repo verification authority 和 Human 明确验证要求推导 required verification；
 - 预期 `0-diff`、cleanup 或 refactor 不能降低已经由事实或 Human 明确要求触发的验证；执行期才能确认的 trigger 放进 Task 0；
 - test/build/replay/static probe 等只是 repo evidence provider，不默认编译固定套餐。
 
