@@ -138,7 +138,7 @@ Status: Design ready
 - 先证明“同一业务”，再设计统一抽象；
 - 本质差异必须保留在明确 variation point；
 - `Delete` 必须具体；没有物理删除时，写明消失的平行业务语义、调用者知识、重复判断或反向依赖；
-- Grill 必须记录实际检查的反证和由此发生的设计修正，不得只写“通过”；
+- Grill 必须记录实际检查的反证；反证成立时修正或撤销设计，未成立时写明适用的 guard，禁止只写“通过”；
 - Brooks constraints 必须扫描 R1–R6；适用 finding 使用 `Severity → Symptom → Source → Consequence → Remedy → How to verify`；
 - `No finding` 也要写最关键 false-positive guard；
 - 不调用或依赖外部 Wayfinder、Improve、Grill 或 Brooks Skill；
