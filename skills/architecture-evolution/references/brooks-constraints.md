@@ -14,6 +14,8 @@ Implementation / acceptance → constraints obtain code and test evidence
 
 只识别与当前 pressure、primary architecture direction、boundary 和 desired end state 直接相关的约束。把它们写入 Architecture Intent 的 `Progressive Brooks constraints`，不要为了覆盖 R1–R6 而制造无关内容。
 
+约束数量本身不是质量信号：一个 case 如果对 R1–R6 都有独立 evidence，可以全部携带；失败标准是无 evidence 的机械补齐、复制通用措辞或与当前 design obligation 无关，而不是“出现太多项”。
+
 每项只写：
 
 ```text
@@ -52,7 +54,7 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 
 | Proof | When relevant | What later evidence should establish |
 | --- | --- | --- |
-| Ownership closure | owner/state/resource 收敛 | fact/state 对 owner 私有、lifetime 正确、consumer 经 owner boundary 使用、无 sidecar truth；有 generation 时不混用 |
+| Ownership closure | owner/state/resource 收敛 | fact/state 对 owner 私有、lifetime 正确、consumer 经 owner boundary 使用、无 sidecar truth；有 generation 时不混用；不要求把相邻 subsystem 的合法 ownership 一并集中 |
 | Mechanical boundary | critical boundary 可机械表达 | dependency/construction/publication/ownership guard 能实际 fail；不能机械表达时允许 evidence-based guard，不新增形式化基础设施 |
 | Stable public test surface | intent 声称 capability boundary 更稳定 | 重要 invariant 可从 public capability behavior 验证，不依赖 private-field、friend access、内部 load-order 或具体 implementation 形状 |
 | Complexity relocation | intent 声称 Real Evolution / caller knowledge 下降 | duplicated policy/fact、consumer reassembly、distributed lifecycle/publication knowledge、sidecar truth 或 reverse-control burden 至少一项真实下降，而非只移动位置或减少 LOC |
@@ -64,6 +66,8 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 - 不同 bounded context 的相似规则不自动统一；
 - 真实吸收 vendor churn 的 adapter 可以保留；
 - composition root 可以知道具体 implementation，但不能承载业务 policy；
+- capability ownership 不自动包含 request execution / orchestration ownership；
+- 相邻 subsystem 已有正确 authoritative owner 时，优先稳定 contract/relation，而不是为“闭合”集中全部资源；
 - 简单 DTO、边界 record 和清晰线性实现不因“简单”自动成为问题；
 - 深模块内部可以复杂，关键是复杂度没有泄漏给 caller；
 - 迁移期双轨可以暂时存在，但必须有 authoritative path 和退出条件。
