@@ -35,22 +35,25 @@ Status: Architecture intent ready
 | Risk | Design constraint | Why applicable | Guard | Proof expected |
 | --- | --- | --- | --- | --- |
 
-只写与当前 pressure、desired end state 和 primary architecture direction 直接相关的约束，不为覆盖 R1–R6 而制造无关内容。
-
 ## Challenge
 - Counterexample checked:
-- Applicable guard:
-
-## Material unknown
-<!-- 仅当真实存在会改变 intent、boundary 或 design obligation 的 material unknown 时输出本节；否则整节省略。 -->
-- Claim at risk:
-- Minimal probe:
-- Evidence:
-- Intent changed / retained:
+- Applicable guard: <only when needed>
 
 ## Success evidence
 - Evidence that the intent was implemented correctly:
 - Evidence that replacement actually happened:
+```
+
+只写与当前 pressure、desired end state 和 primary architecture direction 直接相关的 Brooks constraints，不为覆盖 R1–R6 而制造无关内容。
+
+只有真实存在会改变 intent、boundary 或 design obligation 的 material unknown 时，才在 `Success evidence` 前追加：
+
+```markdown
+## Material unknown
+- Claim at risk:
+- Minimal probe:
+- Evidence:
+- Intent changed / retained:
 ```
 
 ## Discipline
@@ -65,7 +68,7 @@ Status: Architecture intent ready
 - consumer reassembly 是 cross-cutting signal，不是第五个架构方向；
 - 必须保留真实业务差异和 Protected behavior；
 - `Real Evolution` 必须提出至少一个具体退出目标；
-- Material Unknown 存在时必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 进入控制；不存在时整节省略，禁止制造；
+- Material Unknown 存在时必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 进入控制；不存在时不输出该 section，禁止制造；
 - Challenge 必须检查 false unification、历史差异固化、speculative abstraction、复杂度转移、consumer reassembly 和退出真实性；
 - reasoning distinction 不自动成为 type、provider、adapter、layer 或 public seam；
 - Brooks 是下游架构设计逐步吸收的约束；intent 只携带相关约束和必要 proof expectation，不输出全量风险表、Severity、PASS/RETRY 或 Health Score；
