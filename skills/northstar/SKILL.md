@@ -22,13 +22,13 @@ Skill 固化的不是大段上下文或冻结的执行细节，而是每个节�
 
 ## Architecture Design Handoff
 
-输入包含 `Architecture Design Contract` 且 `Handoff: Ready` 时，读取 [architecture-design-handoff.md](references/architecture-design-handoff.md)。只有 `Status: Design ready`、`Brooks verdict: PASS`、用户已要求实现且最小 handoff 字段完整时，才把它作为可执行架构输入。
+输入包含 `Architecture Design Contract` 且 `Handoff: Ready` 时，读取 [architecture-design-handoff.md](references/architecture-design-handoff.md)。只有 Source 合同为 `Design ready + Brooks PASS`、用户已要求实现且 `Source / Scope / Delta / Proof` 完整时，才把它作为可执行架构输入。
 
-Architecture Evolution 已拥有业务统一判断、目标抽象、variation、模块责任、依赖方向和旧结构退出决定。Northstar 不重新裁决这些架构结论；它只把 `Goal seed`、`Architecture decisions`、`Design delta`、`Protected behavior`、`Implementation boundary` 和 `Verification obligations` 编译进现有六节任务书，并安排实现、迁移与验收。
+`Source.Design` 指向的合同是架构决定的唯一事实源。Northstar 不复制或重新裁决业务统一、目标抽象、variation、模块责任、依赖方向和旧结构退出决定；只把 Scope、Delta 和 Proof 编译进现有六节任务书，并安排实现、迁移与验收。
 
-Task 0 只验证 handoff 对当前 repo snapshot 仍然成立。只影响实现方式、任务拆分或验证调度的证据由 Northstar 在合同内吸收；推翻同一业务判断、essential difference、canonical contract、module ownership、dependency direction 或 Protected behavior 的证据，必须停止受影响实现并返回 Architecture Evolution，不得在 Northstar 内悄悄改写架构。
+Task 0 只验证 Source、Scope 和 Proof 对当前 repo reality 仍然成立。只影响实现方式、任务拆分或验证调度的证据由 Northstar 在合同内吸收；命中 `Proof.Return when` 时停止受影响实现并返回 Architecture Evolution，不得在 Northstar 内改写架构。
 
-用户已经要求“实现”“开始实现”或等价行动时，`Handoff: Ready` 提供架构输入；达到 `Status: Executable` 后直接 compile-and-run，不再额外等一次开始确认。
+用户已经要求“实现”“开始实现”或等价行动时，达到 `Status: Executable` 后直接 compile-and-run，不再额外等一次开始确认。
 
 ## 流程
 
@@ -40,7 +40,7 @@ Context 增强只服务于把 Intent Take 做完整：补足会改变 Goal、验
 
 担忧、假设、比较、一组问题，或“改进”“清理”“做得更好”这类宽泛说法，都不自动等于 Goal。先查到足以看清真正选择为止，不替 Human 发明目标。
 
-结果和手段要分开。用户点名的架构、工具或实现方式，默认只是对实现方式的一个假设；只有 Human 明确把它写进 Goal 或已确认边界时，它才是硬约束。有效的 Architecture Evolution handoff 是例外：其中已确认的架构决定已经由专属设计 judgment 固化，Northstar 将其作为实现边界消费，而不是重新降级为实现假设。
+结果和手段要分开。用户点名的架构、工具或实现方式，默认只是对实现方式的一个假设；只有 Human 明确把它写进 Goal 或已确认边界时，它才是硬约束。有效的 Architecture Evolution handoff 是例外：Source 指向的架构合同已经由专属设计 judgment 固化，Northstar 将其作为实现边界消费，而不是重新降级为实现假设。
 
 按后果处理 Unknown：
 
@@ -62,7 +62,7 @@ Context 增强只服务于把 Intent Take 做完整：补足会改变 Goal、验
 
 自己能查的一律先查，不拿事实问题问 Human。只补足会改变当前判断或任务书的 context；证据已经足以继续时就停止扩展。核对真实工作区、具有约束力的规格和测试、关键命令、基线、依赖以及受保护的判卷标准（测试、schema、验收脚本、CI、基线等）。文档和命令名都先当作待验证声明：README 里的命令可能已经不存在，lint 可能只是 `echo` 出一个假绿灯，文件也可能因为无人 import 而从覆盖率报告里消失。只有执行环境才能回答的内容，放进 Task 0。
 
-有效的 Architecture Evolution handoff 已经提供架构判断，不重复调研“是否同一业务”或重新寻找目标架构；调研只补足任务书执行与验收所需的当前 repo reality。若新证据命中 design invalidation trigger，按 handoff 规则返回 Architecture Evolution。
+有效的 Architecture Evolution handoff 已经提供架构判断，不重复调研“是否同一业务”或重新寻找目标架构；调研只补足任务书执行与验收所需的当前 repo reality。若新证据命中 `Proof.Return when`，返回 Architecture Evolution。
 
 ### 2. 提问（Ask）
 
@@ -88,7 +88,7 @@ Handoff 前，只有在明卷可能假通过、可被钻空子或不足以证明
 
 用户要的是提示词、brief、合同或任务书时，返回任务书。用户直接要求完成工作，就已经授予 compile-and-run 权限：达到 `Status: Executable` 后，由现有 runtime 继续执行，不再额外等一次“开始”。Northstar 不实时监督执行。
 
-Architecture Evolution 的 `Handoff: Ready` 只传递目标设计，不等于第二个 workflow。Northstar 继续使用本节既有授权语义：用户已要求实现时直接执行；用户只要求任务书时只交付任务书。
+Architecture Evolution 的 `Handoff: Ready` 只传递设计引用和执行边界，不等于第二个 workflow。Northstar 继续使用本节既有授权语义：用户已要求实现时直接执行；用户只要求任务书时只交付任务书。
 
 ### 5. 验收（Acceptance）
 
@@ -100,7 +100,7 @@ Acceptor 只有在未实质参与实现，并直接对照权威任务书、验�
 
 局部 Task PASS 和 Task Group PASS 可以解锁后续工作，但都不等于完整 Goal PASS。保护判卷标准和基线；检查可能静默失效时，要做反向验证。准备或执行私有/独立验收，或者检查可能假通过时，阅读 [completion-trust.md](references/completion-trust.md)。
 
-架构实现的完整 Goal 验收必须同时证明：Protected behavior 保持、目标 contract 生效、`Delete` 对应旧路径真实退出，以及 handoff 中的 Brooks verification obligations 已取得实现证据。设计阶段的 `Brooks PASS` 不能代替实现验收。
+架构实现的完整 Goal 验收必须同时证明：`Proof.Preserve` 保持、Source 中的目标 contract 生效、`Delta.Delete` 对应旧路径真实退出，以及 `Proof.Prove` 已取得实现证据。设计阶段的 `Brooks PASS` 不能代替实现验收。
 
 ## 输出
 
