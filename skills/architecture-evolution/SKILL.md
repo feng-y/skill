@@ -100,9 +100,7 @@ Intent 描述结果，不提前规定 class、factory、strategy、registry 或�
 - 是否会诱导 union interface、额外 wrapper 或 speculative seam；
 - 是否只是转移复杂度；
 - consumer 是否仍需重组 configuration、implementation、lifecycle、ordering、identity 或 access facts；
-- 是否从 capability ownership 无证据扩张成更大的 request execution / orchestration ownership；
-- 是否为了闭合当前 capability，吞并了相邻 subsystem 原本正确的 ownership；
-- success evidence 是否把当前动态 app/target/config snapshot 错冻结成长期验收集合；
+- ownership scope 或 success evidence 是否超出当前 evidence 支持的边界，包括无证据扩大 owner、集中相邻 ownership 或冻结动态 snapshot；
 - 是否能指出旧路径、重复知识、调用者知识或反向依赖将退出；
 - 是否存在 Human-owned 业务或兼容决定。
 
