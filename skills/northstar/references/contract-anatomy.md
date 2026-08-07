@@ -10,21 +10,23 @@
 
 ## 谁决定什么：Human、现实和推断不要混
 
-- **Human** —— 决定 Goal、哪些行为可以接受、优先级、批准事项和边界；
+- **Human** —— 决定 Goal、哪些行为可以接受、明确提出的优先级、批准事项和边界；
 - **现实** —— 已有证据；它可以修正事实判断、可行性、实现工作和证明需要；
 - **推断** —— 模型的理解、建议或推荐；
 - **Unknown** —— 后果还没有定下来的事项。
 
 证据可以证明某条建议路线走不通，但不能替 Human 改变 Goal。
 
+这里的 Unknown 只指仍可能改变 Stable Intent 合同的不确定性。普通 implementation How 属于 Executor，可以在 Stable Intent 关闭后继续保持未决。
+
 ## Context 与 Unknown
 
 Intent Take 只补足形成 Goal 所需的最小 context：最新且仍有效的 Human 表达、会改变选择的现实证据、已确认边界和验收要求。Context 已经足以区分不同 Goal 时就停止扩展；不要为了建立全面背景而把无关上下游带进来。
 
-Unknown 是判断未决事项影响和责任主体的机制。会影响 Goal、验收要求或已确认边界的 Unknown 留在 Intent Take；可查事实、执行环境事实、实现选择和可回退决定，分别按 [SKILL.md](../SKILL.md) 交给调研、Task 0、Executor 或 Northstar 处理。
+Unknown 的具体 evidence reduction、责任路由和 delegated default 合同统一定义在 [SKILL.md](../SKILL.md)。本文件只保留 authority model 和 Stable Intent closure，不再重复另一套路由表。
 
 ## 什么时候才算目标定准
 
-意图定准至少要清楚这些事情：唯一、内部一致且由 Human 决定的 Goal、为什么做、本次工作要完成到什么程度、已确认边界和优先级、重要证据现状、怎样才算真正且可信地完成，以及最终交付什么。
+意图定准至少要清楚这些事情：唯一、内部一致且由 Human 决定的 Goal、为什么做、本次工作要完成到什么程度、已确认边界和明确优先级、重要证据现状、怎样才算真正且可信地完成，以及最终交付什么。
 
 如果仍有多个实质不同的 Goal 都说得通，返回 `Status: Unresolved Intent`：写清当前理解、不同选择的后果、必要时给出推荐，并提出最小问题或探针。不要输出可执行工作。
