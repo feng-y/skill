@@ -10,7 +10,7 @@ Discover and select skills interactively:
 npx skills@latest add feng-y/skill
 ```
 
-Install all skills (currently installs both Prompt Atlas and Northstar):
+Install all skills (currently installs Prompt Atlas, Northstar, Unknowns First, and Architecture Evolution):
 
 ```bash
 npx skills@latest add feng-y/skill --all
@@ -24,6 +24,7 @@ Install one skill:
 npx skills@latest add feng-y/skill --skill prompt-atlas
 npx skills@latest add feng-y/skill --skill northstar
 npx skills@latest add feng-y/skill --skill unknowns-first
+npx skills@latest add feng-y/skill --skill architecture-evolution
 ```
 
 ## Skills
@@ -31,3 +32,4 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 - `prompt-atlas` — current English baseline for recovering stable intent and compiling one truthful autonomous taskbook or exact blocker.
 - `northstar` — Chinese rewrite and rename candidate for `prompt-atlas`, preserving the same intent, execution-boundary, taskbook, and acceptance semantics.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
+- `architecture-evolution` — turn vague architecture concerns and real change pressure into one evidence-backed Architecture Intent, preserving four architecture directions, a Real Evolution exit target, and the Brooks design constraints that downstream architecture work should absorb progressively.

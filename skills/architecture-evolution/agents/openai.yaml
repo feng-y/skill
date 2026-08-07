@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architecture Evolution"
+  short_description: "从模糊方向构造带设计约束的架构 Intent"
+  default_prompt: "使用 $architecture-evolution。输入可以是历史模块、业务能力、模糊担忧或尚未说清的改进方向。先从真实变化压力和代码现实中判断是否存在架构 intent，再用 Business Semantic Integrity、Stable Abstraction with Explicit Variation、Cohesive Capability Ownership、Unidirectional Policy Dependency 四个方向收敛一个 primary direction。输出 why now、desired end state、boundary、design obligations、Real Evolution 退出目标、关键 Unknown 和 success evidence；方向稳定后只吸收与当前 intent 相关的 Brooks 架构设计约束，供后续目标设计、实现和验收逐步落实。不要提前完成目标设计、实现计划或 Brooks 全量报告。"
