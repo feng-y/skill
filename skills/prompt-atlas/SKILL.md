@@ -26,13 +26,13 @@ Separate the requested outcome from proposed means. A named architecture, tool, 
 
 A material Unknown is uncertainty that can still change the Goal, acceptance requirements, a confirmed boundary, feasibility of the declared delivery, or the proof required to trust success.
 
-Use proportionate evidence to settle factual uncertainty and inform Human-owned choices. Preferences, judgments, and authorization remain Human-owned even when evidence informs them. Use the cheapest authoritative source available: repository/config/tests/runtime inspection, research, a probe/replay/prototype, or information obtained from another person. Treat input from another person as evidence under the same single Human authority model. Route only what remains:
+Use proportionate evidence to settle factual uncertainty and inform Human-owned choices. Human owns the Goal, acceptance requirements, confirmed boundaries, material priorities that change the requested result, and authorization. The Executor owns implementation judgment inside Stable Intent. Use the cheapest authoritative source available: repository/config/tests/runtime inspection, research, a probe/replay/prototype, or information obtained from another person. Treat input from another person as evidence under the same single Human authority model. Route only what remains:
 
 - fact accessible now → investigate;
 - execution-only fact → Task 0 (the execution preflight that verifies environment-only facts before material change);
 - implementation How → Executor;
 - reversible choice that preserves intent → visible delegated default;
-- residual Goal, acceptance, confirmed-boundary, or authority choice → Human;
+- residual Goal, acceptance, confirmed-boundary, priority, or authority choice → Human;
 - unavailable prerequisite with independent work → park and record;
 - unavailable prerequisite with no safe work → `Status: Blocked`.
 
@@ -46,7 +46,7 @@ Read [contract-anatomy.md](references/contract-anatomy.md) only when this bounda
 
 Settle everything accessible without asking: real workspace, governing specs/tests, critical commands, baselines, dependencies, and protected judges. Treat docs and command names as claims until evidenced—the common false ground includes README commands that no longer exist, lint scripts that are placeholder `echo`, and files absent from coverage reports because nothing imports them. Anything that depends on the execution environment goes into Task 0.
 
-Keep material conclusions traceable to their authoritative source. Treat a summary or handoff as transport or an index; preserve the underlying source/reference or reproducible evidence when a later decision or judge depends on it. Reuse evidence only while its basis remains valid; when that basis changes, invalidate only the proof whose established property may have changed.
+Keep material conclusions traceable to their evidence. A derived summary may carry a claim and a pointer; it does not turn that claim into proof. When a later decision or judge depends on the property, preserve the underlying authoritative source/reference or reproducible observation.
 
 ### 2. Ask
 
