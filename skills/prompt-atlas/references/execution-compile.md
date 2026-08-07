@@ -4,7 +4,7 @@ Use only after Stable Intent. Produce one compact authoritative taskbook an Exec
 
 Render the final taskbook in the exact order below. Keep each section's authority and evidence role distinct; vary detail with the work, but do not merge, reorder, or hide required content in another section.
 
-Compile only information that constrains a future decision, execution step, or complete-Goal proof. Keep large supporting material by reference; state global facts once and Task-local differences only; omit superseded discussion and inactive detail. Preserve source fidelity: a derived summary or handoff may index evidence; the authoritative source remains the proof basis when a decision or proof depends on it.
+Compile only information that constrains a future decision, execution step, or complete-Goal proof. Keep large supporting material by reference; state global facts once and Task-local differences only; omit superseded discussion and inactive detail.
 
 For development work, compile verification at three granularities without introducing another workflow or fixed schema:
 
