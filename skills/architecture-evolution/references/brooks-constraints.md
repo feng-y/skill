@@ -46,6 +46,42 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 - `R5 Dependency Disorder` — 源码依赖应符合 `policy → contract ← implementation`，底层不能通过 callback、global state 或 registry 反向控制 policy。
 - `R1 Cognitive Overload` — capability/module 应隐藏必要复杂度，让 caller 少知道步骤、状态、顺序和实现类型。
 
+## Proof vocabulary
+
+这些是下游 design / implementation 可按需吸收的 proof obligation，不是 intent 阶段的新 gate，也不要求每个 intent 全量输出。
+
+### Ownership closure
+
+当 intent 涉及 owner 收敛或 state/resource 迁移时，`Proof expected` 可要求后续证明：
+
+- moved fact/state 对新 owner 私有；
+- 新 owner 持有真实所需 lifetime；
+- consumer 通过新 boundary 读取，而不是绕回 sidecar；
+- 同一事实没有第二份 authoritative truth；
+- publication/reload 等 generation 不会跨 owner 边界混用。
+
+字段换位置、getter 换名字或 manager 包一层，不单独证明 ownership 已闭合。
+
+### Mechanical boundary protection
+
+关键 dependency、construction、publication 或 ownership boundary 如果可以机械表达，`Proof expected` 应优先要求一个会失败的 guard，例如 compile/type visibility、architecture test、schema rule 或 CI dependency check。不能机械表达时允许 evidence-based guard，不为了形式新增基础设施。
+
+### Stable public test surface
+
+当 intent 声称 capability boundary 更稳定时，后续 proof 应优先从 public capability behavior 验证重要 invariant，而不是依赖 private-field、friend access、内部 load-order 或具体 implementation 形状。深模块内部可以复杂，测试不应被迫重建内部知识。
+
+### Complexity relocation
+
+Real Evolution 的 proof 不以 hotspot LOC 下降为目标。后续 evidence 应说明至少一种 distributed burden 真正下降，例如：
+
+- duplicated policy / fact interpretation；
+- consumer reassembly；
+- distributed lifecycle / publication knowledge；
+- data clump 或 sidecar truth；
+- reverse control / dependency knowledge。
+
+如果复杂度只是移动到 helper、adapter、registry、configuration 或 caller，R4/R1/R2 的风险仍然存在。
+
 ## Guards
 
 - 不同 bounded context 的相似规则不自动统一；
@@ -57,4 +93,4 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 
 ## Boundary
 
-Architecture Evolution 只把相关 Brooks 约束携带到 intent 中，不完成目标设计，也不声称约束已经满足。禁止调用、加载、路由到或依赖任何外部 Brooks / brooks-lint Skill、配置、报告、Health Score 或 workflow。
+Architecture Evolution 只把相关 Brooks 约束和必要 proof expectation 携带到 intent 中，不完成目标设计，也不声称约束已经满足。禁止调用、加载、路由到或依赖任何外部 Brooks / brooks-lint Skill、配置、报告、Health Score 或 workflow。
