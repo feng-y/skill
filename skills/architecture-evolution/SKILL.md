@@ -85,7 +85,7 @@ Architecture Intent 只回答：
 - **Boundary**：in scope / out of scope / must preserve；
 - **Obligations**：后续设计必须回答的业务统一、variation、ownership、dependency 和 replacement 问题；
 - **Progressive constraints**：当前方向需要下游逐步吸收的 Brooks 架构设计约束；
-- **Unknown**：仍需关闭的一个关键未知；
+- **Unknown**：如果存在会改变 intent 的 material unknown，说明其风险和最小关闭方式；没有则不制造；
 - **Evidence of success**：什么证据能证明 intent 被正确实现。
 
 Intent 描述结果，不提前规定 class、factory、strategy、registry 或迁移步骤。用于解释现实的 role、provider、support、variation 或 ownership distinction，不自动成为新的架构 artifact。
@@ -103,7 +103,7 @@ Intent 描述结果，不提前规定 class、factory、strategy、registry 或�
 - 是否能指出旧路径、重复知识、调用者知识或反向依赖将退出；
 - 是否存在 Human-owned 业务或兼容决定。
 
-Material Unknown 必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 影响判断；只命名 unknown 而不改变下一步，不算关闭。
+如果存在 Material Unknown，必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 影响判断；只命名 unknown 而不改变下一步，不算关闭。
 
 方向稳定后按需读取 `brooks-constraints.md`。Brooks R1–R6 是后续架构设计需要逐步吸收的约束：intent 阶段只携带与当前 pressure 和 desired end state 直接相关的约束，不做全量扫描、评分、PASS/RETRY 或独立报告。
 
