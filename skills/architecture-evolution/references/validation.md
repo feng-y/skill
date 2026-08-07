@@ -10,20 +10,21 @@
 - 主流程仍为 `Ground → Discover → Shape → Challenge and constrain`，没有新增 round / execution 阶段；
 - 运行时引用为 `rules.md`、`brooks-constraints.md` 和 `intent-contract.md`；`legacy-lenses.md` 只在 legacy/compat/identity 信号出现时加载；
 - Reality 分开观察 Business semantics、Ownership & lifecycle、Consumer knowledge/reassembly、Source dependency、Runtime control/consumption，但只输出实际改变 judgment 的 evidence，不生成五面审计表；
-- `consumer reassembly` 是 cross-cutting signal，不是第五个 architecture direction；
+- `consumer reassembly` 是 cross-cutting signal，不是第五个 architecture direction；纯 composition-root wiring 不自动算 reassembly；
 - 四个方向完整保留：Business Semantic Integrity、Stable Abstraction with Explicit Variation、Cohesive Capability Ownership、Unidirectional Policy Dependency；
 - 一个 intent 只选择一个 primary architecture direction，其他命中作为 consequence 或 design obligation；
 - `Real Evolution` 要求至少一个旧路径、重复知识、caller knowledge/reassembly、无效抽象、兼容分支或反向依赖退出；
 - reasoning distinction 可以先用于解释，不能因为被命名就自动物化为 type/provider/adapter/layer/public seam；
-- Material Unknown 使用 `claim at risk → minimal probe → evidence → intent changed / retained`，只有会改变 intent、boundary 或 obligation 的 unknown 才进入控制；
+- Material Unknown 存在时使用 `claim at risk → minimal probe → evidence → intent changed / retained`；没有 material unknown 时禁止制造；
+- legacy identity 只有在当前 rename/delete/replacement 依赖它时才升级为 material unknown，否则进入 `Must preserve` 或 out of scope；
 - Challenge 检查 local escalation、false unification、historical difference lock-in、speculative abstraction、complexity relocation、consumer reassembly 和 replacement reality；
 - Brooks R1–R6 被保留为下游架构设计逐步吸收的约束，不被降级为可选提示；
-- Brooks proof vocabulary 增加 ownership closure、mechanical boundary protection、stable public test surface、complexity relocation，但它们不是 intent 阶段的新全量 gate；
+- Brooks optional proof vocabulary 包含 ownership closure、mechanical boundary protection、stable public test surface、complexity relocation，但不是 intent 阶段的新 completion checklist；
 - intent 阶段只携带相关 Brooks constraints/proof expectation，不做全量扫描、Severity、PASS/RETRY、Health Score 或完整报告；
 - `brooks-constraints.md` 只在 intent 方向稳定后加载；
 - 不存在 Design ready、Architecture Design Contract、round shape、one-module execution owner、implementation slices、completion workflow 或 Northstar handoff；
 - 输出只有 `No architecture intent / Intent unresolved / Architecture intent ready`；
-- intent contract 描述 outcome、reality-that-changed-judgment、boundary、design obligations、progressive constraints、falsified unknown 和 success evidence，不提前编译实现步骤；
+- intent contract 描述 outcome、reality-that-changed-judgment、boundary、design obligations、progressive constraints、material-unknown control 和 success evidence，不提前编译实现步骤；
 - 不调用外部 Wayfinder、Improve、Grill、Brooks 或 Northstar Skill；
 - README usage 与 SKILL.md 的适用边界、三种状态和“只构造 intent”终点一致；
 - README 明确用户不需要预先提供候选、架构原则、Brooks 风险、最终设计或完整证据；
@@ -128,7 +129,7 @@ intent 指向把 runtime state 收敛给一个 capability owner。
 
 intent 声称建立更稳定 boundary 并减少 caller knowledge。
 
-通过：可以携带“关键 boundary 在可机械表达时应有 fail-able guard”“重要 invariant 从 public capability surface 验证”“distributed knowledge/consumer reconstruction 真正下降”等 proof expectation；不能把这些变成 intent 阶段必须执行的 architecture test、CI 或完整 completion gate。
+通过：可以携带“关键 boundary 在可机械表达时应有 fail-able guard”“重要 invariant 从 public capability surface 验证”“distributed knowledge/consumer reconstruction 真正下降”等 proof expectation；不能把这些变成 intent 阶段必须执行的 architecture test、CI 或完整 completion gate，也不能机械输出全部四种 proof。
 
 ### N1 — Local fix
 
@@ -166,6 +167,12 @@ intent 声称建立更稳定 boundary 并减少 caller knowledge。
 
 通过：输出 `claim at risk → minimal probe → evidence → intent changed / retained`；如果 probe 证明 consumer 属于不同 bounded context，则修改或撤销原 intent。仅列出“需要确认 consumer”但继续沿原方向推进视为失败。
 
+### R4 — No manufactured unknown
+
+业务语义、owner boundary、consumer 和 runtime evidence 已足以支持一个 bounded intent，没有会改变方向的未决事实。
+
+通过：`Architecture intent ready` 可以写 `Material Unknown: None`；不得为了满足 contract 人为提出一个无法改变判断的“待确认项”。
+
 ### L1 — Compat token is not runtime state
 
 一个历史 token 已不再影响 runtime branch，但仍用于 parse/serialization/deployment identity。
@@ -176,7 +183,7 @@ intent 声称建立更稳定 boundary 并减少 caller knowledge。
 
 repo 内找不到某 provider identity 或 config key 的直接 reader，但它可能出现在 generated config、registration 或 repo 外 deployment。
 
-通过：不得以 local grep absence 宣布 dead；如果该 identity 会改变 replacement/exit，则保留为 material unknown 并要求最小证据关闭。
+通过：不得以 local grep absence 宣布 dead；只有当前 rename/delete/exit 依赖该 identity 时才升级为 material unknown，否则将其放入 `Must preserve` 或 out of scope，避免无界研究。
 
 ### G1 — False architecture escalation
 
@@ -198,9 +205,9 @@ repo 内找不到某 provider identity 或 config key 的直接 reader，但它�
 
 ### G4 — Legitimate adapter and composition root
 
-vendor adapter 吸收真实外部变化，composition root 只做 wiring。
+vendor adapter 吸收真实外部变化，composition root 只做 wiring，不承载业务 policy、runtime sequencing、lifecycle ownership 或 capability usage knowledge。
 
-通过：R4/R5 guard 正确应用，不为了“吸收 Brooks”而删除合理边界。
+通过：R4/R5 和 consumer-reassembly guard 正确应用，不为了“吸收 Brooks”或“关闭 reassembly”而删除合理边界。
 
 ### G5 — Explain first, materialize later
 
@@ -264,8 +271,8 @@ B. 加载 architecture-evolution
 | Intent discovery | 罗列症状/方案 | 有方向但不稳定 | 一个能解释压力的 architecture intent |
 | Direction judgment | 未分类或多方向并推 | 方向大致正确 | 一个 primary direction，consumer reassembly 等信号正确降为 consequence/obligation |
 | Intent quality | 模式或任务列表 | outcome 部分清楚 | why now/end state/boundary/obligations 完整 |
-| Progressive constraints | 无 Brooks 或机械全扫 | 有相关 constraint 但边界含糊 | 相关约束和 proof expectation 准确、guard 清楚，可供下游逐步吸收 |
-| Unknown falsification | 猜测、只命名 unknown 或不改变行动 | 有 probe 但 claim/影响不清 | claim at risk + minimal probe + evidence + intent changed/retained 完整 |
+| Progressive constraints | 无 Brooks 或机械全扫 | 有相关 constraint 但边界含糊 | 相关约束和必要 proof expectation 准确、guard 清楚，可供下游逐步吸收且不机械全列 |
+| Unknown falsification | 猜测、制造 unknown、只命名 unknown 或不改变行动 | 有 probe 但 claim/影响不清 | material unknown 有则 claim+probe+evidence+changed/retained 完整；无则不制造 |
 | Challenge quality | 自我确认 | 检查有限 | 主动检查 false unification/speculation/reassembly/relocation/exit/guards |
 | Materialization discipline | 每个角色都物化为 seam | 大体克制 | explain first，只有 evidence 支持才形成 public seam obligation |
 | Scope control | 多方向并推或恢复 round workflow | 大体受控 | 一个 intent，不提前设计/实现，不引入 execution owner/round shape |
@@ -276,16 +283,17 @@ B. 加载 architecture-evolution
 
 1. P1–P8 中 B 臂的 `Reality separation + Intent discovery + Direction judgment + Intent quality` 比 A 臂高至少 2 分；
 2. B1–B4 中 Brooks constraints/proof vocabulary 被正确渐进吸收，既不丢失也不机械前置执行；
-3. N1–N3、R1–R3、L1–L2、G1–G5 路由和 guards 正确；
+3. N1–N3、R1–R4、L1–L2、G1–G5 路由和 guards 正确；
 4. U1–U6 usage smoke 全部通过；README 不要求用户预先做候选分析、原则选择或 Brooks 扫描，并正确排除已稳定 intent 与直接设计/执行请求；
 5. 每个 ready 输出只有一个 intent 和一个 primary direction；consumer reassembly 不成为第五方向；
 6. intent 描述 outcome，不锁死实现模式；reasoning distinction 不自动物化；
 7. 至少一个具体 replacement/exit obligation；
-8. 相关 Brooks constraints 有 Design constraint、Why applicable、Guard 和 Proof expected；
-9. Material Unknown 必须真正改变或保留 architecture judgment，不能作为 passive note；
-10. 未形成目标设计时，不声称 proof 已满足、行为等价、迁移完成或维护成本下降；
-11. 不调用外部 Skill，不生成完整 Brooks 报告或 Health Score；README 不创建固定下游 handoff；
-12. 不恢复 round shapes、one-module execution-owner、next-slice progression 或 completion workflow。
+8. 相关 Brooks constraints 有 Design constraint、Why applicable、Guard 和必要的 Proof expected；
+9. Material Unknown 存在时必须真正改变或保留 architecture judgment；不存在时禁止制造；
+10. legacy identity 不因 local search absence 自动被判 dead，也不因潜在 repo 外使用而无条件阻塞；
+11. 未形成目标设计时，不声称 proof 已满足、行为等价、迁移完成或维护成本下降；
+12. 不调用外部 Skill，不生成完整 Brooks 报告或 Health Score；README 不创建固定下游 handoff；
+13. 不恢复 round shapes、one-module execution-owner、next-slice progression 或 completion workflow。
 
 ## Failure classes
 
@@ -293,6 +301,7 @@ B. 加载 architecture-evolution
 - `local-escalation` — 局部问题被升级成架构 intent；
 - `reality-collapse` — 用 clean interface/provider/dependency 等单一信号替代 semantics、ownership 或 runtime reality 判断；
 - `consumer-reassembly-miss` — caller 仍重组 capability facts，但被误判为 boundary 已闭合；
+- `consumer-reassembly-false-positive` — 把纯 composition-root wiring 误判为 capability reassembly；
 - `intent-sprawl` — 多个方向同时推进；
 - `direction-loss` — 四个方向之一被删除、弱化或无法表达；
 - `fifth-direction-creep` — 把 consumer reassembly、provider role 等 signal 升级成新的 architecture principle；
@@ -304,11 +313,14 @@ B. 加载 architecture-evolution
 - `brooks-loss` — Brooks 被降成可选提示，未进入 design obligations；
 - `brooks-frontload` — intent 阶段机械展开 R1–R6、Severity、PASS/RETRY 或执行 proof；
 - `proof-overreach` — intent 阶段声称 ownership closure、mechanical guard、stable test surface 或 complexity reduction 已被实现证明；
+- `proof-checklist-creep` — 无论适用性都机械携带四种 optional proof；
 - `guard-miss` — 合理 bounded context、adapter、composition root 或深模块被误报；
 - `unknown-swallowed` — 关键未知被猜测填补；
 - `unknown-decoration` — 命名 material unknown 但没有 claim/probe/evidence/judgment change；
+- `unknown-manufacture` — 没有会改变 intent 的 unknown，仍为了合同格式人为制造；
 - `legacy-runtime-collapse` — 把 parse/serialization/deployment identity 错当成 runtime behavior 或反过来；
 - `search-absence-deletion` — 因 local search 无 reader 就宣告 identity/config 可以删除；
+- `legacy-scope-explosion` — identity 不影响当前 exit 仍因潜在 repo 外使用而无限扩查；
 - `premature-design` — intent 阶段输出完整设计或实现步骤；
 - `workflow-regression` — 恢复 round shape、execution owner、next-slice 或 completion workflow；
 - `status-leakage` — 非 ready 状态输出稳定 intent；
