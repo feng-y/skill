@@ -56,20 +56,16 @@ North Star：**发现最值得处理的架构机会，并把其中一个推进�
 
 ## Flow
 
-### 1. Frame
+### 1. Discover
 
-限定架构搜索地界：
+先限定架构搜索地界：
 
 - `Area`：仓库局部、模块、业务能力或已知热点；
 - `Pressure`：真实需求、重复修改、事故、维护阻塞或理解摩擦；
 - `Scope`：发现和判断所需的最小上下游；
 - `Out of scope`：本轮明确不碰的范围。
 
-没有真实变化压力时，返回 `Status: No architecture opportunity`。
-
-### 2. Discover
-
-从代码、调用、测试、配置、变更历史、运行证据和仍有效文档中寻找结构机会。优先观察：
+再从代码、调用、测试、配置、变更历史、运行证据和仍有效文档中寻找结构机会。优先观察：
 
 - 一条业务规则在多处同步修改；
 - 调用者反复选择路径、实现或调用顺序；
@@ -78,7 +74,7 @@ North Star：**发现最值得处理的架构机会，并把其中一个推进�
 - 稳定层依赖易变场景或 provider；
 - 业务名称、invariant 与代码结构互相冲突。
 
-开放范围最多保留三个有证据的候选。已知热点不默认扩大搜索，只验证它是否是架构问题、是否存在更底层的局部根因。
+开放范围最多保留三个有证据的候选。已知热点不默认扩大搜索，只验证它是否是架构问题、是否存在更底层的局部根因。只有审美、文件大小或单次局部修改时，返回 `Status: No architecture opportunity`。
 
 每个候选都必须形成：
 
@@ -86,7 +82,7 @@ North Star：**发现最值得处理的架构机会，并把其中一个推进�
 Change pressure → Structural symptom → Consequence → Candidate boundary → Counterexample
 ```
 
-### 3. Select one
+### 2. Select one
 
 选择一个本轮热点，不打分。优先选择同时满足以下条件的候选：
 
@@ -96,11 +92,11 @@ Change pressure → Structural symptom → Consequence → Candidate boundary �
 - 能说明什么旧路径、重复知识或反向依赖将退出；
 - 现有证据足以继续，或存在成本最低的关键探针。
 
-其余候选只记录一句 defer reason。不得把多个平级问题拼成一个“大架构改造”。
+其余候选只记录一句 defer reason。只有一个有效候选时不虚构比较；不得把多个平级问题拼成一个“大架构改造”。
 
 用户只要求发现和选择时，可返回 `Status: Opportunity selected`；否则继续推进设计。
 
-### 4. Ground business reality
+### 3. Ground business reality
 
 对选中热点恢复：
 
@@ -118,7 +114,7 @@ Change pressure → Structural symptom → Consequence → Candidate boundary �
 
 能从 repo/runtime 查明的事实自己查。设计关键 Unknown 未关闭时返回 `Research required`。
 
-### 5. Diagnose
+### 4. Diagnose
 
 先判断路径是否表达同一业务，再区分：
 
@@ -131,7 +127,7 @@ Change pressure → Structural symptom → Consequence → Candidate boundary �
 Observed evidence → Structural consequence → Primary break → Root cause → Counterexample → Confidence
 ```
 
-### 6. Design
+### 5. Design
 
 只形成一个推荐设计：
 
@@ -144,7 +140,7 @@ Observed evidence → Structural consequence → Primary break → Root cause �
 
 先统一业务，再形成抽象；先定义 capability 与 invariant，再决定具体模式。无法由证据裁决、且会形成长期业务或兼容承诺时返回 `Decision required`。
 
-### 7. Grill
+### 6. Grill
 
 对推荐设计做反向攻击，而不是为它补解释：
 
@@ -158,7 +154,7 @@ Observed evidence → Structural consequence → Primary break → Root cause �
 
 挑战失败就修改、缩小或撤销设计。
 
-### 8. Verify
+### 7. Verify
 
 只对最终设计读取 `verification.md`。使用本 Skill 内置的 Brooks R1–R6 和 Iron Law；禁止调用或依赖外部 Brooks Skill。
 
