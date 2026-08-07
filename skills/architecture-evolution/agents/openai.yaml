@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
-  short_description: "发现并推进一个高价值架构演化机会"
-  default_prompt: "使用 $architecture-evolution。输入可以是仓库局部、模块、业务能力或已知热点。先从真实变化压力中 Discover 并 Select one；再恢复业务现实，判断同一业务与本质差异，形成一个目标设计；用 Grill 寻找代码、文档、兼容和迁移反证，最后用内置 Brooks R1–R6 验证。一次只推进一个热点，只返回一个状态，不调用外部 Wayfinder、Improve、Grill 或 Brooks Skill。"
+  short_description: "从模糊方向构造可验证的架构 Intent"
+  default_prompt: "使用 $architecture-evolution。输入可以是历史模块、业务能力、模糊担忧或尚未说清的改进方向。先从真实变化压力和代码现实中判断是否存在架构 intent，再把一个方向收敛为 why now、desired end state、boundary、design obligations、关键 Unknown 和 success evidence。只构造 intent，不提前完成目标设计、实现计划或 Brooks 全量报告；一次只返回一个状态。"
