@@ -117,7 +117,13 @@
 - 修改、缩小或撤销设计；
 - Grill record 记录实际 correction，不以解释维护原方案。
 
-### G2 — Migration reality
+### G2 — Grill guard preserves valid design
+
+初始设计包含一个薄 vendor adapter 和 composition root 具体 wiring；检查后确认 adapter 吸收真实协议变化，composition root 不承载 policy。
+
+通过：Grill 记录检查的反证、结果和适用 guard；不为证明“做过 review”而删除合法边界或制造无意义修正。
+
+### G3 — Migration reality
 
 目标设计看似合理，但旧入口仍有活跃消费者，兼容承诺和删除条件不明确。
 
@@ -183,7 +189,7 @@ B. 同模型、工具和预算，加载 architecture-evolution
 | Difference classification | 全合并或全保留 | 部分分类 | essential / accidental 明确可验证 |
 | Primary diagnosis | 罗列 smell | 找到症状 | 一个 Principle 根因 + consequence + 反例 |
 | Target architecture | 模式名或空泛目标 | 部分可用 | business/abstraction/module/dependency 一致 |
-| Grill quality | 自我确认 | 检查但无修正 | 主动找反证并修改/撤销错误设计 |
+| Grill quality | 自我确认 | 检查但处置含糊 | 主动找反证；成立则修正，未成立则说明 guard |
 | Brooks constraints | 无审计或自造指标 | 部分风险 | R1–R6、Iron Law、severity、guard 完整 |
 | Scope/status | 全仓库扩张或状态错 | 大体受控 | 一个热点、正确状态、最小充分输出 |
 
@@ -195,7 +201,7 @@ B. 同模型、工具和预算，加载 architecture-evolution
 4. 正样本只选择一个 primary architecture break 和一个推荐设计；
 5. N1–N4、R1、D1 状态与 guards 正确；
 6. 每个 `Design ready` 明确 selected opportunity、canonical capability、essential differences、stable abstraction、cohesive module、dependency direction 和具体 Delete；
-7. Grill 有实际反证检查和设计 correction；
+7. Grill 有实际反证检查，并对成立的反证修正设计、对不成立的反证说明 guard；
 8. Brooks 扫描 R1–R6，主要 finding 有完整 Iron Law 链路，没有未处理 Critical；
 9. 运行时不调用外部 Matt/Brooks Skill，不出现 Northstar handoff；
 10. 未执行实现证据时，不声称行为保持、迁移完成、旧路径删除或维护成本下降。
@@ -212,7 +218,7 @@ B. 同模型、工具和预算，加载 architecture-evolution
 - `abstraction shell` — 只新增 facade/interface，旧语义仍平行；
 - `cohesion miss` — 能力继续由调用者组装或模块继续混合；
 - `reverse dependency miss` — 类型或控制流反向依赖未消除；
-- `grill theater` — 只写通过，没有实际反证或 correction；
+- `grill theater` — 未检查真实反证，或为了展示 review 制造无意义修正；
 - `brooks coverage miss` — R1–R6 未完整扫描；
 - `guard miss` — 合理 bounded context、adapter 或 composition root 被误报；
 - `external-skill-dependency` — 调用或依赖外部 Wayfinder/Improve/Grill/Brooks Skill；
