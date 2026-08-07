@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "收敛 Intent，并生成带分层验证的中文任务书"
-  default_prompt: "使用 $northstar。沿 Intent Take、任务书编译、Handoff 和 Acceptance 的 Flow 推进。遇到 material Unknown 时，先用与后果相称的 evidence 尽量消解，只路由剩余未决项；Goal、验收要求、已确认边界、Human 明确提出的优先级和授权保持 Human-owned，稳定意图内的 implementation judgment 交给 Executor。Goal 定准后，先把 Goal 编译成有限、互不替代的 Completion Contract，再依据 repo verification authority 和真实 change impact/reachability 编译 mandatory verification gates；预期 0-diff 不得把已触发 gate 降级为 optional。再按 SKILL.md 编译一本包含有现实依据的 Task、成本最低且足够的 Task 局部证明、成本感知的 Task Group 组合验证和完整 Goal 验收的中文自主任务书。"
+  short_description: "收敛 Goal，并生成带分层验证和真实 Evidence 的中文任务书"
+  default_prompt: "使用 $northstar。先定准 Human-owned Goal；Human 明确验证要求作为 Verification 的 binding input 单独保留。按 Goal → Execution / Graph → Verification → Evidence 编译：Handoff Graph 只表达当前证据支持的真实依赖，运行时可按新 Evidence 调整剩余 Task/edge/frontier；保留 Task、Task Group、Goal 三种验证粒度；required verification 根据真实 impact/reachability、repo verification authority 和 Human 明确要求确定，0-diff、cleanup 或 refactor 不得降级已触发验证；最终只依据仍有效、可复核且覆盖真实 affected surface 的 Evidence 判断结果，能访问权威环境时对关键 verification 重新取证。不要创建 Completion Contract、Acceptance layer、Graph engine 或固定 Acceptor 角色。"
