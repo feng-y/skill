@@ -1,232 +1,137 @@
-# Evaluate Architecture Evolution
+# Evaluate Architecture Intent
 
-本文件只用于显式 smoke/eval，正常运行禁止读取。运行时设计验证见 [verification.md](verification.md)。
+本文件只用于显式 smoke/eval，正常运行禁止读取。
 
 ## Static smoke
 
-冻结当前 branch/head 后检查：
+检查：
 
-- frontmatter 与 `agents/openai.yaml` 可解析；
-- `SKILL.md` 的相对引用都存在；
-- 正常运行不读取本文件；
-- 主流程为 `Discover → Select one → Ground → Diagnose → Design → Grill → Verify`；
-- 输入既支持开放范围，也支持已知热点；
-- 开放范围最多三个候选，最终只选择一个热点；
-- 已知热点也要验证真实变化压力和架构价值；
-- 四条 Principle 与 `Real Evolution` Gate 在 `SKILL.md`、`rules.md` 和 `design-contract.md` 中一致；
-- Grill 检查现实反证、差异、抽象、内聚、依赖、迁移、复杂度转移和删除真实性；
-- Verify 直接使用内置 Brooks R1–R6，不定义第二套评分体系；
-- 运行时不调用或依赖外部 Wayfinder、Improve、Grill、Brooks Skill 或 workflow；
-- Architecture Design Contract 包含 opportunity selection、一个 primary break、一个推荐设计、Grill record、Brooks constraints 和具体 Delete；
-- 不包含 Northstar handoff、跨 Skill 协议或实现 workflow；
-- agent prompt 不重复注入完整规则；
-- 五种状态名称一致：`No architecture opportunity / Opportunity selected / Research required / Decision required / Design ready`。
-
-任何失败都先修结构，不进入 behavioral eval。
+- 主目标是构造 Architecture Intent，不是完成目标设计或实现；
+- 主流程只有 `Ground → Discover → Shape → Challenge`；
+- 运行时引用仅为 `rules.md` 和 `intent-contract.md`；
+- 不存在 Design ready、Architecture Design Contract、Brooks 全量扫描、Health Score 或 Northstar handoff；
+- Brooks R1–R6 只作为 intent challenge 的风险提问；
+- 输出只有 `No architecture intent / Intent unresolved / Architecture intent ready`；
+- intent contract 描述 outcome、boundary、obligations、unknown 和 success evidence，不提前编译实现步骤；
+- 不调用外部 Wayfinder、Improve、Grill、Brooks 或 Northstar Skill。
 
 ## Scenario smoke
 
-### O1 — Open-area discovery
+### P1 — Fuzzy module direction
 
-用户只给出一个历史模块，存在多次 provider 分支修改、调用者顺序拼装、旧 facade 并存和一处局部大函数。
+用户说“这个历史模块边界混乱，下一步应该怎么演进”。代码显示重复业务判断、caller 拼装顺序和多次兼容分支修改。
 
-通过：
+通过：形成一个 intent，说明 desired end state、为什么是架构问题、必须回答的 ownership/semantic 问题和退出目标；不直接输出 class 拆分方案。
 
-- 从变化历史、调用和测试恢复最多三个候选；
-- 不把大函数单独当作架构机会；
-- 根据 pressure、leverage、boundary、replacement 和 evidence 选择一个热点；
-- 其余候选只写 defer reason；
-- 继续设计时只围绕选中热点展开。
+### P2 — Multiple symptoms, one intent
 
-### O2 — Selection-only request
+用户列出抽象泄漏、模块过大、反向依赖和测试脆弱。
 
-用户只问“这个模块下一步最值得做的架构改进是什么”。
+通过：找到能解释主要压力的一个方向；其他症状作为 consequence 或 out of scope，不并列输出多个改造项目。
 
-通过：输出 `Status: Opportunity selected`；包含选中热点、证据、为什么不是局部修改、deferred candidates 和下一步分析边界；不提前伪造完整目标架构或 Brooks PASS。
+### P3 — Known hotspot, unclear direction
 
-### O3 — Known hotspot
+用户指出 FeatureStreaming 与 Predict 存在平行 ParseRequest 路径，但不确定是合并、适配还是保留差异。
 
-用户明确指出 FeatureStreaming 与 Predict 的 ParseRequest 平行路径。
+通过：恢复同一业务判断和 essential difference 的关键 evidence，形成“应统一什么、必须保留什么”的 intent obligations；不提前决定具体接口。
 
-通过：
+### P4 — Architecture intent with dependency pressure
 
-- 不进行无边界全仓库搜索；
-- 验证该热点有真实变化压力和结构后果；
-- 检查是否存在更底层的同一业务语义分裂；
-- 若只是局部差异则返回 `No architecture opportunity`；否则进入 Ground。
+稳定 core 被 provider 和具体场景持续牵引。
 
-### P1 — Split business semantics
+通过：intent 指向恢复 policy/contract/implementation 边界，并要求至少一条反向知识或依赖退出；不要求在本阶段给出完整模块图。
 
-两条路径主体输入输出一致，但错误、配置解释、日志/metrics 和兼容行为不同。
+### N1 — Local fix
 
-通过：
+问题只是 off-by-one、日志字段或机械迁移。
 
-- 选择 Principle 1；
-- 先证明哪些语义属于同一业务；
-- 区分 essential 与 accidental differences；
-- 定义 canonical capability；
-- 不删除真实差异，也不保留两套 canonical path；
-- Brooks 至少检查 R6、R2、R3。
-
-### P2 — False unified abstraction
-
-已有公共 base/interface，但包含 mode flag、optional provider config、默认空实现和调用者 switch。
-
-通过：
-
-- 选择 Principle 2；
-- 识别“统一形状但未统一语义”；
-- 从共同业务需要定义 stable abstraction；
-- 把真实差异放入明确 variation point；
-- 删除 union contract、外部 switch 或特殊入口，不新增 facade；
-- Brooks 至少检查 R4、R3、R2、R5。
-
-### P3 — Non-cohesive capability
-
-模块混合核心业务、provider 选择、metrics/debug、cache、compatibility 和资源生命周期；完整能力又散落在 helper 与 caller。
-
-通过：
-
-- 选择 Principle 3；
-- 用一句话定义 capability 和 invariant；
-- 区分 intrinsic behavior、private collaborator 与独立责任；
-- 不做 one-module-per-concern；
-- 收回调用顺序、状态与生命周期；
-- Brooks 至少检查 R1、R2、R4。
-
-### P4 — Reverse policy dependency
-
-稳定 core/Harness/Runtime 依赖具体 Application workflow 或 provider，底层通过 callback/global state/registry 决定上层路由。
-
-通过：
-
-- 选择 Principle 4；
-- 同时检查源码依赖和运行控制；
-- contract 从稳定 policy 的需要定义；
-- 删除至少一条 common→scenario、policy→provider 或隐式反向控制；
-- Brooks 以 R5 为主要 finding，并检查 R2 后果。
-
-### G1 — Grill rejects attractive design
-
-初始设计提出统一 interface 和 registry，但代码显示两个 bounded context 的错误语义与生命周期不同，registry 仍由 provider 决定 policy 路由。
-
-通过：
-
-- Grill 引用代码、测试或文档反证；
-- 拒绝错误业务统一和隐藏反向控制；
-- 修改、缩小或撤销设计；
-- Grill record 记录实际 correction，不以解释维护原方案。
-
-### G2 — Grill guard preserves valid design
-
-初始设计包含一个薄 vendor adapter 和 composition root 具体 wiring；检查后确认 adapter 吸收真实协议变化，composition root 不承载 policy。
-
-通过：Grill 记录检查的反证、结果和适用 guard；不为证明“做过 review”而删除合法边界或制造无意义修正。
-
-### G3 — Migration reality
-
-目标设计看似合理，但旧入口仍有活跃消费者，兼容承诺和删除条件不明确。
-
-通过：不能写 `Design ready`；可由 repo/runtime 证据关闭时返回 `Research required`，需要 Human 业务承诺时返回 `Decision required`。
-
-### N1 — Local change only
-
-owner、业务语义和依赖方向清楚，只是 off-by-one、日志字段或机械迁移。
-
-通过：`No architecture opportunity`；只输出证据、为何不升级和局部边界；无 candidate design、Grill 或 Brooks verdict。
+通过：`No architecture intent`；输出局部边界，不发明架构方向。
 
 ### N2 — No real pressure
 
-代码看起来不够优雅，但没有重复变化、调用者摩擦、事故、理解成本或明确需求。
+代码不够优雅，但没有重复变化、事故、caller friction 或明确业务需求。
 
-通过：`No architecture opportunity`；不得从审美或模式偏好发明改造。
+通过：`No architecture intent`；不得从审美和模式偏好发明 intent。
 
-### N3 — Legitimately different business
+### N3 — Design already clear
 
-两个 bounded context 使用相似数据结构，但 invariant、错误和生命周期不同。
+用户已经给出目标 contract、模块边界、迁移步骤和验收标准。
 
-通过：不得为了复用强行统一；R6 应应用 bounded-context guard。
-
-### N4 — Justified adapter / composition root
-
-薄 adapter 隔离 vendor protocol；composition root 构造具体实现但不承载业务决策。
-
-通过：R4/R5 为 `No finding`，分别应用 adapter 与 composition-root guard。
+通过：说明本 Skill 不适用；不重复重构明确 intent。
 
 ### R1 — Evidence missing
 
-开放范围发现多个信号，但无法确认变化频率、消费者或业务等价性。
+存在多个可能方向，但无法确认消费者、变化频率或业务等价性。
 
-通过：`Research required`；只输出会改变选择或设计的一个 Unknown、最小探针和受影响结论；不伪造热点排序或目标设计。
+通过：`Intent unresolved`；只保留一个会改变 intent 的 Unknown 和最小探针。
 
-### D1 — Human-owned decision
+### R2 — Human decision
 
-某兼容行为是长期 contract 还是迁移残留，代码无法裁决。
+某兼容行为是长期业务 contract 还是迁移残留，代码无法裁决。
 
-通过：`Decision required`；输出共同事实、Human-owned 取舍、少量选项和推荐；不伪造删除承诺。
+通过：`Intent unresolved`；标明需要 Human 决定及其影响，不伪造方向。
 
-Scenario smoke 是合同审计，不等于 clean-session behavioral eval。
+### G1 — False architecture escalation
+
+大函数和目录结构看起来差，但压力来自一个局部错误。
+
+通过：challenge 后撤销 architecture intent。
+
+### G2 — False unification
+
+两条相似路径属于不同 bounded context。
+
+通过：intent 不要求业务统一；记录 bounded-context guard。
+
+### G3 — Speculative abstraction
+
+候选 intent 只能描述“新增 interface/manager”，无法说明什么旧知识或路径退出。
+
+通过：intent 不 ready；返回 unresolved 或 no intent。
 
 ## Paired behavioral eval
 
-在支持隔离 clean session 的 runtime 中，对同一任务和 repo snapshot 运行：
+同一模型、repo snapshot 和预算：
 
 ```text
-A. 同模型，不加载 architecture-evolution
-B. 同模型、工具和预算，加载 architecture-evolution
+A. 不加载 architecture-evolution
+B. 加载 architecture-evolution
 ```
 
-冻结任务、repo commit、可见文档、模型版本、工具权限和预算；两臂不得共享输出。
-
-每项 `0–2` 分：
+每项 `0–2`：
 
 | Dimension | 0 | 1 | 2 |
 | --- | --- | --- | --- |
-| Opportunity discovery | 审美或随机点 | 有信号但无 consequence | 从真实 pressure 形成有边界候选 |
-| Selection quality | 多热点并推或任意选择 | 有选择但依据弱 | 一个热点，leverage/replacement/evidence 清楚 |
-| Evidence grounding | 审美判断 | 部分证据 | Observed / Inferred / Unknown 分离 |
-| Business judgment | 未判断同一/不同业务 | 有判断但无证据 | canonical capability 与排除边界有证据 |
-| Difference classification | 全合并或全保留 | 部分分类 | essential / accidental 明确可验证 |
-| Primary diagnosis | 罗列 smell | 找到症状 | 一个 Principle 根因 + consequence + 反例 |
-| Target architecture | 模式名或空泛目标 | 部分可用 | business/abstraction/module/dependency 一致 |
-| Grill quality | 自我确认 | 检查但处置含糊 | 主动找反证；成立则修正，未成立则说明 guard |
-| Brooks constraints | 无审计或自造指标 | 部分风险 | R1–R6、Iron Law、severity、guard 完整 |
-| Scope/status | 全仓库扩张或状态错 | 大体受控 | 一个热点、正确状态、最小充分输出 |
+| Pressure grounding | 审美判断 | 部分 evidence | 真实 pressure、consequence 和 boundary 清楚 |
+| Intent discovery | 罗列症状/方案 | 有方向但不稳定 | 一个能解释压力的 architecture intent |
+| Architecture judgment | 局部问题升级或漏判 | 部分正确 | local/architecture 边界和关键 lenses 正确 |
+| Intent quality | 模式或任务列表 | outcome 部分清楚 | why now/end state/boundary/obligations 完整 |
+| Unknown control | 猜测或发散 | 有 unknown | 一个关键 unknown + 最小关闭方式 |
+| Challenge quality | 自我确认 | 检查有限 | 主动检查 false unification/speculation/exit/guards |
+| Scope control | 多方向并推 | 大体受控 | 一个 intent，不提前设计或实现 |
+| Status judgment | 状态错误 | 正确但冗长 | 正确且最小充分 |
 
 ## V0 pass gate
 
-1. O1、O3 中 B 臂的 `Opportunity discovery + Selection quality` 比 A 臂高至少 2 分；
-2. P1–P4 至少三个案例中，B 臂的 `Business judgment + Primary diagnosis + Target architecture + Grill quality` 比 A 臂高至少 2 分；
-3. 开放范围最多三个候选，最终只推进一个热点；
-4. 正样本只选择一个 primary architecture break 和一个推荐设计；
-5. N1–N4、R1、D1 状态与 guards 正确；
-6. 每个 `Design ready` 明确 selected opportunity、canonical capability、essential differences、stable abstraction、cohesive module、dependency direction 和具体 Delete；
-7. Grill 有实际反证检查，并对成立的反证修正设计、对不成立的反证说明 guard；
-8. Brooks 扫描 R1–R6，主要 finding 有完整 Iron Law 链路，没有未处理 Critical；
-9. 运行时不调用外部 Matt/Brooks Skill，不出现 Northstar handoff；
-10. 未执行实现证据时，不声称行为保持、迁移完成、旧路径删除或维护成本下降。
+1. P1–P4 中 B 臂的 `Intent discovery + Intent quality` 比 A 臂高至少 2 分；
+2. N1–N3、R1–R2、G1–G3 路由正确；
+3. 每个 ready 输出只有一个 intent；
+4. intent 描述 outcome，不锁死实现模式；
+5. 至少一个具体 replacement/exit obligation；
+6. 未形成目标设计时，不声称行为等价、迁移完成或维护成本下降；
+7. 不调用外部 Skill，不生成 Brooks 报告或 Health Score。
 
 ## Failure classes
 
-- `pressure-free-opportunity` — 从审美或模式偏好发明架构工作；
-- `opportunity-miss` — 漏掉最强变化压力；
-- `selection-sprawl` — 多个平级热点同时推进；
-- `weak-selection` — 选择没有 leverage、replacement 或 evidence 支撑；
-- `same-business miss` — 错误判断同一/不同业务；
-- `difference collapse` — 本质差异被错误消除；
-- `historical difference preserved` — 偶然差异被永久化；
-- `abstraction shell` — 只新增 facade/interface，旧语义仍平行；
-- `cohesion miss` — 能力继续由调用者组装或模块继续混合；
-- `reverse dependency miss` — 类型或控制流反向依赖未消除；
-- `grill theater` — 未检查真实反证，或为了展示 review 制造无意义修正；
-- `brooks coverage miss` — R1–R6 未完整扫描；
-- `guard miss` — 合理 bounded context、adapter 或 composition root 被误报；
-- `external-skill-dependency` — 调用或依赖外部 Wayfinder/Improve/Grill/Brooks Skill；
-- `scope expansion` — 局部机会扩大成全仓库重设计；
-- `status leakage` — 非 Design ready 状态输出完整目标设计或 Brooks PASS。
+- `pressure-free-intent` — 从审美发明方向；
+- `local-escalation` — 局部问题被升级成架构 intent；
+- `intent-sprawl` — 多个方向同时推进；
+- `solution-first` — 先定模式再寻找问题；
+- `false-unification` — 错误合并不同业务；
+- `historical-difference-lock-in` — 把偶然差异永久化；
+- `speculative-intent` — 只能新增抽象，不能说明退出目标；
+- `unknown-swallowed` — 关键未知被猜测填补；
+- `premature-design` — intent 阶段输出完整设计或实现步骤；
+- `status-leakage` — 非 ready 状态输出稳定 intent。
 
-同一种 failure 在两个代表性案例重复后，才修改 Principle 或流程。不要为了单个 miss 扩大 Skill。
-
-## Claim boundary
-
-Static/scenario smoke 只能证明文本机制一致；paired eval 只能证明冻结样本上的相对设计质量。它们不证明实现正确、行为等价、迁移完成、实际删除或生产维护成本下降。
+Static/scenario smoke 只证明文本机制一致；paired eval 才能衡量冻结样本上的相对收益。
