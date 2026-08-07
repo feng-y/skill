@@ -52,13 +52,13 @@
 
 `Cohesive Capability Ownership` 只要求当前 capability 的 invariant、state/lifetime 和 usage contract 闭合；它本身不证明 execution、orchestration 或相邻 subsystem 也应归同一 owner。
 
-在命名 owner 时必须同时说明：
+当 ownership 是 primary direction，或 ownership relation 会改变 intent boundary / obligation 时，只记录会改变判断的关系：
 
 - 当前 owner 真正闭合的是哪项 capability / invariant；
-- 哪些 request-level orchestration、sequencing、scheduling、result policy 或其他责任仍由原 owner 保留，或者有什么 evidence 证明它们也属于当前 capability；
-- 哪些相邻 subsystem 已有自己的 authoritative owner，只需要通过稳定 relation / contract 被当前 capability 引用。
+- 已存在的 execution/orchestration responsibility 是否需要保留，或者有什么 evidence 证明它也属于当前 capability；
+- consumer reassembly 是否跨入一个已有 authoritative owner 的相邻 subsystem，因而只需要稳定 relation / contract。
 
-因此 ownership 只能扩到 evidence 支持的 invariant 边界。`capability ownership` 不自动蕴含 `execution ownership`，`ownership closure` 也不自动要求 `ownership centralization`。如果相邻 feature/runtime/resource subsystem 已有内聚 owner，不因当前 caller reassembly 就默认把其内部 config、resource 或 lifecycle 全部迁入当前 owner；只有 evidence 证明该 ownership 本身错误时才改变它。
+ownership 只能扩到 evidence 支持的 invariant 边界。`capability ownership` 不自动蕴含 `execution ownership`，`ownership closure` 也不自动要求 `ownership centralization`。如果相邻 feature/runtime/resource subsystem 已有内聚 owner，不因当前 caller reassembly 就默认把其内部 config、resource 或 lifecycle 全部迁入当前 owner；只有 evidence 证明该 ownership 本身错误时才改变它。
 
 ## Four architecture directions
 
@@ -121,9 +121,9 @@ Claim at risk
 
 Success evidence 要区分**稳定验收规则**与**当前 snapshot evidence**。
 
-- 稳定验收规则描述实现完成时必须成立的 invariant、proof 和 affected-scope 推导方法；
-- 会随 runtime/config/deployment binding、changed boundary/ownership 或时间变化的 app/target/file 列表，只能作为当前 snapshot evidence，除非它本身就是稳定 contract；
-- 对动态 affected targets，应写成“实现验收时根据最终 changed boundary/ownership 与届时 effective runtime/config/deployment state 重新推导并覆盖全部受影响对象”；replay 是适用时的一种 proof，而不是所有 architecture intent 的固定验收机制。
+- 稳定验收规则描述实现完成时必须成立的 invariant 和 proof；只有 affected scope 会随 runtime/config/deployment binding、changed boundary/ownership 或时间变化时，才同时写明届时的 scope 推导方法；
+- 会动态变化的具体对象列表只能作为 current snapshot evidence，除非它本身就是稳定 contract；
+- 对动态 affected targets，应在实现验收时根据最终 changed boundary/ownership 与届时 effective runtime/config/deployment state 重新推导并覆盖全部受影响对象；replay 是适用时的一种 proof，而不是所有 architecture intent 的固定验收机制。
 
 当前具体样本可以保留来证明 intent grounded，但必须标明它是 `current evidence`，不能替代稳定 acceptance rule。
 
@@ -139,7 +139,7 @@ Success evidence 要区分**稳定验收规则**与**当前 snapshot evidence**�
 - consumer reassembly 是否仍存在，只是换了位置；
 - 是否从 capability ownership 无证据推导出更大的 execution / orchestration ownership；
 - 是否为了闭合当前 capability，把相邻 subsystem 的合法 authoritative ownership 也集中进来；
-- success evidence 是否把当前动态 snapshot 冻结成长期 contract；
+- success evidence 是否把动态 snapshot 冻结成长期 contract；
 - 是否没有真实 replacement/exit；
 - 是否存在代码无法裁决的 Human-owned 业务或兼容决定。
 
@@ -184,9 +184,9 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 5. desired end state 描述结果，不锁死实现模式；
 6. in scope、out of scope 和 must preserve 清楚；
 7. 只保留与当前 intent 相关、后续设计真正需要回答的 obligations；
-8. ownership claim 只扩到 evidence 支持的 invariant 边界，并明确哪些 execution/orchestration 或相邻 subsystem responsibility 被保留；
+8. ownership materially shapes intent 时，owner scope 只扩到 evidence 支持的 invariant，并只记录会改变 boundary 的 preserved / adjacent ownership relation；
 9. 至少一个可观察的 replacement/exit 目标；
 10. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；不存在时不制造；
-11. success evidence 使用稳定 acceptance rule；动态当前样本只作为 snapshot evidence；
+11. success evidence 使用稳定 acceptance rule；只有 affected scope 动态变化时才要求 scope derivation，当前样本只作为 snapshot evidence；
 12. 已检查最重要反例、consumer reassembly、owner-scope 和 materialization guard；
 13. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
