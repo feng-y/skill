@@ -16,7 +16,7 @@
 
 本地搜索没有 reader，不足以证明 config key、provider identity、registration、serialized type 或 loader name 可以删除。身份可能通过 generated config、indirect registration、deployment metadata 或 repo 外系统传播。
 
-当 identity 可能超出当前 repo 可枚举范围时，把它保留为 material unknown，直到证据足以关闭。
+只有当前 intent 的 rename、delete 或 replacement/exit 依赖该 identity 时，才把 repo 外可见性升级为 material unknown 并要求最小证据关闭；否则将 identity 放入 `Must preserve` 或 out of scope，不让未知范围无界扩张。
 
 ## Retirement propagation trace
 
