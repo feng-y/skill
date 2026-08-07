@@ -52,6 +52,8 @@ Context 增强只服务于把 Intent Take 做完整：补足会改变 Goal、验
 
 自己能查的一律先查，不拿事实问题问 Human。只补足会改变当前判断或任务书的 context；证据已经足以继续时就停止扩展。核对真实工作区、具有约束力的规格和测试、关键命令、基线、依赖以及受保护的判卷标准（测试、schema、验收脚本、CI、基线等）。文档和命令名都先当作待验证声明：README 里的命令可能已经不存在，lint 可能只是 `echo` 出一个假绿灯，文件也可能因为无人 import 而从覆盖率报告里消失。只有执行环境才能回答的内容，放进 Task 0。
 
+Handoff 前读取与预期 change surface 相关的 repo verification authority；由已知 impact/reachability 触发的 mandatory gate 必须编译进任务书，执行期才能确认的 trigger 放进 Task 0，预期 `0-diff` 不得降级已触发 gate。
+
 重要结论必须能回到它的证据。摘要可以携带 claim 和 source pointer，但不会因为被总结或写进交接而自动变成 proof；后续决定或判卷依赖某个属性时，保留对应的权威来源、reference 或可复现观察。
 
 ### 2. 提问（Ask）
@@ -65,6 +67,10 @@ Northstar 替 Human 作出的决定必须标明仍未由 Human 确认，摆到�
 按 [execution-compile.md](references/execution-compile.md) 的固定合同顺序写任务书。各节职责不能混，细节多少随任务而变；替 Human 作出的决定必须放在执行之前，让 Human 在 Handoff 前看见 Northstar 代为选择了什么。
 
 Context 增强只为了把 Goal 和 Task 描述到 Executor 能独立判断、执行和验收的程度。只写当前起点、边界、授权、关键依赖和证明需要；大段背景通过引用保留，不把任务书扩展成全局知识库。
+
+编译 Execution 前，先把 Goal 收敛成有限、互不替代的 completion properties，形成 Completion Contract；只保留当前 Goal 必要的完成条件，不固定类别，也不能用一个属性的证据替代另一个。
+
+任务书先写 completion properties 和 mandatory gates；测试、build、replay、symbol/static check 等只是 evidence provider，按证明属性聚合，仅在入口本身是受保护判卷标准、权威基线或能显著消除歧义时点名。
 
 一本任务书只承载一个 Goal，并在一次执行工作中完成并证明一个明确交付。如果做不到，就回到 Intent Take 缩小 Human 本次要的交付，不拆成多本任务书，也不编译无边界 Graph。
 

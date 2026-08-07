@@ -6,6 +6,8 @@
 
 Context 增强只为了把 Goal 和 Task 描述到可以独立执行和验收的程度。只写会影响后续决策、执行动作或完整 Goal 证明的信息；大段支撑材料只保留引用入口；全局事实只写一次，Task 内只补局部差异；已经被替代的讨论和当前用不到的细节全部删掉。任务书固化的是判断边界、授权和证明要求，不是全部上下文或冻结的实现步骤。
 
+**先编译 Completion Contract，再编译执行。** 展开 Task 前，把 Goal 收敛成有限、互不替代的 completion properties：必须建立或移除的状态、必须保持的行为/兼容性/边界，以及确有必要时允许保留的残余。只保留当前 Goal 必要属性，不固定类别。每个属性都是完整 Goal PASS 的必要条件，并映射到后续证明；Task、Task Group 和 verification gate 只服务于这些属性。
+
 开发工作必须在不增加额外流程或固定 schema 的前提下编译三种验证粒度：
 
 - **Task 级证明**：证明一个局部行为所需的成本最低且足够的证据；代码修改通常至少到达受影响单元测试或等价定向测试边界，TDD 的红→绿能更清楚定义行为或锁住回归时优先使用；
@@ -13,6 +15,8 @@ Context 增强只为了把 Goal 和 Task 描述到可以独立执行和验收的
 - **完整 Goal 证明**：相关 Task Group 收敛后，为本次明确交付运行所需的完整验证。
 
 验证成本决定执行节奏，不决定是否需要证明。昂贵检查已有实测或可靠成本时，只有它会改变调度才写入任务书；不要编造耗时。每项检查都放在能够证明目标属性的最低成本边界，只在延迟发现失败会显著增加下游返工或恢复成本时提前运行。
+
+**先编译验证门，再安排验证节奏。** Handoff 前读取与 change surface 相关的 repo verification authority，从 changed owner、共享责任面或系统合同追到 effective binding/config 与 affected target/capability；存在 production binding authority 时，以 effective production config 和真实 consumer 为准。已知事实触发 mandatory gate 时，把它写成不可削弱的证明要求；“只是删除/重构”或“预期 0-diff”都不能降级。仅执行期可知的 trigger 交给 Task 0，并预先写明触发后的 mandatory proof。先写证明属性和证据类别；测试、build、replay、symbol/static check 等只是 evidence provider，仅在入口本身是受保护判卷标准、权威基线或能显著消除歧义时点名。provider 不能证明其覆盖范围之外的属性。
 
 调研、选型和决策类工作也使用同一套六节结构，只是 Execution 中写“会产出证据的调查或决策”，而不是实现 Task。每个结论都必须有来源和日期，或有可复现探针；伪造引用、没有实际运行的“测量”和凑数结论都算失败。对有明确边界的学习 Goal，一条证据充分的死路也可能是有效结果。提前写清预算，到点就停，交付证据支持最充分的结论、反证和仍未解决的替代方案；不要另加输出章节。
 
@@ -23,7 +27,7 @@ Context 增强只为了把 Goal 和 Task 描述到可以独立执行和验收的
 - 本任务书是本次执行的权威合同；
 - 唯一、内部一致且由 Human 决定的 Goal；
 - 这活为什么干，以及做成后会有什么不同；
-- 这次必须干成什么、拿什么证明；
+- 这次有哪些 completion properties 必须同时成立，以及拿什么证明；
 - 要求冲突时按什么顺序取舍；
 - 哪些是违反即不合格的硬规则，哪些只是可以结合现场调整的建议。
 
@@ -53,6 +57,8 @@ Northstar 在 Human 尚未明确选择时替 Human 作出的可回退决定，�
 
 需要 Task 0 时，它必须在实质修改之前执行。Task 0 绑定真实 repo、worktree 和 target，实测关键命令和判卷标准是否真的有效；同时识别空跑检查和假绿灯，暴露任务书假设和执行现实之间的重要差异。证据可以修正事实、可行性、实现范围、计划和证明需要，但不能重新定义 Goal。重要发现及其导致的路由变化，优先写进已有实现记录；没有时写进执行证据。
 
+Task 0 如果承担 verification trigger 推导，解析实际 changed owner → effective binding/config → affected target/capability；触发就执行既定 mandatory proof，未触发也保留该 gate 不适用的证据。Task 0 解决执行期事实 Unknown，不重新发明验证政策。
+
 现实与任务书假设不一致时：
 
 - 如果只是任务书被明确误读，而且纠正不会改变 Goal、验收要求或已确认边界，纠正后继续；
@@ -80,6 +86,7 @@ Northstar 在 Human 尚未明确选择时替 Human 作出的可回退决定，�
 - 执行中遇到新的 Unknown，先判断它会影响 Goal、验收要求、已确认边界、事实、实现方式还是证明，再按 [SKILL.md](../SKILL.md) 交给正确主体；路由结果可能是补 context、调整剩余 Task、暂停分支、返回 Intent Take 或 `Blocked`，不要让“重新规划”吞掉判断；
 - Task 是当前可执行计划，不是冻结范围。证据变化时，可以在 Goal、已确认边界、授权边界和不可削弱的证明要求内增加、删除、拆分、合并或重排剩余 Task；
 - 保持证明层级：局部 Task PASS 可以解锁依赖工作，Task Group PASS 可以解锁消费组合合同的下游工作，但二者都不能代替完整 Goal 证明；
+- 已触发的 mandatory gate 不可降级；Executor 只能调整 evidence provider 和运行位置；
 - 验证调度同时考虑证明范围、检查成本和延迟失败的恢复成本；成本可以减少无意义的重复运行，但不能削弱必要判卷标准，也不能把缺失证明写成 PASS；
 - 固化的是 Goal、边界、授权、证据判断和停止/回退规则；Context 与剩余 Task 随证据更新，但不能静默改变这些合同；
 - 只要还有安全工作，就继续推进，直到完整 Goal 已有证据、没有安全工作，或明确停止预算耗尽。分析完、计划写完、局部 PASS、Task Group PASS、一个分支完成或部分交付，都不是停止理由；
@@ -95,12 +102,14 @@ Northstar 在 Human 尚未明确选择时替 Human 作出的可回退决定，�
 
 完成必须有完整 Goal 证据，已确认边界保持不变、判卷标准未被削弱，命令输出真实或证明可复现，并如实列出遗留问题和阻塞。存在停止预算时必须遵守；预算耗尽仍未完成，就准确列出仍未满足的事项。局部 Task PASS 和 Task Group PASS 都只是中间证据，不等于完整 Goal PASS。
 
+完整 Goal 仅在每个 completion property 都有足够且仍有效的证据时才能 PASS；属性之间不能互相补偿。执行中新发现必要属性时，先确认它是原 Goal/边界的真实展开，否则回到 Intent Take。
+
 做完整 Goal 验收时，等相关工作和 Task Group 收敛、并行分支重新汇合，再运行本次交付所需的完整验证。产生这些局部、Task Group 和集成证据时所依赖的前提仍然成立，才可以复用；后续变化可能破坏了某项判卷标准所证明的属性，就必须重跑它。最终验证成本高只影响调度，不能成为省略最终判卷的理由。
 
 写清明卷（可见验收），以及是否需要独立 Acceptor 或独立验收边界。暗卷和独立验收遵循 [completion-trust.md](completion-trust.md)。所需 Acceptor 或验收环境不可用时，结果上限是 `ready for independent acceptance`。
 
 最终报告必须给出 `PASS`、`ready for independent acceptance`，或明确的非 PASS 处理路径，并说明：干成了什么、哪些 Task、Task Group 和完整 Goal 证据支持判断（适用时）、还有哪些遗留问题或卡点、下一条合规推进路径是什么。不要用“做了哪些活动”代替证据。
 
-Handoff 前再检查：只有一个 Goal 和一个明确交付；至少一个 Task 或必需的 Task 0 能立即开始；所有依赖都有现实依据；每个共享写入点只有一个归属；每个开发 Task 都有成本最低且足够的局部证明；需要组合证明的 Task Group 都在正确边界放置了检查；昂贵检查没有被重复放到低于其证明范围的每个 Task；涉及授权边界的操作都已约束；每个分支都会汇合或有明确终止路径；完整 Goal 仍然可以被证明。不要编译 scheduler、lease 或固定 Agent 拓扑。
+Handoff 前再检查：只有一个 Goal 和一个明确交付；Completion Contract 已覆盖 Goal 的必要完成属性；至少一个 Task 或必需的 Task 0 能立即开始；所有依赖都有现实依据；每个共享写入点只有一个归属；相关 repo verification authority 已读取，已知 mandatory gate 已编译，执行期 trigger 已进入 Task 0 并写清触发后的 gate；每个开发 Task 都有成本最低且足够的局部证明；需要组合证明的 Task Group 都在正确边界放置了检查；昂贵检查没有被重复放到低于其证明范围的每个 Task；涉及授权边界的操作都已约束；每个分支都会汇合或有明确终止路径；完整 Goal 仍然可以被证明。不要编译 scheduler、lease 或固定 Agent 拓扑。
 
 一本任务书必须在一次执行工作中完成并证明本次交付。“一次执行工作”只表示一本权威任务书和一个完成且已有证明的交付，不规定持久执行状态或 Agent 拓扑。runtime 支持时，Executor 可以委托、并行或使用依赖 Graph，但必须保持一个 Goal、明确写入所有权、正确放置 Task/Task Group/Goal 三层证明，以及完整 Goal 验收。如果做不到，回到 Intent Take 缩小 Human 本次要的交付；不要把一个 Goal 拆成多本任务书。
