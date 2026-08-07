@@ -2,21 +2,7 @@
 
 只在 Goal 已定准后使用。最终产物是一本紧凑、权威的任务书，Executor 拿到后无需 Human 日常指挥，也能独立推进。
 
-任务书保持固定结构和职责边界。细节可以随任务增减，但不要把 Goal、Execution/Graph、Verification 和 Evidence 混成另一套 completion/acceptance schema。
-
-核心语义保持为：
-
-```text
-Goal
-  ↓
-Execution / Graph
-  ↓
-Verification
-  ↓
-Evidence
-```
-
-Context 只写会影响后续判断、执行动作或验证证据的信息；大段支撑材料只保留引用入口；全局事实只写一次，Task 内只补局部差异；已经被替代的讨论和当前用不到的细节删掉。任务书固化的是 Goal、边界、授权、执行依赖和不可削弱的验证要求，不是全部上下文或冻结的实现步骤。
+任务书保持固定结构和职责边界。Context 只写会影响后续判断、执行动作或验证证据的信息；大段支撑材料保留引用入口；全局事实只写一次，Task 内只补局部差异。不要把 Goal、Execution/Graph、Verification 和 Evidence 再编译成 completion/acceptance schema。
 
 ## Verification granularity
 
@@ -24,13 +10,13 @@ Context 只写会影响后续判断、执行动作或验证证据的信息；大
 
 - **Task 级验证**：证明一个局部行为所需的成本最低且足够的验证；代码修改优先到达 repo verification system 中直接覆盖受影响行为的最近有效边界，通常是受影响单元测试、定向测试或更权威的 direct probe；
 - **Task Group 级验证**：一组 Task 共同形成组合行为、共享合同、迁移切片或汇合结果，而局部验证不足以覆盖时，在最小有意义边界运行覆盖该组合行为的更大范围验证；
-- **Goal 级验证**：相关 Task Group 收敛后，为本次明确交付运行 repo 要求的最终验证。
+- **Goal 级验证**：相关工作收敛后，确认本次明确交付所需的 repo verification 已被足够 evidence 覆盖。它是最终验证边界，不要求机械新增一条“最终命令”；仍有效的 Task/Task Group evidence 可以复用，只补 repo authority 仍要求但尚未覆盖的检查。
 
-低层 PASS 可以解锁后续工作，但不能代替更高层实际需要证明的行为。验证成本决定执行节奏，不决定是否需要验证；昂贵检查只在它会改变调度时记录成本，不编造耗时。
+低层 PASS 可以解锁后续工作，但不能代替更高层实际需要验证的行为。验证成本决定执行节奏，不决定是否需要验证；昂贵检查只在它会改变调度时记录成本，不编造耗时。
 
 ## Repo verification authority
 
-Handoff 前读取与预期 change surface 相关的 repo verification authority。由 Goal、真实 impact/reachability 和主要 failure risk 决定哪些行为必须验证；不要额外制造 `verification focus` 字段或中间模型。
+Handoff 前读取与预期 change surface 相关的 repo verification authority。由 Goal、真实 impact/reachability 和主要 failure risk 决定哪些行为必须验证，不增加 `verification focus` 等中间模型。
 
 从 changed owner、共享责任面或系统合同追到 effective binding/config 与 affected target/capability；存在 production binding authority 时，以 effective production config 和真实 consumer 为准。已知事实触发 mandatory verification 时，把它写成不可削弱的验证要求；“只是删除/重构”或预期 `0-diff` 都不能降级。仅执行期可知的 trigger 交给 Task 0，并预先写明触发后必须运行什么验证。
 
@@ -87,7 +73,7 @@ Task 0 如果承担 verification trigger 推导，解析当前可知的 changed 
 
 按真实依赖排列 Task。每个 Task 至少写清：完成后能观察到什么、成本最低且足够的局部验证是什么、局部 PASS/FAIL 如何判定。
 
-代码修改的局部验证必须到达 repo verification system 中能直接覆盖受影响行为的最近有效边界；通常使用受影响单元测试或定向测试，其他 direct probe 更真实或权威时就用它。TDD 的红→绿是定义行为或锁住回归最直接、低成本的方法时使用，不机械强制。正常局部边界不可用时，说明原因并使用最接近的直接 probe。
+代码修改的局部验证必须到达 repo verification system 中能直接覆盖受影响行为的最近有效边界；通常使用受影响单元测试或定向测试，其他 direct probe 更真实或权威时就用它。TDD 的红→绿是定义行为或锁住回归最直接、低成本的方法时使用，不机械强制。正常局部边界不可用时，说明原因并使用最接近的 direct probe。
 
 **Task Group** 是一组共同形成组合行为、共享合同、迁移切片或依赖图汇合结果的 Task。它只是 Verification 的组合粒度边界，不是新 workflow、持久对象或 Agent 拓扑。当 Task 级验证不足以覆盖组合行为时，写清组合结果、覆盖它的更大范围验证，以及验证运行的位置。
 
@@ -112,7 +98,9 @@ Task 0 如果承担 verification trigger 推导，解析当前可知的 changed 
 
 ## 6. 验证与证据（Verification and Evidence）
 
-相关 Task 和 Task Group 收敛后，运行本次 Goal 所需的最终 repo verification。最终验证范围必须根据**实际** change surface、effective binding/config 和真实 consumer/target 确认；不要沿用已经被执行变化推翻的早期 snapshot，也不要因为预期 `0-diff`、cleanup 或 refactor 就缩小已触发的验证。
+相关 Task 和 Task Group 收敛后，在 Goal 级确认本次交付的 repo verification coverage：复用仍有效的 Task/Task Group evidence，只运行 repo authority 仍要求且尚未被覆盖的检查。Goal 级验证是最终判断边界，不是固定的一条额外命令。
+
+最终验证范围必须根据**实际** change surface、effective binding/config 和真实 consumer/target 确认；不要沿用已经被执行变化推翻的早期 snapshot，也不要因为预期 `0-diff`、cleanup 或 refactor 就缩小已触发的验证。
 
 Evidence 只有在下列条件仍成立时可以支持判断：
 
@@ -127,6 +115,6 @@ Evidence 只有在下列条件仍成立时可以支持判断：
 
 最终报告必须给出 `PASS` 或准确的非 PASS 路径，并说明：干成了什么、哪些 Task/Task Group/Goal 级 verification 及其 evidence 支持判断、还有哪些真实 residual/blocker、下一条合规推进路径是什么。Executor 的 `done`、`PASS` 和 activity narration 都不能代替 evidence。
 
-Handoff 前再检查：只有一个 Goal 和明确交付；至少一个 Task 或必需 Task 0 能立即开始；真实依赖有依据；共享写入有唯一归属；相关 repo verification authority 已读取；已知 mandatory verification 已编译，执行期 trigger 已进入 Task 0；Task / Task Group / Goal 三种验证粒度放置合理；昂贵验证没有机械下沉到每个 Task；授权边界清楚；完整 Goal 级验证仍然可执行。不要编译 scheduler、lease、固定 Agent topology、Completion Contract 或 Acceptance workflow。
+Handoff 前再检查：只有一个 Goal 和明确交付；至少一个 Task 或必需 Task 0 能立即开始；真实依赖有依据；共享写入有唯一归属；相关 repo verification authority 已读取；已知 mandatory verification 已编译，执行期 trigger 已进入 Task 0；Task / Task Group / Goal 三种验证粒度放置合理；昂贵验证没有机械下沉到每个 Task；授权边界清楚；Goal 级所需验证可由现有/计划 evidence 完整覆盖。不要编译 scheduler、lease、固定 Agent topology、Completion Contract 或 Acceptance workflow。
 
 一本任务书必须在一次执行工作中形成本次明确交付。runtime 支持时，Executor 可以委托、并行或使用依赖 Graph，但必须保持一个 Goal、清楚写入所有权、正确放置验证粒度，并最终取得足以支持 Goal 的 Evidence。做不到时回到 Intent Take 缩小 Human 本次要的交付；不要把一个 Goal 拆成多本任务书。
