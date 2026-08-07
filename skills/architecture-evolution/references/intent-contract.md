@@ -40,7 +40,7 @@ Status: Architecture intent ready
 - Applicable guard: <only when needed>
 
 ## Success evidence
-- Stable acceptance rule: <直接引用当前 intent 已承诺的关键 outcome / invariant / must-preserve / replacement，说明实现完成时哪些必须得到实际证明；不要重新编译 property taxonomy。affected scope 动态变化时写届时的 scope derivation；具体 evidence provider 由后续按 repo verification authority 和最终 change surface 选择，除非 provider 本身是稳定受保护判卷标准或必须点名才能消除歧义>
+- Stable acceptance rule: <直接引用当前 intent 已承诺的关键 outcome / invariant / must-preserve / replacement，说明实现完成时哪些必须得到实际证明；不要另写第二套完成条件。affected scope 动态变化时写届时的 scope derivation；具体 evidence provider 由后续按 repo verification authority 和最终 change surface 选择，除非 provider 本身是稳定受保护判卷标准或必须点名才能消除歧义>
 - Replacement evidence: <证明旧路径、知识、判断或依赖确实退出>
 ```
 
@@ -73,14 +73,14 @@ Status: Architecture intent ready
 - Design obligations 只输出适用项，不为覆盖四个方向或 consumer reassembly 而填满固定字段；
 - 必须说明为什么不是局部修改；
 - 四个架构方向必须保留为 intent shaping lenses，并选择一个 primary direction；
-- consumer reassembly 是 cross-cutting signal，不是第五个架构方向；观察到不同 consumer 使用不同事实只形成 evidence，不自动定义长期 public abstraction；
-- Stable Abstraction 的 variation 必须由稳定 semantic / invariant difference 支撑；provider 名称、当前 class hierarchy、execution shape 或其他 implementation partition 只作为证据线索，不自动成为长期 taxonomy；
+- consumer reassembly 是 cross-cutting signal，不是第五个架构方向；观察到的 usage partition 只形成 evidence，不自动定义长期 public abstraction；
+- Stable Abstraction 的 variation 必须由稳定 semantic / invariant difference 支撑；current implementation partition 只作为 evidence，不自动成为长期 taxonomy；
 - ownership materially shapes intent 时，owner scope 只能扩到 evidence 支持的 invariant；preserved execution/orchestration 或 adjacent subsystem ownership 只有会改变 boundary/obligation 时才需要显式记录；不得无证据扩大或集中 ownership；
 - 必须保留真实业务差异和 Protected behavior；
 - `Real Evolution` 必须提出至少一个具体退出目标；
 - Material Unknown 存在时必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 进入控制；不存在时不输出该 section，禁止制造；
 - Challenge 必须检查 false unification、历史差异固化、speculative abstraction、复杂度转移、consumer reassembly、owner-scope expansion、退出真实性，以及是否在缺少 stable semantic / invariant evidence 时把 current implementation/snapshot partition 冻结成长期 architecture contract；
-- reasoning distinction 或 current implementation partition 不自动成为 type、provider、adapter、view、layer 或 public seam；
+- reasoning distinction 或 observed partition 不自动物化为 architecture artifact；
 - Brooks 是下游架构设计逐步吸收的约束；intent 只携带相关约束和必要 proof expectation，不输出全量风险表、Severity、PASS/RETRY 或 Health Score；
-- Success evidence 直接引用 intent 已承诺的结果、invariant、must-preserve 和 replacement；不另建 proof-property 模型。build/test/replay/dependency check 等 provider 由后续基于 repo verification authority 和最终 change surface 选择，动态当前对象只作为 snapshot evidence；
+- Success evidence 直接引用 intent 已承诺的结果、invariant、must-preserve 和 replacement，不再转写第二套完成语义；具体 provider 由后续基于 repo verification authority 和最终 change surface 选择，动态当前对象只作为 snapshot evidence；
 - 目标设计、任务拆分、迁移步骤和实现属于后续工作。
