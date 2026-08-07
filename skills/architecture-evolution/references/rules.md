@@ -28,9 +28,9 @@
 
 否则给出局部修改边界，不升级。
 
-## Four intent lenses
+## Four architecture directions
 
-这些是构造 intent 的提问，不是要求立即给出目标设计。
+这四个方向必须保留。它们用于构造 intent，而不是要求当前阶段完成目标设计。一个 intent 选择一个 primary direction，其他命中只作为 consequence 或 design obligation。
 
 1. **Business Semantic Integrity**
    - 是否存在同一业务的多套语义或事实解释？
@@ -61,18 +61,47 @@ Intent 必须指向真实减少，而不是新增一层。至少能提出一个�
 
 如果只能说“增加 facade/interface/manager/registry”，intent 尚未成立。
 
-## Brooks risk prompts
+## Challenge the intent
 
-Brooks 只作为 intent challenge 的风险词汇，不生成全量报告：
+在 ready 前寻找会推翻或缩小方向的反证：
 
-- `R6 Domain Model Distortion` — intent 是否表达真实业务，而不是代码形状？
-- `R2 Change Propagation` — 它是否针对真实变化扩散？
-- `R3 Knowledge Duplication` — 是否存在重复业务决定或事实解释？
-- `R4 Accidental Complexity` — intent 是否会制造 speculative abstraction？
-- `R5 Dependency Disorder` — 是否指向正确的 policy/contract/implementation 边界？
-- `R1 Cognitive Overload` — 完成后 caller/module 是否会少知道关键步骤和隐含状态？
+- 问题是否其实是局部修复；
+- 是否错误统一不同 bounded context；
+- 是否把历史偶然差异永久化；
+- 是否诱导 union interface、mode flag、额外 wrapper 或 speculative seam；
+- 是否把复杂度转移到 helper、adapter、registry、配置或 caller；
+- 是否没有真实 replacement/exit；
+- 是否存在代码无法裁决的 Human-owned 业务或兼容决定。
 
-合理的 bounded context、vendor adapter、composition root、简单 DTO 和深模块内部复杂度都需要应用 guard，不能机械报错。
+反证成立时修改或撤销 intent；不成立时保留最重要 guard。
+
+## Progressive Brooks constraints
+
+Brooks 是架构设计约束，按成熟度逐步吸收：
+
+```text
+Architecture Intent
+→ 识别与方向相关的 Brooks constraints
+→ Target design 把 constraints 变成设计决定
+→ Implementation / acceptance 用代码和测试证明
+```
+
+Intent 阶段只识别相关约束：
+
+- `R6 Domain Model Distortion` — intent 与后续设计必须表达真实业务，不能按代码形状错误统一；
+- `R2 Change Propagation` — 共同规则和 variation 的变化应收敛到权威位置；
+- `R3 Knowledge Duplication` — 同一业务决定和事实解释应只有一个权威来源；
+- `R4 Accidental Complexity` — 新 abstraction 必须吸收真实变化并替代旧结构；
+- `R5 Dependency Disorder` — 设计应恢复 `policy → contract ← implementation`，并消除隐式反向控制；
+- `R1 Cognitive Overload` — capability/module 应让 caller 少知道步骤、状态、顺序和实现类型。
+
+每项相关约束写：
+
+```text
+Risk → Design constraint → Why applicable → Guard → Proof expected
+```
+
+合理的 bounded context、vendor adapter、composition root、简单 DTO 和深模块内部复杂度都需要应用 guard，不能机械报错。完整规则按需读取 `brooks-constraints.md`。
 
 ## Intent quality gate
 
@@ -81,10 +110,12 @@ Brooks 只作为 intent challenge 的风险词汇，不生成全量报告：
 1. 一个明确方向，不是候选列表；
 2. 有真实 pressure 和代码证据；
 3. 说明为什么是架构问题而不是局部修复；
-4. desired end state 描述结果，不锁死实现模式；
-5. in scope、out of scope 和 must preserve 清楚；
-6. 后续设计 obligations 明确；
-7. 至少一个可观察的 replacement/exit 目标；
-8. 一个关键 Unknown 已关闭，或明确不会阻止 intent；
-9. success evidence 可验证；
-10. 已检查最重要反例和 guard。
+4. 选择一个 primary architecture direction；
+5. desired end state 描述结果，不锁死实现模式；
+6. in scope、out of scope 和 must preserve 清楚；
+7. 后续设计 obligations 明确；
+8. 至少一个可观察的 replacement/exit 目标；
+9. 一个关键 Unknown 已关闭，或明确不会阻止 intent；
+10. success evidence 可验证；
+11. 已检查最重要反例和 guard；
+12. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
