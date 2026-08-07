@@ -48,6 +48,18 @@
 
 纯 composition-root wiring 不自动构成 consumer reassembly：如果它只选择具体 implementation、没有承载业务 policy、runtime sequencing、lifecycle ownership 或 capability usage knowledge，则保留为合法组装边界。
 
+### Ownership scope
+
+`Cohesive Capability Ownership` 只要求当前 capability 的 invariant、state/lifetime 和 usage contract 闭合，不自动把相邻执行责任一起吸入 owner。
+
+在命名 owner 时必须同时说明：
+
+- 当前 owner 真正闭合的是哪项 capability / invariant；
+- 哪些 request-level orchestration、sequencing、scheduling、result policy 或其他上层责任仍由原 owner 保留；
+- 哪些相邻 subsystem 已有自己的 authoritative owner，只需要通过稳定 relation / contract 被当前 capability 引用。
+
+因此 `capability owner ≠ execution owner`，`ownership closure ≠ ownership centralization`。如果相邻 feature/runtime/resource subsystem 已有内聚 owner，不因当前 caller reassembly 就默认把其内部 config、resource 或 lifecycle 全部迁入当前 owner；只有 evidence 证明该 ownership 本身错误时才改变它。
+
 ## Four architecture directions
 
 这四个方向必须保留。它们用于构造 intent，而不是要求当前阶段完成目标设计。一个 intent 选择一个 primary direction，其他命中只作为 consequence 或 design obligation。
@@ -105,6 +117,16 @@ Claim at risk
 
 如果当前没有 material unknown，不要为了满足输出结构制造一个。若 unknown 被命名后不改变任何下一步，它不是 material control signal，不要把它作为正式 blocker 装饰输出。
 
+## Evidence lifetime
+
+Success evidence 要区分**稳定验收规则**与**当前 snapshot evidence**。
+
+- 稳定验收规则描述实现完成时必须成立的 invariant、proof 和 affected-scope 推导方法；
+- 会随 production config、deployment binding、changed ownership 或时间变化的 app/target/file 列表，只能作为当前 snapshot evidence，除非它本身就是稳定 contract；
+- 对动态 replay / affected targets，应写“实现时根据 changed ownership + effective production config 重新推导并覆盖全部受影响对象”，而不是把今天枚举出的对象冻结成长期验收集合。
+
+当前具体样本可以保留来证明 intent grounded，但必须标明它是 `current evidence`，不能替代稳定 acceptance rule。
+
 ## Challenge the intent
 
 在 ready 前寻找会推翻或缩小方向的反证：
@@ -115,6 +137,9 @@ Claim at risk
 - 是否诱导 union interface、mode flag、额外 wrapper 或 speculative seam；
 - 是否把复杂度转移到 helper、adapter、registry、配置或 caller；
 - consumer reassembly 是否仍存在，只是换了位置；
+- 是否把 capability ownership 扩张成 request execution / orchestration ownership；
+- 是否为了闭合当前 capability，把相邻 subsystem 的合法 authoritative ownership 也集中进来；
+- success evidence 是否把当前动态 snapshot 冻结成长期 contract；
 - 是否没有真实 replacement/exit；
 - 是否存在代码无法裁决的 Human-owned 业务或兼容决定。
 
@@ -159,8 +184,9 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 5. desired end state 描述结果，不锁死实现模式；
 6. in scope、out of scope 和 must preserve 清楚；
 7. 只保留与当前 intent 相关、后续设计真正需要回答的 obligations；
-8. 至少一个可观察的 replacement/exit 目标；
-9. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；不存在时不制造；
-10. success evidence 可验证；
-11. 已检查最重要反例、consumer reassembly 和 materialization guard；
-12. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
+8. ownership intent 明确当前 capability owner 的责任边界，并保留 request/orchestration 与相邻 subsystem 的合法 owner；
+9. 至少一个可观察的 replacement/exit 目标；
+10. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；不存在时不制造；
+11. success evidence 使用稳定 acceptance rule；动态当前样本只作为 snapshot evidence；
+12. 已检查最重要反例、consumer reassembly、owner-scope 和 materialization guard；
+13. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
