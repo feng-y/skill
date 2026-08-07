@@ -116,17 +116,28 @@ Status: Design ready
 仅当用户明确要求进入实现且 `Brooks verdict: PASS` 时填写 `Ready`；用户只要设计时写 `None`。
 
 - Handoff: None / Ready
-- Design source: <本合同的路径、引用或稳定标识，以及产生判断的 repo snapshot>
-- Goal seed: <实现已确认目标架构、保留 Protected behavior，并让 Delete 中的旧结构退出>
-- Target: <capability / module / hotspot>
-- Architecture decisions: <canonical capability、stable abstraction、variation points、cohesive ownership、dependency direction>
-- Design delta: <Keep / Move / Merge / Delete / Do not change>
-- Implementation boundary: <证明目标设计成立所需的最小代码与迁移范围>
-- Protected behavior: <必须保持的行为与允许差异的引用>
-- Verification obligations: <Brooks findings、残留风险和实现后必须取得的代码/测试证据>
-- Design invalidation triggers: <会推翻同一业务判断、essential difference、目标 contract 或 Protected behavior 的新证据>
 
-Authority：Northstar 可以编译任务书、安排实现切片、迁移顺序和验收；不得重新选择业务语义、抽象、模块 owner 或依赖方向。Task 0 若发现 design invalidation trigger，必须停止受影响实现并回到 Architecture Evolution，而不是在 Northstar 内改写架构。
+### Source
+- Design: <本合同的路径或稳定引用>
+- Snapshot: <产生本设计的 repo commit / branch>
+
+### Scope
+- Target: <本次实现的 capability / module / hotspot>
+- Implement: <证明目标设计成立所需的最小代码与迁移范围>
+- Do not change: <本轮禁区与不可重判的设计边界引用>
+
+### Delta
+- Keep:
+- Move:
+- Merge:
+- Delete:
+
+### Proof
+- Preserve: <Protected behavior 引用>
+- Prove: <实现后必须取得的代码、测试、迁移与删除证据>
+- Return when: <新证据使本合同中的业务判断、essential difference、目标结构或 Protected behavior 不再成立>
+
+Authority：`Source` 指向的 Architecture Design Contract 是架构决定的唯一事实源。Northstar 只编译实现、迁移和验收，不复制或重新裁决架构；`Proof.Return when` 命中时停止受影响实现并返回 Architecture Evolution。
 ```
 
 ## Discipline
@@ -142,4 +153,5 @@ Authority：Northstar 可以编译任务书、安排实现切片、迁移顺序�
 - 不调用或依赖外部 Brooks / brooks-lint Skill；
 - 不生成 Health Score；未完成实现和全仓库扫描时，分数没有可信含义；
 - 只有 `Design ready + Brooks PASS + 用户要求实现` 才输出 `Handoff: Ready`；其他情况不得伪造可执行 handoff；
-- handoff 固化架构决定和失效条件，不编排实现步骤；实现顺序属于 Northstar 任务书。
+- handoff 只传 `Source / Scope / Delta / Proof`；完整架构决定保留在 Source 指向的合同中；
+- 实现顺序属于 Northstar 任务书。
