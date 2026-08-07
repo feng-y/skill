@@ -8,15 +8,17 @@ Context 增强只为了把 Goal 和 Task 描述到可以独立执行和验收的
 
 **先编译 Completion Contract，再编译执行。** 展开 Task 前，把 Goal 收敛成有限、互不替代的 completion properties：必须建立或移除的状态、必须保持的行为/兼容性/边界，以及确有必要时允许保留的残余。只保留当前 Goal 必要属性，不固定类别。每个属性都是完整 Goal PASS 的必要条件，并映射到后续证明；Task、Task Group 和 verification gate 只服务于这些属性。
 
+证明方式不是 completion property 本身。先从这些属性、真实 change impact/reachability 和主要 failure risk 中识别本次 verification focus，再决定需要哪些 gate 和 evidence；verification focus 只是编译判断，不新增任务书章节、schema 或固定字段。
+
 开发工作必须在不增加额外流程或固定 schema 的前提下编译三种验证粒度：
 
-- **Task 级证明**：证明一个局部行为所需的成本最低且足够的证据；代码修改通常至少到达受影响单元测试或等价定向测试边界，TDD 的红→绿能更清楚定义行为或锁住回归时优先使用；
-- **Task Group 级证明**：一组 Task 共同形成组合行为、共享合同、迁移切片或汇合结果，而局部证明不足以覆盖时，运行更大范围的编译、集成、replay 或等价验证；
+- **Task 级证明**：证明一个局部行为所需的成本最低且足够的证据；代码修改优先到达 repo verification system 中直接覆盖受影响属性的最近有效边界，通常是受影响单元测试、定向测试或更权威的直接 probe；
+- **Task Group 级证明**：一组 Task 共同形成组合行为、共享合同、迁移切片或汇合结果，而局部证明不足以覆盖时，在最小汇合边界运行覆盖该组合属性的更大范围验证；
 - **完整 Goal 证明**：相关 Task Group 收敛后，为本次明确交付运行所需的完整验证。
 
 验证成本决定执行节奏，不决定是否需要证明。昂贵检查已有实测或可靠成本时，只有它会改变调度才写入任务书；不要编造耗时。每项检查都放在能够证明目标属性的最低成本边界，只在延迟发现失败会显著增加下游返工或恢复成本时提前运行。
 
-**先编译验证门，再安排验证节奏。** Handoff 前读取与 change surface 相关的 repo verification authority，从 changed owner、共享责任面或系统合同追到 effective binding/config 与 affected target/capability；存在 production binding authority 时，以 effective production config 和真实 consumer 为准。已知事实触发 mandatory gate 时，把它写成不可削弱的证明要求；“只是删除/重构”或“预期 0-diff”都不能降级。仅执行期可知的 trigger 交给 Task 0，并预先写明触发后的 mandatory proof。先写证明属性和证据类别；测试、build、replay、symbol/static check 等只是 evidence provider，仅在入口本身是受保护判卷标准、权威基线或能显著消除歧义时点名。provider 不能证明其覆盖范围之外的属性。
+**先识别 verification focus，再编译验证门和节奏。** Handoff 前读取与 change surface 相关的 repo verification authority，从 changed owner、共享责任面或系统合同追到 effective binding/config 与 affected target/capability；存在 production binding authority 时，以 effective production config 和真实 consumer 为准。已知事实触发 mandatory gate 时，把它写成不可削弱的证明要求；“只是删除/重构”或“预期 0-diff”都不能降级。仅执行期可知的 trigger 交给 Task 0，并预先写明触发后的 mandatory proof。具体 evidence provider 从 repo verification system 中选择，只能证明其实际覆盖的属性；不要固定成 build/test/replay 套餐，也不要为了凑覆盖枚举检查。只有入口本身是受保护判卷标准、权威基线或能显著消除歧义时，才在任务书中点名。
 
 调研、选型和决策类工作也使用同一套六节结构，只是 Execution 中写“会产出证据的调查或决策”，而不是实现 Task。每个结论都必须有来源和日期，或有可复现探针；伪造引用、没有实际运行的“测量”和凑数结论都算失败。对有明确边界的学习 Goal，一条证据充分的死路也可能是有效结果。提前写清预算，到点就停，交付证据支持最充分的结论、反证和仍未解决的替代方案；不要另加输出章节。
 
@@ -73,11 +75,11 @@ Task 0 如果承担 verification trigger 推导，解析实际 changed owner →
 
 按真实依赖排列 Task。每个 Task 至少写清三件事：完成后能观察到什么、成本最低且足够的局部证据是什么、能明确判定局部 PASS 或 FAIL 的条件是什么。
 
-代码修改的局部证明必须到达受影响的单元测试或等价定向测试边界；TDD 的红→绿是定义行为或锁住回归最直接、低成本的方法时使用，但不要在其他直接探针更真实时机械强制 TDD。如果正常局部边界不可用，说明原因，并使用最接近的直接探针。能由机器判断时就写成机器可判定的标准；不能时，给出明确证据和判断标准。只补充真正影响执行的起点、依赖、写入所有权、硬约束、针对静默失败的反向验证，以及哪些上游变化会让当前证据失效。
+代码修改的局部证明必须到达 repo verification system 中能直接覆盖受影响属性的最近有效边界；通常使用受影响的单元测试或定向测试，其他直接 probe 更真实或权威时就用它。TDD 的红→绿是定义行为或锁住回归最直接、低成本的方法时使用，不机械强制。如果正常局部边界不可用，说明原因，并使用最接近的直接探针。能由机器判断时就写成机器可判定的标准；不能时，给出明确证据和判断标准。只补充真正影响执行的起点、依赖、写入所有权、硬约束、针对静默失败的反向验证，以及哪些上游变化会让当前证据失效。
 
 **Task Group** 是一组共同形成组合行为、共享合同、迁移切片或依赖图汇合结果的 Task。它只是验证边界，不是新的任务书章节、持久对象或 Agent 拓扑。当局部 Task 证明不足以覆盖组合属性时，写清这个 Task Group 完成后应观察到的结果、证明它的更大范围检查，以及该检查运行的位置。
 
-更大范围的编译、集成、replay 或端到端验证，放在能证明组合行为的最小 Task Group 边界：一组彼此连贯的 Task 之后、下游消费结果之前，或并行分支重新汇合时。不要给每个 Task 重跑昂贵的全系统验证。检查耗时达到数分钟或明显主导迭代成本时，已有实测或可靠的近似成本就用于调度：比较现在运行的成本，与推迟到后面才失败导致的返工和恢复成本。Task 改变系统级合同、大量下游 Task 将消费结果、局部证明覆盖不了关键组合风险、分支即将大规模展开，或晚查会显著抬高恢复成本时，提前运行。产生证据时所依赖的前提仍然成立，就继续复用；只有后续变化可能破坏其证明属性时，才让它失效并重跑。
+更大范围验证放在能证明组合行为的最小 Task Group 边界：一组彼此连贯的 Task 之后、下游消费结果之前，或并行分支重新汇合时。不要给每个 Task 重跑昂贵的全系统验证。检查耗时达到数分钟或明显主导迭代成本时，已有实测或可靠的近似成本就用于调度：比较现在运行的成本，与推迟到后面才失败导致的返工和恢复成本。Task 改变系统级合同、大量下游 Task 将消费结果、局部证明覆盖不了关键组合风险、分支即将大规模展开，或晚查会显著抬高恢复成本时，提前运行。产生证据时所依赖的前提仍然成立，就继续复用；只有后续变化可能破坏其证明属性时，才让它失效并重跑。
 
 简单任务保持线性。真实分支、依赖、共享写入、Task Group 或汇合点会被线性列表掩盖时，阅读 [execution-graph.md](execution-graph.md)，把最小依赖关系写进普通 Task。
 
@@ -110,6 +112,6 @@ Task 0 如果承担 verification trigger 推导，解析实际 changed owner →
 
 最终报告必须给出 `PASS`、`ready for independent acceptance`，或明确的非 PASS 处理路径，并说明：干成了什么、哪些 Task、Task Group 和完整 Goal 证据支持判断（适用时）、还有哪些遗留问题或卡点、下一条合规推进路径是什么。不要用“做了哪些活动”代替证据。
 
-Handoff 前再检查：只有一个 Goal 和一个明确交付；Completion Contract 已覆盖 Goal 的必要完成属性；至少一个 Task 或必需的 Task 0 能立即开始；所有依赖都有现实依据；每个共享写入点只有一个归属；相关 repo verification authority 已读取，已知 mandatory gate 已编译，执行期 trigger 已进入 Task 0 并写清触发后的 gate；每个开发 Task 都有成本最低且足够的局部证明；需要组合证明的 Task Group 都在正确边界放置了检查；昂贵检查没有被重复放到低于其证明范围的每个 Task；涉及授权边界的操作都已约束；每个分支都会汇合或有明确终止路径；完整 Goal 仍然可以被证明。不要编译 scheduler、lease 或固定 Agent 拓扑。
+Handoff 前再检查：只有一个 Goal 和一个明确交付；Completion Contract 已覆盖 Goal 的必要完成属性；verification focus 已从 Goal、真实 impact/reachability 和主要 failure risk 推导；至少一个 Task 或必需的 Task 0 能立即开始；所有依赖都有现实依据；每个共享写入点只有一个归属；相关 repo verification authority 已读取，已知 mandatory gate 已编译，执行期 trigger 已进入 Task 0 并写清触发后的 gate；每个开发 Task 都有成本最低且足够的局部证明；需要组合证明的 Task Group 都在正确边界放置了检查；昂贵检查没有被重复放到低于其证明范围的每个 Task；涉及授权边界的操作都已约束；每个分支都会汇合或有明确终止路径；完整 Goal 仍然可以被证明。不要编译 scheduler、lease 或固定 Agent 拓扑。
 
 一本任务书必须在一次执行工作中完成并证明本次交付。“一次执行工作”只表示一本权威任务书和一个完成且已有证明的交付，不规定持久执行状态或 Agent 拓扑。runtime 支持时，Executor 可以委托、并行或使用依赖 Graph，但必须保持一个 Goal、明确写入所有权、正确放置 Task/Task Group/Goal 三层证明，以及完整 Goal 验收。如果做不到，回到 Intent Take 缩小 Human 本次要的交付；不要把一个 Goal 拆成多本任务书。
