@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
   short_description: "统一业务与抽象，收敛模块责任和单向依赖"
-  default_prompt: "使用 $architecture-evolution 分析当前指定业务能力、模块或架构热点。先恢复业务现实并判断哪些路径属于同一业务，再区分本质差异与历史偶然差异；按 Skill 的渐进披露读取 references，并只返回一个状态。只有 Design ready 才加载并输出完整 Architecture Design Contract；仅当 Brooks PASS 且用户明确要求进入实现时，填写 Handoff: Ready 供 Northstar 消费，否则 Handoff: None。"
+  default_prompt: "使用 $architecture-evolution 分析当前指定业务能力、模块或架构热点。先恢复业务现实并判断哪些路径属于同一业务，再区分本质差异与历史偶然差异；按 Skill 的渐进披露读取 references，并只返回一个状态。只有 Design ready 才加载并输出完整 Architecture Design Contract；仅当 Brooks PASS 且用户明确要求进入实现时，填写只含 Source / Scope / Delta / Proof 的 Handoff: Ready 供 Northstar 消费，否则 Handoff: None。"
