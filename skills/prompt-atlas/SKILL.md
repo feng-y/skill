@@ -24,17 +24,19 @@ A concern, hypothesis, comparison, list of questions, or broad request such as �
 
 Separate the requested outcome from proposed means. A named architecture, tool, or implementation is a hypothesis unless the Human explicitly makes it part of the required result or confirmed boundary.
 
-Route Unknown by consequence:
+A material Unknown is uncertainty that can still change the Goal, acceptance requirements, a confirmed boundary, feasibility of the declared delivery, or the proof required to trust success.
 
-- observable fact → investigate;
+Use proportionate evidence to settle factual uncertainty and inform Human-owned choices. Preferences, judgments, and authorization remain Human-owned even when evidence informs them. Use the cheapest authoritative source available: repository/config/tests/runtime inspection, research, a probe/replay/prototype, or information obtained from another person. Treat input from another person as evidence under the same single Human authority model. Route only what remains:
+
+- fact accessible now → investigate;
 - execution-only fact → Task 0 (the execution preflight that verifies environment-only facts before material change);
 - implementation How → Executor;
 - reversible choice that preserves intent → visible delegated default;
-- Goal or confirmed-boundary choice → Human;
+- residual Goal, acceptance, confirmed-boundary, or authority choice → Human;
 - unavailable prerequisite with independent work → park and record;
 - unavailable prerequisite with no safe work → `Status: Blocked`.
 
-Ask Human only when proceeding would change the requested result, cross or relax a confirmed boundary or high-risk authority, or choose between materially different Goals that evidence cannot resolve.
+Ask Human only when the residual choice would change the requested result or acceptance requirements, cross or relax a confirmed boundary or high-risk authority, or choose between materially different Goals that evidence cannot resolve.
 
 Intent is stable only when one coherent Human-owned Goal, its Why, confirmed boundaries, material evidence state, trusted success, and delivery are clear. Otherwise return `Status: Unresolved Intent` with the current understanding and the smallest useful question or probe. **Never emit executable work from unresolved intent.**
 
@@ -43,6 +45,8 @@ Read [contract-anatomy.md](references/contract-anatomy.md) only when this bounda
 ### 1. Research
 
 Settle everything accessible without asking: real workspace, governing specs/tests, critical commands, baselines, dependencies, and protected judges. Treat docs and command names as claims until evidenced—the common false ground includes README commands that no longer exist, lint scripts that are placeholder `echo`, and files absent from coverage reports because nothing imports them. Anything that depends on the execution environment goes into Task 0.
+
+Keep material conclusions traceable to their authoritative source. Treat a summary or handoff as transport or an index; preserve the underlying source/reference or reproducible evidence when a later decision or judge depends on it. Reuse evidence only while its basis remains valid; when that basis changes, invalidate only the proof whose established property may have changed.
 
 ### 2. Ask
 
