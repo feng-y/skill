@@ -87,14 +87,14 @@ Handoff 前，只有在明卷可能假通过、可被钻空子或不足以证明
 用户直接要求完成工作，就已经授予 compile-and-run 权限：文件写好后，用一个薄 launcher 启动 Executor，不再额外等一次“开始”：
 
 ```text
-Read <TASKBOOK_PATH> as the authoritative contract. Execute toward its Goal; Tasks are the current dependency graph, not the completion condition. Loop: observe → run ready work → verify with the repo's applicable verification system → update evidence/graph. Replan as evidence changes without changing Goal, boundaries, authority, or mandatory gates. Stop only when Goal is proven, no safe work remains, or an explicit budget ends.
+Read <TASKBOOK_PATH> as the authoritative contract. Execute toward its Goal; Tasks are the current dependency graph, not the completion condition. Loop: observe → run ready work → verify with the repo's applicable verification system → update evidence/graph. Replan as evidence changes without changing Goal, boundaries, authority, or mandatory gates. Stop only when the Completion Contract is proven, no safe work remains, or an explicit budget ends.
 ```
 
 launcher 只负责驱动任务书；Northstar 不实时监督执行。Executor 返回后继续进入同一条 Acceptance，由 Northstar 保留 Goal-level 判卷权。
 
 ### 5. 验收（Acceptance）
 
-Northstar 对照同一份权威任务书的 Goal、Completion Contract、已确认边界和 mandatory gates 判卷；Executor 的 `done`、`PASS` 和自带证据都只是验收输入，不是最终 verdict。若 Goal 与边界仍稳定但仍有未满足 property、缺失或 stale evidence、未完成 mandatory gate，就把这些 focused gaps 返回给 Executor，继续同一本任务书而不是重编；只有继续推进必须改变 Goal、验收要求、已确认边界、Human 明确优先级或授权时，才回到 Intent Take/Human。
+Northstar 对照同一份权威任务书的 Goal、Completion Contract、已确认边界和 mandatory gates 判卷；Executor 的 `done`、`PASS` 和自带证据都只是验收输入，不是最终 verdict。若 Goal 与边界仍稳定、仍有安全可执行路径，但存在未满足 property、缺失或 stale evidence、未完成 mandatory gate，就把这些 focused gaps 返回给 Executor，继续同一本任务书而不是重编；只有继续推进必须改变 Goal、验收要求、已确认边界、Human 明确优先级或授权时，才回到 Intent Take/Human。
 
 结果返回后，重跑明卷（可见验收）和所有预留暗卷（私有检查）。当 Executor 自证可能被钻空子、证据不完整或不足以证明 Goal 已完成时，绑定独立 Acceptor；本应是暗卷的检查已经对 Executor 可见、又没有其他受保护的判卷标准能证明 Goal 完成，也属于这种情况。
 
