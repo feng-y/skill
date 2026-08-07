@@ -14,13 +14,13 @@
 - 四个方向完整保留：Business Semantic Integrity、Stable Abstraction with Explicit Variation、Cohesive Capability Ownership、Unidirectional Policy Dependency；
 - 一个 intent 只选择一个 primary architecture direction，其他命中作为 consequence 或 design obligation；
 - Design obligations 只输出当前 intent 实际相关的项，不机械填满 semantics / variation / ownership / reassembly / dependency；
-- ownership intent 明确 `capability owner ≠ request execution / orchestration owner`，并且 `ownership closure ≠ ownership centralization`；
+- ownership intent 只把 owner scope 扩到 evidence 支持的 invariant 边界；capability ownership 不自动推导 request execution / orchestration ownership；
 - 相邻 subsystem 已有正确 authoritative owner 时，当前 intent 只要求稳定 relation/contract，不默认吞并其内部 config/resource/lifecycle；
 - `Real Evolution` 要求至少一个旧路径、重复知识、caller knowledge/reassembly、无效抽象、兼容分支或反向依赖退出；
 - reasoning distinction 可以先用于解释，不能因为被命名就自动物化为 type/provider/adapter/layer/public seam；
 - Material Unknown 存在时使用 `claim at risk → minimal probe → evidence → intent changed / retained`；没有 material unknown 时整个 section 省略，禁止制造；
 - legacy identity 只有在当前 rename/delete/replacement 依赖它时才升级为 material unknown，否则进入 `Must preserve` 或 out of scope；
-- Success evidence 以稳定 acceptance rule 为主；会随 production config、deployment binding、changed ownership 或时间变化的对象只作为 current snapshot evidence，并在实现时重新推导 affected scope；
+- Success evidence 以稳定 acceptance rule 为主；会随 runtime/config/deployment binding、changed boundary/ownership 或时间变化的对象只作为 current snapshot evidence，并在实现时重新推导 affected scope；
 - Challenge 检查 local escalation、false unification、historical difference lock-in、speculative abstraction、complexity relocation、consumer reassembly、owner-scope expansion、snapshot freeze 和 replacement reality；
 - Brooks R1–R6 被保留为下游架构设计逐步吸收的约束，不被降级为可选提示；
 - Brooks constraint 的数量不是失败标准：全部 R1–R6 有独立 evidence 时允许全部出现；禁止的是无 evidence 的机械补齐；
@@ -107,13 +107,13 @@ consumer 必须组合 config、provider type、runtime handle 和调用顺序才
 
 通过：识别 `consumer reassembly` 为 architecture signal；根据根因选择 Stable Abstraction 或 Cohesive Capability Ownership 之一作为 primary direction，不新增 `Consumer Boundary` 第五方向。
 
-### P9 — Capability owner is not execution owner
+### P9 — Ownership scope follows the invariant
 
-一个发布型 capability owner 需要闭合 generation/resource/config invariant，但 request orchestration 仍负责目标绑定、sequencing、并发和结果对齐。
+一个发布型 capability owner 需要闭合 generation/resource/config invariant；相邻 orchestration 当前拥有目标绑定、sequencing、并发和结果对齐。
 
-通过：intent 可以选择 Cohesive Capability Ownership，但 owner 命名必须限定为 `execution-ready capability`、`published capability` 或等价 bounded capability；不得因为 consumer reassembly 就推导该 owner 接管 request execution、scheduling 或 result policy。Boundary / Must preserve 明确保留原 orchestration owner。
+通过：owner 的命名和 scope 必须匹配当前 evidence。若证据只支持 published / execution-ready capability，则不得仅因 caller reassembly 将其命名成 execution owner；若另有证据证明 execution invariant 本身也属于该 capability，则可以扩大 owner scope。Boundary / Must preserve 明确记录未被当前 intent 改变的责任。
 
-### P10 — Ownership closure does not centralize adjacent subsystem
+### P10 — Ownership closure does not imply centralization
 
 当前 capability consumer 直接读取相邻 feature/runtime subsystem 的内部 config 与 resource；该 subsystem 自身已有清楚的 authoritative owner。
 
@@ -123,7 +123,7 @@ consumer 必须组合 config、provider type、runtime handle 和调用顺序才
 
 当前 repo 可以枚举三个受影响 replay app，但这些 app 由 production config / deployment binding 动态决定。
 
-通过：Success evidence 写成“实现时根据 changed ownership + effective production config 重新推导 affected targets，并覆盖全部受影响对象”；当前三个 app 可以作为 `Current snapshot evidence`，不能冻结为长期 acceptance set。
+通过：Success evidence 写成“实现时根据最终 changed boundary/ownership 与届时 effective runtime/config/deployment state 重新推导 affected targets，并覆盖全部受影响对象”；replay 在该 case 中是适用的 proof。当前三个 app 可以作为 `Current snapshot evidence`，不能冻结为长期 acceptance set。
 
 ### B1 — Progressive Brooks absorption
 
@@ -300,7 +300,7 @@ B. 加载 architecture-evolution
 | Intent discovery | 罗列症状/方案 | 有方向但不稳定 | 一个能解释压力的 architecture intent |
 | Direction judgment | 未分类或多方向并推 | 方向大致正确 | 一个 primary direction，consumer reassembly 等信号正确降为 consequence/obligation |
 | Intent quality | 模式或任务列表 | outcome 部分清楚 | why now/end state/boundary/适用 obligations 完整且无机械填表 |
-| Ownership scope | 从 reassembly 直接推导大 owner/execute owner | owner 大致正确但相邻边界含糊 | capability owner、request/orchestration owner、adjacent subsystem owner 都有清楚边界 |
+| Ownership scope | 从 reassembly 直接推导更大的 owner | owner 大致正确但 relation 含糊 | owner scope 匹配 invariant evidence，execution/orchestration 与 adjacent ownership relation 清楚且不机械分离/集中 |
 | Evidence lifetime | 冻结当前 app/target/config 枚举 | 有稳定规则但 snapshot 混写 | stable acceptance rule + 动态 affected-scope derivation 清楚，current snapshot 单独标记 |
 | Progressive constraints | 无 Brooks、机械全扫或因“太多”删真实约束 | 有相关 constraint 但边界含糊 | 约束逐项 evidence-driven；数量不作为质量启发式；必要 proof expectation 准确 |
 | Unknown falsification | 猜测、制造 unknown、只命名 unknown 或不改变行动 | 有 probe 但 claim/影响不清 | material unknown 有则 claim+probe+evidence+changed/retained 完整；无则整节省略 |
@@ -318,7 +318,7 @@ B. 加载 architecture-evolution
 4. U1–U6 usage smoke 全部通过；README 不要求用户预先做候选分析、原则选择或 Brooks 扫描，并正确排除已稳定 intent 与直接设计/执行请求；
 5. 每个 ready 输出只有一个 intent 和一个 primary direction；consumer reassembly 不成为第五方向；
 6. intent 描述 outcome，不锁死实现模式；reasoning distinction 不自动物化；Design obligations 只输出适用项；
-7. ownership intent 不把 capability owner 扩成 request execution owner，也不把相邻 subsystem 合法 ownership 无证据集中；
+7. ownership claim 只扩到 evidence 支持的 invariant；不得从 capability ownership 无证据推导更大的 execution/orchestration owner，也不得无证据集中相邻 subsystem 的合法 ownership；
 8. 至少一个具体 replacement/exit obligation；
 9. 相关 Brooks constraints 有 Design constraint、Why applicable、Guard 和必要的 Proof expected；全部 R1–R6 独立有 evidence 时允许全部出现；
 10. Material Unknown 存在时必须真正改变或保留 architecture judgment；不存在时整节省略，禁止制造或输出占位；
@@ -335,7 +335,7 @@ B. 加载 architecture-evolution
 - `reality-collapse` — 用 clean interface/provider/dependency 等单一信号替代 semantics、ownership 或 runtime reality 判断；
 - `consumer-reassembly-miss` — caller 仍重组 capability facts，但被误判为 boundary 已闭合；
 - `consumer-reassembly-false-positive` — 把纯 composition-root wiring 误判为 capability reassembly；
-- `ownership-scope-creep` — 从 capability ownership 无证据扩张到 request execution、scheduling、result policy 等上层 ownership；
+- `ownership-scope-creep` — 从 capability ownership 无证据扩张到更大的 execution、orchestration、scheduling、result policy 等 ownership；
 - `ownership-centralization` — 为关闭 caller reassembly，把已有正确 owner 的相邻 subsystem config/resource/lifecycle 一并集中到当前 owner；
 - `snapshot-freeze` — 把当前 app/target/config/deployment 枚举冻结成长期 acceptance contract，而不是保留稳定 affected-scope 推导规则；
 - `intent-sprawl` — 多个方向同时推进；
