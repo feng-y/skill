@@ -16,7 +16,7 @@
 
 ## Repo verification authority
 
-Handoff 前读取与预期 change surface 相关的 repo verification authority。由 Goal、真实 impact/reachability 和主要 failure risk 决定哪些行为必须验证，不增加 `verification focus` 等中间模型。
+Handoff 前读取与预期 change surface 相关的 repo verification authority。由 Goal、真实 impact/reachability、主要 failure risk 和 Human 明确验证要求（若有）决定哪些行为必须验证；Human 明确验证要求是 Verification 的 binding input，不属于 Goal 本体，也不能由 Northstar/Executor 自行降级。不增加 `verification focus` 等中间模型。
 
 从 changed owner、共享责任面或系统合同追到 effective binding/config 与 affected target/capability；存在 production binding authority 时，以 effective production config 和真实 consumer 为准。已知事实触发 mandatory verification 时，把它写成不可削弱的验证要求；“只是删除/重构”或预期 `0-diff` 都不能降级。仅执行期可知的 trigger 交给 Task 0，并预先写明触发后必须运行什么验证。
 
@@ -29,13 +29,13 @@ Handoff 前读取与预期 change surface 相关的 repo verification authority�
 开头简要说清六件事：
 
 - 本任务书是本次执行的权威合同；
-- 唯一、内部一致且由 Human 决定的 Goal；
+- 唯一、内部一致且由 Human 决定的 Goal，包括成功时必须观察到和必须保持的结果；
 - 这活为什么干，以及成功时世界有什么不同；
-- 成功时必须观察到的结果、必须保持的行为/兼容性/边界，以及 Goal 级需要什么验证；
+- Human 明确验证要求（若有）以及 Goal 级需要覆盖的 verification；
 - 要求冲突时按什么顺序取舍；
 - 哪些是违反即不合格的硬规则，哪些只是可以结合现场调整的建议。
 
-Goal 本身定义成功，不再另建 `Completion Contract`、`completion properties` 或其他完成 taxonomy。只有确实存在执行停止预算时才写；普通工作不要凭空加时间盒或尝试次数。
+Goal 本身定义成功，不再另建 `Completion Contract`、`completion properties` 或其他完成 taxonomy。Verification requirement 独立约束怎么证明 Goal，不重新定义 Goal。只有确实存在执行停止预算时才写；普通工作不要凭空加时间盒或尝试次数。
 
 ## 1. 替 Human 作出的决定
 
