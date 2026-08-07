@@ -9,7 +9,7 @@
 - frontmatter 与 `agents/openai.yaml` 可解析；
 - `SKILL.md` 的相对引用都存在；
 - 正常运行不读取本文件；
-- 主流程为 `Frame → Discover → Select one → Ground → Diagnose → Design → Grill → Verify`；
+- 主流程为 `Discover → Select one → Ground → Diagnose → Design → Grill → Verify`；
 - 输入既支持开放范围，也支持已知热点；
 - 开放范围最多三个候选，最终只选择一个热点；
 - 已知热点也要验证真实变化压力和架构价值；
