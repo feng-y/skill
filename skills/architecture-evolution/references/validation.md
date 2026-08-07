@@ -13,9 +13,10 @@
 - `consumer reassembly` 是 cross-cutting signal，不是第五个 architecture direction；纯 composition-root wiring 不自动算 reassembly；
 - 四个方向完整保留：Business Semantic Integrity、Stable Abstraction with Explicit Variation、Cohesive Capability Ownership、Unidirectional Policy Dependency；
 - 一个 intent 只选择一个 primary architecture direction，其他命中作为 consequence 或 design obligation；
+- Design obligations 只输出当前 intent 实际相关的项，不机械填满 semantics / variation / ownership / reassembly / dependency；
 - `Real Evolution` 要求至少一个旧路径、重复知识、caller knowledge/reassembly、无效抽象、兼容分支或反向依赖退出；
 - reasoning distinction 可以先用于解释，不能因为被命名就自动物化为 type/provider/adapter/layer/public seam；
-- Material Unknown 存在时使用 `claim at risk → minimal probe → evidence → intent changed / retained`；没有 material unknown 时禁止制造；
+- Material Unknown 存在时使用 `claim at risk → minimal probe → evidence → intent changed / retained`；没有 material unknown 时整个 section 省略，禁止制造；
 - legacy identity 只有在当前 rename/delete/replacement 依赖它时才升级为 material unknown，否则进入 `Must preserve` 或 out of scope；
 - Challenge 检查 local escalation、false unification、historical difference lock-in、speculative abstraction、complexity relocation、consumer reassembly 和 replacement reality；
 - Brooks R1–R6 被保留为下游架构设计逐步吸收的约束，不被降级为可选提示；
@@ -24,7 +25,7 @@
 - `brooks-constraints.md` 只在 intent 方向稳定后加载；
 - 不存在 Design ready、Architecture Design Contract、round shape、one-module execution owner、implementation slices、completion workflow 或 Northstar handoff；
 - 输出只有 `No architecture intent / Intent unresolved / Architecture intent ready`；
-- intent contract 描述 outcome、reality-that-changed-judgment、boundary、design obligations、progressive constraints、material-unknown control 和 success evidence，不提前编译实现步骤；
+- intent contract 描述 outcome、decisive reality/evidence、boundary、适用 design obligations、progressive constraints、按需 material-unknown control 和 success evidence，不提前编译实现步骤；
 - 不调用外部 Wayfinder、Improve、Grill、Brooks 或 Northstar Skill；
 - README usage 与 SKILL.md 的适用边界、三种状态和“只构造 intent”终点一致；
 - README 明确用户不需要预先提供候选、架构原则、Brooks 风险、最终设计或完整证据；
@@ -82,7 +83,7 @@
 
 用户只说“这个历史模块边界混乱，下一步应该怎么演进”。代码显示重复业务判断、caller 拼装顺序和多次兼容分支修改。
 
-通过：形成一个 intent，说明 why now、desired end state、primary direction、boundary、design obligations、progressive constraints 和退出目标；不直接输出 class 拆分方案。
+通过：形成一个 intent，说明 why now、desired end state、primary direction、boundary、适用 design obligations、progressive constraints 和退出目标；不直接输出 class 拆分方案，也不为无关方向制造 obligation。
 
 ### P6 — Multiple symptoms, one intent
 
@@ -171,7 +172,7 @@ intent 声称建立更稳定 boundary 并减少 caller knowledge。
 
 业务语义、owner boundary、consumer 和 runtime evidence 已足以支持一个 bounded intent，没有会改变方向的未决事实。
 
-通过：`Architecture intent ready` 可以写 `Material Unknown: None`；不得为了满足 contract 人为提出一个无法改变判断的“待确认项”。
+通过：`Architecture intent ready` 直接省略 `Material unknown` section；不得为了满足 contract 人为提出一个无法改变判断的“待确认项”，也不输出 `None` 占位。
 
 ### L1 — Compat token is not runtime state
 
@@ -270,9 +271,9 @@ B. 加载 architecture-evolution
 | Reality separation | 用单一结构信号替代业务/ownership/runtime 判断 | 部分区分 | semantics/ownership/consumer/source/runtime 按证据区分且只展开相关面 |
 | Intent discovery | 罗列症状/方案 | 有方向但不稳定 | 一个能解释压力的 architecture intent |
 | Direction judgment | 未分类或多方向并推 | 方向大致正确 | 一个 primary direction，consumer reassembly 等信号正确降为 consequence/obligation |
-| Intent quality | 模式或任务列表 | outcome 部分清楚 | why now/end state/boundary/obligations 完整 |
+| Intent quality | 模式或任务列表 | outcome 部分清楚 | why now/end state/boundary/适用 obligations 完整且无机械填表 |
 | Progressive constraints | 无 Brooks 或机械全扫 | 有相关 constraint 但边界含糊 | 相关约束和必要 proof expectation 准确、guard 清楚，可供下游逐步吸收且不机械全列 |
-| Unknown falsification | 猜测、制造 unknown、只命名 unknown 或不改变行动 | 有 probe 但 claim/影响不清 | material unknown 有则 claim+probe+evidence+changed/retained 完整；无则不制造 |
+| Unknown falsification | 猜测、制造 unknown、只命名 unknown 或不改变行动 | 有 probe 但 claim/影响不清 | material unknown 有则 claim+probe+evidence+changed/retained 完整；无则整节省略 |
 | Challenge quality | 自我确认 | 检查有限 | 主动检查 false unification/speculation/reassembly/relocation/exit/guards |
 | Materialization discipline | 每个角色都物化为 seam | 大体克制 | explain first，只有 evidence 支持才形成 public seam obligation |
 | Scope control | 多方向并推或恢复 round workflow | 大体受控 | 一个 intent，不提前设计/实现，不引入 execution owner/round shape |
@@ -286,10 +287,10 @@ B. 加载 architecture-evolution
 3. N1–N3、R1–R4、L1–L2、G1–G5 路由和 guards 正确；
 4. U1–U6 usage smoke 全部通过；README 不要求用户预先做候选分析、原则选择或 Brooks 扫描，并正确排除已稳定 intent 与直接设计/执行请求；
 5. 每个 ready 输出只有一个 intent 和一个 primary direction；consumer reassembly 不成为第五方向；
-6. intent 描述 outcome，不锁死实现模式；reasoning distinction 不自动物化；
+6. intent 描述 outcome，不锁死实现模式；reasoning distinction 不自动物化；Design obligations 只输出适用项；
 7. 至少一个具体 replacement/exit obligation；
 8. 相关 Brooks constraints 有 Design constraint、Why applicable、Guard 和必要的 Proof expected；
-9. Material Unknown 存在时必须真正改变或保留 architecture judgment；不存在时禁止制造；
+9. Material Unknown 存在时必须真正改变或保留 architecture judgment；不存在时整节省略，禁止制造或输出占位；
 10. legacy identity 不因 local search absence 自动被判 dead，也不因潜在 repo 外使用而无条件阻塞；
 11. 未形成目标设计时，不声称 proof 已满足、行为等价、迁移完成或维护成本下降；
 12. 不调用外部 Skill，不生成完整 Brooks 报告或 Health Score；README 不创建固定下游 handoff；
@@ -305,6 +306,7 @@ B. 加载 architecture-evolution
 - `intent-sprawl` — 多个方向同时推进；
 - `direction-loss` — 四个方向之一被删除、弱化或无法表达；
 - `fifth-direction-creep` — 把 consumer reassembly、provider role 等 signal 升级成新的 architecture principle；
+- `obligation-checklist-creep` — 为覆盖固定类别而输出与当前 intent 无关的 design obligations；
 - `solution-first` — 先定模式再寻找问题；
 - `false-unification` — 错误合并不同业务；
 - `historical-difference-lock-in` — 把偶然差异永久化；
@@ -317,7 +319,7 @@ B. 加载 architecture-evolution
 - `guard-miss` — 合理 bounded context、adapter、composition root 或深模块被误报；
 - `unknown-swallowed` — 关键未知被猜测填补；
 - `unknown-decoration` — 命名 material unknown 但没有 claim/probe/evidence/judgment change；
-- `unknown-manufacture` — 没有会改变 intent 的 unknown，仍为了合同格式人为制造；
+- `unknown-manufacture` — 没有会改变 intent 的 unknown，仍为了合同格式人为制造或输出占位 section；
 - `legacy-runtime-collapse` — 把 parse/serialization/deployment identity 错当成 runtime behavior 或反过来；
 - `search-absence-deletion` — 因 local search 无 reader 就宣告 identity/config 可以删除；
 - `legacy-scope-explosion` — identity 不影响当前 exit 仍因潜在 repo 外使用而无限扩查；
