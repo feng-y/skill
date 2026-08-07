@@ -10,7 +10,7 @@
 
 - **Task 级验证**：证明一个局部行为所需的成本最低且足够的验证；代码修改优先到达 repo verification system 中直接覆盖受影响行为的最近有效边界，通常是受影响单元测试、定向测试或更权威的 direct probe；
 - **Task Group 级验证**：一组 Task 共同形成组合行为、共享合同、迁移切片或汇合结果，而局部验证不足以覆盖时，在最小有意义边界运行覆盖该组合行为的更大范围验证；
-- **Goal 级验证**：相关工作收敛后，确认本次明确交付所需的 repo verification 已被足够 evidence 覆盖。它是最终验证边界，不要求机械新增一条“最终命令”；仍有效的 Task/Task Group evidence 可以复用，只补 repo authority 仍要求但尚未覆盖的检查。
+- **Goal 级验证**：相关工作收敛后，确认本次明确交付所需的 repo verification 已被足够 Evidence 覆盖。它是最终验证边界，不要求机械新增一条“最终命令”；仍有效的 Task/Task Group Evidence 可以复用，只补 repo authority 仍要求但尚未覆盖的检查。
 
 低层 PASS 可以解锁后续工作，但不能代替更高层实际需要验证的行为。验证成本决定执行节奏，不决定是否需要验证；昂贵检查只在它会改变调度时记录成本，不编造耗时。
 
@@ -20,7 +20,7 @@ Handoff 前读取与预期 change surface 相关的 repo verification authority�
 
 从 changed owner、共享责任面或系统合同追到 effective binding/config 与 affected target/capability；存在 production binding authority 时，以 effective production config 和真实 consumer 为准。已知事实触发 mandatory verification 时，把它写成不可削弱的验证要求；“只是删除/重构”或预期 `0-diff` 都不能降级。仅执行期可知的 trigger 交给 Task 0，并预先写明触发后必须运行什么验证。
 
-具体 test/build/replay/static/symbol probe 等 provider 从 repo verification system 中选择，只能证明其实际覆盖的行为；不要默认编译固定套餐，也不要为了凑覆盖枚举检查。只有入口本身是受保护判卷标准、权威基线，或点名能显著消除歧义时，才在任务书里固定具体 provider。
+具体 test/build/replay/static/symbol probe 等 provider 从 repo verification system 中选择，只能证明其实际覆盖的行为；不要默认编译固定套餐，也不要为了凑覆盖枚举检查。只有入口本身是受保护判卷标准、权威基线，或点名能显著消除歧义时，才在任务书里固定具体 provider。文档或历史任务书中的 provider 名称先当声明；能提前实测就实测，只有执行环境才能确认时交给 Task 0。
 
 调研、选型和决策类工作也使用同一结构，只是 Execution 中写会产出证据的调查或决策，而不是实现 Task。每个结论都必须有来源和日期或可复现 probe；伪造引用、没有实际运行的“测量”和凑数结论都算失败。对有明确边界的学习 Goal，一条证据充分的死路也可能是有效结果。
 
@@ -71,7 +71,7 @@ Task 0 如果承担 verification trigger 推导，解析当前可知的 changed 
 
 ## 4. 执行（Execution / Graph）
 
-按真实依赖排列 Task。每个 Task 至少写清：完成后能观察到什么、成本最低且足够的局部验证是什么、局部 PASS/FAIL 如何判定。
+按当前已知真实依赖排列 Task。每个 Task 至少写清：完成后能观察到什么、成本最低且足够的局部验证是什么、局部 PASS/FAIL 如何判定。
 
 代码修改的局部验证必须到达 repo verification system 中能直接覆盖受影响行为的最近有效边界；通常使用受影响单元测试或定向测试，其他 direct probe 更真实或权威时就用它。TDD 的红→绿是定义行为或锁住回归最直接、低成本的方法时使用，不机械强制。正常局部边界不可用时，说明原因并使用最接近的 direct probe。
 
@@ -79,42 +79,46 @@ Task 0 如果承担 verification trigger 推导，解析当前可知的 changed 
 
 更大范围验证放在能证明组合行为的最小 Task Group 边界：一组连贯 Task 之后、下游消费结果之前，或并行分支重新汇合时。不要给每个 Task 重跑昂贵的全系统验证。已有实测或可靠成本时，用检查成本和延迟失败的恢复成本决定运行时机；成本只能减少无意义重复，不能削弱必要验证。
 
-简单任务保持线性。真实分支、依赖、共享写入、Task Group 或汇合点会被线性列表掩盖时，读取 [execution-graph.md](execution-graph.md)，只把最小真实依赖写进普通 Task。
+简单任务保持线性。真实分支、依赖、共享写入、Task Group 或汇合点会被线性列表掩盖时，读取 [execution-graph.md](execution-graph.md)，只把最小真实依赖写进普通 Task。Handoff 时编译的是当前 best-known static Graph；它是启动 snapshot，不冻结运行时剩余 Graph。
 
 ## 5. 执行规则（Execution Rules）
 
 - 执行中遇到新的 Unknown，先判断它影响 Goal、边界、事实、实现方式、Verification 还是 Evidence，再按 [SKILL.md](../SKILL.md) 处理；
-- Task 是当前执行计划，不是冻结范围。证据变化时，可以在 Goal、边界、授权和不可削弱验证要求内增加、删除、拆分、合并或重排剩余 Task；
+- Task/Graph 是当前执行计划，不是冻结范围。Evidence 改变依赖或 implementation reality 时，可以在 Goal、边界、授权和不可削弱验证要求内增加、删除、拆分、合并或重排**剩余** Task/edge；
+- 一个分支 Blocked 但其他分支仍 ready 时继续安全工作；join 只等待真实 dependency，不因单个 blocker 把整个 Graph 机械停住；
+- 已完成 Task 不因 Graph 改写机械重做；只有其 Evidence 前提被影响，或新的组合边界要求更高粒度 verification 时才重新取证；
 - 保持验证粒度：Task PASS 可以解锁依赖工作，Task Group PASS 可以解锁消费组合结果的下游工作，但二者都不能替代本次 Goal 实际要求的最终验证；
 - 已触发的 mandatory verification 不可降级；只能在 repo authority 允许时更换等价或更权威的 provider、调整运行位置；
 - 验证调度同时考虑证明范围、检查成本和延迟失败恢复成本；缺失验证不能写成 PASS；
 - 重要决策、会改变证据的偏离、重新规划、范围扩大、验证节奏变化和 blocker，优先保存在 repo/runtime 正常实现记录中；
-- 恢复执行时，只复用前提仍然成立的决定和 evidence；后续变化没有影响其覆盖行为时不要重复工作；
-- 不得跳过测试、削弱断言、缩小验收覆盖、用 mock 绕开真实对象、吞掉失败、偷改判卷标准或接受更低基线，除非 Goal 明确要求且仍有等价可信的 repo evidence；
-- 关键检查可能静默失效时需要反向验证；visible judge 可被针对性优化时按 [verification-trust.md](verification-trust.md) 增加受保护、私有或独立 evidence；
+- 恢复执行时，只复用前提仍然成立的决定和 Evidence；后续变化没有影响其覆盖行为时不要重复工作；
+- 不得跳过测试、削弱断言、缩小验收覆盖、用 mock 绕开真实对象、吞掉失败、偷改判卷标准或接受更低基线，除非 Goal 明确要求且仍有等价可信的 repo Evidence；
+- 关键检查可能静默失效时需要反向验证；visible judge 可被针对性优化时按 [verification-trust.md](verification-trust.md) 增加受保护、私有或独立 Evidence；
 - 每次重试都必须改变假设或方法；已知错误路线立即停。同一路线对同一验证条件失败三次，必须重新规划、换分支、回滚、`BLOCK` 或 `ESCALATE`；
 - 未授权回归必须回滚并如实报告；
 - 遵守仓库已有的分支、PR 和提交前规则。
 
 ## 6. 验证与证据（Verification and Evidence）
 
-相关 Task 和 Task Group 收敛后，在 Goal 级确认本次交付的 repo verification coverage：复用仍有效的 Task/Task Group evidence，只运行 repo authority 仍要求且尚未被覆盖的检查。Goal 级验证是最终判断边界，不是固定的一条额外命令。
+相关 Task 和 Task Group 收敛后，在 Goal 级确认本次交付的 repo verification coverage：复用仍有效的 Task/Task Group Evidence，只运行 repo authority 仍要求且尚未被覆盖的检查。Goal 级验证是最终判断边界，不是固定的一条额外命令。
 
 最终验证范围必须根据**实际** change surface、effective binding/config 和真实 consumer/target 确认；不要沿用已经被执行变化推翻的早期 snapshot，也不要因为预期 `0-diff`、cleanup 或 refactor 就缩小已触发的验证。
 
 Evidence 只有在下列条件仍成立时可以支持判断：
 
 - verification 实际运行，而不是计划或口头声明；
-- provider 确实覆盖当前 claim；
-- 产生 evidence 时的版本、环境、对象、binding/config 和关键前提仍然成立；
-- 后续变化没有影响 evidence 原本证明的行为；
+- provider 已证明可运行、会传播失败，并确实覆盖当前 claim；
+- 产生 Evidence 时的版本、环境、对象、binding/config 和关键前提仍然成立；
+- 后续变化没有影响 Evidence 原本证明的行为；
 - judge、断言、coverage、baseline 和失败传播没有被削弱；
-- 重要输出真实存在或可以复现。
+- 关键 Evidence 有足够 provenance：实际 command/probe、target/revision、必要的 binding/config、verdict/exit，以及原始输出或稳定 artifact/reference。
 
-若关键 judge 可能假绿、visible verification 可被钻空子，或需要额外独立性，按 [verification-trust.md](verification-trust.md) 使用反向、私有或独立 evidence。它们只提高 Evidence 的可信度，不形成独立 Acceptance 阶段或固定 Acceptor 角色。
+Northstar/最终判断方能访问真实 repo/runtime 时，对最终结论关键且成本合理的 repo-authoritative verification 直接重新取证；不机械重跑每个仍有效的 Task-local check。摸不到环境时，如果只有 Executor 总结、截图式描述或不可复核的二手结论，就只能记录 evidence gap，不能写成 PASS。
 
-最终报告必须给出 `PASS` 或准确的非 PASS 路径，并说明：干成了什么、哪些 Task/Task Group/Goal 级 verification 及其 evidence 支持判断、还有哪些真实 residual/blocker、下一条合规推进路径是什么。Executor 的 `done`、`PASS` 和 activity narration 都不能代替 evidence。
+若关键 judge 可能假绿、visible verification 可被钻空子，或需要额外独立性，按 [verification-trust.md](verification-trust.md) 使用反向、私有或独立 Evidence。它们只提高 Evidence 的可信度，不形成独立 Acceptance 阶段或固定 Acceptor 角色。
 
-Handoff 前再检查：只有一个 Goal 和明确交付；至少一个 Task 或必需 Task 0 能立即开始；真实依赖有依据；共享写入有唯一归属；相关 repo verification authority 已读取；已知 mandatory verification 已编译，执行期 trigger 已进入 Task 0；Task / Task Group / Goal 三种验证粒度放置合理；昂贵验证没有机械下沉到每个 Task；授权边界清楚；Goal 级所需验证可由现有/计划 evidence 完整覆盖。不要编译 scheduler、lease、固定 Agent topology、Completion Contract 或 Acceptance workflow。
+最终报告必须给出 `PASS` 或准确的非 PASS 路径，并说明：干成了什么、哪些 Task/Task Group/Goal 级 verification 及其 Evidence 支持判断、还有哪些真实 residual/blocker、下一条合规推进路径是什么。Executor 的 `done`、`PASS` 和 activity narration 都不能代替 Evidence。
 
-一本任务书必须在一次执行工作中形成本次明确交付。runtime 支持时，Executor 可以委托、并行或使用依赖 Graph，但必须保持一个 Goal、清楚写入所有权、正确放置验证粒度，并最终取得足以支持 Goal 的 Evidence。做不到时回到 Intent Take 缩小 Human 本次要的交付；不要把一个 Goal 拆成多本任务书。
+Handoff 前再检查：只有一个 Goal 和明确交付；至少一个 Task 或必需 Task 0 能立即开始；静态 Graph 只包含已有证据支持的真实依赖；共享写入有唯一归属；相关 repo verification authority 已读取；已知 mandatory verification 已编译，执行期 trigger 已进入 Task 0；Task / Task Group / Goal 三种验证粒度放置合理；昂贵验证没有机械下沉到每个 Task；授权边界清楚；Goal 级所需验证可由现有/计划 Evidence 完整覆盖。不要编译 scheduler、lease、固定 Agent topology、Completion Contract 或 Acceptance workflow。
+
+一本任务书必须在一次执行工作中形成本次明确交付。runtime 支持时，Executor 可以委托、并行或使用依赖 Graph，但必须保持一个 Goal、清楚写入所有权、按 Evidence 演化剩余 Graph、正确放置验证粒度，并最终取得足以支持 Goal 的 Evidence。做不到时回到 Intent Take 缩小 Human 本次要的交付；不要把一个 Goal 拆成多本任务书。
