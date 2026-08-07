@@ -40,7 +40,7 @@ Status: Architecture intent ready
 - Applicable guard: <only when needed>
 
 ## Success evidence
-- Stable proof properties: <实现完成时必须被证明的 invariant / protected behavior / change-propagation boundary / replacement；不要把验证手段本身当 property>
+- Stable proof properties: <只写当前 intent 真正承诺、实现后必须可观察证明的 properties；不要把验证手段或固定 property 类别当模板>
 - Replacement evidence: <证明旧路径、知识、判断或依赖确实退出>
 ```
 
