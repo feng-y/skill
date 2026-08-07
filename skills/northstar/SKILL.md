@@ -17,11 +17,11 @@ Verification
 Evidence
 ```
 
-Goal 定义 Human 真正要达到的结果、边界、必须保持什么和最终交付；不再另建 `Completion Contract` 或 `completion properties`。Execution / Graph 组织怎么推进，Graph 只在真实依赖、分支、共享写入或汇合需要表达时使用，不覆盖原有 Task 语义。Verification 决定验证什么、在哪个粒度验证；Evidence 是验证实际产生、仍然有效的事实。`Handoff` 只是交付动作，结果返回后直接判断 Evidence 是否足以支持 Goal，不增加独立 `Acceptance` 层。
+Goal 定义 Human 真正要达到的结果、边界、必须保持什么、Human 明确指定的验证要求和最终交付；不再另建 `Completion Contract` 或 `completion properties`。Execution / Graph 组织怎么推进，Graph 只在真实依赖、分支、共享写入或汇合需要表达时使用，不覆盖原有 Task 语义。Verification 决定验证什么、在哪个粒度验证；Evidence 是验证实际产生、仍然有效的事实。`Handoff` 只是交付动作，结果返回后直接判断 Evidence 是否足以支持 Goal，不增加独立 `Acceptance` 层。
 
-三个稳定角色：**Human** 决定 Goal、已确认边界、明确优先级和授权；**Northstar** 负责澄清、调研、写任务书、交付并依据 Evidence 判断结果；**Executor** 在稳定 Goal 和边界内负责 implementation judgment，并可按新证据调整剩余工作。私有或独立判断只是必要时提高 Evidence 可信度的手段，不建立固定 Acceptor 角色。
+三个稳定角色：**Human** 决定 Goal、已确认边界、明确验证要求、优先级和授权；**Northstar** 负责澄清、调研、写任务书、交付并依据 Evidence 判断结果；**Executor** 在稳定 Goal 和边界内负责 implementation judgment，并可按新证据调整剩余工作。私有或独立判断只是必要时提高 Evidence 可信度的手段，不建立固定 Acceptor 角色。
 
-`Unknown` 是贯穿这条链的未决机制，不是额外流程。事实 Unknown 优先用证据消解；只有仍可能改变 Goal、边界、执行事实或可信 Verification/Evidence 的未决项才需要路由。
+`Unknown` 是贯穿这条链的未决机制，不是额外流程。事实 Unknown 优先用证据消解；只有仍可能改变 Goal、边界、明确验证要求、执行事实或可信 Verification/Evidence 的未决项才需要路由。
 
 ## 0. Intent Take：定准 Goal
 
@@ -34,12 +34,12 @@ Goal 定义 Human 真正要达到的结果、边界、必须保持什么和最�
 - 当前可查事实 → 调研；
 - 只有执行环境才能确认的事实 → Task 0；
 - 怎么实现 → Executor；
-- 不改变 Goal/边界且可以回退的选择 → Northstar 可以做公开、未确认的 delegated default；
-- 会改变 Goal、边界、Human 明确优先级或授权的选择 → Human；
+- 不改变 Goal/边界/明确验证要求且可以回退的选择 → Northstar 可以做公开、未确认的 delegated default；
+- 会改变 Goal、边界、Human 明确验证要求、优先级或授权的选择 → Human；
 - 前置条件不可用但仍有安全工作 → 暂停受影响分支；
 - 没有安全工作可继续 → `Status: Blocked`。
 
-Goal 已定准，意味着唯一、内部一致且由 Human 决定的结果、why、已确认边界、关键现实、必须保持的条件和最终交付已经足以让 Executor 独立判断。否则返回 `Status: Unresolved Intent`，只写当前理解和最小有效问题或探针。**Goal 未解决，不输出可执行工作。**
+Goal 已定准，意味着唯一、内部一致且由 Human 决定的结果、why、已确认边界、关键现实、必须保持的条件、明确验证要求和最终交付已经足以让 Executor 独立判断。否则返回 `Status: Unresolved Intent`，只写当前理解和最小有效问题或探针。**Goal 未解决，不输出可执行工作。**
 
 只有 Goal/authority 边界仍不清楚时读取 [contract-anatomy.md](references/contract-anatomy.md)。
 
@@ -53,7 +53,7 @@ Goal 已定准，意味着唯一、内部一致且由 Human 决定的结果、wh
 
 只问 Human 必须决定且证据无法裁决的事。优先一轮问完，最多五个决定；每个给出选项和推荐。事实、Task 拆分、架构 How、命令顺序和普通执行选择不问 Human。
 
-Northstar 替 Human 作出的可回退决定必须公开标明仍未确认，并写清依据、猜错代价和回滚方式；不能改变 Goal、边界、明确优先级或授权。
+Northstar 替 Human 作出的可回退决定必须公开标明仍未确认，并写清依据、猜错代价和回滚方式；不能改变 Goal、边界、明确验证要求、优先级或授权。
 
 ## 3. Compile
 
@@ -62,7 +62,7 @@ Northstar 替 Human 作出的可回退决定必须公开标明仍未确认，并
 - **Goal** 直接写成功时必须成立和必须保持的结果；
 - **Execution / Graph** 按真实依赖组织 Task；简单任务保持线性，只有线性列表会掩盖真实关系时才读取 [execution-graph.md](references/execution-graph.md)；
 - **Verification** 保留 Task / Task Group / Goal 三种粒度，并从真实 impact/reachability 和 repo verification authority 推导 required verification；
-- 预期 `0-diff`、cleanup 或 refactor 不能降低已经由事实触发的验证要求；执行期才能确认的 trigger 放进 Task 0；
+- 预期 `0-diff`、cleanup 或 refactor 不能降低已经由事实或 Human 明确要求触发的验证；执行期才能确认的 trigger 放进 Task 0；
 - test/build/replay/static probe 等只是 repo evidence provider，不默认编译固定套餐。
 
 一本任务书只承载一个 Goal。做不到时回到 Intent Take 缩小 Human 本次要的交付，不新增 workflow、scheduler、manager 或无边界 Graph。
