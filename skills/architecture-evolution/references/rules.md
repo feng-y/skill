@@ -96,11 +96,7 @@ Intent 必须指向真实减少，而不是新增一层。至少能提出一个�
 
 ## Explain first, materialize later
 
-用于解释现实的 role、provider、primary/support、variation、ownership 或阶段性 distinction，可以先停留在 reasoning vocabulary。发现一个有用概念，不等于应该创建一个新的 type、adapter、provider、layer 或 public seam。
-
-减少 consumer knowledge 也不自动要求按当前 consumer 形状创建一组 public view/interface。Intent 应先描述稳定 capability semantics 和 consumer 不再需要知道的内部事实；只有 evidence 证明某个 seam 能承载稳定 invariant、essential variation 或长期 change boundary 时，才交给后续设计物化。
-
-只有当前 evidence 表明新的 seam 会实际收敛 ownership、减少 caller knowledge、承载 essential variation 或建立更稳定的 verification surface 时，才把它交给后续设计物化。否则保留为解释模型或 guard。
+用于解释现实的 role、provider、primary/support、variation、ownership 或阶段性 distinction，可以先停留在 reasoning vocabulary。发现一个有用概念，或发现不同 consumer 只使用不同事实，都不自动要求创建新的 type、adapter、provider、view、layer 或 public seam。Intent 先描述稳定 capability semantics 和应该消失的 caller knowledge；只有 evidence 证明某个 seam 会实际收敛 ownership、承载 essential variation、形成长期 change boundary 或稳定 verification surface 时，才交给后续设计物化，否则保留为解释模型或 guard。
 
 ## Material unknown falsification
 
