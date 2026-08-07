@@ -17,9 +17,10 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 
 1. 先只用本文件恢复变化压力并判断是否存在架构 intent；
 2. 需要区分候选方向、业务边界或架构性质时读取 [rules.md](references/rules.md)；
-3. intent 方向稳定后读取 [brooks-constraints.md](references/brooks-constraints.md)，只吸收与当前方向相关的设计约束；
-4. 最后读取 [intent-contract.md](references/intent-contract.md) 输出稳定 intent；
-5. [validation.md](references/validation.md) 只用于显式 smoke/eval，正常运行禁止读取。
+3. 涉及历史 mode、compat、旧 config/registration、loader/provider identity、serialized identity 或 residual state 时，按需读取 [legacy-lenses.md](references/legacy-lenses.md)；
+4. intent 方向稳定后读取 [brooks-constraints.md](references/brooks-constraints.md)，只吸收与当前方向相关的设计约束；
+5. 最后读取 [intent-contract.md](references/intent-contract.md) 输出稳定 intent；
+6. [validation.md](references/validation.md) 只用于显式 smoke/eval，正常运行禁止读取。
 
 本 Skill 吸收 opportunity finding、improve 和 design grilling 的判断，并直接保留 Brooks 架构约束；不调用或编排外部 Wayfinder、Improve、Grill、Brooks 或 Northstar Skill。
 
@@ -52,11 +53,13 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 - `Evidence`：代码、调用、测试、配置、变更历史、运行事实或仍有效文档；
 - `Boundary`：本轮最小上下游与明确不做什么。
 
+需要判断结构原因时，分开观察业务语义、ownership/lifecycle、consumer reassembly、source dependency 和 runtime control/consumption；一个观察面整洁不能证明另一个观察面正确。
+
 始终分开：
 
 - `Observed`：证据直接证明；
 - `Inferred`：证据支持的解释；
-- `Unknown`：会改变 intent 的未决事实。
+- `Unknown`：会改变 intent、boundary 或 design obligation 的未决事实。
 
 没有真实压力时返回 `Status: No architecture intent`。
 
@@ -85,7 +88,7 @@ Architecture Intent 只回答：
 - **Unknown**：仍需关闭的一个关键未知；
 - **Evidence of success**：什么证据能证明 intent 被正确实现。
 
-Intent 描述结果，不提前规定 class、factory、strategy、registry 或迁移步骤。
+Intent 描述结果，不提前规定 class、factory、strategy、registry 或迁移步骤。用于解释现实的 role、provider、support、variation 或 ownership distinction，不自动成为新的架构 artifact。
 
 ### 4. Challenge and constrain the intent
 
@@ -96,8 +99,11 @@ Intent 描述结果，不提前规定 class、factory、strategy、registry 或�
 - 是否把历史差异误当作长期业务差异；
 - 是否会诱导 union interface、额外 wrapper 或 speculative seam；
 - 是否只是转移复杂度；
+- consumer 是否仍需重组 configuration、implementation、lifecycle、ordering、identity 或 access facts；
 - 是否能指出旧路径、重复知识、调用者知识或反向依赖将退出；
 - 是否存在 Human-owned 业务或兼容决定。
+
+Material Unknown 必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 影响判断；只命名 unknown 而不改变下一步，不算关闭。
 
 方向稳定后按需读取 `brooks-constraints.md`。Brooks R1–R6 是后续架构设计需要逐步吸收的约束：intent 阶段只携带与当前 pressure 和 desired end state 直接相关的约束，不做全量扫描、评分、PASS/RETRY 或独立报告。
 
