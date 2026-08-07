@@ -20,7 +20,7 @@ Graph 只存在于 Execution 内部，用来表达真实 Task 依赖；Verificat
 
 检查当前 runtime 文件：`SKILL.md`、`execution-compile.md`、`execution-graph.md`、`verification-trust.md`、`contract-anatomy.md` 和 `agents/openai.yaml`。
 
-1. Goal 直接定义 Human 要达到的结果、边界、must-preserve、明确验证要求和交付；不存在独立 Completion Contract / completion-properties runtime layer。
+1. Goal 直接定义 Human 要达到的结果、边界、must-preserve 和交付；不存在独立 Completion Contract / completion-properties runtime layer。Human 明确验证要求属于 Verification authority，保持 binding，但不写回 Goal 本体。
 2. Execution 保留普通 Task 语义；简单工作线性，只有真实依赖、并行、共享写入或汇合被线性列表掩盖时才使用 Graph。
 3. `execution-graph.md` 只表达 dependency / parallel / join / Task Group verification boundary，不定义 Goal、Verification、Evidence 或新的 node type。
 4. Verification 保留 Task / Task Group / Goal 三种粒度；Task Group 是组合验证边界，不是 workflow stage 或持久对象。
