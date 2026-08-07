@@ -15,7 +15,8 @@
 - Brooks finding 结构为 `Severity → Symptom → Source → Consequence → Remedy → How to verify`；
 - `No finding` 必须带 false-positive guard；
 - Architecture Design Contract 只有在 `Design ready + Brooks PASS + 用户要求实现` 时才能输出 `Handoff: Ready`；
-- handoff 必须包含 Design source、Goal seed、Target、Architecture decisions、Design delta、Implementation boundary、Protected behavior、Verification obligations 和 Design invalidation triggers；
+- handoff 只包含 `Source / Scope / Delta / Proof`，不复制完整架构决定；
+- Source 指向的 Architecture Design Contract 是唯一架构事实源；
 - Northstar 的 handoff 入口按需读取 `references/architecture-design-handoff.md`，不得重新裁决架构决定；
 - agent prompt 不重复注入完整规则；
 - 四种状态名称一致；
@@ -84,12 +85,16 @@ FeatureStreaming 与 Predict 各有 ParseRequest 路径，输入输出主体一�
 
 通过：
 
-- Architecture Design Contract 输出 `Handoff: Ready` 和全部最小字段；
-- handoff 固化架构决定、Protected behavior、Delete 和 design invalidation triggers，但不编排实现步骤；
-- Northstar 读取 `architecture-design-handoff.md`，把决定编译进现有六节任务书；
-- 用户已要求实现时，Northstar 达到 `Status: Executable` 后直接 compile-and-run，不再次询问是否开始；
+- Architecture Design Contract 输出 `Handoff: Ready`；
+- `Source` 只提供 Design Contract 引用与 repo snapshot；
+- `Scope` 只约束 target、最小实现范围和 do-not-change；
+- `Delta` 只传 `Keep / Move / Merge / Delete`；
+- `Proof` 只传 preserve、prove 和 return-when；
+- handoff 不复制 canonical capability、variation、module ownership 或 dependency direction；
+- Northstar 从 Source 读取架构决定，并把 Scope、Delta、Proof 编译进现有六节任务书；
+- 用户已要求实现时，Northstar 达到 `Status: Executable` 后直接 compile-and-run；
 - Task 0 只验证合同与当前 repo reality，没有重新执行 Architecture Evolution；
-- 只影响实现细节的新证据在合同内重新规划；推翻架构前提的新证据返回 Architecture Evolution。
+- 只影响实现细节的新证据在合同内重新规划；命中 `Proof.Return when` 时返回 Architecture Evolution。
 
 ### N1 — No architecture change
 
@@ -129,9 +134,9 @@ composition root 显式构造具体 implementation 并注入 policy contract，�
 
 ### R2 — Handoff invalidated by current code
 
-Northstar Task 0 发现当前代码已经改变，证据推翻 same-business judgment、essential difference、canonical contract、module ownership、dependency direction 或 Protected behavior。
+Northstar Task 0 发现当前代码已经改变，新证据使 Source 中的业务判断、essential difference、目标结构或 `Proof.Preserve` 不再成立。
 
-通过：停止受影响实现并返回 Architecture Evolution；不得由 Northstar 自行修改目标架构后继续。仍有独立安全工作时可以保留，但不能消费已失效设计。
+通过：命中 `Proof.Return when`，停止受影响实现并返回 Architecture Evolution；不得由 Northstar 自行修改目标架构后继续。仍有独立安全工作时可以保留，但不能消费已失效设计。
 
 ### D1 — Decision required
 
@@ -164,7 +169,7 @@ B. 同模型、工具和预算，加载 architecture-evolution
 | Scope control | 全面重构 | 大体局部 | 一个目标、一个主断点、明确不做什么 |
 | Unification restraint | 新增壳层或错误合并 | 混合 | 拒绝 union abstraction，并保留真实业务差异 |
 | Brooks constraints | 无风险审计或自造指标 | 部分风险/链路不完整 | R1–R6 全扫描；finding 符合 Iron Law、severity 与 guard；Remedy 已进入设计；无外部 Skill 依赖 |
-| Handoff discipline | 无效/越权 handoff | 字段或路由部分正确 | 条件、字段、authority、Task 0 与 invalidation route 全部正确 |
+| Handoff discipline | 重复设计或越权 handoff | 协议/路由部分正确 | Source/Scope/Delta/Proof 最小充分；Source 单一事实源；Task 0 与 return route 正确 |
 | Status judgment | 状态错误/泄漏 | 正确但偏重 | 正确且最小充分 |
 
 ## V0 pass gate
@@ -177,8 +182,9 @@ B. 同模型、工具和预算，加载 architecture-evolution
 6. Brooks constraints 扫描 R1–R6，主要 finding 有完整 Iron Law 链路，没有未处理的 Critical finding；
 7. 残留 Warning 必须写明业务 tradeoff、owner 和验证边界；
 8. 运行时不调用或依赖任何外部 Brooks Skill；
-9. `Handoff: Ready` 只在有效条件下产生，Northstar 不重新裁决架构，design invalidation 会返回 Architecture Evolution；
-10. 未执行实现证据时，不声称行为保持、业务完全等价、迁移完成或 finding 已经消失。
+9. `Handoff: Ready` 只在有效条件下产生，协议仅传 `Source / Scope / Delta / Proof`，Northstar 不重新裁决架构；
+10. 命中 `Proof.Return when` 时返回 Architecture Evolution；
+11. 未执行实现证据时，不声称行为保持、业务完全等价、迁移完成或 finding 已经消失。
 
 失败分类：
 
@@ -193,9 +199,10 @@ B. 同模型、工具和预算，加载 architecture-evolution
 - `iron-law miss` — finding 缺少 Source、Consequence 或设计内 Remedy；
 - `guard miss` — 合理 adapter、composition root 或 bounded context 被误报；
 - `external-brooks-dependency` — 调用、加载、路由到或依赖外部 Brooks Skill；
-- `invalid-handoff` — 非 Design ready、Brooks 未 PASS、无实现授权或字段缺失却输出 Ready；
+- `invalid-handoff` — 非 Design ready、Brooks 未 PASS、无实现授权或四块协议缺失却输出 Ready；
+- `duplicated-handoff` — handoff 重复复制完整架构决定而不是引用 Source；
 - `architecture-rejudgment` — Northstar 重新裁决已确认架构决定；
-- `invalidation-swallowed` — design invalidation 被当作普通重新规划吞掉；
+- `invalidation-swallowed` — `Proof.Return when` 被当作普通重新规划吞掉；
 - `scope expansion` — 一个热点扩大成全仓库重设计；
 - `false positive` — 局部任务被升级成架构工作；
 - `unverifiable gain` — Remedy 没有具体验证方法；
@@ -205,4 +212,4 @@ B. 同模型、工具和预算，加载 architecture-evolution
 
 ## Claim boundary
 
-Static/scenario smoke 只能证明合同和文本机制一致；paired eval 只能证明冻结样本上的设计质量差异。Brooks constraints 只验证目标设计是否处理已识别风险，handoff 只传递已确认设计和执行边界；二者都不证明实现正确、行为对等、迁移完成、实际删除或生产维护成本下降。
+Static/scenario smoke 只能证明合同和文本机制一致；paired eval 只能证明冻结样本上的设计质量差异。Brooks constraints 只验证目标设计是否处理已识别风险，handoff 只引用已确认设计并传执行边界；二者都不证明实现正确、行为对等、迁移完成、实际删除或生产维护成本下降。
