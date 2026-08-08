@@ -28,6 +28,8 @@ Do not add Completion/Acceptance semantics.
 
 Compile the **minimum currently justified executable structure**.
 
+Routine Goals do not need to be decomposed up front. If one coarse Task is enough for the Executor to start and judge implementation, keep one Task. Split only when current Evidence shows that a single Task would hide a real dependency, independent frontier, shared write, or distinct Verification boundary. New runtime Evidence may split remaining work later when those relationships become real.
+
 A Task is an executable delta, not a miniature prompt. Normally it contains only:
 
 - observable result;
