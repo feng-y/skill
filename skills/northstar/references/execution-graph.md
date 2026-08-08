@@ -1,29 +1,37 @@
 # 执行图：静态编排与运行时演化
 
-只有线性 Task 列表会掩盖真实依赖、并行关系或有意义的 Task Group 验证边界时，才使用执行图。Graph 只表达**当前有证据支持的执行关系**，不定义 Goal、Verification 或 Evidence。
+只有线性 Task 列表会掩盖**会改变执行判断的关系**时才使用 Graph：真实 dependency、并行、shared write、有意义的 Task Group boundary 或 join。
+
+Graph 只承载**当前 Evidence 已经支持的执行关系**。它不是 semantic SOT、未来工作清单、scheduler 或 workflow model。
 
 ## 静态编排
 
-Handoff 时的 Graph 是基于当前 Reality 编译出的 best-known snapshot，不是冻结的执行脚本：
+只编译**当前证据支持的最小 Graph**：
 
-- `depends on`：只有下游确实要消费上游结果，或上游是安全执行前提时才写；
-- `may run in parallel`：没有依赖，也没有写入冲突时才写；
-- `verify group at boundary`：一组 Task 共同形成组合行为或共享合同，而局部证明不足时写；把更大范围检查放在下游消费之前或分支汇合处；
-- `reverify at join`：并行可以继续，但后续修改可能让已有 evidence 失效时写。
+- `depends on`：只有下游确实消费上游结果，或上游是安全执行前提时才写；
+- `may run in parallel`：没有 dependency 和 write conflict 时才写；
+- Task Group / join：只有组合 Verification 与局部检查实质不同才写；
+- re-verification：只有后续工作可能让已有 Evidence 失效时才写。
 
-省略传递依赖，不把单纯先后顺序伪装成依赖边。简单工作保持线性；不要为了“有 Graph”制造节点、分支或 Task Group。
+省略传递依赖和单纯先后顺序，不为了让 Graph 看起来完整制造 node。
 
-## 运行时 Graph
+更重要的是：**不要提前物化那些存在与否仍取决于未来 Evidence 的 downstream Task。** 如果 A 的结果决定是否需要 B/C/D，就只编译 A 和已知 decision boundary；等运行时 Evidence 到来后，只把真正成立的后续工作物化出来。
 
-Executor 面对的是当前可执行 frontier，而不是必须照抄静态 Task 顺序。新 Evidence 改变执行事实时，只调整**剩余 Graph**：
+## 运行时演化
 
-- 发现新的真实前提或 consumer → 在受影响下游前补 Task / dependency；
-- 证明原依赖不存在 → 删除对应 edge，让原本被错误阻塞的工作继续；
-- implementation reality 改变 → 可以拆分、合并或重排剩余 Task；
-- 一个分支 Blocked，但其他分支不依赖它 → 继续 ready work；join 只等待真实依赖；
-- actual change surface、effective binding/config 或共享合同变化 → 同步重算受影响 Verification scope 和 join evidence；
-- 已完成工作不因 Graph 变化机械重做；只有它的 Evidence 前提被影响，或新的组合边界需要更高粒度验证时才重新取证。
+Executor 面对当前 ready frontier。新 Evidence 只调整剩余 Graph：
 
-静态 Graph 是启动时的编排，运行时 Graph 是 Evidence 驱动的当前执行状态。变化的是执行关系，不是 Goal、Human authority 或已经触发且仍适用的 Verification requirement。
+- 新的真实 prerequisite、consumer 或 affected surface 被证明存在 → 在受影响下游前增加必要工作；
+- 原 dependency 或 branch 被证明不存在 → 删除，让 ready work 继续；
+- implementation reality 改变 → 拆分、合并或重排剩余 Task；
+- 一个分支 Blocked，但其他分支独立 → 继续 ready work；
+- join 只等待真实 required upstream result；
+- actual change surface、binding/config 或组合行为变化 → 重算受影响 Verification。
 
-Task Group 只是普通 Task 之上的组合验证边界；不要增加独立 Graph 对象、schema、持久状态、scheduler 或固定 Agent 拓扑。repo/runtime 已有进度记录时可记录剩余 Task 与依赖变化，没有就直接在当前执行上下文维护；不要为了 Graph 新造控制面。写入所有权和 evidence requirement 仍放在普通 Task 合同里。每个分支最终要汇合或走向明确终止路径，不要拆成多本任务书。
+已完成工作不因 Graph 改写机械重开；只有它的 Evidence 前提或所证明行为被影响时才重新取证。
+
+Task Group 仍然只是普通 Task 之上的 Verification boundary。不要增加 Graph object/schema、persistent Graph state、scheduler、固定 Agent topology 或第二本 taskbook。repo/runtime 已有正常 progress record 就复用；没有就直接在当前执行上下文维护 frontier。
+
+稳定规则只有一句：
+
+> **当前 Evidence 让什么真正可执行，就物化什么；新的 Evidence 让更多工作成为现实后，再扩展 Graph。**
