@@ -1,6 +1,6 @@
 # Architecture Intent Contract
 
-只在 `Status: Architecture intent ready` 时读取和输出。
+只在 `Status: Architecture intent ready` 时读取和输出。本文件只定义最终 Intent 的物理形状；architecture judgment、ready/discriminator 规则由 `SKILL.md` / `rules.md` 拥有，不在这里复制第二套判定逻辑。
 
 ```markdown
 # Architecture Intent
@@ -66,21 +66,8 @@ Status: Architecture intent ready
 
 ## Discipline
 
-- 一个 intent，不输出候选清单；
-- 描述 outcome，不提前指定实现模式；
-- `Observed / Inferred / Unknown` 不混写；
-- Reality 只保留实际改变判断的 semantics / ownership / consumer / source dependency / runtime control 证据，不机械输出五面审计；
-- Design obligations 只输出适用项，不为覆盖四个方向或 consumer reassembly 而填满固定字段；
-- 必须说明为什么不是局部修改；
-- 四个架构方向必须保留为 intent shaping lenses，并选择一个 primary direction；
-- consumer reassembly 是 cross-cutting signal，不是第五个架构方向；观察到的 usage partition 只形成 evidence，不自动定义长期 public abstraction；
-- Stable Abstraction 的 variation 必须由稳定 semantic / invariant difference 支撑；current implementation partition 只作为 evidence，不自动成为长期 taxonomy；
-- ownership materially shapes intent 时，owner scope 只能扩到 evidence 支持的 invariant；preserved execution/orchestration 或 adjacent subsystem ownership 只有会改变 boundary/obligation 时才需要显式记录；不得无证据扩大或集中 ownership；
-- 必须保留真实业务差异和 Protected behavior；
-- `Real Evolution` 必须提出至少一个具体退出目标；
-- Material Unknown 存在时必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 进入控制；不存在时不输出该 section，禁止制造；
-- Challenge 必须检查 false unification、历史差异固化、speculative abstraction、复杂度转移、consumer reassembly、owner-scope expansion、退出真实性，以及是否在缺少 stable semantic / invariant evidence 时把 current implementation/snapshot partition 冻结成长期 architecture contract；
-- reasoning distinction 或 observed partition 不自动物化为 architecture artifact；
-- Brooks 是下游架构设计逐步吸收的约束；intent 只携带相关约束和必要 proof expectation，不输出全量风险表、Severity、PASS/RETRY 或 Health Score；
-- Success evidence 直接引用 intent 已承诺的结果、invariant、must-preserve 和 replacement，不再转写第二套完成语义；具体 provider 由后续基于 repo verification authority 和最终 change surface 选择，动态当前对象只作为 snapshot evidence；
+- 一个 intent；描述 outcome，不提前指定实现模式、任务拆分或迁移步骤；
+- 只输出当前仍有效的 architecture judgment / evidence；旧 snapshot 若已被 authoritative reality 推翻，只保留必要 provenance，不与新判断并列为 active state；
+- `Observed / Inferred / Unknown` 不混写；Material Unknown、snapshot evidence 和 guard 只在适用时出现，不填空占位；
+- primary direction、Design obligations、Brooks constraints、replacement / exit 和 success evidence 只输出当前 evidence 实际支持的内容；
 - 目标设计、任务拆分、迁移步骤和实现属于后续工作。
