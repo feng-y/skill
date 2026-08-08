@@ -116,20 +116,25 @@ Claim at risk
 
 如果当前没有 material unknown，不要为了满足输出结构制造一个。若 unknown 被命名后不改变任何下一步，它不是 material control signal，不要把它作为正式 blocker 装饰输出。
 
-## Evidence lifetime
+## Evidence and judgment lifetime
 
-Success evidence 直接从当前 Architecture Intent 已承诺的结果、invariant、must-preserve、boundary 和 replacement/exit 推导**必须证明什么**；不要再把这些 claim 转写成第二套完成条件。
+Architecture reality、material claim 和由其支持的 architecture judgment 都有前提。保持 **one judgment, one active owner**：同一事实或判断只保留一份当前 authoritative state，历史说明可以作为 provenance，但不能和已更新判断并列为 active truth。
 
+- 支撑 judgment 的代码、runtime、binding/config、业务语义、owner boundary 或 Human authority 前提未变化时，直接复用已有 Evidence 和判断；不要因为从 Ground 进入 Discover / Shape / Challenge、换了 lens 或开始 Brooks 检查就重新发现、重新论证；
+- 新 authoritative Evidence 改变前提时，只 reopen 受影响的 claim，并在原 semantic owner 处替换或失效旧判断；只传播到受影响的 Intent / Boundary / Design Obligation / Success evidence，不重算无关部分；
+- 新旧 snapshot 不得同时作为有效依据。若需要保留旧状态解释历史，只标为 provenance / prior snapshot，不参与当前 architecture judgment；
 - 具体 evidence provider 由后续 design / implementation 根据 repo verification authority 和最终 change surface 选择；provider 本身是稳定受保护判卷标准，或当前必须点名才能消除歧义时，才在 intent 中固定入口；
 - affected scope 会随 runtime/config/deployment binding、changed boundary/ownership 或时间变化时，必须保留 scope derivation，并在实现验证时按最终 change surface 与届时 effective reality 重新推导；
 - 会动态变化的具体对象列表只能作为 current snapshot evidence，除非它本身就是稳定 contract；
 - replay 只是适用时的一种 evidence provider，不是所有 architecture intent 的固定验收机制。
 
-当前具体样本可以保留来证明 intent grounded，但必须标明它是 `current evidence`，不能替代稳定 acceptance rule。
+Success evidence 直接从当前 Architecture Intent 已承诺的结果、invariant、must-preserve、boundary 和 replacement/exit 推导**必须证明什么**；不要再把这些 claim 转写成第二套完成条件。当前具体样本可以保留来证明 intent grounded，但必须标明它是 `current evidence`，不能替代稳定 acceptance rule。
 
 ## Challenge the intent
 
-在 ready 前寻找会推翻或缩小方向的反证：
+Challenge 从**当前仍有效的 best-known intent** 出发寻找会推翻、缩小或改变 boundary/obligation 的反证；前提没有变化的 judgment 直接复用，不重新跑一遍完整 architecture analysis、所有 reality lenses 或 Brooks 清单。
+
+重点检查：
 
 - 问题是否其实是局部修复；
 - 是否错误统一不同 bounded context；
@@ -143,7 +148,7 @@ Success evidence 直接从当前 Architecture Intent 已承诺的结果、invari
 - 是否没有真实 replacement/exit；
 - 是否存在代码无法裁决的 Human-owned 业务或兼容决定。
 
-反证成立时修改或撤销 intent；不成立时保留最重要 guard。
+反证成立时替换或缩小受影响 judgment；不成立时保留最重要 guard。
 
 ## Progressive Brooks constraints
 
