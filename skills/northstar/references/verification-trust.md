@@ -1,23 +1,14 @@
 # Verification / Evidence Trust
 
-只在普通 repo verification 可能假通过、可被针对性优化、静默失效，或结果确实需要额外独立性时读取。默认优先使用 repo 已有、受保护且足以覆盖 Goal 的 verification；不要为了“更严格”机械增加暗卷或独立 judge。
+只在普通 repo verification 可能假通过、可被针对性优化、静默失效，或结果确实需要额外独立性时读取。provider 是否真实运行、coverage 是否覆盖 claim、Evidence freshness / provenance / selective reuse 等正常语义由 [execution-compile.md](execution-compile.md) 负责；这里不再复制。
 
-## Evidence trust
+默认优先使用 repo 已有、受保护且足以覆盖 Goal 的 verification；不要为了“更严格”机械增加暗卷或独立 judge。
 
-- **先证明 judge/provider 真能工作。** 文档里的命令、脚本名和 CI 入口都只是声明；Handoff 正确性依赖且能提前实测时就实测，必须进入执行环境后才能确认、并且在主要修改前确认能显著降低 false-green 或错误路线风险时才放进 Task 0，其余在真正使用时验证。不存在、空跑或不会传播失败的检查不能产生有效 Evidence。
-- **覆盖真实 claim。** build、lint、coverage、活动记录或局部测试只有在确实覆盖当前要判断的行为时才有证明力；provider 不能证明覆盖范围之外的事实。
-- **跟真实 affected surface 走。** verification scope 根据实际 change surface、effective binding/config 和真实 consumer/target 决定，不因 cleanup/refactor 或预期 `0-diff` 主观降级。
-- **前提仍然成立。** 版本、环境、对象、binding/config 或上游行为变化可能影响原证据时，该 Evidence 失效；未被影响的 Evidence 可以复用。
-- **判卷标准不能偷改。** 除非 Goal 明确要求且仍保留等价可信验证，否则不得削弱断言、缩小 coverage、跳过测试、用 mock 绕开真实对象、降低阈值、吞掉失败传播或修改验收脚本来制造 PASS。
-- **基线不能无授权倒退。** 已有权威 baseline 被破坏就是回归，不因为实现更简单或成本更低而自动可接受。测试数、skip/todo、coverage、schema 或 replay baseline 只有在 repo 本身把它们当判卷标准时才冻结，不机械制造新指标。
+## 保护 judge 与 baseline
 
-## Evidence 要可判卷
+除非 Goal/Human authority 明确允许且仍保留等价可信验证，否则不得通过削弱断言、缩小 coverage、跳过测试、用 mock 绕开真实对象、降低阈值、吞掉失败传播或修改验收脚本来制造 PASS。
 
-Executor 的 `PASS`、总结、截图式描述或“应该通过”不是 Evidence。关键 Evidence 至少要能回答：**跑了什么、对什么对象/版本/配置跑、结果是什么、原始输出或可复现入口在哪里。**
-
-判断方能访问真实 repo/runtime 时，对最终结论关键且成本合理的 repo-authoritative verification 应直接重新取证，而不是只信 Executor 的摘要；不要求机械重跑每个已经充分且仍有效的 Task-local check。
-
-判断方摸不到执行环境时，Evidence 必须随交付携带足够 provenance：实际 command/probe、target/revision、关键 config/binding、exit/verdict，以及机器可判的原始输出或稳定 artifact/reference。只有无法复核的二手总结时，准确标为 evidence gap，不把它提升成 PASS。
+已有权威 baseline 被破坏就是回归，不因为实现更简单或成本更低而自动可接受。测试数、skip/todo、coverage、schema 或 replay baseline 只有在 repo 本身把它们当判卷标准时才冻结，不机械制造新指标。
 
 ## 反向验证
 
