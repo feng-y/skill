@@ -22,6 +22,8 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 5. 最后读取 [intent-contract.md](references/intent-contract.md) 输出稳定 intent；
 6. [validation.md](references/validation.md) 只用于显式 smoke/eval，正常运行禁止读取。
 
+语义归位保持简单：本文件拥有运行主线；`rules.md` 拥有 architecture judgment / discriminator；`intent-contract.md` 只拥有输出形状；`validation.md` 只拥有 regression/eval。不要在多个位置维护同一套 authoritative 判断。
+
 本 Skill 吸收 opportunity finding、improve 和 design grilling 的判断，并直接保留 Brooks 架构约束；不调用或编排外部 Wayfinder、Improve、Grill、Brooks 或 Northstar Skill。
 
 ## 何时使用
@@ -61,6 +63,8 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 - `Inferred`：证据支持的解释；
 - `Unknown`：会改变 intent、boundary 或 design obligation 的未决事实。
 
+Architecture reality / judgment 一旦被当前 authoritative Evidence 支持，在相关前提未变化时直接复用；不要因为进入下一 Flow step、换 lens 或开始 Brooks/Challenge 就重新发现同一事实。新 Evidence 推翻旧 claim 时，只 reopen 受影响判断，在其 semantic owner 处替换或失效旧状态，并只更新受影响的 intent / boundary / obligation；不要同时保留相互冲突的 active snapshot。
+
 没有真实压力时返回 `Status: No architecture intent`。
 
 ### 2. Discover the intent
@@ -92,23 +96,13 @@ Intent 描述结果，不提前规定 class、factory、strategy、registry 或�
 
 ### 4. Challenge and constrain the intent
 
-先用代码现实挑战方向：
+从当前仍有效的 best-known intent 出发找反证，不重新执行已经有有效 Evidence 支撑的 architecture analysis。重点只挑战会改变方向、边界或 obligation 的问题：它是否其实只是局部修复，是否 false-unify 不同 bounded context，是否把历史差异或 current partition 固化成长期 contract，是否只转移复杂度或 consumer reassembly，ownership 是否越过 evidence 支持的 invariant，replacement / exit 是否真实，以及是否存在 Human-owned 业务或兼容决定。需要更细 discriminator 时读取并复用 `rules.md`，不在这里维护第二套 checklist。
 
-- 它是否只是局部修复或审美清理；
-- 是否错误合并不同 bounded context；
-- 是否把历史差异误当作长期业务差异；
-- 是否会诱导 union interface、额外 wrapper 或 speculative seam；
-- 是否只是转移复杂度；
-- consumer 是否仍需重组 configuration、implementation、lifecycle、ordering、identity 或 access facts；
-- ownership scope 或 success evidence 是否超出当前 evidence 支持的边界，包括无证据扩大 owner、集中相邻 ownership 或冻结动态 snapshot；
-- 是否能指出旧路径、重复知识、调用者知识或反向依赖将退出；
-- 是否存在 Human-owned 业务或兼容决定。
+如果存在 Material Unknown，必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 影响判断；只命名 unknown 而不改变下一步，不算关闭。已经关闭且前提未变化的 Unknown 不重新打开。
 
-如果存在 Material Unknown，必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 影响判断；只命名 unknown 而不改变下一步，不算关闭。
+方向稳定后按需读取 `brooks-constraints.md`。Brooks R1–R6 是后续架构设计需要逐步吸收的约束：intent 阶段只携带与当前 pressure 和 desired end state 直接相关的约束，不做全量扫描、评分、PASS/RETRY 或独立报告。已有适用性 judgment 在前提未变化时直接复用；新设计事实暴露新的风险时由下游继续吸收。
 
-方向稳定后按需读取 `brooks-constraints.md`。Brooks R1–R6 是后续架构设计需要逐步吸收的约束：intent 阶段只携带与当前 pressure 和 desired end state 直接相关的约束，不做全量扫描、评分、PASS/RETRY 或独立报告。
-
-反证改变方向时修改或撤销 intent；约束不适用时写明关键 guard；约束是否真正满足由后续目标设计、实现和验收证明。
+反证改变方向时替换或缩小受影响 intent；约束不适用时写明关键 guard；约束是否真正满足由后续目标设计、实现和验收证明。
 
 ## Output
 
