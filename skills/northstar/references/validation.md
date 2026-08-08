@@ -14,18 +14,18 @@ Verification
 Evidence
 ```
 
-Graph 只存在于 Execution 内部，用来表达真实 Task 依赖和当前可执行关系；Verification 附着在 Task / Task Group / Goal 的有意义边界，Evidence 是验证产生且可复核的事实。不要把这四层重新解释成 Graph node taxonomy。
+这是 semantic ownership / proof chain，不是固定时间 Phase。Graph 只存在于 Execution 内部，用来表达真实 Task/执行 action 的关系；Verification 附着在 Task / Task Group / Goal 的有意义边界，Evidence 是运行时取得且可复核的事实。Completion Hook 只用这些既有 owner 做 stop / continue / block judgment，不成为第五层，也不成为 Graph node。
 
 ## Static smoke
 
 检查当前 runtime 文件：`SKILL.md`、`execution-compile.md`、`execution-graph.md`、`verification-trust.md`、`contract-anatomy.md` 和 `agents/openai.yaml`。
 
 1. Goal 直接定义 Human 要达到的结果、边界、must-preserve 和交付；不存在独立 Completion Contract / completion-properties runtime layer。Human 明确验证要求属于 Verification authority，保持 binding，但不写回 Goal 本体。
-2. Execution 保留普通 Task 语义；简单工作线性，只有真实依赖、并行、共享写入或汇合被线性列表掩盖时才使用 Graph。
-3. Handoff Graph 是当前证据支持的 static snapshot；运行时 Evidence 可以调整剩余 Task/edge/frontier，但不创建 Graph engine/schema/scheduler，也不改变 Goal/Verification/Evidence 的结构语义。
-4. `execution-graph.md` 只表达 dependency / parallel / join / Task Group verification boundary 与 Evidence 驱动的剩余 Graph 演化，不定义新的 node type。
-5. Verification 保留 Task / Task Group / Goal 三种粒度；Task Group 是组合验证边界，不是 workflow stage 或持久对象。
-6. Goal-level verification 是最终 coverage boundary：复用仍有效的低层 Evidence，只补 repo authority 尚未覆盖的验证；不机械增加“最后一条命令”。
+2. Execution 保留普通 Task 语义；当前 Evidence 已能确定的 work/relations 编译成 best-known complete structure，不为了 progressive execution 故意只给下一步；只有 materially contingent work 才延迟展开。
+3. Handoff Graph 是当前证据支持的 best-known snapshot；运行时 Evidence 可以调整真正 contingent 或 invalidated 的 Task/edge/frontier，但不创建 Graph engine/schema/scheduler，也不改变 Goal/Verification/Evidence 的结构语义。
+4. `execution-graph.md` 只表达 dependency / parallel / join / Task Group verification boundary 与 Evidence 驱动的剩余 Graph 演化，不定义 Implementation/Probe/Verification node taxonomy；Evidence 与 Completion Hook 都不是 Graph node。
+5. Verification 保留 Task / Task Group / Goal 三种 placement granularity；这是 placement rule，不要求 Compile 时预先填满完整 verification roadmap。已知 obligation/action 编译，runtime-dependent scope/provider/target 或 trigger 渐进 materialize。
+6. Goal-level verification 是最终 coverage boundary，由 Completion Hook 消费：复用仍有效的低层 Evidence，只补真实 coverage gap；不机械增加“最后一条命令”。
 7. verification scope 从真实 impact/reachability 与 repo verification authority 推导；production binding 存在时以 effective binding/config 和真实 consumer/target 为准。
 8. cleanup/refactor/expected 0-diff 不能降级已由事实或 Human 明确要求触发的 verification。
 9. test/build/replay/static/symbol 等是 provider，不存在固定 provider 套餐；provider 在实际证明可运行并传播失败前只是声明。
@@ -33,7 +33,7 @@ Graph 只存在于 Execution 内部，用来表达真实 Task 依赖和当前可
 11. 关键 Evidence 可判卷且有 provenance；Executor 的 `PASS`、总结或不可复核二手描述不能代替实际 verification result。
 12. 判断方能访问权威环境时，可对最终结论关键且成本合理的 verification 重新取证；摸不到环境时要求实际 command/probe、target/revision、关键 config、verdict/exit 与原始输出或稳定 artifact/reference。
 13. 明卷是默认路径；暗卷、反向验证、独立 Evidence 只在 false-green / gameability / independence 风险存在时按需启用，不形成 Acceptance workflow 或固定 Acceptor 角色。
-14. Human 明确验证要求属于 binding authority；Executor/Northstar 不能自行降级。不新增 scheduler、manager daemon、固定 Agent topology 或新的顶层状态。
+14. Taskbook Completion Hook 只读取 Goal/constraints、已触发 required Verification 与 current valid Evidence，决定 stop / continue / block；不新增 scheduler、manager daemon、Completion/Acceptance layer、固定 Agent topology 或新的顶层状态。
 
 当前候选 source-level review：**14/14 PASS**。
 
@@ -165,9 +165,9 @@ Task A 的定向 verification 失败，原始输出证明一个关键 premise �
 通过：FAIL 作为 Evidence，先修正受影响 premise、剩余 Graph 和 Verification 再继续；不得在原假设不变时机械重试 A。C 及其仍有效 Evidence 继续复用，不因一次失败全量重跑。
 
 ### S26 — One compile, progressive execution expansion
-Human 给出一个稳定 Goal：提高 Northstar completion，同时减少冗余、重复和冲突。Compile 时当前 Evidence 只支持先检查 Task 0 / Verification feedback；dedup、Graph rewrite、context locality、Prompt Atlas sync 是否需要实际修改仍取决于执行后的 Evidence。
+Human 给出一个稳定 Goal：提高 Northstar completion，同时减少冗余、重复和冲突。Compile 时当前 Evidence 已能确定若干必须完成的 Task/relations，但 dedup、context locality、Prompt Atlas sync 等其他方向是否需要实际修改仍取决于执行后的 Evidence。
 
-通过：只编译当前可安全启动的 frontier 和必要 decision boundary。Goal、已确认边界、authority 与 required Verification 未变化时，后续 Evidence 直接扩展、收缩或重排同一本 taskbook 的 remaining Execution/Graph；不得把所有潜在方向预先 Phase 化，也不得在每个 frontier 完成后重新 Compile 一份 roadmap。只有稳定边界真正变化时才重新进入 Intent/Compile。
+通过：把当前 Evidence 已能证明存在且边界足够稳定的 Task/relations 一次编译进同一本 taskbook；只把真正 contingent 的方向留到后续 Evidence 决定。Goal、已确认边界、authority 与 required Verification 未变化时，后续 Evidence 直接扩展、收缩或重排受影响 remaining Execution/Graph；不得把所有潜在方向预先 Phase 化，也不得在每个 frontier 完成后重新 Compile 一份 roadmap。只有稳定边界真正变化时才重新进入 Intent/Compile。
 
 ### S27 — Empty frontier is not Goal completion
 同一本 taskbook 的当前已编译 frontier 已全部执行并取得 Evidence，但这些 Evidence 还不足以证明 Goal；同时现有 Evidence 已经暴露出一个安全、相关且能继续缩小 Goal gap 的 next probe/task，只是它没有在初始 snapshot 中提前物化。
@@ -194,7 +194,22 @@ Compile 时基于旧信息假设 consumer B 仍绑定 shared source；运行时 
 
 通过：按 authority 接受当前现实，在原 semantic owner 处失效或替换旧 claim，并只更新受影响的 Execution / Verification；不得把新旧两个 snapshot 同时保留为有效状态，也不得因为历史说明存在而继续执行已失效的 branch。
 
-当前候选 source-level review：**31/31 PASS**。
+### S32 — Known work compiles instead of becoming artificially lazy
+Compile 时现有 repo Evidence 已明确：A 建立 contract，B/C 迁移两个已知 consumer，D 在 B/C 后删除旧入口；这些 work 的存在与 dependency 不依赖 A 的未来结果。
+
+通过：一次编译 `A → {B,C} → D`（或等价 best-known complete structure），让 fresh Executor 看见已知全局工作。不得为了 progressive execution 只给 A、把已经知道的 B/C/D 假装成未来 Unknown；progressive expansion 只留给真正 contingent 的 work。
+
+### S33 — Contingent Verification materializes when reality triggers it
+Compile 时已知 repo rule：如果 shared source 仍被 production consumer 有效绑定，就必须做 affected replay；但实际 binding、affected target 和 replay scope 只能在执行环境确认。
+
+通过：任务书编译稳定 trigger / Verification authority，而不猜具体 target；运行时 authoritative binding Evidence 命中后，再把对应 replay/probe 作为当前 execution action 放到最低有意义边界并取得 Evidence。未命中则保留“不适用”依据。不得一开始猜死完整 replay topology，也不得因为它未在初始 Graph 中出现就漏掉。
+
+### S34 — Taskbook Completion Hook closes without a final ceremony
+当前 best-known Graph 已执行完；已有可信 Task/Group Evidence 已覆盖 Goal material outcome，must-preserve/confirmed boundaries 没被破坏，Human/repo 已触发的 required Verification 也全部有仍有效 Evidence。
+
+通过：Taskbook Completion Hook 直接判定完成并 STOP，不再制造 Final Verification Task、Completion stage、Acceptance 或重复 replay。反过来，若任一 Goal claim、constraint 或已触发 required Verification 仍有 material Evidence gap，则不能因为 Tasks/frontier 已空而结束；继续已有 work 或只 materialize 足以关闭该 gap 的 contingent action，没有安全路径则准确 Block/non-PASS。
+
+当前候选 source-level review：**34/34 PASS**。
 
 ## Leader-reference smoke
 
@@ -205,7 +220,7 @@ Leader 只作为 frozen reference input，不作为正确性 oracle。这里对�
 3. **反向验证。** Leader 对“坏了没人知道”的检查要求故意制造失败；Northstar 只在 silent-failure 风险存在时使用，且不让它替代行为验证。对应 S11。
 4. **明卷/暗卷。** Leader 固定保留 2–3 条暗卷；Northstar 不先验要求固定数量，但当 visible judge 可被针对性优化时必须能形成隔离的 private Evidence，泄露后失去 private value。对应 S10、S12、S22。
 5. **执行者不能靠自报完成。** Leader 由管理者复跑明卷/暗卷；Northstar 不建立 Acceptance layer，但在判断方有权威环境时重新取得关键 Evidence，摸不到环境时要求可复核 provenance。对应 S13、S19、S20。
-6. **Graph 是 Northstar 的额外能力，不是 Leader 评价标准。** 静态编排只给启动 snapshot，运行时 Evidence 可修正剩余依赖/frontier，并在稳定 Goal 下继续同一本 taskbook；这一增强不能改变 Goal 或把 Verification/Evidence node 化。对应 S2、S15–S17、S25–S31。
+6. **Graph 是 Northstar 的额外能力，不是 Leader 评价标准。** Compile 保留当前已知且足够稳定的完整 Task/Graph，运行时 Evidence 只修正 contingent / invalidated 部分，并由 Taskbook Completion Hook 判断最终 coverage；这一增强不能改变 Goal 或把 Verification/Evidence/Hook node 化。对应 S2、S15–S17、S25–S34。
 
 当前候选 source-level review：**6/6 PASS**。
 
@@ -219,28 +234,29 @@ B. main 上的 Northstar
 C. 当前候选 Northstar
 ```
 
-Leader 用其原始 skill；Northstar 用各自版本。不要把 Leader 当答案 oracle，只比较同一任务最终行为。优先使用 S1–S31 的 repo-grounded 版本；FSRuntime 类 case 必须携带真实 production binding / repo verification authority，而不是只给答案暗示。
+Leader 用其原始 skill；Northstar 用各自版本。不要把 Leader 当答案 oracle，只比较同一任务最终行为。优先使用 S1–S34 的 repo-grounded 版本；FSRuntime 类 case 必须携带真实 production binding / repo verification authority，而不是只给答案暗示。
 
 每项按 0–2 评分：
 
 | Dimension | 0 | 1 | 2 |
 | --- | --- | --- | --- |
 | Goal fidelity | 改写/发明 Goal | 大体正确但混入手段或额外条件 | 结果、边界、must-preserve、Human authority 准确 |
-| Execution / Graph fidelity | 机械顺序/错误依赖或 Graph 泛化 | 静态依赖大体正确但 runtime adaptation 弱 | 简单保持线性，真实 branch/join/write ownership 正确，Evidence 能修正剩余 frontier |
-| Verification granularity | 验证乱放或固定套餐 | 大体覆盖但重复/粒度偏差 | Task/Group/Goal coverage 与真实行为边界匹配 |
+| Execution / Graph fidelity | 过度 lazy、机械顺序、错误依赖或 Graph 泛化 | 已知结构大体正确但 contingent adaptation 弱 | 当前已知 work/relations 充分编译，真实 branch/join/write ownership 正确，Evidence 只修正 contingent/invalidated frontier |
+| Verification granularity | 固定套餐、预编译未来 topology 或漏 runtime trigger | coverage 大体正确但 placement/展开时机偏差 | 已知 obligation/action 编译，runtime-dependent verification 在真实 trigger 后放到最低有意义边界 |
 | Repo verification scope | 根据任务标签猜 scope | 部分使用 repo authority | 根据真实 reachability/effective binding 完整推导且不过度验证 |
 | Evidence quality | 接受自证/不可复核/过期/假绿 | 能发现部分问题 | provider 可运行、provenance 完整、freshness 与 judge/baseline 判断准确 |
 | Anti-false-pass | 被 skip/mock/threshold/可见样本迎合骗过 | 能拦部分 | protected/reverse/private/independent mechanism 按风险正确触发且不过度 |
+| Goal closure | Task/frontier 空就结束，或固定增加 Final stage | 能发现部分 Goal gap 但仍有 ceremony/遗漏 | Completion Hook 用 Goal/constraints/triggered Verification/current Evidence 正确 stop / continue / block |
 | Human intervention | 需要持续推进/重问事实 | 少量不必要介入 | 只在 Human-owned decision 真未决时介入 |
-| Complexity / context cost | 多份 owner、重复 discovery/verification、保留冲突 snapshot 或大量无关展开 | 有少量冗余或重复取得 | one-owner、复用仍有效结果、只替换受影响 state，只保留 decision-relevant context/work |
+| Complexity / context cost | 多份 owner、重复 discovery/verification、保留冲突 snapshot 或大量 speculative 展开 | 有少量冗余或重复取得 | one-owner、复用仍有效结果、只替换受影响 state，已知结构充分但不猜 contingent future |
 
 ### Behavioral pass gate
 
 - C 在关键 case 不得出现新的 critical regression；
 - S5、S6 必须同时正确，避免漏 production verification 和机械 replay 两个方向的偏差；
-- S15–S17、S25–S31 必须证明 static Graph 只是启动 snapshot，runtime 能在同一稳定 Goal/taskbook 下按 Evidence 演化最小 decision-relevant state，而不是新增 scheduler/state machine、预先展开未来、重复取得仍有效结果或保留相互冲突的 authoritative snapshot；
+- S15–S17、S25–S34 必须证明 Taskbook 是 best-known complete 而非过度 lazy，同时 runtime 能在同一稳定 Goal/taskbook 下按 Evidence 演化 contingent / invalidated state，不新增 scheduler/state machine、不预先猜未来 Verification topology、不重复取得仍有效结果、不保留相互冲突的 authoritative snapshot，并由 Taskbook Completion Hook 正确 closure；
 - S18–S24 用于判断 Task 0、provider validity 和 Leader-style verification/evidence 机制是否真的减少 false-pass / wrong-path，而不会制造固定 warmup ceremony；
-- 只有 C 在关键 case 至少不弱于 Leader/main，并在成功率、false-pass、Human intervention 或 context cost 中有实际增益，才能宣称进一步对齐带来行为收益。
+- 只有 C 在关键 case 至少不弱于 Leader/main，并在 completion、false-pass、Human intervention 或 context cost 中有实际增益，才能宣称进一步对齐带来行为收益。
 
 ## Claim boundary
 
