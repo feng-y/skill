@@ -14,7 +14,7 @@ Verification
 Evidence
 ```
 
-物理结构保持稀疏：**one fact, one owner**。只物化会改变执行判断的信息；空 section、重复 context 和 speculative future work 都省略。任务书是启动合同，不是对未来执行的完整模拟。
+运行时只维护**能改变下一判断的最小 authoritative state**：one fact, one owner；仍有效的 discovery / Evidence 直接复用；新 Evidence 只让受影响的旧 state 失效或被替换；未来工作只有在成为 decision-relevant 后才物化。空 section、重复 context 和 speculative future work 都省略。任务书是启动合同，不是对未来执行的完整模拟。
 
 ## Goal
 
@@ -46,7 +46,9 @@ Evidence
 ready work → execute / probe → applicable Verification → Evidence → update affected remaining Execution / Graph / Verification → continue / stop
 ```
 
-PASS 和 FAIL 都会更新对现实的判断。只要 Goal、已确认边界、Human authority 和 required Verification 仍稳定，Evidence 可以增加、删除、拆分、合并或重排剩余工作，改变受影响 verification scope，或证明已有工作仍然有效。失败如果推翻 premise、dependency、affected surface、provider validity 或既有 Evidence 前提，先修正受影响的剩余执行状态再继续；不要把同一路线重复尝试当 progress。真正越过稳定边界时，按 [SKILL.md](../SKILL.md) 路由，不在这里再编码第二套控制流。
+每个 decision boundary 都从当前 authoritative Evidence 重新判断，而不是维护多份相互同步的计划副本：仍有效的事实、discovery 和 Evidence 直接复用；被新 Evidence 推翻的 state 只在其 semantic owner 处失效或替换；只物化足以改变下一 material judgment 的最小 execution delta。多个安全 probe / task 都能缩小同一个 gap 时，优先成本更低且更可能改变 Execution / Verification 判断的那个，再让新 Evidence 决定后续工作。
+
+只要 Goal、已确认边界、Human authority 和 required Verification 仍稳定，就继续同一本 taskbook；Evidence 可以改变受影响的剩余工作和 verification scope，而不重建整个执行计划。真正越过稳定边界时，按 [SKILL.md](../SKILL.md) 路由，不在这里再编码第二套控制流。
 
 ## Verification
 
@@ -81,6 +83,7 @@ Handoff 前只确认：
 - 一个稳定 Goal 和 material authority constraint 已各自表达一次；
 - 至少一个 Task 或必要 Task 0 可立即开始，并且只物化当前有证据支持的 Task / relation；
 - required Verification 不重复，且 Goal-level coverage 仍可达到；
+- 当前 execution state 没有同一事实的多份 authoritative copy，也没有重取前提未变化的 discovery / Evidence；
 - 最终 Evidence 可判卷，并且没有新增 Completion/Acceptance、scheduler、Graph engine 或固定 Agent topology。
 
 不会改变执行判断的内容，直接省略。
