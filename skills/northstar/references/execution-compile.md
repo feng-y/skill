@@ -14,7 +14,7 @@ Verification
 Evidence
 ```
 
-运行时只维护**能改变下一判断的最小 authoritative state**：one fact, one owner；仍有效的 discovery / Evidence 直接复用；新 Evidence 只让受影响的旧 state 失效或被替换；未来工作只有在成为 decision-relevant 后才物化。空 section、重复 context 和 speculative future work 都省略。任务书是启动合同，不是对未来执行的完整模拟。
+物理结构保持稀疏：**one fact, one owner**。只维护能改变下一判断的最小 authoritative state；空 section、重复 context 和 speculative future work 都省略。任务书是启动合同，不是对未来执行的完整模拟。
 
 ## Goal
 
@@ -46,9 +46,7 @@ Evidence
 ready work → execute / probe → applicable Verification → Evidence → update affected remaining Execution / Graph / Verification → continue / stop
 ```
 
-每个 decision boundary 都从当前 authoritative Evidence 重新判断，而不是维护多份相互同步的计划副本：仍有效的事实、discovery 和 Evidence 直接复用；被新 Evidence 推翻的 state 只在其 semantic owner 处失效或替换；只物化足以改变下一 material judgment 的最小 execution delta。多个安全 probe / task 都能缩小同一个 gap 时，优先成本更低且更可能改变 Execution / Verification 判断的那个，再让新 Evidence 决定后续工作。
-
-只要 Goal、已确认边界、Human authority 和 required Verification 仍稳定，就继续同一本 taskbook；Evidence 可以改变受影响的剩余工作和 verification scope，而不重建整个执行计划。真正越过稳定边界时，按 [SKILL.md](../SKILL.md) 路由，不在这里再编码第二套控制流。
+每个 decision boundary 只从当前 authoritative Evidence 推导**下一项最小充分 execution delta**，不维护第二份计划状态。多个安全 probe / task 都能缩小同一个 gap 时，优先成本更低且更可能改变 material Execution / Verification 判断的那个，再让新 Evidence 决定后续工作。只要 Goal、已确认边界、Human authority 和 required Verification 仍稳定，就继续同一本 taskbook；真正越过稳定边界时按 [SKILL.md](../SKILL.md) 路由。
 
 ## Verification
 
@@ -72,7 +70,7 @@ Required Verification 跟真实 impact/reachability 和 repo verification author
 
 Executor 的活动说明或自报 `PASS` 只是输入，不是最终 Evidence。判断方能以合理成本访问权威环境时，对最终结论关键的 repo-authoritative Evidence 直接重新取证；否则要求可复现 provenance。缺失、stale、coverage 不足或 judge 被削弱的 Evidence 都不能支持 PASS。
 
-Evidence 只让受影响的结论失效：版本、环境、对象、binding/config、上游行为或 judge 前提没有改变时直接复用，不因为 Graph 变化或进入更高层 Verification 就机械重取。
+Evidence 只让受影响的结论失效：版本、环境、对象、binding/config、上游行为或 judge 前提没有改变时直接复用，不因为 Graph 变化或进入更高层 Verification 就机械重取。新 Evidence 推翻旧 claim 时，在原 semantic owner 处替换或失效旧状态，不保留相互冲突的有效副本。
 
 最终报告保持很小：实际交付、决定性 Evidence、精确 residual/blocker（若有）、下一条合规路径。不要回放整个执行历史。
 
