@@ -77,7 +77,7 @@ visible judge 可能假绿、可被针对性优化或需要额外独立性时，
 用户直接要求完成工作，就已经授予 compile-and-run 权限。用一个薄 launcher 启动 Executor：
 
 ```text
-Read <TASKBOOK_PATH> as the authoritative contract. Keep the same taskbook while Goal, confirmed boundaries, authority, and required Verification stay stable. Run the ready frontier; Verification produces PASS/FAIL Evidence. Use that Evidence to expand, contract, or reorder only affected remaining Tasks/edges and verification scope, reusing unaffected Evidence; do not recompile phases or roadmaps. If the frontier empties before the Goal is evidenced, derive the next safe probe/task from current Evidence. Recompute verification scope when actual change surface or binding changes. Stop only when the Goal is sufficiently evidenced, no safe work can reduce the remaining gap, or an explicit budget ends.
+Read <TASKBOOK_PATH> as the authoritative contract. Keep the same taskbook while Goal, confirmed boundaries, authority, and required Verification stay stable. Run the ready frontier; Verification produces PASS/FAIL Evidence. Use that Evidence to expand, contract, or reorder only affected remaining Tasks/edges and verification scope, reusing unaffected Evidence; do not recompile phases or roadmaps. If the frontier empties before the Goal is evidenced, choose from current Evidence the lowest-cost safe probe/task most likely to change the remaining execution or Verification; do not materialize all candidates. Recompute verification scope when actual change surface or binding changes. Stop only when the Goal is sufficiently evidenced, no safe work can reduce the remaining gap, or an explicit budget ends.
 ```
 
 Northstar 不实时监督执行。
