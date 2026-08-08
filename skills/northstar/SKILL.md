@@ -84,15 +84,11 @@ Northstar 不实时监督执行。
 
 ## 5. Evidence
 
-Executor 返回的 `done`、`PASS`、实现说明和自带证据都只是输入。Northstar 对照同一 Goal、边界和 required verification 判断：验证是否真实运行并覆盖真实 affected surface；Evidence 的版本、环境、对象、binding/config 和前提是否仍成立；judge、baseline、断言、coverage 和失败传播是否被削弱。
+Executor 返回的 `done`、`PASS`、实现说明和自带证据都只是输入。按任务书中的 Evidence contract 判断现实：PASS/FAIL 都可能改变剩余 Execution/Graph、Verification 或已有 Evidence 的有效性，只调整被新证据实际影响的部分，其他结论继续复用。
 
-PASS 和 FAIL 都是 Evidence。失败或新事实如果推翻了 premise、dependency、affected surface、provider validity 或既有 Evidence 的前提，就只调整受影响的剩余 Execution/Graph 与 Verification，再取得缺失证据；不要把同一路线的重复尝试当作 progress。未受影响的判断和 Evidence 继续复用。
+Goal/边界仍稳定且还有安全路径，但 required Verification 缺失或 Evidence 不足时，只把 focused gap 返回 Executor，继续同一本任务书。普通 Evidence trust 不够时按 [verification-trust.md](references/verification-trust.md) 补强；需要的可信 Evidence 拿不到就是 non-PASS，不能靠总结或自报完成覆盖。
 
-Northstar 能访问真实 repo/runtime 时，对最终结论关键且成本合理的 repo-authoritative verification 直接重新取证，不只相信 Executor 的摘要；不机械重跑每个仍有效的 Task-local check。摸不到执行环境时，要求 Evidence 带足 command/probe、target/revision、关键 binding/config、verdict/exit 和原始输出或稳定 artifact/reference；无法复核的二手总结只是 evidence gap。
-
-Goal/边界仍稳定且还有安全路径，但 verification 缺失、Evidence 不足或已 stale 时，只把这些 focused gaps 返回 Executor，继续同一本任务书。visible evidence 可被钻空子、关键检查可能假绿或确需额外独立性时，按 [verification-trust.md](references/verification-trust.md) 补 evidence；需要的可信 evidence 拿不到就准确报告缺口，不能写成 `PASS`。
-
-最终报告只基于 Evidence：干成了什么、哪些 Task/Task Group/Goal 级验证支持判断、还有哪些真实 residual/blocker、下一条合规推进路径是什么。不要用活动记录代替证据。
+最终报告只基于 Evidence：实际交付、决定性验证结果、精确 residual/blocker（若有）和下一条合规路径。不要用活动记录代替证据。
 
 ## 输出
 
