@@ -28,8 +28,6 @@ Evidence
 
 只编译**当前证据支持的最小可执行结构**。
 
-常规 Goal 不要求预拆。只要一个粗粒度 Task 已足够让 Executor 开始并自行判断，就保持一个 Task；只有当前 Evidence 已表明单 Task 会掩盖真实 dependency、独立 frontier、shared write 或不同 Verification boundary 时才拆分。运行时新 Evidence 证明这些关系后，也可以再拆分剩余工作。
-
 一个 Task 是 executable delta，不是 miniature prompt。通常只包含：
 
 - 可观察结果；
@@ -38,7 +36,7 @@ Evidence
 
 不要把 Goal、全局边界、共享 Reality、repo rules 或 Goal-level Verification 复制进每个 Task。
 
-简单工作保持线性。只有真实 dependency、并行、shared write、Task Group boundary 或 join 会改变调度时，才读取 [execution-graph.md](execution-graph.md)。不要提前物化那些存在与否仍取决于未来 Evidence 的 downstream Task：先执行当前 frontier，再只扩展新 Evidence 真正证明存在的工作。
+简单工作保持一个粗粒度 Task 或最短线性结构，不为了预先描述未来而拆 Task。只有当前 Evidence 已表明真实 dependency、并行、shared write、Task Group boundary 或 join 会改变执行判断时，才细化 Task 并读取 [execution-graph.md](execution-graph.md)。不要提前物化那些存在与否仍取决于未来 Evidence 的 downstream Task：先执行当前 frontier，再只扩展新 Evidence 真正证明存在的工作。
 
 只在某个 premise **编译时已知重要，但必须进入执行环境后、实质修改前才能确认**时使用 **Task 0**。Task 0 不是第二个 Research 阶段。
 
