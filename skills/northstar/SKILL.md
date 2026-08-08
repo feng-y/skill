@@ -32,8 +32,8 @@ Goal 定义 Human 真正要达到的结果、边界、必须保持什么和最�
 先用与后果相称的证据消解事实 Unknown。只路由剩余未决项：
 
 - 当前可查事实 → 调研；
-- 只有执行环境才能确认的事实 → Task 0；
-- 怎么实现 → Executor；
+- 只有执行环境才能确认，且在实质修改前确认会显著改善 execution grounding、稳定性、路线判断或 required Verification 的关键事实 → Task 0；
+- 其余执行事实与怎么实现 → Executor 按需探查和判断；
 - 不改变 Goal/边界/明确验证要求且可以回退的选择 → Northstar 可以做公开、未确认的 delegated default；
 - 会改变 Goal、边界、Human 明确验证要求、优先级或授权的选择 → Human；
 - 前置条件不可用但仍有安全工作 → 暂停受影响分支；
@@ -47,7 +47,7 @@ Goal 已定准，意味着唯一、内部一致且由 Human 决定的结果、wh
 
 自己能查的一律先查，不拿事实问题问 Human。只补足会改变 Goal、Execution、Verification 或 Evidence 判断的 context；已经足以继续时停止扩展。
 
-核对真实 workspace、约束性规格/测试、关键命令、基线、依赖和 repo verification authority。文档和命令先当待验证声明；只有执行环境才能回答的事实放进 Task 0。重要结论必须能回到 source pointer 或可复现观察，摘要本身不是 proof。
+核对 Handoff 正确性真正依赖的 workspace、约束性规格/测试、关键命令、基线、依赖和 repo verification authority。文档和命令先当待验证声明；执行前确认具有高信息价值、但只有真实执行环境才能回答的关键事实放进 Task 0，其余执行现实交给 Executor 按需发现。重要结论必须能回到 source pointer 或可复现观察，摘要本身不是 proof。
 
 ## 2. Ask
 
@@ -61,8 +61,9 @@ Northstar 替 Human 作出的可回退决定必须公开标明仍未确认，并
 
 - **Goal** 直接写成功时必须成立和必须保持的结果；
 - **Execution / Graph** 按当前已知真实依赖组织 Task；简单任务保持线性，只有线性列表会掩盖真实关系时才读取 [execution-graph.md](references/execution-graph.md)。编译出的 Graph 是启动 snapshot，不冻结运行时剩余 Graph；
+- **Task 0** 是可选、bounded 的 execution warmup，只用于在主要执行前关闭少量高价值 Unknown；它不成为第二个 Research 阶段或固定 checklist；
 - **Verification** 保留 Task / Task Group / Goal 三种粒度，并从真实 impact/reachability、repo verification authority 和 Human 明确验证要求推导 required verification；
-- 预期 `0-diff`、cleanup 或 refactor 不能降低已经由事实或 Human 明确要求触发的验证；执行期才能确认的 trigger 放进 Task 0；
+- 预期 `0-diff`、cleanup 或 refactor 不能降低已经由事实或 Human 明确要求触发的验证；执行期才能确认且值得在主要修改前关闭的 trigger 可放进 Task 0；
 - test/build/replay/static probe 等只是 repo evidence provider，不默认编译固定套餐。
 
 一本任务书只承载一个 Goal。做不到时回到 Intent Take 缩小 Human 本次要的交付，不新增 workflow、scheduler、manager 或无边界 Graph。
