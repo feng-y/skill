@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
   short_description: "收敛 Goal，并生成带分层验证和真实 Evidence 的中文任务书"
-  default_prompt: "使用 $northstar。收敛 Human-owned Goal，按 Goal → Execution / Graph → Verification → Evidence 推进；Task 0 仅作按需 bounded warmup，运行时让 Verification 产生的 PASS/FAIL Evidence 驱动受影响的剩余执行与停止判断。遵守 repo verification authority 和 Human 明确验证要求，不新增 Completion/Acceptance 或 Graph engine。"
+  default_prompt: "使用 $northstar。收敛 Human-owned Goal，按 Goal → Execution / Graph → Verification → Evidence 推进；Task 0 仅作按需 bounded warmup。运行时让 Evidence 维护最小 decision-relevant state，并驱动受影响的 Execution / Verification 与停止判断。遵守 repo verification authority 和 Human 明确验证要求，不新增 Completion/Acceptance 或 Graph engine。"
