@@ -28,8 +28,6 @@ Do not add Completion/Acceptance semantics.
 
 Compile the **minimum currently justified executable structure**.
 
-Routine Goals do not need to be decomposed up front. If one coarse Task is enough for the Executor to start and judge implementation, keep one Task. Split only when current Evidence shows that a single Task would hide a real dependency, independent frontier, shared write, or distinct Verification boundary. New runtime Evidence may split remaining work later when those relationships become real.
-
 A Task is an executable delta, not a miniature prompt. Normally it contains only:
 
 - observable result;
@@ -38,7 +36,7 @@ A Task is an executable delta, not a miniature prompt. Normally it contains only
 
 Do not repeat Goal, global boundaries, shared reality, repo rules, or Goal-level Verification inside Tasks.
 
-Keep execution linear unless real relationships change scheduling. Read [execution-graph.md](execution-graph.md) only for real dependency, parallelism, shared writes, Task-Group boundaries, or joins. Do not materialize downstream Tasks whose existence depends on Evidence not yet obtained: execute the current frontier first, then expand only what new Evidence makes real.
+Keep simple work as one coarse Task or the shortest linear structure; do not split Tasks just to describe the future up front. Refine Tasks and read [execution-graph.md](execution-graph.md) only when current Evidence shows a real dependency, parallelism, shared write, Task-Group boundary, or join that changes execution judgment. Do not materialize downstream Tasks whose existence depends on Evidence not yet obtained: execute the current frontier first, then expand only what new Evidence makes real.
 
 Use **Task 0** only for a compile-time-known premise that matters before material change but can be established only in the execution environment. Task 0 is not another research phase.
 
