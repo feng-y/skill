@@ -1,29 +1,37 @@
 # Execution Graph: Static Compile and Runtime Evolution
 
-Use only when a linear Task list would hide real dependency, parallelism, shared writes, or a meaningful Task-Group verification boundary. Graph carries **currently evidenced execution relationships** only; it does not define Goal, Verification, or Evidence.
+Use only when a linear Task list would hide a relationship that changes execution judgment: real dependency, parallelism, shared writes, a meaningful Task-Group boundary, or a join.
+
+Graph carries **currently evidenced execution relationships** only. It is not a semantic SOT, future-work inventory, scheduler, or workflow model.
 
 ## Static compile
 
-At Handoff, the Graph is the best-known snapshot supported by current reality, not a frozen workflow:
+Compile the **minimum currently justified graph**:
 
-- `depends on` — only when downstream work truly consumes an upstream result or the upstream result is a safe-execution prerequisite;
-- `may run in parallel` — when there is no dependency or write conflict;
-- `verify group at boundary` — when a coherent set of Tasks together establishes combined behavior or a shared contract that local verification cannot establish; place the broader judge before dependent work consumes it or at the join;
-- `reverify at join` — when parallel work can continue but later changes may invalidate existing Evidence.
+- `depends on` only when downstream consumes an upstream result or requires it for safe execution;
+- `may run in parallel` only when there is no dependency or write conflict;
+- a Task-Group/join boundary only when combined Verification is materially different from local checks;
+- re-verification only when later work may invalidate existing Evidence.
 
-Omit transitive edges and do not turn mere sequence into dependency. Keep simple work linear; do not manufacture nodes, branches, or Task Groups just to have a Graph.
+Omit transitive edges and mere sequence. Do not invent nodes to make a graph look complete.
 
-## Runtime Graph
+Most importantly, do not materialize downstream Tasks whose existence depends on evidence not yet obtained. If A determines whether B/C/D are needed, compile A and the known decision boundary; let runtime Evidence materialize only the work that becomes real.
 
-The Executor runs the current ready frontier, not a frozen static order. When new Evidence changes execution reality, update only the **remaining Graph**:
+## Runtime evolution
 
-- discover a real new prerequisite or consumer → add the Task/dependency before affected downstream work;
-- prove an assumed dependency is false → remove the edge and unblock independent work;
-- implementation reality changes → split, merge, or reorder remaining Tasks as needed;
-- one branch is Blocked but another is independent → continue ready work; a join waits only for real dependencies;
-- actual change surface, effective binding/config, or a shared contract changes → recompute affected Verification scope and join Evidence;
-- completed work is not mechanically reopened when the Graph changes; reacquire Evidence only when its premises are affected or a new combined boundary requires broader Verification.
+Executor works the current ready frontier. New Evidence may change only the remaining graph:
 
-The static Graph is the starting execution structure; the runtime Graph is the Evidence-driven current execution state. What changes is the remaining execution relationship, not Goal, Human authority, or still-applicable required Verification.
+- add a newly proven prerequisite, consumer, or affected surface before dependent work;
+- remove a disproven dependency or unnecessary branch;
+- split, merge, or reorder remaining Tasks when implementation reality changes;
+- continue independent ready work when another branch is blocked;
+- wait at a join only for real required upstream results;
+- recompute affected Verification when change surface, binding/config, or combined behavior changes.
 
-A Task Group is only a combined Verification boundary over ordinary Tasks. Do not introduce a separate Graph object, schema, persistent state, scheduler, or fixed Agent topology. Reuse normal repo/runtime progress state when it exists; otherwise keep the current frontier in execution context rather than creating a Graph control plane. Write ownership and Evidence requirements remain in ordinary Task contracts. Every branch eventually rejoins or reaches an explicit terminal route; do not create multiple taskbooks.
+Completed work is not reopened mechanically. Reacquire Evidence only when its premise or the behavior it proved was affected.
+
+A Task Group remains only a Verification boundary over ordinary Tasks. Do not create a Graph object/schema, persistent Graph state, scheduler, fixed Agent topology, or a second taskbook. Use normal repo/runtime progress records when they already exist; otherwise keep the current frontier in execution context.
+
+The stable rule is:
+
+> **Materialize what current Evidence makes executable; expand the graph when new Evidence makes more work real.**
