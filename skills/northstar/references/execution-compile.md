@@ -28,6 +28,8 @@ Evidence
 
 只编译**当前证据支持的最小可执行结构**。
 
+常规 Goal 不要求预拆。只要一个粗粒度 Task 已足够让 Executor 开始并自行判断，就保持一个 Task；只有当前 Evidence 已表明单 Task 会掩盖真实 dependency、独立 frontier、shared write 或不同 Verification boundary 时才拆分。运行时新 Evidence 证明这些关系后，也可以再拆分剩余工作。
+
 一个 Task 是 executable delta，不是 miniature prompt。通常只包含：
 
 - 可观察结果；
