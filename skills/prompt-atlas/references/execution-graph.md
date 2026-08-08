@@ -4,6 +4,8 @@ Use only when a linear Task list would hide a relationship that changes executio
 
 Graph carries **currently evidenced execution relationships** only. It is not a semantic SOT, future-work inventory, scheduler, or workflow model.
 
+Task refinement and Graph expansion follow the same pace. Do not split Tasks merely to expose a Graph. Keep a coarse Task when it is already sufficient to execute; split remaining work and add relationships only when current or runtime Evidence proves a real dependency, independent frontier, shared write, or distinct Verification boundary.
+
 ## Static compile
 
 Compile the **minimum currently justified graph**:
