@@ -1,10 +1,8 @@
 # 执行图：静态编排与运行时演化
 
-只有线性 Task 列表会掩盖**会改变执行判断的关系**时才使用 Graph：真实 dependency、并行、shared write、有意义的 Task Group boundary 或 join。
+不要为了画 Graph 先拆 Task。只有当前 Task 粒度会掩盖**会改变执行判断的关系**时才使用 Graph：真实 dependency、并行、shared write、有意义的 Task Group boundary 或 join。
 
 Graph 只承载**当前 Evidence 已经支持的执行关系**。它不是 semantic SOT、未来工作清单、scheduler 或 workflow model。
-
-Task 拆分和 Graph 展开保持同一节奏：不要为了“画出 Graph”先拆 Task。一个粗粒度 Task 已足够执行时保持原样；只有当前或运行时 Evidence 证明其中存在真实 dependency、独立 frontier、shared write 或不同 Verification boundary 时，再拆分剩余工作并补上对应关系。
 
 ## 静态编排
 
