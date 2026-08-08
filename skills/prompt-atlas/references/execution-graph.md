@@ -1,10 +1,8 @@
 # Execution Graph: Static Compile and Runtime Evolution
 
-Use only when a linear Task list would hide a relationship that changes execution judgment: real dependency, parallelism, shared writes, a meaningful Task-Group boundary, or a join.
+Do not split Tasks just to expose a Graph. Use Graph only when the current Task granularity would hide a relationship that changes execution judgment: real dependency, parallelism, shared writes, a meaningful Task-Group boundary, or a join.
 
 Graph carries **currently evidenced execution relationships** only. It is not a semantic SOT, future-work inventory, scheduler, or workflow model.
-
-Task refinement and Graph expansion follow the same pace. Do not split Tasks merely to expose a Graph. Keep a coarse Task when it is already sufficient to execute; split remaining work and add relationships only when current or runtime Evidence proves a real dependency, independent frontier, shared write, or distinct Verification boundary.
 
 ## Static compile
 
