@@ -6,27 +6,30 @@ Graph 只承载**当前 Evidence 已经支持的执行关系**。它不是 seman
 
 ## 静态编排
 
-只编译**当前证据支持的最小 Graph**：
+编译**当前证据支持的 best-known complete Graph**：已知必然存在且边界足够稳定的 work / relation 应一次表达，不为了 lazy 故意隐藏；仍实质依赖未来 Evidence 的 contingent work 不提前猜。
 
 - `depends on`：只有下游确实消费上游结果，或上游是安全执行前提时才写；
 - `may run in parallel`：没有 dependency 和 write conflict 时才写；
-- Task Group / join：只有组合 Verification 与局部检查实质不同才写；
-- re-verification：只有后续工作可能让已有 Evidence 失效时才写。
+- Task Group / join：只有组合 Verification 与局部检查实质不同且关系已经成立时才写；
+- re-verification：只有后续工作已知可能让已有 Evidence 失效时才写。
 
-省略传递依赖和单纯先后顺序，不为了让 Graph 看起来完整制造 node。
+省略传递依赖和单纯先后顺序，不为了让 Graph 看起来完整制造 node；但当前 Evidence 已经能确定 `A → {B,C} → D` 时，就直接编译这个结构，不故意退化成只给 A。
 
-更重要的是：**不要提前物化那些存在与否仍取决于未来 Evidence 的 downstream Task。** 如果 A 的结果决定是否需要 B/C/D，就只编译 A 和已知 decision boundary；等运行时 Evidence 到来后，只把真正成立的后续工作物化出来。
+只有 B/C/D **是否存在、影响范围或必要关系**仍取决于 A 的未来 Evidence 时，才只编译当前已知结构与 decision boundary；等运行时 Evidence 到来后，只把真正成立的后续工作加入同一本 Graph。
 
 ## 运行时演化
 
 Executor 面对当前 ready frontier。新 Evidence 只调整剩余 Graph：
 
-- 新的真实 prerequisite、consumer 或 affected surface 被证明存在 → 在受影响下游前增加必要工作；
+- 新的真实 prerequisite、consumer 或 affected surface 被证明存在 → 在受影响下游前增加必要 work；
 - 原 dependency 或 branch 被证明不存在 → 删除，让 ready work 继续；
 - implementation reality 改变 → 拆分、合并或重排剩余 Task；
 - 一个分支 Blocked，但其他分支独立 → 继续 ready work；
 - join 只等待真实 required upstream result；
-- actual change surface、binding/config 或组合行为变化 → 重算受影响 Verification。
+- actual change surface、binding/config、provider validity 或组合行为使新的 Verification obligation/action 真实适用 → 把该 verification/probe 作为当前 execution action 放在最低有意义边界；
+- 已编译 Verification 的 scope/placement 被新 Evidence 推翻 → 只修正受影响部分。
+
+这里不创建 ImplementationNode / ProbeNode / VerificationNode 等 taxonomy：实现、probe、verification 都只是当前需要执行的 action，Graph 只表达它们之间真实存在的关系。**Evidence 是 action 的 reality output，Completion Hook 是 Taskbook 的 judgment；两者都不是 Graph node。**
 
 已完成工作不因 Graph 改写机械重开；只有它的 Evidence 前提或所证明行为被影响时才重新取证。
 
@@ -34,4 +37,4 @@ Task Group 仍然只是普通 Task 之上的 Verification boundary。不要增�
 
 稳定规则只有一句：
 
-> **当前 Evidence 让什么真正可执行，就物化什么；新的 Evidence 让更多工作成为现实后，再扩展 Graph。**
+> **已知且足够稳定的 execution structure 一次编译；真正 contingent 的 work / Verification 由 Evidence 使其成为现实时再扩展 Graph。**
