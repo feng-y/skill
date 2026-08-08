@@ -4,6 +4,8 @@
 
 Graph 只承载**当前 Evidence 已经支持的执行关系**。它不是 semantic SOT、未来工作清单、scheduler 或 workflow model。
 
+Task 拆分和 Graph 展开保持同一节奏：不要为了“画出 Graph”先拆 Task。一个粗粒度 Task 已足够执行时保持原样；只有当前或运行时 Evidence 证明其中存在真实 dependency、独立 frontier、shared write 或不同 Verification boundary 时，再拆分剩余工作并补上对应关系。
+
 ## 静态编排
 
 只编译**当前证据支持的最小 Graph**：
