@@ -127,7 +127,7 @@ Graph 为 `A → {B,C} → D`。B 因缺权限 Blocked，C 与 B 无依赖也无
 ### S18 — Named verification provider does not actually work
 任务书引用 `./verify.sh`；实际环境中脚本不存在，或总是 exit 0 且不检查目标。
 
-通过：该 provider 不产生有效 Evidence；能提前发现就在 compile 前纠正，只能执行期发现则 Task 0 暴露并选择 repo-authoritative替代项或准确 Block。不得把“命令名写进任务书”当 proof。
+通过：该 provider 不产生有效 Evidence；能提前发现就在 compile 前纠正，只能执行期发现且在主要修改前确认有明显价值时由 Task 0 暴露，否则在真正使用时暴露并选择 repo-authoritative 替代项或准确 Block。不得把“命令名写进任务书”当 proof。
 
 ### S19 — Final judge can access repo/runtime
 Executor 提交完整实现并带 visible test 输出；Northstar/判断方仍能访问相同权威环境，且一个 Goal-level regression suite 成本合理。
@@ -149,18 +149,33 @@ Executor 为让 suite 通过，修改了 assertion/threshold、skip 了失败 ca
 
 通过：H1 可以继续作为明卷，但不能再计算 private/independent trust；若风险仍需要不可针对性优化的 Evidence，必须使用仍隔离的其他 check 或受保护 judge。
 
-当前候选 source-level review：**22/22 PASS**。
+### S23 — Task 0 is not a default ceremony
+一个简单局部修改已经有明确 repo/target、可信局部测试和稳定 execution route；没有任何事实需要在主要修改前提前关闭。
+
+通过：直接执行普通 Task，不为了“先熟悉环境”机械创建 Task 0。普通实现细节和低价值 execution fact 在真正需要时再探查。
+
+### S24 — Task 0 is bounded warmup, not a research phase
+任务书依赖一个只能在真实 runtime 解析的 production binding，以及一个历史上可能空跑的关键 verification provider；二者会直接改变执行路线或 required Verification。其他模块结构、未来实现分支和无关依赖都可在执行中按需发现。
+
+通过：Task 0 只核对这两个高价值 Unknown，并在 Evidence 足以安全开始后立即结束；不得把它扩展成 repo 全扫描、架构调研、完整 dependency discovery 或提前规划全部 downstream Task。
+
+### S25 — Verification failure changes the next judgment
+Task A 的定向 verification 失败，原始输出证明一个关键 premise 不成立，并使后续 B 的 dependency 与 verification scope 发生变化；另一个独立分支 C 的 Evidence 前提未受影响。
+
+通过：FAIL 作为 Evidence，先修正受影响 premise、剩余 Graph 和 Verification 再继续；不得在原假设不变时机械重试 A。C 及其仍有效 Evidence 继续复用，不因一次失败全量重跑。
+
+当前候选 source-level review：**25/25 PASS**。
 
 ## Leader-reference smoke
 
 Leader 只作为 frozen reference input，不作为正确性 oracle。这里对齐的是可验证的行为机制，不复制 `/goal`、4000 字符、固定文件或固定 agent topology。
 
-1. **命令/判卷入口先证实。** Leader 要求命令亲手跑过，摸不到环境放任务 0；Northstar 应等价保证 provider 在真实运行并传播失败前只是一条声明。对应 S18。
+1. **命令/判卷入口先证实。** Leader 要求命令亲手跑过，摸不到环境放任务 0；Northstar 保留其 grounding / premise / judge sanity 价值，同时用 S23/S24 防止 Task 0 退化成固定前置 Research。provider 在真实运行并传播失败前仍只是一条声明。对应 S18、S23、S24。
 2. **防作弊与判卷标准保护。** Leader 明确防 skip、放松断言、mock 绕开、删测试、改阈值/脚本和吞失败；Northstar 应让被削弱 judge 产生的绿灯失效，而不是机械冻结所有指标。对应 S10、S21。
 3. **反向验证。** Leader 对“坏了没人知道”的检查要求故意制造失败；Northstar 只在 silent-failure 风险存在时使用，且不让它替代行为验证。对应 S11。
 4. **明卷/暗卷。** Leader 固定保留 2–3 条暗卷；Northstar 不先验要求固定数量，但当 visible judge 可被针对性优化时必须能形成隔离的 private Evidence，泄露后失去 private value。对应 S10、S12、S22。
 5. **执行者不能靠自报完成。** Leader 由管理者复跑明卷/暗卷；Northstar 不建立 Acceptance layer，但在判断方有权威环境时重新取得关键 Evidence，摸不到环境时要求可复核 provenance。对应 S13、S19、S20。
-6. **Graph 是 Northstar 的额外能力，不是 Leader 评价标准。** 静态编排只给启动 snapshot，运行时 Evidence 可修正剩余依赖/frontier；这一增强不能改变 Goal 或把 Verification/Evidence node 化。对应 S2、S15–S17。
+6. **Graph 是 Northstar 的额外能力，不是 Leader 评价标准。** 静态编排只给启动 snapshot，运行时 Evidence 可修正剩余依赖/frontier；这一增强不能改变 Goal 或把 Verification/Evidence node 化。对应 S2、S15–S17、S25。
 
 当前候选 source-level review：**6/6 PASS**。
 
@@ -174,7 +189,7 @@ B. main 上的 Northstar
 C. 当前候选 Northstar
 ```
 
-Leader 用其原始 skill；Northstar 用各自版本。不要把 Leader 当答案 oracle，只比较同一任务最终行为。优先使用 S1–S22 的 repo-grounded 版本；FSRuntime 类 case 必须携带真实 production binding / repo verification authority，而不是只给答案暗示。
+Leader 用其原始 skill；Northstar 用各自版本。不要把 Leader 当答案 oracle，只比较同一任务最终行为。优先使用 S1–S25 的 repo-grounded 版本；FSRuntime 类 case 必须携带真实 production binding / repo verification authority，而不是只给答案暗示。
 
 每项按 0–2 评分：
 
@@ -193,8 +208,8 @@ Leader 用其原始 skill；Northstar 用各自版本。不要把 Leader 当答�
 
 - C 在关键 case 不得出现新的 critical regression；
 - S5、S6 必须同时正确，避免漏 production verification 和机械 replay 两个方向的偏差；
-- S15–S17 必须证明 static Graph 只是启动 snapshot，runtime 能按 Evidence 演化剩余 frontier，而不是新增 scheduler/state machine；
-- S18–S22 用于判断 Leader-style verification/evidence 机制是否真的减少 false-pass，不预设必须固定暗卷或固定独立 agent；
+- S15–S17、S25 必须证明 static Graph 只是启动 snapshot，runtime 能按 Evidence 演化剩余 frontier，而不是新增 scheduler/state machine；
+- S18–S24 用于判断 Task 0、provider validity 和 Leader-style verification/evidence 机制是否真的减少 false-pass / wrong-path，而不会制造固定 warmup ceremony；
 - 只有 C 在关键 case 至少不弱于 Leader/main，并在成功率、false-pass、Human intervention 或 context cost 中有实际增益，才能宣称进一步对齐带来行为收益。
 
 ## Claim boundary
