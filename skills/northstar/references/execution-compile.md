@@ -38,7 +38,7 @@ Evidence
 
 简单工作保持一个粗粒度 Task 或最短线性结构，不为了预先描述未来而拆 Task。只有当前 Evidence 已表明真实 dependency、并行、shared write、Task Group boundary 或 join 会改变执行判断时，才细化 Task 并读取 [execution-graph.md](execution-graph.md)。不要提前物化那些存在与否仍取决于未来 Evidence 的 downstream Task：先执行当前 frontier，再只扩展新 Evidence 真正证明存在的工作。
 
-只在某个 premise **编译时已知重要，但必须进入执行环境后、实质修改前才能确认**时使用 **Task 0**。Task 0 不是第二个 Research 阶段。
+**Task 0** 是可选、bounded 的 execution warmup。只有在主要执行前关闭少量 Unknown 能显著改善 grounding、路线判断、稳定性或 required Verification 时才使用：例如绑定真实 repo/worktree/target、核对 material premise 或 baseline、证明关键 judge/provider 会真实运行并传播失败、确认会改变执行路线或验证范围的 runtime fact。当前 Evidence 已足以安全开始时立即停止 warmup；普通 execution fact 留给 Executor 按需发现。Task 0 不是第二个 Research 阶段，也不是固定 checklist。
 
 运行时推进只有一条：
 
@@ -58,7 +58,7 @@ ready work → execute / probe → Evidence → update remaining Graph → conti
 
 Goal-level Verification 是最终 **coverage boundary**，不是固定额外命令。仍有效的低层 Evidence 直接复用，只补尚未覆盖或已失效的 required checks。
 
-Required Verification 跟真实 impact/reachability 和 repo verification authority 走。预期 `0-diff`、cleanup 或 refactor 不能降低已经触发的要求。具体 provider 从 repo verification system 中选择，只能证明其真实覆盖范围；只有执行环境才能确认的 provider/binding trigger 放进 Task 0。
+Required Verification 跟真实 impact/reachability 和 repo verification authority 走。预期 `0-diff`、cleanup 或 refactor 不能降低已经触发的要求。具体 provider 从 repo verification system 中选择，只能证明其真实覆盖范围；只有执行环境才能确认且值得在主要修改前关闭的 provider/binding trigger 才放进 Task 0，其余按执行需要获取。
 
 普通受保护 repo Verification 可能假绿、可被针对性优化、静默失效或确实需要 independent Evidence 时，才读取 [verification-trust.md](verification-trust.md)。
 
