@@ -63,7 +63,7 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 - `Inferred`：证据支持的解释；
 - `Unknown`：会改变 intent、boundary 或 design obligation 的未决事实。
 
-Architecture reality / judgment 一旦被当前 authoritative Evidence 支持，在相关前提未变化时直接复用；不要因为进入下一 Flow step、换 lens 或开始 Brooks/Challenge 就重新发现同一事实。新 Evidence 推翻旧 claim 时，只 reopen 受影响判断，在其 semantic owner 处替换或失效旧状态，并只更新受影响的 intent / boundary / obligation；不要同时保留相互冲突的 active snapshot。
+Architecture reality / judgment 遵循 `rules.md` 的 lifetime：相关前提未变就复用；authoritative Evidence 改变前提时只 reopen 并替换受影响判断，不保留冲突的 active snapshot。
 
 没有真实压力时返回 `Status: No architecture intent`。
 
@@ -100,7 +100,7 @@ Intent 描述结果，不提前规定 class、factory、strategy、registry 或�
 
 如果存在 Material Unknown，必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 影响判断；只命名 unknown 而不改变下一步，不算关闭。已经关闭且前提未变化的 Unknown 不重新打开。
 
-方向稳定后按需读取 `brooks-constraints.md`。Brooks R1–R6 是后续架构设计需要逐步吸收的约束：intent 阶段只携带与当前 pressure 和 desired end state 直接相关的约束，不做全量扫描、评分、PASS/RETRY 或独立报告。已有适用性 judgment 在前提未变化时直接复用；新设计事实暴露新的风险时由下游继续吸收。
+方向稳定后按需读取 `brooks-constraints.md`。Brooks R1–R6 是后续架构设计需要逐步吸收的约束：intent 阶段只携带与当前 pressure 和 desired end state 直接相关的约束，不做全量扫描、评分、PASS/RETRY 或独立报告。新设计事实暴露新的风险时由下游继续吸收。
 
 反证改变方向时替换或缩小受影响 intent；约束不适用时写明关键 guard；约束是否真正满足由后续目标设计、实现和验收证明。
 
