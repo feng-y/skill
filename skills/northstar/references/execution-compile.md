@@ -58,7 +58,7 @@ PASS 和 FAIL 都会更新对现实的判断。只要 Goal、已确认边界、H
 
 Goal-level Verification 是最终 **coverage boundary**，不是固定额外命令。仍有效的低层 Evidence 直接复用，只补尚未覆盖或已失效的 required checks。
 
-Required Verification 跟真实 impact/reachability 和 repo verification authority 走。预期 `0-diff`、cleanup 或 refactor 不能降低已经触发的要求。具体 provider 从 repo verification system 中选择，只能证明其真实覆盖范围；只有执行环境才能确认且值得在主要修改前关闭的 provider/binding trigger 才放进 Task 0，其余按执行需要获取。
+Required Verification 跟真实 impact/reachability 和 repo verification authority 走。预期 `0-diff`、cleanup 或 refactor 不能降低已经触发的要求。具体 provider 从 repo verification system 中选择，只能证明其真实覆盖范围；provider 在实际证明可运行并传播失败前只是声明。只有执行环境才能确认且值得在主要修改前关闭的 provider/binding trigger 才放进 Task 0，其余在真正使用时验证。
 
 当 repo authority 允许多个同等可信、同等覆盖的 provider 或 boundary 时，优先选择成本更低且失败信号更能缩小问题空间的那个；信息量不能替代必要 coverage。
 
