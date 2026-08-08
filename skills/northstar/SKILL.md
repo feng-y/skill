@@ -17,7 +17,7 @@ Verification
 Evidence
 ```
 
-Goal 定义 Human 真正要达到的结果、边界、必须保持什么和最终交付；不再另建 `Completion Contract` 或 `completion properties`。Execution / Graph 组织怎么推进：Handoff 时只编排当前证据支持的 best-known execution snapshot，运行时允许 Evidence 改变剩余 Task/依赖；Graph 不覆盖原有 Task 语义，也不定义 Goal、Verification 或 Evidence。Verification 决定验证什么、在哪个粒度验证；Human 明确指定的验证要求是 Verification 的 binding input，Northstar 和 Executor 不得自行降级。Evidence 是 Verification 实际产生、仍然有效且可复核的事实。`Handoff` 只是交付动作，结果返回后直接判断 Evidence 是否足以支持 Goal，不增加独立 `Acceptance` 层。
+Goal 定义 Human 真正要达到的结果、边界、必须保持什么和最终交付；不再另建 `Completion Contract` 或 `completion properties`。Execution / Graph 组织怎么推进：Handoff 时只编排当前证据支持的 best-known execution snapshot，运行时允许 Evidence 改变剩余 Task/依赖；Graph 不覆盖原有 Task 语义，也不定义 Goal、Verification 或 Evidence。Verification 决定验证什么、在哪个粒度验证；Human 明确指定的验证要求是 Verification 的 binding input，Northstar 和 Executor 不得自行降级。Evidence 是 Verification 实际产生、仍然有效且可复核的事实，也是后续 execution judgment 和最终停止判断的现实输入。`Handoff` 只是交付动作，结果返回后直接判断 Evidence 是否足以支持 Goal，不增加独立 `Acceptance` 层。
 
 三个稳定角色：**Human** 决定 Goal、已确认边界、明确验证要求、优先级和授权；**Northstar** 负责澄清、调研、写任务书、交付并依据 Evidence 判断结果；**Executor** 在稳定 Goal 和边界内负责 implementation judgment，并可按新证据调整剩余工作。私有或独立判断只是必要时提高 Evidence 可信度的手段，不建立固定 Acceptor 角色。
 
@@ -77,7 +77,7 @@ visible judge 可能假绿、可被针对性优化或需要额外独立性时，
 用户直接要求完成工作，就已经授予 compile-and-run 权限。用一个薄 launcher 启动 Executor：
 
 ```text
-Read <TASKBOOK_PATH> as the authoritative contract. Execute toward its Goal. Tasks/Graph are the current execution state, not a frozen sequence: run ready work, update the remaining graph when evidence changes dependencies or implementation reality, and keep unaffected completed evidence valid. Verify at the applicable Task / Task Group / Goal boundary and record reproducible evidence. Replan without changing Goal, confirmed boundaries, authority, or required verification. When the actual change surface or effective binding changes, recompute verification scope from repo authority. Stop when current evidence is sufficient for the Goal, no safe work remains, or an explicit budget ends.
+Read <TASKBOOK_PATH> as the authoritative contract. Execute toward its Goal. Tasks/Graph are the current execution state, not a frozen sequence: run ready work, verify at the applicable Task / Task Group / Goal boundary, and treat both PASS and FAIL as evidence. Use new evidence to update only the affected assumptions, remaining tasks/edges/frontier, and verification scope; keep unaffected completed evidence valid. Replan without changing Goal, confirmed boundaries, authority, or required verification. When the actual change surface or effective binding changes, recompute verification scope from repo authority. Stop when current evidence is sufficient for the Goal, no safe work remains, or an explicit budget ends.
 ```
 
 Northstar 不实时监督执行。
@@ -85,6 +85,8 @@ Northstar 不实时监督执行。
 ## 5. Evidence
 
 Executor 返回的 `done`、`PASS`、实现说明和自带证据都只是输入。Northstar 对照同一 Goal、边界和 required verification 判断：验证是否真实运行并覆盖真实 affected surface；Evidence 的版本、环境、对象、binding/config 和前提是否仍成立；judge、baseline、断言、coverage 和失败传播是否被削弱。
+
+PASS 和 FAIL 都是 Evidence。失败或新事实如果推翻了 premise、dependency、affected surface、provider validity 或既有 Evidence 的前提，就只调整受影响的剩余 Execution/Graph 与 Verification，再取得缺失证据；不要把同一路线的重复尝试当作 progress。未受影响的判断和 Evidence 继续复用。
 
 Northstar 能访问真实 repo/runtime 时，对最终结论关键且成本合理的 repo-authoritative verification 直接重新取证，不只相信 Executor 的摘要；不机械重跑每个仍有效的 Task-local check。摸不到执行环境时，要求 Evidence 带足 command/probe、target/revision、关键 binding/config、verdict/exit 和原始输出或稳定 artifact/reference；无法复核的二手总结只是 evidence gap。
 
