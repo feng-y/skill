@@ -4,7 +4,7 @@
 
 ## Evidence trust
 
-- **先证明 judge/provider 真能工作。** 文档里的命令、脚本名和 CI 入口都只是声明；能在 Handoff 前实测就实测，只有执行环境才能确认时放进 Task 0。不存在、空跑或不会传播失败的检查不能产生有效 Evidence。
+- **先证明 judge/provider 真能工作。** 文档里的命令、脚本名和 CI 入口都只是声明；Handoff 正确性依赖且能提前实测时就实测，必须进入执行环境后才能确认、并且在主要修改前确认能显著降低 false-green 或错误路线风险时才放进 Task 0，其余在真正使用时验证。不存在、空跑或不会传播失败的检查不能产生有效 Evidence。
 - **覆盖真实 claim。** build、lint、coverage、活动记录或局部测试只有在确实覆盖当前要判断的行为时才有证明力；provider 不能证明覆盖范围之外的事实。
 - **跟真实 affected surface 走。** verification scope 根据实际 change surface、effective binding/config 和真实 consumer/target 决定，不因 cleanup/refactor 或预期 `0-diff` 主观降级。
 - **前提仍然成立。** 版本、环境、对象、binding/config 或上游行为变化可能影响原证据时，该 Evidence 失效；未被影响的 Evidence 可以复用。
