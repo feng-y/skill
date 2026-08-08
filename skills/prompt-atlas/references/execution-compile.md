@@ -1,111 +1,116 @@
 # Autonomous Taskbook
 
-Use only after Stable Intent. Produce one compact authoritative taskbook an Executor can run without ordinary Human orchestration.
+Use only after Goal is stable. Produce one compact authoritative taskbook an Executor can run without ordinary Human orchestration.
 
-Render the final taskbook in the exact order below. Keep each section's authority and evidence role distinct; vary detail with the work, but do not merge, reorder, or hide required content in another section.
+Keep the taskbook structure and semantic ownership fixed. Compile only context that constrains a future decision, execution step, Verification requirement, or Evidence judgment. Keep large supporting material by reference; state global facts once and Task-local differences locally. Do not recompile Goal / Execution / Verification / Evidence into a separate completion or acceptance model.
 
-Compile only information that constrains a future decision, execution step, or complete-Goal proof. Keep large supporting material by reference; state global facts once and Task-local differences only; omit superseded discussion and inactive detail.
+## Verification granularity
 
-**Compile the Completion Contract before execution.** Reduce the Goal to a finite set of non-substitutable completion properties: states that must exist or disappear, behavior/compatibility/boundaries that must remain true, and any residual explicitly allowed by the Goal. Keep only necessary properties. Every property is independently required for complete-Goal PASS and must map to later proof; Task, Task-Group, and verification gates only serve those properties.
+For development work, keep three meaningful Verification granularities without adding workflow stages:
 
-Proof mechanism is not itself a completion property. Derive the verification focus from the properties, real change impact/reachability, and material failure risks, then use repo verification authority to determine gates and evidence. Verification focus is a compilation judgment, not a new taskbook section, schema, or fixed field.
+- **Task-level Verification** — the cheapest sufficient check for one local behavior, reaching the nearest valid repo-verification boundary that directly covers the affected behavior;
+- **Task-Group Verification** — broader verification at the smallest join or combined boundary where a coherent set of Tasks establishes behavior, a shared contract, migration slice, or dependency result that local checks cannot prove;
+- **Goal-level Verification** — after relevant work converges, confirm that repo-required verification for the declared delivery is sufficiently covered by still-valid Evidence. This is a final coverage boundary, not a mandatory extra final command; reuse valid Task / Task-Group Evidence and run only required checks still uncovered or invalidated.
 
-For development work, compile verification at three granularities without introducing another workflow or fixed schema:
+Lower-level PASS may unlock downstream work but cannot replace broader behavior that genuinely needs verification. Verification cost changes cadence and reuse, not whether required verification may be omitted.
 
-- **Task proof** — the cheapest sufficient evidence for one local behavior, reaching the nearest valid repo-verification boundary that directly proves the affected property; this is often an affected unit/targeted test or a more authoritative direct probe;
-- **Task-Group proof** — broader verification at the smallest join or boundary where a coherent set of Tasks establishes combined behavior, a shared contract, migration slice, or dependency-graph join that local proof cannot establish;
-- **complete-Goal proof** — the full verification required for the declared delivery after relevant Task Groups converge.
+## Repo verification authority
 
-Verification cost changes cadence, not required proof. When an expensive judge has a measured or reliably known cost, preserve that information in the taskbook where it changes scheduling; do not invent timings. Place each judge at the lowest-cost boundary that proves the required property, and run it earlier only when delaying failure would materially increase downstream rework or recovery cost.
+Before Handoff, read repo verification authority for the expected change surface. Derive required Verification from Goal, actual impact/reachability, material failure risk, and explicit Human verification requirements. Human verification requirements are binding Verification input; they are not Goal semantics and cannot be downgraded by Prompt Atlas or Executor.
 
-**Derive verification focus before gates and cadence.** Before Handoff, read repo verification authority for the expected change surface and trace changed owner, shared responsibility, or system contract to effective binding/config and affected target/capability; where production binding authority exists, follow effective production config and real consumers. Known facts that trigger a mandatory gate make that proof non-negotiable; “only cleanup/refactor” or expected `0-diff` cannot downgrade it. Put execution-only trigger derivation in Task 0 and state the proof that becomes mandatory when triggered. Select concrete evidence providers from the repo verification system and trust them only for properties they actually cover; do not default to a build/test/replay bundle or enumerate checks merely to look comprehensive. Name a concrete provider only when it is itself a protected judge, authoritative baseline, or materially reduces ambiguity.
+Trace changed owner, shared responsibility, or system contract to effective binding/config and affected target/capability. When production binding authority exists, follow effective production configuration and real consumers. Known facts that trigger required Verification make it non-negotiable; “only cleanup/refactor” or expected `0-diff` cannot downgrade it. Put execution-only trigger derivation in Task 0 and state the Verification that becomes required when triggered.
 
-For research, selection, or decision work, use the same fixed sections. In Execution, use evidence-producing investigations or decisions instead of implementation Tasks. Each conclusion needs a source/date or reproducible probe; fabricated citations, unrun “measurements”, and filler findings are failure. A well-evidenced dead end may satisfy a bounded learning Goal. State a budget for bounded learning work, stop at it, and deliver the best-supported conclusion plus counterevidence and unresolved alternatives; do not add another output section.
+Select concrete test/build/replay/static/symbol or other evidence providers from the repo verification system. A provider proves only what it actually covers. Do not default to a fixed bundle or enumerate checks for appearance. A documented command is only a claim until availability and signal propagation are evidenced; check before Handoff when possible, otherwise Task 0 owns it.
+
+Research, selection, and decision work use the same structure: Execution contains evidence-producing investigation rather than implementation. Conclusions need source/date or a reproducible probe; fabricated citations, unrun measurements, and filler findings are failure.
 
 ## Contract Header
 
-State six things briefly:
+State briefly:
 
 - this taskbook is the execution source;
-- the one Human-owned Goal;
+- the one Human-owned Goal, including what success must make true and what must remain true;
 - Why and the completed world;
-- the completion properties that must all hold and what will prove them;
+- explicit Human verification requirements, if any, plus the Goal-level verification coverage that must be established;
 - priority order when requirements conflict;
 - hard rules versus guidance.
 
-If an explicit execution stop budget applies, state it here; otherwise do not invent one for routine work.
+Goal itself defines success. Do not add a `Completion Contract`, completion properties, or another done taxonomy. Verification constrains how the Goal is proved; it does not redefine the Goal. State an execution stop budget only when one actually exists.
 
 ## 1. Delegated Decisions
 
-Place compiler-owned defaults here, before boundaries and execution, so the Human can inspect and correct them before Handoff.
+Place compiler-owned reversible defaults here, before boundaries and execution, so Human authority remains visible.
 
 Render each permitted delegated default as: decision → unconfirmed default → basis → cost if wrong → detection or rollback.
 
-If no such choice remains, state `None`; do not invent a decision to fill the section.
+If none remains, state `None`; do not invent a choice to fill the section.
 
 ## 2. Boundaries and Authority
 
-State the initial expected write scope and any protected no-write boundaries. The Executor may expand implementation scope when evidence shows it is necessary to close the Goal, provided confirmed boundaries, protected proof, and authority remain unchanged; make the reason and impact of material expansion explicit in execution evidence. Explicitly bound dependency additions or upgrades, permissions, external-system writes, destructive actions, and other irreversible side effects. Name protected tests, schemas, acceptance scripts, CI, baselines, and other judges. Call out tempting side work and irreversible actions.
+State expected write scope, protected no-write boundaries, and any authority-sensitive operations. The Executor may expand implementation scope when evidence proves it is necessary to reach Goal and sufficient Verification, provided confirmed boundaries, Human authority, and required Verification remain unchanged; material expansion must be visible in execution Evidence.
 
-State what the Executor may decide or adapt inside Stable Intent and protected proof. When an action exceeds declared authority, record a blocker pending explicit Human authority; high-risk or irreversible actions always take this route unless explicitly pre-authorized. Return to Intent Take when the requested result, acceptance requirements, or a confirmed boundary becomes unsettled or would change. Block only when no safe work remains.
+Bound dependency additions/upgrades, permissions, external-system writes, destructive actions, and other irreversible side effects. Name protected tests, schemas, verification scripts, CI, baselines, and other repo judges that must not be weakened. Call out tempting side work outside Goal.
+
+State what the Executor may decide inside Goal, confirmed boundaries, authority, and required Verification. Actions beyond authority become an explicit blocker. Return to Intent Take only when safe continuation would require changing Goal, a confirmed boundary, explicit Human verification requirement, priority, or authorization. `Status: Blocked` applies only when no safe work remains.
 
 ## 3. Current Reality and Task 0
 
-Record evidenced facts and baselines; mark unverified claims.
+Record evidenced facts and baselines; mark unverified claims. Reuse the repository/runtime's normal implementation record when available; Prompt Atlas does not require a dedicated progress artifact.
 
-Use the repository or runtime's existing implementation record when available; Prompt Atlas does not require a new filename or artifact.
+When Task 0 is needed, it runs before material change. It binds the real repo/worktree/target, verifies critical commands and judges, detects no-op or false-green checks, and surfaces material mismatch between taskbook assumptions and execution reality. Evidence may revise facts, feasibility, implementation scope, remaining Tasks, Graph, and Verification needs; it may not redefine Goal.
 
-When Task 0 is required, it runs before material change. It binds repo/worktree/target, verifies critical commands and judges, detects no-op checks, and surfaces material mismatch between the taskbook's execution assumptions and execution reality. Evidence may revise facts, feasibility, implementation scope, plan, and proof needs; it may not redefine the Goal. Preserve material findings or resulting route changes in the normal implementation record when available, otherwise in execution evidence.
+If Task 0 owns a Verification trigger, resolve current changed owner/shared contract → effective binding/config → affected target/capability. Triggered Verification becomes required; an untriggered path needs evidence that the gate is inapplicable. If actual change surface or effective binding changes later, recompute Verification scope from repo authority.
 
-If Task 0 owns a verification trigger, resolve actual changed owner → effective binding/config → affected target/capability. When the trigger fires, execute the already-defined mandatory proof; when it does not, preserve evidence that the gate is inapplicable. Task 0 resolves execution-time facts, not verification policy.
+When reality differs:
 
-If reality differs:
+- correct a clear misreading that does not alter Goal/boundaries, then continue;
+- if Goal and boundaries still hold, update remaining Execution / Graph;
+- if a branch is blocked but independent safe work remains, park only that branch;
+- if no safe work remains, return `Status: Blocked` with the exact resolving condition;
+- if continuation requires changing Goal, confirmed boundaries, Human verification authority, priority, or authorization, return to Intent Take/Human.
 
-- correct a clear misreading of the taskbook that does not alter the requested result, acceptance requirements, or confirmed boundaries, then continue;
-- replan when the stable contract still holds;
-- park only the affected branch while safe work remains;
-- block with the exact resolving condition when no safe work remains;
-- return to Intent Take when the requested result, acceptance requirements, or a confirmed boundary becomes unsettled or would change.
+Reuse Evidence whose premises remain valid; do not repeat discovery ceremonially.
 
-Reuse evidence whose basis remains valid; do not repeat discovery ceremonially.
+## 4. Execution / Graph
 
-## 4. Execution
+Order Tasks by current real dependency. Each Task states at least: observable result, cheapest sufficient local Verification, and a decisive local PASS/FAIL condition.
 
-Order Tasks by real dependency. Every Task states its observable result, the cheapest sufficient local evidence, and a decisive local PASS condition. For code changes, local proof must reach the nearest valid repo-verification boundary that directly covers the affected property; this is often an affected unit/targeted test, but use a more truthful or authoritative direct probe when available. Use a red→green TDD loop when it is the clearest low-cost way to specify behavior or lock a regression, but do not force TDD where a different direct probe is more truthful. If the normal local boundary is unavailable, state why and use the closest direct probe. Make PASS machine-judgable where the work permits; otherwise use explicit evidence and decision criteria. Add only material starting points, dependencies and write ownership, hard constraints, reverse validation for silent failure, and upstream evidence-invalidation conditions.
+For code changes, local Verification should reach the nearest valid repo-verification boundary that directly covers the affected behavior. Use red→green TDD when it is the clearest low-cost way to specify behavior or lock a regression, not as a universal ritual. If the normal local boundary is unavailable, state why and use the closest truthful direct probe.
 
-A **Task Group** is a coherent set of Tasks that together establish one combined behavior, shared contract, migration slice, or dependency-graph join. It is a verification boundary, not a new taskbook section, persistent object, or Agent topology. When local Task proof cannot establish the combined property, state the Task-Group result, the broader judge that proves it, and the point at which that judge runs.
+A **Task Group** is a coherent set of ordinary Tasks whose combined behavior, shared contract, migration slice, or join needs broader Verification. It is only a Verification boundary, not a new taskbook section, persistent object, workflow, or Agent topology.
 
-Place broader verification at the smallest Task-Group boundary whose combined behavior it proves—after a coherent set of Tasks, before dependent work consumes the result, or when branches rejoin. Do not repeat expensive whole-system verification per Task. When a judge costs multiple minutes or otherwise dominates iteration time, use a measured or reliably known approximate cost when available and schedule it by comparing the cost of running now with the likely recovery cost of finding failure later. Run it earlier when a Task changes a system-wide contract, many downstream Tasks will consume the result, local proof cannot cover the material integration risk, a branch is about to fan out, or delaying the check would materially increase recovery cost. Reuse still-valid evidence; invalidate and rerun only the proof whose property later changes may have affected.
+Place broader Verification at the smallest Task-Group boundary that proves the combined behavior: after a coherent set of Tasks, before dependent work consumes it, or at a branch join. Do not repeat expensive system-wide checks per Task. Reuse still-valid Evidence and rerun only Verification whose proven behavior may have been invalidated.
 
-Keep simple work linear. When real branches, dependencies, shared writes, a Task Group, or a join would be hidden by a linear list, read [execution-graph.md](execution-graph.md) and compile the minimum dependency structure into ordinary Tasks.
+Keep simple work linear. When true branches, dependencies, shared writes, Task Groups, or joins would be hidden, read [execution-graph.md](execution-graph.md) and compile only the minimum real dependency structure. The Handoff Graph is a best-known starting snapshot; runtime Evidence may change the remaining frontier.
 
 ## 5. Execution Rules
 
-- treat Tasks as the current executable plan, not frozen scope; add, remove, split, merge, or reorder remaining Tasks as evidence changes inside Stable Intent, confirmed boundaries, authority, and protected proof;
-- preserve the proof hierarchy: local Task PASS may unlock dependent work, Task-Group PASS may unlock consumers of the combined contract, and neither may replace complete-Goal proof;
-- never downgrade a triggered mandatory gate; the Executor may change a provider or run location only if the replacement still proves the required property under repo verification authority;
-- schedule verification by proof scope, judge cost, and delayed-failure recovery cost; cost may reduce redundant runs, but it may not weaken a required judge or turn missing proof into PASS;
-- continue from available safe work until the Completion Contract is proven, no safe work remains, or any stated stop budget is exhausted; analysis, a plan, local PASS, Task-Group PASS, a completed branch, or partial delivery is not a stopping condition;
-- preserve material decisions, evidence-changing deviations, replans, scope expansion, verification-cadence changes, and blockers in the repository or runtime's normal implementation record when available; do not create routine progress or blocker artifacts solely for Prompt Atlas;
-- when execution resumes and such a record is available, read this taskbook and the record before acting; reuse only still-valid decisions and evidence, and do not repeat completed work unless later changes invalidate what it proved;
-- when blocked, preserve the blocker, relevant evidence or attempts, the resolving condition, and any safe remaining work;
-- do not skip tests, weaken assertions, narrow the judged population, mock away the object, swallow failures, edit the judge, or accept a lower baseline unless Stable Intent requires it;
-- every retry changes the hypothesis or approach; stop known-bad routes immediately; three failures against one acceptance condition in one route force replan, branch switch, rollback, `BLOCK`, or `ESCALATE`;
+- route new Unknown by what it can change: Goal/boundary/Human verification authority, execution fact, implementation How, Verification, or Evidence;
+- Tasks/Graph are the current execution plan, not frozen scope. As Evidence changes dependencies or implementation reality, add/remove/split/merge/reorder only the remaining work inside stable Goal, boundaries, authority, and required Verification;
+- if one branch is Blocked but independent work is ready, continue it; joins wait only for real dependencies;
+- do not mechanically reopen completed work when Graph changes; reacquire Evidence only when its premises or required combined Verification changed;
+- preserve Verification granularity: Task PASS and Task-Group PASS may unlock work but cannot substitute for Goal-level coverage actually required by the delivery;
+- never downgrade triggered Verification. A provider/location may change only when the replacement remains equivalent or more authoritative under repo verification authority;
+- preserve material decisions, evidence-changing deviations, replans, scope expansion, Verification-cadence changes, and blockers in normal repo/runtime implementation records when available; do not create Prompt-Atlas-specific state files;
+- on resume, reuse only decisions and Evidence whose premises remain valid;
+- do not skip tests, weaken assertions, narrow judged population, mock away the tested object, swallow failures, edit a judge, or accept a lower protected baseline unless Goal explicitly requires the change and equivalent trustworthy Evidence remains;
+- critical checks that may silently no-op need reverse validation; visible judges that are gameable may require protected/private/independent Evidence under [verification-trust.md](verification-trust.md);
+- every retry must change the hypothesis or approach; stop known-bad routes instead of repeating them;
 - roll back unauthorized regression and report failure truthfully;
 - follow repository branch, PR, and pre-submit rules.
 
-## 6. Completion and Acceptance
+## 6. Verification and Evidence
 
-Require complete-Goal evidence, boundary and judge preservation, actual command output or reproducible proof, and truthful residuals or blockers. Respect any stated stop budget; if it is exhausted before completion, report the exact non-PASS residual. Local Task PASS and Task-Group PASS are intermediate evidence, not complete-Goal PASS.
+After relevant Tasks and Task Groups converge, confirm Goal-level repo verification coverage. Reuse still-valid lower-level Evidence and run only repo-required Verification that remains uncovered or whose premises were invalidated. Goal-level Verification is a final judgment boundary, not a ceremonial extra command.
 
-Complete-Goal PASS requires sufficient still-valid evidence for every completion property; properties cannot compensate for one another. If execution discovers another necessary property, first establish that it is a true expansion of the original Goal/boundaries rather than silently redefining them.
+Final Verification scope follows the **actual** change surface, effective binding/config, and real consumers/targets, not an early snapshot or the author's label for the change. Expected `0-diff`, cleanup, or refactor cannot shrink already-triggered Verification.
 
-At complete-Goal acceptance, run the full verification required for the declared delivery after relevant work and Task Groups have converged and any branches have rejoined. Reuse still-valid local, Task-Group, and integration evidence, but rerun every judge whose proved property may have been invalidated by later changes. A high final-verification cost is a scheduling concern, not a reason to omit the final judge.
+Evidence supports judgment only while its provider really ran, the provider covers the claimed behavior, target/revision/environment/binding/config premises remain valid, and judges/baselines were not weakened.
 
-State visible acceptance and any required independent accepting boundary. Private and independent acceptance follow [completion-trust.md](completion-trust.md). If a required Acceptor or accepting environment is unavailable, cap the result at `ready for independent acceptance`.
+When the judging side can access the authoritative environment, reacquire final-judgment-critical repo-authoritative Evidence at reasonable cost rather than trusting only Executor summaries. Do not mechanically rerun every still-valid local check. When the environment is unavailable, require portable provenance: actual command/probe, target/revision, material binding/config, exit/verdict, and raw output or a stable artifact/reference. Unreviewable summaries are an evidence gap.
 
-The final report states `PASS`, `ready for independent acceptance`, or the exact non-PASS route; the delivered result; the evidence that supports the judgment at Task, Task-Group, and complete-Goal levels where applicable; exact residuals or blockers; and the next legitimate route. Do not replace evidence with activity narration.
+Ordinary protected visible repo Verification is the default. Read [verification-trust.md](verification-trust.md) only when false-green, gameability, silent failure, or independence risk requires stronger trust. Missing or stale required Evidence is non-PASS; obtain new Evidence, adjust remaining Execution/Graph, report a truthful blocker, or return to the relevant Human authority boundary.
 
-Before Handoff, verify one Goal and one declared delivery; the Completion Contract covers every necessary completion property; verification focus follows from Goal, real impact/reachability, and material failure risk; at least one Task or required Task 0 can start immediately; every dependency is grounded; each shared mutable surface has one owner; relevant repo verification authority has been read; known mandatory gates are compiled and execution-time triggers are placed in Task 0 with their resulting proof; every development Task has cheapest sufficient local proof; every coherent Task Group that needs combined proof has a correctly placed judge; expensive judges are not repeated below the boundary they prove; authority-sensitive operations are bounded; every branch rejoins or has an explicit terminal route; and complete-Goal proof remains possible. Do not compile scheduler, lease, or fixed Agent topology.
+The final report states the delivered result, Evidence supporting the judgment at Task / Task Group / Goal levels where applicable, exact residuals or blockers, and the next legitimate route. Do not replace Evidence with activity narration.
 
-One taskbook must close the declared delivery in one execution effort. One execution effort means one authoritative taskbook and one closed delivery. It does not define persistent execution state or Agent topology. The Executor may delegate, parallelize, or use a dependency graph when the runtime supports it while preserving one Goal, clear write ownership, correctly placed Task/Task-Group/Goal proof, and complete-Goal acceptance. If the delivery cannot close under that contract, return to Intent Take to narrow the Human-owned delivery; do not split the Goal into multiple taskbooks.
+Before Handoff, verify that there is one Goal and one declared delivery; Goal is stable; explicit Human verification requirements are preserved; relevant repo verification authority has been read; known required Verification is compiled and execution-only triggers are in Task 0; at least one Task or required Task 0 can start; dependencies are grounded; simple work remains linear; Graph is used only where real relationships require it; every development Task has sufficient local Verification; every meaningful Task Group has broader Verification only when needed; Goal-level coverage remains possible; authority-sensitive operations are bounded; and no Completion/Acceptance layer, scheduler, manager, Graph engine, or fixed Agent topology has been introduced.
