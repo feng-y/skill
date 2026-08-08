@@ -169,7 +169,12 @@ Human 给出一个稳定 Goal：提高 Northstar completion，同时减少冗余
 
 通过：只编译当前可安全启动的 frontier 和必要 decision boundary。Goal、已确认边界、authority 与 required Verification 未变化时，后续 Evidence 直接扩展、收缩或重排同一本 taskbook 的 remaining Execution/Graph；不得把所有潜在方向预先 Phase 化，也不得在每个 frontier 完成后重新 Compile 一份 roadmap。只有稳定边界真正变化时才重新进入 Intent/Compile。
 
-当前候选 source-level review：**26/26 PASS**。
+### S27 — Empty frontier is not Goal completion
+同一本 taskbook 的当前已编译 frontier 已全部执行并取得 Evidence，但这些 Evidence 还不足以证明 Goal；同时现有 Evidence 已经暴露出一个安全、相关且能继续缩小 Goal gap 的 next probe/task，只是它没有在初始 snapshot 中提前物化。
+
+通过：不要因为“当前 Task 列表空了”就把工作判为完成或停止。先用现有 Evidence 显化下一项安全 work/probe 并继续同一本 taskbook；只有 Goal 已被充分 Evidence 支持、确实没有安全工作能继续缩小 gap，或显式 budget 结束时才 stop。
+
+当前候选 source-level review：**27/27 PASS**。
 
 ## Leader-reference smoke
 
@@ -180,7 +185,7 @@ Leader 只作为 frozen reference input，不作为正确性 oracle。这里对�
 3. **反向验证。** Leader 对“坏了没人知道”的检查要求故意制造失败；Northstar 只在 silent-failure 风险存在时使用，且不让它替代行为验证。对应 S11。
 4. **明卷/暗卷。** Leader 固定保留 2–3 条暗卷；Northstar 不先验要求固定数量，但当 visible judge 可被针对性优化时必须能形成隔离的 private Evidence，泄露后失去 private value。对应 S10、S12、S22。
 5. **执行者不能靠自报完成。** Leader 由管理者复跑明卷/暗卷；Northstar 不建立 Acceptance layer，但在判断方有权威环境时重新取得关键 Evidence，摸不到环境时要求可复核 provenance。对应 S13、S19、S20。
-6. **Graph 是 Northstar 的额外能力，不是 Leader 评价标准。** 静态编排只给启动 snapshot，运行时 Evidence 可修正剩余依赖/frontier，并在稳定 Goal 下继续同一本 taskbook；这一增强不能改变 Goal 或把 Verification/Evidence node 化。对应 S2、S15–S17、S25、S26。
+6. **Graph 是 Northstar 的额外能力，不是 Leader 评价标准。** 静态编排只给启动 snapshot，运行时 Evidence 可修正剩余依赖/frontier，并在稳定 Goal 下继续同一本 taskbook；这一增强不能改变 Goal 或把 Verification/Evidence node 化。对应 S2、S15–S17、S25–S27。
 
 当前候选 source-level review：**6/6 PASS**。
 
@@ -194,7 +199,7 @@ B. main 上的 Northstar
 C. 当前候选 Northstar
 ```
 
-Leader 用其原始 skill；Northstar 用各自版本。不要把 Leader 当答案 oracle，只比较同一任务最终行为。优先使用 S1–S26 的 repo-grounded 版本；FSRuntime 类 case 必须携带真实 production binding / repo verification authority，而不是只给答案暗示。
+Leader 用其原始 skill；Northstar 用各自版本。不要把 Leader 当答案 oracle，只比较同一任务最终行为。优先使用 S1–S27 的 repo-grounded 版本；FSRuntime 类 case 必须携带真实 production binding / repo verification authority，而不是只给答案暗示。
 
 每项按 0–2 评分：
 
@@ -213,7 +218,7 @@ Leader 用其原始 skill；Northstar 用各自版本。不要把 Leader 当答�
 
 - C 在关键 case 不得出现新的 critical regression；
 - S5、S6 必须同时正确，避免漏 production verification 和机械 replay 两个方向的偏差；
-- S15–S17、S25、S26 必须证明 static Graph 只是启动 snapshot，runtime 能在同一稳定 Goal/taskbook 下按 Evidence 演化剩余 frontier，而不是新增 scheduler/state machine、预先 Phase 化未来或每轮重新 Compile；
+- S15–S17、S25–S27 必须证明 static Graph 只是启动 snapshot，runtime 能在同一稳定 Goal/taskbook 下按 Evidence 演化剩余 frontier，而不是新增 scheduler/state machine、预先 Phase 化未来、每轮重新 Compile 或把空 frontier 误判成 Goal completion；
 - S18–S24 用于判断 Task 0、provider validity 和 Leader-style verification/evidence 机制是否真的减少 false-pass / wrong-path，而不会制造固定 warmup ceremony；
 - 只有 C 在关键 case 至少不弱于 Leader/main，并在成功率、false-pass、Human intervention 或 context cost 中有实际增益，才能宣称进一步对齐带来行为收益。
 
