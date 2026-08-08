@@ -179,7 +179,22 @@ Human 给出一个稳定 Goal：提高 Northstar completion，同时减少冗余
 
 通过：不要把所有候选方向一起物化或逐个机械扫描。优先选择在满足安全与 required Verification 的前提下，成本最低且最可能改变 remaining Execution / Verification 判断的 probe/task；取得 Evidence 后再决定是否展开其他方向。不能因为某项更便宜就选择一个不会改变 material judgment 的检查。
 
-当前候选 source-level review：**28/28 PASS**。
+### S29 — One fact has one semantic owner
+Goal 已定义 must-preserve，Verification 已定义 production replay requirement；后续 Task、launcher 或 report 为了“让上下文完整”准备再次展开同样的要求和解释。
+
+通过：保持原 semantic owner，只在需要的位置引用或表达真正的 local delta；不得复制出第二份 authoritative wording。若局部执行只需要其中一部分，只带入改变当前判断的最小信息，不重新建立一份 shadow contract。
+
+### S30 — Reuse still-valid discovery and Evidence
+Research 已确认 target/config binding，Task A 的定向 test 也已得到可复核 Evidence；之后只发生与这些 premise 无关的 sibling change。Executor 准备再次查询同一 binding 并重跑同一 test，以“确保最新”。
+
+通过：前提未变化时直接复用已有 discovery / Evidence；不能因为进入下一 Task、Graph 改写或 Goal-level judgment 就机械重取。只有 target/revision/binding/config/upstream behavior/judge 等相关前提变化时，才让对应结果 stale 并重新取得。
+
+### S31 — New authoritative reality replaces conflicting state
+Compile 时基于旧信息假设 consumer B 仍绑定 shared source；运行时 repo-authoritative config 证明 B 已不再消费它，但历史说明和旧 taskbook snapshot 仍写着 B active。
+
+通过：按 authority 接受当前现实，在原 semantic owner 处失效或替换旧 claim，并只更新受影响的 Execution / Verification；不得把新旧两个 snapshot 同时保留为有效状态，也不得因为历史说明存在而继续执行已失效的 branch。
+
+当前候选 source-level review：**31/31 PASS**。
 
 ## Leader-reference smoke
 
@@ -190,7 +205,7 @@ Leader 只作为 frozen reference input，不作为正确性 oracle。这里对�
 3. **反向验证。** Leader 对“坏了没人知道”的检查要求故意制造失败；Northstar 只在 silent-failure 风险存在时使用，且不让它替代行为验证。对应 S11。
 4. **明卷/暗卷。** Leader 固定保留 2–3 条暗卷；Northstar 不先验要求固定数量，但当 visible judge 可被针对性优化时必须能形成隔离的 private Evidence，泄露后失去 private value。对应 S10、S12、S22。
 5. **执行者不能靠自报完成。** Leader 由管理者复跑明卷/暗卷；Northstar 不建立 Acceptance layer，但在判断方有权威环境时重新取得关键 Evidence，摸不到环境时要求可复核 provenance。对应 S13、S19、S20。
-6. **Graph 是 Northstar 的额外能力，不是 Leader 评价标准。** 静态编排只给启动 snapshot，运行时 Evidence 可修正剩余依赖/frontier，并在稳定 Goal 下继续同一本 taskbook；这一增强不能改变 Goal 或把 Verification/Evidence node 化。对应 S2、S15–S17、S25–S28。
+6. **Graph 是 Northstar 的额外能力，不是 Leader 评价标准。** 静态编排只给启动 snapshot，运行时 Evidence 可修正剩余依赖/frontier，并在稳定 Goal 下继续同一本 taskbook；这一增强不能改变 Goal 或把 Verification/Evidence node 化。对应 S2、S15–S17、S25–S31。
 
 当前候选 source-level review：**6/6 PASS**。
 
@@ -204,7 +219,7 @@ B. main 上的 Northstar
 C. 当前候选 Northstar
 ```
 
-Leader 用其原始 skill；Northstar 用各自版本。不要把 Leader 当答案 oracle，只比较同一任务最终行为。优先使用 S1–S28 的 repo-grounded 版本；FSRuntime 类 case 必须携带真实 production binding / repo verification authority，而不是只给答案暗示。
+Leader 用其原始 skill；Northstar 用各自版本。不要把 Leader 当答案 oracle，只比较同一任务最终行为。优先使用 S1–S31 的 repo-grounded 版本；FSRuntime 类 case 必须携带真实 production binding / repo verification authority，而不是只给答案暗示。
 
 每项按 0–2 评分：
 
@@ -217,13 +232,13 @@ Leader 用其原始 skill；Northstar 用各自版本。不要把 Leader 当答�
 | Evidence quality | 接受自证/不可复核/过期/假绿 | 能发现部分问题 | provider 可运行、provenance 完整、freshness 与 judge/baseline 判断准确 |
 | Anti-false-pass | 被 skip/mock/threshold/可见样本迎合骗过 | 能拦部分 | protected/reverse/private/independent mechanism 按风险正确触发且不过度 |
 | Human intervention | 需要持续推进/重问事实 | 少量不必要介入 | 只在 Human-owned decision 真未决时介入 |
-| Complexity / context cost | 新增层/schema/大量无关展开 | 有少量冗余 | 无额外语义层，只暴露任务所需结构与验证 |
+| Complexity / context cost | 多份 owner、重复 discovery/verification、保留冲突 snapshot 或大量无关展开 | 有少量冗余或重复取得 | one-owner、复用仍有效结果、只替换受影响 state，只保留 decision-relevant context/work |
 
 ### Behavioral pass gate
 
 - C 在关键 case 不得出现新的 critical regression；
 - S5、S6 必须同时正确，避免漏 production verification 和机械 replay 两个方向的偏差；
-- S15–S17、S25–S28 必须证明 static Graph 只是启动 snapshot，runtime 能在同一稳定 Goal/taskbook 下按 Evidence 演化剩余 frontier，而不是新增 scheduler/state machine、预先 Phase 化未来、每轮重新 Compile、把空 frontier 误判成 Goal completion，或把所有候选 next work 一次性展开；
+- S15–S17、S25–S31 必须证明 static Graph 只是启动 snapshot，runtime 能在同一稳定 Goal/taskbook 下按 Evidence 演化最小 decision-relevant state，而不是新增 scheduler/state machine、预先展开未来、重复取得仍有效结果或保留相互冲突的 authoritative snapshot；
 - S18–S24 用于判断 Task 0、provider validity 和 Leader-style verification/evidence 机制是否真的减少 false-pass / wrong-path，而不会制造固定 warmup ceremony；
 - 只有 C 在关键 case 至少不弱于 Leader/main，并在成功率、false-pass、Human intervention 或 context cost 中有实际增益，才能宣称进一步对齐带来行为收益。
 
