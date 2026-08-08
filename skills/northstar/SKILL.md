@@ -17,9 +17,9 @@ Verification
 Evidence
 ```
 
-Goal 定义 Human 真正要达到的结果、边界、必须保持什么和最终交付；不再另建 `Completion Contract` 或 `completion properties`。Execution / Graph 组织怎么推进：Handoff 时只编排当前证据支持的 best-known execution snapshot，运行时允许 Evidence 改变剩余 Task/依赖；Graph 不覆盖原有 Task 语义，也不定义 Goal、Verification 或 Evidence。Verification 决定验证什么、在哪个粒度验证；Human 明确指定的验证要求是 Verification 的 binding input，Northstar 和 Executor 不得自行降级。Evidence 是 Verification 实际产生、仍然有效且可复核的事实，也是后续 execution judgment 和最终停止判断的现实输入。`Handoff` 只是交付动作，结果返回后直接判断 Evidence 是否足以支持 Goal，不增加独立 `Acceptance` 层。
+这是 semantic ownership / proof chain，不是固定时间 Phase。Goal 定义 Human 真正要达到的结果、边界、必须保持什么和最终交付；不再另建 `Completion Contract` 或 `completion properties`。Execution / Graph 组织怎么推进：Handoff 时编排当前证据支持的 best-known complete execution snapshot，运行时允许 Evidence 改变真正 contingent 或已失效的 Task/依赖；Graph 不覆盖原有 Task 语义，也不定义 Goal、Verification 或 Evidence。Verification 决定需要证明什么、在哪个粒度证明：已经明确的 obligation/action 随任务书编译，具体 scope/provider/target 仍依赖执行期现实的部分按 Evidence 渐进展开；Human 明确指定的验证要求是 binding input，Northstar 和 Executor 不得自行降级。Evidence 是运行时实际取得、仍然有效且可复核的事实，也是后续 execution judgment 和 Taskbook Completion Hook 的现实输入。`Handoff` 只是交付动作，不增加独立 `Acceptance` 层。
 
-三个稳定角色：**Human** 决定 Goal、已确认边界、明确验证要求、优先级和授权；**Northstar** 负责澄清、调研、写任务书、交付并依据 Evidence 判断结果；**Executor** 在稳定 Goal 和边界内负责 implementation judgment，并可按新证据调整剩余工作。私有或独立判断只是必要时提高 Evidence 可信度的手段，不建立固定 Acceptor 角色。
+三个稳定角色：**Human** 决定 Goal、已确认边界、明确验证要求、优先级和授权；**Northstar** 负责澄清、调研、编译足够完整的任务书并依据最终 Evidence 判断结果；**Executor** 按任务书自主推进，在稳定 Goal 和边界内负责 implementation judgment，并按新 Evidence 调整受影响执行直到 Taskbook Completion Hook 允许停止或准确阻塞。私有或独立判断只是必要时提高 Evidence 可信度的手段，不建立固定 Acceptor 角色。
 
 `Unknown` 是贯穿这条链的未决机制，不是额外流程。事实 Unknown 优先用证据消解；只有仍可能改变 Goal、边界、明确验证要求、执行事实或可信 Verification/Evidence 的未决项才需要路由。
 
@@ -57,14 +57,15 @@ Northstar 替 Human 作出的可回退决定必须公开标明仍未确认，并
 
 ## 3. Compile
 
-按 [execution-compile.md](references/execution-compile.md) 的固定合同结构写任务书，不增加 Completion/Acceptance schema。
+按 [execution-compile.md](references/execution-compile.md) 的固定合同语义写任务书，不增加 Completion/Acceptance schema。
 
 - **Goal** 直接写成功时必须成立和必须保持的结果；
-- **Execution / Graph** 按当前已知真实依赖组织 Task；简单任务保持线性，只有线性列表会掩盖真实关系时才读取 [execution-graph.md](references/execution-graph.md)。编译出的 Graph 是启动 snapshot，不冻结运行时剩余 Graph；
+- **Execution / Graph** 编译当前 Evidence 已经能确定的 best-known complete Tasks / relations；简单任务保持线性，只有线性列表会掩盖真实关系时才读取 [execution-graph.md](references/execution-graph.md)。只有存在、scope 或关系仍 materially contingent on future Evidence 的工作才延迟展开；
 - **Task 0** 是可选、bounded 的 execution warmup，只用于在主要执行前关闭少量高价值 Unknown；它不成为第二个 Research 阶段或固定 checklist；
-- **Verification** 保留 Task / Task Group / Goal 三种粒度，并从真实 impact/reachability、repo verification authority 和 Human 明确验证要求推导 required verification；
+- **Verification** 保留 Task / Task Group / Goal 三种 placement granularity；已知 obligation/action 直接编译，只有 concrete scope/provider/target 或 obligation 是否触发仍依赖执行期事实的部分才运行时 materialize；
 - 预期 `0-diff`、cleanup 或 refactor 不能降低已经由事实或 Human 明确要求触发的验证；执行期才能确认且值得在主要修改前关闭的 trigger 可放进 Task 0；
-- test/build/replay/static probe 等只是 repo evidence provider，不默认编译固定套餐。
+- **Evidence** 编译 proof/trust requirement，不编译未来结果；test/build/replay/static probe 等只是 provider，不默认形成固定套餐；
+- **Completion Hook** 是任务书内置的 stop judgment：复用 Goal / constraints、已触发 Verification obligation 和 current valid Evidence 判断 stop / continue / block，不建立新的 semantic layer。
 
 一本任务书只承载一个 Goal。做不到时回到 Intent Take 缩小 Human 本次要的交付，不新增 workflow、scheduler、manager 或无边界 Graph。
 
@@ -77,7 +78,7 @@ visible judge 可能假绿、可被针对性优化或需要额外独立性时，
 用户直接要求完成工作，就已经授予 compile-and-run 权限。用一个薄 launcher 启动 Executor：
 
 ```text
-Read <TASKBOOK_PATH> as the authoritative contract. Keep the same taskbook while Goal, confirmed boundaries, authority, and required Verification stay stable. Maintain only the minimum decision-relevant execution state from current authoritative Evidence: reuse still-valid facts and Evidence, invalidate or replace only affected state, and materialize only the next sufficient delta. Run ready work and applicable Verification; let PASS/FAIL Evidence update affected remaining Execution / Graph / Verification. Stop only when the Goal is sufficiently evidenced, no safe delta can reduce the remaining gap, or an explicit budget ends.
+Read <TASKBOOK_PATH> as the authoritative execution contract. Execute its best-known Graph and preserve still-valid compiled work. Let material Evidence update only affected contingent or invalidated Execution / Verification, progressively materializing work that becomes real. After material Evidence updates, apply the Taskbook Completion Hook and stop, continue, or block according to that contract.
 ```
 
 Northstar 不实时监督执行。
@@ -86,7 +87,7 @@ Northstar 不实时监督执行。
 
 Executor 返回的 `done`、`PASS`、实现说明和自带证据都只是输入。按任务书中的 Evidence contract 判断现实：PASS/FAIL 都可能改变剩余 Execution/Graph、Verification 或已有 Evidence 的有效性，只调整被新证据实际影响的部分，其他结论继续复用。
 
-Goal/边界仍稳定且还有安全路径，但 required Verification 缺失或 Evidence 不足时，只把 focused gap 返回 Executor，继续同一本任务书。普通 Evidence trust 不够时按 [verification-trust.md](references/verification-trust.md) 补强；需要的可信 Evidence 拿不到就是 non-PASS，不能靠总结或自报完成覆盖。
+只有 Taskbook Completion Hook 已基于可信 Evidence 判定 Goal、约束和已触发 required Verification 足够覆盖时才能完成。普通 Evidence trust 不够时按 [verification-trust.md](references/verification-trust.md) 补强；需要的可信 Evidence 拿不到就是 non-PASS，不能靠总结或自报完成覆盖。
 
 最终报告只基于 Evidence：实际交付、决定性验证结果、精确 residual/blocker（若有）和下一条合规路径。不要用活动记录代替证据。
 
@@ -94,6 +95,6 @@ Goal/边界仍稳定且还有安全路径，但 required Verification 缺失或 
 
 - **`Status: Unresolved Intent`** —— 当前理解、仍会改变 Goal 的分叉，以及最小 Human 决定或证据探针；
 - **`Status: Blocked`** —— 准确的非意图阻塞，以及恢复安全推进所需条件；
-- **`Status: Executable`** —— 一本有现实依据、包含 Execution/Graph、Verification 和 Evidence 要求的自主任务书；用户要求直接完成工作时按 Handoff 继续执行。
+- **`Status: Executable`** —— 一本有现实依据、包含 best-known Execution/Graph、Verification、Evidence 要求和 Completion Hook 的自主任务书；用户要求直接完成工作时按 Handoff 继续执行。
 
 Northstar 不增加 scheduler、manager daemon、workflow owner、Completion layer、Acceptance layer 或固定 Acceptor 角色。
