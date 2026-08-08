@@ -77,7 +77,9 @@ Prompt Atlas does not supervise live execution.
 
 Executor `done`, `PASS`, narration, and self-supplied summaries are inputs, not the final judgment. Judge against the same Goal, boundaries, required Verification, and still-valid Evidence.
 
-If Goal and boundaries remain stable and safe work remains but required Verification or trustworthy Evidence is missing/stale, return only those focused gaps to the Executor and continue the same taskbook. Use [verification-trust.md](references/verification-trust.md) for false-green, gameability, provenance, judge integrity, or independence details rather than duplicating those rules here.
+When the judging side can access the authoritative repo/runtime, reacquire final-judgment-critical repo Evidence when reasonable; otherwise require portable, reproducible provenance rather than an unreviewable summary.
+
+If Goal and boundaries remain stable and safe work remains but required Verification or trustworthy Evidence is missing/stale, return only those focused gaps to the Executor and continue the same taskbook. Use [verification-trust.md](references/verification-trust.md) for false-green, gameability, judge integrity, or independence details rather than duplicating those rules here.
 
 Final reporting is Evidence-based: delivered result, decisive Verification/Evidence, exact residual or blocker, and the next legitimate route. Activity narration is not Evidence.
 
