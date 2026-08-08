@@ -40,7 +40,7 @@ Keep simple work coarse and linear. Read [execution-graph.md](execution-graph.md
 
 Use **Task 0** only for a compile-time-known premise that matters before material change but can be established only in the execution environment. Task 0 is not another research phase.
 
-If execution discovers facts that cross stable Goal, confirmed boundaries, Human authority, or required Verification, route back through [SKILL.md](../SKILL.md) rather than encoding another control flow here.
+Reuse completed work and Evidence while their premises still hold. If execution discovers facts that cross stable Goal, confirmed boundaries, Human authority, or required Verification, route back through [SKILL.md](../SKILL.md) rather than encoding another control flow here.
 
 ## Verification
 
