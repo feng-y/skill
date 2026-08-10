@@ -2,45 +2,46 @@
 
 只在 `Status: Architecture intent ready` 时读取和输出。本文件只定义最终 Intent 的物理形状；architecture judgment、ready/discriminator、Brooks challenge 和 evidence lifetime 由 `SKILL.md` / `rules.md` / `brooks-constraints.md` 拥有，不在这里复制第二套判定逻辑。
 
-最终输出跟随用户当前主要语言。内部 taxonomy、Brooks 编号、challenge 过程或英文 reference 不要求出现在最终 artifact 中；代码符号、类型名、文件名和必须保持稳定的协议名称可以保留原文。
+最终输出跟随用户当前主要语言。**下面的英文 section / field 名只表示语义位置，不是固定输出文案；最终标题、字段名和正文都必须翻译成用户主要语言。** 只有状态 token、代码符号、类型名、文件名和必须保持稳定的协议名称可以保留原文。内部 taxonomy、Brooks 编号、challenge 过程或英文 reference 不要求出现在最终 artifact 中。
 
 ```markdown
-# Architecture Intent
+# <Architecture Intent；按用户语言输出标题>
 
 Status: Architecture intent ready
 
-## Architecture problem
-- Problem: <一句话说明真正的 structural / semantic / ownership / dependency 问题>
-- Why architectural: <为什么局部 cleanup、helper 或单点修复不能消除主要 pressure>
+## <Architecture problem；按用户语言输出>
+- <Problem>: <一句话说明真正的 structural / semantic / ownership / dependency 问题>
+- <Why architectural>: <为什么局部 cleanup、helper 或单点修复不能消除主要 pressure>
 
-## Background
-- Why now: <当前变化压力，以及哪个历史前提、variation 或 boundary 假设已经失效>
-- Decisive evidence: <只保留理解该判断所需的少量决定性 evidence；不要输出调查日志、完整 commit 清单或五面审计表>
+## <Background；按用户语言输出>
+- <Why now>: <当前变化压力，以及哪个历史前提、variation 或 boundary 假设已经失效>
+- <Decisive evidence>: <只保留理解该判断所需的少量决定性 evidence；不要输出调查日志、完整 commit 清单或五面审计表>
 
-## Direction
-- Intent: <应该演化什么>
-- Desired end state: <完成后业务、调用者、ownership 或依赖关系有什么不同>
-- Possible target identities: <可选；仅当一个 intent 下确有 2–3 个值得后续设计比较的基本架构形态时出现。每个 identity 只写核心 ownership / semantic / dependency identity 和主要取舍，不进入具体设计>
+## <Direction；按用户语言输出>
+- <Intent>: <应该演化什么>
+- <Desired end state>: <完成后业务、调用者、ownership 或依赖关系有什么不同>
+- <Possible target identities>: <可选；仅当一个 intent 下确有 2–3 个值得后续设计比较的基本架构形态时出现。每个 identity 只写一句基本 ownership / semantic / dependency identity；不展开内部结构、设计决定或比较表>
 
-## Boundary
-- In scope:
-- Out of scope:
-- Must preserve:
-- Replacement / exit: <至少一个必须退出的旧知识、路径、判断、责任或依赖>
+## <Boundary；按用户语言输出>
+- <In scope>:
+- <Out of scope>:
+- <Must preserve>:
+- <Replacement / exit>: <至少一个必须退出的旧知识、路径、判断、责任或依赖>
 ```
 
 只有真实存在会改变 intent、boundary 或 target identity 的 material unknown 时，才在 `Boundary` 前追加：
 
 ```markdown
-## Material unknown
-- Claim at risk:
-- Minimal probe / Human decision:
-- It changes: <会改变哪个 intent / boundary / target identity>
+## <Material unknown；按用户语言输出>
+- <Claim at risk>:
+- <Minimal probe / Human decision>:
+- <It changes>: <会改变哪个 intent / boundary / target identity>
 ```
 
 ## Discipline
 
 - 一个 intent；`Possible target identities` 是同一 intent 下的基本目标形态，不是并列多个改造项目；
+- target identity 只需要“它是什么”这一层，不要求比较优缺点、列 trade-off、决定 owner placement 或展开实现机制；需要这些内容时已经进入 Target Design；
 - 输出重点是“真正的问题是什么 → 为什么形成 → 希望变成什么 → 哪些基本形态值得继续设计”；
 - decisive evidence 只用于让判断 grounded，不输出完整 evidence inventory、变化历史流水账或 reasoning trace；
 - 内部 architecture taxonomy 可以帮助选择和 challenge intent，但不输出 `Primary architecture direction` 标签；
