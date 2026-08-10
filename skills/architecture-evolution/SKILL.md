@@ -95,7 +95,7 @@ Architecture Intent 只回答：
 - **Background / Why now**：当前变化压力，以及使现有结构失去合理性的历史前提或现实变化；
 - **Direction**：哪项能力或结构应该发生什么方向性变化；
 - **Desired end state**：完成后业务、调用者、ownership 或依赖关系有什么不同；
-- **Possible target identities**：仅在一个 intent 下确有多个值得后续设计比较的基本形态时，给出 1–3 个 architecture identity；只描述核心 ownership / semantic / dependency identity 与主要取舍，不规定具体落法；
+- **Possible target identities**：仅在一个 intent 下确有多个值得后续设计比较的基本形态时，给出 1–3 个 architecture identity；每个只说明“它是什么”以及核心 ownership / semantic / dependency identity，不展开内部结构、优缺点比较或具体落法；
 - **Boundary**：in scope / out of scope / must preserve；
 - **Replacement / exit**：至少说明一种当前旧知识、路径、判断、责任或依赖应当退出；
 - **Unknown**：如果存在会改变 intent、boundary 或目标 identity 的 material unknown，说明其风险和最小关闭方式；没有则不制造。
