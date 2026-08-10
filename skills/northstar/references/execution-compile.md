@@ -38,7 +38,8 @@ Compile 是输出过滤器，不是 Research 转录器。每条准备写入 Task
 
 - 文件行号、普通 include 明细、symbol count、候选 patch、可重算 inventory 默认省略；
 - 同名异义、假依赖、非显然 surviving consumer、真实 hard boundary、会改变验证触发的 binding 等必须保留；
-- 可复算的 baseline/count 可以保留，因为它们是 coverage oracle / attribution anchor，而不只是背景信息。
+- 可复算的 baseline/count 可以保留，因为它们是 coverage oracle / attribution anchor，而不只是背景信息；
+- **candidate 仍然只是 intelligence**：Research 里出现“疑似 dead / 应该清零”的名字，不因为被发现就自动获得 acceptance authority。
 
 更多 Evidence 应该压缩成更少、更可靠的 judgment，而不是更多 instruction。
 
@@ -56,9 +57,13 @@ Taskbook 默认只保留少量 **outcome + judgment work unit**。
 
 **Task 不是 executable delta、文件路径清单或 predicted patch。** 路径/文件只有在集合封闭、不能从 repo 可靠推导、且枚举本身就是判据时才列。对于开放 surface，写判据让 Executor 自己扫全集；否则 checklist 外的第 N+1 个同类残留会永久漏掉。
 
+**逐实例应用 judgment，不等于逐实例编译 Evidence 台账。** Executor 对实际改动实例自行取得足够 evidence；Taskbook 默认只要求能证明 judgment 覆盖面的 coverage oracle、机器可判的 outcome 和 material exception。只有 closed-set accounting 本身是验收、repo/Human authority 明确要求，或某实例拥有不同 safety / authority / Verification 风险时，才要求逐 file/symbol 的保留/删除清单与逐项证据。
+
 不因为 Research 已知一个高置信实现方案，就把具体文件拆法、搬迁目的地、函数抽取行号、include/BUILD 改写、命令顺序或 failure-localization tactic 固化成合同。只有 Human / repo authority /真实 dependency / risk 或唯一安全路径要求时才固化 How。
 
 **法与情报分开**：`必须/不许` 只来自 Human、repo authority 或已验证 reality；模型推荐的路线即使置信度高，也默认只是 intelligence。Executor 找到更小、更稳且满足 Goal/authority 的路径可以改走，并在 `implement-notes` 记录原因。
+
+**升级按 authority，不按不确定度。** 普通 factual / execution Unknown 由 Executor 用 reality + judgment 处理，不生成 `Needs-human-decision` 清单。只有必须改变 Goal / boundary / Human requirement / priority / authorization 才升级 Human；只是事实摸不到且没有安全 work 时，准确 Block 并写恢复条件。
 
 当多个实例共享同一个 judgment 时合并成一个 Task；只有 outcome、judgment、dependency、authority、risk 或 required Verification 真不同才拆。Graph 只表达会改变 execution judgment 的真实 dependency / parallel / join，不为了“精确”把工作切成 patch nodes。
 
@@ -74,7 +79,7 @@ Human 已确认的 strategy / scope boundary / must-preserve 直接保留。read
 
 Taskbook 只保留能让 Executor 复算 scope、判断漏项或区分“原本就坏”与“本次改坏”的 baseline。命令没实测、数字对不上或环境不可达时，不伪造；Taskbook 中未来要执行的命令至少确认真实存在、target/参数可信，必要时把核验放入 Task 0。
 
-**凡被编译进 Taskbook 并作为 scope / coverage / attribution premise 的 baseline，Executor 在首次受影响 material work 前必须用同一 authoritative probe 复算。** 若结果不匹配，不得把旧值当 truth 继续：立即把依赖该 premise 的 assumption / Evidence 标 stale，暂停受影响 work，按当前 reality 修正 Execution / Verification；与该 mismatch 无关的 work / Evidence 继续复用。这个 recheck 是 baseline 的使用条件，不把所有任务机械变成 Task 0。
+**凡被编译进 Taskbook 并作为 scope / coverage / attribution premise 的 baseline，Executor 在首次受影响 material work 前必须用同一 authoritative probe 复算。** 若结果不匹配，不得把旧值当 truth 继续：立即把依赖该 premise 的 assumption / Evidence 标 stale，暂停受影响 work，按当前 reality 修正 Execution / Verification；与该 mismatch 无关的 work / Evidence 继续复用。Taskbook 不得把这个 gate 弱化成“偏差先报告再继续”，也不因此把所有任务机械变成 Task 0。
 
 ## Verification
 
@@ -86,6 +91,8 @@ Verification 冻结**必须证明什么**，不默认冻结**为了实现/调试
 
 Provider、target、scope 依赖 change surface / binding / runtime reality 时，编译稳定 trigger/authority，让 Executor 在触发后 materialize 具体 action。cleanup/refactor/expected `0-diff` 不能降低已经触发的 required Verification。
 
+**不要把 Research candidate 变成 hard-zero 清单。** 具体 symbol/file/config 只有已经被证实属于目标 responsibility、且其归零本身是 Goal/Verification claim 时，才能编译成 `0-hit / 0-count`。如果“它到底是 dead 还是 live/mixed”仍属于执行期 judgment，就写判据与 coverage oracle：所有被证实为 target-only 的实例必须清零，surviving/mixed exception 必须保留；不要提前点名候选并强制为零。
+
 “每改一个文件都 build”“每搬一个类型都单独 test”这类 failure-localization tactic 默认属于 Executor，不进入 binding contract，除非 repo/Human authority 或特殊风险明确要求。
 
 需要额外 judge trust 时按需读取 [verification-trust.md](verification-trust.md)。
@@ -93,6 +100,8 @@ Provider、target、scope 依赖 change surface / binding / runtime reality 时�
 ## Evidence
 
 Compile proof / trust requirement，不编译未来结果。最终 judgment 需要的 Evidence 应可复核并覆盖真实 claim；Executor 自报 `PASS` 或活动说明不是 Evidence。前提未变化的 Evidence 可复用，新 Evidence 只让受影响结论失效。
+
+默认 Evidence 形态是 **judgment + coverage oracle + material exceptions + verification result**。不要为了显得严谨，要求 Executor 把开放 surface 上每个 symbol/file 的“删/留 + grep 输出”复制成最终台账；那会把 judgment 重新退化成 checklist。只有 closed-set reconciliation、审计要求或实例风险不同才逐项 accounting。
 
 ## Completion Hook
 
@@ -130,9 +139,12 @@ Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同�
 - Taskbook 是否定义了任务，而不是展示 Northstar 的调研过程？
 - 每个 Task 是否是 outcome + judgment，而不是文件/函数/checklist/patch step？
 - 同一个 judgment 能覆盖的开放 surface 是否由 Executor 扫全集，而不是静态枚举？
+- 是否把“逐实例判断”错误升级成“逐实例 Evidence 台账”？
+- 普通 factual/execution Unknown 是否被误写成 Human decision？
 - `必须/不许` 是否都有 authority，还是把模型建议误写成 law？
 - 是否保留了不写就会让 Executor 判错的 trap，同时删除了可安全重算的明细？
-- baseline 是否可复算，并明确了 mismatch 时 stale / pause / repair affected state 的 gate？
+- baseline 是否可复算，并明确了 mismatch 时 stale / pause / repair affected state 的 gate，而不是“报告后继续”？
+- hard-zero / zero-hit 验收里的每个具体对象是否已经被证明属于目标 responsibility，而不是 research candidate？
 - Verification 是否冻结 required proof，而没有把 debugging tactic 变成硬流程？
 - Completion 是否同时有 success、stop-loss、rollback 和 judge-integrity 路径？
 - execution Unknown 是否有 `implement-notes` resume carrier？
