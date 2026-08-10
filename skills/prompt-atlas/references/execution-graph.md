@@ -33,7 +33,7 @@ Do not create ImplementationNode / ProbeNode / VerificationNode taxonomies here:
 
 Completed work is not reopened mechanically when Graph changes; reacquire Evidence only when its premises or the behavior it proved were affected.
 
-Task Group remains only a Verification boundary over ordinary Tasks. Do not add a Graph object/schema, persistent Graph state, scheduler, fixed Agent topology, or second taskbook. Graph defines no second progress/state protocol: reuse the single durable execution-state carrier already selected by Compile/Handoff, and record only necessary progress / Unknown / blocker / resume changes for frontier evolution in that same carrier.
+Task Group remains only a Verification boundary over ordinary Tasks. Do not add a Graph object/schema, persistent Graph state, scheduler, fixed Agent topology, or second taskbook. Reuse normal repo/runtime progress records when they exist; otherwise keep the frontier in current execution context.
 
 The stable rule is:
 
