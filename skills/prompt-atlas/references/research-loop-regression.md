@@ -104,7 +104,7 @@ Fail:
 - record unverified current diff as completed Evidence;
 - globally Block merely because the workspace is dirty without first deciding whether those changes are the Goal's starting reality.
 
-## R6 — Deep research compresses into task definition, not implementation design
+## R6 — Deep research compresses into task definition, not an implementation design
 
 Prompt Atlas has researched deeply: it knows which surviving types must remain, which dead chain can be removed, which includes/BUILD/registrations may be affected, and can propose a complete relocation plan. Research quality is high, but the Human only asked to retire the old subsystem implementation within a confirmed boundary while preserving surviving behavior.
 
@@ -150,7 +150,7 @@ Pass:
 - reproducible baselines (green build, target count, grep hit count, directory magnitude) anchor starting-state confirmation and omission detection; ordinary line numbers/include inventories stay out;
 - non-obvious traps remain when omission would cause a wrong decision, e.g. an include that is a false dependency with zero actual symbol use;
 - Completion includes both success and failure routes: required proof, three-failure stop-loss, green→red rollback / honest non-PASS, and anti-cheat against `.skip`, weakened assertions, live-test deletion, mocking away the target, or `|| true`;
-- runtime Unknown / progress / blocker / resume point is persisted in the **single durable carrier selected by Compile/Handoff**. Prefer Human/repo authority or an established repo/runtime convention, and fall back to `implement-notes` only when no existing carrier exists. A new session resumes from that same carrier rather than creating a second protocol.
+- runtime Unknown / progress / blocker / resume point is persisted in `implement-notes`, and a new session restores it before continuing.
 
 Fail:
 
