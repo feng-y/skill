@@ -1,6 +1,6 @@
-# 自主任务书：把稳定 Goal 编译成最小充分执行合同
+# 自主任务书：把稳定 Goal 编译成判断充分的执行合同
 
-只在 Goal 已定准后使用。Taskbook 要让 fresh Executor 独立完成目标，但**不替 Executor 预写实现方案**。
+只在 Goal 已定准后使用。Taskbook 要让 fresh Executor 独立完成目标，但**不替 Executor 预写 patch**。
 
 ```text
 Goal
@@ -12,29 +12,53 @@ Verification
 Evidence
 ```
 
-这是 compiler 内部 ownership / proof chain，不是输出模板。**完整的是 decision coverage，不是 information coverage 或 patch coverage。** Research 可以很深，Taskbook 必须压缩。
+这是 compiler 内部 ownership / proof chain，不是输出模板。**decision-complete ≠ information-complete。** Research 可以很深，Taskbook 只保留会改变 Executor 判断的信息。
 
 ## Goal
 
-只写一个 Human-owned Goal：目标结果、confirmed boundary、must-preserve、最终交付。Why 只有会改变取舍时才写。Human 明确 Verification requirement 归 Verification，不复制回 Goal。
+只写一个 Human-owned Goal，并明确：
+
+- **Outcome**：最终必须成立的结果属性；
+- **Decision priority**：冲突时的让步顺序，未列情况按此自裁；
+- **Allowed boundary**：允许持续发现和处理的 territory；
+- **Forbidden boundary**：不能碰、不能顺手扩展的 territory；
+- **Must-preserve**：行为、接口、数据、验证权威等不可退化属性；
+- 最终交付。
+
+不要把模型选择的内部代码形状默认写成 success criterion。目录消失、文件搬迁、namespace 改名、某个 patch shape 只有在 Human 明确要求、repo authority 要求或其本身就是 Goal invariant 时才属于 Goal。
+
+## Compile output filter
+
+Compile 是输出过滤器，不是 Research 转录器。每条准备写入 Taskbook 的事实都过两问：
+
+1. Executor 能否从 authoritative repo reality 低成本、可靠地重新取得？若能，优先写判据，不写清单/行号/明细。
+2. 省略它是否会显著增加错误 scope、错误删除/保留、错误 Verification 或不安全实现的概率？若会，这个 trap / counterexample / non-obvious reality 必须保留。
+
+因此：
+
+- 文件行号、普通 include 明细、symbol count、候选 patch、可重算 inventory 默认省略；
+- 同名异义、假依赖、非显然 surviving consumer、真实 hard boundary、会改变验证触发的 binding 等必须保留；
+- 可复算的 baseline/count 可以保留，因为它们是 coverage oracle / attribution anchor，而不只是背景信息。
+
+更多 Evidence 应该压缩成更少、更可靠的 judgment，而不是更多 instruction。
 
 ## Execution / Graph
 
-Taskbook 默认只保留少量 **bounded work unit**。
+Taskbook 默认只保留少量 **outcome + judgment work unit**。
 
-一个 Task 应该让 Executor 能在一组统一 judgment 下独立推进到可观察结果，通常只需要：
+一个 Task 应该让 Executor 能在统一 judgment 下扫描并处理完整同类 surface，通常只需要：
 
 - 要达到的局部 outcome；
-- 适用 territory / starting reality 仅在不写会误判时给出；
-- 一个会反复决定“做 / 保留 / 停 / 分支”的 stable judgment；
+- 适用 territory / starting reality，仅在不写会误判时给出；
+- 会反复决定“改 / 保留 / 跳过 / block”的 stable judgment；
 - 真正限制选择空间的 hard constraint；
-- 已经 binding、且决定该 work 是否成立的 Verification obligation。
+- 已经 binding、决定该 work 是否成立的 Verification obligation。
 
-**Task 不是 executable delta，也不是 predicted patch。** 不因为 Research 已经知道某个可行方案，就把以下细节自动写成执行合同：具体文件怎么拆、符号搬到哪个新文件、函数抽哪几行、include/BUILD 怎么改、命令先后、每个 leaf 的删除顺序、用于定位失败的中间 build/test。只有 Human 明确要求、repo authority 要求、真实 dependency/风险要求，或 Evidence 证明这是唯一安全路线时，才把这类 How 固化。
+**Task 不是 executable delta、文件路径清单或 predicted patch。** 路径/文件只有在集合封闭、不能从 repo 可靠推导、且枚举本身就是判据时才列。对于开放 surface，写判据让 Executor 自己扫全集；否则 checklist 外的第 N+1 个同类残留会永久漏掉。
 
-当一批文件/符号/实例共享同一个 judgment 时，合并成一个 Task；不要为每个实例建立节点。只有 outcome、dependency、authority、risk 或 required Verification 真不同才拆。
+不因为 Research 已知一个高置信实现方案，就把具体文件拆法、搬迁目的地、函数抽取行号、include/BUILD 改写、命令顺序或 failure-localization tactic 固化成合同。只有 Human / repo authority /真实 dependency / risk 或唯一安全路径要求时才固化 How。
 
-Graph 只表达会改变 execution judgment 的真实关系，例如 dependency、可并行 work unit、shared write 或必须组合验证的 join。不要为了 Graph 精确把工作切碎。
+当多个实例共享同一个 judgment 时合并成一个 Task；只有 outcome、judgment、dependency、authority、risk 或 required Verification 真不同才拆。Graph 只表达会改变 execution judgment 的真实 dependency / parallel / join，不为了“精确”把工作切成 patch nodes。
 
 Human 已确认的 strategy / scope boundary / must-preserve 直接保留。ready frontier 只表示现在能做什么，不改变 Human Goal；adjacent residual 不自动扩 scope。
 
@@ -42,17 +66,11 @@ Human 已确认的 strategy / scope boundary / must-preserve 直接保留。read
 
 **Task 0** 只在缺少某个执行期事实会阻止第一项安全 material work，或 required Verification 明确要求在 material work 前关闭 trigger 时使用。它不是 Research continuation、inventory 或默认 checklist。
 
-## Information compression
+## Starting baseline
 
-Research finding 不自动进入 Taskbook。只有它至少改变以下一项才值得保留：
+交付前尽量建立可归因起点。对本任务真正有判卷价值的 build/test/replay/static probe 实测 baseline；范围需要度量时优先给可复算 signal，例如 target 数、grep 命中数、文件/行数量级和测量时间，而不是完整 path inventory。
 
-- Goal / boundary / must-preserve；
-- Executor 反复应用的 judgment；
-- work unit 的真实 dependency / risk / authority；
-- required Verification / Completion judgment；
-- 无法安全从 repo 重新取得、且丢失会导致执行偏离的 starting reality。
-
-Executor 打开 repo 就能安全重新取得的文件行号、symbol count、include 明细、候选清单、已知 patch 方案，默认省略。**更多 Evidence 应该压缩成更少、更可靠的判断，而不是更多 instruction。**
+Taskbook 只保留能让 Executor复算 scope、判断漏项或区分“原本就坏”与“本次改坏”的 baseline。命令没实测、数字对不上或环境不可达时，不伪造；必要时把核验放入 Task 0。
 
 ## Verification
 
@@ -64,7 +82,7 @@ Verification 冻结**必须证明什么**，不默认冻结**为了实现/调试
 
 Provider、target、scope 依赖 change surface / binding / runtime reality 时，编译稳定 trigger/authority，让 Executor 在触发后 materialize 具体 action。cleanup/refactor/expected `0-diff` 不能降低已经触发的 required Verification。
 
-“每改一个文件都 build”“每搬一个类型都单独 test”这类失败定位策略默认属于 Executor tactic，不进入 binding contract，除非 repo/Human authority 或特殊风险明确要求。
+“每改一个文件都 build”“每搬一个类型都单独 test”这类 failure-localization tactic 默认属于 Executor，不进入 binding contract，除非 repo/Human authority 或特殊风险明确要求。
 
 需要额外 judge trust 时按需读取 [verification-trust.md](verification-trust.md)。
 
@@ -74,24 +92,44 @@ Compile proof / trust requirement，不编译未来结果。最终 judgment 需�
 
 ## Completion Hook
 
-Taskbook 自带 stop judgment，但不新增 Completion layer。只读取 **Goal / constraints + triggered required Verification + current valid Evidence**：
+Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同时定义成功路径和失败路径：
 
-- Goal material outcome 是否已被最低充分 Evidence 覆盖；
-- must-preserve / confirmed boundaries / authority 是否仍成立；
+### Success
+
+只读取 **Goal / constraints + triggered required Verification + current valid Evidence**：
+
+- Goal material outcome 是否已有最低充分 Evidence；
+- decision priority 下更高优先级属性是否没有被较低优先级目标破坏；
+- must-preserve / allowed+forbidden boundaries / authority 是否仍成立；
 - triggered required Verification 是否都有可信 Evidence。
 
-全部满足就 `STOP`；有 gap 就继续现有 work 或只 materialize 能关闭 gap 的 contingent work；没有安全路径就准确 `BLOCKED`。frontier 为空或 Task 做完本身都不等于完成。
+全部满足才 `STOP`。
+
+### Failure / stop-loss
+
+- 同一验收连续失败 3 次且没有新增 Evidence 时，不继续同一路线硬顶；切换独立 work、改变有依据的策略，或准确报告 non-PASS/blocker；
+- 可信 baseline 从绿变红时，优先恢复到绿再继续；恢复不了就如实报告，不把退化状态当完成；
+- “没做成但说清了”优于“做了但更糟”；
+- 禁止通过 `.skip` / `todo`、放松断言、删除活体测试、mock 掉被测对象、改阈值、吞错误、`|| true` 或其他削弱 judge 的方式制造 PASS。测试随被删主体一起删除时必须由 Goal / dead-code judgment 正当化并可对账。
+
+## Durable execution state
+
+执行期 progress、new Unknown、blocker、关键 decision/Evidence 和 resume point 使用现有 `implement-notes` 持久化。换 session 后先读它，只重做前提已变化或 Evidence 已失效的工作；conversation 不作为唯一状态存储。
 
 ## Handoff check
 
 发出前只问：
 
+- Goal 写的是 outcome，还是把模型选的 implementation shape 偷偷当成功标准？
+- 冲突时是否有清楚 decision priority，未列情况能否据此自裁？
+- allowed / forbidden boundary 是否双向清楚？
 - Taskbook 是否定义了任务，而不是展示 Northstar 的调研过程？
-- 每个 Task 是否是 bounded work unit，而不是文件/函数/patch step？
-- 是否把“一个可行实现”误写成了“必须这样实现”？
-- 同一个 judgment 能覆盖的实例是否已经合并？
-- Graph 是否只保留真实 execution relationship？
-- Verification 是否只冻结 required proof，而没有把 debugging tactic 变成硬流程？
-- Executor 可安全自行取得、且不改变 judgment 的细节是否已经删除？
+- 每个 Task 是否是 outcome + judgment，而不是文件/函数/checklist/patch step？
+- 同一个 judgment 能覆盖的开放 surface 是否由 Executor 扫全集，而不是静态枚举？
+- 是否保留了不写就会让 Executor 判错的 trap，同时删除了可安全重算的明细？
+- baseline 是否可复算、能暴露 stale 或漏项？
+- Verification 是否冻结 required proof，而没有把 debugging tactic 变成硬流程？
+- Completion 是否同时有 success、stop-loss、rollback 和 judge-integrity 路径？
+- execution Unknown 是否有 `implement-notes` resume carrier？
 
-如果删除某段不会改变 Executor 的目标、边界、判断或完成条件，就删除它。
+如果删除某段不会改变 Executor 的目标、边界、判断、验证、失败处理或恢复方式，就删除它。
