@@ -6,7 +6,7 @@ Graph carries only **execution relationships already supported by current Eviden
 
 ## Static compile
 
-Compile the **decision-complete Graph supported by current Evidence**: express once the necessary work / relations that are already known, materially change execution judgment, and have sufficiently stable boundaries. Do not hide them for artificial laziness, and do not enumerate file/symbol/patch detail merely in the name of “complete.” Truly contingent work that still depends materially on future Evidence is not guessed early.
+Compile the **decision-complete Graph supported by current Evidence**: express once the necessary work / relations that are already known, materially change execution judgment, and have sufficiently stable boundaries. Do not hide them for artificial laziness, and do not enumerate file/symbol/patch detail merely in the name of information completeness. Truly contingent work that still depends materially on future Evidence is not guessed early.
 
 - `depends on` — only when downstream really consumes an upstream result or the upstream result is a safe-execution prerequisite;
 - `may run in parallel` — only when there is no dependency or write conflict;
