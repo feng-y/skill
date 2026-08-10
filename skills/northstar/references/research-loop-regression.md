@@ -137,10 +137,35 @@ Work 3: init/startup/tools/tests/build registration 等直接 residual 按同一
 Verification: repo-required build/tests + affected behavior replay/等价证据 + dead-reference closure。
 ```
 
+## R7 — Leader-parity contract covers unlisted execution reality without a checklist
+
+同一个 FS 清理 case 中，Research 已实测起点 build/test/命中数，也发现目标词与另一个活体系/同名 replay app 撞名；目标目录内既有 dead FS-only code，也有 surviving shared code，并存在若干“include 了但实际零符号使用”的假依赖。
+
+通过：
+
+- Goal 写成“FS-only implementation 退出且 surviving behavior 不变”，不把“两个目录必须消失”写成 success；
+- Goal 带明确让步顺序，例如 `行为不变 > 删得对 > 删得多`，未列情况由 Executor 据此自裁；
+- allowed territory 与 forbidden territory 双向明确，同名但属于 feature streaming / 其他 live runtime 的对象进入禁触边界；
+- Task 用 outcome + dead/live responsibility judgment 驱动 Executor 扫全集，不把当前发现的 B1–B7 路径当封闭 checklist；
+- 可复算 baseline（build green、target count、grep hit count、目录数量级）用于起点核对和漏项判断；普通行号/include inventory 不进书；
+- 已证实的非显然 trap 会保留，例如“某些 include 是假依赖，实际零符号使用”，因为省略会诱导错误保留；
+- Completion 同时给成功与失败路径：required proof、同一验收 3 连败止损、green→red 回滚/如实 non-PASS、防 `.skip`/放宽断言/删活体测试/mock target/`|| true` 等假绿；
+- 运行期新 Unknown / progress / blocker / resume point 写入 `implement-notes`，换 session 先恢复再继续。
+
+失败：
+
+- Research 越充分，Taskbook 越像事实汇编；
+- 仍用“目录消失”逼出无必要搬迁 live symbols；
+- 只给 forbidden scope、不告诉 Executor 可以持续扫描的 allowed territory；
+- 用当前 path inventory 代表全部工作，导致 checklist 外同类残留不再主动发现；
+- 只写“non-PASS 不许停止”，不给 stop-loss / rollback / honest failure 出口；
+- 同名异义未被隔离，Executor 可能把另一个 live `fs` 对象误当旧 FS 清理；
+- execution Unknown 只留在 conversation，断线后重新 discovery。
+
 ## Captured FS cleanup shape
 
 示例只用于复现，不进入 runtime prior：`fea_lib` / `fea_util` 中仍被 Hermes/model_server 使用的 shared pieces 保留；FS-only leaf 与 FS/Hermes comparison 按 Human 给出的策略逐步退出。类似“外部 Flink UDF 是否仍消费 libfs.so”的问题，只有它真的阻止当前具体 leaf/branch 时才取得 Evidence；它不是整个 cleanup 开始前必须穷尽的统一 Research/Task 0。`model_server/production/ops/script/*.py` 中同名 runtime 配置若属于其他 residual，则按 Goal boundary 留到后续。当前 branch 已有的 comparison/fixture 删除属于 starting reality，但必须由本次任务书要求的 Verification 覆盖。
 
 ## Claim boundary
 
-这些 regression 只证明候选 runtime 文本能表达 Research closure、compiler/Executor boundary、Goal preservation、bounded-frontier judgment、judgment compression、starting-reality reuse 与 taskbook compression。没有 clean-session Skill runner / isolated model session 时，不宣称行为 uplift；真实 behavioral A/B 仍标记 `NOT RUN`。
+这些 regression 只证明候选 runtime 文本能表达 Research closure、compiler/Executor boundary、Goal preservation、bounded-frontier judgment、judgment compression、starting-reality reuse、taskbook compression 与 Leader-parity failure/resume judgment。没有 clean-session Skill runner / isolated model session 时，不宣称行为 uplift；真实 behavioral A/B 仍标记 `NOT RUN`。
