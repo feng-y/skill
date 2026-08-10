@@ -6,12 +6,12 @@
 
 ## Trust judgment
 
-增加额外 trust mechanism 前先判断：**即使 visible verification 全部 PASS，Goal 或已触发 required Verification 是否仍可能 materially false 或未被覆盖？**
+增加额外 trust mechanism 前先判断：**是否存在一个具体且 material 的 failure mode，使 Executor 在 Goal 或已触发 required Verification 没有真正成立时，仍可能得到 visible PASS？**
 
-- 如果不能，visible Evidence 已足够；停止增加判卷机制。
-- 如果仍可能，先指出使绿灯不足以判卷的具体原因，例如 judge 可能没有真实观察目标、Executor 可以控制或针对 oracle / 固定样本优化、由 Executor 自己推导的 coverage/scope 仍需要独立反证，或关键 Evidence 只能由实现者自报。然后只补足能反证该风险的最小 trust Evidence。
+- 没有这样的具体 failure mode，就直接使用 visible Evidence，不增加额外判卷机制。
+- 如果存在，先说清它是什么，再只补足能反证该 failure mode 的最小 trust Evidence。典型原因包括 judge 没有真实观察目标、Executor 可以修改或针对 oracle / 固定样本优化、关键 coverage/scope 只能依赖实现者自己的推导，或决定性 Evidence 只能由实现者自报。
 
-反向验证、暗卷和独立 Evidence 都只是修补这个 trust gap 的手段，不是新的 Goal、Acceptance 层或固定流程。
+一般 uncertainty 不是 trust gap；coverage / scope 本身仍由 [execution-compile.md](execution-compile.md) 判断。这里仅处理这些结论是否需要额外可信度或独立性。反向验证、暗卷和独立 Evidence 都只是修补具体 trust gap 的手段，不是新的 Goal、Acceptance 层或固定流程。
 
 ## 保护 judge 与 baseline
 
@@ -27,9 +27,9 @@
 
 **明卷**是 Executor 可见的 verification，也是默认路径。repo 的受保护测试、replay、CI、schema 或其他 judge 已足够时，不增加私有检查。
 
-只有 Trust judgment 证明可见绿灯仍留下 material falsifiability gap，且隔离观察能实际缩小该 gap 时，才使用少量**暗卷**。它必须从同一个公开 Goal 和 Verification requirement 推导，可以换样本、scope derivation 或观察路径，但不能增加隐藏要求；如果要称为暗卷，就应在执行前形成并与 Executor 隔离。runtime 无法隔离时，把它当明卷或改用其他受保护 Evidence。
+只有 Trust judgment 已指出一个隔离观察能够实际反证的 concrete failure mode 时，才使用少量**暗卷**。它必须从同一个公开 Goal 和 Verification requirement 推导，可以换样本、scope derivation 或观察路径，但不能增加隐藏要求；如果要称为暗卷，就应在执行前形成并与 Executor 隔离。runtime 无法隔离时，把它当明卷或改用其他受保护 Evidence。
 
-暗卷的价值来自对同一 claim 的独立反证能力，不来自数量。优先检查 visible path 可能遗漏的 coverage、material contradiction 或 shortcut，不为“多一层保险”重复明卷。
+暗卷的价值来自对该 failure mode 的独立反证能力，不来自数量。没有针对那个 gap 的暗卷只是重复明卷，不增加 trust。
 
 暗卷一旦在执行前泄露给 Executor，就不再提供 private-evidence 价值；可以继续作为明卷使用，但不能重复计算其独立性。
 
