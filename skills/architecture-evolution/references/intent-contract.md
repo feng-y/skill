@@ -20,6 +20,7 @@ Status: Architecture intent ready
 ## Direction
 - Intent: <优先表达为完成后必须长期成立的 architecture boundary / invariant，而不是具体实现>
 - Desired end state: <说明哪些边界、ownership、dependency 或 semantics 应稳定，以及边界内哪些实现仍可自主变化>
+- Stable acceptance rule: <直接说明 Direction + Boundary + Replacement / exit 何时成立；不指定 test/lint/evidence provider>
 - Possible shapes: <可选；只在确有少量基本形态值得后续设计比较时简要列出>
 
 ## Boundary
