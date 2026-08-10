@@ -117,15 +117,3 @@ Claim at risk → Minimal probe → Evidence → Intent changed / retained
 - 存在代码无法裁决的 Human-owned 业务或兼容决定。
 
 需要 Brooks 约束时读取 `brooks-constraints.md`；Brooks 只帮助 challenge judgement，不形成独立报告。
-
-## Ready gate
-
-`Architecture intent ready` 只要求：
-
-1. 有真实 pressure 和 evidence；
-2. 一个 structural cause 能解释主要 pressure，并说明为什么不是 local fix；
-3. desired end state 和 boundary 清楚；
-4. ownership / semantic / dependency scope 没有越过 evidence；
-5. 至少一个真实 replacement / exit；
-6. 没有仍会改变 intent 或 boundary 的 Material Unknown；
-7. 最重要的 false-unification、complexity-relocation 和 ownership-overreach 反例已被检查。
