@@ -74,6 +74,8 @@ Human 已确认的 strategy / scope boundary / must-preserve 直接保留。read
 
 Taskbook 只保留能让 Executor 复算 scope、判断漏项或区分“原本就坏”与“本次改坏”的 baseline。命令没实测、数字对不上或环境不可达时，不伪造；Taskbook 中未来要执行的命令至少确认真实存在、target/参数可信，必要时把核验放入 Task 0。
 
+**凡被编译进 Taskbook 并作为 scope / coverage / attribution premise 的 baseline，Executor 在首次受影响 material work 前必须用同一 authoritative probe 复算。** 若结果不匹配，不得把旧值当 truth 继续：立即把依赖该 premise 的 assumption / Evidence 标 stale，暂停受影响 work，按当前 reality 修正 Execution / Verification；与该 mismatch 无关的 work / Evidence 继续复用。这个 recheck 是 baseline 的使用条件，不把所有任务机械变成 Task 0。
+
 ## Verification
 
 Verification 冻结**必须证明什么**，不默认冻结**为了实现/调试应该怎么跑**。
@@ -130,7 +132,7 @@ Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同�
 - 同一个 judgment 能覆盖的开放 surface 是否由 Executor 扫全集，而不是静态枚举？
 - `必须/不许` 是否都有 authority，还是把模型建议误写成 law？
 - 是否保留了不写就会让 Executor 判错的 trap，同时删除了可安全重算的明细？
-- baseline 是否可复算、能暴露 stale 或漏项？
+- baseline 是否可复算，并明确了 mismatch 时 stale / pause / repair affected state 的 gate？
 - Verification 是否冻结 required proof，而没有把 debugging tactic 变成硬流程？
 - Completion 是否同时有 success、stop-loss、rollback 和 judge-integrity 路径？
 - execution Unknown 是否有 `implement-notes` resume carrier？
