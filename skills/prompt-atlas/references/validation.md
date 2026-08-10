@@ -123,7 +123,7 @@ Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 4. decision priority and bidirectional boundaries let the Executor decide unlisted cases;
 5. law and intelligence stay separate;
 6. failure stop-loss / rollback / anti-cheat / resume state are executable;
-7. after execution, the original Taskbook and its required Verification are enough for a simple acceptance pass; acceptance and repair stay separate, and an independent acceptance prompt is only the fallback when the execution environment is unavailable;
+7. required Verification is the visible exam and the manager keeps 2–3 independent hidden spot checks outside the Taskbook; after execution the manager reruns visible + hidden checks and returns a ≤5-line result, falling back to an acceptance prompt for an independent non-executing agent only when the execution environment is inaccessible;
 8. Prompt Atlas/Northstar Graph / Verification / Evidence capabilities do not reduce those properties.
 
 Prompt Atlas does not copy Leader's `/goal` surface, fixed six-section format, or `PROGRESS.md/BLOCKED.md` filenames. **≤4000 characters and the three-failure stop-loss are current Prompt Atlas/Northstar runtime contract, so validation must evaluate that current reality rather than an older reference claim.**
