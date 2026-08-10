@@ -32,8 +32,8 @@ Evidence
 先用与后果相称的证据消解事实 Unknown。只路由剩余未决项：
 
 - 当前可查、且如果在 Compile 前不确认就可能 materially 改变 Goal/authority、初始安全 Execution 或 binding Verification 判断的事实 → 调研；
-- 只有执行环境才能确认，且在实质修改前确认会显著改善 execution grounding、稳定性、路线判断或 required Verification 的关键事实 → Task 0；
-- 其余执行事实与怎么实现，包括仍可查但只会细化后续 scope/consumer/dependency 的事实 → Executor 按需探查和判断；
+- 只有执行环境才能确认，而且缺少它就无法安全选择第一项 material action 或判断执行是否可以开始的关键事实 → Task 0；
+- 其余执行事实与怎么实现，包括仍可查但只会细化后续 scope/consumer/dependency 的事实 → Executor 在真正影响当前 ready work 时按需取得；
 - 不改变 Goal/边界/明确验证要求且可以回退的选择 → Northstar 可以做公开、未确认的 delegated default；
 - 会改变 Goal、边界、Human 明确验证要求、优先级或授权的选择 → Human；
 - 前置条件不可用但仍有安全工作 → 暂停受影响分支；
@@ -45,9 +45,9 @@ Goal 已定准，意味着唯一、内部一致且由 Human 决定的结果、wh
 
 ## 1. Research
 
-Research 只关闭 Handoff 前的 Compile blocker，不负责预先理解完整 execution reality。只补足如果现在缺失就会 materially 改变 Goal/authority、初始安全 Execution、binding Verification 或 Evidence 判断的 context；**当 Goal/authority 已稳定、当前 Evidence 已足以编译至少一个安全 Task 或必要 Task 0，并且 Verification authority/trigger 已明确到 concrete scope/provider/target 可以安全留到执行期时，必须停止 Research，进入 Compile/Run。**
+Research 只关闭 Handoff 前的 Compile blocker，不负责预先理解完整 execution reality。只补足如果现在缺失就会 materially 改变 Goal/authority、初始安全 Execution、binding Verification 或 Evidence 判断的 context；**当 Goal/authority 已稳定、当前 Evidence 已足以编译至少一个安全 material Task 或真正必要的 Task 0，并且 Verification authority/trigger 已明确到执行可以安全开始时，必须停止 Research，进入 Compile/Run。**
 
-核对 Handoff 正确性真正依赖的 workspace、约束性规格/测试、关键命令、基线、依赖和 repo verification authority。一次 observation 又暴露新的 consumer、dependency、history 或 implementation question，本身不构成继续 Research 的理由；除非它重新成为 Compile blocker，否则交给 Task 0 或 Executor 按需取得 Evidence。文档和命令先当待验证声明；执行前确认具有高信息价值、但只有真实执行环境才能回答的关键事实放进 Task 0，其余执行现实交给 Executor 按需发现。重要结论必须能回到 source pointer 或可复现观察，摘要本身不是 proof。
+核对 Handoff 正确性真正依赖的 workspace、约束性规格/测试、关键命令、基线、依赖和 repo verification authority。一次 observation 又暴露新的 consumer、dependency、history 或 implementation question，本身不构成继续 Research 的理由；除非它重新成为 Compile blocker，否则只在真正影响当前 ready work 时由 Executor 取得 Evidence。Task 0 只保留那些第一项 material action 前必须关闭的执行期事实，不作为 Research 的转存区。文档和命令先当待验证声明；重要结论必须能回到 source pointer 或可复现观察，摘要本身不是 proof。
 
 ## 2. Ask
 
@@ -60,10 +60,10 @@ Northstar 替 Human 作出的可回退决定必须公开标明仍未确认，并
 按 [execution-compile.md](references/execution-compile.md) 的固定合同语义写任务书，不增加 Completion/Acceptance schema。
 
 - **Goal** 直接写成功时必须成立和必须保持的结果；
-- **Execution / Graph** 编译当前 Evidence 已经能确定的 best-known complete Tasks / relations；简单任务保持线性，只有线性列表会掩盖真实关系时才读取 [execution-graph.md](references/execution-graph.md)。只有存在、scope 或关系仍 materially contingent on future Evidence 的工作才延迟展开；**best-known complete 表示当前 Evidence 已确定的工作结构足够完整，不要求先获得完整 repo/dependency/reachability knowledge；**
-- **Task 0** 是可选、bounded 的 execution warmup，只用于在主要执行前关闭少量高价值 Unknown；它不成为第二个 Research 阶段或固定 checklist；
+- **Execution / Graph** 编译当前 Evidence 已经能确定的 best-known complete Tasks / relations；优先直接表达能够逼近 Goal 的最小 ready frontier，不把尚未阻塞当前 frontier 的 execution Unknown 先物化成前置 Task。当前 Evidence 已支持一条有边界、可持续推进的路径时直接开始，只有新 Evidence 真正阻断或改变当前 work 时才 materialize 受影响的 contingent work。简单任务保持线性，只有线性列表会掩盖真实关系时才读取 [execution-graph.md](references/execution-graph.md)。只有存在、scope 或关系仍 materially contingent on future Evidence 的工作才延迟展开；**best-known complete 表示当前 Evidence 已确定的工作结构足够完整，不要求先获得完整 repo/dependency/reachability knowledge；Graph 的 stop boundary 来自 Goal/confirmed boundaries，不因执行中发现相邻 residual 自动扩 scope；**
+- **Task 0** 是可选、bounded 的 execution warmup，只用于第一项 material action 前确实必须关闭的少量关键 Unknown；它不成为第二个 Research 阶段、默认 checklist 或未决 execution fact 的收集区；
 - **Verification** 保留 Task / Task Group / Goal 三种 placement granularity；已知 obligation/action 直接编译，只有 concrete scope/provider/target 或 obligation 是否触发仍依赖执行期事实的部分才运行时 materialize；
-- 预期 `0-diff`、cleanup 或 refactor 不能降低已经由事实或 Human 明确要求触发的验证；执行期才能确认且值得在主要修改前关闭的 trigger 可放进 Task 0；
+- 预期 `0-diff`、cleanup 或 refactor 不能降低已经由事实或 Human 明确要求触发的验证；执行期才能确认且必须在第一项 material action 前关闭的 trigger 可放进 Task 0；
 - **Evidence** 编译 proof/trust requirement，不编译未来结果；test/build/replay/static probe 等只是 provider，不默认形成固定套餐；
 - **Completion Hook** 是任务书内置的 stop judgment：复用 Goal / constraints、已触发 Verification obligation 和 current valid Evidence 判断 stop / continue / block，不建立新的 semantic layer。
 
