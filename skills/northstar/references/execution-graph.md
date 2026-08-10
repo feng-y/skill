@@ -6,7 +6,7 @@ Graph 只承载**当前 Evidence 已经支持的执行关系**。它不是 seman
 
 ## 静态编排
 
-编译**当前证据支持的 best-known complete Graph**：已知必然存在且边界足够稳定的 work / relation 应一次表达，不为了 lazy 故意隐藏；仍实质依赖未来 Evidence 的 contingent work 不提前猜。
+编译当前 Evidence 支持的 **decision-complete Graph**：把当前已知、会改变 execution judgment、且边界足够稳定的必要 work / relation 一次表达清楚；不为了 lazy 故意隐藏，也不因为“完整”枚举 file/symbol/patch detail。仍实质依赖未来 Evidence 的 contingent work 不提前猜。
 
 - `depends on`：只有下游确实消费上游结果，或上游是安全执行前提时才写；
 - `may run in parallel`：没有 dependency 和 write conflict 时才写；
@@ -37,4 +37,4 @@ Task Group 仍然只是普通 Task 之上的 Verification boundary。不要增�
 
 稳定规则只有一句：
 
-> **已知且足够稳定的 execution structure 一次编译；真正 contingent 的 work / Verification 由 Evidence 使其成为现实时再扩展 Graph。**
+> **当前 Evidence 已经使其成为必要且稳定的 execution relation 一次编译；真正 contingent 的 work / Verification 由 Evidence 使其成为现实时再扩展 Graph。**
