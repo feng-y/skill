@@ -6,7 +6,7 @@ Graph 只承载**当前 Evidence 已经支持的执行关系**。它不是 seman
 
 ## 静态编排
 
-编译当前 Evidence 支持的 **decision-complete Graph**：把当前已知、会改变 execution judgment、且边界足够稳定的必要 work / relation 一次表达清楚；不为了 lazy 故意隐藏，也不因为“complete”枚举 file/symbol/patch detail。仍实质依赖未来 Evidence 的 contingent work 不提前猜。
+编译当前 Evidence 支持的 **decision-complete Graph**：把当前已知、会改变 execution judgment、且边界足够稳定的必要 work / relation 一次表达清楚；不为了 lazy 故意隐藏，也不因为“完整”枚举 file/symbol/patch detail。仍实质依赖未来 Evidence 的 contingent work 不提前猜。
 
 - `depends on`：只有下游确实消费上游结果，或上游是安全执行前提时才写；
 - `may run in parallel`：没有 dependency 和 write conflict 时才写；
