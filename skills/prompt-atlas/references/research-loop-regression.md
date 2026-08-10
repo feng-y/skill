@@ -104,7 +104,7 @@ Fail:
 - record unverified current diff as completed Evidence;
 - globally Block merely because the workspace is dirty without first deciding whether those changes are the Goal's starting reality.
 
-## R6 — Deep research compresses into task definition, not an implementation design
+## R6 — Deep research compresses into task definition, not implementation design
 
 Prompt Atlas has researched deeply: it knows which surviving types must remain, which dead chain can be removed, which includes/BUILD/registrations may be affected, and can propose a complete relocation plan. Research quality is high, but the Human only asked to retire the old subsystem implementation within a confirmed boundary while preserving surviving behavior.
 
