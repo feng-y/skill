@@ -88,6 +88,8 @@ Intent 必须指向真实减少，而不是再加一层。至少应有一项旧�
 
 Observed partition 是 evidence，不是 architecture boundary。只有它承载稳定 semantics/invariant、闭合 ownership、essential variation 或长期 change boundary 时，才值得成为后续设计的基本形态。
 
+好的 architecture direction 优先表达为少量 stable invariant / boundary：什么必须始终成立，哪些变化仍允许局部自主。不要把 class/API/library choice 当成架构规范。一个 invariant 稳定到值得长期约束时，应能被 repo structure、文档或工具清楚表达；本 Skill 只识别这个 judgement，不设计具体 lint/test。
+
 ## Material unknown
 
 只有会改变 intent 或 boundary 的 unknown 才是 Material Unknown。
