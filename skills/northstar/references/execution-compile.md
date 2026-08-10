@@ -58,6 +58,8 @@ Taskbook 默认只保留少量 **outcome + judgment work unit**。
 
 不因为 Research 已知一个高置信实现方案，就把具体文件拆法、搬迁目的地、函数抽取行号、include/BUILD 改写、命令顺序或 failure-localization tactic 固化成合同。只有 Human / repo authority /真实 dependency / risk 或唯一安全路径要求时才固化 How。
 
+**法与情报分开**：`必须/不许` 只来自 Human、repo authority 或已验证 reality；模型推荐的路线即使置信度高，也默认只是 intelligence。Executor 找到更小、更稳且满足 Goal/authority 的路径可以改走，并在 `implement-notes` 记录原因。
+
 当多个实例共享同一个 judgment 时合并成一个 Task；只有 outcome、judgment、dependency、authority、risk 或 required Verification 真不同才拆。Graph 只表达会改变 execution judgment 的真实 dependency / parallel / join，不为了“精确”把工作切成 patch nodes。
 
 Human 已确认的 strategy / scope boundary / must-preserve 直接保留。ready frontier 只表示现在能做什么，不改变 Human Goal；adjacent residual 不自动扩 scope。
@@ -70,7 +72,7 @@ Human 已确认的 strategy / scope boundary / must-preserve 直接保留。read
 
 交付前尽量建立可归因起点。对本任务真正有判卷价值的 build/test/replay/static probe 实测 baseline；范围需要度量时优先给可复算 signal，例如 target 数、grep 命中数、文件/行数量级和测量时间，而不是完整 path inventory。
 
-Taskbook 只保留能让 Executor复算 scope、判断漏项或区分“原本就坏”与“本次改坏”的 baseline。命令没实测、数字对不上或环境不可达时，不伪造；必要时把核验放入 Task 0。
+Taskbook 只保留能让 Executor 复算 scope、判断漏项或区分“原本就坏”与“本次改坏”的 baseline。命令没实测、数字对不上或环境不可达时，不伪造；Taskbook 中未来要执行的命令至少确认真实存在、target/参数可信，必要时把核验放入 Task 0。
 
 ## Verification
 
@@ -114,7 +116,7 @@ Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同�
 
 ## Durable execution state
 
-执行期 progress、new Unknown、blocker、关键 decision/Evidence 和 resume point 使用现有 `implement-notes` 持久化。换 session 后先读它，只重做前提已变化或 Evidence 已失效的工作；conversation 不作为唯一状态存储。
+开工先在现有 `implement-notes` 写 ≤10 行 Goal / 执行顺序 / 最大风险；之后持续记录 execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point。换 session 后先读它，只重做前提已变化或 Evidence 已失效的工作；conversation 不作为唯一状态存储。
 
 ## Handoff check
 
@@ -126,10 +128,13 @@ Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同�
 - Taskbook 是否定义了任务，而不是展示 Northstar 的调研过程？
 - 每个 Task 是否是 outcome + judgment，而不是文件/函数/checklist/patch step？
 - 同一个 judgment 能覆盖的开放 surface 是否由 Executor 扫全集，而不是静态枚举？
+- `必须/不许` 是否都有 authority，还是把模型建议误写成 law？
 - 是否保留了不写就会让 Executor 判错的 trap，同时删除了可安全重算的明细？
 - baseline 是否可复算、能暴露 stale 或漏项？
 - Verification 是否冻结 required proof，而没有把 debugging tactic 变成硬流程？
 - Completion 是否同时有 success、stop-loss、rollback 和 judge-integrity 路径？
 - execution Unknown 是否有 `implement-notes` resume carrier？
+
+自主执行 Taskbook 默认 **≤4000 字符**；只有 Human 明确要 long-form artifact 或目标 runtime 已知使用不同限制时放宽。超长先压缩 judgment、删重复、删可重算明细，不通过把一个 Human Goal 拆成多个 layer Goal 来规避长度。
 
 如果删除某段不会改变 Executor 的目标、边界、判断、验证、失败处理或恢复方式，就删除它。
