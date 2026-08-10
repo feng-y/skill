@@ -42,6 +42,6 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 - **`Status: Intent unresolved`** — 一个关键 Unknown 或 Human 决定仍会改变方向；
 - **`Status: Architecture intent ready`** — 输出一个有证据、有边界、足以继续目标设计的 Architecture Intent。
 
-具体 module/class/API、responsibility placement、调用流、迁移和实现属于后续 Target Design / execution。
+Intent 固定 outcome-level acceptance；具体 module/class/API、responsibility placement、调用流、迁移、实现以及 lint/test/verification 方法属于后续 Target Design / execution。
 
 最终输出跟随用户主要语言；代码符号、文件名和稳定协议名称可以保留原文。
