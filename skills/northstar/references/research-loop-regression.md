@@ -150,7 +150,7 @@ Verification: repo-required build/tests + affected behavior replay/等价证据 
 - 可复算 baseline（build green、target count、grep hit count、目录数量级）用于起点核对和漏项判断；普通行号/include inventory 不进书；
 - 已证实的非显然 trap 会保留，例如“某些 include 是假依赖，实际零符号使用”，因为省略会诱导错误保留；
 - Completion 同时给成功与失败路径：required proof、同一验收 3 连败止损、green→red 回滚/如实 non-PASS、防 `.skip`/放宽断言/删活体测试/mock target/`|| true` 等假绿；
-- 运行期新 Unknown / progress / blocker / resume point 写入 `implement-notes`，换 session 先恢复再继续。
+- 运行期新 Unknown / progress / blocker / resume point 写入 Compile/Handoff 选定的**唯一 durable carrier**；优先复用 Human/repo authority 或 established repo/runtime convention，只有没有既有载体时才 fallback `implement-notes`。换 session 先恢复同一载体再继续，不在已有协议旁造第二套。
 
 失败：
 
