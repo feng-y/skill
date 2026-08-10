@@ -123,7 +123,7 @@ Leader 是行为基线，不是答案 oracle。至少检查：
 4. decision priority 与双向 boundary 能让 Executor 自裁；
 5. law/intelligence 分离，不把建议写成法；
 6. failure stop-loss / rollback / anti-cheat / resume state 可执行；
-7. 执行完成后能重新读取原 Taskbook、复跑 required Verification 做简单验收；验收与修复分开，摸不到环境才退化为独立验收 agent prompt；
+7. Taskbook 的 required Verification 作为明卷，manager 侧另留 2–3 条 Executor 看不到的独立暗卷；执行完成后 manager 亲自复跑明卷 + 暗卷并给 ≤5 行结果，摸不到环境才退化为未参与执行 agent 的验收官 prompt；
 8. Northstar 额外 Graph / Verification / Evidence 能力不能降低上述质量。
 
 Northstar 不复制 Leader 的 `/goal` surface、固定六节或 `PROGRESS.md/BLOCKED.md` 文件名；**≤4000 字符和三次失败 stop-loss 已经是当前 Northstar runtime contract，validation 必须按当前事实评测。**
