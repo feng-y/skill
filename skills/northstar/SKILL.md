@@ -1,6 +1,6 @@
 ---
 name: northstar
-description: 把用户的一句话想法或零散要求，整理成中文的 Agent 提示词、brief、Goal、执行合同或自主任务书。意图、证据、边界或成功标准还不稳定时尤其适用：补足当前判断所需的最小 context，用证据先消解 material Unknown，只路由剩余未决项，意图没定准就不进入执行。
+description: 把用户的一句话想法或零散要求，整理成中文的 Agent 提示词、brief、Goal、执行合同或自主任务书。意图、证据、边界或成功标准还不稳定时尤其适用：补足当前判断所需的最小 context，用证据先消解 material Unknown，只路由剩余未决项，意图没定准就不输出可执行任务书。
 ---
 
 # Northstar · 先定准 Goal，再写成能独立执行的任务书
