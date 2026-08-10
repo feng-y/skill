@@ -30,7 +30,7 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 
 **2. Discover。**从 pressure 背后的 structural cause 找 intent，不从模式名出发。需要 architecture judgement 时用 `rules.md`。找一个最能解释主要压力、边界清楚、并能说明什么旧知识/路径/责任会退出的方向；必要时解释当前结构原来依赖什么合理前提、哪个前提现在已经失效。
 
-**3. Shape。**把 best-known judgement 收敛成一个 bounded Architecture Intent，结构见 `intent-contract.md`。优先把方向表达成 stable boundary / invariant：什么必须长期成立，哪些实现仍留给后续自主设计。如果确有少量基本架构形态值得后续设计比较，可以简单点出“是什么”；不物化具体 Target Design。
+**3. Shape。**把 best-known judgement 收敛成一个 bounded Architecture Intent，结构见 `intent-contract.md`。如果确有少量基本架构形态值得后续设计比较，可以简单点出“是什么”；不物化具体 Target Design。
 
 **4. Challenge。**用 `rules.md`，必要时加 `brooks-constraints.md`，只挑战会改变 intent 或 boundary 的判断。仍有这类 Material Unknown 就返回 `Status: Intent unresolved`；否则保留收敛后的 intent。
 
