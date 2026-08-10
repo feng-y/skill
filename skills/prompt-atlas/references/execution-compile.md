@@ -34,11 +34,15 @@ Compile is an output filter, not a Research transcription step. Every fact propo
 1. Can the Executor reliably and cheaply recover it from authoritative repo reality? If yes, prefer the judgment/criterion over line numbers, inventories, and detail.
 2. Would omitting it materially increase the chance of wrong scope, wrong change/preserve judgment, wrong Verification, or unsafe implementation? If yes, preserve that trap / counterexample / non-obvious reality.
 
+Run one more check over every **concrete list**: can the Executor reliably regenerate its members from one stable judgment + authoritative reality? If yes, remove the list and keep the judgment. Retain only authoritative closed sets, cases where enumeration itself is the criterion, or non-obvious traps whose omission would cause misjudgment.
+
 Therefore:
 
 - ordinary line numbers, include details, symbol counts, candidate patches, and recomputable inventories are omitted by default;
 - terminology collisions, false dependencies, non-obvious surviving consumers, hard boundaries, and facts that change Verification triggers must be preserved;
 - reproducible baseline counts may be preserved because they act as coverage / attribution anchors rather than background detail.
+
+When the Human excludes a prior effort / branch / MR/PR / old plan, that effort's implementation conclusions, inventories, decomposition, and defaults have no output authority. They may be used only as locators/hypotheses; any fact written into the Taskbook must be independently re-established from current authoritative reality or still-valid Human/repo authority. Prior-effort lists get no exception merely because Research saw them.
 
 More Evidence should compress into fewer, more reliable judgments—not more instructions.
 
@@ -58,7 +62,9 @@ A Task should let the Executor scan and handle the full same-shaped surface unde
 
 Research finding a high-confidence implementation does not make exact file decomposition, symbol destinations, extraction line ranges, include/BUILD rewrites, command order, or failure-localization tactics binding. Freeze How only when required by the Human, repo authority, real dependency/risk, or a uniquely safe route.
 
-**Law and intelligence stay separate**: `must/must not` comes only from the Human, repo authority, or verified reality. A model-recommended route remains intelligence even at high confidence. The Executor may take a smaller, safer compliant path and records why in `implement-notes`.
+**Law and intelligence stay separate**: `must/must not` comes only from the Human, repo authority, or verified reality. A model-recommended route remains intelligence even at high confidence. The Executor may take a smaller, safer compliant path and records why in the selected durable carrier. If Prompt Atlas actually makes a reversible delegated default, preserve it explicitly with decision / basis / cost-if-wrong / rollback; do not emit an empty default section when none exists.
+
+Human/repo-authoritative branch / commit / push / PR / destructive-operation discipline is a hard constraint and must survive when present. Do not invent execution discipline from model habit when no authority exists.
 
 Group instances covered by one judgment. Split only when outcome, judgment, dependency, authority, risk, or required Verification genuinely differs. Graph expresses only real dependency / parallel / join relations that change execution judgment; do not fragment work merely to make Graph precise.
 
@@ -124,7 +130,7 @@ Only then `STOP`.
 
 ## Durable execution state
 
-Start by writing ≤10 lines of Goal / execution order / largest risk into the existing `implement-notes`, then keep execution progress, new Unknowns, blockers, material decisions/Evidence, and resume point there. A new session reads it first and redoes only work whose premises changed or whose Evidence became invalid. Conversation is not the sole state store.
+Select exactly one durable execution-state carrier: prefer Human/repo authority or an existing repo convention; otherwise reuse an existing runtime-provided carrier; only then fall back to `implement-notes`. Start by writing ≤10 lines of Goal / execution order / largest risk into the selected carrier, then keep execution progress, new Unknowns, blockers, material decisions/Evidence, and resume point there. A new session reads the same carrier first and redoes only work whose premises changed or whose Evidence became invalid. Conversation is not the sole state store, and no second protocol is created beside an existing carrier.
 
 ## Handoff check
 
@@ -135,16 +141,20 @@ Before delivery, ask only:
 - Are allowed and forbidden boundaries both explicit?
 - Does the Taskbook define the task instead of exposing Prompt Atlas research?
 - Is each Task an outcome + judgment rather than a file/function/checklist/patch step?
+- Can every concrete list really not be regenerated from one stable judgment + authoritative reality? If it can, was the list removed in favor of the judgment?
+- Did any Human-excluded prior effort still leak into the Taskbook through inventory / decomposition / defaults?
 - Does an open same-shaped surface get scanned by criterion instead of static inventory?
 - Was an ordinary execution Unknown incorrectly promoted to `Needs-human-decision`?
 - Is Evidence proving judgment / coverage, or did it recreate per-file/per-symbol accounting?
 - Is a candidate grep / symbol list still a probe, or was it promoted without authority into a mandatory `0` criterion?
 - Does every `must/must not` have authority, or did model intelligence get promoted into law?
+- If a delegated default exists, is decision / basis / cost-if-wrong / rollback explicit?
+- If Human/repo execution discipline exists, did it survive as a hard constraint without being omitted or rewritten by the model?
+- Is there exactly one durable carrier, reusing authority/existing convention before fallback?
 - Are traps that would cause wrong judgment preserved while safely recomputable detail is removed?
 - Are baselines reproducible, with an explicit mismatch gate that stales / pauses / repairs affected state?
 - Does Verification freeze required proof without turning debugging tactics into hard workflow?
 - Does Completion include success, stop-loss, rollback, and judge-integrity paths?
-- Do execution Unknowns have an `implement-notes` resume carrier?
 
 Autonomous-execution Taskbooks default to **≤4000 characters**. Relax only when the Human explicitly asks for a long-form artifact or the target runtime is known to use a different limit. If it does not fit, compress judgments / deduplicate / remove recomputable detail first; do not split one Human Goal into artificial layer Goals to fit the limit.
 
