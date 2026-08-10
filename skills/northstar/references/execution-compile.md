@@ -34,15 +34,11 @@ Compile 是输出过滤器，不是 Research 转录器。每条准备写入 Task
 1. Executor 能否从 authoritative repo reality 低成本、可靠地重新取得？若能，优先写判据，不写清单/行号/明细。
 2. 省略它是否会显著增加错误 scope、错误删除/保留、错误 Verification 或不安全实现的概率？若会，这个 trap / counterexample / non-obvious reality 必须保留。
 
-再对每个**具体列表**过一问：Executor 能否用一个稳定 judgment + authoritative reality 可靠重建其成员？能则删列表留判据。只有 authoritative closed set、枚举本身就是 criterion，或不写会造成误判的 trap 才保留实例。
-
 因此：
 
 - 文件行号、普通 include 明细、symbol count、候选 patch、可重算 inventory 默认省略；
 - 同名异义、假依赖、非显然 surviving consumer、真实 hard boundary、会改变验证触发的 binding 等必须保留；
 - 可复算的 baseline/count 可以保留，因为它们是 coverage oracle / attribution anchor，而不只是背景信息。
-
-Human 明确排除某 prior effort / branch / MR/PR / old plan 时，该 effort 的 implementation conclusion、inventory、decomposition、default 没有输出 authority。它们只能作为 locator/hypothesis；任何最终写入 Taskbook 的事实必须从当前 authoritative reality 或仍有效的 Human/repo authority 独立重建。prior-effort 清单不因“Research 已经看过”获得豁免。
 
 更多 Evidence 应该压缩成更少、更可靠的 judgment，而不是更多 instruction。
 
@@ -62,13 +58,11 @@ Taskbook 默认只保留少量 **outcome + judgment work unit**。
 
 不因为 Research 已知一个高置信实现方案，就把具体文件拆法、搬迁目的地、函数抽取行号、include/BUILD 改写、命令顺序或 failure-localization tactic 固化成合同。只有 Human / repo authority /真实 dependency / risk 或唯一安全路径要求时才固化 How。
 
-**法与情报分开**：`必须/不许` 只来自 Human、repo authority 或已验证 reality；模型推荐的路线即使置信度高，也默认只是 intelligence。Executor 找到更小、更稳且满足 Goal/authority 的路径可以改走，并在选定的 durable carrier 记录原因。Northstar 若真正代做了可回退 delegated default，必须显式保留 decision / basis / cost-if-wrong / rollback；没有 default 不制造空章节。
+**法与情报分开**：`必须/不许` 只来自 Human、repo authority 或已验证 reality；模型推荐的路线即使置信度高，也默认只是 intelligence。Executor 找到更小、更稳且满足 Goal/authority 的路径可以改走，并在 `implement-notes` 记录原因。
 
-Human/repo authority 明确的 branch / commit / push / PR / destructive-operation 等 execution discipline 属于 hard constraint，存在时必须保留；没有 authority 时不要自行发明。
+只要 Goal / decision priority / boundary / authority 已足以安全裁决，普通事实或技术 Unknown 由 Executor 在执行期取证后自行决定；只有裁决需要改变 Human-owned Goal、boundary、明确 Verification、priority 或 authorization 时才回到 Human。
 
 当多个实例共享同一个 judgment 时合并成一个 Task；只有 outcome、judgment、dependency、authority、risk 或 required Verification 真不同才拆。Graph 只表达会改变 execution judgment 的真实 dependency / parallel / join，不为了“精确”把工作切成 patch nodes。
-
-**Execution Unknown 不等于 Human decision。** 只要现有 Goal / decision priority / boundary / authority 已足以安全裁决，事实或技术不确定项由 Executor 在执行期取证后自行 change / preserve / skip / block，并记录必要 Evidence；只有裁决必须改变 Human-owned Goal、boundary、明确 Verification、priority 或 authorization 时才升级 Human。不要仅因为“当前还不知道 dead/live”就输出 `Needs-human-decision`。
 
 Human 已确认的 strategy / scope boundary / must-preserve 直接保留。ready frontier 只表示现在能做什么，不改变 Human Goal；adjacent residual 不自动扩 scope。
 
@@ -94,8 +88,6 @@ Verification 冻结**必须证明什么**，不默认冻结**为了实现/调试
 
 Provider、target、scope 依赖 change surface / binding / runtime reality 时，编译稳定 trigger/authority，让 Executor 在触发后 materialize 具体 action。cleanup/refactor/expected `0-diff` 不能降低已经触发的 required Verification。
 
-Research / grep 里发现的 candidate symbol、path 或 family 默认只是 **probe seed**，不自动成为必须 `0` 的 success criterion。只有当前 Evidence 或 repo/Human authority 已经证明该集合全部属于 Goal-owned retired responsibility 时，才可要求统一清零；否则 non-zero hit 先按既有 judgment 分类，surviving responsibility 合法存在时不自动 FAIL。
-
 “每改一个文件都 build”“每搬一个类型都单独 test”这类 failure-localization tactic 默认属于 Executor，不进入 binding contract，除非 repo/Human authority 或特殊风险明确要求。
 
 需要额外 judge trust 时按需读取 [verification-trust.md](verification-trust.md)。
@@ -104,7 +96,7 @@ Research / grep 里发现的 candidate symbol、path 或 family 默认只是 **p
 
 Compile proof / trust requirement，不编译未来结果。最终 judgment 需要的 Evidence 应可复核并覆盖真实 claim；Executor 自报 `PASS` 或活动说明不是 Evidence。前提未变化的 Evidence 可复用，新 Evidence 只让受影响结论失效。
 
-Evidence 默认用于证明 **judgment boundary + required coverage**，而不是为开放 surface 的每个文件/符号建立“删除/保留 + 逐项调用方证明”的 ledger。只有 closed-set accounting 本身来自 repo/Human Verification authority，或没有逐项对账就无法证明某个 completion claim 时，才要求 per-instance accounting；否则保留足以证明 discriminator、关键例外、must-preserve 与最终 coverage 的代表性 Evidence。
+Evidence 证明 **judgment + completion claim**，不默认要求开放 surface 的每个文件/符号分别建立删除/保留账本。只有逐项对账本身就是权威验收，或缺少它就无法证明 completion claim 时，才要求 per-instance accounting。
 
 ## Completion Hook
 
@@ -130,7 +122,7 @@ Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同�
 
 ## Durable execution state
 
-只选择一个 durable execution-state carrier：Human/repo authority 已指定或 repo 已有约定优先；否则复用 runtime 已提供的现成 carrier；都没有才回退到 `implement-notes`。**复用的是 carrier identity / repo convention，不代表继承其中所有历史结论**：Human 明确排除的 prior-effort 内容，或 premise 已失效的旧记录，保持 stale/non-authoritative，除非当前 authoritative reality 重新建立。开工先在选定载体写 ≤10 行 Goal / 执行顺序 / 最大风险；之后持续记录 execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point。换 session 后先读同一载体，只重做前提已变化或 Evidence 已失效的工作；conversation 不作为唯一状态，也不在已有载体旁再造第二套。
+开工先在现有 `implement-notes` 写 ≤10 行 Goal / 执行顺序 / 最大风险；之后持续记录 execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point。换 session 后先读它，只重做前提已变化或 Evidence 已失效的工作；conversation 不作为唯一状态存储。
 
 ## Handoff check
 
@@ -141,20 +133,15 @@ Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同�
 - allowed / forbidden boundary 是否双向清楚？
 - Taskbook 是否定义了任务，而不是展示 Northstar 的调研过程？
 - 每个 Task 是否是 outcome + judgment，而不是文件/函数/checklist/patch step？
-- 每个具体列表是否都无法由一个稳定 judgment + authoritative reality 可靠重建？能重建的是否已经删列表留判据？
-- Human 排除的 prior effort 是否仍通过 inventory / decomposition / default 污染 Taskbook？
 - 同一个 judgment 能覆盖的开放 surface 是否由 Executor 扫全集，而不是静态枚举？
-- 普通 execution Unknown 是否被错误升级成 `Needs-human-decision`？
-- Evidence 是否在证明 judgment / coverage，还是又要求逐文件、逐 symbol 建账？
-- candidate grep / symbol 名单是否只是 probe，还是被无依据升级成必须 `0`？
+- 普通技术 Unknown 是否仍留给 Executor judgment，而不是因为未决就升级 Human？
 - `必须/不许` 是否都有 authority，还是把模型建议误写成 law？
-- 若存在 delegated default，是否显式保留 decision / basis / cost-if-wrong / rollback？
-- Human/repo execution discipline 若存在，是否作为 hard constraint 存活而没有被省略或模型改写？
-- durable carrier 是否复用 authority/现有载体且只有一个，同时没有把被排除 prior-effort 的旧内容重新当 truth？
+- Evidence 是否在证明 judgment / claim，而不是重新拆成逐实例账本？
 - 是否保留了不写就会让 Executor 判错的 trap，同时删除了可安全重算的明细？
 - baseline 是否可复算，并明确了 mismatch 时 stale / pause / repair affected state 的 gate？
 - Verification 是否冻结 required proof，而没有把 debugging tactic 变成硬流程？
 - Completion 是否同时有 success、stop-loss、rollback 和 judge-integrity 路径？
+- execution Unknown 是否有 `implement-notes` resume carrier？
 
 自主执行 Taskbook 默认 **≤4000 字符**；只有 Human 明确要 long-form artifact 或目标 runtime 已知使用不同限制时放宽。超长先压缩 judgment、删重复、删可重算明细，不通过把一个 Human Goal 拆成多个 layer Goal 来规避长度。
 
