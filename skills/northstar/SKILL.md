@@ -94,7 +94,7 @@ Taskbook 必须告诉 Executor：开工先在 `implement-notes` 写 ≤10 行的
 
 **Taskbook 交付就是 Northstar 的终止动作。** Northstar 可以读取 repo、检查 reality、执行为编译服务的 probe，但不得执行 Taskbook 的 material Goal work、为了 Goal 修改目标 workspace、启动或继续 Executor。Human 即使说“直接完成/开始执行”，也不改变这个角色边界。
 
-执行完成后 Human 再要求验收时，重新读取原 Taskbook 与当前结果，复跑其中 required Verification；能访问执行环境就直接判断 Goal / Completion 是否成立，摸不到环境才给一段可转交给独立 agent 的简短验收 prompt。验收只判卷，不顺手修实现。
+Taskbook 中的 required Verification 是**明卷**；交付时 Northstar 自留 2–3 条不写进 Taskbook、Executor 看不到的独立抽查作为**暗卷**。Human 跑完回来要求验收时，亲自复跑明卷 + 暗卷，给 ≤5 行结果：过没过 / 干成了什么 / 遗留问题 / 下一步。Executor 不能自己批卷；摸不到执行环境时才退化为一段验收官提示词，交给未参与执行的独立 agent。
 
 ## Output
 
