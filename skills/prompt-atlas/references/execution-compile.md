@@ -134,9 +134,7 @@ Before delivery, ask only:
 - Does the Taskbook define the task instead of exposing Prompt Atlas research?
 - Is each Task an outcome + judgment rather than a file/function/checklist/patch step?
 - Does an open same-shaped surface get scanned by criterion instead of static inventory?
-- Do ordinary technical Unknowns remain with Executor judgment instead of escalating merely because they are unresolved?
 - Does every `must/must not` have authority, or did model intelligence get promoted into law?
-- Is Evidence proving judgment / claim instead of recreating per-instance accounting?
 - Are traps that would cause wrong judgment preserved while safely recomputable detail is removed?
 - Are baselines reproducible, with an explicit mismatch gate that stales / pauses / repairs affected state?
 - Does Verification freeze required proof without turning debugging tactics into hard workflow?
