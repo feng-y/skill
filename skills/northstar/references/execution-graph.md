@@ -33,7 +33,7 @@ Executor 面对当前 ready frontier。新 Evidence 只调整剩余 Graph：
 
 已完成工作不因 Graph 改写机械重开；只有它的 Evidence 前提或所证明行为被影响时才重新取证。
 
-Task Group 仍然只是普通 Task 之上的 Verification boundary。不要增加 Graph object/schema、persistent Graph state、scheduler、固定 Agent topology 或第二本 taskbook。repo/runtime 已有正常 progress record 就复用；没有就直接在当前执行上下文维护 frontier。
+Task Group 仍然只是普通 Task 之上的 Verification boundary。不要增加 Graph object/schema、persistent Graph state、scheduler、固定 Agent topology 或第二本 taskbook。Graph 不定义第二套 progress/state 协议：复用 Compile/Handoff 已选定的唯一 durable execution-state carrier，并让 frontier 变化只更新同一载体中的必要 progress / Unknown / blocker / resume state。
 
 稳定规则只有一句：
 
