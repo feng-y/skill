@@ -45,6 +45,8 @@ Route only remaining unresolved items:
 - reversible choices preserving Goal / boundary / verification / authorization → visible delegated default;
 - choices that change Goal / boundary / Human requirement / priority / authorization → Human.
 
+**Escalation follows authority, not uncertainty.** An ordinary factual / execution Unknown must not become `Needs-human-decision` merely because it is uncertain: the Executor first resolves it from repo reality, Goal priority, and stable judgment. Escalate only when the decision itself changes Goal / boundary / Human requirement / priority / authorization and Evidence cannot settle it. If the missing item is only a fact and no safe work remains, Block accurately with a resume condition rather than asking the Human to guess reality.
+
 If Goal is not settled, return `Status: Unresolved Intent` and do not emit executable work.
 
 ## 1. Research
@@ -77,7 +79,7 @@ Use [execution-compile.md](references/execution-compile.md). Core rule: **comple
 - **Starting baseline** — keep only reproducible baselines that act as coverage or attribution anchors. Omit line numbers, include details, and static candidate lists that the Executor will safely recompute and that do not change judgment;
 - **Task 0** — only the few facts that truly block the first material work; never a second Research phase;
 - **Verification** — freeze what behavior / coverage / authority must be proven, not debugging tactics by default. Explicit Human/repo requirements remain binding; when provider/target/scope depends on execution reality, preserve the trigger/authority and let the Executor materialize it when triggered;
-- **Evidence** — compile proof/trust requirements, not future results;
+- **Evidence** — compile proof/trust requirements, not future results. Evidence proves the judgment and completion claim rather than rebuilding an open surface as a per-file/per-symbol proof ledger;
 - **Completion Hook** — define both success and failure paths. Completion requires required Verification. After the same acceptance path fails three consecutive times without new Evidence, stop brute-forcing it: switch to independent work, change strategy with evidence, or report the exact non-PASS/blocker. If a trustworthy green baseline turns red, restore green before continuing or report the regression honestly. “Not finished but accurately explained” is better than “finished but worse.” Never manufacture PASS by using `.skip`/`todo`, weakening assertions, deleting live tests, mocking away the target, changing thresholds, swallowing failures, `|| true`, or otherwise weakening the judge.
 
 Graph connects high-quality work units; it does not turn every executable delta into a node. The ready frontier says what can execute now and must not narrow the Human Goal. Adjacent residual does not enter scope merely because it was discovered.

@@ -60,6 +60,8 @@ Research finding a high-confidence implementation does not make exact file decom
 
 **Law and intelligence stay separate**: `must/must not` comes only from the Human, repo authority, or verified reality. A model-recommended route remains intelligence even at high confidence. The Executor may take a smaller, safer compliant path and records why in `implement-notes`.
 
+When Goal / decision priority / boundary / authority already make a safe decision possible, ordinary factual or technical Unknowns stay with the Executor to resolve from execution-time Evidence. Escalate only when resolution must change the Human-owned Goal, boundary, explicit Verification, priority, or authorization.
+
 Group instances covered by one judgment. Split only when outcome, judgment, dependency, authority, risk, or required Verification genuinely differs. Graph expresses only real dependency / parallel / join relations that change execution judgment; do not fragment work merely to make Graph precise.
 
 Preserve Human-confirmed strategy / scope boundary / must-preserve constraints. The ready frontier says what can execute now and does not redefine the Human Goal. Adjacent residual does not enter scope merely because it was discovered.
@@ -86,6 +88,8 @@ Verification freezes **what must be proven**, not **how implementation/debugging
 
 When provider, target, or scope depends on change surface / binding / runtime reality, compile the stable trigger/authority and let the Executor materialize the concrete action after it triggers. cleanup/refactor/expected `0-diff` cannot downgrade already-triggered required Verification.
 
+**Do not turn Research candidates into a hard-zero list.** A concrete symbol/file/config may become a `0-hit / 0-count` acceptance item only after it is established to belong to the target responsibility and its disappearance is part of the Goal/Verification claim. If “dead vs live/mixed” is still execution-time judgment, compile the predicate and coverage oracle instead: every instance proven target-only must disappear, while surviving/mixed exceptions remain. Do not pre-name candidates and force them to zero.
+
 Tactics such as “build after every moved type” or “test after every edited file” belong to the Executor by default. They become binding only when repo/Human authority or a specific risk requires them.
 
 Read [verification-trust.md](verification-trust.md) only when judge trust genuinely needs strengthening.
@@ -93,6 +97,8 @@ Read [verification-trust.md](verification-trust.md) only when judge trust genuin
 ## Evidence
 
 Compile proof / trust requirements, not future results. Evidence needed for final judgment must be reviewable and cover the real claim. Executor narration or self-declared `PASS` is not Evidence. Reuse Evidence while its premises remain valid; new Evidence invalidates only affected conclusions.
+
+Evidence proves the **judgment + completion claim** rather than requiring a separate delete/preserve ledger for every file or symbol on an open surface. Require per-instance accounting only when that accounting is itself authoritative acceptance or when the completion claim cannot otherwise be proven.
 
 ## Completion Hook
 

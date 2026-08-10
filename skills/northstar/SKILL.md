@@ -45,6 +45,8 @@ Evidence
 - 可回退且不改变 Goal / boundary / verification / authorization 的选择 → 可做显式 delegated default；
 - 会改变 Goal / boundary / Human requirement / priority / authorization 的选择 → Human。
 
+**升级依据是 authority，不是“不确定”。** 普通 factual / execution Unknown 不得因为“拿不准”就编译成 `Needs-human-decision`：先由 Executor 依据 repo reality、Goal priority 和稳定 judgment 裁决。只有裁决本身会改变 Goal / boundary / Human requirement / priority / authorization，且 Evidence 无法决定时才升级 Human；若只是事实暂时摸不到且没有安全 work，则准确 Block 并写恢复条件，不让 Human 猜事实。
+
 Goal 未定准就返回 `Status: Unresolved Intent`，不输出可执行工作。
 
 ## 1. Research
@@ -77,7 +79,7 @@ Northstar 代做的可回退决定必须公开为未确认 default，写清依�
 - **Starting baseline**：只保留能作为 coverage oracle / attribution anchor 的可复算基线；行号、include 明细、静态候选列表等会被 Executor 自己重算、且不改变判断的细节不写；
 - **Task 0**：只关闭第一项 material work 前真正阻塞执行的少量事实，不成为第二轮 Research；
 - **Verification**：冻结必须证明的 behavior / coverage / authority，不默认冻结用于定位失败的调试策略。Human 或 repo 明确要求必须保留；provider/target/scope 依赖执行现实的，保留 trigger/authority，让 Executor 在触发时 materialize；
-- **Evidence**：编译 proof/trust requirement，不编译未来结果；
+- **Evidence**：编译 proof/trust requirement，不编译未来结果；Evidence 证明 judgment 与 completion claim，不把开放 surface 重新拆成逐文件、逐 symbol 的证明账本；
 - **Completion Hook**：同时定义 success path 和 failure path：required Verification 通过才可完成；同一验收连续失败 3 次且没有新增 Evidence 时停止硬顶、换独立项或准确报告；可信 baseline 从绿变红时先恢复到绿再继续或如实 non-PASS；“没做成但说清了”优于“做了但更糟”。禁止通过 `.skip`/`todo`、放松断言、删活体测试、mock 掉被测对象、改阈值、吞错误或 `|| true` 等削弱 judge 的方式制造 PASS。
 
 Graph 只连接高质量 work unit，不把每个 executable delta 变成节点。ready frontier 只表示现在能做什么，不能反向缩小 Human Goal；adjacent residual 不因被发现就自动扩 scope。

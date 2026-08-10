@@ -60,6 +60,8 @@ Taskbook 默认只保留少量 **outcome + judgment work unit**。
 
 **法与情报分开**：`必须/不许` 只来自 Human、repo authority 或已验证 reality；模型推荐的路线即使置信度高，也默认只是 intelligence。Executor 找到更小、更稳且满足 Goal/authority 的路径可以改走，并在 `implement-notes` 记录原因。
 
+只要 Goal / decision priority / boundary / authority 已足以安全裁决，普通事实或技术 Unknown 由 Executor 在执行期取证后自行决定；只有裁决需要改变 Human-owned Goal、boundary、明确 Verification、priority 或 authorization 时才回到 Human。
+
 当多个实例共享同一个 judgment 时合并成一个 Task；只有 outcome、judgment、dependency、authority、risk 或 required Verification 真不同才拆。Graph 只表达会改变 execution judgment 的真实 dependency / parallel / join，不为了“精确”把工作切成 patch nodes。
 
 Human 已确认的 strategy / scope boundary / must-preserve 直接保留。ready frontier 只表示现在能做什么，不改变 Human Goal；adjacent residual 不自动扩 scope。
@@ -86,6 +88,8 @@ Verification 冻结**必须证明什么**，不默认冻结**为了实现/调试
 
 Provider、target、scope 依赖 change surface / binding / runtime reality 时，编译稳定 trigger/authority，让 Executor 在触发后 materialize 具体 action。cleanup/refactor/expected `0-diff` 不能降低已经触发的 required Verification。
 
+**不要把 Research candidate 变成 hard-zero 清单。** 具体 symbol/file/config 只有已经被证实属于目标 responsibility、且其归零本身是 Goal/Verification claim 时，才能编译成 `0-hit / 0-count`。如果“它到底是 dead 还是 live/mixed”仍属于执行期 judgment，就写判据与 coverage oracle：所有被证实为 target-only 的实例必须清零，surviving/mixed exception 必须保留；不要提前点名候选并强制为零。
+
 “每改一个文件都 build”“每搬一个类型都单独 test”这类 failure-localization tactic 默认属于 Executor，不进入 binding contract，除非 repo/Human authority 或特殊风险明确要求。
 
 需要额外 judge trust 时按需读取 [verification-trust.md](verification-trust.md)。
@@ -93,6 +97,8 @@ Provider、target、scope 依赖 change surface / binding / runtime reality 时�
 ## Evidence
 
 Compile proof / trust requirement，不编译未来结果。最终 judgment 需要的 Evidence 应可复核并覆盖真实 claim；Executor 自报 `PASS` 或活动说明不是 Evidence。前提未变化的 Evidence 可复用，新 Evidence 只让受影响结论失效。
+
+Evidence 证明 **judgment + completion claim**，不默认要求开放 surface 的每个文件/符号分别建立删除/保留账本。只有逐项对账本身就是权威验收，或缺少它就无法证明 completion claim 时，才要求 per-instance accounting。
 
 ## Completion Hook
 
