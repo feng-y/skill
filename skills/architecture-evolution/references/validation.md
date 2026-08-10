@@ -7,7 +7,7 @@
 通过需要同时满足：
 
 - North Star 原文不变；
-- 主流程仍是 `Ground → Discover → Shape → Challenge`；
+- 主流程仍是 `Ground → Judge → Shape → Challenge`；
 - `SKILL.md` 主要拥有 Flow，`rules.md` 主要拥有 architecture judgement；
 - 四个 architecture directions 仍可用于内部 diagnosis，但不要求输出 taxonomy；
 - Brooks 只用于 challenge judgement，不形成最终 section；
@@ -38,6 +38,12 @@
 
 通过：不能因代码相似就统一业务语义，也不能因 caller reassembly 就把相邻 subsystem 的 config/resource/lifecycle 全部迁入当前 owner。
 
+### P3 — Durable outcome over local target
+
+局部 capability ownership / stable interface 本身合理，但只描述 target shape，仍需下游重新发现为什么值得推进。
+
+通过：Intent 继续收敛到 durable architecture outcome，使 why、direction、boundary 足够稳定供下游直接设计，同时不规定具体 how。
+
 ### N1 — Local fix
 
 问题只是 off-by-one、日志字段、dead getter 或机械迁移，没有重复 pressure、consumer knowledge 或跨边界 structural consequence。
@@ -66,5 +72,6 @@
 - 中文输入输出英文主文；
 - basic shape 被展开成具体 Target Design；
 - local smell 被升级成 architecture intent；
+- 局部 target shape 合理却替代 durable architecture outcome，导致下游必须重新发现 why；
 - capability ownership 无 evidence 扩张到 orchestration 或 adjacent subsystem；
 - 新 facade/helper 没有真实 replacement / exit 却被判定为 evolution。
