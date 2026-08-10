@@ -24,7 +24,7 @@
 - 一个结构原因造成多个可观察后果；
 - 影响跨越单个局部实现，但仍能限定边界；
 - 需要重新确定业务语义、责任 owner、稳定 contract 或依赖方向；
-- 可以说明完成后什么旧知识、路径、判断或依赖会退出。
+- 可以说明完成后什么旧知识、路径、判断、责任或依赖会退出。
 
 否则给出局部修改边界，不升级。
 
@@ -42,27 +42,21 @@
 
 ### Consumer reassembly
 
-`Consumer reassembly` 是 cross-cutting signal，不是第五个 architecture direction。
+`Consumer reassembly` 是 cross-cutting signal，不是独立 architecture direction。
 
-当调用者为了使用一个 capability，仍需重新组合本应属于 capability owner 的 configuration、implementation、lifecycle、ordering、identity 或 access facts，则 capability boundary 尚未闭合。它通常会指向 Stable Abstraction、Cohesive Capability Ownership，以及 R1/R2/R3 的相关设计约束。
-
-纯 composition-root wiring 不自动构成 consumer reassembly：如果它只选择具体 implementation、没有承载业务 policy、runtime sequencing、lifecycle ownership 或 capability usage knowledge，则保留为合法组装边界。
+当调用者为了使用一个 capability，仍需重新组合本应属于 capability owner 的 configuration、implementation、lifecycle、ordering、identity 或 access facts，则 capability boundary 尚未闭合。纯 composition-root wiring 不自动构成 consumer reassembly：如果它只选择具体 implementation、没有承载业务 policy、runtime sequencing、lifecycle ownership 或 capability usage knowledge，则保留为合法组装边界。
 
 ### Ownership scope
 
 `Cohesive Capability Ownership` 只要求当前 capability 的 invariant、state/lifetime 和 usage contract 闭合；它本身不证明 execution、orchestration 或相邻 subsystem 也应归同一 owner。
 
-当 ownership 是 primary direction，或 ownership relation 会改变 intent boundary / obligation 时，只记录会改变判断的关系：
-
-- 当前 owner 真正闭合的是哪项 capability / invariant；
-- 已存在的 execution/orchestration responsibility 是否需要保留，或者有什么 evidence 证明它也属于当前 capability；
-- consumer reassembly 是否跨入一个已有 authoritative owner 的相邻 subsystem，因而只需要稳定 relation / contract。
-
 ownership 只能扩到 evidence 支持的 invariant 边界。`capability ownership` 不自动蕴含 `execution ownership`，`ownership closure` 也不自动要求 `ownership centralization`。如果相邻 feature/runtime/resource subsystem 已有内聚 owner，不因当前 caller reassembly 就默认把其内部 config、resource 或 lifecycle 全部迁入当前 owner；只有 evidence 证明该 ownership 本身错误时才改变它。
 
-## Four architecture directions
+## Architecture diagnosis directions
 
-这四个方向必须保留。它们用于构造 intent，而不是要求当前阶段完成目标设计。一个 intent 选择一个 primary direction，其他命中只作为 consequence 或 design obligation。
+下面四个方向必须保留，作为内部 architecture discriminator；它们帮助解释压力、挑战 intent 和生成目标 architecture identity，**不是最终 artifact 的固定 taxonomy**，也不要求向用户输出名称。
+
+一个 intent 可以同时命中多个 lens；reasoning 中可以选择一个 primary direction 强制收敛，但最终输出必须来自具体代码现实，而不是从 taxonomy 名称反推设计。
 
 1. **Business Semantic Integrity**
    - 是否存在同一业务的多套语义或事实解释？
@@ -83,7 +77,7 @@ ownership 只能扩到 evidence 支持的 invariant 边界。`capability ownersh
 
 ## Real Evolution gate
 
-Intent 必须指向真实减少，而不是新增一层。至少能提出一个后续需要证明的退出目标：
+Intent 必须指向真实减少，而不是新增一层。至少能提出一个后续需要实现的退出目标：
 
 - 平行业务语义；
 - 重复事实解释；
@@ -96,11 +90,13 @@ Intent 必须指向真实减少，而不是新增一层。至少能提出一个�
 
 ## Explain first, materialize later
 
-用于解释现实的 distinction 或 partition 可以先停留在 reasoning vocabulary。**Observed partition 是 evidence，不是 architecture boundary。** 只有 evidence 表明新的 seam 会承载稳定 semantics/invariant、闭合 ownership、承载 essential variation、形成长期 change boundary 或建立稳定 verification surface 时，才交给后续设计物化；否则保留为解释模型或 guard。
+用于解释现实的 distinction 或 partition 可以先停留在 reasoning vocabulary。**Observed partition 是 evidence，不是 architecture boundary。** 只有 evidence 表明新的 seam 会承载稳定 semantics/invariant、闭合 ownership、承载 essential variation 或形成长期 change boundary 时，才把它作为 possible target identity 交给后续设计；否则保留为解释模型或 guard。
+
+Possible target identity 只描述基本架构形态，例如稳定 semantic owner、generation-scoped capability、独立 execution capability 或 policy/implementation dependency relation。它不能规定具体 class、interface、API、adapter、对象组合、调用流程或 responsibility placement。
 
 ## Material unknown falsification
 
-只有会改变 Architecture Intent、Boundary 或 Design Obligation 的 unknown 才是 material unknown。存在这类 unknown 时，关闭它至少使用下面的控制链：
+只有会改变 Architecture Intent、Boundary 或 target architecture identity 的 unknown 才是 material unknown。存在这类 unknown 时，关闭它至少使用下面的控制链：
 
 ```text
 Claim at risk
@@ -112,7 +108,7 @@ Claim at risk
 - `Claim at risk`：明确哪个 architecture judgment 会被该未知推翻或缩小；
 - `Minimal territory probe`：只调查足以裁决该 claim 的最小事实；
 - `Evidence`：记录代码、runtime、历史或 Human 决定；
-- `Intent changed / retained`：明确 evidence 如何改变或保留 intent/boundary/obligation。
+- `Intent changed / retained`：明确 evidence 如何改变或保留 intent/boundary/target identity。
 
 如果当前没有 material unknown，不要为了满足输出结构制造一个。若 unknown 被命名后不改变任何下一步，它不是 material control signal，不要把它作为正式 blocker 装饰输出。
 
@@ -121,18 +117,13 @@ Claim at risk
 Architecture reality、material claim 和由其支持的 architecture judgment 都有前提。保持 **one judgment, one active owner**：同一事实或判断只保留一份当前 authoritative state，历史说明可以作为 provenance，但不能和已更新判断并列为 active truth。
 
 - 支撑 judgment 的代码、runtime、binding/config、业务语义、owner boundary 或 Human authority 前提未变化时，直接复用已有 Evidence 和判断；不要因为从 Ground 进入 Discover / Shape / Challenge、换了 lens 或开始 Brooks 检查就重新发现、重新论证；
-- 新 authoritative Evidence 改变前提时，只 reopen 受影响的 claim，并在原 semantic owner 处替换或失效旧判断；只传播到受影响的 Intent / Boundary / Design Obligation / Success evidence，不重算无关部分；
+- 新 authoritative Evidence 改变前提时，只 reopen 受影响的 claim，并在原 semantic owner 处替换或失效旧判断；只传播到受影响的 Intent / Boundary / target identity，不重算无关部分；
 - 新旧 snapshot 不得同时作为有效依据。若需要保留旧状态解释历史，只标为 provenance / prior snapshot，不参与当前 architecture judgment；
-- 具体 evidence provider 由后续 design / implementation 根据 repo verification authority 和最终 change surface 选择；provider 本身是稳定受保护判卷标准，或当前必须点名才能消除歧义时，才在 intent 中固定入口；
-- affected scope 会随 runtime/config/deployment binding、changed boundary/ownership 或时间变化时，必须保留 scope derivation，并在实现验证时按最终 change surface 与届时 effective reality 重新推导；
-- 会动态变化的具体对象列表只能作为 current snapshot evidence，除非它本身就是稳定 contract；
-- replay 只是适用时的一种 evidence provider，不是所有 architecture intent 的固定验收机制。
-
-Success evidence 直接从当前 Architecture Intent 已承诺的结果、invariant、must-preserve、boundary 和 replacement/exit 推导**必须证明什么**；不要再把这些 claim 转写成第二套完成条件。当前具体样本可以保留来证明 intent grounded，但必须标明它是 `current evidence`，不能替代稳定 acceptance rule。
+- 动态变化的具体对象列表只是 current evidence，除非它本身就是稳定 contract；最终输出只保留足以解释 intent 的决定性证据，不冻结实现验收集合。
 
 ## Challenge the intent
 
-Challenge 从**当前仍有效的 best-known intent** 出发寻找会推翻、缩小或改变 boundary/obligation 的反证；前提没有变化的 judgment 直接复用，不重新跑一遍完整 architecture analysis、所有 reality lenses 或 Brooks 清单。
+Challenge 从**当前仍有效的 best-known intent** 出发寻找会推翻、缩小或改变 boundary/target identity 的反证；前提没有变化的 judgment 直接复用，不重新跑一遍完整 architecture analysis、所有 reality lenses 或 Brooks 清单。
 
 重点检查：
 
@@ -148,50 +139,42 @@ Challenge 从**当前仍有效的 best-known intent** 出发寻找会推翻、�
 - 是否没有真实 replacement/exit；
 - 是否存在代码无法裁决的 Human-owned 业务或兼容决定。
 
-反证成立时替换或缩小受影响 judgment；不成立时保留最重要 guard。
+反证成立时替换或缩小受影响 judgment；不成立时只把会改变最终 intent 含义的 guard 沉淀为普通架构语言。`Counterexample checked`、taxonomy 命中和 challenge 过程本身不进入最终 artifact。
 
-## Progressive Brooks constraints
+## Brooks challenge
 
-Brooks 是架构设计约束，按成熟度逐步吸收：
+Brooks 是内部 architecture challenge lens，不是 Architecture Intent 的输出 section：
 
 ```text
-Architecture Intent
-→ 识别与方向相关的 Brooks constraints
-→ Target design 把 constraints 变成设计决定
-→ Implementation / verification 用代码和测试证明
+Best-known intent / possible target identity
+→ relevant Brooks challenge
+→ reject / narrow / guard
+→ Architecture Intent
 ```
 
-Intent 阶段只识别相关约束：
-
-- `R6 Domain Model Distortion` — intent 与后续设计必须表达真实业务，不能按代码形状错误统一；
+- `R6 Domain Model Distortion` — 不能按代码形状错误统一真实不同的业务语义；
 - `R2 Change Propagation` — 共同规则和 variation 的变化应收敛到权威位置；
 - `R3 Knowledge Duplication` — 同一业务决定和事实解释应只有一个权威来源；
 - `R4 Accidental Complexity` — 新 abstraction 必须吸收真实变化并替代旧结构；
-- `R5 Dependency Disorder` — 设计应恢复 `policy → contract ← implementation`，并消除隐式反向控制；
+- `R5 Dependency Disorder` — 设计方向不能强化反向 policy/control dependency；
 - `R1 Cognitive Overload` — capability/module 应让 caller 少知道步骤、状态、顺序和实现类型。
 
-每项相关约束写：
-
-```text
-Risk → Design constraint → Why applicable → Guard → Proof expected
-```
-
-合理的 bounded context、vendor adapter、composition root、简单 DTO 和深模块内部复杂度都需要应用 guard，不能机械报错。完整规则按需读取 `brooks-constraints.md`。
+Brooks 编号、Risk/Guard/Proof 表、PASS/RETRY、Health Score 和完整 proof expectation 不输出。完整 guard 按需读取 `brooks-constraints.md`。
 
 ## Intent quality gate
 
 `Architecture intent ready` 必须满足：
 
-1. 一个明确方向，不是候选列表；
+1. 仍然只有一个明确 intent，不是并列多个改造项目；
 2. 有真实 pressure 和代码证据；
-3. 说明为什么是架构问题而不是局部修复；
-4. 选择一个 primary architecture direction；
-5. desired end state 描述结果，不锁死实现模式；
-6. in scope、out of scope 和 must preserve 清楚；
-7. 只保留与当前 intent 相关、后续设计真正需要回答的 obligations；
-8. ownership materially shapes intent 时，owner scope 只扩到 evidence 支持的 invariant，并只记录会改变 boundary 的 preserved / adjacent ownership relation；
+3. 能用一个 architecture problem identity 解释主要压力，并说明为什么是架构问题而不是局部修复；
+4. 能解释当前结构形成的关键背景，尤其是已失效的历史前提、variation 或 boundary 假设；
+5. desired end state 描述结果和基本 architecture identity，不锁死实现模式；
+6. 如果存在多个值得比较的 target identity，只保留 1–3 个基本形态，并且它们仍服务于同一个 intent；
+7. in scope、out of scope 和 must preserve 清楚；
+8. ownership materially shapes intent 时，owner scope 只扩到 evidence 支持的 invariant；
 9. 至少一个可观察的 replacement/exit 目标；
-10. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；不存在时不制造；
-11. success evidence 直接引用当前 intent 已承诺的关键 claim，不再转写第二套完成条件；动态 scope 有 derivation，具体 provider 只在其本身属于稳定判卷标准或必须消除歧义时固定；
-12. 已检查最重要反例、consumer reassembly、owner-scope 和 materialization guard；
-13. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
+10. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它阻止 ready；不存在时不制造；
+11. 已检查最重要反例、consumer reassembly、owner-scope、false unification、complexity relocation 和 materialization guard；
+12. Brooks 只用于内部 challenge，最终 artifact 不泄漏 Brooks 表、taxonomy、counterexample 或 proof machinery；
+13. 输出没有进入具体 class/interface/API/adapter、responsibility placement、调用/执行流、迁移步骤、implementation slice 或 verification plan；一旦需要回答这些问题，就停止并交给后续目标设计。
