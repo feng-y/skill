@@ -1,24 +1,34 @@
-# Stable Intent
+# Stable Intent: confirm what the work actually is
 
-Read this only when it is unclear whether the request already contains one executable Goal or who owns a remaining decision.
+Read this only when it remains unclear whether the request already contains one executable Goal.
 
-## Authority
+## A problem space is not a Goal
 
-Keep distinct:
+Concerns, hypotheses, comparisons, mixed questions, conflicting outcomes, and broad verbs such as “improve”, “simplify”, “optimize”, “clean up”, or “modernize” usually describe a problem space. Add enough Evidence to expose the real choice; do not convert a plausible model recommendation into Human authority.
 
-- **Human** — owns Goal, acceptable result/behavior, explicit priorities, explicit verification requirements, approvals, and confirmed boundaries;
-- **reality** — evidence that may revise facts, feasibility, implementation work, and Verification needs;
-- **inference** — model interpretation, recommendation, or default;
+Separate outcome from means. A named architecture, tool, migration, or implementation may be only the Human's current implementation hypothesis. It becomes required only when the Human explicitly makes it part of the Goal or a confirmed boundary.
+
+## Keep Human, reality, and inference distinct
+
+- **Human** — owns Goal, acceptable result/behavior, explicit priorities, verification requirements, approvals, and boundaries;
+- **reality** — existing Evidence; it may revise facts, feasibility, implementation work, and Verification needs;
+- **inference** — model interpretation, recommendation, or suggestion;
 - **Unknown** — an unsettled consequence.
 
-Evidence may prove a proposed route wrong; it cannot silently rewrite the Goal. Explicit Human verification requirements remain binding Verification authority rather than Goal semantics.
+Evidence may prove a proposed route wrong, but it cannot change the Goal on behalf of the Human. Explicit Human verification requirements remain binding, but belong to Verification authority rather than Goal semantics.
 
-Implementation How may remain unresolved after Stable Intent; the Executor owns it unless the decision would change Goal, confirmed boundaries, Human verification authority, priority, or authorization.
+Unknown here means uncertainty that can still change Stable Intent, Human verification authority, or a key execution fact. Ordinary implementation How belongs to the Executor and may remain unresolved after Stable Intent closes.
 
-## Closure
+## Context and Unknown
 
-Stable Intent requires one coherent Human-owned Goal and Why, declared end state, must-preserve conditions, confirmed boundaries, material reality, relevant priorities, and delivery. The model does not need a complete implementation plan before this boundary closes.
+Intent Take loads only the minimum context needed to form the Goal: the latest still-valid Human expression, reality Evidence that can change the choice, and confirmed boundaries. Preserve any explicit Human verification requirements separately for Verification. Do not pull in unrelated surrounding context merely to feel complete. Stop expanding when the context is sufficient to distinguish materially different Goals.
 
-If materially different Goals remain plausible, emit `Status: Unresolved Intent` with the consequences of the fork and the smallest Human decision or evidence probe. Do not emit executable work.
+Unknown evidence reduction, consequence routing, and delegated-default semantics are defined once in [SKILL.md](../SKILL.md). This file owns only the authority model and Stable Intent closure.
 
-Unknown evidence reduction, consequence routing, delegated defaults, and ordinary outcome-versus-means handling are owned by [SKILL.md](../SKILL.md); do not duplicate them here.
+## When the Goal is settled
+
+Goal settlement requires at least: one coherent Human-owned result, Why, the state this effort must reach, what must remain true, confirmed boundaries, any explicit Human priority, decisive reality Evidence, and final delivery.
+
+Explicit Human verification requirements do not define what the Goal is, but must be preserved accurately as binding Verification input before execution.
+
+If materially different Goals remain plausible, return `Status: Unresolved Intent`: state the current understanding, consequences of the alternatives, a recommendation when useful, and the smallest Human decision or evidence probe. Do not emit executable work.
