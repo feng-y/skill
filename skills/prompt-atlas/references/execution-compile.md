@@ -38,7 +38,8 @@ Therefore:
 
 - ordinary line numbers, include details, symbol counts, candidate patches, and recomputable inventories are omitted by default;
 - terminology collisions, false dependencies, non-obvious surviving consumers, hard boundaries, and facts that change Verification triggers must be preserved;
-- reproducible baseline counts may be preserved because they act as coverage / attribution anchors rather than background detail.
+- reproducible baseline counts may be preserved because they act as coverage / attribution anchors rather than background detail;
+- **a candidate remains intelligence**: a Research name marked “probably dead / should reach zero” does not gain acceptance authority merely because it was discovered.
 
 More Evidence should compress into fewer, more reliable judgments—not more instructions.
 
@@ -56,9 +57,13 @@ A Task should let the Executor scan and handle the full same-shaped surface unde
 
 **A Task is not an executable delta, file-path checklist, or predicted patch.** Enumerate paths/files only when the set is closed, cannot be reliably derived from the repo, and enumeration itself is the decision rule. For open surfaces, state the discriminator and let the Executor scan the full set; otherwise the N+1th same-shaped residual outside the checklist will be missed.
 
+**Applying a judgment instance-by-instance does not mean compiling an instance-by-instance Evidence ledger.** The Executor gathers enough Evidence for the instances it changes; the Taskbook normally asks for a coverage oracle, machine-judgeable outcome, and material exceptions that prove the judgment covers the work surface. Require per-file/per-symbol keep-delete accounting only when closed-set reconciliation is itself acceptance, repo/Human authority requires it, or an instance has distinct safety / authority / Verification risk.
+
 Research finding a high-confidence implementation does not make exact file decomposition, symbol destinations, extraction line ranges, include/BUILD rewrites, command order, or failure-localization tactics binding. Freeze How only when required by the Human, repo authority, real dependency/risk, or a uniquely safe route.
 
 **Law and intelligence stay separate**: `must/must not` comes only from the Human, repo authority, or verified reality. A model-recommended route remains intelligence even at high confidence. The Executor may take a smaller, safer compliant path and records why in `implement-notes`.
+
+**Escalate by authority, not uncertainty.** Ordinary factual / execution Unknowns stay with the Executor and are resolved through reality + judgment; do not create a `Needs-human-decision` list for them. Escalate only when resolving the item requires changing Goal / boundary / Human requirement / priority / authorization. If only a fact is unavailable and no safe work remains, Block accurately with a resume condition.
 
 Group instances covered by one judgment. Split only when outcome, judgment, dependency, authority, risk, or required Verification genuinely differs. Graph expresses only real dependency / parallel / join relations that change execution judgment; do not fragment work merely to make Graph precise.
 
@@ -74,7 +79,7 @@ Establish an attributable starting point when the environment is available. Actu
 
 Keep only baselines that let the Executor recompute scope, detect omissions, or distinguish pre-existing breakage from regressions introduced by this work. If a command was not actually run, a number cannot be confirmed, or the environment is unavailable, do not fabricate it. Future commands named in the Taskbook must at least be confirmed to exist with credible targets/arguments; use Task 0 when the check must happen before material work.
 
-**Any baseline compiled into the Taskbook as a scope / coverage / attribution premise must be recomputed by the Executor with the same authoritative probe before the first affected material work.** On mismatch, do not keep using the old value as truth: immediately mark dependent assumptions / Evidence stale, pause work that depends on that premise, and repair affected Execution / Verification from current reality. Unrelated work / Evidence remains reusable. This recheck is a condition on using the baseline; it does not mechanically turn every task into Task 0.
+**Any baseline compiled into the Taskbook as a scope / coverage / attribution premise must be recomputed by the Executor with the same authoritative probe before the first affected material work.** On mismatch, do not keep using the old value as truth: immediately mark dependent assumptions / Evidence stale, pause work that depends on that premise, and repair affected Execution / Verification from current reality. Unrelated work / Evidence remains reusable. The Taskbook must not weaken this gate to “report the difference, then continue,” and the gate does not mechanically turn every task into Task 0.
 
 ## Verification
 
@@ -86,6 +91,8 @@ Verification freezes **what must be proven**, not **how implementation/debugging
 
 When provider, target, or scope depends on change surface / binding / runtime reality, compile the stable trigger/authority and let the Executor materialize the concrete action after it triggers. cleanup/refactor/expected `0-diff` cannot downgrade already-triggered required Verification.
 
+**Do not turn Research candidates into a hard-zero list.** A concrete symbol/file/config may become a `0-hit / 0-count` acceptance item only after it is established to belong to the target responsibility and its disappearance is part of the Goal/Verification claim. If “dead vs live/mixed” is still execution-time judgment, compile the predicate and coverage oracle instead: every instance proven target-only must disappear, while surviving/mixed exceptions remain. Do not pre-name candidates and force them to zero.
+
 Tactics such as “build after every moved type” or “test after every edited file” belong to the Executor by default. They become binding only when repo/Human authority or a specific risk requires them.
 
 Read [verification-trust.md](verification-trust.md) only when judge trust genuinely needs strengthening.
@@ -93,6 +100,8 @@ Read [verification-trust.md](verification-trust.md) only when judge trust genuin
 ## Evidence
 
 Compile proof / trust requirements, not future results. Evidence needed for final judgment must be reviewable and cover the real claim. Executor narration or self-declared `PASS` is not Evidence. Reuse Evidence while its premises remain valid; new Evidence invalidates only affected conclusions.
+
+The default Evidence shape is **judgment + coverage oracle + material exceptions + Verification result**. Do not demand a final “delete/keep + grep output” ledger for every symbol/file on an open surface merely to look rigorous; that turns judgment back into a checklist. Require per-instance accounting only for closed-set reconciliation, audit authority, or genuinely different instance risk.
 
 ## Completion Hook
 
@@ -130,9 +139,12 @@ Before delivery, ask only:
 - Does the Taskbook define the task instead of exposing Prompt Atlas research?
 - Is each Task an outcome + judgment rather than a file/function/checklist/patch step?
 - Does an open same-shaped surface get scanned by criterion instead of static inventory?
+- Did “instance-by-instance judgment” accidentally become an instance-by-instance Evidence ledger?
+- Did an ordinary factual/execution Unknown get mislabeled as a Human decision?
 - Does every `must/must not` have authority, or did model intelligence get promoted into law?
 - Are traps that would cause wrong judgment preserved while safely recomputable detail is removed?
-- Are baselines reproducible, with an explicit mismatch gate that stales / pauses / repairs affected state?
+- Are baselines reproducible with a mismatch gate that stales / pauses / repairs affected state rather than “report then continue”?
+- Is every concrete object in a hard-zero / zero-hit acceptance check already proven to belong to the target responsibility rather than being a Research candidate?
 - Does Verification freeze required proof without turning debugging tactics into hard workflow?
 - Does Completion include success, stop-loss, rollback, and judge-integrity paths?
 - Do execution Unknowns have an `implement-notes` resume carrier?
