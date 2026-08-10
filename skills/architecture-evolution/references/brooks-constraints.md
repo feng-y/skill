@@ -1,39 +1,44 @@
 # Progressive Brooks Architecture Constraints
 
-只在 Architecture Intent 的方向已经稳定、需要形成下游设计义务时读取。初始 Ground / Discover 阶段不要加载。
+只在 Architecture Intent 的方向已经基本稳定、需要挑战其是否会把复杂度转移、错误统一语义或扩大 ownership 时读取。初始 Ground / Discover 阶段不要加载。
 
-Brooks 在这里是**架构设计约束**，不是独立 Skill、全量扫描器或报告模板。约束按工作成熟度逐步吸收：
+Brooks 在这里是**内部架构 challenge 约束**，不是最终 Architecture Intent 的 section、独立 Skill、全量扫描器或报告模板。约束按工作成熟度逐步吸收：
 
 ```text
-Intent → relevant constraints
+Architecture Evolution → relevant constraints challenge intent / target identity
 Target design → constraints become design decisions
 Implementation / acceptance → constraints obtain code and test evidence
 ```
 
-## Level 1 — Intent
+## Level 1 — Architecture Intent
 
-只识别与当前 pressure、primary architecture direction、boundary 和 desired end state 直接相关的约束。把它们写入 Architecture Intent 的 `Progressive Brooks constraints`，不要为了覆盖 R1–R6 而制造无关内容。
+只识别与当前 pressure、boundary、desired end state 和 possible target identity 直接相关的 Brooks 风险，用它们回答：
 
-约束数量本身不是质量信号：一个 case 如果对 R1–R6 都有独立 evidence，可以全部携带；失败标准是无 evidence 的机械补齐、复制通用措辞或与当前 design obligation 无关，而不是“出现太多项”。
+- 这个 intent 是否只是把复杂度搬到别处；
+- caller / consumer knowledge 是否真的下降；
+- 是否把不同 bounded context 错误统一；
+- ownership 是否扩大到 evidence 不支持的 execution / orchestration 或相邻 subsystem；
+- 新 abstraction 是否有真实 replacement / exit；
+- dependency direction 是否变得更稳定而非更隐蔽。
 
-每项只写：
+challenge 的结果只能有三种：
 
-```text
-Risk → Design constraint → Why applicable → Guard → Proof expected
-```
+1. **reject** — 候选 intent / target identity 不成立；
+2. **narrow** — 缩小 intent、owner scope、variation 或 boundary；
+3. **guard** — intent 保留，但把会改变其含义的限制用普通架构语言沉淀到 Direction / Boundary / Must preserve / Replacement。
 
-此阶段不输出 severity、finding、PASS/RETRY、Health Score 或完整 Remedy。
+不要把 Brooks 编号、风险表、proof expectation、PASS/RETRY、Health Score 或 challenge 过程写入最终 Architecture Intent。约束数量本身也不是质量信号：只使用有当前 evidence 的约束，不为了覆盖 R1–R6 而机械补齐。
 
 ## Level 2 — Target design
 
-后续形成目标架构时，把相关约束吸收为明确设计决定：
+后续形成目标架构时，才把相关约束物化为明确设计决定：
 
 - constraint 由哪个 contract、module、variation point 或 dependency boundary 承担；
 - 哪个旧知识、路径、判断或依赖因此退出；
 - 哪个 guard 防止错误统一、过度抽象或机械倒置依赖；
 - 什么设计证据可以说明约束被满足。
 
-只有设计范围扩大、风险交叉或证据表明可能遗漏时，才继续展开其他 Brooks 约束。
+这些问题属于 Target Design，不属于 Architecture Evolution。Architecture Intent 可以指出少量 target identity，但不能提前回答上述 responsibility placement。
 
 ## Level 3 — Implementation and acceptance
 
@@ -48,18 +53,18 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 - `R5 Dependency Disorder` — 源码依赖应符合 `policy → contract ← implementation`，底层不能通过 callback、global state 或 registry 反向控制 policy。
 - `R1 Cognitive Overload` — capability/module 应隐藏必要复杂度，让 caller 少知道步骤、状态、顺序和实现类型。
 
-## Optional proof vocabulary
+## Proof vocabulary for downstream work
 
-只选择会影响当前 design obligation 的 proof；不要把下面四项机械变成 completion checklist。
+下面的 proof 只帮助 Architecture Evolution 判断一个候选是否只是口号；真正的 proof obligation 属于后续 Target Design / Implementation / Acceptance，不进入 Intent 输出。
 
-| Proof | When relevant | What later evidence should establish |
-| --- | --- | --- |
-| Ownership closure | owner/state/resource 收敛 | fact/state 对 owner 私有、lifetime 正确、consumer 经 owner boundary 使用、无 sidecar truth；有 generation 时不混用；不要求把相邻 subsystem 的合法 ownership 一并集中 |
-| Mechanical boundary | critical boundary 可机械表达 | dependency/construction/publication/ownership guard 能实际 fail；不能机械表达时允许 evidence-based guard，不新增形式化基础设施 |
-| Stable public test surface | intent 声称 capability boundary 更稳定 | 重要 invariant 可从 public capability behavior 验证，不依赖 private-field、friend access、内部 load-order 或具体 implementation 形状 |
-| Complexity relocation | intent 声称 Real Evolution / caller knowledge 下降 | duplicated policy/fact、consumer reassembly、distributed lifecycle/publication knowledge、sidecar truth 或 reverse-control burden 至少一项真实下降，而非只移动位置或减少 LOC |
+| Proof | What later evidence should establish |
+| --- | --- |
+| Ownership closure | fact/state 对 owner 私有、lifetime 正确、consumer 经稳定 boundary 使用、无 sidecar truth；有 generation 时不混用；不要求把相邻 subsystem 的合法 ownership 一并集中 |
+| Mechanical boundary | dependency/construction/publication/ownership guard 在适用时可以实际 fail；不能机械表达时允许 evidence-based guard，不新增形式化基础设施 |
+| Stable public test surface | 重要 invariant 可从 public capability behavior 验证，不依赖 private-field、friend access、内部 load-order 或具体 implementation 形状 |
+| Complexity relocation | duplicated policy/fact、consumer reassembly、distributed lifecycle/publication knowledge、sidecar truth 或 reverse-control burden 至少一项真实下降，而非只移动位置或减少 LOC |
 
-字段换位置、getter 换名字、manager 包一层、helper/adaptor 吸收热点 LOC，都不单独构成上述 proof。
+字段换位置、getter 换名字、manager 包一层、helper/adapter 吸收热点 LOC，都不单独构成上述 proof。
 
 ## Guards
 
@@ -74,4 +79,4 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 
 ## Boundary
 
-Architecture Evolution 只把相关 Brooks 约束和必要 proof expectation 携带到 intent 中，不完成目标设计，也不声称约束已经满足。禁止调用、加载、路由到或依赖任何外部 Brooks / brooks-lint Skill、配置、报告、Health Score 或 workflow。
+Architecture Evolution 只使用相关 Brooks 约束来 challenge、reject、narrow 或 guard 当前 intent / target identity，不输出 Brooks table，也不声称约束已经满足。禁止调用、加载、路由到或依赖任何外部 Brooks / brooks-lint Skill、配置、报告、Health Score 或 workflow。
