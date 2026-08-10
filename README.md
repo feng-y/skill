@@ -32,7 +32,7 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 - `prompt-atlas` — English version of the shared Northstar/Prompt Atlas semantics for recovering a stable Goal and compiling one truthful autonomous taskbook or exact blocker.
 - `northstar` — Chinese version of the same semantics and behavior; changes should stay synchronized with Prompt Atlas rather than evolving as an independent control surface.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `architecture-evolution` — turn vague architecture concerns and real change pressure into one evidence-backed Architecture Intent, preserving four architecture directions, a Real Evolution exit target, and the Brooks design constraints that downstream architecture work should absorb progressively.
+- `architecture-evolution` — turn vague architecture concerns and real change pressure into one evidence-backed Architecture Intent: identify the real architecture problem and its background, frame the target direction and boundary, and when useful expose a few basic target architecture identities without crossing into target design.
 
 ## Architecture Evolution usage
 
@@ -58,12 +58,14 @@ Given its current code and change pressure, identify the next architecture
 direction worth pursuing. Do not jump to an implementation plan.
 ```
 
-The Skill will ground the direction in repository evidence, distinguish architecture pressure from a local fix, select one primary architecture direction, challenge false unification or speculative abstraction, and return one of:
+The Skill will ground the direction in repository evidence, distinguish architecture pressure from a local fix, recover the structural problem and the historical assumption that no longer fits, challenge false unification or speculative abstraction, and return one of:
 
 - `No architecture intent` — keep the work local; there is not enough architecture pressure.
 - `Intent unresolved` — one evidence gap or Human-owned decision still changes the direction.
 - `Architecture intent ready` — one bounded intent is stable enough for downstream design.
 
-A ready intent describes the desired end state, boundaries, design obligations, an observable replacement/exit target, and the Brooks constraints that later design should absorb progressively. It intentionally does **not** prescribe classes, factories, registries, migration steps, or a complete target architecture.
+A ready intent explains the architecture problem, why it exists now, the target direction, its boundary, and a real replacement/exit. If more than one basic target shape is genuinely worth comparing, it may include a small number of target architecture identities. Brooks risks, internal taxonomy, counterexample checks, and proof vocabulary remain reasoning machinery rather than output sections.
+
+The Skill intentionally stops before target design: it does **not** prescribe concrete classes, interfaces, APIs, adapters, responsibility placement, call/data flows, migration steps, implementation slices, or verification plans. Its final answer follows the user's primary language; code symbols and stable protocol names can remain in their source language.
 
 Skip this Skill when the target architecture, implementation boundary, and success criteria are already clear, or when the current request is specifically for a complete design, taskbook, code review, or direct implementation. Continue with the appropriate design or execution path rather than reconstructing the intent.
