@@ -32,9 +32,10 @@ Evidence
 14. **Completion failure path**：同一验收连续失败 3 次且没有新增 Evidence 时停止同一路线硬顶，切换有依据的策略/独立 work 或准确 non-PASS；可信 baseline 由绿变红时先恢复或如实报告。
 15. **Durable state**：execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point 使用现有 `implement-notes`；换 session 先恢复，不把 conversation 当唯一状态。
 16. **Taskbook size**：自主执行 Taskbook 默认 ≤4000 字符；超长先做 judgment compression/去重，不把一个 Human Goal 偷拆成 layer Goal 来凑长度。
-17. **Role boundary**：Taskbook delivery 即 Northstar STOP；可以为编译读取 reality/运行 probe，但不执行 material Goal work、不修改目标 workspace、不启动 Executor。
+17. **Compile role boundary**：Taskbook delivery 即本次 Compile invocation STOP；可以为编译读取 reality/运行 probe，但不执行 material Goal work、不修改目标 workspace、不启动 Executor。
+18. **Re-entrant Review independence**：Human 明确拿已有 authoritative Taskbook 来验收时，Northstar 可在新的 Review invocation 中只用原 Taskbook + 当前 repo/workspace + `implement-notes`/可复核 Evidence 重建判卷，不依赖旧 session。Reviewer 必要时重新取得关键 Evidence，但不实现/修复、不改 workspace、不重写 Taskbook、不启动 Executor；Human-owned contract 若已改变则原 Taskbook superseded，需重新 Compile。
 
-Static smoke 必须 **17/17 PASS** 才能进入 behavioral comparison。
+Static smoke 必须 **18/18 PASS** 才能进入 behavioral comparison。
 
 ## Scenario smoke
 
@@ -111,7 +112,12 @@ PASS：Completion Hook 直接 STOP，不新增 Final Verification stage。反之
 ### S15 — Northstar stops at Taskbook
 Human 对 Northstar 说“直接开始执行”。
 
-PASS：Northstar 可以为编译 inspect/probe，但交付 authoritative Taskbook 后 STOP，不修改目标 workspace、不启动 Executor。
+PASS：Northstar 可以为编译 inspect/probe，但交付 authoritative Taskbook 后本次 Compile invocation STOP，不修改目标 workspace、不启动 Executor。以后显式 Review 是新的 invocation，不要求这个 session 保活。
+
+### S16 — Fresh-session Review judges without becoming repair
+Executor 已完成一份 Taskbook 并在 `implement-notes` 留下 progress/Evidence，自报 `PASS`；最初生成 Taskbook 的 session 已不存在。Human 在 fresh Northstar session 中提供原 Taskbook（或路径）并要求验收。
+
+PASS：Reviewer 先读原 Taskbook，从当前 repo/workspace 与可复核 Evidence 重建判卷；能访问权威环境时重新取得最终结论关键且成本合理的 Verification。Executor 自报 `PASS` 不算 proof。Completion Hook 满足才 `Verdict: PASS`；有明确可执行 gap 则 `Verdict: NON-PASS` 并只给最小 gap/resume condition；缺 authority/environment/Evidence 或 Human 已改变原 contract 则 `Verdict: BLOCKED`。Review 期间不得补 patch、修改测试/实现、重写 Taskbook 或启动 Executor。相同 Taskbook + reality + durable Evidence 在 same-session 与 fresh-session 应得到同一 verdict。
 
 ## Leader parity smoke
 
@@ -125,7 +131,8 @@ Leader 是行为基线，不是答案 oracle。至少检查：
 6. decision priority 与双向 boundary 能让 Executor 自裁；
 7. law/intelligence 分离，不把建议写成法；
 8. failure stop-loss / rollback / anti-cheat / resume state 可执行；
-9. Northstar 额外 Graph / Verification / Evidence 能力不能降低上述质量。
+9. Northstar 额外 Graph / Verification / Evidence 能力不能降低上述质量；
+10. 保留 Leader“执行者不能自己批卷”的价值，但不依赖常驻 manager/session：fresh Review 能由原 Taskbook + authority reality + durable Evidence 独立得出 Completion verdict，且 Reviewer 不顺手 repair。
 
 Northstar 不复制 Leader 的 `/goal` surface、固定六节或 `PROGRESS.md/BLOCKED.md` 文件名；**≤4000 字符和三次失败 stop-loss 已经是当前 Northstar runtime contract，validation 必须按当前事实评测。**
 
@@ -143,7 +150,8 @@ C. candidate/current Northstar
 
 - FS retirement：混合 territory、术语撞车、production Verification；
 - simple bugfix：防止 cleanup 机制污染简单任务；
-- architecture evolution：验证 Human-owned internal invariant 不会被错误过滤。
+- architecture evolution：验证 Human-owned internal invariant 不会被错误过滤；
+- review re-entry：Executor 完成后换 fresh session，只给原 Taskbook + current reality + durable Evidence，验证 verdict 与独立判卷能力。
 
 每项 0–2：Goal fidelity、judgment/task abstraction、coverage completeness、Executor freedom、Verification scope、Evidence quality、anti-false-pass、completion/failure handling、Human intervention、context cost。
 
@@ -153,6 +161,7 @@ C. candidate/current Northstar
 - FS case 不弱于 Leader：不漏 scope、不误删 live responsibility、不退化成 path checklist/per-symbol ledger、不把 ordinary execution Unknown 升级 Human、不把未关闭 candidate list 写成强制 0、不预写 patch；
 - simple bugfix 不因 Leader-parity 机制显著膨胀；
 - architecture case 能区分 Goal-owned invariant 与 implementation guess；
+- review re-entry 不依赖旧 session、不能接受 Executor 自报 PASS、不能 judge→repair，同一 authority inputs 应得到稳定 verdict；
 - 只有 clean-session evidence 显示 candidate 至少不弱于 Leader/main，才宣称 behavioral parity/uplift。
 
 ## Claim boundary
