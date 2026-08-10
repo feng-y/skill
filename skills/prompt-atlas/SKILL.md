@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: "English counterpart to Northstar. Turn a one-line idea or fragmented request into an Agent prompt, brief, Goal, execution contract, or autonomous taskbook. Especially useful when intent, evidence, boundaries, or success criteria are still unstable: load the minimum context needed for the current judgment, reduce material Unknown with evidence first, route only what remains unresolved, and never turn unresolved intent into executable work."
+description: "English counterpart to Northstar. Turn a one-line idea or fragmented request into an Agent prompt, brief, Goal, execution contract, or autonomous taskbook; also independently review an existing authoritative Taskbook through a re-entrant judge invocation. Especially useful when intent, evidence, boundaries, or success criteria are still unstable: load the minimum context needed for the current judgment, reduce material Unknown with evidence first, route only what remains unresolved, and never turn unresolved intent into executable work."
 ---
 
 # Prompt Atlas · Set the Goal first, then write an independently executable taskbook
@@ -22,6 +22,14 @@ This is compiler semantic ownership / proof chain, not an output template. **Pro
 Three roles are enough: **Human** owns Goal, confirmed boundaries, explicit verification requirements, priorities, and authorization; **Prompt Atlas** clarifies, researches, judges, and compiles the Taskbook, whose delivery ends this invocation; **Executor** consumes the Taskbook, owns implementation judgment inside the stable Goal / boundary, and lets new Evidence repair only affected execution.
 
 `Unknown` is cross-cutting, not another phase. Reduce factual Unknown through reality first. Once same-shaped execution Unknowns can be decided instance-by-instance under one stable judgment, Prompt Atlas does not need to enumerate them all. Execution progress / Unknown / blocker / resume state that must survive sessions goes into the existing `implement-notes`; do not leave it only in conversation or invent a second state protocol.
+
+## Review re-entry (existing Taskbook only)
+
+When the Human explicitly asks to review / validate / judge an **already-existing authoritative Taskbook**, bypass the Intent / Research / Compile / Handoff flow below and use [review-reentry.md](references/review-reentry.md). Review is a new invocation: same-session reuse is allowed, but correctness cannot depend on the old conversation staying alive. The review inputs must be reconstructible from the original Taskbook, current repo/workspace, `implement-notes`, and reviewable Evidence.
+
+Review applies only the original Taskbook's Goal / constraints / triggered required Verification / Completion Hook and reacquires critical Evidence when needed. **It must not implement or repair the Goal, mutate the target workspace, rewrite the Taskbook, or launch an Executor while judging.** If the Human changed Goal / boundary / Verification / priority / authorization after the Taskbook, the old contract has been superseded and must be recompiled rather than silently merged by the Reviewer.
+
+Ordinary new requests, existing briefs that are not yet authoritative Taskbooks, and requests to continue defining/modifying a Taskbook still use the Compile flow below. Review is not a default Acceptance layer.
 
 ## 0. Intent Take
 
@@ -92,7 +100,7 @@ Return ordinary prompt / brief / contract text directly. For `Status: Executable
 
 The Taskbook must tell the Executor to start by writing ≤10 lines of Goal / execution order / largest risk into `implement-notes`, then keep execution progress, new Unknowns, blockers, material decisions/Evidence, and resume point there. A new session reads it first and continues rather than redoing still-valid work.
 
-**Taskbook delivery is the terminal action of Prompt Atlas.** Prompt Atlas may read the repo, inspect reality, and run probes needed for compilation, but it does not perform the Taskbook's material Goal work, mutate the target workspace toward the Goal, or launch/continue an Executor. Human wording such as “complete this” or “start executing” does not change that role boundary.
+**Taskbook delivery is the terminal action of this Compile invocation.** Prompt Atlas may read the repo, inspect reality, and run probes needed for compilation, but it does not perform the Taskbook's material Goal work, mutate the target workspace toward the Goal, or launch/continue an Executor. Human wording such as “complete this” or “start executing” does not change that role boundary. If the Human later asks to judge this Taskbook, a new Review invocation may re-enter through `review-reentry.md`; the original session does not need to remain alive.
 
 ## Output
 
