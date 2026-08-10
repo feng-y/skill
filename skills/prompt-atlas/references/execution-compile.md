@@ -88,6 +88,8 @@ Verification freezes **what must be proven**, not **how implementation/debugging
 
 When provider, target, or scope depends on change surface / binding / runtime reality, compile the stable trigger/authority and let the Executor materialize the concrete action after it triggers. cleanup/refactor/expected `0-diff` cannot downgrade already-triggered required Verification.
 
+**Do not turn Research candidates into a hard-zero list.** A concrete symbol/file/config may become a `0-hit / 0-count` acceptance item only after it is established to belong to the target responsibility and its disappearance is part of the Goal/Verification claim. If “dead vs live/mixed” is still execution-time judgment, compile the predicate and coverage oracle instead: every instance proven target-only must disappear, while surviving/mixed exceptions remain. Do not pre-name candidates and force them to zero.
+
 Tactics such as “build after every moved type” or “test after every edited file” belong to the Executor by default. They become binding only when repo/Human authority or a specific risk requires them.
 
 Read [verification-trust.md](verification-trust.md) only when judge trust genuinely needs strengthening.

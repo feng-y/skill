@@ -88,6 +88,8 @@ Verification 冻结**必须证明什么**，不默认冻结**为了实现/调试
 
 Provider、target、scope 依赖 change surface / binding / runtime reality 时，编译稳定 trigger/authority，让 Executor 在触发后 materialize 具体 action。cleanup/refactor/expected `0-diff` 不能降低已经触发的 required Verification。
 
+**不要把 Research candidate 变成 hard-zero 清单。** 具体 symbol/file/config 只有已经被证实属于目标 responsibility、且其归零本身是 Goal/Verification claim 时，才能编译成 `0-hit / 0-count`。如果“它到底是 dead 还是 live/mixed”仍属于执行期 judgment，就写判据与 coverage oracle：所有被证实为 target-only 的实例必须清零，surviving/mixed exception 必须保留；不要提前点名候选并强制为零。
+
 “每改一个文件都 build”“每搬一个类型都单独 test”这类 failure-localization tactic 默认属于 Executor，不进入 binding contract，除非 repo/Human authority 或特殊风险明确要求。
 
 需要额外 judge trust 时按需读取 [verification-trust.md](verification-trust.md)。

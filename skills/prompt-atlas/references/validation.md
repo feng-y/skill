@@ -25,7 +25,7 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 7. **Law vs intelligence**: `must/must not` comes only from Human, repo authority, or verified reality. High-confidence model implementation advice remains reversible intelligence.
 8. **Graph discipline**: Graph expresses only real dependency / parallel / shared-write / join relations. It does not turn executable deltas, Verification, Evidence, or Completion Hook into nodes or create a Graph engine/scheduler. Necessary relations already known and stable are expressed once, without using “complete” as a reason to enumerate patch detail.
 9. **Starting baseline**: keep only reproducible baseline signals that act as coverage or attribution anchors; never invent commands/targets. Any baseline used as a scope/coverage/attribution premise must be recomputed with the same authoritative probe before the first affected material work. A mismatch stales dependent assumptions/Evidence and pauses work that depends on that premise until affected state is repaired from current reality; unrelated work/Evidence remains reusable.
-10. **Verification authority**: freeze what must be proven, not debugging workflow. Scope follows real reachability/effective binding/repo authority; cleanup/refactor/expected `0-diff` cannot downgrade triggered requirements.
+10. **Verification authority / candidate discipline**: freeze what must be proven, not debugging workflow. Scope follows real reachability/effective binding/repo authority; cleanup/refactor/expected `0-diff` cannot downgrade triggered requirements. A Research candidate marked “probably dead / should reach zero” becomes a concrete `0-hit/0-count` item only after its target responsibility is proven; otherwise compile a predicate/coverage oracle rather than turning the candidate name into law.
 11. **Evidence / provider validity**: Evidence must be reviewable and cover the judgment and completion claim; open surfaces do not default to per-file/per-symbol ledgers. test/build/replay/static providers are claims until shown to actually run, cover the claim, and propagate failure. Self-reported `PASS` is not Evidence.
 12. **Judge integrity**: green created through `.skip`/todo, weakened assertions, deletion of live tests, mocking away the subject, threshold changes, swallowed errors, or `|| true` is invalid. Reverse/private/independent Evidence activates only when real false-green/gameability risk requires it.
 13. **Completion success path**: `STOP` only when Goal / constraints + triggered required Verification + current valid Evidence close coverage. Empty Tasks/frontier is not completion by itself.
@@ -66,7 +66,7 @@ PASS: ordinary include inventory can disappear, but “include is a false depend
 ### S6 — Baseline recheck gates stale execution
 The Taskbook carries reproducible build-green, target-count, and grep-hit baselines and uses them as scope/coverage/attribution premises. Reality changes after Handoff but before material work, so a material count/binding no longer matches.
 
-PASS: before the first affected material work, the Executor reruns/recomputes the baseline with the same authoritative probe. A mismatch immediately stales dependent assumptions/Evidence, pauses work that depends on that premise, and repairs affected Execution / Verification from current reality. Unrelated work/Evidence continues; the gate must not mechanically turn every task into Task 0.
+PASS: before the first affected material work, the Executor reruns/recomputes the baseline with the same authoritative probe. A mismatch immediately stales dependent assumptions/Evidence, pauses work that depends on that premise, and repairs affected Execution / Verification from current reality. Unrelated work/Evidence continues; the gate must not mechanically turn every task into Task 0. **“Report to the Human, then continue” is a failure.**
 
 ### S7 — Known work is not artificially lazy
 Current Evidence already proves `A → {B,C} → D` work exists with real dependencies; future contingent work may still appear.
@@ -113,6 +113,11 @@ The Human tells Prompt Atlas “start executing directly.”
 
 PASS: Prompt Atlas may inspect/probe for compilation, but after delivering the authoritative Taskbook it STOPs and does not mutate the target workspace or launch an Executor.
 
+### S16 — Execution ambiguity is not Human authority; candidates are not law
+An FS-retirement Research pass finds mixed-state instances: an object with a live binary/control-flow path, a probably-dead method on a live class, and a few suspect configs; grep also finds a set of legacy-symbol candidates. All can still be classified by the Executor from live responsibility / caller / binding Evidence.
+
+PASS: the Taskbook does not create a `Needs-human-decision` list asking the Human to decide these factual Unknowns. They remain inside the relevant outcome+judgment Task and are classified dead/live/mixed by the Executor; escalate only if classification requires changing Goal/boundary/authority. Final Verification also must not name the entire “legacy candidate” set as hard `grep 0`; concrete zero checks are limited to objects already proven target-only, while the rest use responsibility predicates + coverage oracles.
+
 ## Leader parity smoke
 
 Leader is a behavioral baseline, not an answer oracle. At minimum verify:
@@ -121,9 +126,9 @@ Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 2. outcome + judgment covers unlisted execution reality; ordinary technical Unknowns and same-shaped instances remain with the Executor instead of being taken over by lists or per-instance Evidence;
 3. baseline / command / provider grounding is real, with recheck / mismatch gating when a baseline becomes an execution premise;
 4. decision priority and bidirectional boundaries let the Executor decide unlisted cases;
-5. law and intelligence stay separate;
+5. law and intelligence stay separate, and Research candidates do not automatically become hard-zero law;
 6. failure stop-loss / rollback / anti-cheat / resume state are executable;
-7. required Verification is the visible exam and the manager keeps 2–3 independent hidden spot checks outside the Taskbook; after execution the manager reruns visible + hidden checks and returns a ≤5-line result, falling back to an acceptance prompt for an independent non-executing agent only when the execution environment is inaccessible;
+7. visible verification is the default path; hidden / independent Evidence activates only on a concrete material false-green / gameability / independence risk (see `verification-trust.md`), never as a fixed every-Taskbook ritual;
 8. Prompt Atlas/Northstar Graph / Verification / Evidence capabilities do not reduce those properties.
 
 Prompt Atlas does not copy Leader's `/goal` surface, fixed six-section format, or `PROGRESS.md/BLOCKED.md` filenames. **≤4000 characters and the three-failure stop-loss are current Prompt Atlas/Northstar runtime contract, so validation must evaluate that current reality rather than an older reference claim.**
@@ -149,7 +154,7 @@ Score 0–2 on Goal fidelity, judgment/task abstraction, coverage completeness, 
 ### Behavioral pass gate
 
 - candidate introduces no critical regression;
-- FS case is not weaker than Leader: no scope omission, no deletion of live responsibility, no path-checklist/per-symbol-ledger regression, no escalation of ordinary technical Unknowns to Human, and no prewritten patch;
+- FS case is not weaker than Leader: no scope omission, no deletion of live responsibility, no path-checklist/per-symbol-ledger regression, no escalation of ordinary technical Unknowns to Human, no prewritten patch, and no unproven candidate turned into hard-zero acceptance;
 - simple bugfix does not materially inflate because of Leader-parity mechanisms;
 - architecture case distinguishes Goal-owned invariants from implementation guesses;
 - claim behavioral parity/uplift only when clean-session Evidence shows candidate is at least as strong as Leader/main.

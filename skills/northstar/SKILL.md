@@ -45,6 +45,8 @@ Evidence
 - 可回退且不改变 Goal / boundary / verification / authorization 的选择 → 可做显式 delegated default；
 - 会改变 Goal / boundary / Human requirement / priority / authorization 的选择 → Human。
 
+**升级依据是 authority，不是“不确定”。** 普通 factual / execution Unknown 不得因为“拿不准”就编译成 `Needs-human-decision`：先由 Executor 依据 repo reality、Goal priority 和稳定 judgment 裁决。只有裁决本身会改变 Goal / boundary / Human requirement / priority / authorization，且 Evidence 无法决定时才升级 Human；若只是事实暂时摸不到且没有安全 work，则准确 Block 并写恢复条件，不让 Human 猜事实。
+
 Goal 未定准就返回 `Status: Unresolved Intent`，不输出可执行工作。
 
 ## 1. Research
@@ -72,7 +74,7 @@ Northstar 代做的可回退决定必须公开为未确认 default，写清依�
 按 [execution-compile.md](references/execution-compile.md) 编译 Taskbook。核心要求：**complete 指 decision gap 已关闭，不指把 Research 已知事实抄全。Compile 是输出过滤器，不是转录步骤。**
 
 - **Goal**：只写 Goal-owned outcome、decision priority、allowed / forbidden boundary、must-preserve 和最终交付；不要把模型选择的 implementation shape 偷偷升级成 success criterion；
-- **Execution / Graph**：Task 以 **outcome + judgment** 为单位，负责让 Executor 在一个稳定判据下扫描并处理完整同类 surface。路径/文件只在集合封闭、不可可靠推导、且枚举本身就是判据时才列；同一 judgment 能覆盖的文件/符号/实例不得拆成 checklist；具体文件怎么拆、符号搬哪里、函数如何抽取、include/BUILD 如何改、命令顺序默认交给 Executor。只要 Goal / priority / boundary / authority 已足以安全裁决，普通技术 Unknown 也留给 Executor，不因“现在还不知道”升级 Human；
+- **Execution / Graph**：Task 以 **outcome + judgment** 为单位，负责让 Executor 在一个稳定判据下扫描并处理完整同类 surface。路径/文件只在集合封闭、不可可靠推导、且枚举本身就是判据时才列；同一 judgment 能覆盖的文件/符号/实例不得拆成 checklist；具体文件怎么拆、符号搬哪里、函数如何抽取、include/BUILD 如何改、命令顺序默认交给 Executor；
 - **Law vs intelligence**：`必须/不许` 只来自 Human、repo authority 或已验证 reality；模型的高置信实现建议仍是可回退 intelligence，不冒充 law。Executor 有更小、更稳的合规路径可以改走，并在 `implement-notes` 记录原因；
 - **Starting baseline**：只保留能作为 coverage oracle / attribution anchor 的可复算基线；行号、include 明细、静态候选列表等会被 Executor 自己重算、且不改变判断的细节不写；
 - **Task 0**：只关闭第一项 material work 前真正阻塞执行的少量事实，不成为第二轮 Research；
@@ -93,8 +95,6 @@ visible judge 存在 false-green / gameability / independence 风险时，才按
 Taskbook 必须告诉 Executor：开工先在 `implement-notes` 写 ≤10 行的 Goal/顺序/最大风险；之后把 execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point 持续写入。换会话先读它继续，不重做已完成且前提仍有效的工作。
 
 **Taskbook 交付就是 Northstar 的终止动作。** Northstar 可以读取 repo、检查 reality、执行为编译服务的 probe，但不得执行 Taskbook 的 material Goal work、为了 Goal 修改目标 workspace、启动或继续 Executor。Human 即使说“直接完成/开始执行”，也不改变这个角色边界。
-
-Taskbook 中的 required Verification 是**明卷**；交付时 Northstar 自留 2–3 条不写进 Taskbook、Executor 看不到的独立抽查作为**暗卷**。Human 跑完回来要求验收时，亲自复跑明卷 + 暗卷，给 ≤5 行结果：过没过 / 干成了什么 / 遗留问题 / 下一步。Executor 不能自己批卷；摸不到执行环境时才退化为一段验收官提示词，交给未参与执行的独立 agent。
 
 ## Output
 

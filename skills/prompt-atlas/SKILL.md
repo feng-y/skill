@@ -45,6 +45,8 @@ Route only remaining unresolved items:
 - reversible choices preserving Goal / boundary / verification / authorization → visible delegated default;
 - choices that change Goal / boundary / Human requirement / priority / authorization → Human.
 
+**Escalation follows authority, not uncertainty.** An ordinary factual / execution Unknown must not become `Needs-human-decision` merely because it is uncertain: the Executor first resolves it from repo reality, Goal priority, and stable judgment. Escalate only when the decision itself changes Goal / boundary / Human requirement / priority / authorization and Evidence cannot settle it. If the missing item is only a fact and no safe work remains, Block accurately with a resume condition rather than asking the Human to guess reality.
+
 If Goal is not settled, return `Status: Unresolved Intent` and do not emit executable work.
 
 ## 1. Research
@@ -72,7 +74,7 @@ Any reversible choice Prompt Atlas makes on the Human's behalf must remain visib
 Use [execution-compile.md](references/execution-compile.md). Core rule: **complete means the decision gap is closed, not that known Research facts are copied out. Compile is an output filter, not a transcription step.**
 
 - **Goal** — keep only Goal-owned outcome, decision priority, allowed / forbidden boundary, must-preserve conditions, and final delivery; do not silently promote a model-selected implementation shape into a success criterion;
-- **Execution / Graph** — Tasks are **outcome + judgment** units that let the Executor scan and handle the full same-shaped surface under one stable criterion. Enumerate paths/files only when the set is closed, cannot be reliably derived, and enumeration itself is the decision rule. Do not split files/symbols/instances covered by one judgment into a checklist. Exact file decomposition, symbol destination, extraction mechanics, include/BUILD rewrites, and command order stay with the Executor by default. When Goal / priority / boundary / authority already make a safe decision possible, ordinary technical Unknowns stay with the Executor instead of escalating merely because they are unresolved;
+- **Execution / Graph** — Tasks are **outcome + judgment** units that let the Executor scan and handle the full same-shaped surface under one stable criterion. Enumerate paths/files only when the set is closed, cannot be reliably derived, and enumeration itself is the decision rule. Do not split files/symbols/instances covered by one judgment into a checklist. Exact file decomposition, symbol destination, extraction mechanics, include/BUILD rewrites, and command order stay with the Executor by default;
 - **Law vs intelligence** — `must/must not` comes only from the Human, repo authority, or verified reality. A high-confidence model recommendation remains reversible intelligence rather than law. The Executor may take a smaller, safer compliant path and records why in `implement-notes`;
 - **Starting baseline** — keep only reproducible baselines that act as coverage or attribution anchors. Omit line numbers, include details, and static candidate lists that the Executor will safely recompute and that do not change judgment;
 - **Task 0** — only the few facts that truly block the first material work; never a second Research phase;
@@ -93,8 +95,6 @@ Return ordinary prompt / brief / contract text directly. For `Status: Executable
 The Taskbook must tell the Executor to start by writing ≤10 lines of Goal / execution order / largest risk into `implement-notes`, then keep execution progress, new Unknowns, blockers, material decisions/Evidence, and resume point there. A new session reads it first and continues rather than redoing still-valid work.
 
 **Taskbook delivery is the terminal action of Prompt Atlas.** Prompt Atlas may read the repo, inspect reality, and run probes needed for compilation, but it does not perform the Taskbook's material Goal work, mutate the target workspace toward the Goal, or launch/continue an Executor. Human wording such as “complete this” or “start executing” does not change that role boundary.
-
-The Taskbook's required Verification is the **visible exam**. At handoff, Prompt Atlas keeps 2–3 independent spot checks outside the Taskbook as a **hidden exam** the Executor cannot see. When the Human returns after execution and asks for acceptance, rerun the visible + hidden checks and give a ≤5-line report: pass/fail, what was achieved, remaining issues, next step. The Executor does not grade itself. Only when the execution environment is inaccessible, fall back to a short acceptance prompt for an independent agent that did not participate in execution.
 
 ## Output
 

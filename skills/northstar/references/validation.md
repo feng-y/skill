@@ -25,7 +25,7 @@ Evidence
 7. **Law vs intelligence**：`必须/不许` 只来自 Human、repo authority 或 verified reality；模型的高置信 implementation suggestion 仍是可回退 intelligence。
 8. **Graph discipline**：Graph 只表达真实 dependency / parallel / shared-write / join；不把 executable delta、Verification、Evidence 或 Completion Hook node 化，也不建立 Graph engine/scheduler；当前已知且稳定的必要 relation 一次表达，但不以“complete”为理由枚举 patch detail。
 9. **Starting baseline**：只保留可复算、能作为 coverage oracle / attribution anchor 的 baseline；命令/target 不得编造。凡 baseline 被用作 scope/coverage/attribution premise，Executor 必须在首次受影响 material work 前用同一 authoritative probe 复算；mismatch 会让相关 assumption/Evidence stale，并暂停依赖该 premise 的 work 直到按当前 reality 修正，不影响的 work/Evidence 继续复用。
-10. **Verification authority**：冻结必须证明什么，不冻结调试流程。scope 跟真实 reachability/effective binding/repo authority 走；cleanup/refactor/expected `0-diff` 不能降级已触发要求。
+10. **Verification authority / candidate discipline**：冻结必须证明什么，不冻结调试流程。scope 跟真实 reachability/effective binding/repo authority 走；cleanup/refactor/expected `0-diff` 不能降级已触发要求。Research 中“疑似 dead / 应清零”的 candidate 只有在已证明属于目标 responsibility 后才可进入具体 `0-hit/0-count`；否则编译 predicate/coverage oracle，不把候选名变成 law。
 11. **Evidence / provider validity**：Evidence 必须可复核并覆盖 judgment 与 completion claim；开放 surface 不默认逐文件/逐 symbol 建账。test/build/replay/static 等在证明真实运行、覆盖 claim 且传播失败前只是声明；self-reported `PASS` 不是 Evidence。
 12. **Judge integrity**：`.skip`/todo、放松断言、删活体测试、mock 掉被测对象、改阈值、吞错误、`|| true` 等制造的绿灯无效；reverse/private/independent Evidence 只在真实 false-green/gameability 风险存在时启用。
 13. **Completion success path**：只有 Goal / constraints + triggered required Verification + current valid Evidence 足够覆盖时 `STOP`；Task/frontier 为空本身不代表完成。
@@ -66,7 +66,7 @@ PASS：普通 include inventory 可省略，但“include 是假依赖”和“�
 ### S6 — Baseline recheck gates stale execution
 Taskbook 带 build green、target count、grep hit count 等可复算 baseline，并把它们用作 scope/coverage/attribution premise。Taskbook 交付后、material work 开始前现实发生变化，关键 count/binding 已不再匹配。
 
-PASS：Executor 在首次受影响 material work 前用同一 authoritative probe 重跑/复算 baseline；不匹配就立即把相关 assumption/Evidence 标 stale，暂停依赖该 premise 的 work，并按当前 reality 修正 Execution / Verification。与 mismatch 无关的 work/Evidence 继续，不因 baseline gate 把所有任务机械变成 Task 0。
+PASS：Executor 在首次受影响 material work 前用同一 authoritative probe 重跑/复算 baseline；不匹配就立即把相关 assumption/Evidence 标 stale，暂停依赖该 premise 的 work，并按当前 reality 修正 Execution / Verification。与 mismatch 无关的 work/Evidence 继续，不因 baseline gate 把所有任务机械变成 Task 0。**“先报告 Human 再继续”是 failure。**
 
 ### S7 — Known work is not artificially lazy
 现有 Evidence 已确定 `A → {B,C} → D` 的 work 存在和真实 dependency；未来仍可能出现 contingent work。
@@ -113,6 +113,11 @@ Human 对 Northstar 说“直接开始执行”。
 
 PASS：Northstar 可以为编译 inspect/probe，但交付 authoritative Taskbook 后 STOP，不修改目标 workspace、不启动 Executor。
 
+### S16 — Execution ambiguity is not Human authority; candidates are not law
+FS retirement 的 Research 发现几个混合状态实例：一个仍有活 binary/control-flow 的对象、一个 live 类里的疑似 dead 方法、几个疑似 dead 配置；同时 grep 找到一组旧符号候选。它们都能在 Executor 运行期根据 live responsibility / caller / binding Evidence 继续裁决。
+
+PASS：Taskbook 不生成 `Needs-human-decision` 列表让 Human 决定这些 factual Unknown；它们留在对应 outcome+judgment Task 内，由 Executor 判 dead/live/mixed，只有裁决要求改变 Goal/boundary/authority 时才升级。终验收也不能把整组“候选旧符号”全部点名成 hard `grep 0`；只有已证明 target-only 的对象才可具体归零，其余用 responsibility predicate + coverage oracle。
+
 ## Leader parity smoke
 
 Leader 是行为基线，不是答案 oracle。至少检查：
@@ -121,9 +126,9 @@ Leader 是行为基线，不是答案 oracle。至少检查：
 2. outcome + judgment 能覆盖未列 execution reality，普通技术 Unknown 与同类实例留给 Executor，而不是被清单/逐项 Evidence 接管；
 3. baseline / command / provider 有真实 grounding，并在作为执行 premise 时有 recheck / mismatch gate；
 4. decision priority 与双向 boundary 能让 Executor 自裁；
-5. law/intelligence 分离，不把建议写成法；
+5. law/intelligence 分离，不把建议写成法，Research candidate 不自动成为 hard-zero law；
 6. failure stop-loss / rollback / anti-cheat / resume state 可执行；
-7. Taskbook 的 required Verification 作为明卷，manager 侧另留 2–3 条 Executor 看不到的独立暗卷；执行完成后 manager 亲自复跑明卷 + 暗卷并给 ≤5 行结果，摸不到环境才退化为未参与执行 agent 的验收官 prompt；
+7. 明卷是默认路径，暗卷/独立 Evidence 只在具体 material false-green / gameability / independence risk 存在时按需启用（见 `verification-trust.md`），不设 every-taskbook 固定抽查；
 8. Northstar 额外 Graph / Verification / Evidence 能力不能降低上述质量。
 
 Northstar 不复制 Leader 的 `/goal` surface、固定六节或 `PROGRESS.md/BLOCKED.md` 文件名；**≤4000 字符和三次失败 stop-loss 已经是当前 Northstar runtime contract，validation 必须按当前事实评测。**
@@ -149,7 +154,7 @@ C. candidate/current Northstar
 ### Behavioral pass gate
 
 - candidate 无新的 critical regression；
-- FS case 不弱于 Leader：不漏 scope、不误删 live responsibility、不退化成 path checklist/per-symbol ledger、不把普通技术 Unknown 升级 Human、不预写 patch；
+- FS case 不弱于 Leader：不漏 scope、不误删 live responsibility、不退化成 path checklist/per-symbol ledger、不把普通技术 Unknown 升级 Human、不预写 patch、不把未证实 candidate 变 hard-zero；
 - simple bugfix 不因 Leader-parity 机制显著膨胀；
 - architecture case 能区分 Goal-owned invariant 与 implementation guess；
 - 只有 clean-session evidence 显示 candidate 至少不弱于 Leader/main，才宣称 behavioral parity/uplift。
