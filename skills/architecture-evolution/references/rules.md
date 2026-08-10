@@ -90,7 +90,7 @@ Observed partition 是 evidence，不是 architecture boundary。只有它承载
 
 好的 architecture direction 优先表达为少量 stable invariant / boundary：什么必须始终成立，哪些变化仍允许局部自主。不要把 class/API/library choice 当成架构规范。一个 invariant 稳定到值得长期约束时，应优先能被 repo structure 或 tooling 清楚表达并在适合时机械检查；文档可以解释它，但不替代 enforcement。本 Skill 只识别这个 judgement，不设计具体 lint/test。
 
-局部 target shape 即使合理，也不能替代 durable architecture outcome；如果下游仍需重新发现 why 才能理解为何值得推进，intent 还未收敛。Architecture Intent 应固定 why、direction 和 boundary，同时保持 how 开放。
+局部 target shape 即使合理，也不能替代 durable architecture outcome。当 repo 已有仍有效且明确点名当前 area 的 architecture/evolution goal 时，intent 必须说明该 area 对这个 goal 的贡献；ownership/interface/dependency 收紧只作为结构杠杆。没有已声明目标时，从跨边界 pressure 收敛最小 durable outcome，不发明战略口号。下游不应重新发现 why；why、direction 和 boundary 固定，how 保持开放。
 
 ## Material unknown
 
@@ -116,7 +116,7 @@ Claim at risk → Minimal probe → Evidence → Intent changed / retained
 - speculative abstraction 或 mode/union interface；
 - complexity 只是搬到 helper/adapter/registry/caller；
 - consumer reassembly 仍然存在；
-- ownership 无证据扩到 execution/orchestration/adjacent subsystem；
+- ownership 无 evidence 扩到 execution/orchestration/adjacent subsystem；
 - 没有真实 replacement / exit；
 - 存在代码无法裁决的 Human-owned 业务或兼容决定。
 
