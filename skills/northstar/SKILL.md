@@ -21,7 +21,7 @@ Evidence
 
 三个稳定角色：**Human** 决定 Goal、已确认边界、明确验证要求、优先级和授权；**Northstar** 负责澄清、调研并编译足够完整的任务书，任务书交付就是本次 Northstar 的终止产物；**Executor** 消费任务书并自主推进，在稳定 Goal 和边界内负责 implementation judgment，按新 Evidence 调整受影响执行，直到 Taskbook Completion Hook 允许停止或准确阻塞。私有或独立判断只是必要时提高 Evidence 可信度的手段，不建立固定 Acceptor 角色。
 
-`Unknown` 是贯穿这条链的未决机制，不是额外流程。事实 Unknown 优先用证据消解；只有仍可能改变 Goal、边界、明确验证要求、执行事实或可信 Verification/Evidence 的未决项才需要路由。
+`Unknown` 是贯穿这条链的未决机制，不是额外流程。事实 Unknown 优先用证据消解；只有仍可能改变 Goal、边界、明确验证要求、执行事实或可信 Verification/Evidence 的未决项才需要路由。多个 execution Unknown 如果可以由同一个稳定判据在执行期逐项裁决，就编译这个判据，不要求 Northstar 预先消掉或列全这些 Unknown。
 
 ## 0. Intent Take：定准 Goal
 
@@ -45,9 +45,9 @@ Goal 已定准，意味着唯一、内部一致且由 Human 决定的结果、wh
 
 ## 1. Research
 
-Research 只关闭 Handoff 前的 Compile blocker，不负责预先理解完整 execution reality。只补足如果现在缺失就会 materially 改变 Goal/authority、初始安全 Execution、binding Verification 或 Evidence 判断的 context；**当 Goal/authority 已稳定、当前 Evidence 已足以编译至少一个安全 material Task 或真正必要的 Task 0，并且 Verification authority/trigger 已明确到任务书可以安全交付时，必须停止 Research，进入 Compile/Handoff。**
+Research 只取得会改变 Taskbook judgment 的事实，不负责预先理解完整 execution reality。优先确认会改变 Goal/authority、bounded execution territory、当前 starting reality、可重复 application 的 selection discriminator、must-preserve 或 binding Verification 的事实；**当剩余同类 execution Unknown 已能由一个稳定判据交给 Executor 逐项裁决，或 Goal/authority 已稳定、当前 Evidence 已足以编译至少一个安全 material Task / 真正必要的 Task 0，且 Verification authority/trigger 已明确到任务书可以安全交付时，必须停止 Research，进入 Compile/Handoff。**
 
-核对 Handoff 正确性真正依赖的 workspace、约束性规格/测试、关键命令、基线、依赖和 repo verification authority。一次 observation 又暴露新的 consumer、dependency、history 或 implementation question，本身不构成继续 Research 的理由；除非它重新成为 Compile blocker，否则只在真正影响当前 ready work 时由 Executor 取得 Evidence。Task 0 只保留那些第一项 material action 前必须关闭的执行期事实，不作为 Research 的转存区。文档和命令先当待验证声明；重要结论必须能回到 source pointer 或可复现观察，摘要本身不是 proof。
+核对 Handoff 正确性真正依赖的 workspace、约束性规格/测试、关键命令、基线、依赖和 repo verification authority。一次 observation 又暴露新的 consumer、dependency、history 或 implementation question，本身不构成继续 Research 的理由；如果这些实例只是在同一判据下等待执行期分类，就不继续枚举。当前 workspace 中已经存在、与 Human Goal 一致且仍有效的修改属于 starting reality：任务书围绕它继续编译剩余工作与 Verification，不要求清空或重做；未验证修改也不因此自动成为正确结果。Task 0 只保留那些第一项 material action 前必须关闭的执行期事实，不作为 Research 的转存区。文档和命令先当待验证声明；重要结论必须能回到 source pointer 或可复现观察，摘要本身不是 proof。
 
 ## 2. Ask
 
@@ -60,7 +60,7 @@ Northstar 替 Human 作出的可回退决定必须公开标明仍未确认，并
 按 [execution-compile.md](references/execution-compile.md) 的固定合同语义写任务书，不增加 Completion/Acceptance schema。
 
 - **Goal** 直接写成功时必须成立和必须保持的结果；
-- **Execution / Graph** 编译当前 Evidence 已经能确定的 best-known complete Tasks / relations。Human 已明确且仍有效的执行策略、scope boundary 或 must-preserve constraint 直接保留，不被模型重新分层替换。优先表达能够逼近 Goal 的最小 ready frontier，不把尚未阻塞当前 frontier 的 execution Unknown 先物化成前置 Task；**ready frontier 只决定现在可以执行什么，不能反向把 Human-owned Goal 缩成某个 layer / phase / subgoal。** 当前 Evidence 已支持一条有边界、可持续推进的路径时直接编译它，只有新 Evidence 真正阻断或改变当前 work 时才 materialize 受影响的 contingent work。简单任务保持线性，只有线性列表会掩盖真实关系时才读取 [execution-graph.md](references/execution-graph.md)。只有存在、scope 或关系仍 materially contingent on future Evidence 的工作才延迟展开；**best-known complete 表示当前 Evidence 已确定的工作结构足够完整，不要求先获得完整 repo/dependency/reachability knowledge；Graph 的 stop boundary 来自 Goal/confirmed boundaries，不因执行中发现相邻 residual 自动扩 scope；**
+- **Execution / Graph** 编译当前 Evidence 已经能确定的 best-known complete Tasks / relations。Human 已明确且仍有效的执行策略、scope boundary 或 must-preserve constraint 直接保留，不被模型重新分层替换。优先表达能够逼近 Goal 的最小 ready frontier，不把尚未阻塞当前 frontier 的 execution Unknown 先物化成前置 Task；**ready frontier 只决定现在可以执行什么，不能反向把 Human-owned Goal 缩成某个 layer / phase / subgoal。** 当多个候选位置属于同一 bounded territory，且一个稳定 discriminator 已足以决定“改 / 保留 / 只改哪部分”时，优先编译这个 judgment 及其适用边界，而不是为了完整 inventory 继续 Research、逐文件/逐符号预分类或为每个实例建 Task；Executor 用运行时 Evidence 应用这个 judgment。当前 Evidence 已支持一条有边界、可持续推进的路径时直接编译它，只有新 Evidence 真正阻断或改变当前 work 时才 materialize 受影响的 contingent work。当前 workspace 中与 Goal 一致且仍有效的已有修改作为 starting reality 保留，不因此另造局部 Goal，也不要求重做；是否正确仍由 Verification/Evidence 判定。简单任务保持线性，只有线性列表会掩盖真实关系时才读取 [execution-graph.md](references/execution-graph.md)。只有存在、scope 或关系仍 materially contingent on future Evidence 的工作才延迟展开；**best-known complete 表示当前 Evidence 已确定的工作结构和 judgment 足够完整，不要求先获得完整 repo/dependency/reachability knowledge；Graph 的 stop boundary 来自 Goal/confirmed boundaries，不因执行中发现相邻 residual 自动扩 scope；**
 - **Task 0** 是可选、bounded 的 execution warmup，只用于第一项 material action 前确实必须关闭的少量关键 Unknown；它不成为第二个 Research 阶段、默认 checklist 或未决 execution fact 的收集区；
 - **Verification** 保留 Task / Task Group / Goal 三种 placement granularity；已知 obligation/action 直接编译，只有 concrete scope/provider/target 或 obligation 是否触发仍依赖执行期事实的部分才运行时 materialize；
 - 预期 `0-diff`、cleanup 或 refactor 不能降低已经由事实或 Human 明确要求触发的验证；执行期才能确认且必须在第一项 material action 前关闭的 trigger 可放进 Task 0；
