@@ -137,10 +137,35 @@ Work 3: clean direct init/startup/tools/tests/build-registration residual under 
 Verification: repo-required build/tests + affected behavior replay/equivalent evidence + dead-reference closure.
 ```
 
+## R7 — Leader-parity contract covers unlisted execution reality without a checklist
+
+In the same FS cleanup case, Research has measured starting build/test/hit counts, found a terminology collision with another live system / same-named replay app, and observed that target directories contain both dead FS-only code and surviving shared code, including some false dependencies where files are included but none of their symbols are actually used.
+
+Pass:
+
+- Goal is “retire FS-only implementation while preserving surviving behavior,” not “make two directories disappear”;
+- Goal includes a clear tradeoff order such as `behavior preservation > correct deletion boundary > amount removed`, and the Executor adjudicates unlisted cases with it;
+- allowed and forbidden territory are both explicit, and same-named objects belonging to feature streaming / another live runtime are placed outside the cleanup boundary;
+- Tasks use outcome + dead/live responsibility judgment to drive a full-surface scan instead of treating the currently known B1–B7 paths as a closed checklist;
+- reproducible baselines (green build, target count, grep hit count, directory magnitude) anchor starting-state confirmation and omission detection; ordinary line numbers/include inventories stay out;
+- non-obvious traps remain when omission would cause a wrong decision, e.g. an include that is a false dependency with zero actual symbol use;
+- Completion includes both success and failure routes: required proof, three-failure stop-loss, green→red rollback / honest non-PASS, and anti-cheat against `.skip`, weakened assertions, live-test deletion, mocking away the target, or `|| true`;
+- runtime Unknown / progress / blocker / resume point is persisted in `implement-notes`, and a new session restores it before continuing.
+
+Fail:
+
+- deeper Research produces a larger fact dump instead of a smaller judgment contract;
+- “directory disappearance” still forces unnecessary relocation of live symbols;
+- only forbidden scope is given and the Executor must infer what territory it may keep scanning;
+- current path inventory is treated as the whole job, so same-shaped residual outside the checklist is not discovered;
+- the taskbook says only “non-PASS cannot stop” and gives no stop-loss / rollback / honest failure path;
+- terminology collisions are not isolated and the Executor can operate on the wrong live `fs` object;
+- execution Unknown exists only in conversation and is rediscovered after interruption.
+
 ## Captured FS cleanup shape
 
 This example exists only to reproduce the regression and must not become a runtime prior. Shared pieces in `fea_lib` / `fea_util` that are still used by Hermes/model_server stay; FS-only leaves and FS/Hermes comparison are peeled according to the Human-confirmed strategy. A question such as “does an external Flink UDF still consume libfs.so?” needs Evidence only when it actually blocks the concrete leaf/branch being removed; it is not a unified Research/Task-0 prerequisite before cleanup can begin. Same-named runtime config under `model_server/production/ops/script/*.py` remains deferred when it belongs to other residual outside the Goal boundary. Existing comparison/fixture deletions on the current branch are starting reality but must still be covered by the Taskbook's required Verification.
 
 ## Claim boundary
 
-These regressions prove only that the candidate runtime text expresses Research closure, compiler/Executor boundary, Goal preservation, bounded-frontier judgment, judgment compression, starting-reality reuse, and taskbook compression. Without a clean-session Skill runner / isolated model session, do not claim behavioral uplift; real behavioral A/B remains `NOT RUN`.
+These regressions prove only that the candidate runtime text expresses Research closure, compiler/Executor boundary, Goal preservation, bounded-frontier judgment, judgment compression, starting-reality reuse, taskbook compression, and Leader-parity failure/resume judgment. Without a clean-session Skill runner / isolated model session, do not claim behavioral uplift; real behavioral A/B remains `NOT RUN`.
