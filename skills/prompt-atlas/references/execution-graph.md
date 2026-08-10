@@ -1,37 +1,40 @@
-# Execution Graph: Static Compile and Runtime Evolution
+# Execution Graph: static compile and runtime evolution
 
-Do not split Tasks just to expose a Graph. Use Graph only when the current Task granularity would hide a relationship that changes execution judgment: real dependency, parallelism, shared writes, a meaningful Task-Group boundary, or a join.
+Do not split Tasks just to draw a Graph. Use Graph only when the current Task granularity would hide a **relationship that changes execution judgment**: a real dependency, parallelism, shared write, meaningful Task Group boundary, or join.
 
-Graph carries **currently evidenced execution relationships** only. It is not a semantic SOT, future-work inventory, scheduler, or workflow model.
+Graph carries only **execution relationships already supported by current Evidence**. It is not a semantic SOT, future-work inventory, scheduler, or workflow model.
 
 ## Static compile
 
-Compile the **minimum currently justified graph**:
+Compile the **best-known complete Graph supported by current Evidence**: work / relations already known to exist and sufficiently stable should be expressed once rather than hidden for artificial laziness; truly contingent work that still materially depends on future Evidence should not be guessed early.
 
-- `depends on` only when downstream consumes an upstream result or requires it for safe execution;
-- `may run in parallel` only when there is no dependency or write conflict;
-- a Task-Group/join boundary only when combined Verification is materially different from local checks;
-- re-verification only when later work may invalidate existing Evidence.
+- `depends on` — only when downstream really consumes an upstream result or the upstream result is a safe-execution prerequisite;
+- `may run in parallel` — only when there is no dependency or write conflict;
+- Task Group / join — only when combined Verification is materially different from local checks and the relationship is already real;
+- re-verification — only when later work is already known to be able to invalidate existing Evidence.
 
-Omit transitive edges and mere sequence. Do not invent nodes to make a graph look complete.
+Omit transitive dependencies and mere sequence. Do not manufacture nodes to make the Graph look complete. But when current Evidence already establishes `A → {B,C} → D`, compile that structure directly rather than intentionally degrading it to only A.
 
-Most importantly, do not materialize downstream Tasks whose existence depends on evidence not yet obtained. If A determines whether B/C/D are needed, compile A and the known decision boundary; let runtime Evidence materialize only the work that becomes real.
+Compile only the known structure and its decision boundary when whether B/C/D **exist, what they affect, or which relationship is necessary** still depends on future Evidence from A. When runtime Evidence arrives, add only the downstream work that becomes real to the same Graph.
 
 ## Runtime evolution
 
-Executor works the current ready frontier. New Evidence may change only the remaining graph:
+The Executor works the current ready frontier. New Evidence adjusts only the remaining Graph:
 
-- add a newly proven prerequisite, consumer, or affected surface before dependent work;
-- remove a disproven dependency or unnecessary branch;
-- split, merge, or reorder remaining Tasks when implementation reality changes;
-- continue independent ready work when another branch is blocked;
-- wait at a join only for real required upstream results;
-- recompute affected Verification when change surface, binding/config, or combined behavior changes.
+- a newly proven prerequisite, consumer, or affected surface → add necessary work before affected downstream work;
+- a disproven dependency or branch → remove it and let ready work continue;
+- changed implementation reality → split, merge, or reorder remaining Tasks;
+- one branch Blocked while another is independent → continue ready work;
+- a join waits only for real required upstream results;
+- actual change surface, binding/config, provider validity, or combined behavior makes a new Verification obligation/action applicable → place that verification/probe as a current execution action at the lowest meaningful boundary;
+- new Evidence disproves compiled Verification scope/placement → repair only the affected part.
 
-Completed work is not reopened mechanically. Reacquire Evidence only when its premise or the behavior it proved was affected.
+Do not create ImplementationNode / ProbeNode / VerificationNode taxonomies here: implementation, probes, and verification are simply current executable actions, while Graph expresses only their real relationships. **Evidence is the reality output of an action; the Completion Hook is taskbook judgment. Neither is a Graph node.**
 
-A Task Group remains only a Verification boundary over ordinary Tasks. Do not create a Graph object/schema, persistent Graph state, scheduler, fixed Agent topology, or a second taskbook. Use normal repo/runtime progress records when they already exist; otherwise keep the current frontier in execution context.
+Completed work is not reopened mechanically when Graph changes; reacquire Evidence only when its premises or the behavior it proved were affected.
+
+Task Group remains only a Verification boundary over ordinary Tasks. Do not add a Graph object/schema, persistent Graph state, scheduler, fixed Agent topology, or second taskbook. Reuse normal repo/runtime progress records when they exist; otherwise keep the frontier in current execution context.
 
 The stable rule is:
 
-> **Materialize what current Evidence makes executable; expand the graph when new Evidence makes more work real.**
+> **Compile known and sufficiently stable execution structure once; expand truly contingent work / Verification only when Evidence makes it real.**

@@ -1,8 +1,6 @@
-# Autonomous Taskbook
+# Autonomous Taskbook: turn a stable Goal into an execution contract
 
-Use only after Goal is stable. Produce the smallest truthful taskbook that lets an Executor start safely and continue by judgment.
-
-Semantic ownership stays fixed:
+Use only after Goal is settled. Produce a taskbook that is **complete enough under current Evidence without guessing the future**, so a fresh Executor can see the known global structure and advance independently.
 
 ```text
 Goal
@@ -14,63 +12,78 @@ Verification
 Evidence
 ```
 
-Physical structure is sparse. **One fact, one owner.** Materialize only information that changes execution judgment; omit empty sections, repeated context, and speculative future work. The taskbook is a starting contract, not a full simulation of execution.
+This is semantic ownership / proof chain, not a fixed temporal sequence. Keep **one fact, one owner**: compile every Task, relationship, and Verification obligation already established by current Evidence; delay only work whose existence, scope, or concrete action still materially depends on future Evidence.
 
 ## Goal
 
-Write one concise Human-owned Goal: desired result, must-preserve conditions, and declared delivery. Include Why only when it changes a tradeoff.
-
-Represent confirmed boundaries, authorization limits, protected side effects, or an unconfirmed delegated default only when they materially constrain execution, and state them once. Human explicit verification requirements belong to Verification, not Goal.
+Write one Human-owned Goal: desired result, what must remain true, and final delivery. Include Why only when it changes tradeoffs. Confirmed boundaries, authorization limits, protected side effects, or unconfirmed delegated defaults appear only when they actually constrain execution, and only once. Explicit Human verification requirements belong to Verification, not Goal.
 
 Do not add Completion/Acceptance semantics.
 
 ## Execution / Graph
 
-Compile the **minimum currently justified executable structure**.
+Compile the **best-known complete execution structure supported by current Evidence**. Do not give only the next step, and do not simulate an unknown future.
 
-A Task is an executable delta, not a miniature prompt. Normally it contains only:
+A Task is an executable delta. Normally it contains only:
 
 - observable result;
-- a non-obvious starting point or Task-local hard constraint, if needed;
-- one local check only when that check decides whether execution may progress.
+- a non-obvious starting point / Task-local hard constraint when needed;
+- one local check only when it is already applicable and decides whether execution may progress.
 
-Do not repeat Goal, global boundaries, shared reality, repo rules, or Goal-level Verification inside Tasks.
+Do not repeat Goal, global boundaries, shared Reality, repo rules, or Goal-level Verification inside each Task. Work that current Evidence already proves must exist, has a sufficiently stable boundary, and has a real relationship should be compiled once. Keep simple work linear; read [execution-graph.md](execution-graph.md) only when a real dependency, parallel relation, shared write, Task Group boundary, or join changes execution judgment. Delay materialization only when the work's **existence, affected scope, or necessary relationship** still depends on future Evidence.
 
-Keep simple work coarse and linear. Read [execution-graph.md](execution-graph.md) only when current Evidence shows a real dependency, parallelism, shared write, Task-Group boundary, or join that changes execution judgment. Do not materialize downstream Tasks whose existence depends on Evidence not yet obtained. Runtime Graph/frontier evolution is owned by that reference; do not restate it here.
+**Task 0** is optional, bounded execution warmup. Use it only before material execution to close a small number of Unknown whose early resolution materially improves grounding, route judgment, stability, or required Verification—for example the real repo/target, a material premise/baseline, critical judge/provider validity, or a runtime fact that changes Verification scope. End Task 0 as soon as Evidence is sufficient to start safely; ordinary execution facts stay with the Executor to discover as needed.
 
-Use **Task 0** only for a compile-time-known premise that matters before material change but can be established only in the execution environment. Task 0 is not another research phase.
+Runtime progression stays:
 
-Reuse completed work and Evidence while their premises still hold. If execution discovers facts that cross stable Goal, confirmed boundaries, Human authority, or required Verification, route back through [SKILL.md](../SKILL.md) rather than encoding another control flow here.
+```text
+ready work → execute / probe / applicable Verification → Evidence → update affected Execution / Graph / Verification → Completion Hook → continue / expand / stop / block
+```
+
+Reuse compiled work while it remains valid; new Evidence repairs only contingent / invalidated parts. If several new probes/tasks could close the same material gap, prefer the lower-cost one that is more likely to change Execution / Verification judgment. Continue in the same taskbook while Goal, confirmed boundaries, Human authority, and required Verification stay stable; cross those stable boundaries only through [SKILL.md](../SKILL.md).
 
 ## Verification
 
-Write each Verification obligation once, at the lowest meaningful boundary:
+Task / Task Group / Goal are **placement granularity**, not a requirement to fill three levels of Verification roadmap at Compile time:
 
-- **Task** — cheapest sufficient local check when it controls progression;
-- **Task Group** — one broader check at the smallest combined boundary when local checks cannot prove combined behavior;
-- **Goal** — remaining delivery-level coverage required by repo authority or explicit Human verification requirements.
+- **Task** — compile a known local check when it already applies and controls progression; runtime-triggered obligations join when they become applicable;
+- **Task Group** — when known combined behavior needs separate proof, compile one check at the smallest meaningful combined boundary; contingent joins materialize only after Evidence establishes them;
+- **Goal** — preserve delivery-level coverage required by repo authority or explicit Human verification requirements; do not predeclare an extra “final verification command”.
 
-Goal-level Verification is a final **coverage boundary**, not an extra mandatory command. Reuse valid lower-level Evidence; run only required checks that remain uncovered or were invalidated.
+Compile known Verification obligations and trustworthy concrete action/scope now. When provider, target, scope, or whether an obligation triggers still depends on change surface, binding/config, provider validity, or other execution reality, preserve the stable trigger/authority and materialize the corresponding action only after the fact becomes true.
 
-Required Verification follows actual impact/reachability and repo verification authority. Expected `0-diff`, cleanup, or refactor does not downgrade an already-triggered requirement. Concrete providers come from the repo verification system and prove only what they actually cover; execution-only provider/binding triggers belong in Task 0.
+Goal-level Verification is a **coverage boundary** consumed by the Completion Hook: reuse still-valid lower-level Evidence and add only real coverage gaps or invalidated checks. Required scope follows actual impact/reachability and repo authority. Expected `0-diff`, cleanup, or refactor cannot downgrade already-triggered requirements. A provider is only a claim until it is shown to really run, cover the claim, and propagate failure; when trust and coverage are equal, prefer the lower-cost provider whose failure signal narrows the problem space more effectively.
 
-Read [verification-trust.md](verification-trust.md) only when ordinary protected repo Verification may false-pass, be gameable, fail silently, or genuinely needs independent Evidence. Judge protection, reverse/private/independent Evidence, and detailed provenance rules are owned there.
+Read [verification-trust.md](verification-trust.md) only when ordinary repo Verification may false-pass, be directly targetable, fail silently, or genuinely require independent Evidence.
 
 ## Evidence
 
-Do not restate the Verification plan. Preserve only Evidence needed to judge material claims: what actually ran, the relevant target/revision or binding/config when needed, verdict/exit, and raw output or a stable artifact/reference.
+Compile proof / trust requirements, not future results. Runtime Evidence keeps only material facts needed for judgment and the next decision: provider/probe, target/revision, material binding/config, verdict/exit, and raw output or a stable artifact/reference.
 
-Executor narration or self-declared `PASS` is not enough. Missing, stale, under-covered, unreviewable, or judge-weakened Evidence is non-PASS; trust mechanics live in [verification-trust.md](verification-trust.md).
+Executor narration or self-declared `PASS` is not Evidence. When the judging side can access the authoritative environment at reasonable cost, reacquire final-judgment-critical repo-authoritative Evidence directly; otherwise require reproducible provenance. Missing, stale, under-covered, or judge-weakened Evidence cannot support PASS.
 
-Final reporting stays small: delivered result, decisive Evidence, exact residual/blocker if any, and the next legitimate route. Do not replay task history.
+Evidence invalidates only affected conclusions: reuse results while their premises remain valid. When new Evidence disproves an old claim, replace or invalidate it at its original semantic owner rather than keeping conflicting states simultaneously valid.
+
+## Completion Hook
+
+The taskbook carries a completion judgment without adding a Completion layer/schema/state/Acceptor. At each material Evidence update, it reads only **Goal / constraints + triggered required Verification + current valid Evidence** and decides:
+
+- whether the Goal's material outcome has minimum sufficient Evidence;
+- whether must-preserve conditions, confirmed boundaries, Human authority, and repo hard constraints still hold;
+- whether every triggered required Verification obligation has trustworthy, still-valid Evidence.
+
+If all hold, `STOP` without manufacturing a Final Verification Task. If a material gap remains, continue existing work or materialize only the contingent work / Verification that can close that gap. If no safe route remains, return accurate `BLOCKED` / non-PASS. Completed Tasks or an empty frontier are not completion conditions by themselves.
+
+Final reporting contains only actual delivery, decisive Evidence, exact residual/blocker if any, and the next legitimate route.
 
 ## Handoff check
 
 Before Handoff, confirm only:
 
-- one stable Goal and material authority constraints are represented once;
-- at least one Task or necessary Task 0 is actionable, with only currently justified work materialized;
-- required Verification is non-duplicated and Goal-level coverage remains reachable;
-- final Evidence can be judged without adding Completion/Acceptance, scheduler, Graph engine, or fixed Agent topology.
+- Goal and each material authority have exactly one owner;
+- all required Tasks / relations / Verification obligations already established by current Evidence are sufficiently compiled rather than hidden for artificial laziness;
+- contingent work is not speculatively materialized, and at least one Task or necessary Task 0 can start immediately;
+- required Verification is non-duplicated and the Completion Hook can judge stop / continue / block from existing semantic owners;
+- discovery / Evidence whose premises have not changed is not reacquired, and no Completion/Acceptance, scheduler, Graph engine, or fixed Agent topology has been added.
 
 If content does not change execution judgment, omit it.

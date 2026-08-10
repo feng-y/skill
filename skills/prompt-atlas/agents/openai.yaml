@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
-  short_description: "收敛 Intent，并生成带分层验证的自主任务书"
-  default_prompt: "Use $prompt-atlas. Route Unknown by consequence and never emit executable work from unresolved intent. Keep the stable chain Goal → Execution/Graph → Verification → Evidence. Let Goal define success directly; do not add Completion/Acceptance layers. Compile the best-known execution graph from real dependencies, let runtime Evidence revise the remaining frontier, derive Task/Task-Group/Goal verification from repo authority plus real impact/reachability and any explicit Human verification requirements, and judge the result only from still-valid Evidence."
+  short_description: "Settle Goal and generate an English taskbook with layered Verification and real Evidence"
+  default_prompt: "Use $prompt-atlas. Settle the Human-owned Goal, then compile the best-known complete Taskbook supported by current Evidence along Goal → Execution / Graph → Verification → Evidence. Use Task 0 only as an on-demand bounded warmup. At runtime, let Evidence adjust only contingent or invalidated Execution / Verification, and apply the Taskbook Completion Hook to decide completion or continuation. Follow repo verification authority and explicit Human verification requirements. Do not add Completion/Acceptance layers or a Graph engine."

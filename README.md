@@ -16,7 +16,7 @@ Install all skills (currently installs Prompt Atlas, Northstar, Unknowns First, 
 npx skills@latest add feng-y/skill --all
 ```
 
-Prompt Atlas and Northstar are peer skill surfaces. They may share or synchronize mechanisms, but neither owns or contains the other. Because their invocation territory can overlap, install one explicitly for active use unless you are comparing them.
+Prompt Atlas and Northstar are two language surfaces of the same Skill semantics: **Prompt Atlas is the English version and Northstar is the Chinese version**. Their runtime model, decision boundaries, taskbook semantics, Verification/Evidence behavior, and eval cases should remain behaviorally aligned; changes to one should be synchronized to the other unless the difference is purely language-specific. Because their invocation territory overlaps, install the language surface you want to use unless you are explicitly comparing the two.
 
 Install one skill:
 
@@ -29,8 +29,8 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 
 ## Skills
 
-- `prompt-atlas` — English skill for recovering stable intent and compiling one truthful autonomous taskbook or exact blocker.
-- `northstar` — peer Chinese skill with its own control surface; shared mechanisms may be synchronized without making either skill subordinate to the other.
+- `prompt-atlas` — English version of the shared Northstar/Prompt Atlas semantics for recovering a stable Goal and compiling one truthful autonomous taskbook or exact blocker.
+- `northstar` — Chinese version of the same semantics and behavior; changes should stay synchronized with Prompt Atlas rather than evolving as an independent control surface.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
 - `architecture-evolution` — turn vague architecture concerns and real change pressure into one evidence-backed Architecture Intent, preserving four architecture directions, a Real Evolution exit target, and the Brooks design constraints that downstream architecture work should absorb progressively.
 
