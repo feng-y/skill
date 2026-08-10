@@ -45,6 +45,8 @@ Evidence
 - 可回退且不改变 Goal / boundary / verification / authorization 的选择 → 可做显式 delegated default；
 - 会改变 Goal / boundary / Human requirement / priority / authorization 的选择 → Human。
 
+**升级依据是 authority，不是“不确定”。** 普通 factual / execution Unknown 不得因为“拿不准”就编译成 `Needs-human-decision`：先由 Executor 依据 repo reality、Goal priority 和稳定 judgment 裁决。只有裁决本身会改变 Goal / boundary / Human requirement / priority / authorization，且 Evidence 无法决定时才升级 Human；若只是事实暂时摸不到且没有安全 work，则准确 Block 并写恢复条件，不让 Human 猜事实。
+
 Goal 未定准就返回 `Status: Unresolved Intent`，不输出可执行工作。
 
 ## 1. Research
@@ -72,12 +74,12 @@ Northstar 代做的可回退决定必须公开为未确认 default，写清依�
 按 [execution-compile.md](references/execution-compile.md) 编译 Taskbook。核心要求：**complete 指 decision gap 已关闭，不指把 Research 已知事实抄全。Compile 是输出过滤器，不是转录步骤。**
 
 - **Goal**：只写 Goal-owned outcome、decision priority、allowed / forbidden boundary、must-preserve 和最终交付；不要把模型选择的 implementation shape 偷偷升级成 success criterion；
-- **Execution / Graph**：Task 以 **outcome + judgment** 为单位，负责让 Executor 在一个稳定判据下扫描并处理完整同类 surface。路径/文件只在集合封闭、不可可靠推导、且枚举本身就是判据时才列；同一 judgment 能覆盖的文件/符号/实例不得拆成 checklist；具体文件怎么拆、符号搬哪里、函数如何抽取、include/BUILD 如何改、命令顺序默认交给 Executor；
+- **Execution / Graph**：Task 以 **outcome + judgment** 为单位，负责让 Executor 在一个稳定判据下扫描并处理完整同类 surface。路径/文件只在集合封闭、不可可靠推导、且枚举本身就是判据时才列；同一 judgment 能覆盖的文件/符号/实例不得拆成 checklist；具体文件怎么拆、符号搬哪里、函数如何抽取、include/BUILD 如何改、命令顺序默认交给 Executor。judgment 可以逐实例应用，但 Taskbook **不默认要求逐 file/symbol 的删除/保留 Evidence 台账**；只有 closed-set accounting 本身是验收、repo/Human authority 明确要求，或某实例有不同 safety/authority 时才逐项列；
 - **Law vs intelligence**：`必须/不许` 只来自 Human、repo authority 或已验证 reality；模型的高置信实现建议仍是可回退 intelligence，不冒充 law。Executor 有更小、更稳的合规路径可以改走，并在 `implement-notes` 记录原因；
-- **Starting baseline**：只保留能作为 coverage oracle / attribution anchor 的可复算基线；行号、include 明细、静态候选列表等会被 Executor 自己重算、且不改变判断的细节不写；
+- **Starting baseline**：只保留能作为 coverage oracle / attribution anchor 的可复算基线；行号、include 明细、静态候选列表等会被 Executor 自己重算、且不改变判断的细节不写。baseline 一旦作为 execution premise，Taskbook 必须编译 **recheck → mismatch 使相关 premise stale → pause affected work → repair affected state**，不得弱化成“偏差先报告再继续”；
 - **Task 0**：只关闭第一项 material work 前真正阻塞执行的少量事实，不成为第二轮 Research；
-- **Verification**：冻结必须证明的 behavior / coverage / authority，不默认冻结用于定位失败的调试策略。Human 或 repo 明确要求必须保留；provider/target/scope 依赖执行现实的，保留 trigger/authority，让 Executor 在触发时 materialize；
-- **Evidence**：编译 proof/trust requirement，不编译未来结果；
+- **Verification**：冻结必须证明的 behavior / coverage / authority，不默认冻结用于定位失败的调试策略。Human 或 repo 明确要求必须保留；provider/target/scope 依赖执行现实的，保留 trigger/authority，让 Executor 在触发时 materialize。Research 中的 dead/suspect candidate 不自动升级成 hard acceptance；只有已证明属于目标 responsibility 的对象才可写具体 `0-hit/0-count`，分类仍取决于执行期 reality 时写 predicate/trigger，不把候选名清单强制清零；
+- **Evidence**：编译 proof/trust requirement，不编译未来结果。默认用 **judgment + coverage oracle + material exceptions** 证明工作面，不要求把每个 symbol/file 的删除/保留都复制成最终台账；逐项 accounting 只在其本身是验收或有真实风险差异时要求；
 - **Completion Hook**：同时定义 success path 和 failure path：required Verification 通过才可完成；同一验收连续失败 3 次且没有新增 Evidence 时停止硬顶、换独立项或准确报告；可信 baseline 从绿变红时先恢复到绿再继续或如实 non-PASS；“没做成但说清了”优于“做了但更糟”。禁止通过 `.skip`/`todo`、放松断言、删活体测试、mock 掉被测对象、改阈值、吞错误或 `|| true` 等削弱 judge 的方式制造 PASS。
 
 Graph 只连接高质量 work unit，不把每个 executable delta 变成节点。ready frontier 只表示现在能做什么，不能反向缩小 Human Goal；adjacent residual 不因被发现就自动扩 scope。
@@ -102,4 +104,4 @@ Taskbook 必须告诉 Executor：开工先在 `implement-notes` 写 ≤10 行的
 
 自主执行 Taskbook 默认控制在 **≤4000 字符**；Human 明确要求 long-form artifact 或目标 runtime 已知使用不同限制时才放宽。压不下去时先继续做 judgment compression / 去重，不把一个 Human Goal 偷拆成多个 layer Goal 来凑长度。
 
-发出前删掉所有只是展示 Northstar 调研过程、预测 patch、实现步骤或 Executor 可安全自行取得的细节；保留不写就会让 Executor 判错的 trap。Northstar 不执行 Taskbook，也不新增 scheduler、manager daemon、Completion/Acceptance layer、Graph engine 或固定 Agent topology。
+发出前删掉所有只是展示 Northstar 调研过程、预测 patch、实现步骤或 Executor 可安全自行取得的细节；保留不写就会让 Executor 判错的 trap。**再删一遍执行期清单化内容：普通 execution Unknown 不得伪装成 Human decision，开放 surface 不得附逐 symbol/file 证据台账，未证实的 candidate 不得变成 hard-zero 验收。** Northstar 不执行 Taskbook，也不新增 scheduler、manager daemon、Completion/Acceptance layer、Graph engine 或固定 Agent topology。
