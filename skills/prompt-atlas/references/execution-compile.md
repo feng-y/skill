@@ -74,6 +74,8 @@ Establish an attributable starting point when the environment is available. Actu
 
 Keep only baselines that let the Executor recompute scope, detect omissions, or distinguish pre-existing breakage from regressions introduced by this work. If a command was not actually run, a number cannot be confirmed, or the environment is unavailable, do not fabricate it. Future commands named in the Taskbook must at least be confirmed to exist with credible targets/arguments; use Task 0 when the check must happen before material work.
 
+**Any baseline compiled into the Taskbook as a scope / coverage / attribution premise must be recomputed by the Executor with the same authoritative probe before the first affected material work.** On mismatch, do not keep using the old value as truth: immediately mark dependent assumptions / Evidence stale, pause work that depends on that premise, and repair affected Execution / Verification from current reality. Unrelated work / Evidence remains reusable. This recheck is a condition on using the baseline; it does not mechanically turn every task into Task 0.
+
 ## Verification
 
 Verification freezes **what must be proven**, not **how implementation/debugging should proceed** by default.
@@ -130,7 +132,7 @@ Before delivery, ask only:
 - Does an open same-shaped surface get scanned by criterion instead of static inventory?
 - Does every `must/must not` have authority, or did model intelligence get promoted into law?
 - Are traps that would cause wrong judgment preserved while safely recomputable detail is removed?
-- Are baselines reproducible enough to expose staleness or omission?
+- Are baselines reproducible, with an explicit mismatch gate that stales / pauses / repairs affected state?
 - Does Verification freeze required proof without turning debugging tactics into hard workflow?
 - Does Completion include success, stop-loss, rollback, and judge-integrity paths?
 - Do execution Unknowns have an `implement-notes` resume carrier?
