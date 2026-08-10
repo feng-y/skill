@@ -2,16 +2,16 @@
 
 只在 Evidence trust / independence 可能改变 completion judgment 时读取。provider 是否真实运行、coverage 是否覆盖 claim、Evidence freshness / provenance / selective reuse 等正常语义由 [execution-compile.md](execution-compile.md) 负责；这里不再复制。
 
-默认优先使用 repo 已有、受保护且足以覆盖 Goal 的 visible verification；不要为了“更严格”机械增加暗卷或独立 judge。
+默认优先使用 repo 已有、受保护且足以覆盖 Goal 的 visible verification；不要为了“更严格”机械增加暗卷或独立 judge。Human 或 repo verification authority 明确要求独立验证时，该要求保持 binding，不需要再用下面的 failure-mode judgment 证明其必要性。
 
 ## Trust judgment
 
-增加额外 trust mechanism 前先判断：**是否存在一个具体且 material 的 failure mode，使 Executor 在 Goal 或已触发 required Verification 没有真正成立时，仍可能得到 visible PASS？**
+没有 binding independence requirement 时，增加额外 trust mechanism 前先判断：**是否存在一个具体且 material 的 failure mode，使 Executor 在 Goal 或已触发 required Verification 没有真正成立时，仍可能得到 visible PASS？**
 
 - 没有这样的具体 failure mode，就直接使用 visible Evidence，不增加额外判卷机制。
 - 如果存在，先说清它是什么，再只补足能反证该 failure mode 的最小 trust Evidence。典型原因包括 judge 没有真实观察目标、Executor 可以修改或针对 oracle / 固定样本优化、关键 coverage/scope 只能依赖实现者自己的推导，或决定性 Evidence 只能由实现者自报。
 
-一般 uncertainty 不是 trust gap；coverage / scope 本身仍由 [execution-compile.md](execution-compile.md) 判断。这里仅处理这些结论是否需要额外可信度或独立性。反向验证、暗卷和独立 Evidence 都只是修补具体 trust gap 的手段，不是新的 Goal、Acceptance 层或固定流程。
+一般 uncertainty 不是 trust gap；coverage / scope 本身仍由 [execution-compile.md](execution-compile.md) 判断。这里仅处理这些结论是否需要额外可信度或独立性。反向验证、暗卷和独立 Evidence 都只是修补具体 trust gap 或满足 binding independence requirement 的手段，不是新的 Goal、Acceptance 层或固定流程。
 
 ## 保护 judge 与 baseline
 
@@ -27,15 +27,15 @@
 
 **明卷**是 Executor 可见的 verification，也是默认路径。repo 的受保护测试、replay、CI、schema 或其他 judge 已足够时，不增加私有检查。
 
-只有 Trust judgment 已指出一个隔离观察能够实际反证的 concrete failure mode 时，才使用少量**暗卷**。它必须从同一个公开 Goal 和 Verification requirement 推导，可以换样本、scope derivation 或观察路径，但不能增加隐藏要求；如果要称为暗卷，就应在执行前形成并与 Executor 隔离。runtime 无法隔离时，把它当明卷或改用其他受保护 Evidence。
+只有 Trust judgment 已指出一个隔离观察能够实际反证的 concrete failure mode，或 binding verification authority 本身要求私有检查时，才使用少量**暗卷**。它必须从同一个公开 Goal 和 Verification requirement 推导，可以换样本、scope derivation 或观察路径，但不能增加隐藏要求；如果要称为暗卷，就应在执行前形成并与 Executor 隔离。runtime 无法隔离时，把它当明卷或改用其他受保护 Evidence。
 
-暗卷的价值来自对该 failure mode 的独立反证能力，不来自数量。没有针对那个 gap 的暗卷只是重复明卷，不增加 trust。
+暗卷的价值来自对该 failure mode 的独立反证能力或满足明确的 independence requirement，不来自数量。没有针对那个 gap 或 authority requirement 的暗卷只是重复明卷，不增加 trust。
 
 暗卷一旦在执行前泄露给 Executor，就不再提供 private-evidence 价值；可以继续作为明卷使用，但不能重复计算其独立性。
 
 ## 独立 Evidence
 
-当 Executor 自证无法形成可信判断、visible/private judge 仍可被操纵，或关键 coverage / claim 只能由实现者自己的推导支撑时，可以让未参与实现的主体在权威环境中重新取得 Evidence。
+当 Executor 自证无法形成可信判断、visible/private judge 仍可被操纵、关键 coverage / claim 只能由实现者自己的推导支撑，或 Human / repo verification authority 明确要求独立取证时，可以让未参与实现的主体在权威环境中重新取得 Evidence。
 
 “独立”指没有实质参与实现，并重新面对 Goal、repo verification authority、基线和真实环境取得证据；是否使用相同模型或 provider 本身不能单独证明或否定独立性。
 
