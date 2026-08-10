@@ -134,9 +134,7 @@ Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同�
 - Taskbook 是否定义了任务，而不是展示 Northstar 的调研过程？
 - 每个 Task 是否是 outcome + judgment，而不是文件/函数/checklist/patch step？
 - 同一个 judgment 能覆盖的开放 surface 是否由 Executor 扫全集，而不是静态枚举？
-- 普通技术 Unknown 是否仍留给 Executor judgment，而不是因为未决就升级 Human？
 - `必须/不许` 是否都有 authority，还是把模型建议误写成 law？
-- Evidence 是否在证明 judgment / claim，而不是重新拆成逐实例账本？
 - 是否保留了不写就会让 Executor 判错的 trap，同时删除了可安全重算的明细？
 - baseline 是否可复算，并明确了 mismatch 时 stale / pause / repair affected state 的 gate？
 - Verification 是否冻结 required proof，而没有把 debugging tactic 变成硬流程？
