@@ -64,6 +64,6 @@ The Skill grounds the direction in repository evidence, distinguishes architectu
 - `Intent unresolved` — one evidence gap or Human-owned decision still changes the direction.
 - `Architecture intent ready` — one bounded intent is stable enough for downstream design.
 
-A ready intent explains the problem, background, direction, and boundary. It may briefly name a few basic target shapes when useful, but stops before concrete target design.
+A ready intent explains the problem, background, direction, and boundary, and fixes one stable outcome-level acceptance rule. It may briefly name a few basic target shapes when useful, but stops before concrete target design; lint/test/verification methods remain downstream choices.
 
 Skip this Skill when the target architecture and implementation boundary are already clear, or when the current request is specifically for a complete design, taskbook, code review, or direct implementation.
