@@ -12,16 +12,16 @@
 - `brooks-constraints.md` 继续保留 R1–R6 的 guard，但只用于 reject / narrow / guard intent，不再要求输出 Brooks table；
 - `Challenge`、counterexample、taxonomy 命中和 proof vocabulary 都属于 reasoning machinery，不作为 ready intent 的最终 section；
 - 最终输出跟随用户主要语言，内部英文 taxonomy 不改变用户输出语言；
-- ready intent 只物化 Architecture problem、Background、Direction、Boundary，以及必要时 Material unknown / 少量 Possible target identities；
+- ready intent 只物化 Architecture problem、Background、Direction、Boundary，以及必要时少量 Possible target identities；
 - `Possible target identities` 仍服务于一个 intent，只描述基本 ownership / semantic / dependency identity，不成为多个并列改造项目；
 - decisive evidence 只保留足以解释判断的少量事实，不输出完整 commit inventory、五面审计表或 reasoning trace；
 - `Real Evolution` 仍要求至少一个旧路径、旧知识、旧责任、旧判断或旧依赖真实退出；
 - 不再输出 `Primary architecture direction`、`Design obligations`、`Progressive Brooks constraints`、`Challenge`、`Success evidence`、`Current snapshot evidence`；
-- Material Unknown 只在会改变 intent / boundary / target identity 时出现；没有则整个 section 省略；
+- `Architecture intent ready` 不包含 Material Unknown；任何仍会改变 intent / boundary / target identity 的未关闭 unknown 必须返回 `Intent unresolved`；
 - capability ownership 不自动推导 execution / orchestration ownership；相邻 subsystem 的合法 authoritative ownership 不因 caller reassembly 被默认吞并；
 - reasoning distinction / observed partition 不能因为被命名就自动 materialize 成 type/provider/adapter/layer/public seam；
 - Stop line 明确禁止 class/interface/API/adapter、具体 responsibility placement、调用/执行流、迁移步骤、implementation slice、任务拆分和 verification plan；
-- 输出状态仍只有 `No architecture intent / Intent unresolved / Architecture intent ready`；
+- 输出状态仍只有 `No architecture intent / Intent unresolved / Architecture intent ready`，且三者语义互斥；
 - 不调用外部 Wayfinder、Improve、Grill、Brooks 或 Northstar Skill。
 
 ## Scenario smoke
@@ -119,7 +119,7 @@ consumer 必须组合 config、provider type、runtime handle 和调用顺序才
 - Direction 指向 model-scoped feature capability 这类基本目标 identity；
 - 可以保留两个值得后续设计比较的 basic identity，例如 generation-owned capability 与独立 feature-execution capability，但不得定义其 class/API/adapter/调用关系；
 - scoring 与 feature-streaming 的差异作为 must-preserve / guard，不因 mechanics 相似被强制统一；
-- 最终输出不出现 Brooks 五列表、R1–R6 编号、`Primary architecture direction`、Challenge、Success evidence 或完整 commit 清单；
+- 最终输出不出现 Brooks 五列表、R1–R6 编号、`Primary architecture direction`、Challenge、Success evidence、Material unknown 或完整 commit 清单；
 - 不继续决定 projection/rehash/metadata 具体归谁，那属于 Target Design。
 
 ### N1 — Local fix
@@ -156,7 +156,13 @@ consumer 必须组合 config、provider type、runtime handle 和调用顺序才
 
 业务语义、owner boundary、consumer 和 runtime evidence 已足以支持 bounded intent，没有会改变方向的未决事实。
 
-通过：`Architecture intent ready` 直接省略 `Material unknown` section；不得为了模板完整输出 `None` 或虚构待确认项。
+通过：`Architecture intent ready` 不输出 `Material unknown` section；不得为了模板完整输出 `None` 或虚构待确认项。
+
+### R4 — Material unknown forces unresolved
+
+当前存在一个未关闭事实：它可能改变 intent、boundary 或 target identity，例如无法确认 feature-streaming 与 scoring 是否共享同一业务语义，且不同答案会改变目标边界。
+
+通过：必须返回 `Status: Intent unresolved`，输出 claim at risk 与最小 probe / Human decision；不得同时输出 `Architecture intent ready`，也不得把该 unknown 附在 ready artifact 后继续推进。
 
 ### L1 — Compat token is not runtime state
 
@@ -170,7 +176,8 @@ consumer 必须组合 config、provider type、runtime handle 和调用顺序才
 
 - 修改或弱化 North Star；
 - 把 Architecture Evolution 扩成 Target Design / execution workflow；
-- ready intent 固定输出 Brooks 表、Challenge、Primary architecture direction 或 verification plan；
+- ready intent 固定输出 Brooks 表、Challenge、Primary architecture direction、Material unknown 或 verification plan；
+- 同一个未关闭 material unknown 既允许 `Intent unresolved` 又允许 `Architecture intent ready`；
 - 中文输入因为内部 taxonomy/reference 而输出英文主文；
 - possible target identities 细化成 class/API/adapter/责任落位/调用流程；
 - 为了“有方案”机械输出多个并列改造项目；
