@@ -18,8 +18,6 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 5. 最后读 [intent-contract.md](references/intent-contract.md) 输出；
 6. [validation.md](references/validation.md) 只用于显式 smoke/eval，正常运行不读。
 
-同一规则只放一个 owner；不要在 Flow、judgement 和 output contract 之间重复维护。
-
 ## 何时使用
 
 使用：架构方向仍模糊，需要从历史模块、重复症状、变化压力或代码现实中找出真正值得推进的方向。
