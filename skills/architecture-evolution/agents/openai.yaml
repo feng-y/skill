@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
   short_description: "从真实变化压力与上位目标构造可验证的架构 Intent"
-  default_prompt: "使用 $architecture-evolution，把目标 area 的真实变化压力放回仍有效的上位架构目标，输出一个可供下游继续推进但不预选目标设计或实现步骤的 Architecture Intent。"
+  default_prompt: "使用 $architecture-evolution，把目标 area 的真实变化压力放回仍有效的上位架构目标，以 AI-native 为 architecture quality bar，输出一个可供下游继续推进但不预选目标设计或实现步骤的 Architecture Intent。"

@@ -7,15 +7,13 @@
 检查：
 
 - 主目标是构造 Architecture Intent，不是完成目标设计或实现；
-- 主流程仍为 `Ground → Discover → Shape → Challenge and constrain`，没有新增 round / execution 阶段；
+- 主流程仍为 `Ground → Judge → Shape → Challenge`，没有新增 round / execution 阶段；
 - 运行时引用为 `rules.md`、`brooks-constraints.md` 和 `intent-contract.md`；`legacy-lenses.md` 只在 legacy/compat/identity 信号出现时加载；
 - Reality 分开观察 Business semantics、Ownership & lifecycle、Consumer knowledge/reassembly、Source dependency、Runtime control/consumption，但只输出实际改变 judgment 的 evidence，不生成五面审计表；
 - `consumer reassembly` 是 cross-cutting signal，不是第五个 architecture direction；纯 composition-root wiring 不自动算 reassembly；
 - 四个方向完整保留：Business Semantic Integrity、Stable Abstraction with Explicit Variation、Cohesive Capability Ownership、Unidirectional Policy Dependency；
 - 一个 intent 只选择一个 primary architecture direction，其他命中作为 consequence 或 design obligation；
-- Architecture contribution 连接 evolution horizon、domain/identity constraint、target pressure 与 durable capability；四个方向只描述结构杠杆；
-- broad next-direction 请求执行 `target + evolution vocabulary` 的有界检索，不在第一份 repo-level 文档处停止，也不以 system identity、ADR、hard boundary 或最近 subsystem objective 代替 evolution horizon；
-- AI-native / agentic engineering 是明确 horizon 时，Contribution 必须落到 agent intervention、independent verification 与跨局部重构仍成立的 durable capability，不能只写口号；
+- North-star judgment 先确定 area 推进什么上位结果，四个方向只描述结构杠杆；
 - Design obligations 只输出当前 intent 实际相关的项，不机械填满 semantics / variation / ownership / reassembly / dependency；
 - ownership intent 只把 owner scope 扩到 evidence 支持的 invariant 边界；capability ownership 不自动推导 request execution / orchestration ownership；
 - 相邻 subsystem 已有正确 authoritative owner 时，当前 intent 只要求稳定 relation/contract，不默认吞并其内部 config/resource/lifecycle；
@@ -128,13 +126,13 @@ consumer 必须组合 config、provider type、runtime handle 和调用顺序才
 
 通过：Success evidence 写成“实现时根据最终 changed boundary/ownership 与届时 effective runtime/config/deployment state 重新推导 affected targets，并覆盖全部受影响对象”；replay 在该 case 中是适用的 proof。当前三个 app 可以作为 `Current snapshot evidence`，不能冻结为长期 acceptance set。
 
-### P12 — Architecture altitude before local target shape
+### P12 — North-star before local target shape
 
 repo 已声明扩大可独立验证的 AI intervention surface，并点名一个历史 module 作为高价值切口；另有 repo strategic identity、subsystem objective 和 module-local ownership pressure。
 
-通过：Intent 用 `AI-native horizon → identity/domain constraint → module pressure → durable capability` 说明 agent intervention 如何更有界且可独立验证；局部 provider / consumer / ownership 收紧只进入 obligation 或下游 target design。
+通过：Intent 说明 module 如何推进可独立验证的 AI intervention surface，并把命中的 architecture / taste judgment 收成 repo-readable、可机械执行的 invariant；局部 provider / consumer / ownership 收紧只进入 obligation 或下游 target design。
 
-失败：primary intent 只输出 cohesive owner、truthful provider、stable interface；只连接 subsystem objective；用 strategic identity / hard boundary 替代 AI-native evolution authority；或只有 AI-native 标签而没有 intervention / verification evidence。
+失败：primary intent 只输出 cohesive owner、truthful provider 或 stable interface，仍需下游重新发现 AI-native contribution；只有 AI-native 标签而没有 intervention / verification evidence 也失败。
 
 ### B1 — Progressive Brooks absorption
 
@@ -309,7 +307,7 @@ B. 加载 architecture-evolution
 | Pressure grounding | 审美判断 | 部分 evidence | 真实 pressure、consequence 和 boundary 清楚 |
 | Reality separation | 用单一结构信号替代业务/ownership/runtime 判断 | 部分区分 | semantics/ownership/consumer/source/runtime 按证据区分且只展开相关面 |
 | Intent discovery | 罗列症状/方案 | 有方向但不稳定 | 一个能解释压力的 architecture intent |
-| Architecture altitude | 局部 target shape 或 system identity 冒充 evolution outcome | 提到上位目标但贡献不可验证 | evolution authority、pressure、durable capability 与 success evidence 闭合 |
+| North-star judgment | 局部 target shape 冒充 architecture outcome | 提到上位目标但贡献不可验证 | contribution、pressure、durable capability 与 success evidence 闭合 |
 | Direction judgment | 未分类或多方向并推 | 方向大致正确 | 一个 primary direction，consumer reassembly 等信号正确降为 consequence/obligation |
 | Intent quality | 模式或任务列表 | outcome 部分清楚 | why now/end state/boundary/适用 obligations 完整且无机械填表 |
 | Ownership scope | 从 reassembly 直接推导更大的 owner | owner 大致正确但 relation 含糊 | owner scope 匹配 invariant evidence，execution/orchestration 与 adjacent ownership relation 清楚且不机械分离/集中 |
@@ -324,12 +322,12 @@ B. 加载 architecture-evolution
 
 ## V0 pass gate
 
-1. P1–P12 中 B 臂的 `Reality separation + Intent discovery + Architecture altitude + Direction judgment + Intent quality + Ownership scope` 比 A 臂高至少 2 分；
+1. P1–P12 中 B 臂的 `Reality separation + Intent discovery + North-star judgment + Direction judgment + Intent quality + Ownership scope` 比 A 臂高至少 2 分；
 2. B1–B5 中 Brooks constraints/proof vocabulary 被正确渐进吸收：不丢失、不机械前置、不因条目数量误判；
 3. N1–N3、R1–R4、L1–L2、G1–G5 路由和 guards 正确；
 4. U1–U6 usage smoke 全部通过；README 不要求用户预先做候选分析、原则选择或 Brooks 扫描，并正确排除已稳定 intent 与直接设计/执行请求；
 5. 每个 ready 输出只有一个 intent 和一个 primary direction；consumer reassembly 不成为第五方向；
-6. 每个 ready 输出都有 Architecture contribution；局部 target shape 不替代上位 outcome；
+6. 每个 ready intent 说明 North-star contribution；局部 target shape 不替代上位 outcome；
 7. intent 描述 outcome，不锁死实现模式；reasoning distinction 不自动物化；Design obligations 只输出适用项；
 8. ownership claim 只扩到 evidence 支持的 invariant；不得从 capability ownership 无证据推导更大的 execution/orchestration owner，也不得无证据集中相邻 subsystem 的合法 ownership；
 9. 至少一个具体 replacement/exit obligation；
@@ -345,8 +343,7 @@ B. 加载 architecture-evolution
 
 - `pressure-free-intent` — 从审美发明方向；
 - `local-escalation` — 局部问题被升级成架构 intent；
-- `local-target-substitution` — 局部 capability / ownership / interface target 合理，却替代了 area 对上位 evolution objective 的贡献；
-- `nearest-horizon-substitution` — 用最近的 subsystem objective 或 system identity 替代更高、仍有效且明确依赖当前 area 的 evolution horizon；
+- `north-star-loss` — 局部 target 合理，却替代了 area 对上位 architecture goal 的贡献；
 - `reality-collapse` — 用 clean interface/provider/dependency 等单一信号替代 semantics、ownership 或 runtime reality 判断；
 - `consumer-reassembly-miss` — caller 仍重组 capability facts，但被误判为 boundary 已闭合；
 - `consumer-reassembly-false-positive` — 把纯 composition-root wiring 误判为 capability reassembly；
