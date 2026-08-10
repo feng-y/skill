@@ -10,6 +10,7 @@ Status: Architecture intent ready
 ## Direction
 - Intent:
 - Why now:
+- Architecture contribution: <闭合 evolution horizon → domain / identity constraint → target pressure → durable capability；current-stage 与 long-term north-star 同时存在时连接二者；没有 authoritative horizon 时写从跨边界 pressure 推导出的最小持久结果>
 - Desired end state:
 - Primary architecture direction:
   - Business Semantic Integrity / Stable Abstraction with Explicit Variation / Cohesive Capability Ownership / Unidirectional Policy Dependency
@@ -40,7 +41,7 @@ Status: Architecture intent ready
 - Applicable guard: <only when needed>
 
 ## Success evidence
-- Stable acceptance rule: <直接引用当前 intent 已承诺的关键 outcome / invariant / must-preserve / replacement，说明实现完成时哪些必须得到实际证明；不要另写第二套完成条件。affected scope 动态变化时写届时的 scope derivation；具体 evidence provider 由后续按 repo verification authority 和最终 change surface 选择，除非 provider 本身是稳定受保护判卷标准或必须点名才能消除歧义>
+- Stable acceptance rule: <直接引用当前 intent 已承诺的 Architecture contribution / outcome / invariant / must-preserve / replacement，说明实现完成时哪些必须得到实际证明；AI-native / agentic horizon 适用时包括 intervention boundary 与 independent verification。不要另写第二套完成条件。affected scope 动态变化时写届时的 scope derivation；具体 evidence provider 由后续按 repo verification authority 和最终 change surface 选择，除非 provider 本身是稳定受保护判卷标准或必须点名才能消除歧义>
 - Replacement evidence: <证明旧路径、知识、判断或依赖确实退出>
 ```
 
@@ -66,7 +67,7 @@ Status: Architecture intent ready
 
 ## Discipline
 
-- 一个 intent；描述 outcome，不提前指定实现模式、任务拆分或迁移步骤；
+- 一个 intent；Architecture contribution 说明为什么这个 area 值得成为当前 architecture evolution，四个 primary direction 只描述主要结构杠杆；不提前指定实现模式、任务拆分或迁移步骤；
 - 只输出当前仍有效的 architecture judgment / evidence；旧 snapshot 若已被 authoritative reality 推翻，只保留必要 provenance，不与新判断并列为 active state；
 - `Observed / Inferred / Unknown` 不混写；Material Unknown、snapshot evidence 和 guard 只在适用时出现，不填空占位；
 - primary direction、Design obligations、Brooks constraints、replacement / exit 和 success evidence 只输出当前 evidence 实际支持的内容；

@@ -28,6 +28,31 @@
 
 否则给出局部修改边界，不升级。
 
+## Architecture altitude
+
+Architecture intent 不只回答局部 hotspot 应变成什么；它必须说明为什么当前 area 值得成为 architecture evolution，以及它推进什么上位、可持续的结果。
+
+先恢复竞争中的 horizon，并按它们回答的问题区分 authority：
+
+- **Evolution authority** 回答 current stage、next evolution、engineering north-star、构建目标或高价值方向，拥有 architecture altitude；
+- **Identity / domain / constraint authority** 回答系统是什么、主导业务边界、subsystem 责任、ADR 或 hard boundary，只约束 intent 与 must-preserve；即使被标为高优先级，也不因约束力强而自动变成 evolution outcome；
+- **Target reality** 用代码、runtime、config、tests 与 history 证明 pressure 和局部结构杠杆，不自动拥有上位方向。
+
+广义 next-direction 请求不能在第一份 repo-level 文档处停止：完成 target reality 后，必须做一次 `target name + current stage / next evolution / north-star / building goal` 的 repo-wide 有界检索；这是 direction-selection probe，不改变 repo route。再用 identity/domain/constraint authority 校验边界。architecture direction 文档可以拥有方向判断，即使它位于 knowledge layer 或不拥有 execution route；若它明确点名 area、把它列为高价值切口或必要能力，不得用更近的 subsystem objective、ADR 或 hard boundary 替代。无法裁决 authority 时保留 Material Unknown。current-stage objective 与 long-term north-star 同时存在时，选择当前可验证的结果，并说明它如何推进长期 north-star。
+
+每个候选用一条 contribution chain 接受 altitude 检查：
+
+```text
+Evolution horizon
+→ domain / identity constraint
+→ target pressure
+→ durable architecture capability
+```
+
+四个 architecture directions 只描述实现该结果的主要结构杠杆。provider / consumer / ownership / interface 收紧通常只是 obligation 或 target-design candidate；downstream design / goal compiler 不应再调查“为什么这个 target 值得推进”，但 intent 仍不得预选 class、interface、owner layout、迁移步骤或具体验证套餐。
+
+当 repo 明确以 **AI-native / agentic engineering** 为 horizon，且当前 area 位于其因果链时，Contribution 必须使用 repo 自己的目标语义说明 agent intervention 如何变得更可发现、更有界或更便宜，结果如何独立验证，以及为何这项能力跨一次局部重构仍成立；局部 deepening 或 “AI-friendly” 标签不能替代该结果。
+
 ## Architecture reality lenses
 
 恢复现实不是画一张统一的结构图。按当前 evidence 分开判断下面几个观察面；只展开会改变 intent 的部分：
@@ -137,6 +162,8 @@ Challenge 从**当前仍有效的 best-known intent** 出发寻找会推翻、�
 重点检查：
 
 - 问题是否其实是局部修复；
+- 是否把局部 target shape、最近的 subsystem objective、system identity、ADR 或 hard boundary 冒充为 evolution outcome；
+- 是否在第一份 repo-level 文档处停止，漏掉更高、更当前或明确点名 area 的 evolution authority；
 - 是否错误统一不同 bounded context；
 - 是否把历史偶然差异永久化；
 - 是否诱导 union interface、mode flag、额外 wrapper 或 speculative seam；
@@ -185,13 +212,15 @@ Risk → Design constraint → Why applicable → Guard → Proof expected
 1. 一个明确方向，不是候选列表；
 2. 有真实 pressure 和代码证据；
 3. 说明为什么是架构问题而不是局部修复；
-4. 选择一个 primary architecture direction；
-5. desired end state 描述结果，不锁死实现模式；
-6. in scope、out of scope 和 must preserve 清楚；
-7. 只保留与当前 intent 相关、后续设计真正需要回答的 obligations；
-8. ownership materially shapes intent 时，owner scope 只扩到 evidence 支持的 invariant，并只记录会改变 boundary 的 preserved / adjacent ownership relation；
-9. 至少一个可观察的 replacement/exit 目标；
-10. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；不存在时不制造；
-11. success evidence 直接引用当前 intent 已承诺的关键 claim，不再转写第二套完成条件；动态 scope 有 derivation，具体 provider 只在其本身属于稳定判卷标准或必须消除歧义时固定；
-12. 已检查最重要反例、consumer reassembly、owner-scope 和 materialization guard；
-13. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。
+4. Architecture contribution 闭合 `evolution horizon → domain/identity constraint → target pressure → durable capability`；没有 authoritative horizon 时，只从跨边界 pressure 推导最小 durable outcome，不发明战略口号；
+5. 四个 architecture directions 之一被选为主要结构杠杆，但不替代 Architecture contribution；
+6. downstream design / goal compiler 无需重新发现“为什么值得推进”，同时 intent 不锁死 target design 或实现模式；
+7. desired end state 描述结果，不锁死实现模式；
+8. in scope、out of scope 和 must preserve 清楚；
+9. 只保留与当前 intent 相关、后续设计真正需要回答的 obligations；
+10. ownership materially shapes intent 时，owner scope 只扩到 evidence 支持的 invariant，并只记录会改变 boundary 的 preserved / adjacent ownership relation；
+11. 至少一个可观察的 replacement/exit 目标；
+12. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它不会阻止 intent；不存在时不制造；
+13. success evidence 直接引用 Architecture contribution 与当前 intent 的关键 claim；AI-native / agentic horizon 适用时证明 intervention boundary 与 independent verification；动态 scope 有 derivation，具体 provider 只在其本身属于稳定判卷标准或必须消除歧义时固定；
+14. 已检查最重要反例、architecture altitude、consumer reassembly、owner-scope 和 materialization guard；
+15. 已携带与当前方向相关、需要下游逐步吸收的 Brooks constraints。

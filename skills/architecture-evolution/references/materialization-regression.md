@@ -26,6 +26,14 @@ Architecture Intent 已经写清 desired end state、must-preserve、boundary、
 
 失败：默认冻结 `build + tests + replay/diff` 套餐，或把 evidence provider 本身写成 architecture property。
 
+## M4 — Local deepening is a lever, not the enclosing outcome
+
+repo 同时存在 evolution horizon、system/domain authority 和 module-local pressure。
+
+通过：Intent 连接最高相关 evolution horizon、domain/identity constraint、module pressure 与 durable capability；局部 deepening 只作为结构杠杆、obligation 或下游 target-design candidate。
+
+失败：primary intent 只要求 capability ownership、truthful provider、consumer knowledge 退出或 stable interface；只连接最近的 subsystem objective；或把 strategic identity / hard boundary 当成 evolution horizon。
+
 ## Captured ModelCurator regression
 
 对 2026-08-07 captured Architecture Intent 检查：
@@ -34,8 +42,11 @@ Architecture Intent 已经写清 desired end state、must-preserve、boundary、
 2. `真实执行形状` 不能仅因当前调用形状存在就被冻结为长期 variation；必须有 semantic/invariant evidence。
 3. `定向测试、build、replay/diff` 不能作为固定 acceptance 套餐；应保留当前 Intent 的 evidence obligation，provider 在后续按 repo verification authority 选择。
 4. owner-scope、adjacent-owner、dynamic snapshot 和 evidence-driven Brooks cardinality guards 不得回退。
+5. ModelCurator 的局部 capability closure 不能替代它对 repo evolution horizon 的贡献；四个 architecture directions 是结构杠杆，不是自动的 architecture outcome。
 
 ## General failure classes
 
 - `observed-partition-materialization` — 没有稳定 semantic/invariant/change-boundary evidence，却把当前 consumer/provider/class/execution partition 物化成长期 architecture contract。
 - `evidence-provider-freeze` — 在 Intent 阶段冻结具体验证套餐，而不是保留现有 Intent claim 的 evidence obligation。
+- `local-target-substitution` — 局部 capability / ownership / interface target 合理，却替代了 area 对上位 evolution objective 的贡献。
+- `nearest-horizon-substitution` — 用最近的 subsystem objective 或 system identity 替代更高、仍有效且明确依赖当前 area 的 evolution horizon。

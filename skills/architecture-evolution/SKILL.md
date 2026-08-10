@@ -1,11 +1,11 @@
 ---
 name: architecture-evolution
-description: 用于架构方向模糊、只有历史模块或“应该改进什么”这类输入：从真实变化压力和代码现实中构造一个可讨论、可验证的 Architecture Intent，说明应该演化什么、为什么、边界、渐进设计约束和成功证据。目标设计或实现已经明确时不使用。
+description: 用于架构方向模糊、只有历史模块或“应该改进什么”这类输入：把真实变化压力放回仍有效的上位架构目标，构造一个可讨论、可验证的 Architecture Intent，说明应该演化什么、为什么、边界、渐进设计约束和成功证据。目标设计或实现已经明确时不使用。
 ---
 
 # Architecture Evolution · 从模糊方向构造架构 Intent
 
-North Star：**把模糊的架构担忧、模块问题或改进方向，收敛成一个有证据、有边界、可继续设计或执行的 Architecture Intent。**
+North Star：**把模糊的架构担忧、模块问题或改进方向，放回仍有效的上位架构目标，收敛成一个有证据、有边界、可继续设计或执行的 Architecture Intent。**
 
 本 Skill 不负责完成目标架构、实现计划或代码改造。它解决的是更早的问题：
 
@@ -16,7 +16,7 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 ## Context loading
 
 1. 先只用本文件恢复变化压力并判断是否存在架构 intent；
-2. 需要区分候选方向、业务边界或架构性质时读取 [rules.md](references/rules.md)；
+2. 需要区分候选方向、业务边界或架构性质时读取 [rules.md](references/rules.md)；广义“下一步往哪演化”在恢复最小 target reality 后，必须先完成其中的 Architecture altitude 判断；
 3. 涉及历史 mode、compat、旧 config/registration、loader/provider identity、serialized identity 或 residual state 时，按需读取 [legacy-lenses.md](references/legacy-lenses.md)；
 4. intent 方向稳定后读取 [brooks-constraints.md](references/brooks-constraints.md)，只吸收与当前方向相关的设计约束；
 5. 最后读取 [intent-contract.md](references/intent-contract.md) 输出稳定 intent；
@@ -54,6 +54,7 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 - `Pressure`：需求、重复修改、事故、维护阻塞、调用者知识或理解摩擦；
 - `Evidence`：代码、调用、测试、配置、变更历史、运行事实或仍有效文档；
 - `Boundary`：本轮最小上下游与明确不做什么。
+- `Architecture horizon`：repo evolution / north-star、domain objective 与 target-local desired state 的关系；当前 area 应推进什么上位结果，而不只是内部更整洁。
 
 需要判断结构原因时，分开观察业务语义、ownership/lifecycle、consumer reassembly、source dependency 和 runtime control/consumption；一个观察面整洁不能证明另一个观察面正确。
 
@@ -77,7 +78,7 @@ Architecture reality / judgment 遵循 `rules.md` 的 lifetime：相关前提未
 - 稳定 policy 被易变 implementation 或场景反向牵引；
 - 新抽象持续增加，但旧路径和旧知识没有退出。
 
-需要比较时只保留少量有证据方向，不评分。选择一个最能解释当前压力、边界最清楚、且能说明什么将消失的 intent。已知热点也必须证明它值得升级为架构 intent。
+需要比较时只保留少量有证据方向，不评分。先用 `rules.md` 的 Architecture altitude 选择最高相关 evolution objective，再用四个 architecture directions 描述主要结构杠杆。不能用 system identity、最近的 subsystem objective 或局部 capability / ownership / interface target shape 替代上位 architecture outcome。选择一个最能解释当前压力、边界最清楚、且能说明什么将消失的 intent。
 
 ### 3. Shape the intent
 
@@ -85,6 +86,7 @@ Architecture Intent 只回答：
 
 - **What**：哪项能力或结构应该发生什么方向性变化；
 - **Why now**：当前变化压力和后果；
+- **Architecture contribution**：当前 area 推进哪个仍有效的 evolution horizon，使哪项 durable capability 成为可能或显著更便宜；
 - **Desired end state**：完成后业务、调用者或依赖关系有什么不同；
 - **Boundary**：in scope / out of scope / must preserve；
 - **Obligations**：只写与当前 intent 相关、后续设计必须回答的业务语义、variation、ownership、consumer knowledge、dependency 或 replacement 问题；
@@ -96,7 +98,7 @@ Intent 描述结果，不提前规定 class、factory、strategy、registry 或�
 
 ### 4. Challenge and constrain the intent
 
-从当前仍有效的 best-known intent 出发找反证，不重新执行已经有有效 Evidence 支撑的 architecture analysis。重点只挑战会改变方向、边界或 obligation 的问题：它是否其实只是局部修复，是否 false-unify 不同 bounded context，是否把历史差异或 current partition 固化成长期 contract，是否只转移复杂度或 consumer reassembly，ownership 是否越过 evidence 支持的 invariant，replacement / exit 是否真实，以及是否存在 Human-owned 业务或兼容决定。需要更细 discriminator 时读取并复用 `rules.md`，不在这里维护第二套 checklist。
+从当前仍有效的 best-known intent 出发找反证，不重新执行已经有有效 Evidence 支撑的 architecture analysis。重点只挑战会改变方向、边界或 obligation 的问题：它是否其实只是局部修复，是否把局部 target shape 当成 architecture outcome，是否推进仍有效的上位目标，是否 false-unify 不同 bounded context，是否把历史差异或 current partition 固化成长期 contract，是否只转移复杂度或 consumer reassembly，ownership 是否越过 evidence 支持的 invariant，replacement / exit 是否真实，以及是否存在 Human-owned 业务或兼容决定。需要更细 discriminator 时读取并复用 `rules.md`，不在这里维护第二套 checklist。
 
 如果存在 Material Unknown，必须通过 `claim at risk → minimal probe → evidence → intent changed / retained` 影响判断；只命名 unknown 而不改变下一步，不算关闭。已经关闭且前提未变化的 Unknown 不重新打开。
 
@@ -110,6 +112,6 @@ Intent 描述结果，不提前规定 class、factory、strategy、registry 或�
 
 - **`Status: No architecture intent`** — 当前压力不足，或问题属于局部修改；输出证据和局部边界。
 - **`Status: Intent unresolved`** — 输出当前理解、一个关键 Unknown、最小探针或 Human 决定，以及它会改变什么。
-- **`Status: Architecture intent ready`** — 读取 `brooks-constraints.md` 与 `intent-contract.md`，输出一个有证据、有边界、携带渐进设计约束且可验证的 Architecture Intent。
+- **`Status: Architecture intent ready`** — 读取 `brooks-constraints.md` 与 `intent-contract.md`，输出一个有证据、有边界、明确 architecture contribution、携带渐进设计约束且可验证的 Architecture Intent。
 
 本 Skill 的终点是稳定 intent。目标设计负责吸收约束并形成架构决定；任务书、实现和完整验收属于后续工作。
