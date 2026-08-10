@@ -23,8 +23,8 @@ Evidence
 5. **Decision-complete, not information-complete**：当前 Evidence 已能确定的必要 work/relations 不能为了 progressive execution 故意隐藏；但 file/symbol/line/include/inventory/patch plan 不因“已知”就获得输出资格。
 6. **Task abstraction**：Task 以 outcome + judgment 为单位。同一个 discriminator 可覆盖的开放 surface 由 Executor 扫全集；只有集合封闭、不可可靠推导且枚举本身就是判据时才列路径/文件。
 7. **Law vs intelligence**：`必须/不许` 只来自 Human、repo authority 或 verified reality；模型的高置信 implementation suggestion 仍是可回退 intelligence。
-8. **Graph discipline**：Graph 只表达真实 dependency / parallel / shared-write / join；不把 executable delta、Verification、Evidence 或 Completion Hook node 化，也不建立 Graph engine/scheduler。
-9. **Starting baseline**：只保留可复算、能作为 coverage oracle / attribution anchor 的 baseline；命令/target 不得编造。baseline 前提变化时相关 assumption/Evidence stale，不影响的 Evidence 继续复用。
+8. **Graph discipline**：Graph 只表达真实 dependency / parallel / shared-write / join；不把 executable delta、Verification、Evidence 或 Completion Hook node 化，也不建立 Graph engine/scheduler；当前已知且稳定的必要 relation 一次表达，但不以“complete”为理由枚举 patch detail。
+9. **Starting baseline**：只保留可复算、能作为 coverage oracle / attribution anchor 的 baseline；命令/target 不得编造。凡 baseline 被用作 scope/coverage/attribution premise，Executor 必须在首次受影响 material work 前用同一 authoritative probe 复算；mismatch 会让相关 assumption/Evidence stale，并暂停依赖该 premise 的 work 直到按当前 reality 修正，不影响的 work/Evidence 继续复用。
 10. **Verification authority**：冻结必须证明什么，不冻结调试流程。scope 跟真实 reachability/effective binding/repo authority 走；cleanup/refactor/expected `0-diff` 不能降级已触发要求。
 11. **Provider validity**：test/build/replay/static 等在证明真实运行、覆盖 claim 且传播失败前只是声明；self-reported `PASS` 不是 Evidence。
 12. **Judge integrity**：`.skip`/todo、放松断言、删活体测试、mock 掉被测对象、改阈值、吞错误、`|| true` 等制造的绿灯无效；reverse/private/independent Evidence 只在真实 false-green/gameability 风险存在时启用。
@@ -63,15 +63,15 @@ PASS：Task 写 outcome + dead/live responsibility judgment，让 Executor 扫�
 
 PASS：普通 include inventory 可省略，但“include 是假依赖”和“同名活体系不可碰”必须进入 Taskbook，因为省略会导致错误保留或误删。
 
-### S6 — Baseline is a coverage/attribution oracle
-Taskbook 带 build green、target count、grep hit count 等可复算 baseline。执行前现实发生变化，关键 count/binding 已不再匹配 Taskbook premise。
+### S6 — Baseline recheck gates stale execution
+Taskbook 带 build green、target count、grep hit count 等可复算 baseline，并把它们用作 scope/coverage/attribution premise。Taskbook 交付后、material work 开始前现实发生变化，关键 count/binding 已不再匹配。
 
-PASS：不得把 stale baseline 当 truth 继续机械执行；相关 assumption / work / Verification 先按 authoritative reality 修正。无关 Evidence 不因一个 mismatch 全部作废。
+PASS：Executor 在首次受影响 material work 前用同一 authoritative probe 重跑/复算 baseline；不匹配就立即把相关 assumption/Evidence 标 stale，暂停依赖该 premise 的 work，并按当前 reality 修正 Execution / Verification。与 mismatch 无关的 work/Evidence 继续，不因 baseline gate 把所有任务机械变成 Task 0。
 
 ### S7 — Known work is not artificially lazy
 现有 Evidence 已确定 `A → {B,C} → D` 的 work 存在和真实 dependency；未来仍可能出现 contingent work。
 
-PASS：一次编译当前已知 decision-complete work/relations；不得只给 A，也不得为了“complete”提前猜所有 contingent future。
+PASS：一次编译当前已知 decision-complete work/relations；不得只给 A，也不得为了“complete”提前猜所有 contingent future或展开 patch detail。
 
 ### S8 — Runtime Evidence changes only affected state
 A 后发现新 consumer C，或原 dependency 被 authoritative reality 证明不存在。
@@ -119,7 +119,7 @@ Leader 是行为基线，不是答案 oracle。至少检查：
 
 1. Research 足够深但最终任务书短；
 2. outcome + judgment 能覆盖未列 execution reality；
-3. baseline / command / provider 有真实 grounding；
+3. baseline / command / provider 有真实 grounding，并在作为执行 premise 时有 recheck / mismatch gate；
 4. decision priority 与双向 boundary 能让 Executor 自裁；
 5. law/intelligence 分离，不把建议写成法；
 6. failure stop-loss / rollback / anti-cheat / resume state 可执行；
