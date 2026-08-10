@@ -23,8 +23,8 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 5. **Decision-complete, not information-complete**: necessary work/relations already established by current Evidence must not be hidden merely for progressive execution, but file/symbol/line/include inventories and patch plans do not gain output authority merely because Research knows them.
 6. **Task abstraction**: Tasks are outcome + judgment. An open same-shaped surface covered by one discriminator is scanned by the Executor; enumerate paths/files only when the set is closed, cannot be reliably inferred, and enumeration itself is the decision rule.
 7. **Law vs intelligence**: `must/must not` comes only from Human, repo authority, or verified reality. High-confidence model implementation advice remains reversible intelligence.
-8. **Graph discipline**: Graph expresses only real dependency / parallel / shared-write / join relations. It does not turn executable deltas, Verification, Evidence, or Completion Hook into nodes and creates no Graph engine/scheduler.
-9. **Starting baseline**: keep only reproducible baseline signals that act as coverage or attribution anchors; never invent commands/targets. When baseline premises change, affected assumptions/Evidence become stale while unaffected Evidence remains reusable.
+8. **Graph discipline**: Graph expresses only real dependency / parallel / shared-write / join relations. It does not turn executable deltas, Verification, Evidence, or Completion Hook into nodes or create a Graph engine/scheduler. Necessary relations already known and stable are expressed once, without using “complete” as a reason to enumerate patch detail.
+9. **Starting baseline**: keep only reproducible baseline signals that act as coverage or attribution anchors; never invent commands/targets. Any baseline used as a scope/coverage/attribution premise must be recomputed with the same authoritative probe before the first affected material work. A mismatch stales dependent assumptions/Evidence and pauses work that depends on that premise until affected state is repaired from current reality; unrelated work/Evidence remains reusable.
 10. **Verification authority**: freeze what must be proven, not debugging workflow. Scope follows real reachability/effective binding/repo authority; cleanup/refactor/expected `0-diff` cannot downgrade triggered requirements.
 11. **Provider validity**: test/build/replay/static providers are claims until shown to actually run, cover the claim, and propagate failure. Self-reported `PASS` is not Evidence.
 12. **Judge integrity**: green created through `.skip`/todo, weakened assertions, deletion of live tests, mocking away the subject, threshold changes, swallowed errors, or `|| true` is invalid. Reverse/private/independent Evidence activates only when real false-green/gameability risk requires it.
@@ -63,15 +63,15 @@ A file includes an old FS header but actual symbol use is zero; another same-nam
 
 PASS: ordinary include inventory can disappear, but “include is a false dependency” and “same-name live system is forbidden” must survive because omission would cause wrong preserve/delete decisions.
 
-### S6 — Baseline is a coverage/attribution oracle
-The Taskbook carries reproducible build-green, target-count, and grep-hit baselines. Reality changes before execution and a material count/binding no longer matches the Taskbook premise.
+### S6 — Baseline recheck gates stale execution
+The Taskbook carries reproducible build-green, target-count, and grep-hit baselines and uses them as scope/coverage/attribution premises. Reality changes after Handoff but before material work, so a material count/binding no longer matches.
 
-PASS: do not continue mechanically using a stale baseline as truth; repair affected assumptions/work/Verification from authoritative reality. Unrelated Evidence does not become stale merely because one baseline signal changed.
+PASS: before the first affected material work, the Executor reruns/recomputes the baseline with the same authoritative probe. A mismatch immediately stales dependent assumptions/Evidence, pauses work that depends on that premise, and repairs affected Execution / Verification from current reality. Unrelated work/Evidence continues; the gate must not mechanically turn every task into Task 0.
 
 ### S7 — Known work is not artificially lazy
 Current Evidence already proves `A → {B,C} → D` work exists with real dependencies; future contingent work may still appear.
 
-PASS: compile the currently known decision-complete work/relations once. Do not expose only A, and do not guess all contingent future in the name of completeness.
+PASS: compile the currently known decision-complete work/relations once. Do not expose only A, and do not guess all contingent future or enumerate patch detail in the name of completeness.
 
 ### S8 — Runtime Evidence changes only affected state
 After A, a new consumer C appears, or authoritative reality disproves an old dependency.
@@ -119,7 +119,7 @@ Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 
 1. Research may be deep while the final Taskbook stays short;
 2. outcome + judgment covers unlisted execution reality;
-3. baseline / command / provider grounding is real;
+3. baseline / command / provider grounding is real, with recheck / mismatch gating when a baseline becomes an execution premise;
 4. decision priority and bidirectional boundaries let the Executor decide unlisted cases;
 5. law and intelligence stay separate;
 6. failure stop-loss / rollback / anti-cheat / resume state are executable;
