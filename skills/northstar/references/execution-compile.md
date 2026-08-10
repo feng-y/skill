@@ -32,7 +32,9 @@ Evidence
 
 不要把 Goal、全局边界、共享 Reality、repo rules 或 Goal-level Verification 复制进每个 Task。当前 Evidence 已证明必然存在、边界足够稳定且关系真实的工作应一次编译；简单工作保持线性，真实 dependency、并行、shared write、Task Group boundary 或 join 会改变判断时才读取 [execution-graph.md](execution-graph.md)。只有 work 的**存在、影响范围或必要关系**仍取决于未来 Evidence 时才延迟物化。
 
-**Task 0** 是可选、bounded 的 execution warmup，只在主要执行前关闭少量会显著改善 grounding、路线判断、稳定性或 required Verification 的 Unknown，例如真实 repo/target、material premise/baseline、关键 judge/provider validity 或会改变 verification scope 的 runtime fact。Evidence 足以安全开始就结束；普通 execution fact 留给 Executor 按需发现。
+Human 已确认的执行策略、scope boundary 或 must-preserve constraint 属于当前合同输入，不因模型重新分层而被替换。当前 Evidence 已支持安全、bounded 的 ready frontier 时直接表达它；尚未阻塞当前 frontier 的 consumer、dependency、history 或 implementation Unknown 不先物化成 prerequisite Task。**ready frontier 只表示现在可以执行什么，不改变 Human-owned Goal；当前只暴露一部分叶子工作，不得把 Goal 改写成 `Layer 1`、phase 或局部 cleanup。** Graph 的 stop boundary 来自 Goal / confirmed boundaries；执行中发现相邻 residual 不自动扩 scope。
+
+**Task 0** 是可选、bounded 的 execution warmup，只在缺少某个执行期事实会阻止第一项安全 material action，或 required Verification 明确要求在第一项 material action 前关闭 trigger 时使用。它不是第二个 Research 阶段、默认 checklist、完整 reachability inventory，也不是普通 execution Unknown 的收集区。当前 ready work 可以安全开始时，其他事实交给 Executor 在真正影响该 work 时按需取得。
 
 运行时保持：
 
@@ -82,7 +84,8 @@ Handoff 前只确认：
 
 - Goal / material authority 各自只有一个 owner；
 - 当前 Evidence 已确定的 required Tasks / relations / Verification obligations 已充分编译，没有为了 lazy 隐藏已知工作；
-- contingent work 没有 speculative materialize，且至少一个 Task 或必要 Task 0 可立即开始；
+- ready frontier 没有反向缩小 Human Goal，Human 已确认的执行策略和 stop boundary 没有被模型重写；
+- contingent work 没有 speculative materialize，且至少一个 Task 或真正必要的 Task 0 可立即开始；
 - required Verification 不重复，Completion Hook 能基于现有 owner 判断 stop / continue / block；
 - 没有重取前提未变化的 discovery / Evidence，也没有新增 Completion/Acceptance、scheduler、Graph engine 或固定 Agent topology。
 
