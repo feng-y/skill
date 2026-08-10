@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: English counterpart to Northstar. Turn a one-line idea or fragmented request into an Agent prompt, brief, Goal, execution contract, or autonomous taskbook. Especially useful when intent, evidence, boundaries, or success criteria are still unstable: load the minimum context needed for the current judgment, reduce material Unknown with evidence first, route only what remains unresolved, and never turn unresolved intent into executable work.
+description: "English counterpart to Northstar. Turn a one-line idea or fragmented request into an Agent prompt, brief, Goal, execution contract, or autonomous taskbook. Especially useful when intent, evidence, boundaries, or success criteria are still unstable: load the minimum context needed for the current judgment, reduce material Unknown with evidence first, route only what remains unresolved, and never turn unresolved intent into executable work."
 ---
 
 # Prompt Atlas · Set the Goal first, then write an independently executable taskbook
