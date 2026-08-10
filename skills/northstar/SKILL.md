@@ -51,7 +51,7 @@ Goal 未定准就返回 `Status: Unresolved Intent`，不输出可执行工作�
 
 Research 只取得**会改变 Taskbook judgment** 的事实。优先确认 Goal/boundary、starting reality、稳定 selection judgment、must-preserve、真实 dependency 和 repo/Human Verification authority。
 
-先建立可归因的起点：对本任务真正有判卷价值的 build/test/replay/static probe 实测基线；范围需要度量时优先记录可复算、会自暴露 stale 的 signal，例如 target 数、命中数、文件/行数量级和测量时间，而不是把完整文件清单当 scope 本身。关键基线命令必须真实存在并实际运行；摸不到环境才放进 Task 0。
+先建立可归因的起点：对本任务真正有判卷价值的 build/test/replay/static probe 实测基线；范围需要度量时优先记录可复算、会自暴露 stale 的 signal，例如 target 数、命中数、文件/行数量级和测量时间，而不是把完整文件清单当 scope 本身。关键基线命令必须真实存在并实际运行；Taskbook 中未来要用的命令至少先确认真实存在、参数/target 名可靠，摸不到环境才放进 Task 0，不能平静地编造命令。
 
 对决定 scope、routing 或 Verification 的关键术语做一次 repo-local collision check：确认同名词是否还指向另一个活体系、配置、app、target 或 namespace。命中时把区别写成明确的允许/禁触边界，避免 Executor 在正确流程里操作错对象。
 
@@ -73,6 +73,7 @@ Northstar 代做的可回退决定必须公开为未确认 default，写清依�
 
 - **Goal**：只写 Goal-owned outcome、decision priority、allowed / forbidden boundary、must-preserve 和最终交付；不要把模型选择的 implementation shape 偷偷升级成 success criterion；
 - **Execution / Graph**：Task 以 **outcome + judgment** 为单位，负责让 Executor 在一个稳定判据下扫描并处理完整同类 surface。路径/文件只在集合封闭、不可可靠推导、且枚举本身就是判据时才列；同一 judgment 能覆盖的文件/符号/实例不得拆成 checklist；具体文件怎么拆、符号搬哪里、函数如何抽取、include/BUILD 如何改、命令顺序默认交给 Executor；
+- **Law vs intelligence**：`必须/不许` 只来自 Human、repo authority 或已验证 reality；模型的高置信实现建议仍是可回退 intelligence，不冒充 law。Executor 有更小、更稳的合规路径可以改走，并在 `implement-notes` 记录原因；
 - **Starting baseline**：只保留能作为 coverage oracle / attribution anchor 的可复算基线；行号、include 明细、静态候选列表等会被 Executor 自己重算、且不改变判断的细节不写；
 - **Task 0**：只关闭第一项 material work 前真正阻塞执行的少量事实，不成为第二轮 Research；
 - **Verification**：冻结必须证明的 behavior / coverage / authority，不默认冻结用于定位失败的调试策略。Human 或 repo 明确要求必须保留；provider/target/scope 依赖执行现实的，保留 trigger/authority，让 Executor 在触发时 materialize；
@@ -89,7 +90,7 @@ visible judge 存在 false-green / gameability / independence 风险时，才按
 
 普通 prompt / brief / contract 直接返回文本。`Status: Executable` 时交付 authoritative Taskbook；需要文件交接时可把同一正文写到 repo/workspace 外的临时 Markdown。
 
-Taskbook 必须告诉 Executor：执行期 progress、new Unknown、blocker、关键 decision/Evidence 和 resume point 写入 `implement-notes`；换会话先读它继续，不重做已完成且前提仍有效的工作。
+Taskbook 必须告诉 Executor：开工先在 `implement-notes` 写 ≤10 行的 Goal/顺序/最大风险；之后把 execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point 持续写入。换会话先读它继续，不重做已完成且前提仍有效的工作。
 
 **Taskbook 交付就是 Northstar 的终止动作。** Northstar 可以读取 repo、检查 reality、执行为编译服务的 probe，但不得执行 Taskbook 的 material Goal work、为了 Goal 修改目标 workspace、启动或继续 Executor。Human 即使说“直接完成/开始执行”，也不改变这个角色边界。
 
@@ -98,5 +99,7 @@ Taskbook 必须告诉 Executor：执行期 progress、new Unknown、blocker、�
 - **`Status: Unresolved Intent`** —— 当前理解、仍会改变 Goal 的分叉、最小 Human 决定或 evidence probe；
 - **`Status: Blocked`** —— 准确 blocker 与恢复条件；
 - **`Status: Executable`** —— 一份 decision-complete、minimum-sufficient Taskbook：Goal / priority / 双向 boundary、关键 starting reality/baseline、少量 outcome+judgment work unit、required Verification / Evidence、failure policy 与 Completion Hook。
+
+自主执行 Taskbook 默认控制在 **≤4000 字符**；Human 明确要求 long-form artifact 或目标 runtime 已知使用不同限制时才放宽。压不下去时先继续做 judgment compression / 去重，不把一个 Human Goal 偷拆成多个 layer Goal 来凑长度。
 
 发出前删掉所有只是展示 Northstar 调研过程、预测 patch、实现步骤或 Executor 可安全自行取得的细节；保留不写就会让 Executor 判错的 trap。Northstar 不执行 Taskbook，也不新增 scheduler、manager daemon、Completion/Acceptance layer、Graph engine 或固定 Agent topology。
