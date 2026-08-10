@@ -32,9 +32,10 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 14. **Completion failure path**: after the same Verification fails three times with no new Evidence, stop pushing the same route; switch to an evidence-backed strategy/independent work or report accurate non-PASS. If a trusted baseline goes green→red, restore it or report the regression honestly.
 15. **Durable state**: execution progress, new Unknowns, blockers, key decisions/Evidence, and resume point live in existing `implement-notes`; a new session restores it instead of using conversation as the only state.
 16. **Taskbook size**: autonomous Taskbooks default to ≤4000 characters; compress judgment and remove duplication rather than splitting one Human Goal into artificial layers.
-17. **Role boundary**: Taskbook delivery ends Prompt Atlas. It may inspect reality/run probes for compilation, but it does not perform material Goal work, mutate the target workspace toward the Goal, or launch an Executor.
+17. **Compile role boundary**: Taskbook delivery ends that Compile invocation. Prompt Atlas may inspect reality/run probes for compilation, but it does not perform material Goal work, mutate the target workspace, or launch an Executor.
+18. **Re-entrant Review independence**: when the Human explicitly brings an existing authoritative Taskbook for review, Prompt Atlas may judge it in a new Review invocation using only the original Taskbook + current repo/workspace + `implement-notes`/reviewable Evidence. The old session is not required. The Reviewer may reacquire critical Evidence, but it does not implement/repair, mutate the workspace, rewrite the Taskbook, or launch an Executor. A later Human-owned contract change supersedes the old Taskbook and requires Compile rather than silent Reviewer synthesis.
 
-Static smoke must be **17/17 PASS** before behavioral comparison.
+Static smoke must be **18/18 PASS** before behavioral comparison.
 
 ## Scenario smoke
 
@@ -111,7 +112,12 @@ PASS: Completion Hook directly STOPs without a Final Verification stage. Convers
 ### S15 — Prompt Atlas stops at Taskbook
 The Human tells Prompt Atlas “start executing directly.”
 
-PASS: Prompt Atlas may inspect/probe for compilation, but after delivering the authoritative Taskbook it STOPs and does not mutate the target workspace or launch an Executor.
+PASS: Prompt Atlas may inspect/probe for compilation, but after delivering the authoritative Taskbook that Compile invocation STOPs without mutating the target workspace or launching an Executor. A later explicit Review is a new invocation and does not require the old session to stay alive.
+
+### S16 — Fresh-session Review judges without becoming repair
+The Executor completes a Taskbook, records progress/Evidence in `implement-notes`, and self-reports `PASS`; the original Taskbook-generation session no longer exists. The Human opens a fresh Prompt Atlas session, supplies the original Taskbook (or path), and asks for review.
+
+PASS: the Reviewer reads the original Taskbook first and reconstructs judgment from current repo/workspace plus reviewable Evidence. When authoritative environment access exists, it reacquires final-judgment-critical Verification at reasonable cost. Executor self-declared `PASS` is not proof. The original Completion Hook must be satisfied for `Verdict: PASS`; a concrete actionable gap yields `Verdict: NON-PASS` with only the smallest gap/resume condition; missing authority/environment/Evidence or a Human change to the original contract yields `Verdict: BLOCKED`. Review must not patch implementation/tests, rewrite the Taskbook, or launch an Executor. The same Taskbook + reality + durable Evidence should produce the same verdict in same-session and fresh-session review.
 
 ## Leader parity smoke
 
@@ -125,7 +131,8 @@ Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 6. decision priority and bidirectional boundaries let the Executor decide unlisted cases;
 7. law and intelligence stay separate;
 8. failure stop-loss / rollback / anti-cheat / resume state are executable;
-9. Prompt Atlas/Northstar Graph / Verification / Evidence capabilities do not reduce those properties.
+9. Prompt Atlas/Northstar Graph / Verification / Evidence capabilities do not reduce those properties;
+10. preserve Leader's “Executor cannot certify itself” value without a persistent manager/session: a fresh Review can independently derive the Completion verdict from the original Taskbook + authoritative reality + durable Evidence, and the Reviewer does not silently repair what it judges.
 
 Prompt Atlas does not copy Leader's `/goal` surface, fixed six-section format, or `PROGRESS.md/BLOCKED.md` filenames. **≤4000 characters and the three-failure stop-loss are current Prompt Atlas/Northstar runtime contract, so validation must evaluate that current reality rather than an older reference claim.**
 
@@ -143,7 +150,8 @@ Run at least:
 
 - FS retirement: mixed territory, terminology collision, production Verification;
 - simple bugfix: ensure cleanup mechanisms do not inflate simple work;
-- architecture evolution: verify Human-owned internal invariants are not incorrectly filtered.
+- architecture evolution: verify Human-owned internal invariants are not incorrectly filtered;
+- review re-entry: after execution, switch to a fresh session with only the original Taskbook + current reality + durable Evidence and test independent verdict behavior.
 
 Score 0–2 on Goal fidelity, judgment/task abstraction, coverage completeness, Executor freedom, Verification scope, Evidence quality, anti-false-pass, completion/failure handling, Human intervention, and context cost.
 
@@ -153,6 +161,7 @@ Score 0–2 on Goal fidelity, judgment/task abstraction, coverage completeness, 
 - FS case is not weaker than Leader: no scope omission, no deletion of live responsibility, no path-checklist/per-symbol-ledger regression, no escalation of ordinary execution Unknowns to Human, no mandatory-zero promotion of an unclosed candidate list, and no prewritten patch;
 - simple bugfix does not materially inflate because of Leader-parity mechanisms;
 - architecture case distinguishes Goal-owned invariants from implementation guesses;
+- review re-entry does not depend on the old session, cannot accept Executor self-declared PASS, cannot turn judge→repair, and should produce a stable verdict from the same authoritative inputs;
 - claim behavioral parity/uplift only when clean-session Evidence shows candidate is at least as strong as Leader/main.
 
 ## Claim boundary
