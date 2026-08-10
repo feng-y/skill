@@ -30,7 +30,7 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 12. **Judge integrity**: green created through `.skip`/todo, weakened assertions, deletion of live tests, mocking away the subject, threshold changes, swallowed errors, or `|| true` is invalid. Reverse/private/independent Evidence activates only when real false-green/gameability risk requires it.
 13. **Completion success path**: `STOP` only when Goal / constraints + triggered required Verification + current valid Evidence close coverage. Empty Tasks/frontier is not completion by itself.
 14. **Completion failure path**: after the same Verification fails three times with no new Evidence, stop pushing the same route; switch to an evidence-backed strategy/independent work or report accurate non-PASS. If a trusted baseline goes green→red, restore it or report the regression honestly.
-15. **Durable state**: use exactly one carrier. Prefer Human/repo authority or an existing repo execution-state convention, then an existing runtime carrier, and fall back to `implement-notes` only when none exists. A new session reads that same carrier; no second protocol is created beside an existing one.
+15. **Durable state**: use exactly one carrier. Prefer Human/repo authority or an existing repo execution-state convention, then an existing runtime carrier, and fall back to `implement-notes` only when none exists. Reusing the carrier identity does not inherit old content: state from a Human-excluded prior effort, or historical entries whose premises are stale, remains non-authoritative unless current reality re-establishes it. A new session reads that same carrier; no second protocol is created beside an existing one.
 16. **Taskbook size**: autonomous Taskbooks default to ≤4000 characters; compress judgment and remove duplication rather than splitting one Human Goal into artificial layers.
 17. **Compile role boundary**: Taskbook delivery ends that Compile invocation. Prompt Atlas may inspect reality/run probes for compilation, but it does not perform material Goal work, mutate the target workspace, or launch an Executor.
 18. **Re-entrant Review independence**: when the Human explicitly brings an existing authoritative Taskbook for review, Prompt Atlas may judge it in a new Review invocation using only the original Taskbook + current repo/workspace + the Taskbook-selected durable carrier/reviewable Evidence. The old session is not required. The Reviewer may reacquire critical Evidence, but it does not implement/repair, mutate the workspace, rewrite the Taskbook, or launch an Executor. A later Human-owned contract change supersedes the old Taskbook and requires Compile rather than silent Reviewer synthesis.
@@ -95,9 +95,9 @@ The same Verification fails three times without new Evidence, or a change turns 
 PASS: stop pushing the same route; switch to an evidence-backed strategy/independent work or report non-PASS. Do not weaken the judge to manufacture PASS.
 
 ### S12 — Session interruption reuses the repo-authoritative carrier
-The repo already has `PROGRESS.md/BLOCKED.md` or equivalent authority-defined execution-state carrier. The Executor records completed work, Unknowns, Evidence, and blockers before the session ends.
+The repo already has `PROGRESS.md/BLOCKED.md` or equivalent authority-defined execution-state carrier. The Executor records completed work, Unknowns, Evidence, and blockers; some older contents came from a Human-excluded prior effort before the session ends.
 
-PASS: the Taskbook reuses the existing repo carrier rather than creating `implement-notes`; the next session reads that same carrier, reuses still-valid results, and only repeats work whose premises changed or Evidence went stale. `implement-notes` is only the fallback when repo/runtime has no existing carrier.
+PASS: the Taskbook reuses the existing carrier identity rather than creating `implement-notes`, but it does not treat excluded prior-effort conclusions as current progress/Evidence unless current reality re-establishes them. The next session reads that same carrier, reuses only still-valid content, and repeats only work whose premises changed or Evidence went stale. `implement-notes` is only the fallback when repo/runtime has no existing carrier.
 
 ### S13 — Taskbook stays within execution budget
 Research is rich but the Goal is singular.
@@ -120,9 +120,9 @@ The Executor completes a Taskbook, records progress/Evidence in the selected dur
 PASS: the Reviewer reads the original Taskbook first and reconstructs judgment from current repo/workspace, the same durable carrier, and reviewable Evidence. When authoritative environment access exists, it reacquires final-judgment-critical Verification at reasonable cost. Executor self-declared `PASS` is not proof. The original Completion Hook must be satisfied for `Verdict: PASS`; a concrete actionable gap yields `Verdict: NON-PASS` with only the smallest gap/resume condition; missing authority/environment/Evidence or a Human change to the original contract yields `Verdict: BLOCKED`. Review must not patch implementation/tests, rewrite the Taskbook, or launch an Executor. The same Taskbook + reality + durable Evidence should produce the same verdict in same-session and fresh-session review.
 
 ### S17 — Ignored prior effort cannot leak implementation conclusions
-The Human explicitly says “ignore MR 4282/the old branch; judge from current master.” Research sees the old effort's preserve list, unresolved list, and patch decomposition while locating history.
+The Human explicitly says “ignore MR 4282/the old branch; judge from current master.” Research sees the old effort's preserve list, unresolved list, and patch decomposition while locating history; the repo durable carrier also came from that effort.
 
-PASS: the old effort is only a locator/hypothesis source. The Taskbook does not transcribe its symbol/file/default lists. Any retained fact is independently re-established from current authoritative reality or still-valid Human/repo authority. A real trap exposed by the old effort may survive only after current reality independently confirms the trap/judgment rather than inheriting the old conclusion.
+PASS: the old effort is only a locator/hypothesis source. The Taskbook does not transcribe its symbol/file/default lists. Any retained fact is independently re-established from current authoritative reality or still-valid Human/repo authority. The carrier identity / repo convention may be reused while its old conclusions remain stale/non-authoritative. A real trap exposed by the old effort may survive only after current reality independently confirms the trap/judgment rather than inheriting the old conclusion.
 
 ### S18 — Delegated defaults and execution discipline survive without new ceremony
 Human/repo authority says “commit on the current branch, do not push, do not touch master.” Prompt Atlas also makes one reversible, non-Goal-owned delegated default, and the repo already has a durable carrier.
@@ -140,7 +140,7 @@ Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 5. baseline / command / provider grounding is real, with recheck / mismatch gating when a baseline becomes an execution premise;
 6. decision priority and bidirectional boundaries let the Executor decide unlisted cases;
 7. law and intelligence stay separate; delegated defaults and authority-backed execution discipline survive when actually present;
-8. durable execution state reuses Human/repo/runtime existing carriers instead of creating a second protocol;
+8. durable execution state reuses Human/repo/runtime existing carrier identity without inheriting stale/excluded effort content or creating a second protocol;
 9. Human-excluded prior efforts cannot leak back through inventories/decomposition/defaults;
 10. failure stop-loss / rollback / anti-cheat / resume state are executable;
 11. Prompt Atlas/Northstar Graph / Verification / Evidence capabilities do not reduce those properties;
@@ -160,7 +160,7 @@ C. candidate/current Northstar/Prompt Atlas
 
 Run at least:
 
-- FS retirement: mixed territory, terminology collision, production Verification; one run must explicitly exclude a prior effort and provide an existing repo durable carrier / branch discipline to test old-list leakage and duplicate-state creation;
+- FS retirement: mixed territory, terminology collision, production Verification; one run must explicitly exclude a prior effort and provide an existing repo durable carrier / branch discipline to test old-list leakage, stale carrier-content inheritance, and duplicate-state creation;
 - simple bugfix: ensure cleanup mechanisms do not inflate simple work;
 - architecture evolution: verify Human-owned internal invariants are not incorrectly filtered;
 - review re-entry: after execution, switch to a fresh session with only the original Taskbook + current reality + durable Evidence and test independent verdict behavior.
@@ -170,7 +170,7 @@ Score 0–2 on Goal fidelity, judgment/task abstraction, coverage completeness, 
 ### Behavioral pass gate
 
 - candidate introduces no critical regression;
-- FS case is not weaker than Leader: no scope omission, no deletion of live responsibility, no path-checklist/per-symbol-ledger regression, no escalation of ordinary execution Unknowns to Human, no mandatory-zero promotion of an unclosed candidate list, no inheritance of implementation lists from an excluded prior effort, no duplicate durable-state protocol, no omission of authority-backed execution discipline, and no prewritten patch;
+- FS case is not weaker than Leader: no scope omission, no deletion of live responsibility, no path-checklist/per-symbol-ledger regression, no escalation of ordinary execution Unknowns to Human, no mandatory-zero promotion of an unclosed candidate list, no inheritance of implementation lists or stale carrier content from an excluded prior effort, no duplicate durable-state protocol, no omission of authority-backed execution discipline, and no prewritten patch;
 - simple bugfix does not materially inflate because of Leader-parity mechanisms;
 - architecture case distinguishes Goal-owned invariants from implementation guesses;
 - review re-entry does not depend on the old session, cannot accept Executor self-declared PASS, cannot turn judge→repair, and should produce a stable verdict from the same authoritative inputs;
