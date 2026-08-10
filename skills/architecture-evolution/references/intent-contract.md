@@ -18,8 +18,8 @@ Status: Architecture intent ready
 - Decisive evidence:
 
 ## Direction
-- Intent:
-- Desired end state:
+- Intent: <优先表达为完成后必须长期成立的 architecture boundary / invariant，而不是具体实现>
+- Desired end state: <说明哪些边界、ownership、dependency 或 semantics 应稳定，以及边界内哪些实现仍可自主变化>
 - Possible shapes: <可选；只在确有少量基本形态值得后续设计比较时简要列出>
 
 ## Boundary
@@ -31,4 +31,4 @@ Status: Architecture intent ready
 
 只保留足以支撑 intent 的 evidence；不输出 taxonomy、Brooks、Challenge 或 reasoning trace。
 
-到 architecture direction / basic shape 为止；具体 module/class/API、responsibility placement、调用流、迁移、任务拆分和 verification 属于后续设计或实现。
+到 architecture direction / basic shape 为止；具体 module/class/API、responsibility placement、调用流、迁移、任务拆分、lint/test 或 verification 属于后续设计或实现。
