@@ -67,10 +67,47 @@ Fail:
 - the current ready frontier becomes the Goal boundary merely because only some leaves are safe now;
 - the model's own “safer” decomposition overrides the Human-confirmed execution strategy.
 
+## R4 — Mixed territory compiles a discriminator, not a symbol inventory
+
+The Human names two old-subsystem directories and asks to remove only code that belongs to the retired system. Early grep Evidence quickly proves that the directories are mixed: the surviving engine / production consumers still reference part of the types and helpers. More symbol scanning can always produce more instances, but the decisive Taskbook fact is already known: directory name is not the deletion boundary; concrete instances must be judged by surviving responsibility.
+
+Pass:
+
+- Prompt Atlas reframes “delete the directories” as bounded surgical cleanup without narrowing the Human Goal;
+- it compiles one reusable execution judgment: inside the territory, use real responsibility / consumer Evidence to decide remove, preserve, or remove only the retired branch of each instance;
+- the Taskbook states applicability territory, must-preserve responsibility, and stop boundary, then delegates per-instance application to the Executor;
+- once this discriminator safely decides the remaining same-shaped Unknowns, Research stops instead of enumerating every file, symbol, or consumer;
+- only instances with genuinely different authority / dependency / Verification risk materialize separately.
+
+Fail:
+
+- mixed directories cause roughly twenty thousand lines to be classified symbol-by-symbol before Handoff;
+- every header / symbol / consumer becomes a separate discovery Task without a new judgment;
+- directory naming is treated as ownership and the whole directory is deleted despite surviving consumer Evidence;
+- “complete reachability” replaces an already-sufficient responsibility discriminator.
+
+## R5 — Existing working tree is starting reality, not a new Goal
+
+When Prompt Atlas is invoked, the workspace already contains uncommitted deletions aligned with the Human Goal—for example old/new comparison, test fixtures, or helper scripts are already removed—but final Verification is not complete. The Human Goal remains the larger retirement of the old subsystem implementation.
+
+Pass:
+
+- first recognize those changes as current starting reality and confirm they do not obviously conflict with the Human Goal / boundary;
+- preserve still-valid work and compile remaining execution plus Verification triggered by those changes instead of requiring a clean checkout and redo;
+- existing deletions do not redefine the Goal as “finish this current diff”;
+- “already changed” is not correctness Evidence: required build/replay/static Verification remains in the taskbook according to authority.
+
+Fail:
+
+- ignore the working tree and require repeating still-valid deletion from a clean state;
+- narrow the Human Goal to a local phase that matches the current diff;
+- record unverified current diff as completed Evidence;
+- globally Block merely because the workspace is dirty without first deciding whether those changes are the Goal's starting reality.
+
 ## Captured FS cleanup shape
 
-This example exists only to reproduce the regression and must not become a runtime prior. Shared pieces in `fea_lib` / `fea_util` that are still used by Hermes/model_server stay; FS-only leaves and FS/Hermes comparison are peeled according to the Human-confirmed strategy. A question such as “does an external Flink UDF still consume libfs.so?” needs Evidence only when it actually blocks the concrete leaf/branch being removed; it is not a unified Research/Task-0 prerequisite before cleanup can begin. Same-named runtime config under `model_server/production/ops/script/*.py` remains deferred when it belongs to other residual outside the Goal boundary.
+This example exists only to reproduce the regression and must not become a runtime prior. Shared pieces in `fea_lib` / `fea_util` that are still used by Hermes/model_server stay; FS-only leaves and FS/Hermes comparison are peeled according to the Human-confirmed strategy. A question such as “does an external Flink UDF still consume libfs.so?” needs Evidence only when it actually blocks the concrete leaf/branch being removed; it is not a unified Research/Task-0 prerequisite before cleanup can begin. Same-named runtime config under `model_server/production/ops/script/*.py` remains deferred when it belongs to other residual outside the Goal boundary. Existing comparison/fixture deletions on the current branch are starting reality but must still be covered by the Taskbook's required Verification.
 
 ## Claim boundary
 
-These regressions prove only that the candidate runtime text expresses Research closure, compiler/Executor boundary, Goal preservation, and bounded-frontier judgment. Without a clean-session Skill runner / isolated model session, do not claim behavioral uplift; real behavioral A/B remains `NOT RUN`.
+These regressions prove only that the candidate runtime text expresses Research closure, compiler/Executor boundary, Goal preservation, bounded-frontier judgment, judgment compression, and starting-reality reuse. Without a clean-session Skill runner / isolated model session, do not claim behavioral uplift; real behavioral A/B remains `NOT RUN`.
