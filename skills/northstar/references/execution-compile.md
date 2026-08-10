@@ -34,11 +34,15 @@ Compile 是输出过滤器，不是 Research 转录器。每条准备写入 Task
 1. Executor 能否从 authoritative repo reality 低成本、可靠地重新取得？若能，优先写判据，不写清单/行号/明细。
 2. 省略它是否会显著增加错误 scope、错误删除/保留、错误 Verification 或不安全实现的概率？若会，这个 trap / counterexample / non-obvious reality 必须保留。
 
+再对每个**具体列表**过一问：Executor 能否用一个稳定 judgment + authoritative reality 可靠重建其成员？能则删列表留判据。只有 authoritative closed set、枚举本身就是 criterion，或不写会造成误判的 trap 才保留实例。
+
 因此：
 
 - 文件行号、普通 include 明细、symbol count、候选 patch、可重算 inventory 默认省略；
 - 同名异义、假依赖、非显然 surviving consumer、真实 hard boundary、会改变验证触发的 binding 等必须保留；
 - 可复算的 baseline/count 可以保留，因为它们是 coverage oracle / attribution anchor，而不只是背景信息。
+
+Human 明确排除某 prior effort / branch / MR/PR / old plan 时，该 effort 的 implementation conclusion、inventory、decomposition、default 没有输出 authority。它们只能作为 locator/hypothesis；任何最终写入 Taskbook 的事实必须从当前 authoritative reality 或仍有效的 Human/repo authority 独立重建。prior-effort 清单不因“Research 已经看过”获得豁免。
 
 更多 Evidence 应该压缩成更少、更可靠的 judgment，而不是更多 instruction。
 
@@ -58,7 +62,9 @@ Taskbook 默认只保留少量 **outcome + judgment work unit**。
 
 不因为 Research 已知一个高置信实现方案，就把具体文件拆法、搬迁目的地、函数抽取行号、include/BUILD 改写、命令顺序或 failure-localization tactic 固化成合同。只有 Human / repo authority /真实 dependency / risk 或唯一安全路径要求时才固化 How。
 
-**法与情报分开**：`必须/不许` 只来自 Human、repo authority 或已验证 reality；模型推荐的路线即使置信度高，也默认只是 intelligence。Executor 找到更小、更稳且满足 Goal/authority 的路径可以改走，并在 `implement-notes` 记录原因。
+**法与情报分开**：`必须/不许` 只来自 Human、repo authority 或已验证 reality；模型推荐的路线即使置信度高，也默认只是 intelligence。Executor 找到更小、更稳且满足 Goal/authority 的路径可以改走，并在选定的 durable carrier 记录原因。Northstar 若真正代做了可回退 delegated default，必须显式保留 decision / basis / cost-if-wrong / rollback；没有 default 不制造空章节。
+
+Human/repo authority 明确的 branch / commit / push / PR / destructive-operation 等 execution discipline 属于 hard constraint，存在时必须保留；没有 authority 时不要自行发明。
 
 当多个实例共享同一个 judgment 时合并成一个 Task；只有 outcome、judgment、dependency、authority、risk 或 required Verification 真不同才拆。Graph 只表达会改变 execution judgment 的真实 dependency / parallel / join，不为了“精确”把工作切成 patch nodes。
 
@@ -124,7 +130,7 @@ Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同�
 
 ## Durable execution state
 
-开工先在现有 `implement-notes` 写 ≤10 行 Goal / 执行顺序 / 最大风险；之后持续记录 execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point。换 session 后先读它，只重做前提已变化或 Evidence 已失效的工作；conversation 不作为唯一状态存储。
+只选择一个 durable execution-state carrier：Human/repo authority 已指定或 repo 已有约定优先；否则复用 runtime 已提供的现成 carrier；都没有才回退到 `implement-notes`。开工先在选定载体写 ≤10 行 Goal / 执行顺序 / 最大风险；之后持续记录 execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point。换 session 后先读同一载体，只重做前提已变化或 Evidence 已失效的工作；conversation 不作为唯一状态，也不在已有载体旁再造第二套。
 
 ## Handoff check
 
@@ -135,16 +141,20 @@ Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同�
 - allowed / forbidden boundary 是否双向清楚？
 - Taskbook 是否定义了任务，而不是展示 Northstar 的调研过程？
 - 每个 Task 是否是 outcome + judgment，而不是文件/函数/checklist/patch step？
+- 每个具体列表是否都无法由一个稳定 judgment + authoritative reality 可靠重建？能重建的是否已经删列表留判据？
+- Human 排除的 prior effort 是否仍通过 inventory / decomposition / default 污染 Taskbook？
 - 同一个 judgment 能覆盖的开放 surface 是否由 Executor 扫全集，而不是静态枚举？
 - 普通 execution Unknown 是否被错误升级成 `Needs-human-decision`？
 - Evidence 是否在证明 judgment / coverage，还是又要求逐文件、逐 symbol 建账？
 - candidate grep / symbol 名单是否只是 probe，还是被无依据升级成必须 `0`？
 - `必须/不许` 是否都有 authority，还是把模型建议误写成 law？
+- 若存在 delegated default，是否显式保留 decision / basis / cost-if-wrong / rollback？
+- Human/repo execution discipline 若存在，是否作为 hard constraint 存活而没有被省略或模型改写？
+- durable carrier 是否复用 authority/现有载体且只有一个？
 - 是否保留了不写就会让 Executor 判错的 trap，同时删除了可安全重算的明细？
 - baseline 是否可复算，并明确了 mismatch 时 stale / pause / repair affected state 的 gate？
 - Verification 是否冻结 required proof，而没有把 debugging tactic 变成硬流程？
 - Completion 是否同时有 success、stop-loss、rollback 和 judge-integrity 路径？
-- execution Unknown 是否有 `implement-notes` resume carrier？
 
 自主执行 Taskbook 默认 **≤4000 字符**；只有 Human 明确要 long-form artifact 或目标 runtime 已知使用不同限制时放宽。超长先压缩 judgment、删重复、删可重算明细，不通过把一个 Human Goal 拆成多个 layer Goal 来规避长度。
 
