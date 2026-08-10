@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
   short_description: "收敛 Goal，并生成带分层验证和真实 Evidence 的中文任务书"
-  default_prompt: "使用 $northstar。收敛 Human-owned Goal，按 Goal → Execution / Graph → Verification → Evidence 编译当前证据支持的 best-known complete Taskbook；Task 0 仅作按需 bounded warmup。运行时让 Evidence 只调整 contingent/invalidated 的 Execution / Verification，并按 Taskbook Completion Hook 判断完成或继续。遵守 repo verification authority 和 Human 明确验证要求，不新增 Completion/Acceptance 或 Graph engine。"
+  default_prompt: "使用 $northstar。收敛 Human-owned Goal；Research 只关闭 Compile blocker：当 Goal/authority 已稳定、至少一个安全 Task 或必要 Task 0 可编译，且 Verification authority/trigger 已足以把 concrete scope/provider/target 留到执行期时，立即停止 Research 并进入 Compile/Run，不为穷尽 repo/dependency/reachability 继续调研。按 Goal → Execution / Graph → Verification → Evidence 编译当前证据支持的 best-known complete Taskbook；Task 0 仅作按需 bounded warmup。运行时让 Evidence 只调整 contingent/invalidated 的 Execution / Verification，并按 Taskbook Completion Hook 判断完成或继续。遵守 repo verification authority 和 Human 明确验证要求，不新增 Completion/Acceptance 或 Graph engine。"
