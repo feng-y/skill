@@ -130,7 +130,7 @@ Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同�
 
 ## Durable execution state
 
-只选择一个 durable execution-state carrier：Human/repo authority 已指定或 repo 已有约定优先；否则复用 runtime 已提供的现成 carrier；都没有才回退到 `implement-notes`。开工先在选定载体写 ≤10 行 Goal / 执行顺序 / 最大风险；之后持续记录 execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point。换 session 后先读同一载体，只重做前提已变化或 Evidence 已失效的工作；conversation 不作为唯一状态，也不在已有载体旁再造第二套。
+只选择一个 durable execution-state carrier：Human/repo authority 已指定或 repo 已有约定优先；否则复用 runtime 已提供的现成 carrier；都没有才回退到 `implement-notes`。**复用的是 carrier identity / repo convention，不代表继承其中所有历史结论**：Human 明确排除的 prior-effort 内容，或 premise 已失效的旧记录，保持 stale/non-authoritative，除非当前 authoritative reality 重新建立。开工先在选定载体写 ≤10 行 Goal / 执行顺序 / 最大风险；之后持续记录 execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point。换 session 后先读同一载体，只重做前提已变化或 Evidence 已失效的工作；conversation 不作为唯一状态，也不在已有载体旁再造第二套。
 
 ## Handoff check
 
@@ -150,7 +150,7 @@ Taskbook 自带 stop judgment，但不新增 Completion layer。Completion 同�
 - `必须/不许` 是否都有 authority，还是把模型建议误写成 law？
 - 若存在 delegated default，是否显式保留 decision / basis / cost-if-wrong / rollback？
 - Human/repo execution discipline 若存在，是否作为 hard constraint 存活而没有被省略或模型改写？
-- durable carrier 是否复用 authority/现有载体且只有一个？
+- durable carrier 是否复用 authority/现有载体且只有一个，同时没有把被排除 prior-effort 的旧内容重新当 truth？
 - 是否保留了不写就会让 Executor 判错的 trap，同时删除了可安全重算的明细？
 - baseline 是否可复算，并明确了 mismatch 时 stale / pause / repair affected state 的 gate？
 - Verification 是否冻结 required proof，而没有把 debugging tactic 变成硬流程？
