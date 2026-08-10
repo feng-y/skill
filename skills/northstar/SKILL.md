@@ -1,6 +1,6 @@
 ---
 name: northstar
-description: 把用户的一句话想法或零散要求，整理成中文的 Agent 提示词、brief、Goal、执行合同或自主任务书。意图、证据、边界或成功标准还不稳定时尤其适用：补足当前判断所需的最小 context，用证据先消解 material Unknown，只路由剩余未决项，意图没定准就不输出可执行任务书。
+description: 把用户的一句话想法或零散要求，整理成中文的 Agent 提示词、brief、Goal、执行合同或自主任务书；也可对已有 authoritative Taskbook 做可重入的独立判卷。意图、证据、边界或成功标准还不稳定时尤其适用：补足当前判断所需的最小 context，用证据先消解 material Unknown，只路由剩余未决项，意图没定准就不输出可执行任务书。
 ---
 
 # Northstar · 先定准 Goal，再写成能独立执行的任务书
@@ -22,6 +22,14 @@ Evidence
 三个角色：**Human** 决定 Goal、已确认边界、明确验证要求、优先级和授权；**Northstar** 澄清、调研、判断并编译 Taskbook，交付即本次调用结束；**Executor** 消费 Taskbook，在稳定 Goal / boundary 内负责 implementation judgment，并让新 Evidence 只修正受影响的执行。
 
 `Unknown` 是贯穿机制，不是额外阶段。能用 reality 消掉就先消；一组 execution Unknown 已可由同一个稳定 judgment 在执行期逐项裁决时，不要求 Northstar 列全实例。执行期新出现、需要跨会话存活的 progress / Unknown / blocker / resume state 使用现有 `implement-notes` 持久化，不只留在 conversation，也不另造第二套状态协议。
+
+## Review re-entry（已有 Taskbook 才触发）
+
+如果 Human 明确要求对一份**已经存在的 authoritative Taskbook** 做 review / 验收 / 判卷，跳过下面的 Intent / Research / Compile / Handoff 流程，按 [review-reentry.md](references/review-reentry.md) 独立判卷。Review 是新的 invocation：same session 可以复用，但 correctness 不依赖旧 conversation 存活；输入必须能由原 Taskbook、当前 repo/workspace、`implement-notes` 与可复核 Evidence 重建。
+
+Review 只应用原 Taskbook 的 Goal / constraints / triggered required Verification / Completion Hook，必要时重新取得关键 Evidence；**不得在判卷时实现/修复 Goal、改目标 workspace、重写 Taskbook 或启动 Executor**。若 Human 已在 Taskbook 之后改变 Goal / boundary / Verification / priority / authorization，原合同被 supersede，应重新 Compile，而不是让 Reviewer 静默拼接新合同。
+
+普通新请求、已有 brief 但尚无 authoritative Taskbook、或要求继续定义/修改任务书时，仍走下面的 Compile 流程；不要把 Review 当成默认 Acceptance layer。
 
 ## 0. Intent Take
 
@@ -92,7 +100,7 @@ visible judge 存在 false-green / gameability / independence 风险时，才按
 
 Taskbook 必须告诉 Executor：开工先在 `implement-notes` 写 ≤10 行的 Goal/顺序/最大风险；之后把 execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point 持续写入。换会话先读它继续，不重做已完成且前提仍有效的工作。
 
-**Taskbook 交付就是 Northstar 的终止动作。** Northstar 可以读取 repo、检查 reality、执行为编译服务的 probe，但不得执行 Taskbook 的 material Goal work、为了 Goal 修改目标 workspace、启动或继续 Executor。Human 即使说“直接完成/开始执行”，也不改变这个角色边界。
+**Taskbook 交付就是本次 Compile invocation 的终止动作。** Northstar 可以读取 repo、检查 reality、执行为编译服务的 probe，但不得执行 Taskbook 的 material Goal work、为了 Goal 修改目标 workspace、启动或继续 Executor。Human 即使说“直接完成/开始执行”，也不改变这个角色边界。之后若 Human 明确要求对这份 Taskbook 判卷，可在新的 Review invocation 中按 `review-reentry.md` 重入；这不要求原 session 保活。
 
 ## Output
 
