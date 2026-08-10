@@ -1,73 +1,52 @@
 # Architecture Intent Contract
 
-只在 `Status: Architecture intent ready` 时读取和输出。本文件只定义最终 Intent 的物理形状；architecture judgment、ready/discriminator 规则由 `SKILL.md` / `rules.md` 拥有，不在这里复制第二套判定逻辑。
+只在 `Status: Architecture intent ready` 时读取和输出。本文件只定义最终 Intent 的物理形状；architecture judgment、ready/discriminator、Brooks challenge 和 evidence lifetime 由 `SKILL.md` / `rules.md` / `brooks-constraints.md` 拥有，不在这里复制第二套判定逻辑。
+
+最终输出跟随用户当前主要语言。内部 taxonomy、Brooks 编号、challenge 过程或英文 reference 不要求出现在最终 artifact 中；代码符号、类型名、文件名和必须保持稳定的协议名称可以保留原文。
 
 ```markdown
 # Architecture Intent
 
 Status: Architecture intent ready
 
-## Direction
-- Intent:
-- Why now:
-- Desired end state:
-- Primary architecture direction:
-  - Business Semantic Integrity / Stable Abstraction with Explicit Variation / Cohesive Capability Ownership / Unidirectional Policy Dependency
+## Architecture problem
+- Problem: <一句话说明真正的 structural / semantic / ownership / dependency 问题>
+- Why architectural: <为什么局部 cleanup、helper 或单点修复不能消除主要 pressure>
 
-## Reality
-- Area:
-- Observed pressure:
-- Structural consequence:
-- Why architectural rather than local:
-- Decisive reality and evidence:
+## Background
+- Why now: <当前变化压力，以及哪个历史前提、variation 或 boundary 假设已经失效>
+- Decisive evidence: <只保留理解该判断所需的少量决定性 evidence；不要输出调查日志、完整 commit 清单或五面审计表>
+
+## Direction
+- Intent: <应该演化什么>
+- Desired end state: <完成后业务、调用者、ownership 或依赖关系有什么不同>
+- Possible target identities: <可选；仅当一个 intent 下确有 2–3 个值得后续设计比较的基本架构形态时出现。每个 identity 只写核心 ownership / semantic / dependency identity 和主要取舍，不进入具体设计>
 
 ## Boundary
 - In scope:
 - Out of scope:
 - Must preserve:
-
-## Design obligations
-- <只写与当前 intent 相关的 Business semantics / Essential variation / Ownership / Consumer reassembly / Dependency direction obligation>
-- Replacement / exit: <至少一个必须退出的旧路径、知识、判断或依赖>
-
-## Progressive Brooks constraints
-
-| Risk | Design constraint | Why applicable | Guard | Proof expected |
-| --- | --- | --- | --- | --- |
-
-## Challenge
-- Counterexample checked:
-- Applicable guard: <only when needed>
-
-## Success evidence
-- Stable acceptance rule: <直接引用当前 intent 已承诺的关键 outcome / invariant / must-preserve / replacement，说明实现完成时哪些必须得到实际证明；不要另写第二套完成条件。affected scope 动态变化时写届时的 scope derivation；具体 evidence provider 由后续按 repo verification authority 和最终 change surface 选择，除非 provider 本身是稳定受保护判卷标准或必须点名才能消除歧义>
-- Replacement evidence: <证明旧路径、知识、判断或依赖确实退出>
+- Replacement / exit: <至少一个必须退出的旧知识、路径、判断、责任或依赖>
 ```
 
-只写与当前 pressure、desired end state 和 primary architecture direction 直接相关的 Brooks constraints，不为覆盖 R1–R6 而制造无关内容。
-
-如果 affected scope 会动态变化，或当前具体样本有助于说明 grounding，可以在 `Success evidence` 后按需追加；两项都只在适用时写，不填 `None`：
-
-```markdown
-## Current snapshot evidence
-- Scope derivation: <仅在 affected scope 动态变化时，说明实现验证如何从最终 change surface 与届时 effective binding/config/runtime reality 推导受影响范围>
-- Current snapshot: <仅在当前样本有助于 grounding 时记录；除非本身是稳定 contract，否则不得冻结为长期验收集合>
-```
-
-只有真实存在会改变 intent、boundary 或 design obligation 的 material unknown 时，才在 `Success evidence` 前追加：
+只有真实存在会改变 intent、boundary 或 target identity 的 material unknown 时，才在 `Boundary` 前追加：
 
 ```markdown
 ## Material unknown
 - Claim at risk:
-- Minimal probe:
-- Evidence:
-- Intent changed / retained:
+- Minimal probe / Human decision:
+- It changes: <会改变哪个 intent / boundary / target identity>
 ```
 
 ## Discipline
 
-- 一个 intent；描述 outcome，不提前指定实现模式、任务拆分或迁移步骤；
-- 只输出当前仍有效的 architecture judgment / evidence；旧 snapshot 若已被 authoritative reality 推翻，只保留必要 provenance，不与新判断并列为 active state；
-- `Observed / Inferred / Unknown` 不混写；Material Unknown、snapshot evidence 和 guard 只在适用时出现，不填空占位；
-- primary direction、Design obligations、Brooks constraints、replacement / exit 和 success evidence 只输出当前 evidence 实际支持的内容；
-- 目标设计、任务拆分、迁移步骤和实现属于后续工作。
+- 一个 intent；`Possible target identities` 是同一 intent 下的基本目标形态，不是并列多个改造项目；
+- 输出重点是“真正的问题是什么 → 为什么形成 → 希望变成什么 → 哪些基本形态值得继续设计”；
+- decisive evidence 只用于让判断 grounded，不输出完整 evidence inventory、变化历史流水账或 reasoning trace；
+- 内部 architecture taxonomy 可以帮助选择和 challenge intent，但不输出 `Primary architecture direction` 标签；
+- Brooks R1–R6、Risk/Guard/Proof 表和 counterexample challenge 都属于内部 reasoning machinery，不作为最终 section；如果它们改变了 intent，只把结果以普通架构语言沉淀到 Direction / Boundary / Must preserve / Replacement；
+- 不输出 `Design obligations` 清单。只有会改变 intent 含义或防止明显错误物化的 identity-level guard 才进入 Boundary / Must preserve；具体“谁负责 projection / rehash / lifecycle helper”等问题属于后续目标设计；
+- 不输出 success/verification plan、proof provider、scope derivation 或 implementation acceptance checklist；Real Evolution 只需通过 `Replacement / exit` 表明旧知识、路径、责任或依赖会真实退出；
+- `Observed / Inferred / Unknown` 不混写；Material Unknown 只在确实会改变 intent 时出现，不填空占位；
+- 描述 architecture identity，不提前指定 class、interface、API、factory、strategy、registry、adapter、对象组合、调用流程、迁移步骤、implementation slice、任务拆分或 verification plan；
+- 当问题、背景、方向、边界和必要的 possible target identities 已足以让后续目标设计继续时停止。
