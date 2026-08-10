@@ -58,6 +58,8 @@ A Task should let the Executor scan and handle the full same-shaped surface unde
 
 Research finding a high-confidence implementation does not make exact file decomposition, symbol destinations, extraction line ranges, include/BUILD rewrites, command order, or failure-localization tactics binding. Freeze How only when required by the Human, repo authority, real dependency/risk, or a uniquely safe route.
 
+**Law and intelligence stay separate**: `must/must not` comes only from the Human, repo authority, or verified reality. A model-recommended route remains intelligence even at high confidence. The Executor may take a smaller, safer compliant path and records why in `implement-notes`.
+
 Group instances covered by one judgment. Split only when outcome, judgment, dependency, authority, risk, or required Verification genuinely differs. Graph expresses only real dependency / parallel / join relations that change execution judgment; do not fragment work merely to make Graph precise.
 
 Preserve Human-confirmed strategy / scope boundary / must-preserve constraints. The ready frontier says what can execute now and does not redefine the Human Goal. Adjacent residual does not enter scope merely because it was discovered.
@@ -70,7 +72,7 @@ Still-valid workspace changes aligned with the Goal are starting reality. Reuse 
 
 Establish an attributable starting point when the environment is available. Actually run build/test/replay/static probes that matter for judging the task. When scope needs measurement, prefer reproducible signals—target count, grep hit count, file/line magnitude, measurement time—over full path inventories.
 
-Keep only baselines that let the Executor recompute scope, detect omissions, or distinguish pre-existing breakage from regressions introduced by this work. If a command was not actually run, a number cannot be confirmed, or the environment is unavailable, do not fabricate it; use Task 0 when the check must happen before material work.
+Keep only baselines that let the Executor recompute scope, detect omissions, or distinguish pre-existing breakage from regressions introduced by this work. If a command was not actually run, a number cannot be confirmed, or the environment is unavailable, do not fabricate it. Future commands named in the Taskbook must at least be confirmed to exist with credible targets/arguments; use Task 0 when the check must happen before material work.
 
 ## Verification
 
@@ -114,7 +116,7 @@ Only then `STOP`.
 
 ## Durable execution state
 
-Persist execution progress, new Unknowns, blockers, material decisions/Evidence, and resume point in the existing `implement-notes`. A new session reads it first and redoes only work whose premises changed or whose Evidence became invalid. Conversation is not the sole state store.
+Start by writing ≤10 lines of Goal / execution order / largest risk into the existing `implement-notes`, then keep execution progress, new Unknowns, blockers, material decisions/Evidence, and resume point there. A new session reads it first and redoes only work whose premises changed or whose Evidence became invalid. Conversation is not the sole state store.
 
 ## Handoff check
 
@@ -126,10 +128,13 @@ Before delivery, ask only:
 - Does the Taskbook define the task instead of exposing Prompt Atlas research?
 - Is each Task an outcome + judgment rather than a file/function/checklist/patch step?
 - Does an open same-shaped surface get scanned by criterion instead of static inventory?
+- Does every `must/must not` have authority, or did model intelligence get promoted into law?
 - Are traps that would cause wrong judgment preserved while safely recomputable detail is removed?
 - Are baselines reproducible enough to expose staleness or omission?
 - Does Verification freeze required proof without turning debugging tactics into hard workflow?
 - Does Completion include success, stop-loss, rollback, and judge-integrity paths?
 - Do execution Unknowns have an `implement-notes` resume carrier?
+
+Autonomous-execution Taskbooks default to **≤4000 characters**. Relax only when the Human explicitly asks for a long-form artifact or the target runtime is known to use a different limit. If it does not fit, compress judgments / deduplicate / remove recomputable detail first; do not split one Human Goal into artificial layer Goals to fit the limit.
 
 If deleting a passage does not change the Executor's Goal, boundary, judgment, verification, failure handling, or resume behavior, delete it.
