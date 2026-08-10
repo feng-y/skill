@@ -130,7 +130,7 @@ Only then `STOP`.
 
 ## Durable execution state
 
-Select exactly one durable execution-state carrier: prefer Human/repo authority or an existing repo convention; otherwise reuse an existing runtime-provided carrier; only then fall back to `implement-notes`. Start by writing ≤10 lines of Goal / execution order / largest risk into the selected carrier, then keep execution progress, new Unknowns, blockers, material decisions/Evidence, and resume point there. A new session reads the same carrier first and redoes only work whose premises changed or whose Evidence became invalid. Conversation is not the sole state store, and no second protocol is created beside an existing carrier.
+Select exactly one durable execution-state carrier: prefer Human/repo authority or an existing repo convention; otherwise reuse an existing runtime-provided carrier; only then fall back to `implement-notes`. **Reuse the carrier identity / repo convention, not every historical conclusion inside it**: content from a Human-excluded prior effort, or old entries whose premises no longer hold, remains stale/non-authoritative unless current authoritative reality re-establishes it. Start by writing ≤10 lines of Goal / execution order / largest risk into the selected carrier, then keep execution progress, new Unknowns, blockers, material decisions/Evidence, and resume point there. A new session reads the same carrier first and redoes only work whose premises changed or whose Evidence became invalid. Conversation is not the sole state store, and no second protocol is created beside an existing carrier.
 
 ## Handoff check
 
@@ -150,7 +150,7 @@ Before delivery, ask only:
 - Does every `must/must not` have authority, or did model intelligence get promoted into law?
 - If a delegated default exists, is decision / basis / cost-if-wrong / rollback explicit?
 - If Human/repo execution discipline exists, did it survive as a hard constraint without being omitted or rewritten by the model?
-- Is there exactly one durable carrier, reusing authority/existing convention before fallback?
+- Is there exactly one durable carrier, reusing authority/existing convention before fallback without treating excluded prior-effort content as truth?
 - Are traps that would cause wrong judgment preserved while safely recomputable detail is removed?
 - Are baselines reproducible, with an explicit mismatch gate that stales / pauses / repairs affected state?
 - Does Verification freeze required proof without turning debugging tactics into hard workflow?
