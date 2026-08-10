@@ -34,6 +34,10 @@ Do not repeat Goal, global boundaries, shared Reality, repo rules, or Goal-level
 
 Any Human-confirmed execution strategy, scope boundary, or must-preserve constraint is part of the current contract input and must not be replaced by model-invented decomposition. When current Evidence already supports a safe bounded ready frontier, express it directly; execution Unknown that does not block that frontier must not be materialized as prerequisite work. **The ready frontier says what can execute now; it does not redefine the Human-owned Goal. Seeing only a subset of current work must not turn the Goal into a narrower phase or local subgoal.** The Graph stop boundary comes from Goal / confirmed boundaries, and adjacent residual discovered during execution does not automatically expand scope.
 
+When many candidate instances inside one bounded territory can be decided by the same stable discriminator, **compile judgment, not inventory**: state the discriminator, applicability boundary, must-preserve responsibility, and stop boundary, then let the Executor apply that judgment to concrete instances using Evidence. Do not continue Research merely to list every file/symbol or create one Task per instance. Split instances only when they have genuinely different dependency, risk, authority, or Verification relationships.
+
+Existing workspace changes that still align with the Human Goal and whose premises remain valid are starting reality. Compile remaining work and Verification around them instead of clearing, redoing, or renaming them into a smaller Goal; “already changed” proves current state only, not correctness, so corresponding Verification/Evidence is still required.
+
 **Task 0** is optional, bounded execution warmup. Use it only when a missing execution-time fact blocks selection of the first safe material action, or when required Verification explicitly requires a trigger to be settled before the first material action. It is not a second Research phase, a default checklist, or a collection point for ordinary execution Unknown. If current ready work can begin safely, leave other facts to the Executor to obtain only when they actually affect that work.
 
 Runtime progression stays:
@@ -85,6 +89,8 @@ Before Handoff, confirm only:
 - Goal and each material authority have exactly one owner;
 - all required Tasks / relations / Verification obligations already established by current Evidence are sufficiently compiled rather than hidden for artificial laziness;
 - the ready frontier has not narrowed the Human Goal, and any Human-confirmed execution strategy or stop boundary has not been rewritten by the model;
+- when same-shaped instances already share a stable discriminator, the taskbook preserves judgment + bounded territory rather than a low-value complete inventory;
+- still-valid workspace work is reused as starting reality without treating “already changed” as “proven correct”;
 - contingent work is not speculatively materialized, and at least one Task or truly necessary Task 0 can start immediately;
 - required Verification is non-duplicated and the Completion Hook can judge stop / continue / block from existing semantic owners;
 - discovery / Evidence whose premises have not changed is not reacquired, and no Completion/Acceptance, scheduler, Graph engine, or fixed Agent topology has been added.
