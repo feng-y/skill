@@ -30,7 +30,7 @@ Evidence
 12. **Judge integrity**：`.skip`/todo、放松断言、删活体测试、mock 掉被测对象、改阈值、吞错误、`|| true` 等制造的绿灯无效；reverse/private/independent Evidence 只在真实 false-green/gameability 风险存在时启用。
 13. **Completion success path**：只有 Goal / constraints + triggered required Verification + current valid Evidence 足够覆盖时 `STOP`；Task/frontier 为空本身不代表完成。
 14. **Completion failure path**：同一验收连续失败 3 次且没有新增 Evidence 时停止同一路线硬顶，切换有依据的策略/独立 work 或准确 non-PASS；可信 baseline 由绿变红时先恢复或如实报告。
-15. **Durable state**：只使用一个 carrier。优先 Human/repo authority 或 repo 已有 execution-state convention，其次 runtime 已有载体，都没有才 fallback `implement-notes`；换 session 读同一载体，不在已有载体旁造第二套。
+15. **Durable state**：只使用一个 carrier。优先 Human/repo authority 或 repo 已有 execution-state convention，其次 runtime 已有载体，都没有才 fallback `implement-notes`。复用 carrier identity 不代表继承旧内容；被 Human 排除的 prior-effort state 或 premise 已 stale 的历史记录保持 non-authoritative，除非当前 reality 重建。换 session 读同一载体，不在已有载体旁造第二套。
 16. **Taskbook size**：自主执行 Taskbook 默认 ≤4000 字符；超长先做 judgment compression/去重，不把一个 Human Goal 偷拆成 layer Goal 来凑长度。
 17. **Compile role boundary**：Taskbook delivery 即本次 Compile invocation STOP；可以为编译读取 reality/运行 probe，但不执行 material Goal work、不修改目标 workspace、不启动 Executor。
 18. **Re-entrant Review independence**：Human 明确拿已有 authoritative Taskbook 来验收时，Northstar 可在新的 Review invocation 中只用原 Taskbook + 当前 repo/workspace + Taskbook 选定的 durable carrier/可复核 Evidence 重建判卷，不依赖旧 session。Reviewer 必要时重新取得关键 Evidence，但不实现/修复、不改 workspace、不重写 Taskbook、不启动 Executor；Human-owned contract 若已改变则原 Taskbook superseded，需重新 Compile。
@@ -95,9 +95,9 @@ PASS：该 provider 不产生 Evidence；选择 repo-authoritative 替代项或�
 PASS：停止同一路线硬顶，切换有依据策略/独立 work 或如实 non-PASS；不能通过削弱 judge 获得 PASS。
 
 ### S12 — Session interruption reuses the repo-authoritative carrier
-repo 已有 `PROGRESS.md/BLOCKED.md`（或等价 authority-defined carrier），Executor 已记录部分 work、Unknown、Evidence、blocker；会话中断。
+repo 已有 `PROGRESS.md/BLOCKED.md`（或等价 authority-defined carrier），Executor 已记录部分 work、Unknown、Evidence、blocker；其中部分旧内容来自 Human 明确要求忽略的 prior effort；会话中断。
 
-PASS：Taskbook 复用 repo 已有 carrier，不另建 `implement-notes`；新 session 先读同一载体，复用仍有效结果，只重做前提已变或 Evidence 已 stale 的部分。只有 repo/runtime 没有既有 carrier 时才 fallback `implement-notes`。
+PASS：Taskbook 复用 repo 已有 carrier identity，不另建 `implement-notes`；但不把被排除 prior-effort 的旧结论当当前 progress/Evidence，除非当前 reality 重新建立。新 session 读同一载体后只复用仍有效内容，只重做前提已变或 Evidence 已 stale 的部分。只有 repo/runtime 没有既有 carrier 时才 fallback `implement-notes`。
 
 ### S13 — Taskbook stays within execution budget
 Research 很丰富，但 Goal 单一。
@@ -120,9 +120,9 @@ Executor 已完成一份 Taskbook并在选定 durable carrier 留下 progress/Ev
 PASS：Reviewer 先读原 Taskbook，从当前 repo/workspace、同一 durable carrier 与可复核 Evidence 重建判卷；能访问权威环境时重新取得最终结论关键且成本合理的 Verification。Executor 自报 `PASS` 不算 proof。Completion Hook 满足才 `Verdict: PASS`；有明确可执行 gap 则 `Verdict: NON-PASS` 并只给最小 gap/resume condition；缺 authority/environment/Evidence 或 Human 已改变原 contract 则 `Verdict: BLOCKED`。Review 期间不得补 patch、修改测试/实现、重写 Taskbook 或启动 Executor。相同 Taskbook + reality + durable Evidence 在 same-session 与 fresh-session 应得到同一 verdict。
 
 ### S17 — Ignored prior effort cannot leak implementation conclusions
-Human 明确要求“忽略 MR 4282/旧 branch，从当前 master 判断”；Research 因历史定位看到了旧 effort 的保留清单、待裁决清单和 patch decomposition。
+Human 明确要求“忽略 MR 4282/旧 branch，从当前 master 判断”；Research 因历史定位看到了旧 effort 的保留清单、待裁决清单和 patch decomposition；repo 的 durable carrier 也来自这个 effort。
 
-PASS：旧 effort 只能提供 locator/hypothesis；Taskbook 不转录其 symbol/file/default 列表。任何保留的事实必须由当前 authoritative reality 或仍有效 Human/repo authority 独立重建。若旧 effort 暴露了真实 trap，可在当前 reality 重新证实后保留该 trap/judgment，而不是继承旧结论。
+PASS：旧 effort 只能提供 locator/hypothesis；Taskbook 不转录其 symbol/file/default 列表。任何保留的事实必须由当前 authoritative reality 或仍有效 Human/repo authority 独立重建。carrier identity / repo convention 可以复用，但其中旧结论仍 stale/non-authoritative。若旧 effort 暴露了真实 trap，可在当前 reality 重新证实后保留该 trap/judgment，而不是继承旧结论。
 
 ### S18 — Delegated defaults and execution discipline survive without new ceremony
 repo/Human 明确要求“当前分支 commit，不 push、不碰 master”，同时 Northstar 为一个可回退、非 Goal-owned选择代做了 default；repo 已有 durable carrier。
@@ -140,7 +140,7 @@ Leader 是行为基线，不是答案 oracle。至少检查：
 5. baseline / command / provider 有真实 grounding，并在作为执行 premise 时有 recheck / mismatch gate；
 6. decision priority 与双向 boundary 能让 Executor 自裁；
 7. law/intelligence 分离，不把建议写成法；delegated default 与 authority-backed execution discipline 在存在时不丢失；
-8. durable execution state 复用 repo/Human/runtime 已有 carrier，不平白创造第二套；
+8. durable execution state 复用 repo/Human/runtime 已有 carrier identity，但不继承 stale/excluded effort content，不平白创造第二套；
 9. Human 排除的 prior effort 不通过 inventory/decomposition/default 偷渡回 Taskbook；
 10. failure stop-loss / rollback / anti-cheat / resume state 可执行；
 11. Northstar 额外 Graph / Verification / Evidence 能力不能降低上述质量；
@@ -160,7 +160,7 @@ C. candidate/current Northstar
 
 优先至少跑：
 
-- FS retirement：混合 territory、术语撞车、production Verification；其中一轮明确要求忽略 prior effort，并给 repo 已有 durable carrier / branch discipline，检查是否仍泄漏旧清单或造第二套状态；
+- FS retirement：混合 territory、术语撞车、production Verification；其中一轮明确要求忽略 prior effort，并给 repo 已有 durable carrier / branch discipline，检查是否仍泄漏旧清单、继承旧 carrier 内容或造第二套状态；
 - simple bugfix：防止 cleanup 机制污染简单任务；
 - architecture evolution：验证 Human-owned internal invariant 不会被错误过滤；
 - review re-entry：Executor 完成后换 fresh session，只给原 Taskbook + current reality + durable Evidence，验证 verdict 与独立判卷能力。
@@ -170,7 +170,7 @@ C. candidate/current Northstar
 ### Behavioral pass gate
 
 - candidate 无新的 critical regression；
-- FS case 不弱于 Leader：不漏 scope、不误删 live responsibility、不退化成 path checklist/per-symbol ledger、不把 ordinary execution Unknown 升级 Human、不把未关闭 candidate list 写成强制 0、不继承被排除 prior-effort 的 implementation list、不造第二套 durable carrier、不遗漏 authority-backed execution discipline、不预写 patch；
+- FS case 不弱于 Leader：不漏 scope、不误删 live responsibility、不退化成 path checklist/per-symbol ledger、不把 ordinary execution Unknown 升级 Human、不把未关闭 candidate list 写成强制 0、不继承被排除 prior-effort 的 implementation list/stale carrier content、不造第二套 durable carrier、不遗漏 authority-backed execution discipline、不预写 patch；
 - simple bugfix 不因 Leader-parity 机制显著膨胀；
 - architecture case 能区分 Goal-owned invariant 与 implementation guess；
 - review re-entry 不依赖旧 session、不能接受 Executor 自报 PASS、不能 judge→repair，同一 authority inputs 应得到稳定 verdict；
