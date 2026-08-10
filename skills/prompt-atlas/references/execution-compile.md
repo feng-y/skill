@@ -62,6 +62,8 @@ Research finding a high-confidence implementation does not make exact file decom
 
 Group instances covered by one judgment. Split only when outcome, judgment, dependency, authority, risk, or required Verification genuinely differs. Graph expresses only real dependency / parallel / join relations that change execution judgment; do not fragment work merely to make Graph precise.
 
+**An Execution Unknown is not a Human decision merely because it is unresolved.** When the existing Goal / decision priority / boundary / authority is sufficient to decide safely, the Executor gathers runtime Evidence and chooses change / preserve / skip / block, recording only the Evidence needed for that judgment. Escalate to the Human only when resolution must change the Human-owned Goal, boundary, explicit Verification, priority, or authorization. Do not emit `Needs-human-decision` just because dead/live status is not known yet.
+
 Preserve Human-confirmed strategy / scope boundary / must-preserve constraints. The ready frontier says what can execute now and does not redefine the Human Goal. Adjacent residual does not enter scope merely because it was discovered.
 
 Still-valid workspace changes aligned with the Goal are starting reality. Reuse them; do not redo them or shrink the Goal around them. “Already changed” is not correctness Evidence.
@@ -86,6 +88,8 @@ Verification freezes **what must be proven**, not **how implementation/debugging
 
 When provider, target, or scope depends on change surface / binding / runtime reality, compile the stable trigger/authority and let the Executor materialize the concrete action after it triggers. cleanup/refactor/expected `0-diff` cannot downgrade already-triggered required Verification.
 
+Candidate symbols, paths, or families discovered during Research / grep are **probe seeds** by default, not automatic `0` success criteria. Require a whole candidate set to reach zero only when current Evidence or repo/Human authority already establishes that every member is Goal-owned retired responsibility. Otherwise a non-zero hit is classified under the existing judgment first; legitimate surviving responsibility is not an automatic FAIL.
+
 Tactics such as “build after every moved type” or “test after every edited file” belong to the Executor by default. They become binding only when repo/Human authority or a specific risk requires them.
 
 Read [verification-trust.md](verification-trust.md) only when judge trust genuinely needs strengthening.
@@ -93,6 +97,8 @@ Read [verification-trust.md](verification-trust.md) only when judge trust genuin
 ## Evidence
 
 Compile proof / trust requirements, not future results. Evidence needed for final judgment must be reviewable and cover the real claim. Executor narration or self-declared `PASS` is not Evidence. Reuse Evidence while its premises remain valid; new Evidence invalidates only affected conclusions.
+
+Evidence proves the **judgment boundary + required coverage** by default; it does not require a delete/preserve ledger with per-caller proof for every file or symbol on an open surface. Require per-instance accounting only when closed-set accounting itself comes from repo/Human Verification authority or when the completion claim cannot otherwise be proven. Otherwise keep representative Evidence sufficient to establish the discriminator, material exceptions, must-preserve properties, and final coverage.
 
 ## Completion Hook
 
@@ -130,6 +136,9 @@ Before delivery, ask only:
 - Does the Taskbook define the task instead of exposing Prompt Atlas research?
 - Is each Task an outcome + judgment rather than a file/function/checklist/patch step?
 - Does an open same-shaped surface get scanned by criterion instead of static inventory?
+- Was an ordinary execution Unknown incorrectly promoted to `Needs-human-decision`?
+- Is Evidence proving judgment / coverage, or did it recreate per-file/per-symbol accounting?
+- Is a candidate grep / symbol list still a probe, or was it promoted without authority into a mandatory `0` criterion?
 - Does every `must/must not` have authority, or did model intelligence get promoted into law?
 - Are traps that would cause wrong judgment preserved while safely recomputable detail is removed?
 - Are baselines reproducible, with an explicit mismatch gate that stales / pauses / repairs affected state?
