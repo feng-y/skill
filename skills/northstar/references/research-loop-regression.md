@@ -104,10 +104,43 @@ Human 指定两个旧 subsystem 命名目录，要求删除其中只属于旧体
 - 把现有 unverified diff 直接写成已完成 Evidence；
 - 因为 workspace 非空就把整个任务 Blocked，而没有先判断这些修改是否就是当前 Goal 的 starting reality。
 
+## R6 — Deep research compresses into task definition, not an implementation design
+
+Northstar 已经调研得很深：知道哪些 surviving types 必须保留、哪些 dead chain 可以删除、哪些 include/BUILD/registration 可能受影响，也能提出一个完整的搬迁方案。这个 research quality 很高，但 Human 只要求在既定边界内退出旧 subsystem implementation，并保持 surviving behavior 不变。
+
+通过：
+
+- 最终 Taskbook 只保留少量 work unit，例如 comparison cleanup、old implementation retirement、direct residual cleanup；
+- 对 mixed code 使用稳定 judgment：old-only 删除，surviving responsibility 保留，mixed 只去 old 部分，证据不足则保留/准确 block；
+- surviving types 必须保留属于 binding constraint，但“具体搬到哪个新文件、从哪几行抽出、include 怎么重写”只是实现 hypothesis，默认不写成 mandatory Task；
+- Graph 只保留真实 work-unit dependency，不展开成 A1–A5/B1–B7 之类 patch schedule；
+- Verification 只冻结最终 build/test/replay/dead-reference coverage 等 required proof，不把“每搬一个类型单独 build”这类 failure-localization tactic 变成硬要求；
+- Research 中的行号、symbol count、include 明细只有真正改变 judgment 时才进入 Taskbook。
+
+失败：
+
+- Taskbook 详细指定 `SlotStorage` / context type / sequence ptr 应移动到哪些新文件，以及精确行号和 include 修改清单，尽管 Human/repo 并未要求这种 patch shape；
+- 把一个高置信可行方案写成 authoritative execution path，使 Executor 只能按预测 patch 证明它自己；
+- 把每个文件移动、函数抽取、BUILD 调整、扫描动作都 materialize 成独立 Graph node；
+- 把调试友好的中间 build/test 顺序升级成 required Verification；
+- research 越充分，Taskbook 反而越长、instruction 越多，而不是压缩成更少、更可靠的 judgment。
+
+期望的抽象层级接近：
+
+```text
+Goal: 在 confirmed boundary 内退出 old implementation，surviving behavior 不变。
+
+Work 1: 清 old/new coexistence comparison。
+Work 2: 在目标 implementation territory 内按 responsibility judgment 持续删除 old-only code；surviving/mixed responsibility 保留必要部分，由 Executor 选择最小安全实现。
+Work 3: init/startup/tools/tests/build registration 等直接 residual 按同一 dead/live judgment 清理，不扩到其他 residual。
+
+Verification: repo-required build/tests + affected behavior replay/等价证据 + dead-reference closure。
+```
+
 ## Captured FS cleanup shape
 
 示例只用于复现，不进入 runtime prior：`fea_lib` / `fea_util` 中仍被 Hermes/model_server 使用的 shared pieces 保留；FS-only leaf 与 FS/Hermes comparison 按 Human 给出的策略逐步退出。类似“外部 Flink UDF 是否仍消费 libfs.so”的问题，只有它真的阻止当前具体 leaf/branch 时才取得 Evidence；它不是整个 cleanup 开始前必须穷尽的统一 Research/Task 0。`model_server/production/ops/script/*.py` 中同名 runtime 配置若属于其他 residual，则按 Goal boundary 留到后续。当前 branch 已有的 comparison/fixture 删除属于 starting reality，但必须由本次任务书要求的 Verification 覆盖。
 
 ## Claim boundary
 
-这些 regression 只证明候选 runtime 文本能表达 Research closure、compiler/Executor boundary、Goal preservation、bounded-frontier judgment、judgment compression 与 starting-reality reuse。没有 clean-session Skill runner / isolated model session 时，不宣称行为 uplift；真实 behavioral A/B 仍标记 `NOT RUN`。
+这些 regression 只证明候选 runtime 文本能表达 Research closure、compiler/Executor boundary、Goal preservation、bounded-frontier judgment、judgment compression、starting-reality reuse 与 taskbook compression。没有 clean-session Skill runner / isolated model session 时，不宣称行为 uplift；真实 behavioral A/B 仍标记 `NOT RUN`。
