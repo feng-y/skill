@@ -1,6 +1,6 @@
-# Autonomous Taskbook: compile a stable Goal into a minimum-sufficient execution contract
+# Autonomous Taskbook: compile a stable Goal into a decision-complete execution contract
 
-Use only after Goal is settled. The Taskbook must let a fresh Executor complete the Goal independently **without pre-writing the implementation for it**.
+Use only after Goal is settled. The Taskbook must let a fresh Executor complete the Goal independently **without pre-writing its patch**.
 
 ```text
 Goal
@@ -12,29 +12,53 @@ Verification
 Evidence
 ```
 
-This is compiler ownership / proof chain, not an output template. **Decision coverage must be complete; information coverage and patch coverage must not be.** Research may be deep; the Taskbook must compress it.
+This is compiler ownership / proof chain, not an output template. **Decision-complete does not mean information-complete.** Research may be deep; the Taskbook keeps only information that changes Executor judgment.
 
 ## Goal
 
-Write one Human-owned Goal: desired result, confirmed boundary, must-preserve conditions, and final delivery. Include Why only when it changes tradeoffs. Explicit Human Verification requirements belong to Verification and are not duplicated back into Goal.
+Write one Human-owned Goal and make explicit:
+
+- **Outcome** — the result property that must become true;
+- **Decision priority** — the tradeoff order for conflicts, with unlisted cases delegated to the Executor under that order;
+- **Allowed boundary** — territory where the Executor may keep discovering and acting;
+- **Forbidden boundary** — territory that must not be touched or pulled in opportunistically;
+- **Must-preserve** — behavior, APIs, data, verification authority, or other non-regression properties;
+- final delivery.
+
+Do not make a model-selected repository shape a success criterion by default. Directory disappearance, file moves, namespace renames, or a particular patch shape belong in Goal only when explicitly required by the Human, required by repo authority, or themselves part of the Goal invariant.
+
+## Compile output filter
+
+Compile is an output filter, not a Research transcription step. Every fact proposed for the Taskbook passes two questions:
+
+1. Can the Executor reliably and cheaply recover it from authoritative repo reality? If yes, prefer the judgment/criterion over line numbers, inventories, and detail.
+2. Would omitting it materially increase the chance of wrong scope, wrong change/preserve judgment, wrong Verification, or unsafe implementation? If yes, preserve that trap / counterexample / non-obvious reality.
+
+Therefore:
+
+- ordinary line numbers, include details, symbol counts, candidate patches, and recomputable inventories are omitted by default;
+- terminology collisions, false dependencies, non-obvious surviving consumers, hard boundaries, and facts that change Verification triggers must be preserved;
+- reproducible baseline counts may be preserved because they act as coverage / attribution anchors rather than background detail.
+
+More Evidence should compress into fewer, more reliable judgments—not more instructions.
 
 ## Execution / Graph
 
-The Taskbook normally keeps only a small number of **bounded work units**.
+The Taskbook normally keeps only a small number of **outcome + judgment work units**.
 
-A Task should let the Executor independently advance under one coherent judgment to an observable outcome. Normally it needs only:
+A Task should let the Executor scan and handle the full same-shaped surface under one stable judgment. Normally it needs only:
 
 - the local outcome;
 - applicability territory / starting reality only when omission would cause misjudgment;
-- one stable judgment that repeatedly decides change / preserve / stop / branch;
+- a stable judgment that repeatedly decides change / preserve / skip / block;
 - hard constraints that truly reduce the choice space;
 - already-binding Verification obligations that determine whether the work is valid.
 
-**A Task is not an executable delta and not a predicted patch.** Research finding one viable implementation does not make these details binding: exact file decomposition, symbol destination, line extraction, include/BUILD rewrites, command order, leaf-deletion order, or intermediate build/test steps used for failure localization. Freeze such How only when explicitly required by the Human, required by repo authority, required by real dependency/risk, or proven by Evidence to be the only safe route.
+**A Task is not an executable delta, file-path checklist, or predicted patch.** Enumerate paths/files only when the set is closed, cannot be reliably derived from the repo, and enumeration itself is the decision rule. For open surfaces, state the discriminator and let the Executor scan the full set; otherwise the N+1th same-shaped residual outside the checklist will be missed.
 
-When many files/symbols/instances share one judgment, group them into one Task. Split only when outcome, dependency, authority, risk, or required Verification is genuinely different.
+Research finding a high-confidence implementation does not make exact file decomposition, symbol destinations, extraction line ranges, include/BUILD rewrites, command order, or failure-localization tactics binding. Freeze How only when required by the Human, repo authority, real dependency/risk, or a uniquely safe route.
 
-Graph expresses only real relationships that change execution judgment, such as dependency, parallel work units, shared writes, or joins that require combined Verification. Do not fragment work merely to make Graph more precise.
+Group instances covered by one judgment. Split only when outcome, judgment, dependency, authority, risk, or required Verification genuinely differs. Graph expresses only real dependency / parallel / join relations that change execution judgment; do not fragment work merely to make Graph precise.
 
 Preserve Human-confirmed strategy / scope boundary / must-preserve constraints. The ready frontier says what can execute now and does not redefine the Human Goal. Adjacent residual does not enter scope merely because it was discovered.
 
@@ -42,17 +66,11 @@ Still-valid workspace changes aligned with the Goal are starting reality. Reuse 
 
 **Task 0** exists only when a missing execution-time fact blocks the first safe material work, or required Verification explicitly requires a trigger before material work. It is not continued Research, an inventory, or a default checklist.
 
-## Information compression
+## Starting baseline
 
-A Research finding does not automatically enter the Taskbook. Keep it only if it changes at least one of:
+Establish an attributable starting point when the environment is available. Actually run build/test/replay/static probes that matter for judging the task. When scope needs measurement, prefer reproducible signals—target count, grep hit count, file/line magnitude, measurement time—over full path inventories.
 
-- Goal / boundary / must-preserve;
-- a judgment the Executor will repeatedly apply;
-- a work unit's real dependency / risk / authority;
-- required Verification / Completion judgment;
-- starting reality that cannot be safely rediscovered from the repo and whose loss would cause execution drift.
-
-File line numbers, symbol counts, include details, candidate inventories, and known patch shapes that the Executor can safely rediscover from the repo are omitted by default. **More Evidence should compress into fewer, more reliable judgments—not more instructions.**
+Keep only baselines that let the Executor recompute scope, detect omissions, or distinguish pre-existing breakage from regressions introduced by this work. If a command was not actually run, a number cannot be confirmed, or the environment is unavailable, do not fabricate it; use Task 0 when the check must happen before material work.
 
 ## Verification
 
@@ -74,24 +92,44 @@ Compile proof / trust requirements, not future results. Evidence needed for fina
 
 ## Completion Hook
 
-The Taskbook carries a stop judgment without adding a Completion layer. It reads only **Goal / constraints + triggered required Verification + current valid Evidence**:
+The Taskbook carries a stop judgment without adding a Completion layer. Completion defines both success and failure paths.
+
+### Success
+
+Read only **Goal / constraints + triggered required Verification + current valid Evidence**:
 
 - whether the Goal's material outcome has minimum sufficient Evidence;
-- whether must-preserve / confirmed boundaries / authority still hold;
+- whether higher-priority properties in the decision order were not sacrificed to lower-priority goals;
+- whether must-preserve / allowed+forbidden boundaries / authority still hold;
 - whether every triggered required Verification obligation has trustworthy Evidence.
 
-If all hold, `STOP`. If a gap remains, continue existing work or materialize only contingent work that can close it. If no safe route remains, return accurate `BLOCKED`. An empty frontier or completed Tasks are not completion conditions by themselves.
+Only then `STOP`.
+
+### Failure / stop-loss
+
+- After the same acceptance path fails three consecutive times without new Evidence, stop brute-forcing it: switch to independent work, change strategy with evidence, or report the exact non-PASS/blocker;
+- if a trustworthy green baseline turns red, restore green before continuing where possible; if restoration fails, report the regression honestly rather than declaring completion;
+- “not finished but accurately explained” is better than “finished but worse”;
+- never manufacture PASS via `.skip` / `todo`, weakened assertions, deleting live tests, mocking away the target, changing thresholds, swallowing failures, `|| true`, or any other judge weakening. Tests may be deleted with their dead subject only when the Goal / dead-code judgment justifies it and the count can be reconciled.
+
+## Durable execution state
+
+Persist execution progress, new Unknowns, blockers, material decisions/Evidence, and resume point in the existing `implement-notes`. A new session reads it first and redoes only work whose premises changed or whose Evidence became invalid. Conversation is not the sole state store.
 
 ## Handoff check
 
 Before delivery, ask only:
 
+- Does Goal describe an outcome, or did a model-selected implementation shape get smuggled in as success?
+- Is the decision priority clear enough to adjudicate unlisted cases?
+- Are allowed and forbidden boundaries both explicit?
 - Does the Taskbook define the task instead of exposing Prompt Atlas research?
-- Is each Task a bounded work unit rather than a file/function/patch step?
-- Did one viable implementation get incorrectly promoted into a mandatory implementation?
-- Are instances covered by one judgment grouped together?
-- Does Graph contain only real execution relationships?
+- Is each Task an outcome + judgment rather than a file/function/checklist/patch step?
+- Does an open same-shaped surface get scanned by criterion instead of static inventory?
+- Are traps that would cause wrong judgment preserved while safely recomputable detail is removed?
+- Are baselines reproducible enough to expose staleness or omission?
 - Does Verification freeze required proof without turning debugging tactics into hard workflow?
-- Have safely rediscoverable details that do not change judgment been removed?
+- Does Completion include success, stop-loss, rollback, and judge-integrity paths?
+- Do execution Unknowns have an `implement-notes` resume carrier?
 
-If deleting a passage does not change the Executor's Goal, boundary, judgment, or completion condition, delete it.
+If deleting a passage does not change the Executor's Goal, boundary, judgment, verification, failure handling, or resume behavior, delete it.
