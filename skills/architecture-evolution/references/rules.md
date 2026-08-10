@@ -110,7 +110,13 @@ Claim at risk
 - `Evidence`：记录代码、runtime、历史或 Human 决定；
 - `Intent changed / retained`：明确 evidence 如何改变或保留 intent/boundary/target identity。
 
-如果当前没有 material unknown，不要为了满足输出结构制造一个。若 unknown 被命名后不改变任何下一步，它不是 material control signal，不要把它作为正式 blocker 装饰输出。
+状态语义必须单义：
+
+- unknown 不会改变 intent、boundary 或 target identity → 它不是 material unknown，不作为正式 blocker 输出；
+- material unknown 已通过 evidence / Human decision 关闭 → 更新当前 judgment 后继续判断是否 ready，不保留为 active unknown；
+- material unknown 仍未关闭 → 返回 `Status: Intent unresolved`；不得同时返回 `Architecture intent ready`。
+
+不要为了满足输出结构制造 unknown；已经关闭的 unknown 只作为必要 provenance，不进入 ready artifact。
 
 ## Evidence and judgment lifetime
 
@@ -174,7 +180,7 @@ Brooks 编号、Risk/Guard/Proof 表、PASS/RETRY、Health Score 和完整 proof
 7. in scope、out of scope 和 must preserve 清楚；
 8. ownership materially shapes intent 时，owner scope 只扩到 evidence 支持的 invariant；
 9. 至少一个可观察的 replacement/exit 目标；
-10. 若存在 material Unknown，已通过 falsification chain 关闭，或明确为什么它阻止 ready；不存在时不制造；
+10. 不存在仍会改变 intent、boundary 或 target identity 的 material unknown；若存在则必须返回 `Status: Intent unresolved`；
 11. 已检查最重要反例、consumer reassembly、owner-scope、false unification、complexity relocation 和 materialization guard；
 12. Brooks 只用于内部 challenge，最终 artifact 不泄漏 Brooks 表、taxonomy、counterexample 或 proof machinery；
 13. 输出没有进入具体 class/interface/API/adapter、responsibility placement、调用/执行流、迁移步骤、implementation slice 或 verification plan；一旦需要回答这些问题，就停止并交给后续目标设计。
