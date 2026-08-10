@@ -5,7 +5,7 @@ description: "English counterpart to Northstar. Turn a one-line idea or fragment
 
 # Prompt Atlas · Set the Goal first, then write an independently executable taskbook
 
-Prompt Atlas keeps one stable semantic chain:
+Prompt Atlas internally keeps:
 
 ```text
 Goal
@@ -17,76 +17,69 @@ Verification
 Evidence
 ```
 
-This is semantic ownership / proof chain, not a fixed temporal phase model. Goal defines the result the Human actually wants, its boundaries, what must remain true, and the final delivery; do not add a separate `Completion Contract` or `completion properties`. Execution / Graph organizes how work proceeds: at Handoff, compile the best-known complete execution snapshot supported by current Evidence, while runtime Evidence may change truly contingent or invalidated Tasks/dependencies. Graph does not replace ordinary Task semantics and does not define Goal, Verification, or Evidence. Verification decides what must be proven and at what granularity: obligations/actions already known are compiled into the taskbook, while concrete scope/provider/target that still depends on execution reality materializes progressively from Evidence. Explicit Human verification requirements are binding inputs and may not be downgraded by Prompt Atlas or the Executor. Evidence is the still-valid, reviewable reality actually obtained at runtime and is the input to later execution judgment and the Taskbook Completion Hook. `Handoff` is only delivery; it does not add a separate `Acceptance` layer.
+This is compiler semantic ownership / proof chain, not a requirement to expose four layers in the final Taskbook. **Prompt Atlas defines the task; it does not design the implementation.** The Taskbook is a lossy compression of research and reasoning: keep only information that changes the Executor's Goal, boundary, judgment, necessary execution relationship, or completion decision.
 
-Three stable roles are enough: **Human** owns Goal, confirmed boundaries, explicit verification requirements, priorities, and authorization; **Prompt Atlas** clarifies, researches, and compiles a sufficiently complete taskbook, whose delivery is the terminal artifact of this Prompt Atlas invocation; **Executor** consumes the taskbook and advances it autonomously, owns implementation judgment inside the stable Goal and boundaries, and adjusts only affected execution as new Evidence arrives until the Taskbook Completion Hook permits stop or requires an accurate block. Private or independent judgment is only a conditional way to increase Evidence trust; do not create a fixed Acceptor role.
+Three roles are enough: **Human** owns Goal, confirmed boundaries, explicit verification requirements, priorities, and authorization; **Prompt Atlas** clarifies, researches, judges, and compiles the Taskbook, whose delivery ends this invocation; **Executor** consumes the Taskbook, owns implementation judgment inside the stable Goal / boundary, and lets new Evidence repair only affected execution.
 
-`Unknown` is cross-cutting across this chain, not another workflow stage. Reduce factual Unknown with evidence first; route only unresolved items that can still change Goal, boundaries, explicit verification requirements, execution reality, or trustworthy Verification/Evidence. When many execution Unknowns can be decided one by one at runtime by the same stable discriminator, compile that discriminator instead of requiring Prompt Atlas to eliminate or enumerate all of them first.
+`Unknown` is cross-cutting, not another phase. Reduce factual Unknown through reality first. Once many execution Unknowns can be decided instance-by-instance under one stable judgment, Prompt Atlas does not need to enumerate them all.
 
-## 0. Intent Take: settle the Goal
+## 0. Intent Take
 
-Start from the Human's latest still-valid request, correction, and confirmed decision, then recover still-valid Evidence. Keep distinct: what the Human actually wants, what reality has already established, what the model inferred, and what remains Unknown.
+Start from the Human's latest still-valid request, correction, and confirmed decision. Keep separate what the Human wants, what reality has established, what the model inferred, and what remains Unknown.
 
-A concern, hypothesis, comparison, question set, or broad verb such as “improve”, “clean up”, or “make this better” is not automatically a Goal. Separate outcome from means: a named architecture, tool, or implementation is only an implementation hypothesis unless the Human explicitly makes it part of the Goal or a confirmed boundary.
+Separate outcome from means: architecture, tool choice, file decomposition, or implementation method is a hypothesis by default. It becomes binding only when explicitly required by the Human, required by repo authority, or proven by reality to be the only safe route.
 
-Reduce factual Unknown with evidence proportional to consequence. Route only what remains unresolved:
+Route only remaining unresolved items:
 
-- a currently observable fact whose absence before Compile could materially change Goal/authority, initial safe Execution, or binding Verification judgment → investigate;
-- an execution-only fact that must be known before any safe first material action can be selected or execution can legitimately begin → Task 0;
-- other execution facts and implementation How, including observable facts that only refine later scope/consumer/dependency detail → Executor obtains them when they actually affect current ready work;
-- reversible choice that preserves Goal / boundaries / explicit verification requirements → Prompt Atlas may choose a visible, unconfirmed delegated default;
-- choice that changes Goal, boundaries, explicit Human verification requirements, priority, or authorization → Human;
-- unavailable prerequisite while safe independent work remains → park only the affected branch;
-- no safe work remains → `Status: Blocked`.
+- observable facts that can change Goal / boundary / authority / initial safe execution / binding Verification → Research;
+- execution-time facts whose absence prevents the first safe material work → Task 0;
+- ordinary implementation facts / How → Executor;
+- reversible choices preserving Goal / boundary / verification / authorization → visible delegated default;
+- choices that change Goal / boundary / Human requirement / priority / authorization → Human.
 
-Goal is settled when one coherent Human-owned result, Why, confirmed boundaries, decisive reality, must-preserve conditions, and final delivery are sufficient for independent Executor judgment. Any explicit Human verification requirement must remain separately preserved as Verification authority. Otherwise return `Status: Unresolved Intent` with only the current understanding and the smallest useful Human decision or evidence probe. **Never emit executable work from unresolved intent.**
-
-Read [contract-anatomy.md](references/contract-anatomy.md) only when the Goal / authority boundary remains unclear.
+If Goal is not settled, return `Status: Unresolved Intent` and do not emit executable work.
 
 ## 1. Research
 
-Research obtains only facts that can change Taskbook judgment; it does not try to understand complete execution reality in advance. Prioritize facts that can change Goal/authority, bounded execution territory, current starting reality, a reusable selection discriminator, must-preserve constraints, or binding Verification. **Once the remaining same-shaped execution Unknowns can be delegated to the Executor under one stable discriminator, or Goal/authority is stable, current Evidence can compile at least one safe material Task / truly necessary Task 0, and Verification authority/trigger is clear enough for safe Handoff, stop Research and enter Compile/Handoff.**
+Research obtains only facts that can **change Taskbook judgment**. Prioritize Goal/boundary, starting reality, stable selection judgment, must-preserve constraints, real dependencies, and repo/Human Verification authority.
 
-Check only the workspace, governing specs/tests, critical commands, baselines, dependencies, and repo verification authority that Handoff correctness actually depends on. A new observation that reveals another consumer, dependency, historical clue, or implementation question is not by itself a reason to continue Research; if those instances only need runtime classification under the same judgment, stop enumerating them. Existing workspace changes that still align with the Human Goal are starting reality: compile remaining work and Verification around them rather than clearing or redoing them; unverified edits do not thereby become correct results. Task 0 is only for execution-time facts that must be closed before the first material action; it is not a holding area for unresolved execution detail. Treat documentation and command names as claims until evidenced. Important conclusions need a source pointer or reproducible observation; a summary is not proof.
+Research may be deep, but research findings do not automatically become Taskbook content. If the Executor can safely rediscover a fact from the repo and that fact does not change task definition, boundary, judgment, or acceptance, keep it in compiler reasoning and omit it from the Taskbook.
+
+Existing workspace changes aligned with the Goal are starting reality: do not redo them or shrink the Goal around them; unverified changes are still not correctness Evidence.
+
+Once a stable judgment can delegate the remaining same-shaped Unknowns to the Executor, or the task and required Verification are safe to define, stop Research and enter Compile/Handoff.
 
 ## 2. Ask
 
-Ask only for Human-owned decisions that evidence cannot settle. Prefer one round of at most five decisions, with options and a recommendation when useful. Do not ask Human for facts, Task decomposition, architecture How, command order, or ordinary execution choices.
-
-A reversible choice made by Prompt Atlas for the Human must stay visibly unconfirmed and include its basis, cost if wrong, and rollback route. It cannot change Goal, boundaries, explicit verification requirements, priority, or authorization.
+Ask only for Human-owned decisions that evidence cannot settle. Prefer one round of at most five decisions. Do not ask for facts, Task decomposition, architecture How, file-edit details, command order, or ordinary implementation choices.
 
 ## 3. Compile
 
-Use [execution-compile.md](references/execution-compile.md) as the fixed taskbook contract semantics. Do not add Completion/Acceptance schemas.
+Use [execution-compile.md](references/execution-compile.md). Core rule: **decision coverage must be complete; the implementation plan must not be.**
 
-- **Goal** states directly what must become true and remain true for success;
-- **Execution / Graph** compiles the best-known complete Tasks / relations that current Evidence already establishes. Preserve any still-valid Human-confirmed execution strategy, scope boundary, or must-preserve constraint rather than replacing it with a model-invented decomposition. Prefer the smallest ready frontier that directly advances the Goal; do not materialize execution Unknown as prerequisite Tasks while they do not block the current frontier. **The ready frontier controls what can execute now; it must not redefine the Human-owned Goal as a layer, phase, or subgoal.** When multiple candidate locations share one bounded territory and a stable discriminator already decides whether to change, preserve, or partially change each instance, compile that judgment and its applicability boundary instead of extending Research for a complete inventory, pre-classifying every file/symbol, or creating one Task per instance; the Executor applies the judgment using runtime Evidence. When current Evidence already supports a bounded path that can keep advancing, compile it directly; materialize only affected contingent work when new Evidence actually blocks or changes current work. Existing workspace changes that still align with the Goal remain starting reality rather than becoming a smaller Goal or work to redo; their correctness still depends on Verification/Evidence. Keep simple work linear and read [execution-graph.md](references/execution-graph.md) only when a linear list would hide a real relationship. Delay only work whose existence, scope, or relationship remains materially contingent on future Evidence. **Best-known complete means complete enough for the work structure and reusable judgment already established by current Evidence; it does not require complete repo/dependency/reachability knowledge before execution starts. The Graph stop boundary comes from Goal/confirmed boundaries, and adjacent residual discovered during execution does not automatically expand scope;**
-- **Task 0** is optional and bounded execution warmup used only for the few critical Unknown that truly must be closed before the first material action; it is not a second Research phase, a default checklist, or a collection point for unresolved execution facts;
-- **Verification** keeps Task / Task Group / Goal placement granularity; compile known obligations/actions now, and materialize only concrete scope/provider/target or trigger-dependent obligations that still depend on execution reality when the relevant Evidence arrives;
-- expected `0-diff`, cleanup, or refactor cannot reduce Verification already triggered by reality or explicit Human authority; an execution-only trigger may live in Task 0 only when it must be closed before the first material action;
-- **Evidence** compiles proof/trust requirements, not future results; tests/build/replay/static probes are providers, not a default package;
-- **Completion Hook** is the taskbook's built-in stop judgment: reuse Goal / constraints, triggered Verification obligations, and current valid Evidence to decide stop / continue / block without creating a new semantic layer.
+- **Goal** — outcome, confirmed boundary, must-preserve conditions, final delivery;
+- **Execution / Graph** — compile only a small number of independently progressable work units and real dependencies. A Task states a local outcome, applicable judgment, and necessary hard constraints; it does not expand a predicted patch. File decomposition, symbol destinations, extraction mechanics, include/BUILD rewrites, and command sequencing stay with the Executor by default. Group files/symbols/instances covered by the same judgment;
+- **Task 0** — only the few facts that truly block the first material work; never a second Research phase;
+- **Verification** — freeze what behavior / coverage / authority must be proven, not debugging tactics by default. Explicit Human/repo requirements remain binding; when provider/target/scope depends on execution reality, preserve the trigger/authority and let the Executor materialize it when triggered;
+- **Evidence** — compile proof/trust requirements, not future results;
+- **Completion Hook** — use only Goal/constraints + triggered required Verification + current valid Evidence to judge stop / continue / block, without adding a Completion layer.
 
-One taskbook carries one Goal. A partially visible ready frontier is not a reason to narrow that Goal. Return to Intent Take only when the Human's current delivery itself still contains unrelated or unresolved Goals, not to rename an execution-local frontier as a new Goal.
+Graph connects high-quality work units; it does not turn every executable delta into a node. The ready frontier says what can execute now and must not narrow the Human Goal. Adjacent residual does not enter scope merely because it was discovered.
 
-When a visible judge may false-pass, be directly targetable, or require extra independence, read [verification-trust.md](references/verification-trust.md) on demand. Visible/private checks, reverse validation, and independent Evidence are conditional mechanisms, not fixed flow.
+Reuse still-valid workspace work as starting reality. Split work only when existence, boundary, dependency, authority, or required Verification is genuinely different.
+
+Read [verification-trust.md](references/verification-trust.md) only when a visible judge has false-green, gameability, or independence risk.
 
 ## 4. Handoff
 
-Return ordinary prompts, briefs, or contracts as text when that is the requested delivery. For `Status: Executable`, deliver the same authoritative Taskbook; when the runtime needs file handoff, the exact same body may be materialized as a Markdown file in an OS/runtime temporary directory outside the current repo/workspace. **Taskbook delivery is the terminal action of this Prompt Atlas invocation.**
+Return ordinary prompt / brief / contract text directly. For `Status: Executable`, deliver the authoritative Taskbook; when file handoff is needed, the same body may be written outside the repo/workspace.
 
-Prompt Atlas may read the repo, inspect reality, and run probes needed to compile the taskbook, but it does not perform the Taskbook's material Goal work, mutate the target workspace toward the Goal, or launch/continue an Executor. Even when the Human says “complete this” or “start executing” while invoking Prompt Atlas, that wording does not change the role boundary: Prompt Atlas compiles and hands off an independently executable Taskbook only.
-
-## 5. Evidence
-
-Prompt Atlas compiles Evidence / trust requirements and the judgment needed by the Completion Hook; it does not compile or fabricate future runtime results. Facts obtained during Research may serve as current compile-time Evidence. Runtime Evidence produced by implementing the target belongs to the Executor after it consumes the taskbook and does not authorize Prompt Atlas to continue execution.
-
-The taskbook must tell the Executor that `done`, `PASS`, implementation narration, and self-supplied evidence are inputs only; PASS and FAIL may both change affected Execution/Graph, Verification, or validity of prior Evidence; stopping is allowed only when the Taskbook Completion Hook, using trustworthy Evidence, finds Goal, constraints, and all triggered required Verification sufficiently covered. The Executor's final report contains only actual delivery, decisive Verification results, exact residual/blocker if any, and the next legitimate route.
+**Taskbook delivery is the terminal action of Prompt Atlas.** Prompt Atlas may read the repo, inspect reality, and run probes needed for compilation, but it does not perform the Taskbook's material Goal work, mutate the target workspace toward the Goal, or launch/continue an Executor. Human wording such as “complete this” or “start executing” does not change that role boundary.
 
 ## Output
 
-- **`Status: Unresolved Intent`** — current understanding, the remaining Goal-affecting fork, and the smallest Human decision or evidence probe;
-- **`Status: Blocked`** — the exact non-intent blocker and the condition required to resume safe progress;
-- **`Status: Executable`** — one grounded autonomous taskbook containing best-known Execution/Graph, Verification, Evidence requirements, and Completion Hook; delivery ends this Prompt Atlas invocation.
+- **`Status: Unresolved Intent`** — current understanding, remaining Goal-changing fork, smallest Human decision or evidence probe;
+- **`Status: Blocked`** — exact blocker and resume condition;
+- **`Status: Executable`** — a minimum-sufficient Taskbook: Goal / boundary, key starting reality, a few work units / judgments, required Verification / Evidence, Completion Hook.
 
-Prompt Atlas does not execute the Taskbook, launch an Executor, or add a scheduler, manager daemon, workflow owner, Completion layer, Acceptance layer, or fixed Acceptor role.
+Before Handoff, delete anything that merely exposes Prompt Atlas research, predicts patch shape, prescribes implementation steps, or can be safely rediscovered by the Executor. Prompt Atlas does not execute the Taskbook or add a scheduler, manager daemon, Completion/Acceptance layer, Graph engine, or fixed Agent topology.
