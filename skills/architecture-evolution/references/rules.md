@@ -90,6 +90,8 @@ Observed partition 是 evidence，不是 architecture boundary。只有它承载
 
 好的 architecture direction 优先表达为少量 stable invariant / boundary：什么必须始终成立，哪些变化仍允许局部自主。不要把 class/API/library choice 当成架构规范。一个 invariant 稳定到值得长期约束时，应优先能被 repo structure 或 tooling 清楚表达并在适合时机械检查；文档可以解释它，但不替代 enforcement。本 Skill 只识别这个 judgement，不设计具体 lint/test。
 
+局部 target shape 即使合理，也不能替代 durable architecture outcome；如果下游仍需重新发现 why 才能理解为何值得推进，intent 还未收敛。Architecture Intent 应固定 why、direction 和 boundary，同时保持 how 开放。
+
 ## Material unknown
 
 只有会改变 intent 或 boundary 的 unknown 才是 Material Unknown。
