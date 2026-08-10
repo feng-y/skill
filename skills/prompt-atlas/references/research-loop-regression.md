@@ -150,7 +150,7 @@ Pass:
 - reproducible baselines (green build, target count, grep hit count, directory magnitude) anchor starting-state confirmation and omission detection; ordinary line numbers/include inventories stay out;
 - non-obvious traps remain when omission would cause a wrong decision, e.g. an include that is a false dependency with zero actual symbol use;
 - Completion includes both success and failure routes: required proof, three-failure stop-loss, green→red rollback / honest non-PASS, and anti-cheat against `.skip`, weakened assertions, live-test deletion, mocking away the target, or `|| true`;
-- runtime Unknown / progress / blocker / resume point is persisted in `implement-notes`, and a new session restores it before continuing.
+- runtime Unknown / progress / blocker / resume point is persisted in the **single durable carrier selected by Compile/Handoff**. Prefer Human/repo authority or an established repo/runtime convention, and fall back to `implement-notes` only when no existing carrier exists. A new session resumes from that same carrier rather than creating a second protocol.
 
 Fail:
 
