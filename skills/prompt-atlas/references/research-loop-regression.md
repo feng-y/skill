@@ -104,10 +104,43 @@ Fail:
 - record unverified current diff as completed Evidence;
 - globally Block merely because the workspace is dirty without first deciding whether those changes are the Goal's starting reality.
 
+## R6 — Deep research compresses into task definition, not implementation design
+
+Prompt Atlas has researched deeply: it knows which surviving types must remain, which dead chain can be removed, which includes/BUILD/registrations may be affected, and can propose a complete relocation plan. Research quality is high, but the Human only asked to retire the old subsystem implementation within a confirmed boundary while preserving surviving behavior.
+
+Pass:
+
+- the final Taskbook keeps only a few work units, for example coexistence-comparison cleanup, old implementation retirement, and direct residual cleanup;
+- mixed code uses one stable judgment: retired-only remove, surviving responsibility preserve, mixed remove only the retired part, insufficient evidence preserve or accurately block;
+- “surviving responsibility must remain” is binding, but exact destination files, extracted line ranges, and include rewrites are implementation hypotheses and are not mandatory by default;
+- Graph keeps only real work-unit dependencies rather than expanding into an A1–A5/B1–B7 patch schedule;
+- Verification freezes required build/test/replay/dead-reference coverage, not failure-localization tactics such as building after every moved type;
+- line numbers, symbol counts, and include inventories from Research enter the Taskbook only when they truly change judgment.
+
+Fail:
+
+- the Taskbook prescribes exact destination files for surviving types, precise line extraction, and include edit lists even though neither Human nor repo authority requires that patch shape;
+- one high-confidence viable plan becomes the authoritative execution path and the Executor is forced to prove the predicted patch;
+- every file move, function extraction, BUILD edit, and scan becomes a separate Graph node;
+- debugging-friendly intermediate build/test order is promoted into required Verification;
+- deeper Research produces a longer Taskbook with more instructions instead of compressing into fewer, more reliable judgments.
+
+Expected abstraction level is close to:
+
+```text
+Goal: retire old implementation inside the confirmed boundary while preserving surviving behavior.
+
+Work 1: remove old/new coexistence comparison.
+Work 2: inside the implementation territory, repeatedly apply responsibility judgment to remove retired-only code; preserve surviving/mixed responsibility and let the Executor choose the minimum safe implementation.
+Work 3: clean direct init/startup/tools/tests/build-registration residual under the same dead/live judgment without expanding into unrelated residue.
+
+Verification: repo-required build/tests + affected behavior replay/equivalent evidence + dead-reference closure.
+```
+
 ## Captured FS cleanup shape
 
 This example exists only to reproduce the regression and must not become a runtime prior. Shared pieces in `fea_lib` / `fea_util` that are still used by Hermes/model_server stay; FS-only leaves and FS/Hermes comparison are peeled according to the Human-confirmed strategy. A question such as “does an external Flink UDF still consume libfs.so?” needs Evidence only when it actually blocks the concrete leaf/branch being removed; it is not a unified Research/Task-0 prerequisite before cleanup can begin. Same-named runtime config under `model_server/production/ops/script/*.py` remains deferred when it belongs to other residual outside the Goal boundary. Existing comparison/fixture deletions on the current branch are starting reality but must still be covered by the Taskbook's required Verification.
 
 ## Claim boundary
 
-These regressions prove only that the candidate runtime text expresses Research closure, compiler/Executor boundary, Goal preservation, bounded-frontier judgment, judgment compression, and starting-reality reuse. Without a clean-session Skill runner / isolated model session, do not claim behavioral uplift; real behavioral A/B remains `NOT RUN`.
+These regressions prove only that the candidate runtime text expresses Research closure, compiler/Executor boundary, Goal preservation, bounded-frontier judgment, judgment compression, starting-reality reuse, and taskbook compression. Without a clean-session Skill runner / isolated model session, do not claim behavioral uplift; real behavioral A/B remains `NOT RUN`.
