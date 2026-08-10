@@ -21,7 +21,7 @@ Evidence
 
 三个角色：**Human** 决定 Goal、已确认边界、明确验证要求、优先级和授权；**Northstar** 澄清、调研、判断并编译 Taskbook，交付即本次调用结束；**Executor** 消费 Taskbook，在稳定 Goal / boundary 内负责 implementation judgment，并让新 Evidence 只修正受影响的执行。
 
-`Unknown` 是贯穿机制，不是额外阶段。能用 reality 消掉就先消；一组 execution Unknown 已可由同一个稳定 judgment 在执行期逐项裁决时，不要求 Northstar 列全实例。执行期需要跨会话存活的 progress / Unknown / blocker / resume state 使用**唯一 durable carrier**：优先复用 Human/repo authority 已指定或 repo 已存在的执行状态载体，其次复用 runtime 已提供的现成载体；都没有时才回退到 `implement-notes`。不只留在 conversation，也不在已有载体旁再造第二套状态协议。
+`Unknown` 是贯穿机制，不是额外阶段。能用 reality 消掉就先消；一组 execution Unknown 已可由同一个稳定 judgment 在执行期逐项裁决时，不要求 Northstar 列全实例。执行期需要跨会话存活的 progress / Unknown / blocker / resume state 使用**唯一 durable carrier**：优先复用 Human/repo authority 已指定或 established repo convention 明确的执行状态载体，其次复用 runtime 已提供的现成载体；都没有时才回退到 `implement-notes`。单纯“某个历史状态文件存在”不构成 carrier authority；不只留在 conversation，也不在已有载体旁再造第二套状态协议。
 
 ## Review re-entry（已有 Taskbook 才触发）
 
