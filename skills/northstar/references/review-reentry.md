@@ -8,7 +8,7 @@ Review 只依赖可重建输入，不依赖旧 conversation 继续活着：
 
 1. **authoritative Taskbook**：原 Goal、decision priority、allowed/forbidden boundary、must-preserve、required Verification、Evidence 要求、Completion Hook，以及 Compile 选定的 durable execution-state carrier；
 2. **current repo/workspace reality**：当前 revision、diff、binding/config、可运行 provider；
-3. **durable execution state**：Taskbook 指向的唯一 carrier，以及 Executor 留下的原始/稳定 Evidence artifact；若旧 Taskbook 未声明 carrier，则先按 Human/repo authority / existing repo convention / runtime existing carrier / `implement-notes` fallback 的顺序解析一处，不新造第二套；
+3. **durable execution state**：优先读取 Taskbook 指向的唯一 carrier，以及 Executor 留下的原始/稳定 Evidence artifact；若旧 Taskbook 未声明 carrier，只读取 Human/repo authority 或 established repo/runtime convention 已经存在的载体。没有既有载体就没有这项输入，**Reviewer 不创建 `implement-notes` 或任何 fallback state file**；
 4. 旧 session memory 只能帮助定位，不能替代上述 SOT。
 
 如果 Human 在 Taskbook 之后明确改了 Goal / boundary / Verification / priority / authorization，不要静默拼出一个新合同；准确指出原 Taskbook 已被 supersede，需要重新 Compile 后再 Review。
@@ -21,7 +21,7 @@ Review 只依赖可重建输入，不依赖旧 conversation 继续活着：
 - 能访问 authoritative environment 时，对最终结论关键且成本合理的 Evidence 直接重新取得；无法访问时要求可复核 provenance / artifact，而不是猜；
 - premise 变化只让受影响 Evidence stale，不机械推翻无关 Evidence；
 - judge 被 skip/todo、放松断言、删活体测试、mock 被测对象、改阈值、吞失败、`|| true` 等削弱后产生的绿灯无效；
-- **Review 只判卷，不实现/修复**：不修改目标 workspace、不替 Executor 补 patch、不重写 Taskbook、不启动 Executor。发现失败只输出最小、可执行的 gap，让后续 Executor invocation 继续。
+- **Review 只判卷，不实现/修复**：不修改目标 workspace、不替 Executor 补 patch、不重写 Taskbook、不启动 Executor，也不创建新的 execution-state carrier。发现失败只输出最小、可执行的 gap，让后续 Executor invocation 继续。
 
 ## Verdict
 
@@ -38,9 +38,9 @@ Review 输出保持短：Verdict、最关键 Evidence、必要 gap / resume cond
 ```text
 Read <TASKBOOK_PATH> as the authoritative execution contract. Review the current workspace and still-valid Evidence against its Goal, decision priority, boundaries, must-preserve constraints, triggered required Verification, and Completion Hook.
 
-Use current authoritative repo/runtime reality and the Taskbook-selected durable execution-state carrier only as evidence/provenance inputs; if the Taskbook predates carrier selection, resolve one existing carrier from Human/repo authority or repo/runtime convention before falling back to implement-notes. Do not reconstruct the task from conversation and do not create a second state protocol. Re-acquire final-judgment-critical Evidence directly when the authoritative environment is accessible. Reuse Evidence whose premises remain valid and stale only affected Evidence when premises changed. Executor narration or self-declared PASS is not proof, and any green obtained by weakening the judge is invalid.
+Use current authoritative repo/runtime reality and the Taskbook-selected durable execution-state carrier only as evidence/provenance inputs. If the Taskbook predates carrier selection, read an already-existing carrier only when Human/repo authority or an established repo/runtime convention identifies it; if none exists, proceed without durable-state input and do not create implement-notes or any replacement state file. Do not reconstruct the task from conversation. Re-acquire final-judgment-critical Evidence directly when the authoritative environment is accessible. Reuse Evidence whose premises remain valid and stale only affected Evidence when premises changed. Executor narration or self-declared PASS is not proof, and any green obtained by weakening the judge is invalid.
 
-Do not implement or repair the Goal, modify the target workspace, rewrite the Taskbook, or launch an Executor during review. Return Verdict: PASS only when the original Completion Hook is satisfied. Otherwise return Verdict: NON-PASS or BLOCKED with the smallest concrete gap, the Evidence supporting that judgment, and the exact resume condition for a separate Executor invocation.
+Do not implement or repair the Goal, modify the target workspace, rewrite the Taskbook, create execution-state files, or launch an Executor during review. Return Verdict: PASS only when the original Completion Hook is satisfied. Otherwise return Verdict: NON-PASS or BLOCKED with the smallest concrete gap, the Evidence supporting that judgment, and the exact resume condition for a separate Executor invocation.
 ```
 
 Same-session review is allowed as a convenience, but correctness must be identical when the same Taskbook + repo reality + durable Evidence are supplied in a fresh session.
