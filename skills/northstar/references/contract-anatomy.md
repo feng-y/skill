@@ -31,4 +31,4 @@ Goal 定准至少要清楚这些事情：唯一、内部一致且由 Human 决�
 
 Human 明确验证要求不决定 Goal 是什么，但必须在进入执行前被准确保留为 Verification 的 binding input。
 
-如果仍有多个实质不同的 Goal 都说得通，直接写清当前理解、不同选择的后果、必要时给推荐，并提出最小 Human decision 或 evidence probe；不要输出可执行 Taskbook，也不要用 status token 把这次未收敛变成 outcome lifecycle state。
+如果仍有多个实质不同的 Goal 都说得通，写清当前理解、不同选择的后果、必要时给推荐，并提出最小 Human decision 或 evidence probe；不要输出可执行 Taskbook。
