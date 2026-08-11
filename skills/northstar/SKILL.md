@@ -34,7 +34,7 @@ Evidence
 
 这比“不要写哪些代码细节”的 checklist 更重要。Research 中刚发现的好方案也不会因此自动升级成任务定义。
 
-**删除 / 迁移先定 disposition。** 先判断什么能力最终还应该存在、哪个 authority 承接它，再编译 Execution。现有 consumer、数据流、可承接能力可以从 repo 查；但“活体能力是否继续存在、最终归谁”如果没有 Human / Architecture Intent / repo authority 已经决定，就是 intent / architecture 问题，不能用一个 replacement mechanism 填空。当前请求若重新打开了已有 Architecture Intent 的 responsibility / ownership / boundary，Northstar 不自行修复架构结论；先返回 `Status: Unresolved Intent` 或提出最小的 Human-owned 决定。
+**删除 / 迁移先定 disposition。** 先判断什么能力最终还应该存在、哪个 authority 承接它，再编译 Execution。现有 consumer、数据流、可承接能力可以从 repo 查；但“活体能力是否继续存在、最终归谁”如果没有 Human / Architecture Intent / repo authority 已经决定，就是 intent / architecture 问题，不能用一个 replacement mechanism 填空。当前请求若重新打开了已有 Architecture Intent 的 responsibility / ownership / boundary，Northstar 不自行修复架构结论；返回 `Status: Unresolved Intent` 并指出未决的上游 architecture decision。只有该决定本身确实属于 Human authority 时才问 Human。
 
 **Human correction 从最高受影响层重新进入。** 如果纠正的是 Goal / capability disposition，就让依赖它的 Execution / Verification 重新编译；不要在被否定的下层继续换一个机制重发。若只纠正 Execution，仍有效的 Goal 不重开。
 
@@ -42,7 +42,7 @@ Evidence
 
 Research 只做到足以定准 Goal、边界、关键 Verification 和不写就会误判的 trap；不要把调研深度转成输出长度。Ask 只问 repo reality / upstream authority 无法决定的 Human-owned 选择；普通 factual / implementation Unknown 交给 Executor 在执行期取证。
 
-Taskbook 没有固定章节义务。只保留 fresh Executor 真正需要的：**outcome、必要的 priority / boundary / must-preserve、少量彼此 judgment/dependency 真不同的 work unit、以及完成所需的 proof。** 它回答“什么算对”，不回答“具体怎么改”。
+普通 prompt / brief / contract 直接返回文本，不强制包装成 Taskbook。需要 autonomous execution handoff 时，只保留 fresh Executor 真正需要的：**outcome、必要的 priority / boundary / must-preserve、少量彼此 judgment/dependency 真不同的 work unit、以及完成所需的 proof。** 它回答“什么算对”，不回答“具体怎么改”，也没有固定章节义务。
 
 复杂 autonomous work 确实需要更细的 Graph / baseline / Verification / Evidence 约束时，按需读取 [execution-compile.md](references/execution-compile.md)；只有具体 false-green / gameability / independence 风险存在时读取 [verification-trust.md](references/verification-trust.md)。不要为了完整感默认加载这些 reference。
 
@@ -57,6 +57,6 @@ Taskbook 没有固定章节义务。只保留 fresh Executor 真正需要的：*
 
 ## Output
 
-- `Status: Unresolved Intent` — 仍有会改变 Goal / capability disposition / upstream architecture 的 Human-owned 决定；
+- `Status: Unresolved Intent` — 仍有会改变 Goal / capability disposition / upstream architecture 的未决上游决定；指出缺口及 authority，不把它伪装成实现问题；
 - `Status: Blocked` — 缺的是事实或环境，且当前没有安全可继续的工作；写准确 blocker 与恢复条件；
-- `Status: Executable` — 交付 minimum-sufficient task definition；若有 handoff 文件，立即显示路径。
+- `Status: Executable` — 交付 minimum-sufficient autonomous task definition；若有 handoff 文件，立即显示路径。
