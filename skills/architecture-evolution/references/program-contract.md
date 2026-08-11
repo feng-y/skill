@@ -1,32 +1,16 @@
 # Architecture Program Contract
 
-只在 `Status: Architecture decision ready` 时读取。本文件定义 AE 的 Compile 结果：把完整 architecture reasoning 压成一个可继续设计/执行、但不需要下游重新发现架构 why 的薄 Architecture Program。它不规定固定 Markdown 章节，也不输出内部 judgment taxonomy。
+只在 `Status: Architecture decision ready` 时读取。Compile 的目标是把完整 reasoning 压成薄 Architecture Program，让下游无需重新发现 architecture why；不规定固定 Markdown 章节。
 
-最终结果应让一个不了解本轮 Research 过程的人能够回答：**结构要变成什么、长期保持什么、接下来哪几个 architecture improvement 最值得真实推进、它们有什么依赖、完成后什么旧复杂度退出。**
+已有 authoritative repo SOT 定义稳定事实时直接引用；Program 只携带新的 architecture judgement / structural delta。若 SOT 本身要变，明确修改该 authoritative source，不建立平行规范。
 
-已有 authoritative repo SOT 已定义稳定 contract / invariant / schema / boundary 时，优先引用其路径或稳定名称，不用散文复制成第二份事实源。Compile 只携带本轮新增的 architecture judgement、结构 delta、必须改变的 authoritative rule，以及下游继续推进所需的最小 rationale；若现有 SOT 本身需要演进，明确它应改变什么，而不是在 Program 中另建平行规范。
+Program 只需要回答：
 
-只保留会约束后续架构变化或推进顺序的内容：
+- **Target delta** — current → target 的关键 layer/dependency、capability/responsibility、abstraction/specific 变化；
+- **Long-lived invariants** — 后续演进仍应保持的少量 architecture boundary；
+- **Top Improvements** — 最多 3 个，不补数；按 structural leverage 排序。每个必须说明 structural change、architecture gain、real exit、structural done condition，并在完成时独立让当前结构变好；
+- **Route / completion** — 只保留 improvements 之间真实的 architecture dependency，以及整体完成后哪些旧结构不再 authoritative。
 
-- **Structural adjustment** — 用最小 current → target 对比说明 layer/dependency、module/capability boundary、abstraction/specific 或 primary responsibility 要发生什么结构变化；不复述文件 inventory。
-- **Long-term architecture** — 少量长期必须成立的 boundary / invariant，说明未来需求来了以后系统仍应保持什么结构；只保留稳定方向，不写未来可能性清单。
-- **Top Architecture Improvements** — 最多 3 个；不足 3 个不补数。优先保留能减少最多跨边界 knowledge/dependency/accidental complexity、或解除后续结构性阻塞的 improvement，而不是实现最容易或描述最宏大的项。每个 improvement 都必须是一个真实可推进的 bounded architecture outcome，而不是 research question、knowledge task、愿望或实现步骤。
-- **Route** — 只表达 improvements 之间真实的 architecture dependency：为什么 B 必须在 A 的结构事实成立后才能推进。没有 dependency 就允许并行；不制造 roadmap ceremony。
-- **Boundary / completion** — 整体 in/out scope、must-preserve，以及完成这些 improvement 后什么结构事实成立、什么旧结构不再 authoritative。
+research/knowledge task、future wish、纯铺路 abstraction/bridge 或 implementation step 不能冒充 improvement；若缺失 evidence 会决定某个 change 是否真改善结构或改变推进依赖，返回 `Status: Architecture unresolved`。
 
-每个 Architecture Improvement 必须同时回答四件事：
-
-1. **Structural change** — 哪个长期 layer / dependency / responsibility / abstraction / provider boundary 会改变；
-2. **Architecture gain** — 它明确改善哪个核心判断：layering、cohesion/simplicity、abstraction vs specific、primary responsibility 或 real evolution；
-3. **Real exit** — 哪个旧 knowledge / authority / dependency / special path / accidental complexity 会真实退出或停止 authoritative；
-4. **Done condition** — 用结构事实说明何时完成，不固定 test/lint/evidence provider。
-
-每个 improvement 完成后都必须独立产生结构收益；不能只“为下一步铺路”而让新 abstraction / bridge / authority 与旧结构并存却没有任何旧 complexity 退出。若 architecture dependency 要求先建立新 boundary，则该 improvement 也必须同时迁移至少一类真实 responsibility / knowledge / dependency，使当前结构当场变好。
-
-如果一个候选项只有“研究 / 确认 / 梳理 / 观察 / 收集数据”，或完成后结构没有确定变好，它不能进入 Top Improvements。若缺失 evidence 会决定该 change 到底是不是 improvement、会改变 Target Architecture 或推进顺序，则不能靠 Compile 隐藏它：返回 `Status: Architecture unresolved`。
-
-Compile 应删除 Research trace、完整 alternatives 论证、Brooks challenge 过程、普通 unknown、看过的文件列表和 implementation detail。只有某个被否决 alternative 的代价会约束后续设计时，才保留一句必要 decision rationale。
-
-Architecture Program 可以固定 Target Architecture 与 architecture-level improvement outcome，但不能把 representation 冒充 architecture law。除非 Human/repo authority 或不可替代约束使其成为 invariant，否则不要固定具体 class/API/file、helper、flag/metadata schema、虚函数形式、调用实现、MR/task split 或 lint/test/verification provider。
-
-标题、组织方式和正文跟随用户主要语言；`Status` token、代码符号、文件名和稳定协议名称可保留原文。不要输出五项 judgment 清单、Brooks 名称、评分表或 reasoning trace。
+删除 Research trace、完整 alternatives/Brooks 过程、普通 unknown、文件 inventory 与 implementation detail。除非 representation 本身是 authoritative invariant，不固定 class/API/file/schema/call implementation/MR/task/test provider。
