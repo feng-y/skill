@@ -26,7 +26,7 @@ Split work only when judgment or dependency genuinely differs. Graph expresses r
 
 Ordinary factual / implementation Unknowns stay with the Executor to resolve from current repo reality. Reopen an upstream decision only when the conclusion would change Goal / authority.
 
-Still-valid work / Evidence aligned with the Goal can be reused. New Evidence stales only conclusions that depend on it. A material Human correction to the current handoff is also Evidence: re-enter at the highest affected layer, replace only dependent compiled conclusions, then continue to complete the handoff rather than leaving the correction as a conversation-only patch.
+Still-valid work / Evidence aligned with the Goal can be reused. New Evidence stales only conclusions that depend on it. A material Human correction to the current handoff re-settles intent / authority at the highest affected layer, replaces only dependent compiled conclusions, then continues to complete the handoff rather than leaving the correction as a conversation-only patch.
 
 ## Verification / Evidence
 
