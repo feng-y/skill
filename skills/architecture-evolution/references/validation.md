@@ -11,7 +11,7 @@
 - 现有 module 名称、provider/class taxonomy、consumer partition 都只是 evidence；必须允许从真实职责重新识别 capability、boundary 与 provider；
 - `rules.md` 的 architecture kernel 仍只有 Layering & dependency、Cohesion & simplicity、Abstraction vs specific、Primary vs auxiliary responsibility、Real evolution；其他维度只是 evidence lenses；
 - Brooks 仍只保留 Conceptual Integrity、Essential vs Accidental Complexity、Second-System Effect 三个按需反证 lens，不形成第二套 runtime taxonomy；
-- `decision-contract.md` 是唯一 ready artifact owner：完整 reasoning 被 Compile 成 Structural adjustment、Long-term architecture、最多 3 个真实 Architecture Improvements、必要 Route 与 completion；不要求固定 Markdown section；
+- `program-contract.md` 是唯一 ready artifact owner：完整 reasoning 被 Compile 成 Structural adjustment、Long-term architecture、最多 3 个真实 Architecture Improvements、必要 Route 与 completion；不要求固定 Markdown section；
 - Top Improvements 不固定凑 3 个。每个都必须有 structural change、architecture gain、real exit、done condition；research/knowledge task、愿望和 implementation step 不能冒充 improvement；
 - 如果缺失 evidence 会决定一个 change 是否真能改善结构、会改变 Target Architecture 或真实推进依赖，则必须 `Architecture unresolved`；Compile 不能隐藏 blocker；
 - ready output 不泄漏完整 alternatives、Brooks trace、文件 inventory、普通 unknown 或 implementation design；
@@ -170,7 +170,7 @@ B. 加载 architecture-evolution
 3. B 臂不能靠更长 analysis 冒充能力提升：必须表现出 bounded research、重新识别 capability/provider、具体 Target Architecture 和 convergent Compile；
 4. ready 必须至少有一个真实 Architecture Improvement，且不能以 research task 补数；
 5. captured regression properties 1–8 全部可判定，具体 case 名词不进入 runtime；
-6. README / SKILL / agent prompt / decision contract 与 module-anchored Research + Compile 语义一致；
+6. README / SKILL / agent prompt / program contract 与 module-anchored Research + Compile 语义一致；
 7. Brooks 能挑战局部合理但整体膨胀的 proposal，却不成为另一套 taxonomy；
 8. 只有 clean-session paired Evidence 才能宣称 behavioral uplift；static/scenario review 只证明 contract/eval consistency。
 
