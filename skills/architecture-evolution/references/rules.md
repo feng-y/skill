@@ -2,7 +2,7 @@
 
 只在需要 architecture judgement 时读取。本文件拥有 Architecture Evolution 的核心判断；它不是固定推理流程，也不要求逐项输出。
 
-架构原则保持少而稳定。`change pressure / knowledge / SOT / control / lifecycle / variation / complexity relocation` 用来证明或推翻架构判断，不与架构原则本身平级。
+架构原则保持少而稳定。核心是四个结构设计判断，加一个 evolution gate：**Layering & dependency、Cohesion & simplicity、Abstraction vs specific、Primary vs auxiliary responsibility；以及旧复杂度是否真实退出。** `change pressure / knowledge / SOT / control / lifecycle / variation / complexity relocation` 只用来证明或推翻这些判断，不与它们平级。
 
 ## Architecture or local
 
@@ -10,7 +10,7 @@ Architecture work 必须来自真实 structural pressure，而不是模式偏好
 
 如果一个局部修复就能消除 pressure，且不需要重新确定长期 layer / dependency、module responsibility、abstraction boundary、primary responsibility 或旧结构退出，就保持 local。
 
-## Five architecture judgments
+## Architecture design
 
 ### Layering & dependency normativity
 
@@ -38,7 +38,7 @@ Layer 是稳定 responsibility + dependency boundary，不是为了整齐增加�
 
 不要为了未经证明的性能收益打穿 layering、cohesion 或 abstraction boundary。只有 profiling、SLA、resource constraint 或其他真实 evidence 证明性能会改变长期架构选择时，性能才升级为 architecture force；否则结构清晰、责任自然和长期可演进性优先。
 
-### Real evolution
+## Real evolution gate
 
 Architecture change 必须让旧复杂度真实退出，而不是增加一层后继续保留旧知识和旧路径。至少应能说明哪些 duplicate semantics / caller knowledge / reverse dependency / special branch / old authority / permanent compatibility 会停止 authoritative 或被删除。
 
@@ -46,13 +46,13 @@ Architecture change 必须让旧复杂度真实退出，而不是增加一层后
 
 ## Evidence lenses
 
-只展开会改变上述五个判断的 evidence：
+只展开会改变上述架构判断的 evidence：
 
 - **Change locality** — future change 为什么跨多个模块传播；用于判断 Cohesion / Abstraction 是否切错。
 - **Knowledge reassembly** — caller 为完成责任必须知道什么内部事实；用于判断 Cohesion / Primary responsibility 是否泄漏。
 - **Authority / SOT / control / lifecycle** — 谁定义事实、选择实现、驱动执行、拥有状态与生命周期；用于判断 Layering / Responsibility 是否清楚。不要因为这些责任相关就默认集中到同一 owner。
 - **Variation evidence** — 差异是否由稳定 semantics / lifecycle / performance / deployment 证明；用于判断 Abstraction vs specific。
-- **Complexity relocation** — 被删除的 complexity 去了哪里、由谁承担；用于判断是否发生 Real evolution。
+- **Complexity relocation** — 被删除的 complexity 去了哪里、由谁承担；用于判断是否通过 Real evolution gate。
 
 一个 lens 干净不能替另一个作证：clean dependency graph 不等于模块内聚；单一 owner 不等于 abstraction 正确；统一 interface 不等于 specific variation 应消失。
 
@@ -80,7 +80,7 @@ Architecture Decision 不能只有目标状态，还要说明 architecture 如�
 
 ## Material Unknown & evidence lifetime
 
-只有会改变 architecture vs local、五个核心判断、Target Architecture 或 architecture-level evolution 的 unknown 才是 Material Unknown。
+只有会改变 architecture vs local、核心架构判断、Target Architecture 或 architecture-level evolution 的 unknown 才是 Material Unknown。
 
 ```text
 Claim at risk → Minimal probe / Human decision → Evidence → Decision changed / retained
