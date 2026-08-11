@@ -12,6 +12,8 @@
 - `rules.md` 的 architecture kernel 仍只有 Layering & dependency、Cohesion & simplicity、Abstraction vs specific、Primary vs auxiliary responsibility、Real evolution；其他维度只是 evidence lenses；
 - Brooks 仍只保留 Conceptual Integrity、Essential vs Accidental Complexity、Second-System Effect 三个按需反证 lens，不形成第二套 runtime taxonomy；
 - `program-contract.md` 是唯一 ready artifact owner：完整 reasoning 被 Compile 成 Structural adjustment、Long-term architecture、最多 3 个真实 Architecture Improvements、必要 Route 与 completion；不要求固定 Markdown section；
+- `agents/openai.yaml` 的 default prompt 只是薄 invocation pointer，不复制 Research topology、architecture kernel、Brooks 或 Compile 细则；这些语义只由对应 runtime owner 提供；
+- Compile 遇到已有 authoritative repo SOT 时优先引用而不是散文复制；Program 只保留本轮新增 judgement / structural delta，若旧 SOT 需要演进则指向该 authoritative source 的变化，不新建平行事实源；
 - Top Improvements 不固定凑 3 个。每个都必须有 structural change、architecture gain、real exit、done condition；research/knowledge task、愿望和 implementation step 不能冒充 improvement；优先级来自 structural leverage，而不是实现便利或描述规模；
 - 如果缺失 evidence 会决定一个 change 是否真能改善结构、会改变 Target Architecture 或真实推进依赖，则必须 `Architecture unresolved`；Compile 不能隐藏 blocker；
 - ready output 不泄漏完整 alternatives、Brooks trace、文件 inventory、普通 unknown 或 implementation design；
@@ -110,6 +112,12 @@ PASS：不能进入 Top Improvements。要么收敛成一个同时产生结构�
 
 PASS：Top Improvements 优先后两者，而不是按实现成本最低、改动最大或描述最抽象排序。排序依据是能减少多少跨边界 knowledge/dependency/accidental complexity，以及是否解除后续结构性阻塞。
 
+### C5 — Compile references authoritative SOT
+
+repo 已有 authoritative schema / contract / architecture rule 定义一个必须保持的稳定事实，本轮 AE 只新增其上的结构判断；另一个旧 SOT 本身需要随 Target Architecture 演进。
+
+PASS：前者在 Architecture Program 中引用 authoritative path / stable name，而不是复制一份散文规范；后者明确指出 authoritative source 应改变的 architecture delta。Program 不因为“自包含”复制整个 contract/schema，也不建立新的平行 SOT。
+
 ### N1 — Local fix stays local
 
 问题只是 off-by-one、日志字段、dead getter、机械迁移或局部重复，不需要改变核心架构判断。
@@ -145,7 +153,8 @@ PASS：AE 可以明确 Target Architecture、improvement outcome、architecture 
 5. scoring-side “executor 不再拥有 family-specific execution knowledge”可以是 architecture outcome，但“必须显式声明差异”或指定 symbol 必删不是无条件 architecture law；
 6. auxiliary concern 不能仅因实现方便升级为 primary architecture owner；
 7. Research 默认从指定模块有限展开，而不是把 repo completeness 当成功；
-8. Compile 中 research/knowledge task 不能冒充 architecture improvement；每个 improvement 都必须带来确定结构收益与 real exit。
+8. Compile 中 research/knowledge task 不能冒充 architecture improvement；每个 improvement 都必须带来确定结构收益与 real exit；
+9. 已有 authoritative repo truth 优先被引用；Compile 只携带新的 architecture judgement / delta，不复制第二份 SOT。
 
 ## Paired behavioral eval
 
@@ -166,17 +175,17 @@ B. 加载 architecture-evolution
 | Abstraction / specific | 过度统一、锁死历史 partition 或制造 provider | 大方向正确但 variation 理由弱 | common/specific 由稳定 semantics/invariant 决定，仅真实 variation 形成 provider |
 | Primary responsibility | auxiliary concern 塑造主架构 | 主次大致清楚 | primary surface 主导结构，辅助 concern 附着且不污染 boundary |
 | Real evolution | 新层叠在旧结构上 | 有部分退出 | 旧 knowledge/authority/dependency/path 明确退出，temporary complexity 有 exit |
-| Compile convergence | reasoning dump、研究清单或固定 3 项 | 有推进点但收益/完成态不稳 | 最多 3 个真实 improvement，每个有 change/gain/exit/done；top value 来自 structural leverage，route 只保真实依赖 |
+| Compile convergence | reasoning dump、研究清单、重复 SOT 或固定 3 项 | 有推进点但收益/完成态/SOT 边界不稳 | 最多 3 个真实 improvement，每个有 change/gain/exit/done；引用既有 SOT、只保新增 delta；top value 来自 structural leverage，route 只保真实依赖 |
 | Architecture altitude | 只给口号或直接进代码设计 | 能描述部分 target | 完成 Target Architecture + Program，同时保持 Implementation Design 自由 |
 
 ## V2 pass gate
 
-1. P1–P3 / C1–C4 的 discriminator 全部正确；
+1. P1–P3 / C1–C5 的 discriminator 全部正确；
 2. P4–P8 / N1 / R1 / L1 / O1 的边界全部正确；
 3. B 臂不能靠更长 analysis 冒充能力提升：必须表现出 bounded research、重新识别 capability/真实 variation、具体 Target Architecture 和 convergent Compile；
 4. ready 必须至少有一个真实 Architecture Improvement，且不能以 research task 补数；
-5. captured regression properties 1–8 全部可判定，具体 case 名词不进入 runtime；
-6. README / SKILL / agent prompt / program contract 与 module-anchored Research + Compile 语义一致；
+5. captured regression properties 1–9 全部可判定，具体 case 名词不进入 runtime；
+6. README / SKILL / program contract 与 module-anchored Research + Compile 语义一致；agent default prompt 只负责 invocation，不复制这些 runtime 规则；
 7. Brooks 能挑战局部合理但整体膨胀的 proposal，却不成为另一套 taxonomy；
 8. 只有 clean-session paired Evidence 才能宣称 behavioral uplift；static/scenario review 只证明 contract/eval consistency。
 
@@ -195,6 +204,7 @@ B. 加载 architecture-evolution
 - `complexity-relocation` — 旧结构消失但 knowledge/branch/adapter 只是搬家；
 - `authority-duplication` — 新旧 SOT 长期并存；
 - `compile-as-summary` — Compile 只是压缩 reasoning，没有形成可推进 architecture outcomes；
+- `compile-sot-duplication` — 已有 authoritative contract/schema/boundary 仍被 Program 散文复制成第二份事实源；
 - `non-improving-top-item` — Top Improvement 完成后结构没有确定变好或没有 real exit；
 - `research-as-improvement` — “研究/确认/收集数据”进入 Top Improvements；
 - `forced-top3` — 不足 3 个真实 improvement 时为补数制造 future work；
