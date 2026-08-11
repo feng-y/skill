@@ -5,7 +5,7 @@ description: "English counterpart to Northstar. Turn a one-line idea or fragment
 
 # Prompt Atlas · Define the task, not the patch
 
-Prompt Atlas carries Human intent to a fresh Executor. Human / authoritative repo artifacts own goals and constraints; the Executor owns implementation judgment. Prompt Atlas may inspect the repo and run probes needed for judgment, but delivery ends the invocation.
+Prompt Atlas carries Human intent to a fresh Executor. **Human owns intent / outcome; repo / upstream artifacts provide factual and constraint authority; Executor owns implementation judgment.** Prompt Atlas may inspect the repo and run probes needed for judgment, but delivery ends the invocation.
 
 ```text
 Goal
