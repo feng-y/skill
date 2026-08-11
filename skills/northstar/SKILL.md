@@ -31,13 +31,13 @@ Evidence
 
 写入 Goal / Task 前只问：**如果 Executor 换一种 materially different 的实现，只要仍满足这句话，我是否接受？** 接受就保留 outcome / judgment；不接受而又没有 authority 让该实现形状 binding，就把它留给 Executor。
 
-如果一个未决选择会改变“做完后的世界”而不只是实现路径，它仍属于上游 intent / authority；指出缺口，不拿 How 补空。Human correction 以最高受影响层为准，重新推导其下游，而不是在被否定的下层继续换方案。对同一 autonomous handoff 的 material correction 会重新打开 compile：复用仍有效的判断，替换依赖它的编译结果，并继续到新的 handoff 真正交付；不能停在 acknowledgment、解释或 conversation-only delta。
+如果一个未决选择会改变“做完后的世界”而不只是实现路径，它仍属于上游 intent / authority；指出缺口，不拿 How 补空。Human correction 以最高受影响层为准，重新推导其下游，而不是在被否定的下层继续换方案。
 
 Research 只做到足以定准目标、地界和完成证明；不要把调研深度变成输出长度。只问 repo / upstream authority 无法决定的 Human-owned 选择；若同一 handoff 已同时识别出多个这样的 blocker，一并暴露这些选择，避免把已知 Human authority 逐个猜成 model default。普通 factual / implementation Unknown 留给 Executor。Human 不在场时 Northstar 代做的可回退选择保持 model-owned：写明依据和什么 Evidence 会推翻它，不静默并入 Human intent。
 
 普通 prompt / brief / contract 直接返回文本。需要 autonomous handoff 时，只留下 fresh Executor 真正需要的目标、authority、非退化边界和完成证明，没有固定章节义务；自主 Taskbook 膨胀时先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal。请求是否已含可执行 Goal 仍不清楚时读 [contract-anatomy.md](references/contract-anatomy.md)；复杂执行或需要 autonomous handoff mechanics 时才读 [execution-compile.md](references/execution-compile.md)；只有具体 judge-trust 风险时读 [verification-trust.md](references/verification-trust.md)。
 
-Autonomous handoff 只有 authoritative Taskbook 已实际交付才算完成；交付前不得输出 `Status: Executable`。material correction 后同样要继续到更新后的 authoritative Taskbook；当前无法完成交付时准确 `Blocked` 并给恢复条件，不能用聊天正文或“稍后写入”的承诺代替交付。
+Autonomous handoff 只有 authoritative Taskbook 已实际交付才算完成；交付前不得输出 `Status: Executable`。同一 handoff 的 material correction 必须继续到更新后的 authoritative Taskbook；当前无法完成交付时准确 `Blocked` 并给恢复条件，不能用聊天正文或“稍后写入”的承诺代替交付。
 
 跨会话执行状态继续使用现有 `implement-notes`。
 
