@@ -4,7 +4,7 @@
 
 只展开与当前 decision 有真实关系的 challenge：
 
-- **Conceptual Integrity** — 系统应由少量一致的 design ideas 解释。一个局部很好的 feature、优化或 abstraction，如果要求 caller / maintainer 同时记住第二套概念、特殊规则或例外路径，就可能破坏整体结构。优先 challenge Layering、Cohesion 和 Primary responsibility 是否仍由同一组概念解释。
+- **Conceptual Integrity** — 系统应由少量一致的 design ideas 解释。一个局部很好的 feature、优化或 abstraction，如果要求 caller / maintainer 同时记住第二套概念、特殊规则或例外路径，就可能破坏整体结构。优先 challenge Layering、Cohesion 和 Primary responsibility 是否仍由同一组概念解释。Conceptual integrity 不等于统一 implementation：若 stable specific variation 能被同一架构模型自然解释，就应保留，不为表面一致强行合并。
 - **Essential vs Accidental Complexity** — 只有来自问题本身或当前必须满足的外部系统约束、无法通过改变 representation / organization 消除的复杂度，才应被当作 essential。由历史 representation、工具限制、重复解释、兼容残留、当前 provider/class/deployment 形状制造的 complexity 仍需被挑战，不能因为“现实存在”就永久 architecture 化。用它 challenge Abstraction vs specific 与 Real evolution：新 abstraction 若只是重新包装 accidental complexity，不算改进。
 - **Second-System Effect** — 重设计最容易把过去没做的 flexibility、extension point、mode、hook、registry、通用框架和“顺便优化”一次补齐。除非当前 evidence 证明它们是长期 architecture requirement，否则优先克制：保留更少概念、更窄 public surface，让未来真实 pressure 再证明新的 abstraction / specific boundary。
 
