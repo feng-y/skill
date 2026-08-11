@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
-  short_description: "Settle Goal and define the task without prewriting implementation"
-  default_prompt: "Use $prompt-atlas. Compile the Human's wording into outcome, means, and constraints: trace a named means back to the result it serves to define what completion means, leave replaceable means to the Executor, and keep only constraints that Human/repo authority makes binding. Prefer existing specifications; when upstream intent is unsettled, name the gap instead of filling it with a mechanism."
+  short_description: "Settle Human intent, route Unknowns, then compile the task"
+  default_prompt: "Use $prompt-atlas. Start with Intent Take/Shape: separate outcome, means, and constraints from the Human's latest wording; close factual Unknowns through repo/runtime authority, keep completed-world choices with the Human, and leave implementation How to the Executor. Compile a minimum-sufficient Taskbook only after Goal converges."
