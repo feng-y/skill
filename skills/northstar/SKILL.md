@@ -23,7 +23,7 @@ Evidence
 
 从 Human 最新且仍有效的表达出发，用 repo reality 和已有 Architecture Intent、tests、schema、ADR、验收脚本等 authority 校正。已有规格优先引用，不在 handoff 里再写一份散文副本。
 
-像 Leader 一样先把输入分成三类：
+先把输入分成三类：
 
 - **目标**：做完后什么必须成立；
 - **手段**：用户或 Research 提到的做法，默认是可替换假设；
