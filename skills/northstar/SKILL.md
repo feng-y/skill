@@ -37,7 +37,7 @@ Research 只做到足以定准目标、地界和完成证明；不要把调研�
 
 普通 prompt / brief / contract 直接返回文本。需要 autonomous handoff 时，只留下 fresh Executor 真正需要的目标、authority、非退化边界和完成证明，没有固定章节义务；自主 Taskbook 膨胀时先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal。请求是否已含可执行 Goal 仍不清楚时读 [contract-anatomy.md](references/contract-anatomy.md)；复杂执行或需要 autonomous handoff mechanics 时才读 [execution-compile.md](references/execution-compile.md)；只有具体 judge-trust 风险时读 [verification-trust.md](references/verification-trust.md)。
 
-Autonomous handoff 只有 authoritative Taskbook 已实际交付才算完成；交付前不得输出 `Status: Executable`。同一 handoff 的 material correction 必须继续到更新后的 authoritative Taskbook；当前无法完成交付时准确 `Blocked` 并给恢复条件，不能用聊天正文或“稍后写入”的承诺代替交付。
+Autonomous handoff 只有 authoritative Taskbook 已实际交付才算完成；交付前不得输出 `Status: Executable`。material correction 若重新打开上游 intent / authority，则保持 `Unresolved Intent`；重新收敛为 executable handoff 后，必须继续到更新后的 authoritative Taskbook 实际交付。已收敛 Taskbook 当前无法 materialize 时准确 `Blocked` 并给恢复条件，不能用聊天正文或“稍后写入”的承诺代替交付。
 
 跨会话执行状态继续使用现有 `implement-notes`。
 
