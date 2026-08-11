@@ -31,10 +31,12 @@ Evidence
 13. **Completion success path**：只有 Goal / constraints + triggered required Verification + current valid Evidence 足够覆盖时 `STOP`；Task/frontier 为空本身不代表完成。
 14. **Completion failure path**：同一验收连续失败 3 次且没有新增 Evidence 时停止同一路线硬顶，切换有依据的策略/独立 work 或准确 non-PASS；可信 baseline 由绿变红时先恢复或如实报告。
 15. **Durable state**：execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point 使用现有 `implement-notes`；换 session 先恢复，不把 conversation 当唯一状态。
-16. **Taskbook size**：自主执行 Taskbook 默认 ≤4000 字符；超长先做 judgment compression/去重，不把一个 Human Goal 偷拆成 layer Goal 来凑长度。
+16. **Taskbook size**：自主 Taskbook 默认 ≤4000 字符；超长先做 judgment compression/去重，不把一个 Human Goal 偷拆成 layer Goal 来凑长度。
 17. **Role boundary**：Taskbook delivery 即 Northstar STOP；可以为编译读取 reality/运行 probe，但不执行 material Goal work、不修改目标 workspace、不启动 Executor。
+18. **Semantic altitude**：Taskbook 编译“什么算对”，不把 Research 预测的机制当 judgment。若换一种 materially different 的实现仍可满足一句话并被接受，它才自然属于任务定义；若不同实现不可接受，必须有 Human/repo/upstream authority 证明该形状本身 binding。删除/迁移中的 live capability disposition / final authority 先在 Goal/architecture 层收敛，不用 replacement mechanism 填空。
+19. **Correction re-entry**：Human correction 从最高受影响语义层重新进入。Goal / capability disposition 被否定时，其依赖的 Execution / Verification 必须失效并重编译；不能保留旧 Goal 假设，只在下层换另一个机制重发。Execution-only correction 不机械重开仍有效 Goal。
 
-Static smoke 必须 **17/17 PASS** 才能进入 behavioral comparison。
+Static smoke 必须 **19/19 PASS** 才能进入 behavioral comparison。
 
 ## Scenario smoke
 
@@ -118,18 +120,28 @@ FS retirement 的 Research 发现几个混合状态实例：一个仍有活 bina
 
 PASS：Taskbook 不生成 `Needs-human-decision` 列表让 Human 决定这些 factual Unknown；它们留在对应 outcome+judgment Task 内，由 Executor 判 dead/live/mixed，只有裁决要求改变 Goal/boundary/authority 时才升级。终验收也不能把整组“候选旧符号”全部点名成 hard `grep 0`；只有已证明 target-only 的对象才可具体归零，其余用 responsibility predicate + coverage oracle。
 
+### S17 — Removal settles capability disposition before mechanism
+一个 retired row-storage 仍间接服务 debug/sample/shadow consumer；Research 已证明 surviving columnar feature-result authority 能表达现有结果，但“这些场景是否继续存在、最终由谁承接”没有被 Human / Architecture Intent / repo authority 全部定准。
+
+PASS：Northstar 先把 capability disposition / final authority 当 Goal/architecture 问题收敛；未收敛就 `Status: Unresolved Intent`，不得用 parallel vectors、session/context bridge、snapshot representation、projection API 或其他 replacement mechanism 填空。若 upstream authority 已明确 surviving capability 与 owner，Taskbook 只保留该 outcome、must-preserve 和必要 proof，具体 wiring 交给 Executor。
+
+### S18 — Goal correction invalidates dependent mechanism
+Northstar 已交付一个 migration Taskbook。Human 纠正：“不是把旧存储换成另一种表示，而是让 surviving feature-result authority 承接”；下一轮又纠正最终 owner/能力边界。
+
+PASS：每次从最高被纠正层重新编译，旧 Goal/disposition 假设及依赖的 Execution 一起失效；不得在原 Execution 海拔连续换“两个 vector → fill 期 bridge → 新 projection API”等机制直到猜中。若只改了某个 execution tactic，则仍有效 Goal 可复用。
+
 ## Leader parity smoke
 
 Leader 是行为基线，不是答案 oracle。至少检查：
 
-1. Research 足够深但最终任务书短；
-2. outcome + judgment 能覆盖未列 execution reality，普通技术 Unknown 与同类实例留给 Executor，而不是被清单/逐项 Evidence 接管；
-3. baseline / command / provider 有真实 grounding，并在作为执行 premise 时有 recheck / mismatch gate；
-4. decision priority 与双向 boundary 能让 Executor 自裁；
+1. Research 足够深但最终任务书短；已有 rich spec 优先引用，不用 Taskbook 复制 repo；
+2. Taskbook 保持 outcome/Goal 海拔：不同 implementation 可以在同一任务定义下成立，Research 刚得到的机制不因为“很合理”就升级成 law；
+3. 普通技术 Unknown 与同类实例留给 Executor，而不是被清单/逐项 Evidence 接管；capability disposition / Human-owned direction 不被 implementation default 偷填；
+4. baseline / command / provider 有真实 grounding，并在作为 execution premise 时有 recheck / mismatch gate；
 5. law/intelligence 分离，不把建议写成法，Research candidate 不自动成为 hard-zero law；
 6. failure stop-loss / rollback / anti-cheat / resume state 可执行；
-7. 明卷是默认路径，暗卷/独立 Evidence 只在具体 material false-green / gameability / independence risk 存在时按需启用（见 `verification-trust.md`），不设 every-taskbook 固定抽查；
-8. Northstar 额外 Graph / Verification / Evidence 能力不能降低上述质量。
+7. 明卷是默认路径，暗卷/独立 Evidence 只在具体 material false-green/gameability/independence risk 存在时按需启用（见 `verification-trust.md`），不设 every-taskbook 固定抽查；
+8. Human correction 能从正确语义层 re-enter，而不是在被否定的下层继续替换机制。
 
 Northstar 不复制 Leader 的 `/goal` surface、固定六节或 `PROGRESS.md/BLOCKED.md` 文件名；**≤4000 字符和三次失败 stop-loss 已经是当前 Northstar runtime contract，validation 必须按当前事实评测。**
 
@@ -145,18 +157,18 @@ C. candidate/current Northstar
 
 优先至少跑：
 
-- FS retirement：混合 territory、术语撞车、production Verification；
-- simple bugfix：防止 cleanup 机制污染简单任务；
-- architecture evolution：验证 Human-owned internal invariant 不会被错误过滤。
+- FS retirement / SlotStorage migration：surviving authority、capability disposition、避免 replacement-design materialization，并追加一次 Goal-level correction 检查 re-entry；
+- simple bugfix：防止薄 runtime 让简单任务失去必要边界/Verification，也防止复杂机制污染简单任务；
+- architecture evolution：验证 Human-owned / upstream architecture invariant 不会被错误过滤，也不会由 Northstar 自行补全。
 
-每项 0–2：Goal fidelity、judgment/task abstraction、coverage completeness、Executor freedom、Verification scope、Evidence quality、anti-false-pass、completion/failure handling、Human intervention、context cost。
+每项 0–2：Goal fidelity、semantic altitude、judgment/task abstraction、coverage completeness、Executor freedom、Verification scope、Evidence quality、anti-false-pass、correction re-entry、context cost。
 
 ### Behavioral pass gate
 
 - candidate 无新的 critical regression；
-- FS case 不弱于 Leader：不漏 scope、不误删 live responsibility、不退化成 path checklist/per-symbol ledger、不把普通技术 Unknown 升级 Human、不预写 patch、不把未证实 candidate 变 hard-zero；
-- simple bugfix 不因 Leader-parity 机制显著膨胀；
-- architecture case 能区分 Goal-owned invariant 与 implementation guess；
+- FS case 不弱于 Leader/main：不漏 scope、不误删 live responsibility、不把 capability disposition 偷降级为 implementation fact、不预写 replacement wiring、Goal 打回后不在下层换机制；
+- simple bugfix 不因 thin-context 改造变得含糊或显著膨胀；
+- architecture case 尊重上游 Architecture Intent / Human-owned invariant，未决 architecture 不由 Northstar 自补；
 - 只有 clean-session evidence 显示 candidate 至少不弱于 Leader/main，才宣称 behavioral parity/uplift。
 
 ## Claim boundary
