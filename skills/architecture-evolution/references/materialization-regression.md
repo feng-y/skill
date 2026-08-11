@@ -65,4 +65,4 @@ Evidence 证明 caller 不应拥有 implementation-specific variation knowledge�
 
 1. `model_family_`、family switch、纯转发 arm 和重复抽取前奏可以证明 executor 持有 family-specific execution knowledge，但它们的逐项删除不能自动成为 architecture acceptance；stable exit 应判断这份 caller knowledge/reassembly 是否真正退出。
 2. `每个模型的执行期差异在能力侧显式声明` 把 owner judgement 过早物化成 representation。Architecture Intent 只固定 scoring capability boundary 应拥有 variation；是否采用 contract metadata、虚函数、多态对象或 capability-owned execution 留给 Target Design。
-3. Human 若随后纠正上述 Direction / acceptance，旧 ready intent 不能与聊天 delta 并存为 active truth；应按 Flow 重新收敛并产出唯一 current Architecture Intent，或在 Material Unknown 未关闭时返回 `Intent unresolved`。
+3. Human 若随后纠正上述 Direction / acceptance，旧 ready intent 不能与聊天 delta 并存为 active truth；应按 Flow 重新判断当前状态：architecture pressure 不再成立时返回 `No architecture intent`，Material Unknown 未关闭时返回 `Intent unresolved`，仍 ready 才重新输出完整 current Architecture Intent。
