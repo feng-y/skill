@@ -9,7 +9,7 @@
 - North Star 是从 forces / repo reality 收敛 Architecture Decision + architecture-level evolution，不再只产出 Architecture Intent；
 - `SKILL.md` 只拥有 stance、适用边界和三种终态，不要求固定 reasoning stage；
 - `rules.md` 是 architecture judgement 的唯一 owner：architecture forces、minimal current model、design space、trade-off、complexity relocation、Target Architecture altitude、evolution；
-- `intent-contract.md` 只拥有 ready decision 的语义义务，不要求固定 Markdown section；
+- `decision-contract.md` 只拥有 ready decision 的语义义务，不要求固定 Markdown section；
 - Target Architecture 可以固定长期 responsibility / authority / knowledge / control / lifecycle / dependency / essential variation boundary，但不把 class/API/file/helper/schema/调用实现/task/verification provider 当 architecture law；
 - alternatives 只有 materially different architecture fork 才出现，不要求固定数量，也不把同一 representation 的不同命名/类层次算不同 architecture；
 - 若多个 materially different architecture 都可行而 forces 不足以裁决，必须 `Architecture unresolved`，不能把第一个 plausible shape 当 ready；
