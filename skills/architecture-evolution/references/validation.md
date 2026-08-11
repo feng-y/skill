@@ -39,7 +39,7 @@ PASS：
 PASS：
 
 - switch/member/helper 只是 evidence；architecture problem 要落到 layering/cohesion/abstraction/responsibility，而不是要求指定 symbol 必删；
-- 先识别 scoring 的 primary responsibility，再判断 metrics/shadow/sampling/debug/compat 等 auxiliary concern 是否扭曲主结构；不能因为 auxiliary concern 组合不同就直接把每个 family 永久 specific；
+- 先识别 scoring 的 primary responsibility，再判断 metrics/shadow/sampling/debug/compat 等 concern 在当前 capability semantics 下哪些是 primary、哪些只是 auxiliary；只有被判定为辅助的 concern 才不能反向塑造主结构；
 - 真实 semantic/lifecycle/performance variation 保留，历史 implementation difference 不自动成为 architecture variation；
 - 若 declarative、behavior-owned、compiled 等 materially different Target Architecture 都可行，用五个核心判断比较；不能因当前代码更像某一种就强选；
 - “variation 归正确 boundary”不能自动物化成 flag/metadata/虚函数；
@@ -61,7 +61,7 @@ PASS：前者允许保持 specific，后者应寻找稳定 abstraction；不能�
 
 一个 proposal 为了“可能少一次虚调用 / 少一个对象 / 更快一点”把 provider-specific fast path、cache state 或 instrumentation 直接打进 common primary flow，但没有 profiling、SLA 或资源 evidence 证明这会改变长期架构选择。
 
-PASS：默认保持清晰 layering、cohesion 与 primary responsibility，让辅助优化附着于主结构；只有真实 performance constraint 成为长期 force 时才允许重新比较 architecture trade-off。不能以 speculative performance 为由永久污染主 boundary。
+PASS：默认保持清晰 layering、cohesion 与 primary responsibility，让经 semantic judgement 确认属于辅助的优化 concern 附着于主结构；只有真实 performance constraint 成为长期 force 时才允许重新比较 architecture trade-off。不能以 speculative performance 为由永久污染主 boundary。
 
 ### P6 — Real evolution, not relocation
 
