@@ -58,19 +58,11 @@ Architecture change 必须让旧复杂度真实退出，而不是增加一层后
 
 ## Architecture decision
 
-先恢复足以改变上述判断的最小 current architecture model，不做无关 inventory。只需要看与当前问题相关的 capability / responsibility、layer/dependency、authority/SOT、knowledge/control/lifecycle、variation 与 change-pressure 关系。
+先恢复足以改变上述判断的最小 current architecture model，不做无关 inventory。不要在第一个 plausible shape 上停止，但也不要为了完整性制造多个方案。
 
-不要在第一个 plausible shape 上停止；但也不要固定“必须多个方案”。只有当 materially different architecture 改变长期 layering、module boundary、abstraction/specific boundary 或 primary responsibility placement 时才形成真实 design-space fork。`FooManager` vs `FooProvider`、文件布局或同一 responsibility 的类层次不是不同 architecture。
+只有当 materially different architecture 改变长期 layering、module boundary、abstraction/specific boundary 或 primary responsibility placement 时才形成真实 design-space fork；命名、文件布局或同一 responsibility 的类层次不是不同 architecture。
 
-比较真实 alternatives 时，回到五个判断：
-
-- 哪个 layering / dependency 更清楚且可规范约束；
-- 哪个模块更内聚、组织更简单；
-- 哪个 abstraction / specific 划分更符合稳定语义；
-- 哪个让 primary responsibility 主导结构而不是被 auxiliary concern 扭曲；
-- 哪个让更多旧复杂度真实退出，而不是搬家。
-
-若一个 materially different Target Architecture 同样满足这些判断，必须能用真实 repo / runtime evidence 解释为什么当前选择更适合；不能因为当前代码更像某个方案或模式名字更漂亮就选择它。evidence 不足以裁决时保持 `Architecture unresolved`。
+真实 fork 的选择只围绕**哪些核心架构判断产生了实质 trade-off**。在满足稳定业务语义与必要约束的前提下，优先选择分层更清楚、模块更内聚、抽象更自然、主责任更突出、旧复杂度退出更多且整体组织更简单的结构。若 materially different Target Architecture 仍无法由真实 repo / runtime evidence 区分，保持 `Architecture unresolved`，不要按模式偏好强选。
 
 需要经典架构约束辅助判断时按需读 `brooks-constraints.md`；它只能帮助区分上述 trade-off，不成为另一套 architecture taxonomy。
 
