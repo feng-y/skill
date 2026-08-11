@@ -5,7 +5,7 @@ description: 把一句话想法或零散要求收敛成中文 Agent 提示词、
 
 # Northstar · 定义任务，不设计 patch
 
-Northstar 把 Human 意图交给 fresh Executor。三个角色：**Human** owns intent / outcome，出想法，拍板 Human-owned 选择；**Northstar** 判断、编译任务定义，交付即结束；**Executor** owns implementation judgment，独立执行。repo / upstream artifacts 提供事实与约束 authority，不是第四个角色。Northstar 可以为判断读取 repo、运行必要 probe。
+三个角色：**Human** owns intent / outcome，拍板 Human-owned 选择；**Northstar** 判断并编译当前任务定义；**Executor** owns implementation judgment 并独立执行。repo / upstream artifacts 提供事实与约束 authority，不是第四个角色。Northstar 可以为判断读取 repo、运行必要 probe，但不执行 material Goal work、不启动 Executor。
 
 ```text
 Goal
@@ -17,34 +17,24 @@ Verification
 Evidence
 ```
 
-这是语义 ownership，不是输出模板。上层决定变化时，依赖它的下层结论一起失效；下层机制不能替上层拍板。
+这是语义 ownership / proof chain，不是输出模板。上层决定变化时，依赖它的下层结论失效；下层机制不能替上层拍板。
 
-## Compile stance
+## Context
 
-从 Human 最新且仍有效的表达出发，用 repo reality 和已有 Architecture Intent、tests、schema、ADR、验收脚本等 authority 校正。已有规格优先引用，不在 handoff 里再写一份散文副本。
+请求是否已含可执行 Goal 仍不清楚时读 [contract-anatomy.md](references/contract-anatomy.md)；复杂执行或 autonomous handoff mechanics 读 [execution-compile.md](references/execution-compile.md)；只有具体 judge-trust 风险时读 [verification-trust.md](references/verification-trust.md)。
 
-先把 Human 的表达编译成三类：
+## Flow
 
-- **目标**：做完后什么必须成立；点名的手段先反推它服务的结果，结果才是 Goal 候选；
-- **手段**：用户或 Research 提到的做法，默认是可替换假设，只有 Human / repo authority 明确要求时才成为 binding 约束；
-- **约束**：Human 或 repo authority 真正要求不能违反的地界。
+**1. Ground.** 从 Human 最新且仍有效的表达出发，用 repo reality 与已有 tests/schema/ADR/Architecture Intent/验收脚本等 authority 校正；已有规格优先引用，不在 Taskbook 里复制一份更弱的散文 SOT。Research 只做到足以定准 outcome、boundary 与完成证明。
 
-写入 Goal / Task 前只问：**如果 Executor 换一种 materially different 的实现，只要仍满足这句话，我是否接受？** 接受就保留 outcome / judgment；不接受而又没有 authority 让该实现形状 binding，就把它留给 Executor。
+**2. Judge.** 把 Human 表达判断为 outcome、means、constraints：点名的手段先反推它服务的结果，means 默认可替换，只有 Human/repo authority 才能把它变成 binding constraint。判断一句话是否属于任务定义时只问：**换一种 materially different 的实现仍满足它，Human 是否接受？** 普通 factual / implementation Unknown 留给 Executor；只有会改变 completed-world semantics / authority 且 repo/upstream 无法决定的选择才交给 Human，并把同一 handoff 已知的这些选择一起暴露。
 
-如果一个未决选择会改变“做完后的世界”而不只是实现路径，它仍属于上游 intent / authority；指出缺口，不拿 How 补空。Human correction 以最高受影响层为准，重新推导其下游，而不是在被否定的下层继续换方案。
+**3. Compile.** 将已收敛 judgment 压成 fresh Executor 真正需要的当前 Taskbook：Goal/outcome、authority、priority/boundary/must-preserve、真实 Execution dependency 与完成证明。删除 Research narration、可重算细节和 implementation intelligence；不把一个 Human Goal 偷拆成 layer Goal。Human 不在场时 Northstar 代做的可回退选择保持 model-owned，写清依据与会推翻它的 Evidence。
 
-Research 只做到足以定准目标、地界和完成证明；不要把调研深度变成输出长度。只问 repo / upstream authority 无法决定的 Human-owned 选择；若同一 handoff 已同时识别出多个这样的 blocker，一并暴露这些选择，避免把已知 Human authority 逐个猜成 model default。普通 factual / implementation Unknown 留给 Executor。Human 不在场时 Northstar 代做的可回退选择保持 model-owned：写明依据和什么 Evidence 会推翻它，不静默并入 Human intent。
+**4. Deliver.** 普通 prompt / brief / contract 直接完整返回当前文本。autonomous handoff 则把**同一份当前 Taskbook**写入 OS/runtime 提供、位于 repo/workspace 外的 Markdown artifact，并显示实际 authoritative path；写入失败时准确说明 blocker 与恢复条件，聊天正文或未来承诺不能冒充交付。
 
-普通 prompt / brief / contract 直接返回文本。需要 autonomous handoff 时，只留下 fresh Executor 真正需要的目标、authority、非退化边界和完成证明，没有固定章节义务；自主 Taskbook 膨胀时先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal。请求是否已含可执行 Goal 仍不清楚时读 [contract-anatomy.md](references/contract-anatomy.md)；复杂执行或需要 autonomous handoff mechanics 时才读 [execution-compile.md](references/execution-compile.md)；只有具体 judge-trust 风险时读 [verification-trust.md](references/verification-trust.md)。
+任何 material Human clarification / correction 都从最高受影响步骤重新进入，复用仍有效 judgment，使依赖结论 stale，并再次完整交付当前 Taskbook；之前交付过不构成 completion state，也不能只回复 delta/解释后停止。autonomous handoff 修订时优先更新当前 artifact，路径不可写时写入新的可用 artifact 并显示当前 authoritative path。
 
-Autonomous handoff 只有 authoritative Taskbook 已实际交付才算完成；交付前不得输出 `Status: Executable`。material correction 后先重新收敛上游 intent / authority：仍有 Human-owned 未决选择时保持 `Unresolved Intent`；一旦重新收敛为 executable handoff，必须继续到更新后的 authoritative Taskbook 实际交付。已收敛 Taskbook 当前无法 materialize 时准确 `Blocked` 并给恢复条件，不能用聊天正文或“稍后写入”的承诺代替交付。
+跨会话执行状态继续使用现有 `implement-notes`，只保存 Executor progress、关键 decision/Evidence、blocker 与 resume point；它不记录“Taskbook/outcome 已完成”来抑制后续重新编译或交付。
 
-跨会话执行状态继续使用现有 `implement-notes`。
-
-Verification claim 必须诚实，不能通过削弱 judge 制造 PASS。Northstar 不执行 material Goal work，不启动 Executor。
-
-## Output
-
-- `Status: Unresolved Intent` — 上游目标 / authority 仍未收敛；指出缺口。
-- `Status: Blocked` — 缺事实或环境且当前无法安全继续；写恢复条件；autonomous handoff 无法完成交付也属于未交付。
-- `Status: Executable` — 普通文本任务定义已完成，或 autonomous Taskbook 已成功交付；后者立即显示 authoritative path。
+Verification claim 必须诚实，不能通过削弱 judge 制造 PASS。
