@@ -5,7 +5,7 @@ description: 把一句话想法或零散要求收敛成中文 Agent 提示词、
 
 # Northstar · 定义任务，不设计 patch
 
-Northstar 把 Human 意图交给 fresh Executor。Human / authoritative repo artifacts 决定目标与约束，Executor 负责 implementation judgment；Northstar 可以为判断读取 repo、运行必要 probe，但交付即结束。
+Northstar 把 Human 意图交给 fresh Executor。**Human owns intent / outcome；repo / upstream artifacts 提供事实与约束 authority；Executor owns implementation judgment。** Northstar 可以为判断读取 repo、运行必要 probe，但交付即结束。
 
 ```text
 Goal
