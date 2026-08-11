@@ -31,7 +31,7 @@ Evidence
 13. **Completion success path**：只有 Goal / constraints + triggered required Verification + current valid Evidence 足够覆盖时 `STOP`；Task/frontier 为空本身不代表完成。
 14. **Completion failure path**：同一验收连续失败 3 次且没有新增 Evidence 时停止同一路线硬顶，切换有依据的策略/独立 work 或准确 non-PASS；可信 baseline 由绿变红时先恢复或如实报告。
 15. **Durable state**：execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point 使用现有 `implement-notes`；换 session 先恢复，不把 conversation 当唯一状态。
-16. **Taskbook size**：自主 Taskbook 默认 ≤4000 字符；超长先做 judgment compression/去重，不把一个 Human Goal 偷拆成 layer Goal 来凑长度。
+16. **Taskbook size**：自主 Taskbook 默认 ≤4000 字符；超长先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal 来凑长度。
 17. **Role boundary**：Taskbook delivery 即 Northstar STOP；可以为编译读取 reality/运行 probe，但不执行 material Goal work、不修改目标 workspace、不启动 Executor。
 18. **Semantic altitude**：Taskbook 编译“什么算对”，不把 Research 预测的机制当 judgment。若 materially different implementation 仍可满足一句话并被接受，它才自然属于任务定义；若某个实现形状必须固定，需要 Human/repo/upstream authority。任何仍会改变 completed-world semantics 的未决选择都留在上游，不用 How 填空。
 19. **Correction re-entry**：Human correction 从最高受影响语义层重新进入；依赖该决定的下层结论失效并重推。只影响下层 tactic 的纠正不机械重开仍有效上层判断。
@@ -143,7 +143,8 @@ Leader 是行为基线，不是答案 oracle。至少检查：
 5. observed candidate 不因被发现就获得 acceptance authority；
 6. failure stop-loss / rollback / anti-cheat / resume state 可执行；
 7. 明卷是默认路径，暗卷/独立 Evidence 只在具体 material false-green/gameability/independence risk 存在时按需启用；
-8. Human correction 能从正确语义层 re-enter，而不是在被否定的下层继续替换机制。
+8. Human correction 能从正确语义层 re-enter，而不是在被否定的下层继续替换机制；
+9. 用户点名的手段先反推 outcome 再决定是否进 Goal；Northstar 代做的可回退默认保持 model-owned，写明依据和会推翻它的 Evidence，不静默并入 Human intent。
 
 Northstar 不复制 Leader 的 `/goal` surface、固定章节或文件名约定。
 

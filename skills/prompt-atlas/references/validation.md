@@ -31,7 +31,7 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 13. **Completion success path**: `STOP` only when Goal / constraints + triggered required Verification + current valid Evidence close coverage. Empty Tasks/frontier is not completion by itself.
 14. **Completion failure path**: after the same Verification fails three times with no new Evidence, stop pushing the same route; switch to an evidence-backed strategy/independent work or report accurate non-PASS. If a trusted baseline goes green→red, restore it or report the regression honestly.
 15. **Durable state**: execution progress, new Unknowns, blockers, key decisions/Evidence, and resume point live in existing `implement-notes`; a new session restores it instead of using conversation as the only state.
-16. **Taskbook size**: autonomous Taskbooks default to ≤4000 characters; compress judgment and remove duplication rather than splitting one Human Goal into artificial layers.
+16. **Taskbook size**: autonomous Taskbooks default to ≤4000 characters; when over, compress judgment and remove duplication / implementation intelligence first, rather than splitting one Human Goal into artificial layers.
 17. **Role boundary**: Taskbook delivery ends Prompt Atlas. It may inspect reality/run probes for compilation, but it does not perform material Goal work, mutate the target workspace toward the Goal, or launch an Executor.
 18. **Semantic altitude**: the Taskbook compiles what counts as correct instead of turning a Research-predicted mechanism into judgment. A statement naturally belongs in the task when a materially different implementation can still satisfy it and remain acceptable. If an implementation shape must be fixed, Human/repo/upstream authority must make it binding. Any unresolved choice that still changes completed-world semantics stays upstream instead of being filled with How.
 19. **Correction re-entry**: Human correction re-enters at the highest affected semantic layer. Dependent lower-layer conclusions become stale and are re-derived. A correction that changes only a lower-layer tactic does not mechanically reopen still-valid higher-level judgment.
@@ -143,7 +143,8 @@ Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 5. observed candidates do not acquire acceptance authority merely by being discovered;
 6. failure stop-loss / rollback / anti-cheat / resume state are executable;
 7. visible verification is the default path; hidden / independent Evidence activates only on a concrete material false-green / gameability / independence risk;
-8. Human correction re-enters at the correct semantic layer rather than substituting another mechanism at the rejected lower layer.
+8. Human correction re-enters at the correct semantic layer rather than substituting another mechanism at the rejected lower layer;
+9. a means named by the Human is traced back to its outcome before entering the Goal; a reversible default made on the Human's behalf stays model-owned, with its basis and the Evidence that would overturn it stated, never silently merged into Human intent.
 
 Prompt Atlas does not copy Leader's `/goal` surface, fixed sections, or file-name conventions.
 

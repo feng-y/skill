@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
   short_description: "收敛 Goal，定义任务而不预写实现"
-  default_prompt: "使用 $northstar。把输入分成目标、手段、约束：定义什么算完成，把可替换手段留给 Executor，只保留 Human/repo authority 真正 binding 的约束。优先引用已有规格；上游意图未决就指出缺口，不用实现机制补空。"
+  default_prompt: "使用 $northstar。把 Human 表达编译成目标、手段、约束：从点名的手段反推它服务的结果来定义什么算完成，手段默认可替换、留给 Executor，只保留 Human/repo authority 真正 binding 的约束。优先引用已有规格；上游意图未决就指出缺口，不用实现机制补空。"
