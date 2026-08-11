@@ -32,7 +32,7 @@ Target Architecture 必须让旧 knowledge/authority/reverse dependency/special 
 
 不要停在第一个 plausible shape，也不要制造假 alternatives。只有长期 layering、module boundary、abstraction/specific 或 primary-responsibility placement 不同时才是 materially different architecture fork。
 
-满足稳定业务语义与必要约束后，优先选择分层更清楚、内聚更高、抽象更自然、主责任更突出、旧复杂度退出更多且整体更简单的结构。真实 fork 若仍缺少 decisive repo/runtime evidence，保持 `Architecture unresolved`。
+满足稳定业务语义与必要约束后，优先选择分层更清楚、内聚更高、抽象更自然、主责任更突出、旧复杂度退出更多且整体更简单的结构。真实 fork 若仍缺少 decisive repo/runtime evidence，不按模式偏好强选；明确缺失的 evidence / Human decision，由 Flow 的 Deliver 交付。
 
 ## Altitude & unknowns
 
