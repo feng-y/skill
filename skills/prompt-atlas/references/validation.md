@@ -34,7 +34,7 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 16. **Taskbook size**: autonomous Taskbooks default to ≤4000 characters; when over, compress judgment and remove duplication / implementation intelligence first, rather than splitting one Human Goal into artificial layers.
 17. **Role boundary / material handoff**: Prompt Atlas STOPs after ordinary text output is delivered. An autonomous Taskbook is delivered only after it is actually written outside the repo/workspace and its authoritative path is surfaced; only then may Prompt Atlas STOP. It may inspect reality/run probes for compilation, but it does not perform material Goal work, mutate the target workspace toward the Goal, or launch an Executor.
 18. **Semantic altitude**: the Taskbook compiles what counts as correct instead of turning a Research-predicted mechanism into judgment. A statement naturally belongs in the task when a materially different implementation can still satisfy it and remain acceptable. If an implementation shape must be fixed, Human/repo/upstream authority must make it binding. Any unresolved choice that still changes completed-world semantics stays upstream instead of being filled with How.
-19. **Correction re-entry / continuation**: Human correction re-enters at the highest affected semantic layer. Dependent lower-layer conclusions become stale and are re-derived. A correction that changes only a lower-layer tactic does not mechanically reopen still-valid higher-level judgment. If the correction materially changes the same autonomous handoff, Prompt Atlas must re-deliver the updated authoritative Taskbook before reaching the new terminal status; acknowledgment, explanation, or a conversation-only delta is not completion.
+19. **Correction re-entry / continuation**: Human correction re-enters at the highest affected semantic layer, and dependent lower-layer conclusions become stale and are re-derived. After a material correction, reconverge from that layer: while Human-owned upstream intent / authority remains unsettled, remain `Unresolved Intent`; once it reconverges to an executable handoff, re-deliver the updated authoritative Taskbook before reaching `Executable`. A correction that changes only a lower-layer tactic does not mechanically reopen still-valid higher-level judgment; acknowledgment, explanation, or a conversation-only delta is not completion.
 
 Static smoke must be **19/19 PASS** before behavioral comparison.
 
@@ -130,7 +130,7 @@ PASS: Prompt Atlas keeps U at the correct upstream semantic layer. If repo/upstr
 ### S18 — Higher-level correction recompiles the delivered handoff
 Prompt Atlas compiled and delivered an autonomous handoff under higher-level decision D; the Human later changes D to D'. Existing Execution contains several concrete mechanism choices that depended on D.
 
-PASS: re-enter at the highest layer affected by D→D' and invalidate dependent lower-layer conclusions; reuse unaffected compiled judgment and re-deliver the updated authoritative Taskbook, surfacing the current authoritative path. Reusing the prior path is not required for PASS. Do not preserve the old higher-level assumption and merely cycle M1→M2→M3, and do not stop after only explaining the correction or returning a conversation delta. If the correction changes only an execution tactic, still-valid higher-level judgment remains reusable.
+PASS: re-enter at the highest layer affected by D→D' and invalidate dependent lower-layer conclusions; reuse unaffected compiled judgment. If D→D' leaves Human-owned upstream intent / authority unresolved, remain `Unresolved Intent` and do not force Taskbook materialization. Once it reconverges to an executable handoff, re-deliver the updated authoritative Taskbook and surface the current authoritative path; reusing the prior path is not required for PASS. Do not preserve the old higher-level assumption and merely cycle M1→M2→M3, and once reconverged do not stop after only explaining the correction or returning a conversation delta. If the correction changes only an execution tactic, still-valid higher-level judgment remains reusable.
 
 ### S19 — Materialization failure is not successful delivery
 Prompt Atlas can already generate a plausible autonomous Taskbook, but writing the temporary file fails, the tool is unavailable, or no write is attempted.
@@ -150,7 +150,7 @@ Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 7. visible verification is the default path; hidden / independent Evidence activates only on a concrete material false-green / gameability / independence risk;
 8. Human correction re-enters at the correct semantic layer rather than substituting another mechanism at the rejected lower layer;
 9. a means named by the Human is traced back to its outcome before entering the Goal; a reversible default made on the Human's behalf stays model-owned, with its basis and the Evidence that would overturn it stated, never silently merged into Human intent;
-10. autonomous handoff is complete only after its authoritative Taskbook is actually written and its path surfaced; a material correction to the same task continues compilation and delivers the updated Taskbook instead of stopping at explanation, a chat delta, or an unwritten delivery promise.
+10. autonomous handoff is complete only after its authoritative Taskbook is actually written and its path surfaced; if a material correction reopens Human-owned upstream intent / authority, remain unresolved, and once it reconverges to an executable handoff deliver the updated Taskbook instead of stopping at explanation, a chat delta, or an unwritten delivery promise.
 
 Prompt Atlas does not copy Leader's `/goal` surface, fixed sections, or file-name conventions.
 
@@ -169,7 +169,7 @@ Cover at least these domain-neutral property stimuli and replace domain/nouns be
 - **altitude / authority**: plausible How exists while one or more higher-level choices remain unresolved; when several Human-owned blockers are already visible, verify they are not serially guessed as defaults; then add one higher-level correction to test re-entry;
 - **simple local change**: verify thin context does not make simple work vague or import complex ceremony;
 - **upstream invariant**: an explicit authority and a separate unresolved upstream choice coexist; verify the former is preserved and the latter is not silently completed by the model;
-- **handoff lifecycle**: request autonomous handoff into a runtime temporary file, then provide a material correction after the first delivery; verify the candidate continues to deliver the updated authoritative Taskbook and returns a new terminal status with the current authoritative path rather than leaving the revision in conversation.
+- **handoff lifecycle**: request autonomous handoff into a runtime temporary file, then provide a material correction after the first delivery and have that correction reopen a Human-owned upstream choice. Verify the candidate remains `Unresolved Intent` without forcing a revised Taskbook write, then after authority settles, delivers the updated authoritative Taskbook and returns a terminal status with the current authoritative path.
 
 Score 0–2 on Goal fidelity, semantic altitude, judgment/task abstraction, coverage completeness, Executor freedom, Verification scope, Evidence quality, anti-false-pass, correction re-entry, handoff completion/continuity, and context cost.
 
@@ -180,7 +180,7 @@ Score 0–2 on Goal fidelity, semantic altitude, judgment/task abstraction, cove
 - unresolved higher-level choice is not downgraded into an implementation fact, and a Research mechanism is not prewritten as binding How; concurrently visible Human-owned blockers for the same handoff are not serially guessed as model defaults;
 - simple local change does not become vague or materially inflated because of the thin-context rewrite;
 - explicit upstream authority is respected while genuinely unresolved upstream choice is not invented by Prompt Atlas;
-- autonomous handoff must actually be written; after a material correction it must continue to the updated authoritative Taskbook rather than an acknowledgment-only / conversation-delta stop, and cannot end with an unwritten delivery promise;
+- autonomous handoff must actually be written; if a material correction reopens upstream intent / authority, remain `Unresolved Intent`, and once it reconverges to an executable handoff continue to the updated authoritative Taskbook instead of an acknowledgment-only / conversation-delta stop or an unwritten delivery promise;
 - claim behavioral parity/uplift only when clean-session Evidence shows candidate is at least as strong as Leader/main.
 
 ## Claim boundary
