@@ -13,8 +13,9 @@
 - 四个 architecture directions 仍可用于内部 diagnosis，但不要求输出 taxonomy；
 - Brooks 只用于 challenge judgement，不形成最终 section；
 - ready intent 的物理 section 只有 Problem / Background / Direction / Boundary；`Stable acceptance rule` 位于 Direction，Possible shapes 仅按需出现；
-- stable acceptance 只描述 outcome / boundary / replacement 何时成立，不固定 lint/test/evidence provider；具体验证方法属于下游；
+- stable acceptance 只描述 outcome / boundary / replacement 何时成立，不固定 lint/test/evidence provider、当前 symbol/residue 或 variation representation；具体验证方法和 Target Design 属于下游；
 - 未关闭且会改变 intent / boundary 的 Material Unknown 只能返回 `Intent unresolved`，ready 不携带 active Material Unknown；
+- 已 ready intent 收到 material Human correction 时只 reopen 受影响判断；未重新收敛则 `Intent unresolved`，重新收敛后返回完整 current Architecture Intent，不以旧 intent + conversation delta 代替；
 - 最终输出跟随用户主要语言；
 - 三个状态保持互斥：`No architecture intent / Intent unresolved / Architecture intent ready`；
 - 不进入具体 Target Design；
@@ -55,6 +56,12 @@ Direction、Boundary 和 Replacement / exit 已稳定，repo 同时存在 build/
 
 通过：Intent 只写一个 outcome-level stable acceptance rule；具体验证 provider 留给后续 design/implementation 根据最终 change surface 选择，不冻结当前 app/target/config 列表。
 
+### P5 — Implementation evidence does not become architecture law
+
+Research 已定位一个 family switch、若干纯转发 arm、重复前奏和不同后置步骤组合；这些 residue 共同证明 caller 持有 capability 内部 variation knowledge，但存在多个 materially different Target Design 都能关闭这份 knowledge。
+
+通过：Direction / stable acceptance 固定的是 caller 不再按 implementation identity 理解或重新拼装 capability variation，以及对应 knowledge/responsibility/dependency 的真实退出。当前 member/switch arm/helper 是否逐个删除只作为 evidence / design consequence；variation 由正确 owner 承担，但不规定必须用 flag、metadata、显式声明、虚函数或其他 representation。
+
 ### N1 — Local fix
 
 问题只是 off-by-one、日志字段、dead getter 或机械迁移，没有重复 pressure、consumer knowledge 或跨边界 structural consequence。
@@ -66,6 +73,12 @@ Direction、Boundary 和 Replacement / exit 已稳定，repo 同时存在 build/
 一个未关闭事实会改变 intent 或 boundary，例如无法确认两条路径是否属于同一业务语义。
 
 通过：`Status: Intent unresolved`；指出 claim at risk 和最小 probe / Human decision，不同时返回 ready。
+
+### R2 — Ready correction replaces the current intent
+
+已经输出 `Status: Architecture intent ready`；Human 随后 materially 修正 Direction、Boundary 或 acceptance premise，其中一部分旧 judgment 仍有效。
+
+通过：只 reopen correction 影响的判断及其依赖结论并复用其余 Evidence；若 correction 留下会改变 intent / boundary 的 Human-owned 决定或 Material Unknown，则返回 `Intent unresolved`。重新收敛后重新输出完整 current Architecture Intent；只确认 correction、只给 delta、或让旧 intent + patch 同时充当 active truth 都失败。
 
 ### L1 — Legacy identity is not runtime behavior
 
@@ -96,22 +109,22 @@ B. 加载 architecture-evolution
 | Reality separation | 用单一接口/依赖信号替代整体判断 | 部分区分 | semantics/ownership/consumer/dependency/runtime 按需要分开判断 |
 | Architecture judgment | local/architecture 混淆或 solution-first | 大方向合理但根因不稳 | 正确裁决 architecture vs local，并形成一个 evidence-backed direction |
 | Durable outcome | 局部 target shape 冒充 outcome | why 大致成立但下游仍需重建 | why/direction/boundary 已稳定；有明确上位 goal 时说明 area 贡献，否则从 pressure 得出最小 durable outcome |
-| Invariant quality | class/API/library 被当成架构规范 | boundary 大致清楚 | 少量 stable invariant/boundary + 明确 local autonomy，且不提前设计 enforcement |
+| Invariant quality | class/API/library 或 variation representation 被当成架构规范 | boundary 大致清楚 | 少量 stable invariant/boundary + 明确 local autonomy，且不提前设计 representation/enforcement |
 | Ownership scope | 从 reassembly 直接扩张 owner | scope 大致正确但 relation 含糊 | owner 只扩到 invariant evidence，execution/orchestration/adjacent owner 不被无证据吞并 |
 | Unknown handling | 猜测、制造 unknown 或 ready 带 active blocker | 有 probe 但影响不清 | 只处理会改变 intent/boundary 的 unknown；未关闭则 unresolved |
 | Challenge quality | 只做自我确认 | 检查有限 | 主动检查 false unification、relocation、reassembly、owner overreach、exit 与 Human decision |
-| Acceptance quality | 没有判定 outcome 是否成立，或冻结验证套餐 | 有验收描述但混入 provider | 一个 stable outcome-level acceptance rule；provider 与动态 target 留给下游 |
+| Acceptance quality | 没有 outcome 判据，或冻结验证套餐/当前代码 residue | 有验收描述但仍混入实现形状 | 一个 stable outcome-level acceptance rule，判断 knowledge/responsibility/dependency/replacement 是否真正退出；provider 与当前 residue 留给下游 |
 | Output discipline | 输出 taxonomy/Brooks/trace 或重型协议 | 大致精简但有多余 machinery | 仅 Problem / Background / Direction / Boundary，Possible shapes 按需，Material Unknown 不泄漏到 ready |
 | Target-design boundary | 直接规定 module/class/API/migration | 偶有责任放置或调用流泄漏 | freeze why/outcome/boundary，how 保持开放并在 basic shape 前后正确停止 |
-| Status / invocation | 状态或适用范围错误 | 正确但冗长 | 三状态互斥，local/已明确设计/直接实现请求正确退出 |
+| Status / invocation | 状态/适用范围错误，或 ready correction 只留成 delta | 正确但冗长 | 三状态互斥；local/已明确设计/直接实现请求正确退出；material correction 正确 re-enter 并形成唯一 current intent |
 
 ## V0 pass gate
 
-1. P1–P4 的 paired eval 中，B 臂在 `Architecture judgment + Durable outcome + Invariant quality + Output discipline` 合计至少高于 A 臂 2 分，且这些维度没有新增 0 分退化；
-2. N1 / R1 / L1 / O1 的路由和停止条件全部正确；
+1. P1–P5 的 paired eval 中，B 臂在 `Architecture judgment + Durable outcome + Invariant quality + Output discipline` 合计至少高于 A 臂 2 分，且这些维度没有新增 0 分退化；
+2. N1 / R1 / R2 / L1 / O1 的路由、re-entry 和停止条件全部正确；
 3. ready 输出只有四个 section；stable acceptance 只在 Direction 表达 outcome，Possible shapes 不展开，且不输出 taxonomy、Brooks、Challenge trace 或 active Material Unknown；
 4. upper-goal discriminator 正确应用：有明确相关 goal 时保留其贡献，没有时从 pressure 得出 durable outcome；不得因此新增目标发现协议；
-5. `materialization-regression.md` 的 M1–M4 全部通过，尤其不能冻结 observed partition、verification provider 或扩大 ownership；
+5. `materialization-regression.md` 的 M1–M6 全部通过，尤其不能冻结 observed partition、verification provider、current residue、variation representation 或扩大 ownership；
 6. README、SKILL、agent default prompt 与当前薄 contract / Target Design 边界一致，eval 变化不扩大正常 runtime context。
 
 ## Regression failures
@@ -133,7 +146,9 @@ B. 加载 architecture-evolution
 - `unknown-swallowed` — 关键未知被猜测填补；
 - `unknown-manufacture` — 没有会改变 intent/boundary 的 unknown 仍人为制造 blocker；
 - `acceptance-provider-freeze` — 把 build/test/replay 或当前 target 列表冻结进 stable acceptance；
+- `acceptance-residue-freeze` — 把当前 member/switch arm/helper/flag 的逐项消失冻结成 architecture acceptance，而不是判断其承载的 knowledge/responsibility/dependency 是否退出；
 - `premature-design` — intent 阶段决定具体 module/class/API/responsibility/call flow/migration；
+- `correction-delta-stop` — ready intent 收到 material correction 后只回复确认/delta，没有重新形成唯一 current intent；
 - `output-protocol-regression` — ready 输出重新出现 Brooks/taxonomy/Challenge/重型 proof machinery；
 - `legacy-runtime-collapse` — 把 compat/serialized identity 与 runtime behavior 混为一谈；
 - `search-absence-deletion` — 因 local search 无 reader 就宣告 identity/config 可删除；
