@@ -40,6 +40,6 @@ Evidence 要能支撑实际 completion claim，而不是活动说明或自报 PA
 
 Autonomous handoff 把当前完整 Taskbook 写入 OS/runtime 提供、位于当前 repo/workspace 外的 Markdown artifact；artifact 只承载任务定义，不写 ready/completed/executable metadata。修订时优先更新当前 Taskbook；当前路径不可写时，在可用 runtime artifact 中写入修订版并显示实际 authoritative path。
 
-`implement-notes` 只保存 Executor progress、关键 decision / Evidence、blocker 和 resume point。它不拥有 Taskbook/outcome completion，也不能让后续 Human material update 跳过重新编译与完整交付。
+`implement-notes` 只保存 Executor progress、关键 decision / Evidence、blocker 和 resume point。
 
 自主 Taskbook 默认保持短；如果内容不断增长，先删重复和 implementation intelligence，而不是增加更多规则。
