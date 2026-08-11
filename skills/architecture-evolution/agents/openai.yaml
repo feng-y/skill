@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
-  short_description: "从模糊方向构造有证据、有边界的架构 Intent"
-  default_prompt: "使用 $architecture-evolution。输入可以是历史模块、业务能力、模糊担忧或尚未说清的改进方向。从真实 change pressure 和 repo evidence 判断 architecture vs local，收敛一个 bounded Architecture Intent；内部 judgement 与 Brooks 只用于裁决和 challenge，最终保持薄 Intent，并停在具体 Target Design 之前。"
+  short_description: "从 change pressure 推演目标架构与演进决策"
+  default_prompt: "使用 $architecture-evolution。输入可以是历史模块、业务能力、模糊担忧或下一步架构方向。从真实 change pressure 和 repo reality 重建关键 architecture forces 与最小 current architecture model；存在真实 fork 时比较 materially different Target Architecture 的 trade-off、complexity relocation 与 evolution cost，收敛 primary Architecture Decision。可以完成 responsibility/authority/knowledge/control/lifecycle/dependency/essential-variation 层面的 Target Architecture 与 architecture-level evolution，但停在具体 class/API/file/task/verification 等 Implementation Design 之前。"
