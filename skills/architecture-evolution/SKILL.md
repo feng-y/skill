@@ -18,7 +18,7 @@ AE 可以决定长期 architecture boundary 与 architecture-level evolution；�
 
 ## Flow
 
-**1. Ground.** 从用户指定模块开始，只沿直接 upstream/downstream 与会改变 architecture decision 的边界展开；从真实 responsibility 重新识别 capability 与 stable variation，不接受现有 module/provider taxonomy 作为答案。只有局部无法关闭 decision-changing 的 authority/SOT/identity/external constraint 时才扩大搜索。
+**1. Ground.** 从用户指定模块开始，先看真实 responsibility 与直接 upstream/downstream，再重新识别它实际提供/参与的 capability 并重划 boundary；现有 module/provider taxonomy 只是 evidence。只有 stable specific variation 被 semantics/contract/lifecycle/performance/deployment constraint 证明时才形成 provider boundary，并只展开会改变 architecture decision 的 provider difference。只有局部无法关闭 decision-changing 的 authority/SOT/identity/external constraint 时才扩大搜索。
 
 **2. Judge.** 用 `rules.md` 判断 architecture vs local，并收敛 best-known architecture judgment：pressure 是否应保持 local、是否仍有会改变 Target Architecture / architecture-level evolution 的 Material Unknown，或 evidence 是否已足够确定 Target Architecture。Material Unknown 只指出真正缺失的 evidence / Human decision，不拿 implementation 填空。
 
