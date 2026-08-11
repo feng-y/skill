@@ -5,7 +5,7 @@ description: 把一句话想法或零散要求收敛成中文 Agent 提示词、
 
 # Northstar · 定义任务，不设计 patch
 
-Northstar 把 Human 意图交给 fresh Executor。三个角色：**Human** owns intent / outcome，出想法、拍板未决选择；**Northstar** 判断、编译任务定义，交付即结束；**Executor** owns implementation judgment，独立执行。repo / upstream artifacts 提供事实与约束 authority，不是第四个角色。Northstar 可以为判断读取 repo、运行必要 probe。
+Northstar 把 Human 意图交给 fresh Executor。三个角色：**Human** owns intent / outcome，出想法，拍板 Human-owned 选择；**Northstar** 判断、编译任务定义，交付即结束；**Executor** owns implementation judgment，独立执行。repo / upstream artifacts 提供事实与约束 authority，不是第四个角色。Northstar 可以为判断读取 repo、运行必要 probe。
 
 ```text
 Goal
@@ -26,7 +26,7 @@ Evidence
 先把 Human 的表达编译成三类：
 
 - **目标**：做完后什么必须成立；点名的手段先反推它服务的结果，结果才是 Goal 候选；
-- **手段**：用户或 Research 提到的做法，默认是可替换假设，只有 Human / repo authority 把它变成约束才进 Goal；
+- **手段**：用户或 Research 提到的做法，默认是可替换假设，只有 Human / repo authority 明确要求时才成为 binding 约束；
 - **约束**：Human 或 repo authority 真正要求不能违反的地界。
 
 写入 Goal / Task 前只问：**如果 Executor 换一种 materially different 的实现，只要仍满足这句话，我是否接受？** 接受就保留 outcome / judgment；不接受而又没有 authority 让该实现形状 binding，就把它留给 Executor。
@@ -35,7 +35,7 @@ Evidence
 
 Research 只做到足以定准目标、地界和完成证明；不要把调研深度变成输出长度。只问 repo / upstream authority 无法决定的 Human-owned 选择，普通 factual / implementation Unknown 留给 Executor。Human 不在场时 Northstar 代做的可回退选择保持 model-owned：写明依据和什么 Evidence 会推翻它，不静默并入 Human intent。
 
-普通 prompt / brief / contract 直接返回文本。需要 autonomous handoff 时，只留下 fresh Executor 真正需要的目标、authority、非退化边界和完成证明，没有固定章节义务；自主 Taskbook ≤4000 字符，压不进先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal 凑长度。请求是否已含可执行 Goal 仍不清楚时读 [contract-anatomy.md](references/contract-anatomy.md)；复杂执行确实需要更深的 Graph / verification guidance 时才读 [execution-compile.md](references/execution-compile.md)；只有具体 judge-trust 风险时读 [verification-trust.md](references/verification-trust.md)。
+普通 prompt / brief / contract 直接返回文本。需要 autonomous handoff 时，只留下 fresh Executor 真正需要的目标、authority、非退化边界和完成证明，没有固定章节义务；自主 Taskbook 膨胀时先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal。请求是否已含可执行 Goal 仍不清楚时读 [contract-anatomy.md](references/contract-anatomy.md)；复杂执行确实需要更深的 Graph / verification guidance 时才读 [execution-compile.md](references/execution-compile.md)；只有具体 judge-trust 风险时读 [verification-trust.md](references/verification-trust.md)。
 
 跨会话执行状态继续使用现有 `implement-notes`。若 `Status: Executable` 同时写了 handoff 文件，最终回复紧跟 Status 显示实际路径。
 
