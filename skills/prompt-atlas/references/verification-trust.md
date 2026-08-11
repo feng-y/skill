@@ -1,6 +1,6 @@
 # Verification / Evidence Trust
 
-Read only when Evidence trust or independence can change completion judgment. Provider executability, claim coverage, Evidence freshness/provenance/reuse, and ordinary scope judgment remain owned by [execution-compile.md](execution-compile.md).
+Read only when Evidence trust or independence can change completion judgment. Provider executability, claim coverage, Evidence freshness/provenance/reuse, and ordinary scope judgment remain owned by [SKILL.md](../SKILL.md) Compile.
 
 Default to existing protected repo Verification when it sufficiently covers the Goal. An explicit Human or repo-verification-authority requirement for independent verification remains binding.
 
@@ -8,7 +8,7 @@ Default to existing protected repo Verification when it sufficiently covers the 
 
 When no binding independence requirement exists, ask one question: **is there a concrete and material failure mode that could let the Executor obtain visible PASS while the Goal or required Verification is not actually established?**
 
-If not, stop adding judge machinery. If yes, name that failure mode and add only the minimum trust Evidence needed to falsify it. Typical causes are a judge that does not observe the real target, an Executor-controlled or directly targetable oracle/fixed sample, material coverage or scope supported only by the implementer's own derivation, or decisive Evidence available only as Executor self-report. General uncertainty is not a trust gap; ordinary coverage/scope remains an execution-compile judgment.
+If not, stop adding judge machinery. If yes, name that failure mode and add only the minimum trust Evidence needed to falsify it. Typical causes are a judge that does not observe the real target, an Executor-controlled or directly targetable oracle/fixed sample, material coverage or scope supported only by the implementer's own derivation, or decisive Evidence available only as Executor self-report. General uncertainty is not a trust gap; ordinary coverage/scope remains a Compile judgment.
 
 ## Judge integrity
 

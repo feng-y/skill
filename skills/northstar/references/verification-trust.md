@@ -1,6 +1,6 @@
 # Verification / Evidence Trust
 
-只在 Evidence trust / independence 会改变 completion judgment 时读取。provider 可执行性、claim coverage、Evidence freshness / provenance / reuse 等正常语义仍由 [execution-compile.md](execution-compile.md) 负责。
+只在 Evidence trust / independence 会改变 completion judgment 时读取。provider 可执行性、claim coverage、Evidence freshness / provenance / reuse 等正常语义由 [SKILL.md](../SKILL.md) 的 Compile 立场负责。
 
 默认使用 repo 已有、受保护且足以覆盖 Goal 的 visible verification；Human 或 repo verification authority 明确要求独立验证时，该要求保持 binding。
 
@@ -8,7 +8,7 @@
 
 没有 binding independence requirement 时，只问一个问题：**是否存在一个具体且 material 的 failure mode，使 Executor 在 Goal 或 required Verification 没有真正成立时，仍可能得到 visible PASS？**
 
-没有就停止增加判卷机制；有就先说清 failure mode，再只补能反证它的最小 trust Evidence。典型原因是 judge 没有真实观察目标、Executor 可以修改或针对 oracle / 固定样本优化、关键 coverage/scope 只依赖实现者自己的推导，或决定性 Evidence 只能由实现者自报。一般 uncertainty 不是 trust gap；coverage / scope 本身仍归 execution compile 判断。
+没有就停止增加判卷机制；有就先说清 failure mode，再只补能反证它的最小 trust Evidence。典型原因是 judge 没有真实观察目标、Executor 可以修改或针对 oracle / 固定样本优化、关键 coverage/scope 只依赖实现者自己的推导，或决定性 Evidence 只能由实现者自报。一般 uncertainty 不是 trust gap；coverage / scope 本身仍归 Compile 立场判断。
 
 ## Judge integrity
 
