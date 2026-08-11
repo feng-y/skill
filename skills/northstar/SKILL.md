@@ -31,7 +31,7 @@ Evidence
 
 写入 Goal / Task 前只问：**如果 Executor 换一种 materially different 的实现，只要仍满足这句话，我是否接受？** 接受就保留 outcome / judgment；不接受而又没有 authority 让该实现形状 binding，就把它留给 Executor。
 
-“最终什么能力存在、谁拥有责任”会改变目标状态，不只是 How；若这类上游 intent / architecture 仍未决，指出缺口，不自行猜一个机制。Human correction 以最高受影响层为准，重新推导其下游，而不是在被否定的下层继续换方案。
+如果一个未决选择会改变“做完后的世界”而不只是实现路径，它仍属于上游 intent / authority；指出缺口，不拿 How 补空。Human correction 以最高受影响层为准，重新推导其下游，而不是在被否定的下层继续换方案。
 
 Research 只做到足以定准目标、地界和完成证明；不要把调研深度变成输出长度。只问 repo / upstream authority 无法决定的 Human-owned 选择，普通 factual / implementation Unknown 留给 Executor。
 
