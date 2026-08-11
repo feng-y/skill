@@ -1,16 +1,13 @@
-# Brooks Architecture Constraints
+# Brooks Challenge Lenses
 
-只在当前 architecture trade-off、complexity relocation 或 conceptual integrity 难以判断时读取。Brooks 是按需 judgement lens；具体 architecture decision 以 `rules.md` 为准。
+只在一个 architecture proposal 已经 plausible、但仍需要挑战其 conceptual integrity、complexity 或克制性时读取。Brooks 只提供反证 lens；`rules.md` 仍是唯一 architecture judgement owner。
 
-只使用与当前 forces 和 boundary 有 evidence 关系的约束：
+只展开与当前 decision 有真实关系的 challenge：
 
-- **R6 Domain Model Distortion** — 不能按现有代码形状错误统一真实不同的业务语义。
-- **R2 Change Propagation** — 共同规则和 variation 的变化应收敛到权威位置，而不是跨多个 owner 传播。
-- **R3 Knowledge Duplication** — 同一业务决定、配置解释或路径选择应只有一个权威来源。
-- **R4 Accidental Complexity** — 新 abstraction 必须吸收真实变化并替代旧结构；比较方案时要说明复杂度去了哪里。
-- **R5 Dependency Disorder** — policy / contract / implementation 的依赖与控制方向应稳定，不能由底层隐式反向控制 policy。
-- **R1 Cognitive Overload** — capability 应让 caller 少知道步骤、状态、顺序和实现类型。
+- **Conceptual Integrity** — 系统应由少量一致的 design ideas 解释。一个局部很好的 feature、优化或 abstraction，如果要求 caller / maintainer 同时记住第二套概念、特殊规则或例外路径，就可能破坏整体结构。优先 challenge Layering、Cohesion 和 Primary responsibility 是否仍由同一组概念解释。
+- **Essential vs Accidental Complexity** — 稳定业务语义、真实 lifecycle / performance / deployment constraint 属于必须尊重的 essential complexity；由历史 representation、工具限制、重复解释、兼容残留或当前代码形状制造的 complexity 不应被永久 architecture 化。用它 challenge Abstraction vs specific 与 Real evolution：新 abstraction 若只是重新包装 accidental complexity，不算改进。
+- **Second-System Effect** — 重设计最容易把过去没做的 flexibility、extension point、mode、hook、registry、通用框架和“顺便优化”一次补齐。除非当前 evidence 证明它们是长期 architecture requirement，否则优先克制：保留更少概念、更窄 public surface，让未来真实 pressure 再证明新的 abstraction / specific boundary。
 
-这些约束用于区分 materially different architecture 的真实 trade-off，或推翻一个只是搬移 complexity 的方案；不要求逐项检查，也不形成独立阶段、评分或最终 section。
+Brooks challenge 的目的不是替 `rules.md` 再做一次完整 review，而是推翻“局部都合理、整体却更复杂”的方案。反证成立就缩小、替换或保持 unresolved；不要为保住 proposal 增加新的 guard。
 
-Brooks 只改变 judgement；最终 Architecture Decision 不输出 R1–R6、评分、proof 或 challenge 过程。
+最终 Architecture Decision 不输出 Brooks 名称、评分、challenge trace，也不要求逐项检查。
