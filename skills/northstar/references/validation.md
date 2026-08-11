@@ -34,7 +34,7 @@ Evidence
 16. **Taskbook size**：自主 Taskbook 默认 ≤4000 字符；超长先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal 来凑长度。
 17. **Role boundary / material handoff**：普通文本输出交付后 Northstar STOP；autonomous Taskbook 只有在 repo/workspace 外实际落盘并显示 authoritative path 后才算交付、才允许 STOP。Northstar 可以为编译读取 reality/运行 probe，但不执行 material Goal work、不修改目标 workspace、不启动 Executor。
 18. **Semantic altitude**：Taskbook 编译“什么算对”，不把 Research 预测的机制当 judgment。若 materially different implementation 仍可满足一句话并被接受，它才自然属于任务定义；若某个实现形状必须固定，需要 Human/repo/upstream authority。任何仍会改变 completed-world semantics 的未决选择都留在上游，不用 How 填空。
-19. **Correction re-entry / continuation**：Human correction 从最高受影响语义层重新进入；依赖该决定的下层结论失效并重推。只影响下层 tactic 的纠正不机械重开仍有效上层判断。若 correction materially 改变同一 autonomous handoff，Northstar 必须重新交付更新后的 authoritative Taskbook，再到达新的 terminal status；acknowledgment、解释或 conversation-only delta 都不是完成。
+19. **Correction re-entry / continuation**：Human correction 从最高受影响语义层重新进入；依赖该决定的下层结论失效并重推。只影响下层 tactic 的纠正不机械重开仍有效上层判断。若 correction 重新打开 Human-owned upstream intent / authority，则保持 `Unresolved Intent`；重新收敛为 executable handoff 后，必须重新交付更新后的 authoritative Taskbook 再到达 `Executable`，acknowledgment、解释或 conversation-only delta 都不是完成。
 
 Static smoke 必须 **19/19 PASS** 才能进入 behavioral comparison。
 
@@ -130,7 +130,7 @@ PASS：Northstar 保持 U 在正确的上游语义层；若 repo/upstream author
 ### S18 — Higher-level correction recompiles the delivered handoff
 Northstar 已基于上层决定 D 编译并交付 autonomous handoff；Human 随后把 D 改成 D'。旧 Execution 中存在多个依赖 D 的具体机制选择。
 
-PASS：从 D 所在最高受影响层重新推导，使依赖 D 的下层结论失效；复用不受影响的 compiled judgment，并重新交付更新后的 authoritative Taskbook，显示当前 authoritative path。是否沿用原路径不影响 PASS。不得保持旧上层假设只在下层轮换 M1→M2→M3，也不得只回复修正说明或 conversation delta 后停止。若 correction 只改变 execution tactic，则仍有效的上层判断继续复用。
+PASS：从 D 所在最高受影响层重新推导，使依赖 D 的下层结论失效；复用不受影响的 compiled judgment。若 D→D' 仍留下 Human-owned upstream intent / authority 未收敛，则保持 `Unresolved Intent`，不得强行 materialize Taskbook；重新收敛为 executable handoff 后才重新交付更新后的 authoritative Taskbook，并显示当前 authoritative path，是否沿用原路径不影响 PASS。不得保持旧上层假设只在下层轮换 M1→M2→M3，也不得在已重新收敛后只回复修正说明或 conversation delta 就停止。若 correction 只改变 execution tactic，则仍有效的上层判断继续复用。
 
 ### S19 — Materialization failure is not successful delivery
 Northstar 已经能生成一份看似完整的 autonomous Taskbook，但 runtime 写入临时文件失败、工具不可用，或根本没有执行写入。
@@ -150,7 +150,7 @@ Leader 是行为基线，不是答案 oracle。至少检查：
 7. 明卷是默认路径，暗卷/独立 Evidence 只在具体 material false-green/gameability/independence risk 存在时按需启用；
 8. Human correction 能从正确语义层 re-enter，而不是在被否定的下层继续替换机制；
 9. 用户点名的手段先反推 outcome 再决定是否进 Goal；Northstar 代做的可回退默认保持 model-owned，写明依据和会推翻它的 Evidence，不静默并入 Human intent；
-10. autonomous handoff 只有在 authoritative Taskbook 实际写入并显示路径后才完成；同一任务收到 material correction 后会继续重新编译并交付更新后的 Taskbook，而不是停在说明、聊天 delta 或未完成的写入承诺。
+10. autonomous handoff 只有在 authoritative Taskbook 实际写入并显示路径后才完成；material correction 若重新打开 Human-owned upstream intent / authority，则保持 unresolved，重新收敛为 executable handoff 后再交付更新后的 Taskbook，而不是停在说明、聊天 delta 或未完成的写入承诺。
 
 Northstar 不复制 Leader 的 `/goal` surface、固定章节或文件名约定。
 
@@ -169,7 +169,7 @@ C. candidate/current Northstar
 - **altitude / authority**：存在 plausible How，但有一个或多个未决上层 choice；若多个 Human-owned blocker 已同时可见，检查它们不会被逐个猜成 defaults；再追加一次上层 correction 检查 re-entry；
 - **simple local change**：验证 thin context 不让简单任务变含糊，也不导入复杂 ceremony；
 - **upstream invariant**：已有明确 authority 与另一个未决 upstream choice 同时存在，验证前者被保留、后者不被模型自行补全；
-- **handoff lifecycle**：要求 autonomous handoff 落到 runtime temp file；首次交付后再给 material correction，验证 candidate 会继续交付更新后的 authoritative Taskbook，并返回新的 terminal status 与当前 authoritative path，而不是把修正留在 conversation。
+- **handoff lifecycle**：要求 autonomous handoff 落到 runtime temp file；首次交付后给 material correction，并让该 correction 重新打开一个 Human-owned upstream choice；验证 candidate 先保持 `Unresolved Intent` 而不强行写修订 Taskbook，authority 定准后再交付更新后的 authoritative Taskbook，并返回 terminal status 与当前 authoritative path。
 
 每项 0–2：Goal fidelity、semantic altitude、judgment/task abstraction、coverage completeness、Executor freedom、Verification scope、Evidence quality、anti-false-pass、correction re-entry、handoff completion/continuity、context cost。
 
@@ -180,7 +180,7 @@ C. candidate/current Northstar
 - 上层未决选择不会被降级成 implementation fact，Research mechanism 不会被预写成 binding How；同一 handoff 同时可见的 Human-owned blockers 不会被串行猜成 model defaults；
 - simple local change 不因 thin-context 改造变得含糊或显著膨胀；
 - 明确 upstream authority 被尊重，真正未决的上游 choice 不由 Northstar 自补；
-- autonomous handoff 必须真正写入；material correction 后必须继续到更新后的 authoritative Taskbook，而不是 acknowledgement-only / conversation-delta stop，也不能以未完成的写入承诺结束；
+- autonomous handoff 必须真正写入；material correction 若重新打开 upstream intent / authority，则保持 `Unresolved Intent`，重新收敛为 executable handoff 后必须继续到更新后的 authoritative Taskbook，不能以 acknowledgement-only / conversation-delta 或未完成写入承诺结束；
 - 只有 clean-session evidence 显示 candidate 至少不弱于 Leader/main，才宣称 behavioral parity/uplift。
 
 ## Claim boundary
