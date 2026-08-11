@@ -6,26 +6,25 @@
 
 通过需要同时满足：
 
-1. 主 Skill 有稳定 `Ground → Judge → Compile → Deliver` Flow，但 Flow 只属于单次 invocation，不形成持久状态机。
-2. Ground 默认锚定用户指定模块，只沿直接 upstream/downstream 与会改变判断的 boundary/provider 渐进展开；不把全 repo scan 当默认 Research。
-3. 现有 module/provider/class taxonomy 只是 evidence；必须允许从真实 responsibility 重新识别 capability/boundary；没有 stable specific variation 时不得制造 provider。
-4. `rules.md` 仍是唯一 architecture judgement owner：Layering & dependency、Cohesion & simplicity、Abstraction vs specific、Primary vs auxiliary responsibility、Real evolution。
-5. Brooks 与 legacy 只按需进入 Judge，不形成第二套固定流程或 taxonomy。
-6. Judge 若认为 pressure 保持 local 更合理，直接交付 local judgment 与理由；若仍有 decision-changing Material Unknown，直接指出缺失 evidence/Human decision；两者都不制造 Architecture Program。
-7. Judge 足够收敛后，`program-contract.md` 是唯一 Compile artifact owner；Program 保留 target delta、long-lived invariants、最多 3 个 independently improving improvements、真实 route/completion。
-8. 每个 improvement 必须有 structural change、architecture gain、real exit、structural done condition；research/knowledge task、愿望、implementation step、setup-only abstraction 不能冒充 improvement。
-9. Compile 优先引用 authoritative repo SOT，只保新增 judgement/structural delta；若原 SOT 要变，指向原 authoritative source，不建立平行规范。
-10. Deliver 成功时直接输出完整当前 Architecture Program，不输出 ready/completed status token；Program 本身就是当前 judgement 足够收敛的产物。
-11. 任何 material Human clarification/correction 都从最高受影响 Flow step 重进，使依赖结论 stale，并重新完整交付当前 outcome；之前交付过不能抑制重新输出，也不能只回复 delta/解释。
-12. AE 停在 Architecture altitude：可固定长期 layer/dependency、capability/responsibility、必要 authority/lifecycle/variation 与 structural done condition，不固定 class/API/file/schema/call implementation/MR/task/test provider，除非 representation 本身是 authoritative invariant。
-13. `agents/openai.yaml` 只是薄 invocation pointer；`validation.md` 不进入正常 runtime。
+1. **Stable Flow**：主 Skill 明确 `Ground → Judge → Compile → Deliver`，只描述单次 invocation，不形成 phase/status lifecycle。
+2. **Self-contained architecture contract**：主 Skill 自己就包含五个稳定结构判据；`rules.md` 只展开判别边界/反例，不是第二套 architecture model。
+3. **Bounded Ground**：默认锚定用户指定模块，按 `module → direct upstream/downstream → real capability → boundary → stable variation/provider` 渐进展开；不把全 repo scan 当 Research 成功。
+4. **Taxonomy is evidence**：现有 module/provider/class/family/consumer partition 只是 evidence；必须允许从真实 responsibility 重新识别 capability/boundary；没有 stable specific variation 时不得制造 provider。
+5. **Architecture taste**：Layering & dependency、Cohesion & simplicity、Abstraction vs specific、Primary vs auxiliary responsibility、Real evolution 五项都能直接改变 Target Architecture；其他 lens 只作 evidence/challenge。
+6. **Progressive challenge**：Brooks 与 legacy 只在 Judge 中按需读取，不形成第二套固定 Flow/taxonomy。
+7. **Honest branch**：local pressure 直接交付 local judgment；真实 architecture fork 缺 decisive Evidence/Human decision 时直接交付缺口；两者都不制造 Architecture Program。
+8. **Convergent Compile**：Target Architecture 足够稳定后才形成 Architecture Program；最多 3 个 independently improving improvements，不补数。每个完成时必须产生 structural gain 与 real exit；research task、future wish、implementation step、setup-only abstraction 不能冒充 improvement。
+9. **SOT discipline**：Compile 优先引用 authoritative repo SOT，只保新增 architecture judgement / structural delta；旧 SOT 本身需演进时指向原 authority 的 delta，不建立平行规范。
+10. **Architecture altitude**：AE 可固定长期 layer/dependency、capability/module responsibility、abstraction/specific、必要 authority/lifecycle/variation 与 structural done condition；不固定 class/API/file/schema/call implementation/MR/task/test provider，除非 representation 本身是 authoritative invariant。
+11. **Delivery is not outcome state**：成功时直接完整输出当前 Architecture Program，不输出 ready/completed status；material Human update 从最高受影响 Flow step 重进并再次完整交付，prior delivery 不抑制输出。
+12. **Thin entry / eval isolation**：`agents/openai.yaml` 只是 invocation pointer；`validation.md` 不进入正常 runtime。
 
 ## Scenario smoke
 
 ### P1 — Bounded module research
-用户指定历史模块，存在直接 caller/downstream 与当前 provider/family taxonomy。
+用户指定历史模块，存在 direct caller/downstream 与当前 provider/family taxonomy。
 
-PASS：先恢复真实 responsibility 与 direct neighborhood，再识别 capability/boundary；只有 stable variation 有 decisive evidence 时才形成 provider；只有局部无法关闭且会改变 Target Architecture 的 authority/SOT/identity/external constraint 才扩大搜索。
+PASS：先恢复真实 responsibility 与 direct neighborhood，再识别 capability/boundary；只有 stable variation 有 decisive Evidence 时才形成 provider；只有局部无法关闭且会改变 Target Architecture 的 authority/SOT/identity/external constraint 才扩大搜索。
 
 ### P2 — ModelCurator / Hermes
 publication ownership 已基本闭合，但 consumer 仍解释 feature config/Hermes usage；streaming 与 scoring 存在真实 semantic/input/lifecycle 差异。
@@ -60,7 +59,7 @@ PASS：不能交付 Program；必须先形成会让旧 knowledge/authority/depen
 ### P8 — Brooks second-system
 当前 pressure 可用简单结构解决，但 redesign 又加入 plugin framework、generic registry、future hooks/modes。
 
-PASS：按需 Brooks challenge 后缩小方案；没有当前长期 evidence 的 flexibility 不物化。
+PASS：按需 Brooks challenge 后缩小方案；没有当前长期 Evidence 的 flexibility 不物化。
 
 ### C1 — Compile keeps only real improvements
 5 个候选中 2 个只是 research/performance data collection，3 个能直接改变长期结构并让旧复杂度退出。
@@ -95,7 +94,7 @@ PASS：直接说明保持 local 与理由，不制造 Target Architecture/Progra
 ### R1 — Real fork unresolved
 两个 materially different Target Architecture 均可行，当前缺一个 decisive semantic/lifecycle/performance constraint。
 
-PASS：指出真正缺失的 evidence/Human decision；不按模式偏好强选，不把“研究它”塞进 improvements，也不输出状态 token。
+PASS：指出真正缺失的 Evidence/Human decision；不按模式偏好强选，不把“研究它”塞进 improvements，也不输出状态 token。
 
 ### L1 — Legacy identity
 旧 token 不再影响 runtime branch，但可能承担 parse/serialization/deployment identity，本地无直接 reader。
@@ -110,7 +109,7 @@ PASS：明确 Target Architecture、improvement outcome、architecture dependenc
 ### D1 — Human update re-delivers full outcome
 AE 已交付完整 Architecture Program；Human 随后补充一个会改变 provider boundary 或 Target Architecture 的 material constraint。
 
-PASS：从 Judge 或 Ground 的最高受影响点重进，复用不受影响 judgement，重新 Compile，并再次输出**完整当前 Architecture Program**。只回复“变更点”、解释旧 Program、或因为之前已经交付过而不再输出 Program 都失败。
+PASS：从最高受影响的 Ground/Judge/Compile step 重进，复用不受影响 judgement，重新 Compile，并再次输出**完整当前 Architecture Program**。只回复“变更点”、解释旧 Program、或因为之前已经交付而不再输出 Program 都失败。
 
 ## Captured regression properties
 
@@ -132,11 +131,16 @@ A. 不加载 architecture-evolution
 B. 加载 architecture-evolution
 ```
 
-每项 0–2：Research scope、Layering/dependency、Cohesion/simplicity、Abstraction/specific、Primary responsibility、Real evolution、Compile convergence、Architecture altitude、Human-update re-delivery。
+每项 0–2：Research scope、Layering/dependency、Cohesion/simplicity、Abstraction/specific、Primary responsibility、Real evolution、Compile convergence、Architecture altitude、Human-update re-delivery、context cost。
 
 ### Pass gate
 
 - P1–P8 / C1–C5 / N1 / R1 / L1 / O1 / D1 property 全部正确；
 - B 不能靠更长 analysis 冒充能力提升；必须表现出 bounded research、真实 Target Architecture 与 convergent Compile；
+- main Skill 在不读取 `rules.md` 时仍能给出正确高层 architecture taste；需要细节/反例时才下沉 reference；
 - material Human update 后必须重新完整交付 current outcome；
 - 没有 clean-session 结果时，不宣称 behavioral uplift。
+
+## Claim boundary
+
+Static/scenario smoke 只证明 contract 与 frozen properties 一致；没有 clean-session runner 结果时，behavioral uplift 标记 `NOT RUN`。
