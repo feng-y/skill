@@ -58,7 +58,7 @@ Given its current code and change pressure, choose a target architecture if the 
 and stop before implementation design.
 ```
 
-The Skill keeps the architecture kernel intentionally small. It judges five structural questions: whether layering and dependencies are clear and one-way; whether modules are cohesive and simply organized; whether common abstraction and specific capability are balanced correctly; whether the primary responsibility shapes the architecture instead of auxiliary metrics/debug/compat/performance concerns; and whether the change makes old structural complexity actually exit.
+The Skill keeps the architecture kernel intentionally small. It judges whether layering and dependencies are clear and one-way; whether modules are cohesive and simply organized; whether common abstraction and specific capability are balanced correctly; whether the primary responsibility shapes the architecture instead of concerns that are merely auxiliary for that capability; and whether the change makes old structural complexity actually exit.
 
 `change locality`, caller knowledge, SOT/control/lifecycle, variation and complexity relocation are supporting evidence for those judgments rather than a mandatory analysis checklist. Real alternatives are compared only when they change a long-lived architecture boundary; naming or class-layout differences do not count.
 
