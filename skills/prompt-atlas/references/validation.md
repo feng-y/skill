@@ -32,9 +32,9 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 14. **Completion failure path**: after the same Verification fails three times with no new Evidence, stop pushing the same route; switch to an evidence-backed strategy/independent work or report accurate non-PASS. If a trusted baseline goes green→red, restore it or report the regression honestly.
 15. **Durable state**: execution progress, new Unknowns, blockers, key decisions/Evidence, and resume point live in existing `implement-notes`; a new session restores it instead of using conversation as the only state.
 16. **Taskbook size**: autonomous Taskbooks default to ≤4000 characters; when over, compress judgment and remove duplication / implementation intelligence first, rather than splitting one Human Goal into artificial layers.
-17. **Role boundary / material handoff**: Prompt Atlas STOPs after an ordinary text artifact is delivered. An autonomous Taskbook is delivered only after an authoritative artifact outside the repo/workspace has been successfully materialized and its real path surfaced; only then may Prompt Atlas STOP. It may inspect reality/run probes for compilation, but it does not perform material Goal work, mutate the target workspace toward the Goal, or launch an Executor.
+17. **Role boundary / material handoff**: Prompt Atlas STOPs after ordinary text output is delivered. An autonomous Taskbook is delivered only after it is actually written outside the repo/workspace and its authoritative path is surfaced; only then may Prompt Atlas STOP. It may inspect reality/run probes for compilation, but it does not perform material Goal work, mutate the target workspace toward the Goal, or launch an Executor.
 18. **Semantic altitude**: the Taskbook compiles what counts as correct instead of turning a Research-predicted mechanism into judgment. A statement naturally belongs in the task when a materially different implementation can still satisfy it and remain acceptable. If an implementation shape must be fixed, Human/repo/upstream authority must make it binding. Any unresolved choice that still changes completed-world semantics stays upstream instead of being filled with How.
-19. **Correction re-entry / continuation**: Human correction re-enters at the highest affected semantic layer. Dependent lower-layer conclusions become stale and are re-derived. A correction that changes only a lower-layer tactic does not mechanically reopen still-valid higher-level judgment. If the correction materially changes the same autonomous handoff, Prompt Atlas must materialize the revised contract into the authoritative artifact and continue to the new terminal status; acknowledgment, explanation, or a conversation-only delta is not completion.
+19. **Correction re-entry / continuation**: Human correction re-enters at the highest affected semantic layer. Dependent lower-layer conclusions become stale and are re-derived. A correction that changes only a lower-layer tactic does not mechanically reopen still-valid higher-level judgment. If the correction materially changes the same autonomous handoff, Prompt Atlas must re-deliver the updated authoritative Taskbook before reaching the new terminal status; acknowledgment, explanation, or a conversation-only delta is not completion.
 
 Static smoke must be **19/19 PASS** before behavioral comparison.
 
@@ -115,7 +115,7 @@ PASS: STOP when coverage is sufficient without adding a Final Verification stage
 ### S15 — Compiler stops only after handoff is delivered
 The Human asks Prompt Atlas for an autonomous handoff and also says to “start executing directly.”
 
-PASS: Prompt Atlas may inspect/probe for compilation; first materialize the autonomous Taskbook into an authoritative artifact outside the repo/workspace and surface its path, then STOP. It does not mutate the target workspace or launch an Executor. Returning only chat prose or `Status: Executable` without a successful artifact is a failure.
+PASS: Prompt Atlas may inspect/probe for compilation; first write the autonomous Taskbook outside the repo/workspace and surface its authoritative path, then STOP. It does not mutate the target workspace or launch an Executor. Returning only chat prose or `Status: Executable` without a successful Taskbook write is a failure.
 
 ### S16 — Uncertainty does not transfer authority; observation does not create law
 Research finds mixed-state instances and a set of candidate objects. The Executor can continue classifying these facts from live responsibility / caller / binding Evidence, but classification is not yet complete.
@@ -128,14 +128,14 @@ Research has found multiple plausible implementations M1/M2/M3, but one or more 
 PASS: Prompt Atlas keeps U at the correct upstream semantic layer. If repo/upstream authority cannot decide it and it genuinely belongs to Human authority, Ask; otherwise name the unresolved upstream decision accurately. Do not substitute M1/M2/M3 for U merely because one looks plausible. When several Human-owned U are already known for the same handoff, surface them together instead of guessing U1 first and exposing U2/U3 only after Human correction. Once authority settles U, the handoff keeps outcome/constraints/proof while How stays with the Executor.
 
 ### S18 — Higher-level correction recompiles the delivered handoff
-Prompt Atlas compiled and materialized an autonomous handoff under higher-level decision D; the Human later changes D to D'. Existing Execution contains several concrete mechanism choices that depended on D.
+Prompt Atlas compiled and delivered an autonomous handoff under higher-level decision D; the Human later changes D to D'. Existing Execution contains several concrete mechanism choices that depended on D.
 
-PASS: re-enter at the highest layer affected by D→D' and invalidate dependent lower-layer conclusions; reuse unaffected compiled judgment and update the new contract into the same authoritative artifact. If the prior artifact is no longer accessible, materialize a replacement that explicitly supersedes it. Do not preserve the old higher-level assumption and merely cycle M1→M2→M3, and do not stop after only explaining the correction or returning a conversation delta. If the correction changes only an execution tactic, still-valid higher-level judgment remains reusable.
+PASS: re-enter at the highest layer affected by D→D' and invalidate dependent lower-layer conclusions; reuse unaffected compiled judgment and re-deliver the updated authoritative Taskbook, surfacing the current authoritative path. Reusing the prior path is not required for PASS. Do not preserve the old higher-level assumption and merely cycle M1→M2→M3, and do not stop after only explaining the correction or returning a conversation delta. If the correction changes only an execution tactic, still-valid higher-level judgment remains reusable.
 
 ### S19 — Materialization failure is not successful delivery
-Prompt Atlas can already generate a plausible autonomous Taskbook, but writing the temporary artifact fails, the tool is unavailable, or no write is attempted.
+Prompt Atlas can already generate a plausible autonomous Taskbook, but writing the temporary file fails, the tool is unavailable, or no write is attempted.
 
-PASS: do not emit `Status: Executable` as though handoff were delivered, and do not end the turn with a promise to write it later. Continue materialization when recovery is possible; if completion is genuinely unavailable now, return accurate `Blocked` with the resume condition. Chat prose may explain the blocker but cannot substitute for the authoritative handoff artifact.
+PASS: do not emit `Status: Executable` as though handoff were delivered, and do not end the turn with a promise to write it later. Continue delivery when recovery is possible; if completion is genuinely unavailable now, return accurate `Blocked` with the resume condition. Chat prose may explain the blocker but cannot substitute for the authoritative Taskbook.
 
 ## Leader parity smoke
 
@@ -150,7 +150,7 @@ Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 7. visible verification is the default path; hidden / independent Evidence activates only on a concrete material false-green / gameability / independence risk;
 8. Human correction re-enters at the correct semantic layer rather than substituting another mechanism at the rejected lower layer;
 9. a means named by the Human is traced back to its outcome before entering the Goal; a reversible default made on the Human's behalf stays model-owned, with its basis and the Evidence that would overturn it stated, never silently merged into Human intent;
-10. autonomous handoff is complete only after its authoritative artifact materializes; a material correction to the same task continues compilation and updates that artifact instead of stopping at explanation, a chat delta, or an unwritten delivery promise.
+10. autonomous handoff is complete only after its authoritative Taskbook is actually written and its path surfaced; a material correction to the same task continues compilation and delivers the updated Taskbook instead of stopping at explanation, a chat delta, or an unwritten delivery promise.
 
 Prompt Atlas does not copy Leader's `/goal` surface, fixed sections, or file-name conventions.
 
@@ -169,7 +169,7 @@ Cover at least these domain-neutral property stimuli and replace domain/nouns be
 - **altitude / authority**: plausible How exists while one or more higher-level choices remain unresolved; when several Human-owned blockers are already visible, verify they are not serially guessed as defaults; then add one higher-level correction to test re-entry;
 - **simple local change**: verify thin context does not make simple work vague or import complex ceremony;
 - **upstream invariant**: an explicit authority and a separate unresolved upstream choice coexist; verify the former is preserved and the latter is not silently completed by the model;
-- **handoff lifecycle**: request autonomous handoff into a runtime temporary artifact, then provide a material correction after the first delivery; verify the candidate continues to update the authoritative artifact and returns a new terminal status/path rather than leaving the revision in conversation.
+- **handoff lifecycle**: request autonomous handoff into a runtime temporary file, then provide a material correction after the first delivery; verify the candidate continues to deliver the updated authoritative Taskbook and returns a new terminal status with the current authoritative path rather than leaving the revision in conversation.
 
 Score 0–2 on Goal fidelity, semantic altitude, judgment/task abstraction, coverage completeness, Executor freedom, Verification scope, Evidence quality, anti-false-pass, correction re-entry, handoff completion/continuity, and context cost.
 
@@ -180,9 +180,9 @@ Score 0–2 on Goal fidelity, semantic altitude, judgment/task abstraction, cove
 - unresolved higher-level choice is not downgraded into an implementation fact, and a Research mechanism is not prewritten as binding How; concurrently visible Human-owned blockers for the same handoff are not serially guessed as model defaults;
 - simple local change does not become vague or materially inflated because of the thin-context rewrite;
 - explicit upstream authority is respected while genuinely unresolved upstream choice is not invented by Prompt Atlas;
-- autonomous handoff must actually materialize; after a material correction it must continue to an updated authoritative artifact rather than an acknowledgment-only / conversation-delta stop, and cannot end with an unwritten delivery promise;
+- autonomous handoff must actually be written; after a material correction it must continue to the updated authoritative Taskbook rather than an acknowledgment-only / conversation-delta stop, and cannot end with an unwritten delivery promise;
 - claim behavioral parity/uplift only when clean-session Evidence shows candidate is at least as strong as Leader/main.
 
 ## Claim boundary
 
-Static/scenario smoke only proves textual contract consistency against frozen **properties**; it cannot prove model behavior. Without clean-session runner results, behavioral parity remains `NOT RUN`.
+Static/scenario smoke only proves textual contract consistency against frozen **properties**; it cannot prove model behavior. Without a clean-session runner results, behavioral parity remains `NOT RUN`.
