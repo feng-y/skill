@@ -12,7 +12,7 @@
 - `rules.md` 的 architecture kernel 仍只有 Layering & dependency、Cohesion & simplicity、Abstraction vs specific、Primary vs auxiliary responsibility、Real evolution；其他维度只是 evidence lenses；
 - Brooks 仍只保留 Conceptual Integrity、Essential vs Accidental Complexity、Second-System Effect 三个按需反证 lens，不形成第二套 runtime taxonomy；
 - `program-contract.md` 是唯一 ready artifact owner：完整 reasoning 被 Compile 成 Structural adjustment、Long-term architecture、最多 3 个真实 Architecture Improvements、必要 Route 与 completion；不要求固定 Markdown section；
-- Top Improvements 不固定凑 3 个。每个都必须有 structural change、architecture gain、real exit、done condition；research/knowledge task、愿望和 implementation step 不能冒充 improvement；
+- Top Improvements 不固定凑 3 个。每个都必须有 structural change、architecture gain、real exit、done condition；research/knowledge task、愿望和 implementation step 不能冒充 improvement；优先级来自 structural leverage，而不是实现便利或描述规模；
 - 如果缺失 evidence 会决定一个 change 是否真能改善结构、会改变 Target Architecture 或真实推进依赖，则必须 `Architecture unresolved`；Compile 不能隐藏 blocker；
 - ready output 不泄漏完整 alternatives、Brooks trace、文件 inventory、普通 unknown 或 implementation design；
 - Target Architecture / improvement outcome 可以固定长期结构，但不把 class/API/file/helper/schema/task/test provider 当 architecture law；
@@ -104,6 +104,12 @@ PASS：只输出 2 个，不为了格式补第三个；future possibility 不物
 
 PASS：不能进入 Top Improvements。要么收敛成一个同时产生结构收益/exit 的 bounded improvement，要么保持 unresolved；不能用纯铺垫 step 制造推进感。
 
+### C4 — Top value means structural leverage
+
+三个以上真实 improvement 都可推进：一个只是局部整理；一个能消除跨多个 caller 的 knowledge reassembly；另一个能先解除后续两项共同依赖的反向 boundary。
+
+PASS：Top Improvements 优先后两者，而不是按实现成本最低、改动最大或描述最抽象排序。排序依据是能减少多少跨边界 knowledge/dependency/accidental complexity，以及是否解除后续结构性阻塞。
+
 ### N1 — Local fix stays local
 
 问题只是 off-by-one、日志字段、dead getter、机械迁移或局部重复，不需要改变核心架构判断。
@@ -160,12 +166,12 @@ B. 加载 architecture-evolution
 | Abstraction / specific | 过度统一、锁死历史 partition 或制造 provider | 大方向正确但 variation 理由弱 | common/specific 由稳定 semantics/invariant 决定，仅真实 variation 形成 provider |
 | Primary responsibility | auxiliary concern 塑造主架构 | 主次大致清楚 | primary surface 主导结构，辅助 concern 附着且不污染 boundary |
 | Real evolution | 新层叠在旧结构上 | 有部分退出 | 旧 knowledge/authority/dependency/path 明确退出，temporary complexity 有 exit |
-| Compile convergence | reasoning dump、研究清单或固定 3 项 | 有推进点但收益/完成态不稳 | 最多 3 个真实 improvement，每个有 change/gain/exit/done；route 只保真实依赖 |
+| Compile convergence | reasoning dump、研究清单或固定 3 项 | 有推进点但收益/完成态不稳 | 最多 3 个真实 improvement，每个有 change/gain/exit/done；top value 来自 structural leverage，route 只保真实依赖 |
 | Architecture altitude | 只给口号或直接进代码设计 | 能描述部分 target | 完成 Target Architecture + Program，同时保持 Implementation Design 自由 |
 
 ## V2 pass gate
 
-1. P1–P3 / C1–C3 的 discriminator 全部正确；
+1. P1–P3 / C1–C4 的 discriminator 全部正确；
 2. P4–P8 / N1 / R1 / L1 / O1 的边界全部正确；
 3. B 臂不能靠更长 analysis 冒充能力提升：必须表现出 bounded research、重新识别 capability/真实 variation、具体 Target Architecture 和 convergent Compile；
 4. ready 必须至少有一个真实 Architecture Improvement，且不能以 research task 补数；
@@ -192,6 +198,7 @@ B. 加载 architecture-evolution
 - `non-improving-top-item` — Top Improvement 完成后结构没有确定变好或没有 real exit；
 - `research-as-improvement` — “研究/确认/收集数据”进入 Top Improvements；
 - `forced-top3` — 不足 3 个真实 improvement 时为补数制造 future work；
+- `value-by-convenience` — Top Improvements 按容易实现/改动大/叙述宏大排序，而不是 structural leverage；
 - `roadmap-ceremony` — 无 architecture dependency 仍强制串行路线；
 - `representation-freeze` — architecture judgement/Program 被物化成固定 class/API/flag/schema/虚函数；
 - `evolution-as-task-plan` — architecture evolution/route 退化成文件/MR/test/发布步骤；
