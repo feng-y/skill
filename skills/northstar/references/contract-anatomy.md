@@ -23,7 +23,7 @@
 
 Intent Take 只补足形成 Goal 所需的最小 context：最新且仍有效的 Human 表达、会改变选择的现实证据和已确认边界。Human 明确验证要求如果存在，单独保留给 Verification；不要为了建立全面背景而把无关上下游带进来。Context 已经足以区分不同 Goal 时就停止扩展。
 
-Unknown 的 evidence reduction、责任路由和 delegated default 规则在 [SKILL.md](../SKILL.md) 的 Judge 中；本文件只保留 authority model 和 Stable Intent closure，不另起一套路由表。
+Unknown 的 consequence routing、evidence reduction 和 model-owned default 规则由 [SKILL.md](../SKILL.md) 的 `Shape` 负责；本文件只展开 authority model 与 Stable Intent closure，不另起一套路由表。
 
 ## 什么时候才算目标定准
 
