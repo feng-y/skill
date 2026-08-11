@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
   short_description: "从 change pressure 收敛目标架构与演进决策"
-  default_prompt: "使用 $architecture-evolution。输入可以是历史模块、业务能力、模糊担忧或下一步架构方向。从真实 change pressure 和 repo reality 判断清晰分层与单向依赖、模块内聚与简洁组织、abstraction 与 specific 的取舍、primary 与 auxiliary responsibility 的主次，以及旧复杂度是否真实退出。只有存在 materially different 的长期架构 fork 时才比较方案；evidence 不足则保持 unresolved。可以完成 Target Architecture 与 architecture-level evolution，但停在具体 class/API/file/task/verification 等 Implementation Design 之前。"
+  default_prompt: "使用 $architecture-evolution。输入可以是历史模块、业务能力、模糊担忧或下一步架构方向。从真实 change pressure 和 repo reality 判断清晰分层与单向依赖、模块内聚与简洁组织、abstraction 与 specific 的取舍、primary 与 auxiliary responsibility 的主次，以及旧复杂度是否真实退出。只有存在 materially different 的长期架构 fork 时才比较方案；evidence 不足则保持 unresolved。可以完成 Target Architecture 与 architecture-level evolution，但停在具体 class/API/file/task/verification 等 Implementation Design 之前。Brooks 只在方案局部合理但整体概念膨胀、essential/accidental complexity 或 conceptual integrity 难判时按需 challenge，不作为固定 checklist。"
