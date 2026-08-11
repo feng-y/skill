@@ -31,7 +31,7 @@ Like Leader, separate the input into three things:
 
 Before keeping a Goal / Task statement, ask: **If the Executor chose a materially different implementation but still satisfied this statement, would I accept it?** If yes, keep the outcome / judgment. If no and no authority makes that implementation shape binding, leave it to the Executor.
 
-What capability ultimately survives and who owns responsibility changes the target state rather than merely How. If that upstream intent / architecture is unresolved, name the gap instead of guessing a mechanism. Human correction applies at the highest affected layer and lower layers are re-derived from it rather than patched around it.
+If an unresolved choice changes the world after completion rather than only the implementation path, it still belongs to upstream intent / authority; name the gap instead of filling it with How. Human correction applies at the highest affected layer and lower layers are re-derived from it rather than patched around it.
 
 Research only until the outcome, boundaries, and completion proof are settled enough. Do not turn research depth into output length. Ask only for Human-owned choices that repo / upstream authority cannot settle; ordinary factual / implementation Unknowns stay with the Executor.
 
