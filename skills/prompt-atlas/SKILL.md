@@ -23,7 +23,7 @@ This is semantic ownership, not an output template. When a higher-level decision
 
 Start from the Human's latest still-valid wording, then ground it in repo reality and existing authorities such as Architecture Intent, tests, schemas, ADRs, or acceptance scripts. Prefer referencing an existing specification over rewriting it as handoff prose.
 
-Like Leader, separate the input into three things:
+Separate the input into three things:
 
 - **Outcome** — what must be true when the work is done;
 - **Means** — a proposed approach from the Human or Research, replaceable by default;
