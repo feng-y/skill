@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
   short_description: "Settle Goal and define the task without prewriting implementation"
-  default_prompt: "Use $prompt-atlas. Define what completion means; do not design the patch. Use Goal → Execution → Verification → Evidence as semantic altitude: keep a choice in the task only when a materially different implementation could still satisfy it and remain acceptable, unless Human/authority already makes that choice binding. For removal/migration, settle surviving capability/owner first; do not fill unresolved intent/architecture with a mechanism. Re-enter at the highest layer changed by Human correction. Prefer authoritative artifacts; ask only Human-owned decisions. Handoff is terminal; never manufacture PASS."
+  default_prompt: "Use $prompt-atlas. Separate outcome, means, and constraints: define what completion means, leave replaceable means to the Executor, and keep only constraints that Human/repo authority makes binding. Prefer existing specifications; when upstream intent is unsettled, name the gap instead of filling it with a mechanism."
