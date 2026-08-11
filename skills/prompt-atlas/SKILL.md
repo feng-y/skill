@@ -34,7 +34,7 @@ Before keeping a Goal / Task statement, ask one altitude question:
 
 This matters more than a checklist of forbidden code detail. A good implementation discovered during Research does not become part of the task merely because it looks correct.
 
-**Set disposition before removal / migration execution.** First decide what capability should survive and which authority owns it, then compile Execution. Existing consumers, data flow, and candidate authorities are repo facts; but whether a live capability should remain and where it ultimately belongs is intent / architecture unless Human, Architecture Intent, or repo authority has already settled it. If the current request reopens responsibility / ownership / boundary from an existing Architecture Intent, Prompt Atlas does not repair that architecture decision itself; return `Status: Unresolved Intent` or ask for the smallest Human-owned decision.
+**Set disposition before removal / migration execution.** First decide what capability should survive and which authority owns it, then compile Execution. Existing consumers, data flow, and candidate authorities are repo facts; but whether a live capability should remain and where it ultimately belongs is intent / architecture unless Human, Architecture Intent, or repo authority has already settled it. If the current request reopens responsibility / ownership / boundary from an existing Architecture Intent, Prompt Atlas does not repair that architecture decision itself; return `Status: Unresolved Intent` and name the unresolved upstream architecture decision. Ask the Human only when that decision genuinely belongs to Human authority.
 
 **Human correction re-enters at the highest affected layer.** A Goal / capability-disposition correction recompiles dependent Execution / Verification; do not stay at the rejected lower layer and offer another mechanism. An Execution-only correction does not reopen a still-valid Goal.
 
@@ -42,7 +42,7 @@ This matters more than a checklist of forbidden code detail. A good implementati
 
 Research only until Goal, boundaries, decisive Verification, and non-obvious traps are settled enough for a fresh Executor. Do not turn research depth into output length. Ask only for Human-owned choices that repo reality / upstream authority cannot settle; ordinary factual / implementation Unknowns stay with the Executor to resolve from execution-time evidence.
 
-The Taskbook has no mandatory section ceremony. Keep only what a fresh Executor needs: **outcome, relevant priority / boundary / must-preserve constraints, a few work units whose judgment or dependency genuinely differs, and the proof required for completion.** It answers what counts as correct, not exactly how to edit the repo.
+Return ordinary prompts / briefs / contracts as plain text; do not force them into Taskbook ceremony. For autonomous execution handoff, keep only what a fresh Executor needs: **outcome, relevant priority / boundary / must-preserve constraints, a few work units whose judgment or dependency genuinely differs, and the proof required for completion.** It answers what counts as correct, not exactly how to edit the repo, and has no mandatory section ceremony.
 
 When complex autonomous work genuinely needs deeper Graph / baseline / Verification / Evidence guidance, read [execution-compile.md](references/execution-compile.md) on demand. Read [verification-trust.md](references/verification-trust.md) only for a concrete false-green / gameability / independence risk. Do not load these references merely for a sense of completeness.
 
@@ -57,6 +57,6 @@ When `Status: Executable` also writes a file handoff, the final response must su
 
 ## Output
 
-- `Status: Unresolved Intent` — a Human-owned decision still changes Goal / capability disposition / upstream architecture;
+- `Status: Unresolved Intent` — an unresolved upstream decision still changes Goal / capability disposition / architecture; name the gap and its authority instead of disguising it as implementation;
 - `Status: Blocked` — the missing item is factual/environmental and no safe work can continue; state the exact blocker and resume condition;
-- `Status: Executable` — deliver the minimum-sufficient task definition; if a handoff file exists, show its path immediately.
+- `Status: Executable` — deliver the minimum-sufficient autonomous task definition; if a handoff file exists, show its path immediately.
