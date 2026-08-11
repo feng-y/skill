@@ -23,7 +23,7 @@ Unknown here means uncertainty that can still change Stable Intent, Human verifi
 
 Intent Take loads only the minimum context needed to form the Goal: the latest still-valid Human expression, reality Evidence that can change the choice, and confirmed boundaries. Preserve any explicit Human verification requirements separately for Verification. Do not pull in unrelated surrounding context merely to feel complete. Stop expanding when the context is sufficient to distinguish materially different Goals.
 
-Unknown evidence reduction, consequence routing, and delegated-default rules live in the Compile stance of [SKILL.md](../SKILL.md). This file owns only the authority model and Stable Intent closure, not a second routing table.
+Unknown evidence reduction, consequence routing, and delegated-default rules live in Judge in [SKILL.md](../SKILL.md). This file owns only the authority model and Stable Intent closure, not a second routing table.
 
 ## When the Goal is settled
 
@@ -31,4 +31,4 @@ Goal settlement requires at least: one coherent Human-owned result, Why, the sta
 
 Explicit Human verification requirements do not define what the Goal is, but must be preserved accurately as binding Verification input before execution.
 
-If materially different Goals remain plausible, return `Status: Unresolved Intent`: state the current understanding, consequences of the alternatives, a recommendation when useful, and the smallest Human decision or evidence probe. Do not emit executable work.
+If materially different Goals remain plausible, state the current understanding, consequences of the alternatives, a recommendation when useful, and the smallest Human decision or evidence probe. Do not emit executable work, and do not turn this invocation's unresolved result into an outcome lifecycle by emitting a status token.
