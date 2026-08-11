@@ -34,6 +34,22 @@ repo 已有仍有效且明确点名当前 area 的 architecture/evolution goal�
 
 失败：局部 target 合理却替代上位 outcome；或在没有 authoritative goal 时发明战略口号；或为了避免前两者建立新的目标发现协议。
 
+## M5 — Current residue is evidence, not stable acceptance
+
+Research 已定位若干 member、switch arm、helper、重复前奏或 flag，它们共同暴露一份错误的 caller knowledge / responsibility / dependency，但多个不同 Target Design 都可能关闭该 architecture problem。
+
+通过：Replacement / exit 和 stable acceptance 判断真正的 knowledge、responsibility、semantic split、dependency 或长期兼容负担是否退出；当前 residue 可以作为 decisive evidence 或 design consequence，但不要求每个名字逐项消失，除非 Human/repo authority 明确把该形状本身定义为 invariant。
+
+失败：只因为某个现有 member/helper/switch arm 仍存在，就判定一个已经满足 durable outcome / boundary 的 materially different Target Design 不合格。
+
+## M6 — Variation ownership does not freeze representation
+
+Evidence 证明 caller 不应拥有 implementation-specific variation knowledge，且 variation 应回到稳定 capability boundary；下游存在 metadata/flag、polymorphism、strategy、capability-owned execution 等多个可行 representation。
+
+通过：Architecture Intent 只固定 variation 的正确 owner/boundary 和必须退出的 caller knowledge；representation 留给 Target Design，根据最终 semantics、lifecycle、change boundary 决定。
+
+失败：把“variation 应归 owner”自动翻译成“variation 必须显式声明”，或固定 metadata/flag/虚函数/某一种多态形式为 architecture law。
+
 ## Captured ModelCurator regression
 
 对 2026-08-07 captured Architecture Intent 检查：
@@ -42,3 +58,11 @@ repo 已有仍有效且明确点名当前 area 的 architecture/evolution goal�
 2. `真实执行形状` 不能仅因当前调用形状存在就被冻结为长期 variation；必须有 semantic/invariant evidence。
 3. build/test/replay/diff 不能成为固定 acceptance 套餐；Intent 只保留稳定 outcome-level acceptance，provider 由下游按最终 change surface 选择。
 4. false-unification、owner-scope、adjacent-owner 与 Target Design stop guards 不得回退。
+
+## Captured scoring-side regression
+
+对 2026-08-11 `PredictExecutor` scoring-side captured Architecture Intent 检查：
+
+1. `model_family_`、family switch、纯转发 arm 和重复抽取前奏可以证明 executor 持有 family-specific execution knowledge，但它们的逐项删除不能自动成为 architecture acceptance；stable exit 应判断这份 caller knowledge/reassembly 是否真正退出。
+2. `每个模型的执行期差异在能力侧显式声明` 把 owner judgement 过早物化成 representation。Architecture Intent 只固定 scoring capability boundary 应拥有 variation；是否采用 contract metadata、虚函数、多态对象或 capability-owned execution 留给 Target Design。
+3. Human 若随后纠正上述 Direction / acceptance，旧 ready intent 不能与聊天 delta 并存为 active truth；应按 Flow 重新收敛并产出唯一 current Architecture Intent，或在 Material Unknown 未关闭时返回 `Intent unresolved`。
