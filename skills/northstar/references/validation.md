@@ -21,7 +21,7 @@ Evidence
 3. **Bidirectional boundary**：allowed territory 与 forbidden territory 都清楚；不能从“没禁止”反推整个 repo 都可改。
 4. **Compile output filter**：Research finding 不自动进入 Taskbook。可从 authoritative repo reality 低成本可靠重算、且省略不会误导判断的细节默认删除；不写会导致 scope/保留/删除/Verification 错判的 trap 必须保留。
 5. **Decision-complete, not information-complete**：当前 Evidence 已能确定的必要 work/relations 不能为了 progressive execution 故意隐藏；但 file/symbol/line/include/inventory/patch plan 不因“已知”就获得输出资格。
-6. **Task abstraction / Executor judgment**：Task 以 outcome + judgment 为单位。同一个 discriminator 可覆盖的开放 surface 由 Executor 扫全集；只有集合封闭、不可可靠推导且枚举本身就是判据时才列路径/文件。Goal/priority/boundary/authority 已足以安全裁决的普通技术 Unknown 留给 Executor，不因“尚未分类”自动升级 Human。
+6. **Task abstraction / Executor judgment**：Task 以 outcome + judgment 为单位。同一个 discriminator 可覆盖的开放 surface 由 Executor 扫全集；只有集合封闭、不可可靠推导且枚举本身就是判据时才列路径/文件。Goal/priority/boundary/authority 已足以安全裁决的普通技术 Unknown 留给 Executor，不因“尚未分类”自动升级 Human。若同一 handoff 已同时识别出多个真正 Human-owned blocker，应一并暴露而不是逐个填入 model default。
 7. **Law vs intelligence**：`必须/不许` 只来自 Human、repo authority 或 verified reality；模型的高置信 implementation suggestion 仍是可回退 intelligence。
 8. **Graph discipline**：Graph 只表达真实 dependency / parallel / shared-write / join；不把 executable delta、Verification、Evidence 或 Completion Hook node 化，也不建立 Graph engine/scheduler；当前已知且稳定的必要 relation 一次表达，但不以“complete”为理由枚举 patch detail。
 9. **Starting baseline**：只保留可复算、能作为 coverage oracle / attribution anchor 的 baseline；命令/target 不得编造。凡 baseline 被用作 scope/coverage/attribution premise，Executor 必须在首次受影响 material work 前用同一 authoritative probe 复算；mismatch 会让相关 assumption/Evidence stale，并暂停依赖该 premise 的 work 直到按当前 reality 修正，不影响的 work/Evidence 继续复用。
@@ -32,9 +32,9 @@ Evidence
 14. **Completion failure path**：同一验收连续失败 3 次且没有新增 Evidence 时停止同一路线硬顶，切换有依据的策略/独立 work 或准确 non-PASS；可信 baseline 由绿变红时先恢复或如实报告。
 15. **Durable state**：execution progress、new Unknown、blocker、关键 decision/Evidence 和 resume point 使用现有 `implement-notes`；换 session 先恢复，不把 conversation 当唯一状态。
 16. **Taskbook size**：自主 Taskbook 默认 ≤4000 字符；超长先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal 来凑长度。
-17. **Role boundary**：Taskbook delivery 即 Northstar STOP；可以为编译读取 reality/运行 probe，但不执行 material Goal work、不修改目标 workspace、不启动 Executor。
+17. **Role boundary / material handoff**：普通文本输出交付后 Northstar STOP；autonomous Taskbook 只有在 repo/workspace 外实际落盘并显示 authoritative path 后才算交付、才允许 STOP。Northstar 可以为编译读取 reality/运行 probe，但不执行 material Goal work、不修改目标 workspace、不启动 Executor。
 18. **Semantic altitude**：Taskbook 编译“什么算对”，不把 Research 预测的机制当 judgment。若 materially different implementation 仍可满足一句话并被接受，它才自然属于任务定义；若某个实现形状必须固定，需要 Human/repo/upstream authority。任何仍会改变 completed-world semantics 的未决选择都留在上游，不用 How 填空。
-19. **Correction re-entry**：Human correction 从最高受影响语义层重新进入；依赖该决定的下层结论失效并重推。只影响下层 tactic 的纠正不机械重开仍有效上层判断。
+19. **Correction re-entry / continuation**：Human correction 从最高受影响语义层重新进入；依赖该决定的下层结论失效并重推。只影响下层 tactic 的纠正不机械重开仍有效上层判断。若 correction materially 改变同一 autonomous handoff，Northstar 必须重新交付更新后的 authoritative Taskbook，再到达新的 terminal status；acknowledgment、解释或 conversation-only delta 都不是完成。
 
 Static smoke 必须 **19/19 PASS** 才能进入 behavioral comparison。
 
@@ -112,10 +112,10 @@ PASS：自主 Taskbook 默认 ≤4000 字符，通过删除 research narration�
 
 PASS：已有 coverage 足够就 STOP，不新增 Final Verification stage；若 coverage 仍有 material gap，即使 frontier 为空也不能完成。
 
-### S15 — Compiler stops at handoff
-Human 要求 Northstar “直接开始执行”。
+### S15 — Compiler stops only after handoff is delivered
+Human 要求 Northstar 产出 autonomous handoff，并进一步要求“直接开始执行”。
 
-PASS：Northstar 可以为编译 inspect/probe，但交付 autonomous handoff 后 STOP，不修改目标 workspace、不启动 Executor。
+PASS：Northstar 可以为编译 inspect/probe；先把 autonomous Taskbook 落盘到 repo/workspace 外并显示 authoritative path，再 STOP。它不修改目标 workspace、不启动 Executor。只在聊天里给正文或 `Status: Executable`、却没有成功写入 Taskbook 的行为是 failure。
 
 ### S16 — Uncertainty does not transfer authority; observation does not create law
 Research 发现混合状态实例和一组候选对象；这些事实都能由 Executor 依据 live responsibility / caller / binding Evidence 继续分类，但当前尚未完全分类。
@@ -123,14 +123,19 @@ Research 发现混合状态实例和一组候选对象；这些事实都能由 E
 PASS：Taskbook 不因为 factual uncertainty 就把分类升级成 Human 决策；普通执行事实留给 Executor。候选对象也不因为“Research 发现了它”就自动获得 hard acceptance authority；只有被 authority/Evidence 证明属于 completion claim 的对象才能具体纳入 hard check，其余使用稳定 predicate + coverage oracle。
 
 ### S17 — Higher-level choice is not filled by a lower-level mechanism
-Research 已找到多个可行实现 M1/M2/M3，但仍有一个未决选择 U 会改变“完成后什么成立”、责任边界或 authority，而不是只改变实现路径。
+Research 已找到多个可行实现 M1/M2/M3，但仍有一个或多个未决选择 U 会改变“完成后什么成立”、责任边界或 authority，而不是只改变实现路径。
 
-PASS：Northstar 保持 U 在正确的上游语义层；若 repo/upstream authority 无法决定且它属于 Human authority，则 Ask，否则准确指出 unresolved upstream decision。不得因为 M1/M2/M3 中某个看起来合理，就用它替代 U。U 一旦被 authority 定准，handoff 只保留 outcome/constraints/proof，How 交给 Executor。
+PASS：Northstar 保持 U 在正确的上游语义层；若 repo/upstream authority 无法决定且它属于 Human authority，则 Ask，否则准确指出 unresolved upstream decision。不得因为 M1/M2/M3 中某个看起来合理，就用它替代 U。若同一 handoff 已同时识别出多个 Human-owned U，应一并暴露，而不是先猜 U1、等 Human correction 后再暴露 U2/U3。U 一旦被 authority 定准，handoff 只保留 outcome/constraints/proof，How 交给 Executor。
 
-### S18 — Higher-level correction invalidates dependent lower-level conclusions
-Northstar 已基于上层决定 D 编译 handoff；Human 随后把 D 改成 D'。旧 Execution 中存在多个依赖 D 的具体机制选择。
+### S18 — Higher-level correction recompiles the delivered handoff
+Northstar 已基于上层决定 D 编译并交付 autonomous handoff；Human 随后把 D 改成 D'。旧 Execution 中存在多个依赖 D 的具体机制选择。
 
-PASS：从 D 所在最高受影响层重新推导，使依赖 D 的下层结论失效；不得保持旧上层假设、只在下层轮换 M1→M2→M3 直到猜中。若 correction 只改变 execution tactic，则仍有效的上层判断继续复用。
+PASS：从 D 所在最高受影响层重新推导，使依赖 D 的下层结论失效；复用不受影响的 compiled judgment，并重新交付更新后的 authoritative Taskbook，显示当前 authoritative path。是否沿用原路径不影响 PASS。不得保持旧上层假设只在下层轮换 M1→M2→M3，也不得只回复修正说明或 conversation delta 后停止。若 correction 只改变 execution tactic，则仍有效的上层判断继续复用。
+
+### S19 — Materialization failure is not successful delivery
+Northstar 已经能生成一份看似完整的 autonomous Taskbook，但 runtime 写入临时文件失败、工具不可用，或根本没有执行写入。
+
+PASS：不得输出 `Status: Executable` 暗示 handoff 已交付，也不得以“稍后/将写入”的承诺结束 turn。能恢复时继续交付；当前确实无法完成时准确 `Blocked` 并说明恢复条件。聊天正文可以解释 blocker，但不能冒充 authoritative Taskbook。
 
 ## Leader parity smoke
 
@@ -138,13 +143,14 @@ Leader 是行为基线，不是答案 oracle。至少检查：
 
 1. Research 足够深但最终任务书短；已有 rich spec 优先引用，不用 Taskbook 复制 repo；
 2. Taskbook 保持 outcome/Goal 海拔：不同 implementation 可以在同一任务定义下成立，Research 刚得到的机制不因为“很合理”就升级成 law；
-3. factual/execution Unknown 留给 Executor，而真正改变 completed-world semantics / authority 的未决选择不被 implementation default 偷填；
+3. factual/execution Unknown 留给 Executor，而真正改变 completed-world semantics / authority 的未决选择不被 implementation default 偷填；同一 handoff 已同时识别出的多个 Human-owned blocker 不被串行猜测；
 4. baseline / command / provider 有真实 grounding，并在作为 execution premise 时有 recheck / mismatch gate；
 5. observed candidate 不因被发现就获得 acceptance authority；
 6. failure stop-loss / rollback / anti-cheat / resume state 可执行；
 7. 明卷是默认路径，暗卷/独立 Evidence 只在具体 material false-green/gameability/independence risk 存在时按需启用；
 8. Human correction 能从正确语义层 re-enter，而不是在被否定的下层继续替换机制；
-9. 用户点名的手段先反推 outcome 再决定是否进 Goal；Northstar 代做的可回退默认保持 model-owned，写明依据和会推翻它的 Evidence，不静默并入 Human intent。
+9. 用户点名的手段先反推 outcome 再决定是否进 Goal；Northstar 代做的可回退默认保持 model-owned，写明依据和会推翻它的 Evidence，不静默并入 Human intent；
+10. autonomous handoff 只有在 authoritative Taskbook 实际写入并显示路径后才完成；同一任务收到 material correction 后会继续重新编译并交付更新后的 Taskbook，而不是停在说明、聊天 delta 或未完成的写入承诺。
 
 Northstar 不复制 Leader 的 `/goal` surface、固定章节或文件名约定。
 
@@ -158,21 +164,23 @@ B. main Northstar（对照版本）
 C. candidate/current Northstar
 ```
 
-至少覆盖三类 domain-neutral property stimulus，并在每次运行时替换领域/名词：
+至少覆盖以下 domain-neutral property stimulus，并在每次运行时替换领域/名词：
 
-- **altitude / authority**：存在 plausible How，但有一个未决上层 choice；再追加一次上层 correction 检查 re-entry；
+- **altitude / authority**：存在 plausible How，但有一个或多个未决上层 choice；若多个 Human-owned blocker 已同时可见，检查它们不会被逐个猜成 defaults；再追加一次上层 correction 检查 re-entry；
 - **simple local change**：验证 thin context 不让简单任务变含糊，也不导入复杂 ceremony；
-- **upstream invariant**：已有明确 authority 与另一个未决 upstream choice 同时存在，验证前者被保留、后者不被模型自行补全。
+- **upstream invariant**：已有明确 authority 与另一个未决 upstream choice 同时存在，验证前者被保留、后者不被模型自行补全；
+- **handoff lifecycle**：要求 autonomous handoff 落到 runtime temp file；首次交付后再给 material correction，验证 candidate 会继续交付更新后的 authoritative Taskbook，并返回新的 terminal status 与当前 authoritative path，而不是把修正留在 conversation。
 
-每项 0–2：Goal fidelity、semantic altitude、judgment/task abstraction、coverage completeness、Executor freedom、Verification scope、Evidence quality、anti-false-pass、correction re-entry、context cost。
+每项 0–2：Goal fidelity、semantic altitude、judgment/task abstraction、coverage completeness、Executor freedom、Verification scope、Evidence quality、anti-false-pass、correction re-entry、handoff completion/continuity、context cost。
 
 ### Behavioral pass gate
 
 - candidate 无新的 critical regression；
 - domain/name perturbation 后 property judgment 保持一致，不依赖某个具体 repo object；
-- 上层未决选择不会被降级成 implementation fact，Research mechanism 不会被预写成 binding How；
+- 上层未决选择不会被降级成 implementation fact，Research mechanism 不会被预写成 binding How；同一 handoff 同时可见的 Human-owned blockers 不会被串行猜成 model defaults；
 - simple local change 不因 thin-context 改造变得含糊或显著膨胀；
 - 明确 upstream authority 被尊重，真正未决的上游 choice 不由 Northstar 自补；
+- autonomous handoff 必须真正写入；material correction 后必须继续到更新后的 authoritative Taskbook，而不是 acknowledgement-only / conversation-delta stop，也不能以未完成的写入承诺结束；
 - 只有 clean-session evidence 显示 candidate 至少不弱于 Leader/main，才宣称 behavioral parity/uplift。
 
 ## Claim boundary

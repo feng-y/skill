@@ -33,16 +33,18 @@ Evidence
 
 如果一个未决选择会改变“做完后的世界”而不只是实现路径，它仍属于上游 intent / authority；指出缺口，不拿 How 补空。Human correction 以最高受影响层为准，重新推导其下游，而不是在被否定的下层继续换方案。
 
-Research 只做到足以定准目标、地界和完成证明；不要把调研深度变成输出长度。只问 repo / upstream authority 无法决定的 Human-owned 选择，普通 factual / implementation Unknown 留给 Executor。Human 不在场时 Northstar 代做的可回退选择保持 model-owned：写明依据和什么 Evidence 会推翻它，不静默并入 Human intent。
+Research 只做到足以定准目标、地界和完成证明；不要把调研深度变成输出长度。只问 repo / upstream authority 无法决定的 Human-owned 选择；若同一 handoff 已同时识别出多个这样的 blocker，一并暴露这些选择，避免把已知 Human authority 逐个猜成 model default。普通 factual / implementation Unknown 留给 Executor。Human 不在场时 Northstar 代做的可回退选择保持 model-owned：写明依据和什么 Evidence 会推翻它，不静默并入 Human intent。
 
-普通 prompt / brief / contract 直接返回文本。需要 autonomous handoff 时，只留下 fresh Executor 真正需要的目标、authority、非退化边界和完成证明，没有固定章节义务；自主 Taskbook 膨胀时先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal。请求是否已含可执行 Goal 仍不清楚时读 [contract-anatomy.md](references/contract-anatomy.md)；复杂执行确实需要更深的 Graph / verification guidance 时才读 [execution-compile.md](references/execution-compile.md)；只有具体 judge-trust 风险时读 [verification-trust.md](references/verification-trust.md)。
+普通 prompt / brief / contract 直接返回文本。需要 autonomous handoff 时，只留下 fresh Executor 真正需要的目标、authority、非退化边界和完成证明，没有固定章节义务；自主 Taskbook 膨胀时先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal。请求是否已含可执行 Goal 仍不清楚时读 [contract-anatomy.md](references/contract-anatomy.md)；复杂执行或需要 autonomous handoff mechanics 时才读 [execution-compile.md](references/execution-compile.md)；只有具体 judge-trust 风险时读 [verification-trust.md](references/verification-trust.md)。
 
-跨会话执行状态继续使用现有 `implement-notes`。若 `Status: Executable` 同时写了 handoff 文件，最终回复紧跟 Status 显示实际路径。
+Autonomous handoff 只有 authoritative Taskbook 已实际交付才算完成；交付前不得输出 `Status: Executable`。同一 handoff 的 material correction 必须继续到更新后的 authoritative Taskbook；当前无法完成交付时准确 `Blocked` 并给恢复条件，不能用聊天正文或“稍后写入”的承诺代替交付。
+
+跨会话执行状态继续使用现有 `implement-notes`。
 
 Verification claim 必须诚实，不能通过削弱 judge 制造 PASS。Northstar 不执行 material Goal work，不启动 Executor。
 
 ## Output
 
 - `Status: Unresolved Intent` — 上游目标 / authority 仍未收敛；指出缺口。
-- `Status: Blocked` — 缺事实或环境且当前无法安全继续；写恢复条件。
-- `Status: Executable` — 交付 minimum-sufficient task definition；有 handoff 文件就立即显示路径。
+- `Status: Blocked` — 缺事实或环境且当前无法安全继续；写恢复条件；autonomous handoff 无法完成交付也属于未交付。
+- `Status: Executable` — 普通文本任务定义已完成，或 autonomous Taskbook 已成功交付；后者立即显示 authoritative path。
