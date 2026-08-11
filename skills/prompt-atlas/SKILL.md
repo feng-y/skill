@@ -30,7 +30,7 @@ It defines what counts as correct and the dependencies that matter; it does not 
 **2. Ground.** Use current repo/runtime reality plus existing authorities such as tests, schemas, ADRs, Architecture Intents, or acceptance scripts to close factual questions. Reference rich specs directly rather than copying them into weaker Taskbook prose. Research only while it can still change Goal, boundary, authority, or proof of completion; do not keep researching ordinary implementation detail for completeness.
 
 **3. Shape.** Converge the input into a Stable Goal and resolve only the Unknowns that can still affect it. To decide whether a statement belongs in the task definition, ask only: **Would the Human accept a materially different implementation that still satisfies it?** Route Unknowns by consequence:
-- changes completed-world semantics / authority and repo/upstream cannot settle it → **Human-owned choice**; surface all such currently known choices together;
+- changes completed-world semantics / authority and repo/upstream cannot settle it → **Human-owned choice**; ask only these choices, surface all currently known ones together, and include consequences plus a recommendation when useful;
 - fact that repo/runtime can determine → close through **probe / authority**;
 - changes only implementation How → **Executor-owned** and leave it for execution;
 - reversible default Prompt Atlas must make while the Human is unavailable → keep it **model-owned**, with its basis and the Evidence that would overturn it.
@@ -43,10 +43,10 @@ If materially different Goals remain plausible, do not fill the gap with an impl
 
 ## Compile rules
 
-- **Outcome outranks means.** Only Human/repo authority can make implementation shape binding law.
+- **Outcome outranks means.** Only Human/repo/upstream authority can make implementation shape binding law.
 - **Decision-complete, not information-complete.** Compile established relations that change Executor judgment; omit detail that authoritative reality can reliably reconstruct.
 - **Keep law separate from intelligence.** `must / must not` requires authority; even a high-confidence plan remains replaceable by a better Executor implementation.
 - **Verification freezes proof, not debugging workflow.** Evidence must actually run, cover the claim, and propagate failure; never weaken the judge to manufacture PASS.
 - **Execution state is not outcome state.** `implement-notes` stores only Executor progress, material decisions/Evidence, blockers, and resume point.
 
-Any material Human clarification / correction re-enters at the highest affected Take / Ground / Shape step, reuses still-valid judgment, recompiles dependent conclusions, and fully Deliver the current outcome again. Prior delivery never becomes a completion state and must not collapse the response into a delta/explanation only. For autonomous revisions, update the current artifact when possible; otherwise write a new available artifact and surface its authoritative path. Do not emit ready/completed/executable/status tokens.
+Any material Human clarification / correction re-enters at the highest affected Flow step, reuses still-valid judgment, recompiles dependent conclusions, and fully Deliver the current outcome again. Prior delivery never becomes a completion state and must not collapse the response into a delta/explanation only. For autonomous revisions, update the current artifact when possible; otherwise write a new available artifact and surface its authoritative path. Do not emit ready/completed/executable/status tokens.
