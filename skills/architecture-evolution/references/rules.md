@@ -34,7 +34,7 @@ Layer 是稳定 responsibility + dependency boundary，不是为了整齐增加�
 
 ### Primary vs auxiliary responsibility
 
-先确定模块的 primary responsibility surface；它决定主要 boundary、依赖和组织形态。metrics、debug/shadow、sampling、compat、fallback、cache、观测或局部性能优化等 auxiliary responsibility 应附着于主责任，而不是反过来塑造主架构。
+先确定模块真正的 primary responsibility surface；它决定主要 boundary、依赖和组织形态。metrics、debug/shadow、sampling、compat、fallback、cache、观测或局部性能优化只是常见的 auxiliary 候选，是否属于辅助责任必须由 capability semantics 和长期责任判断，不能由名字预设。被判定为 auxiliary 的 concern 应附着于主责任，而不是反过来塑造主架构。
 
 不要为了未经证明的性能收益打穿 layering、cohesion 或 abstraction boundary。只有 profiling、SLA、resource constraint 或其他真实 evidence 证明性能会改变长期架构选择时，性能才升级为 architecture force；否则结构清晰、责任自然和长期可演进性优先。
 
