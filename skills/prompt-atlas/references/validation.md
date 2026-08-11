@@ -35,8 +35,9 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 17. **Role boundary**: Taskbook delivery ends Prompt Atlas. It may inspect reality/run probes for compilation, but it does not perform material Goal work, mutate the target workspace toward the Goal, or launch an Executor.
 18. **Semantic altitude**: the Taskbook compiles what counts as correct instead of turning a Research-predicted mechanism into judgment. A statement naturally belongs in the task when a materially different implementation can still satisfy it and remain acceptable. If an implementation shape must be fixed, Human/repo/upstream authority must make it binding. Any unresolved choice that still changes completed-world semantics stays upstream instead of being filled with How.
 19. **Correction re-entry**: Human correction re-enters at the highest affected semantic layer. Dependent lower-layer conclusions become stale and are re-derived. A correction that changes only a lower-layer tactic does not mechanically reopen still-valid higher-level judgment.
+20. **Deliverable durability**: an autonomous handoff's Taskbook is persisted to a durable file; the `Status: Executable` reply shows the path and a fixed usage line immediately. Correction rounds update the same file and reply with the affected layer and delta, never a full reprint in chat; a turn must not end with a promised-but-unwritten deliverable.
 
-Static smoke must be **19/19 PASS** before behavioral comparison.
+Static smoke must be **20/20 PASS** before behavioral comparison.
 
 ## Scenario smoke
 
@@ -132,6 +133,11 @@ Prompt Atlas compiled a handoff under higher-level decision D; the Human later c
 
 PASS: re-enter at the highest layer affected by D→D' and invalidate dependent lower-layer conclusions. Do not preserve the old higher-level assumption and merely cycle M1→M2→M3 until something fits. If the correction changes only an execution tactic, still-valid higher-level judgment remains reusable.
 
+### S19 — Human-owned unknowns are asked in one batched round
+Several Human-owned choices that repo / upstream authority cannot settle are open at once, each changing completed-world semantics, boundaries, or verification authority.
+
+PASS: ask them in one batched round (with options and a recommendation) and deliver after the Human decides; when the Human is unavailable, take a model-owned default and state its basis. Failure: not asking, writing serial guesses into the Taskbook, and being corrected one by one across many rounds; or silently merging guesses into the Goal.
+
 ## Leader parity smoke
 
 Leader is a behavioral baseline, not an answer oracle. At minimum verify:
@@ -145,6 +151,7 @@ Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 7. visible verification is the default path; hidden / independent Evidence activates only on a concrete material false-green / gameability / independence risk;
 8. Human correction re-enters at the correct semantic layer rather than substituting another mechanism at the rejected lower layer;
 9. a means named by the Human is traced back to its outcome before entering the Goal; a reversible default made on the Human's behalf stays model-owned, with its basis and the Evidence that would overturn it stated, never silently merged into Human intent.
+10. the autonomous handoff is persisted durably and carries a fixed usage line; Human correction rounds update the same file and reply with the delta rather than a full reprint; a turn never ends with an unwritten delivery promise.
 
 Prompt Atlas does not copy Leader's `/goal` surface, fixed sections, or file-name conventions.
 

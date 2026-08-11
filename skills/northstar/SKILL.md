@@ -33,11 +33,13 @@ Evidence
 
 如果一个未决选择会改变“做完后的世界”而不只是实现路径，它仍属于上游 intent / authority；指出缺口，不拿 How 补空。Human correction 以最高受影响层为准，重新推导其下游，而不是在被否定的下层继续换方案。
 
-Research 只做到足以定准目标、地界和完成证明；不要把调研深度变成输出长度。只问 repo / upstream authority 无法决定的 Human-owned 选择，普通 factual / implementation Unknown 留给 Executor。Human 不在场时 Northstar 代做的可回退选择保持 model-owned：写明依据和什么 Evidence 会推翻它，不静默并入 Human intent。
+Research 只做到足以定准目标、地界和完成证明；不要把调研深度变成输出长度。只问 repo / upstream authority 无法决定的 Human-owned 选择；多个此类选择一轮批量提出并给推荐，不逐个猜测后靠 Human 串行纠正。普通 factual / implementation Unknown 留给 Executor。Human 不在场时 Northstar 代做的可回退选择保持 model-owned：写明依据和什么 Evidence 会推翻它，不静默并入 Human intent。
 
 普通 prompt / brief / contract 直接返回文本。需要 autonomous handoff 时，只留下 fresh Executor 真正需要的目标、authority、非退化边界和完成证明，没有固定章节义务；自主 Taskbook 膨胀时先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal。请求是否已含可执行 Goal 仍不清楚时读 [contract-anatomy.md](references/contract-anatomy.md)；复杂执行确实需要更深的 Graph / verification guidance 时才读 [execution-compile.md](references/execution-compile.md)；只有具体 judge-trust 风险时读 [verification-trust.md](references/verification-trust.md)。
 
-跨会话执行状态继续使用现有 `implement-notes`。若 `Status: Executable` 同时写了 handoff 文件，最终回复紧跟 Status 显示实际路径。
+跨会话执行状态继续使用现有 `implement-notes`。自主 handoff 的 Taskbook 默认落盘为持久文件，位置优先目标 repo 的既有 handoff / notes 约定；/tmp 等易失位置只在 Human 点名时使用。
+
+Human 的每轮输入都是 compile 的继续，不是结束：correction 从最高受影响层重推后更新同一 handoff 文件；回复只给 Status、路径、本轮受影响层与 delta，不全文重印。turn 不以“已承诺但未写入”结束——回复里提到的交付物必须已经存在。
 
 Verification claim 必须诚实，不能通过削弱 judge 制造 PASS。Northstar 不执行 material Goal work，不启动 Executor。
 
@@ -45,4 +47,4 @@ Verification claim 必须诚实，不能通过削弱 judge 制造 PASS。Northst
 
 - `Status: Unresolved Intent` — 上游目标 / authority 仍未收敛；指出缺口。
 - `Status: Blocked` — 缺事实或环境且当前无法安全继续；写恢复条件。
-- `Status: Executable` — 交付 minimum-sufficient task definition；有 handoff 文件就立即显示路径。
+- `Status: Executable` — 交付 minimum-sufficient task definition；自主 handoff 紧跟 Status 显示落盘路径，并附一句固定用法提示：如何把 Taskbook 交给 fresh Executor，入口形式跟随目标环境。

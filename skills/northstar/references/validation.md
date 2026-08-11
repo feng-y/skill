@@ -35,8 +35,9 @@ Evidence
 17. **Role boundary**：Taskbook delivery 即 Northstar STOP；可以为编译读取 reality/运行 probe，但不执行 material Goal work、不修改目标 workspace、不启动 Executor。
 18. **Semantic altitude**：Taskbook 编译“什么算对”，不把 Research 预测的机制当 judgment。若 materially different implementation 仍可满足一句话并被接受，它才自然属于任务定义；若某个实现形状必须固定，需要 Human/repo/upstream authority。任何仍会改变 completed-world semantics 的未决选择都留在上游，不用 How 填空。
 19. **Correction re-entry**：Human correction 从最高受影响语义层重新进入；依赖该决定的下层结论失效并重推。只影响下层 tactic 的纠正不机械重开仍有效上层判断。
+20. **Deliverable durability**：自主 handoff 的 Taskbook 落盘为持久文件，`Status: Executable` 回复紧跟路径与固定用法提示；Human correction 轮次更新同一文件、回复受影响层与 delta，不在对话全文重印；turn 不以“已承诺但未写入”结束。
 
-Static smoke 必须 **19/19 PASS** 才能进入 behavioral comparison。
+Static smoke 必须 **20/20 PASS** 才能进入 behavioral comparison。
 
 ## Scenario smoke
 
@@ -132,6 +133,11 @@ Northstar 已基于上层决定 D 编译 handoff；Human 随后把 D 改成 D'�
 
 PASS：从 D 所在最高受影响层重新推导，使依赖 D 的下层结论失效；不得保持旧上层假设、只在下层轮换 M1→M2→M3 直到猜中。若 correction 只改变 execution tactic，则仍有效的上层判断继续复用。
 
+### S19 — Human-owned unknowns are asked in one batched round
+Repo / upstream authority 无法决定的多个 Human-owned 选择同时存在，各自会改变 completed-world semantics、边界或 verification authority。
+
+PASS：一轮批量提出这些选择（附选项与推荐），Human 拍板后再交付；Human 不在场时走 model-owned 默认并标注依据。反例：不提问、逐个把猜测写进 Taskbook，被 Human 串行纠正多轮；或把猜测静默并入 Goal。
+
 ## Leader parity smoke
 
 Leader 是行为基线，不是答案 oracle。至少检查：
@@ -145,6 +151,7 @@ Leader 是行为基线，不是答案 oracle。至少检查：
 7. 明卷是默认路径，暗卷/独立 Evidence 只在具体 material false-green/gameability/independence risk 存在时按需启用；
 8. Human correction 能从正确语义层 re-enter，而不是在被否定的下层继续替换机制；
 9. 用户点名的手段先反推 outcome 再决定是否进 Goal；Northstar 代做的可回退默认保持 model-owned，写明依据和会推翻它的 Evidence，不静默并入 Human intent。
+10. 自主 handoff 落盘持久、附固定用法提示；Human correction 轮次更新同一文件、回复 delta 而非全文重印；turn 不以未写入的交付承诺结束。
 
 Northstar 不复制 Leader 的 `/goal` surface、固定章节或文件名约定。
 

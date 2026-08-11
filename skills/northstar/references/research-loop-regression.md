@@ -162,10 +162,28 @@ Verification: repo-required build/tests + affected behavior replay/等价证据 
 - 同名异义未被隔离，Executor 可能把另一个 live `fs` 对象误当旧 FS 清理；
 - execution Unknown 只留在 conversation，断线后重新 discovery。
 
+## R8 — Human input continues compile, and the deliverable is durable
+
+Northstar 已交付一版较长的 autonomous handoff；Human 随后分多轮给出 correction 与新约束，最后一轮要求把方案写入文件。
+
+通过：
+
+- 每轮 Human 输入后 compile 继续到新的交付：correction 从最高受影响层重推，更新同一落盘 Taskbook，回复 Status + 路径 + 本轮受影响层与 delta；
+- 回复中提到的文件在 turn 结束前已经写入；交付附固定用法提示（如何把 Taskbook 交给 fresh Executor）；
+- 多轮 correction 的 SOT 始终是落盘文件，对话只承载 delta；
+- 多个 repo authority 无法决定的 Human-owned 选择一轮批量提出，不逐个猜测后被串行纠正。
+
+失败：
+
+- 每轮在对话里全文重印修订版、从不落盘，交付物只存在于 scrollback；
+- 承诺写文件但 turn 在写入前结束，方案无处恢复；
+- Human 交互后不再产出完整交付物，只回一段修订文字即停；
+- 0 提问、把内部机制猜测写进 Taskbook，让 Human 逐条纠正（同时违反 S17/S18 时按对应条目记）。
+
 ## Captured FS cleanup shape
 
 示例只用于复现，不进入 runtime prior：`fea_lib` / `fea_util` 中仍被 Hermes/model_server 使用的 shared pieces 保留；FS-only leaf 与 FS/Hermes comparison 按 Human 给出的策略逐步退出。类似“外部 Flink UDF 是否仍消费 libfs.so”的问题，只有它真的阻止当前具体 leaf/branch 时才取得 Evidence；它不是整个 cleanup 开始前必须穷尽的统一 Research/Task 0。`model_server/production/ops/script/*.py` 中同名 runtime 配置若属于其他 residual，则按 Goal boundary 留到后续。当前 branch 已有的 comparison/fixture 删除属于 starting reality，但必须由本次任务书要求的 Verification 覆盖。
 
 ## Claim boundary
 
-这些 regression 只证明候选 runtime 文本能表达 Research closure、compiler/Executor boundary、Goal preservation、bounded-frontier judgment、judgment compression、starting-reality reuse、taskbook compression 与 Leader-parity failure/resume judgment。没有 clean-session Skill runner / isolated model session 时，不宣称行为 uplift；真实 behavioral A/B 仍标记 `NOT RUN`。
+这些 regression 只证明候选 runtime 文本能表达 Research closure、compiler/Executor boundary、Goal preservation、bounded-frontier judgment、judgment compression、starting-reality reuse、taskbook compression、Leader-parity failure/resume judgment、handoff 交付物持久性与 Human 交互后继续产出。没有 clean-session Skill runner / isolated model session 时，不宣称行为 uplift；真实 behavioral A/B 仍标记 `NOT RUN`。

@@ -162,10 +162,28 @@ Fail:
 - terminology collisions are not isolated and the Executor can operate on the wrong live `fs` object;
 - execution Unknown exists only in conversation and is rediscovered after interruption.
 
+## R8 — Human input continues compile, and the deliverable is durable
+
+Prompt Atlas has delivered a long autonomous handoff; the Human then gives corrections and new constraints across several rounds, and the final round asks for the plan to be written to a file.
+
+Pass:
+
+- every Human input continues compile into a new delivery: the correction re-enters at the highest affected layer, the same persisted Taskbook is updated, and the reply carries Status + path + the affected layer and delta;
+- any file the reply mentions has been written before the turn ends; the delivery carries a fixed usage line (how to hand the Taskbook to a fresh Executor);
+- the SOT across correction rounds is always the persisted file; chat carries only the delta;
+- several Human-owned choices that repo authority cannot settle are asked in one batched round, not guessed serially and corrected one by one.
+
+Failure:
+
+- every round reprints the full revised text in chat and never persists, so the deliverable exists only in scrollback;
+- a file write is promised but the turn ends before the write, leaving the plan unrecoverable;
+- after Human interaction the run stops producing the full deliverable and replies with only a revised fragment;
+- zero questions asked, internal mechanism guesses written into the Taskbook, corrected by the Human one at a time (when this also violates S17/S18, record it under those entries).
+
 ## Captured FS cleanup shape
 
 This example exists only to reproduce the regression and must not become a runtime prior. Shared pieces in `fea_lib` / `fea_util` that are still used by Hermes/model_server stay; FS-only leaves and FS/Hermes comparison are peeled according to the Human-confirmed strategy. A question such as “does an external Flink UDF still consume libfs.so?” needs Evidence only when it actually blocks the concrete leaf/branch being removed; it is not a unified Research/Task-0 prerequisite before cleanup can begin. Same-named runtime config under `model_server/production/ops/script/*.py` remains deferred when it belongs to other residual outside the Goal boundary. Existing comparison/fixture deletions on the current branch are starting reality but must still be covered by the Taskbook's required Verification.
 
 ## Claim boundary
 
-These regressions prove only that the candidate runtime text expresses Research closure, compiler/Executor boundary, Goal preservation, bounded-frontier judgment, judgment compression, starting-reality reuse, taskbook compression, and Leader-parity failure/resume judgment. Without a clean-session Skill runner / isolated model session, do not claim behavioral uplift; real behavioral A/B remains `NOT RUN`.
+These regressions prove only that the candidate runtime text expresses Research closure, compiler/Executor boundary, Goal preservation, bounded-frontier judgment, judgment compression, starting-reality reuse, taskbook compression, Leader-parity failure/resume judgment, handoff deliverable durability, and continued production after Human interaction. Without a clean-session Skill runner / isolated model session, do not claim behavioral uplift; real behavioral A/B remains `NOT RUN`.
