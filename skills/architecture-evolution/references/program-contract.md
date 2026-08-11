@@ -4,6 +4,8 @@
 
 最终结果应让一个不了解本轮 Research 过程的人能够回答：**结构要变成什么、长期保持什么、接下来哪几个 architecture improvement 最值得真实推进、它们有什么依赖、完成后什么旧复杂度退出。**
 
+已有 authoritative repo SOT 已定义稳定 contract / invariant / schema / boundary 时，优先引用其路径或稳定名称，不用散文复制成第二份事实源。Compile 只携带本轮新增的 architecture judgement、结构 delta、必须改变的 authoritative rule，以及下游继续推进所需的最小 rationale；若现有 SOT 本身需要演进，明确它应改变什么，而不是在 Program 中另建平行规范。
+
 只保留会约束后续架构变化或推进顺序的内容：
 
 - **Structural adjustment** — 用最小 current → target 对比说明 layer/dependency、module/capability boundary、abstraction/specific 或 primary responsibility 要发生什么结构变化；不复述文件 inventory。
