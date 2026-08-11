@@ -19,6 +19,8 @@
 3. **Real exit** — 哪个旧 knowledge / authority / dependency / special path / accidental complexity 会真实退出或停止 authoritative；
 4. **Done condition** — 用结构事实说明何时完成，不固定 test/lint/evidence provider。
 
+每个 improvement 完成后都必须独立产生结构收益；不能只“为下一步铺路”而让新 abstraction / bridge / authority 与旧结构并存却没有任何旧 complexity 退出。若 architecture dependency 要求先建立新 boundary，则该 improvement 也必须同时迁移至少一类真实 responsibility / knowledge / dependency，使当前结构当场变好。
+
 如果一个候选项只有“研究 / 确认 / 梳理 / 观察 / 收集数据”，或完成后结构没有确定变好，它不能进入 Top Improvements。若缺失 evidence 会决定该 change 到底是不是 improvement、会改变 Target Architecture 或推进顺序，则不能靠 Compile 隐藏它：返回 `Status: Architecture unresolved`。
 
 Compile 应删除 Research trace、完整 alternatives 论证、Brooks challenge 过程、普通 unknown、看过的文件列表和 implementation detail。只有某个被否决 alternative 的代价会约束后续设计时，才保留一句必要 decision rationale。
