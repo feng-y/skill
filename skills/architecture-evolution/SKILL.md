@@ -32,7 +32,7 @@ North Star：**把模糊的架构担忧、模块问题或改进方向，收敛�
 
 **3. Shape。**把 best-known judgement 收敛成一个 bounded Architecture Intent，结构见 `intent-contract.md`。如果确有少量基本架构形态值得后续设计比较，可以简单点出“是什么”；不物化具体 Target Design。
 
-**4. Challenge。**用 `rules.md`，必要时加 `brooks-constraints.md`，只挑战会改变 intent 或 boundary 的判断。仍有这类 Material Unknown 就返回 `Status: Intent unresolved`；否则保留收敛后的 intent。Human 对已 ready intent 的 material correction 按 `rules.md` 只 reopen 受影响判断；重新收敛后返回完整的当前 Architecture Intent，不把旧 intent + conversation delta 当成当前结果。
+**4. Challenge。**用 `rules.md`，必要时加 `brooks-constraints.md`，只挑战会改变 intent 或 boundary 的判断。仍有这类 Material Unknown 就返回 `Status: Intent unresolved`；否则保留收敛后的 intent。Human 对已 ready intent 的 material correction 按 `rules.md` 只 reopen 受影响判断并重新进入必要 Flow，返回当前正确状态；若仍为 `Architecture intent ready`，重新输出完整 current Architecture Intent，不把旧 intent + conversation delta 当成当前结果。
 
 ## Output
 
