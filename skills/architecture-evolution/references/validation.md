@@ -16,7 +16,7 @@
 - 未经 profiling/SLA/resource evidence 证明的“可能性能更好”不能无条件覆盖 layering、cohesion、abstraction 或 primary-responsibility judgement；
 - ready decision 必须说明真实 structural exit 与 architecture-level evolution；temporary adapter/dual path/compat 必须有 architecture purpose 与 exit condition；
 - 三个状态互斥：`No architecture evolution / Architecture unresolved / Architecture decision ready`；
-- legacy 与 Brooks 都只是按需 lens；captured case wording 不进入 runtime。
+- legacy 与 Brooks 都只是按需 lens；Brooks 只保留 Conceptual Integrity、Essential vs Accidental Complexity、Second-System Effect 三个反证 lens，不建立 R1–R6 或另一套 architecture taxonomy；captured case wording 不进入 runtime。
 
 ## Scenario smoke
 
@@ -68,6 +68,12 @@ PASS：默认保持清晰 layering、cohesion 与 primary responsibility，让�
 一个 proposal 新增 facade/manager/registry，但旧 source of truth、caller branch 与 compat path 全部继续 authoritative。
 
 PASS：不能判 ready；必须说明什么旧 knowledge/authority/dependency/path 真正退出。temporary dual path 必须有 exit condition，否则只是 complexity relocation。
+
+### P7 — Brooks: locally good ideas can still break the system
+
+一个 redesign 已解决当前真实 pressure，但又顺手加入 plugin framework、generic registry、多个 future hooks / mode 和预留 extension point；每一项单独看都有合理用途，但当前没有 evidence 证明这些 flexibility 是必须长期承担的 requirement。
+
+PASS：按需读取 `brooks-constraints.md`；用 Conceptual Integrity / Second-System Effect challenge 整体方案，优先保留能解释当前 essential semantics 的最少 design ideas 与最窄 public surface，推迟 speculative flexibility。若某个 extension 确由当前必须满足的外部约束证明，则允许保留；不能把“未来可能有用”当 essential complexity，也不能因为每个局部点都合理就接受整体膨胀。
 
 ### N1 — Local fix stays local
 
@@ -131,19 +137,20 @@ B. 加载 architecture-evolution
 ## V2 pass gate
 
 1. P1 / P2 的 B 臂在五个核心 architecture dimension 合计至少高于 A 臂 3 分，且没有新增 0 分退化；
-2. P3–P6 / N1 / R1 / L1 / O1 的 discriminator 与停止边界全部正确；
+2. P3–P7 / N1 / R1 / L1 / O1 的 discriminator 与停止边界全部正确；
 3. B 臂不能只把旧 Architecture Intent 写得更长，也不能靠输出更多 analysis dimension 冒充能力提升；
 4. ready result 可以完成 Target Architecture，但不能泄漏 Implementation Design；
 5. captured regression properties 1–8 全部可判定，且具体 case 名词不出现在 runtime；
 6. README / SKILL / agent prompt / decision contract 与 compact kernel 一致；
-7. 只有 clean-session paired Evidence 才能宣称 behavioral uplift；static/scenario review 只证明 contract/eval consistency。
+7. Brooks challenge 能识别“局部都合理、整体 conceptual integrity 下降 / second-system 膨胀”的 proposal，但不能形成第二套 runtime taxonomy；
+8. 只有 clean-session paired Evidence 才能宣称 behavioral uplift；static/scenario review 只证明 contract/eval consistency。
 
 ## Regression failures
 
 - `pressure-free-architecture` — 从审美发明 architecture work；
 - `local-escalation` — local problem 被升级成 architecture evolution；
 - `layering-disorder` — policy/common 继续依赖 specific implementation，或依赖方向只能靠口头约定；
-- `cohesion-loss` — responsibility 被 helper/manager/registry 分散，组织复杂度上升；
+- `cohesion-loss` — responsibility 被 helper/manager/registry 分散，或一组局部合理的新概念让整体设计失去统一解释；
 - `false-abstraction` — 不同稳定语义被强行统一；
 - `historical-specific-lock-in` — 当前 provider/class partition 被永久化；
 - `auxiliary-takes-over` — metrics/debug/compat/cache/speculative performance 扭曲 primary architecture；
