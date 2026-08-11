@@ -28,7 +28,7 @@ North Star：**从真实 change pressure、系统现实和稳定约束中判断�
 
 默认锚定用户指定模块，不做全 repo architecture scan。先看该模块的真实职责与直接 upstream / downstream，从行为和依赖重新识别它实际提供或参与的 capability；**现有 module 名称和 provider taxonomy 只是 evidence，不是边界答案。**
 
-识别 capability 后重新判断 boundary：哪些 responsibility 属于 capability，哪些属于 caller / adjacent subsystem，哪些是 stable common，哪些是 specific。随后重新识别真正的 provider / variation boundary，并只沿会改变 architecture judgement 的 provider 逐个展开 semantics、input/output、lifecycle、state、performance/deployment constraint 等 decisive difference。
+识别 capability 后重新判断 boundary：哪些 responsibility 属于 capability，哪些属于 caller / adjacent subsystem，哪些是 stable common，哪些是 specific。只有存在由稳定 semantics / lifecycle / performance / deployment constraint 证明的 specific variation 时，才形成 provider boundary；否则保持单一 capability，不为对称或扩展性制造 provider。需要 provider 时，也只沿会改变 architecture judgement 的 provider 逐个展开 decisive difference。
 
 只有当局部边界无法关闭 authority/SOT、serialized/config identity、repo 外 contract 或其他会改变 Target Architecture 的 constraint 时，才做 targeted wider search；Research 深度本身不是价值。
 
