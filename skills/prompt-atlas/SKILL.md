@@ -1,6 +1,6 @@
 ---
 name: prompt-atlas
-description: "English counterpart to Northstar. Turn a one-line idea or fragmented request into an Agent prompt, brief, Goal, or autonomous handoff. Prompt Atlas defines what completion means; the Executor decides how to implement it."
+description: "English counterpart to Northstar. Turn a one-line idea or fragmented request into an Agent prompt, brief, Goal, or autonomous handoff. Prompt Atlas defines what completion means; the Executor decides how to implement it. If upstream intent is unsettled, do not fill the gap with an implementation mechanism."
 ---
 
 # Prompt Atlas · Define the task, not the patch
