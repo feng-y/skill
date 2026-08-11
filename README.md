@@ -32,7 +32,7 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 - `prompt-atlas` — English version of the shared Northstar/Prompt Atlas semantics for recovering a stable Goal and compiling one truthful autonomous taskbook or exact blocker.
 - `northstar` — Chinese version of the same semantics and behavior; changes should stay synchronized with Prompt Atlas rather than evolving as an independent control surface.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `architecture-evolution` — start from a named module and its direct structural neighborhood, recover the real capability/provider boundaries, choose a Target Architecture, and compile it into a few concrete Architecture Improvements without dropping into implementation design.
+- `architecture-evolution` — start from a named module and its direct structural neighborhood, recover the real capability and any evidence-backed provider boundaries, choose a Target Architecture, and compile it into a few concrete Architecture Improvements without dropping into implementation design.
 
 ## Architecture Evolution usage
 
@@ -49,16 +49,16 @@ Find the target architecture and the highest-value architecture improvements wor
 ```text
 Use $architecture-evolution on FeatureStreaming and Predict ParseRequest.
 They have parallel paths, but I am not sure whether they should be unified,
-adapted, or kept distinct. Re-identify the capability/provider boundary from repo reality.
+adapted, or kept distinct. Re-identify the capability and stable common/specific boundary from repo reality.
 ```
 
 ```text
 Use $architecture-evolution on <module-or-capability>.
-Start from this area and its direct upstream/downstream, choose a target architecture if evidence is sufficient,
+Start from this area and its direct upstream/downstream, choose a target architecture if the evidence is sufficient,
 then compile it into concrete architecture improvements. Stop before implementation design.
 ```
 
-Research is bounded by default: anchor on the named module, inspect direct upstream/downstream, infer the capability from actual responsibility rather than module names, redraw its boundary, then re-identify and expand only the providers/variations that can change the architecture decision. Wider repo search is targeted only when local evidence cannot close a material authority/SOT/identity/contract question.
+Research is bounded by default: anchor on the named module, inspect direct upstream/downstream, infer the capability from actual responsibility rather than module names, redraw its boundary, then expand only the stable specific variations that can change the architecture decision. A provider boundary is created only when durable semantics/lifecycle/performance/deployment evidence proves real variation; otherwise the result stays one capability. Wider repo search is targeted only when local evidence cannot close a material authority/SOT/identity/contract question.
 
 The architecture kernel stays small: clear layering and one-way dependencies; cohesive and simple modules; correct abstraction vs specific boundaries; primary responsibility shaping the structure instead of auxiliary concerns; and real structural exit rather than complexity relocation. `change locality`, caller knowledge, SOT/control/lifecycle, variation and Brooks are supporting evidence/challenge context, not mandatory analysis checklists.
 
@@ -67,7 +67,7 @@ A ready result is compiled into a thin Architecture Program rather than returnin
 It returns one of:
 
 - `No architecture evolution` — the pressure does not justify architecture work; keep the change local.
-- `Architecture unresolved` — a material unknown / Human decision / real architecture fork still lacks enough evidence, or no candidate change can yet be proven to improve the structure.
+- `Architecture unresolved` — a Material Unknown / Human decision / real architecture fork still lacks enough evidence, or no candidate change can yet be proven to improve the structure.
 - `Architecture decision ready` — Target Architecture is stable and has been compiled into a bounded Architecture Program that can enter Implementation Design / execution.
 
 A ready program may choose stable layering/dependency, module responsibility, abstraction/specific and necessary authority/lifecycle boundaries. It does not prescribe concrete class/API/file layouts, helper forms, flag schemas, MR/task breakdowns or verification providers unless repo/Human authority makes such representation itself an invariant.
