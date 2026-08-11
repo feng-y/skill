@@ -26,7 +26,7 @@ Evidence
 
 普通 factual / implementation Unknown 由 Executor 从当前 repo reality 处理。只有结论会改变上游 Goal / authority 时才重新打开上层决定。
 
-已有且仍符合 Goal 的 work / Evidence 可以继续复用；新 Evidence 只让依赖它的结论 stale。Human 对当前 handoff 的 material correction 也是 Evidence：从最高受影响层重推，只替换依赖它的编译结果，然后继续完成本次 handoff，不能把修正留成 conversation-only patch。
+已有且仍符合 Goal 的 work / Evidence 可以继续复用；新 Evidence 只让依赖它的结论 stale。Human 对当前 handoff 的 material correction 从最高受影响层重新定准 authority / intent，只替换依赖它的编译结果，然后继续完成本次 handoff，不能把修正留成 conversation-only patch。
 
 ## Verification / Evidence
 
