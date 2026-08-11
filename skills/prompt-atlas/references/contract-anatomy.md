@@ -31,4 +31,4 @@ Goal settlement requires at least: one coherent Human-owned result, Why, the sta
 
 Explicit Human verification requirements do not define what the Goal is, but must be preserved accurately as binding Verification input before execution.
 
-If materially different Goals remain plausible, state the current understanding, consequences of the alternatives, a recommendation when useful, and the smallest Human decision or evidence probe. Do not emit executable work, and do not turn this invocation's unresolved result into an outcome lifecycle by emitting a status token.
+If materially different Goals remain plausible, state the current understanding, consequences of the alternatives, a recommendation when useful, and the smallest Human decision or evidence probe. Do not emit executable work.
