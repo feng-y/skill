@@ -38,6 +38,8 @@ Evidence must support the real completion claim rather than activity narration o
 
 Stay minimum-sufficient. Research details the Executor can reliably reconstruct do not belong in the Taskbook; keep only non-obvious facts whose omission would cause a wrong Goal, boundary, or verification decision.
 
-Write an autonomous handoff to an OS/runtime-provided temporary Markdown artifact outside the current repo/workspace; do not fix `/tmp`, a filename, or a directory convention. For a revised handoff, update the current Taskbook when possible; if the current path is not writable, write the revision to an available runtime artifact and surface its actual path.
+Write the complete current Taskbook to an OS/runtime-provided Markdown artifact outside the current repo/workspace. The artifact carries the task definition only; do not add ready/completed/executable metadata. For a revision, update the current Taskbook when possible; if that path is not writable, write the revision to an available runtime artifact and surface the actual authoritative path.
 
-Use the existing `implement-notes` for execution state: progress, material decisions / Evidence, blockers, and resume point. Keep autonomous Taskbooks short; when content grows, remove duplication and implementation intelligence before adding more guidance.
+`implement-notes` owns only Executor progress, material decisions / Evidence, blockers, and resume point. It does not own Taskbook/outcome completion and must not suppress recompilation or full re-delivery after a material Human update.
+
+Keep autonomous Taskbooks short; when content grows, remove duplication and implementation intelligence before adding more guidance.
