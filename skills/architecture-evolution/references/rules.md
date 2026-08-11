@@ -1,123 +1,140 @@
-# Architecture Intent Rules
+# Architecture Reasoning Kernel
 
-只在需要 architecture judgement 时读取。本文件不定义 Flow，也不定义最终输出模板。
+只在需要 architecture judgement 时读取。本文件拥有 architecture forces、current model、design-space、trade-off 与 evolution judgment；不定义最终输出模板，也不规定实现 representation。
 
-## Start from pressure
+## 1. Architecture or local
 
-有效 intent 必须能追溯到真实压力，例如：
+有效 architecture work 必须能追溯到真实 pressure，而不是模式偏好。常见 pressure 包括：变化持续跨多个 owner 传播、caller 反复重建内部知识、多个事实源或 policy 并存、runtime control / lifecycle 被错误边界持有、provider/family/mode 分支持续增长、兼容路径长期不退、结构原因反复造成事故或回归。
 
-- 同一业务规则或配置解释反复在多处修改；
-- 新需求持续增加特殊入口、mode flag 或 provider/family switch；
-- 事故、回归或测试脆弱性集中在同一结构边界；
-- 调用者必须知道内部步骤、状态、生命周期或实现类型；
-- 一个模块同时承受多个不相关变化；
-- 新抽象增加，但旧路径、旧事实源和旧判断仍存在；
-- common/core/Harness/Runtime 被具体场景或 provider 牵引。
+文件大、函数长、目录不整齐、switch/if 很多或单次局部修改都只是 evidence；如果一个局部修复就能消除 pressure 且不重新定义长期 responsibility / authority / knowledge / control / lifecycle / dependency / variation boundary，就不要升级为 architecture evolution。
 
-文件大、函数长、目录不整齐、模式不优雅或单次局部修改，不单独构成 architecture intent。
+## 2. Architecture forces
 
-## Architecture or local
+只展开会改变 architecture decision 的 forces。
 
-形成 architecture intent 通常需要同时看到：
+### Change locality
 
-- pressure 会重复出现或恢复成本高；
-- 一个结构原因造成多个可观察后果；
-- 影响跨越单个局部实现，但仍能限定边界；
-- 需要重新确定业务语义、责任 owner、稳定 contract 或依赖方向；
-- 可以说明完成后什么旧知识、路径、判断、责任或依赖会退出。
+问未来最可能反复发生的变化是什么，以及当前结构会迫使哪些本不应一起变化的责任同时修改。好的 boundary 让稳定共变的 responsibility 靠近，让独立变化保持局部；不要用“高内聚低耦合”替代具体 change-pressure 判断。
 
-否则保持局部，不升级。
+### Knowledge ownership
 
-## Reality lenses
+问一个组件为了完成自己的责任，正在知道哪些本不该知道的事实：implementation identity、configuration interpretation、ordering、lifecycle、state、fallback、protocol 或 capability-private variation。caller 能调用 capability 不等于 caller 应理解 capability 如何成立。
 
-只展开会改变判断的观察面：
+纯 composition-root wiring 不自动是 knowledge leakage；如果它只选择 implementation，没有承载业务 policy、runtime sequencing、lifecycle ownership 或 usage knowledge，就是合法组装边界。
 
-1. **Business semantics** — 哪些路径表达同一业务，哪些属于不同 bounded context；事实和规则的权威解释在哪里。
-2. **Ownership & lifecycle** — config、runtime resource、state、publication、reload 和 lifetime 由谁真正拥有。
-3. **Consumer knowledge / reassembly** — caller 是否仍需组合 implementation、configuration、ordering、lifecycle、identity 或 access facts 才能使用 capability。
-4. **Source dependency** — policy、contract、implementation 的源码依赖方向是否稳定。
-5. **Runtime control / consumption** — 谁在运行时选择、构造、驱动和消费 capability。
+### Authority, control & lifecycle
 
-一个观察面整洁不能替另一个作证：clean interface 不等于 ownership 已闭合；clean dependency graph 不等于 runtime control 正确。
+不要把 ownership 压成单一 owner。按当前问题区分 semantic authority、configuration authority、construction、runtime selection、execution control、state ownership、publication/reload、lifecycle 与 observation。只有 evidence 证明必须 cohesive 的责任才应收敛；相邻 subsystem 已有正确 owner 时，优先稳定 relation/contract，不因“统一”吞并它。
 
-### Consumer reassembly
+### Authority / SOT / dependency
 
-当 caller 仍需重新组合本应属于 capability owner 的 configuration、implementation、lifecycle、ordering、identity 或 access facts，capability boundary 尚未闭合。
+同一事实、policy 或 decision 应有清楚 authoritative source。source dependency 和 runtime control 都要看：clean source graph 不代表 runtime control 正确，clean interface 也不代表 authority 已闭合。稳定 policy 不应被 provider、场景或 implementation 反向定义。
 
-纯 composition-root wiring 不自动算 reassembly：如果它只选择 implementation，没有承载业务 policy、runtime sequencing、lifecycle ownership 或 usage knowledge，就是合法组装边界。
+### Essential variation
 
-### Ownership scope
+Observed partition 只是 evidence。只有差异稳定改变 business semantics、precondition、output contract、consistency/lifecycle、performance architecture、deployment boundary 或其他长期 invariant 时，才值得成为 architecture-level variation；历史 API、当前 class hierarchy、provider 名称、mode 或调用形状本身不能证明 variation 应长期存在。
 
-Capability ownership 只闭合当前 capability 的 invariant、state/lifetime 和 usage contract，不自动包含 request execution、orchestration 或相邻 subsystem。
+## 3. Minimal current architecture model
 
-ownership 只能扩到 evidence 支持的 invariant。相邻 subsystem 已有正确 authoritative owner 时，优先稳定 relation/contract，不默认把其 config、resource、lifecycle 一并集中。
+不要机械生成 C4/目录图。只建足以改变 decision 的最小模型：
 
-## Architecture diagnosis directions
+- capabilities / responsibilities；
+- authority / SOT；
+- knowledge edges；
+- control / lifecycle edges；
+- source/runtime dependency；
+- stable or suspected variation axes；
+- change-pressure edges。
 
-下面四个方向是内部 discriminator，不是最终 artifact 的固定 taxonomy。一个 intent 可以同时命中多个 lens，最终判断必须来自具体 evidence。
+模型的价值是解释为什么 change 会传播、knowledge 为什么泄漏、authority 为什么分裂，以及哪个 boundary 真正承担长期变化。不能影响 decision 的 inventory 不进入当前模型。
 
-1. **Business Semantic Integrity**
-   - 同一业务是否存在多套语义或事实解释？
-   - 是否可能错误合并不同 bounded context？
+## 4. Design space
 
-2. **Stable Abstraction with Explicit Variation**
-   - caller 是否依赖 implementation difference 而不是业务能力？
-   - 哪些 variation 是 essential，哪些只是历史残留？
-   - current implementation partition 本身不证明 variation 应长期存在。
+不要在第一个 plausible shape 上停止。若存在 materially different 的 architecture，它们至少应改变一个长期 architecture axis：responsibility owner、knowledge boundary、authority/SOT、control direction、lifecycle ownership、dependency direction 或 essential variation model。
 
-3. **Cohesive Capability Ownership**
-   - capability、invariant、state、lifetime 是否有清楚 owner？
-   - 是否仍由 caller、helper、global state 共同拼装？
+`FooManager` vs `FooProvider`、同一 owner 的不同类层次、不同文件布局或 API 命名不算不同 architecture。
 
-4. **Unidirectional Policy Dependency**
-   - 稳定 policy 是否被 provider、场景或 implementation 反向定义或控制？
-   - 是否存在 `common→scenario`、`policy→provider` 或隐式反向控制？
+也不要固定“必须三个方案”。当 repo authority / forces 已经唯一决定方向时，不制造 alternatives ceremony；当两个 materially different architecture 都成立而关键 forces 尚不足以裁决时，返回 unresolved。
 
-## Real Evolution
+## 5. Architecture decision
 
-Intent 必须指向真实减少，而不是再加一层。至少应有一项旧东西真正退出：
+选择 architecture 不是选“最整洁”的图，而是选择哪组长期 trade-off 更适合真实 forces。至少回答以下会改变结论的问题：
 
-- 平行业务语义；
-- 重复事实解释；
-- caller 内部知识或 capability reassembly；
-- 无效抽象或特殊入口；
-- 反向或循环依赖；
-- 永久兼容分支。
+- future change 是否更局部，还是只是把 switch 搬到另一个 owner；
+- caller / coordinator 真正少知道了什么；
+- authority / SOT 是否更清楚，还是新增第二套解释；
+- control / lifecycle 是否落到能长期承担 invariant 的 boundary；
+- essential variation 是否保留，historical variation 是否有退出机会；
+- 新 abstraction 吸收了什么 complexity，又把 complexity 搬到哪里；
+- 是否形成新的 flag matrix、mini-framework、implicit DSL、global registry 或长期 adapter；
+- 新 architecture 对未来新增 variation / capability 的 change amplification 如何；
+- conceptual integrity 是否更强：少数稳定概念能否解释主要路径，而不是让每个特殊场景拥有一套模型。
 
-如果只能说“增加 facade/interface/manager/registry”，intent 尚未成立。
+### Counterfactual test
 
-Observed partition 是 evidence，不是 architecture boundary。只有它承载稳定 semantics/invariant、闭合 ownership、essential variation 或长期 change boundary 时，才值得成为后续设计的基本形态。
+如果一个 materially different Target Architecture 也能满足同一 outcome / boundary，必须能用 forces 解释为什么当前选择更合适。解释只能依赖稳定 semantics、change pressure、authority、lifecycle、dependency 或 evolution cost；不能因为当前代码更像某个方案就选择它。
 
-好的 architecture direction 优先表达为少量 stable invariant / boundary：什么必须始终成立，哪些变化仍允许局部自主。不要把 class/API/library choice 当成架构规范。一个 invariant 稳定到值得长期约束时，应优先能被 repo structure 或 tooling 清楚表达并在适合时机械检查；文档可以解释它，但不替代 enforcement。本 Skill 只识别这个 judgement，不设计具体 lint/test。
+### Complexity relocation
 
-局部 target shape 即使合理，也不能替代 durable architecture outcome。当 repo 已有仍有效且明确点名当前 area 的 architecture/evolution goal 时，intent 必须说明该 area 对这个 goal 的贡献；ownership/interface/dependency 收紧只作为结构杠杆。没有已声明目标时，从跨边界 pressure 收敛最小 durable outcome，不发明战略口号。下游不应重新发现 why；why、direction 和 boundary 固定，how 保持开放。
+真实 evolution 必须让旧 complexity 退出，而不是 `old A → new abstraction → old B`。比较方案时明确：哪些 knowledge / branch / source / compatibility / dependency 被删除，哪些新 complexity 是必要的，以及新 complexity 是否有更稳定 owner。
 
-## Material unknown
+需要经典架构约束辅助判断时按需读 `brooks-constraints.md`，但不要把其中的名称、评分或 checklist 变成输出协议。
 
-只有会改变 intent 或 boundary 的 unknown 才是 Material Unknown。
+## 6. Target Architecture altitude
+
+Target Architecture 可以固定：
+
+- 长期 responsibility / capability boundary；
+- authority / SOT；
+- knowledge 和 control direction；
+- state / lifecycle ownership；
+- dependency invariant；
+- essential variation boundary；
+- architecture-level acceptance 与必须退出的旧责任/知识/路径。
+
+它不能仅凭 model preference 固定 class、API、文件、具体 helper、某个 flag/metadata schema、虚函数形态、调用顺序实现、migration task、lint/test/provider 套餐。representation 只有 Human/repo authority 或不可替代的技术约束使其成为 invariant 时才进入 architecture law。
+
+## 7. Architecture evolution
+
+Architecture Decision 不能只有目标图，还要说明系统如何从 current architecture 进入 target architecture，但只到 architecture-level transition。
+
+重点判断：
+
+- **Authority transition** — 新 authority / boundary 何时建立，旧 authority 何时停止 authoritative；避免长期 dual truth。
+- **Knowledge/control exit** — 哪类 caller knowledge、control 或 dependency 在什么 architecture condition 成立后可以退休。
+- **Temporary complexity** — adapter、dual path、compat 或 bridge 若必须出现，要有明确 architecture purpose 和 exit condition；不能默认永久化。
+- **Ordering** — 只表达 architecture dependency，例如“先建立新 SOT，旧解释才能退出”；不展开文件级 task plan。
+- **Reversibility / lock-in** — 哪个 transition 容易回退，哪一步会产生新的长期承诺；如果高 lock-in 方案没有足够收益，不应仅因局部实现方便而选择。
+
+最终 evolution 应让 target architecture 比 current architecture 更容易解释和继续变化；如果中间结构只是把复杂度叠加且没有可信退出条件，decision 尚未成立。
+
+## 8. Material Unknown
+
+只有会改变 architecture vs local、Target Architecture、关键 trade-off、boundary 或 evolution path 的 unknown 才是 Material Unknown。
 
 ```text
-Claim at risk → Minimal probe → Evidence → Intent changed / retained
+Claim at risk → Minimal probe / Human decision → Evidence → Decision changed / retained
 ```
 
-未关闭的 Material Unknown ⇒ `Status: Intent unresolved`。不会改变判断的 unknown 不升级；已经关闭的 unknown 不继续作为 active blocker。
+事实缺口能从 repo/runtime reality 关闭就先 probe；真正属于 Human-owned 的业务、兼容、风险或长期承诺才 Ask。不会改变 architecture decision 的 unknown 留给后续 design / execution。
 
-## Evidence lifetime
+## 9. Evidence lifetime
 
-同一事实或 judgment 只保留一份当前 authoritative state。前提未变就复用；新 authoritative evidence 改变前提时，只 reopen 并替换受影响判断，不把新旧 snapshot 并列为 active truth。
+同一事实或 judgment 只保留一份当前 authoritative state。前提未变就复用；新 authoritative evidence 改变前提时，只 reopen 依赖它的 current model、alternative comparison、decision 或 evolution conclusion，不把新旧 snapshot 并列为 active truth。
 
-## Challenge
+## 10. Challenge
 
-重点找会推翻或缩小 intent 的反证：
+最终 challenge 只找会推翻或缩小 architecture decision 的反证：
 
-- 其实只是局部修复；
+- 其实只是 local fix；
 - false-unify 不同 bounded context；
-- 把历史偶然差异永久化；
-- speculative abstraction 或 mode/union interface；
-- complexity 只是搬到 helper/adapter/registry/caller；
-- consumer reassembly 仍然存在；
-- ownership 无 evidence 扩到 execution/orchestration/adjacent subsystem；
-- 没有真实 replacement / exit；
-- 存在代码无法裁决的 Human-owned 业务或兼容决定。
+- current implementation partition 被误当长期 variation；
+- ownership 从 capability 无 evidence 扩张到 orchestration/adjacent subsystem；
+- alternatives 只是不同 implementation representation；
+- chosen architecture 没有比 materially different alternative 更好的 force-based 理由；
+- complexity 只是搬家或形成新 mini-framework；
+- transition 依赖永久 dual authority / adapter 才成立；
+- target architecture 没有真实 replacement / exit；
+- 存在代码无法裁决的 Human-owned 长期决定。
 
-需要 Brooks 约束时读取 `brooks-constraints.md`；Brooks 只帮助 challenge judgement，不形成独立报告。
+反证成立就缩小、替换或保持 unresolved；不要新增一套 guard 来保住原结论。
