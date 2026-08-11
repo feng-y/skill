@@ -2,7 +2,7 @@
 
 只在 `Status: Architecture decision ready` 时读取。本文件只定义最终 Architecture Decision 的语义义务，不规定固定 Markdown 章节。
 
-最终结果应让一个不了解本轮 Research 过程的人能够回答：为什么这是 architecture problem、当前 architecture 的关键力量和关系是什么、有哪些 materially different 的选择、为什么选当前方向、目标 architecture 长期固定什么、系统如何在 architecture 层面演进过去。
+最终结果应让一个不了解本轮 Research 过程的人能够回答：为什么这是 architecture problem、当前 architecture 的关键力量和关系是什么、若存在真实 architecture fork 为什么选当前方向、目标 architecture 长期固定什么、系统如何在 architecture 层面演进过去。
 
 只保留 decision-relevant 内容：
 
