@@ -8,7 +8,7 @@
 
 - AE 仍完成 Target Architecture + architecture-level evolution，并在 ready 时自行 Compile 成薄 Architecture Program；
 - `SKILL.md` 默认锚定用户指定模块，只沿直接 upstream/downstream 与会改变判断的 provider / boundary 渐进展开，不把全 repo scan 当默认 Research；
-- 现有 module 名称、provider/class taxonomy、consumer partition 都只是 evidence；必须允许从真实职责重新识别 capability、boundary 与 provider；
+- 现有 module 名称、provider/class taxonomy、consumer partition 都只是 evidence；必须允许从真实职责重新识别 capability、boundary 与 provider；没有稳定 specific variation 时不得为了对称/扩展性制造 provider boundary；
 - `rules.md` 的 architecture kernel 仍只有 Layering & dependency、Cohesion & simplicity、Abstraction vs specific、Primary vs auxiliary responsibility、Real evolution；其他维度只是 evidence lenses；
 - Brooks 仍只保留 Conceptual Integrity、Essential vs Accidental Complexity、Second-System Effect 三个按需反证 lens，不形成第二套 runtime taxonomy；
 - `program-contract.md` 是唯一 ready artifact owner：完整 reasoning 被 Compile 成 Structural adjustment、Long-term architecture、最多 3 个真实 Architecture Improvements、必要 Route 与 completion；不要求固定 Markdown section；
@@ -29,7 +29,7 @@ PASS：
 - 先恢复模块真实职责与直接 upstream/downstream，不先扫全 repo；
 - 从行为重新识别它实际提供/参与的 capability，现有 module 名不自动等于 capability；
 - 重新划 capability boundary，区分 caller / adjacent subsystem / stable common / specific；
-- 重新识别真正 provider/variation，只逐个展开会改变 architecture judgement 的 semantics、I/O、lifecycle、state、performance/deployment difference；
+- 只有 stable specific variation 有 decisive evidence 时才形成 provider boundary；没有就保持单一 capability。需要 provider 时才逐个展开会改变 architecture judgement 的 semantics、I/O、lifecycle、state、performance/deployment difference；
 - 只有 authority/SOT、serialized/config identity、repo 外 contract 等局部无法关闭且会改变 Target Architecture 时，才 targeted wider search；
 - 不因“更全面”继续扫描无关模块。
 
@@ -51,7 +51,7 @@ executor 按 family identity 分派 scoring；feature preparation、metrics/writ
 PASS：
 
 - 先识别 scoring / orchestration 的真实 primary responsibility，而不是以 `PredictExecutor` 名称固定 boundary；
-- 当前 family switch 只是 evidence，重新判断哪些差异是真 provider semantics，哪些只是 historical implementation difference；
+- 当前 family switch 只是 evidence，重新判断哪些差异是真 stable specific semantics，哪些只是 historical implementation difference；没有稳定 specific 时不制造 provider；
 - 被 semantic judgement 判为 auxiliary 的 concern 不反向塑造主架构；真实 semantic/lifecycle/performance variation 保留；
 - 若多个 materially different Target Architecture 仍可行，只用会改变核心结构判断的 evidence 裁决；不足则 unresolved；
 - evolution 让 executor-side family knowledge 真实退出，而不是搬到 registry/flag matrix/DSL。
@@ -133,7 +133,7 @@ PASS：AE 可以明确 Target Architecture、improvement outcome、architecture 
 以下 property 来自真实 case，但不是 runtime prior：
 
 1. consumer usage partition 是 evidence，不自动生成 consumer-specific public view/interface；
-2. current provider/class/execution partition 不自动成为 stable variation taxonomy；
+2. current provider/class/execution partition 不自动成为 stable variation taxonomy，也不能因为“应该有 provider”就制造新 taxonomy；
 3. current member/switch/helper/flag residue 不自动成为 stable acceptance；判断其承载的结构 knowledge/responsibility/dependency 是否退出；
 4. responsibility/variation ownership 不冻结 representation；
 5. scoring-side “executor 不再拥有 family-specific execution knowledge”可以是 architecture outcome，但“必须显式声明差异”或指定 symbol 必删不是无条件 architecture law；
@@ -154,10 +154,10 @@ B. 加载 architecture-evolution
 
 | Dimension | 0 | 1 | 2 |
 | --- | --- | --- | --- |
-| Research scope | 全 repo 漫游或按目录 inventory | 大致围绕模块但扩散明显 | 指定模块→直接上下游→capability/boundary→必要 providers，按判断渐进展开 |
+| Research scope | 全 repo 漫游或按目录 inventory | 大致围绕模块但扩散明显 | 指定模块→直接上下游→capability/boundary→必要 specific/provider，按判断渐进展开 |
 | Layering / dependency | 反向依赖仍被接受 | 大致分层但规范弱 | 层次清楚、依赖单向，稳定约束可从 repo territory 表达 |
 | Cohesion / simplicity | 继续堆 helper/manager/registry | responsibility 大致集中但概念多 | capability 内聚、public surface 小、组织更简单 |
-| Abstraction / specific | 过度统一或锁死历史 partition | 大方向正确但 variation 理由弱 | common/specific 由稳定 semantics/invariant 决定，并重新识别真实 provider |
+| Abstraction / specific | 过度统一、锁死历史 partition 或制造 provider | 大方向正确但 variation 理由弱 | common/specific 由稳定 semantics/invariant 决定，仅真实 variation 形成 provider |
 | Primary responsibility | auxiliary concern 塑造主架构 | 主次大致清楚 | primary surface 主导结构，辅助 concern 附着且不污染 boundary |
 | Real evolution | 新层叠在旧结构上 | 有部分退出 | 旧 knowledge/authority/dependency/path 明确退出，temporary complexity 有 exit |
 | Compile convergence | reasoning dump、研究清单或固定 3 项 | 有推进点但收益/完成态不稳 | 最多 3 个真实 improvement，每个有 change/gain/exit/done；route 只保真实依赖 |
@@ -167,7 +167,7 @@ B. 加载 architecture-evolution
 
 1. P1–P3 / C1–C3 的 discriminator 全部正确；
 2. P4–P8 / N1 / R1 / L1 / O1 的边界全部正确；
-3. B 臂不能靠更长 analysis 冒充能力提升：必须表现出 bounded research、重新识别 capability/provider、具体 Target Architecture 和 convergent Compile；
+3. B 臂不能靠更长 analysis 冒充能力提升：必须表现出 bounded research、重新识别 capability/真实 variation、具体 Target Architecture 和 convergent Compile；
 4. ready 必须至少有一个真实 Architecture Improvement，且不能以 research task 补数；
 5. captured regression properties 1–8 全部可判定，具体 case 名词不进入 runtime；
 6. README / SKILL / agent prompt / program contract 与 module-anchored Research + Compile 语义一致；
@@ -179,6 +179,7 @@ B. 加载 architecture-evolution
 - `research-scope-explosion` — 指定模块任务被无证据扩大成全 repo 扫描；
 - `module-shape-lock-in` — 当前 module 名称/目录被当成长期 capability boundary；
 - `provider-shape-lock-in` — current provider/family/class partition 被永久化；
+- `provider-manufacture` — 没有稳定 specific variation evidence 仍为对称/扩展性制造 provider boundary；
 - `layering-disorder` — policy/common 继续依赖 specific implementation；
 - `cohesion-loss` — responsibility 被 helper/manager/registry 分散或概念膨胀；
 - `false-abstraction` — 不同稳定语义被强行统一；
