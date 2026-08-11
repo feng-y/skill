@@ -26,7 +26,7 @@ Split work only when judgment or dependency genuinely differs. Graph expresses r
 
 Ordinary factual / implementation Unknowns stay with the Executor to resolve from current repo reality. Reopen an upstream decision only when the conclusion would change Goal / authority.
 
-Still-valid work / Evidence aligned with the Goal can be reused. New Evidence stales only conclusions that depend on it. A material Human correction to the current handoff re-settles intent / authority at the highest affected layer, replaces only dependent compiled conclusions, then continues to complete the handoff rather than leaving the correction as a conversation-only patch.
+Still-valid work / Evidence aligned with the Goal can be reused. New Evidence stales only conclusions that depend on it.
 
 ## Verification / Evidence
 
@@ -38,6 +38,6 @@ Evidence must support the real completion claim rather than activity narration o
 
 Stay minimum-sufficient. Research details the Executor can reliably reconstruct do not belong in the Taskbook; keep only non-obvious facts whose omission would cause a wrong Goal, boundary, or verification decision.
 
-Write an autonomous handoff to an OS/runtime-provided temporary Markdown artifact outside the current repo/workspace; do not fix `/tmp`, a filename, or a directory convention. The Taskbook currently delivered successfully and surfaced by path is authoritative; `Status: Executable` is valid only after a successful write. A material correction should update the current Taskbook when possible; if the current path is not writable, write the revision to an available runtime artifact and surface its actual path. Do not end the turn with a promise to write later; if writing cannot complete, return accurate `Blocked` with the resume condition. Chat prose or a delta cannot substitute for delivery.
+Write an autonomous handoff to an OS/runtime-provided temporary Markdown artifact outside the current repo/workspace; do not fix `/tmp`, a filename, or a directory convention. A material correction should update the current Taskbook when possible; if the current path is not writable, write the revision to an available runtime artifact and surface its actual path.
 
 Use the existing `implement-notes` for execution state: progress, material decisions / Evidence, blockers, and resume point. Keep autonomous Taskbooks short; when content grows, remove duplication and implementation intelligence before adding more guidance.
