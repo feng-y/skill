@@ -34,7 +34,7 @@ Evidence
 16. **Taskbook size**：自主 Taskbook 默认 ≤4000 字符；超长先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal 来凑长度。
 17. **Role boundary / material handoff**：普通文本输出交付后 Northstar STOP；autonomous Taskbook 只有在 repo/workspace 外实际落盘并显示 authoritative path 后才算交付、才允许 STOP。Northstar 可以为编译读取 reality/运行 probe，但不执行 material Goal work、不修改目标 workspace、不启动 Executor。
 18. **Semantic altitude**：Taskbook 编译“什么算对”，不把 Research 预测的机制当 judgment。若 materially different implementation 仍可满足一句话并被接受，它才自然属于任务定义；若某个实现形状必须固定，需要 Human/repo/upstream authority。任何仍会改变 completed-world semantics 的未决选择都留在上游，不用 How 填空。
-19. **Correction re-entry / continuation**：Human correction 从最高受影响语义层重新进入；依赖该决定的下层结论失效并重推。只影响下层 tactic 的纠正不机械重开仍有效上层判断。若 correction 重新打开 Human-owned upstream intent / authority，则保持 `Unresolved Intent`；重新收敛为 executable handoff 后，必须重新交付更新后的 authoritative Taskbook 再到达 `Executable`，acknowledgment、解释或 conversation-only delta 都不是完成。
+19. **Correction re-entry / continuation**：Human correction 从最高受影响语义层重新进入；依赖该决定的下层结论失效并重推。material correction 后先从该层重新收敛：仍有 Human-owned upstream intent / authority 未定时保持 `Unresolved Intent`；一旦重新收敛为 executable handoff，必须重新交付更新后的 authoritative Taskbook 再到达 `Executable`。只影响下层 tactic 的纠正不机械重开仍有效上层判断；acknowledgment、解释或 conversation-only delta 都不是完成。
 
 Static smoke 必须 **19/19 PASS** 才能进入 behavioral comparison。
 
