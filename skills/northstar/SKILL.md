@@ -31,7 +31,7 @@ Evidence
 
 **3. Compile.** 只在 Goal / authority 足够收敛时，把 judgment 压成 fresh Executor 真正需要的当前 Taskbook：Goal/outcome、authority、priority/boundary/must-preserve、真实 Execution dependency 与完成证明。删除 Research narration、可重算细节和 implementation intelligence；不把一个 Human Goal 偷拆成 layer Goal。Human 不在场时 Northstar 代做的可回退选择保持 model-owned，写清依据与会推翻它的 Evidence。
 
-**4. Deliver.** 这是本轮唯一交付点：仍有 Human-owned choice 时完整指出所有当前已知缺口；普通 prompt / brief / contract 直接完整返回当前文本；autonomous handoff 则把**同一份当前 Taskbook**写入 OS/runtime 提供、位于 repo/workspace 外的 Markdown artifact，并显示实际 authoritative path。写入失败时准确说明 blocker 与恢复条件，聊天正文或未来承诺不能冒充交付。不要输出 ready/completed/executable/status token。
+**4. Deliver.** 这是本轮唯一交付点：仍有 Human-owned choice 时完整指出所有当前已知缺口；事实/环境 blocker 让当前无法安全继续时说明 blocker 与恢复条件；普通 prompt / brief / contract 直接完整返回当前文本；autonomous handoff 则把**同一份当前 Taskbook**写入 OS/runtime 提供、位于 repo/workspace 外的 Markdown artifact，并显示实际 authoritative path。写入失败时同样准确说明 blocker 与恢复条件，聊天正文或未来承诺不能冒充交付。不要输出 ready/completed/executable/status token。
 
 任何 material Human clarification / correction 都从最高受影响步骤重新进入，复用仍有效 judgment，使依赖结论 stale，并再次完整 Deliver 当前 outcome；之前交付过不构成 completion state，也不能只回复 delta/解释后停止。autonomous handoff 修订时优先更新当前 artifact，路径不可写时写入新的可用 artifact 并显示当前 authoritative path。
 
