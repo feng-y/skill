@@ -33,11 +33,11 @@ Evidence
 
 如果一个未决选择会改变“做完后的世界”而不只是实现路径，它仍属于上游 intent / authority；指出缺口，不拿 How 补空。Human correction 以最高受影响层为准，重新推导其下游，而不是在被否定的下层继续换方案。对同一 autonomous handoff 的 material correction 会重新打开 compile：复用仍有效的判断，替换失效部分，并继续到新的 handoff 真正交付；不能停在 acknowledgment、解释或 conversation-only delta。
 
-Research 只做到足以定准目标、地界和完成证明；不要把调研深度变成输出长度。只问 repo / upstream authority 无法决定的 Human-owned 选择，普通 factual / implementation Unknown 留给 Executor。Human 不在场时 Northstar 代做的可回退选择保持 model-owned：写明依据和什么 Evidence 会推翻它，不静默并入 Human intent。
+Research 只做到足以定准目标、地界和完成证明；不要把调研深度变成输出长度。只问 repo / upstream authority 无法决定的 Human-owned 选择；若同一 handoff 已同时识别出多个这样的 blocker，一并暴露这些选择，避免把已知 Human authority 逐个猜成 model default。普通 factual / implementation Unknown 留给 Executor。Human 不在场时 Northstar 代做的可回退选择保持 model-owned：写明依据和什么 Evidence 会推翻它，不静默并入 Human intent。
 
 普通 prompt / brief / contract 直接返回文本。需要 autonomous handoff 时，只留下 fresh Executor 真正需要的目标、authority、非退化边界和完成证明，没有固定章节义务；自主 Taskbook 膨胀时先压缩 judgment、删重复和 implementation intelligence，不把一个 Human Goal 偷拆成 layer Goal。请求是否已含可执行 Goal 仍不清楚时读 [contract-anatomy.md](references/contract-anatomy.md)；复杂执行确实需要更深的 Graph / verification guidance 时才读 [execution-compile.md](references/execution-compile.md)；只有具体 judge-trust 风险时读 [verification-trust.md](references/verification-trust.md)。
 
-Autonomous handoff 的交付以 materialized Taskbook 为准：把当前编译结果写入 OS/runtime 提供、位于当前 repo/workspace 外的临时 Markdown 文件，不硬编码固定路径或文件名。该文件是 fresh Executor 的 authoritative contract；写入成功前不得输出 `Status: Executable`。最终回复紧跟 Status 显示实际路径。同一任务后续收到 material correction 时，更新仍可访问的同一文件；若旧文件已不可访问，则写入替代文件并明确它 supersede 旧 handoff。无法 materialize 时准确 `Blocked` 并给恢复条件，不能用聊天正文冒充已交付文件。
+Autonomous handoff 的交付以 materialized Taskbook 为准：把当前编译结果写入 OS/runtime 提供、位于当前 repo/workspace 外的临时 Markdown 文件，不硬编码固定路径或文件名。该文件是 fresh Executor 的 authoritative contract；写入成功前不得输出 `Status: Executable`。最终回复紧跟 Status 显示实际路径。同一任务后续收到 material correction 时，更新仍可访问的同一文件；若旧文件已不可访问，则写入替代文件并明确它 supersede 旧 handoff。turn 不能以“稍后/将写入”的未完成交付承诺结束；无法 materialize 时准确 `Blocked` 并给恢复条件，不能用聊天正文冒充已交付文件。
 
 跨会话执行状态继续使用现有 `implement-notes`。
 
