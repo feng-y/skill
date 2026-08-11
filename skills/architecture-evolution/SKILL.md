@@ -17,7 +17,7 @@ AE 不是架构建议生成器。它从一个真实模块及其 change pressure 
 
 **3. Compile.** Target Architecture 足够稳定后读 [program-contract.md](references/program-contract.md)，只编译会让当前结构真实变好的 Architecture Program。最多保留 3 个 improvements，不补数；每个完成时都必须产生 structural gain，并让旧 knowledge/authority/dependency/path 有真实 exit。research task、future wish、纯铺路 abstraction 或 implementation step 不能冒充 improvement。
 
-**4. Deliver.** 这是本轮唯一交付点：如果 pressure 本质是 local，完整说明为什么保持 local；如果 architecture choice 仍缺 decisive Evidence/Human decision，完整指出缺口；如果已收敛，完整交付当前 Architecture Program。任何 material Human clarification/correction 都从最高受影响的 Ground/Judge 重新进入，重推依赖结论并再次完整 Deliver 当前 outcome；之前交付过不构成 completion state。不要输出 ready/completed/status token。
+**4. Deliver.** 这是本轮唯一交付点：如果 pressure 本质是 local，完整说明为什么保持 local；如果 architecture choice 仍缺 decisive Evidence/Human decision，完整指出缺口；如果已收敛，完整交付当前 Architecture Program。最终只交当前 architecture judgment / Program，不附 Research inventory、完整 alternatives、Brooks trace 或旧版本 Program。任何 material Human clarification/correction 都从最高受影响的 Flow step 重新进入，重推依赖结论并再次完整 Deliver 当前 outcome；之前交付过不构成 completion state。不要输出 ready/completed/status token。
 
 ## Architecture rules
 
