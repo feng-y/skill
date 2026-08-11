@@ -29,14 +29,14 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 
 ## Skills
 
-- `prompt-atlas` — English version of the shared Northstar/Prompt Atlas semantics for recovering a stable Goal and compiling one truthful autonomous taskbook or exact blocker.
-- `northstar` — Chinese version of the same semantics and behavior; changes should stay synchronized with Prompt Atlas rather than evolving as an independent control surface.
+- `prompt-atlas` — English surface of the shared Northstar semantics: shape a problem space into a stable Goal, route Unknowns to the right authority, then compile a minimum-sufficient task definition or autonomous handoff.
+- `northstar` — Chinese surface of the same Intent Take / Shape + Unknown-routing semantics; Human owns outcome, repo/runtime closes facts, and implementation How stays with the Executor.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `architecture-evolution` — reason from a named module or capability to a Target Architecture and a few concrete structural improvements, stopping before implementation design.
+- `architecture-evolution` — start from a named module's repo reality, re-identify capability/boundary and stable variation, then converge a Target Architecture and a few concrete structural improvements before implementation design.
 
 ## Architecture Evolution usage
 
-Use `architecture-evolution` when a module keeps accumulating structural pressure or its long-term architecture is still unclear. Give the relevant area and the pressure; the Skill grounds the decision in repo reality and returns either a local/no-evolution judgment, an unresolved architecture decision, or a compiled Architecture Program.
+Use `architecture-evolution` when a module keeps accumulating structural pressure or its long-term architecture is still unclear. Give the relevant area and the pressure; the Skill grounds the decision in repo reality and returns either a local/no-evolution judgment, the decisive missing evidence/choice, or a compiled Architecture Program.
 
 ```text
 Use $architecture-evolution on <module-or-capability>.
