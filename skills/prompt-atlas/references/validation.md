@@ -21,7 +21,7 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 3. **Bidirectional boundary**: both allowed territory and forbidden territory are clear; absence from a blacklist does not imply permission across the repo.
 4. **Compile output filter**: Research findings do not automatically survive into the Taskbook. Details that can be cheaply and reliably recomputed from authoritative repo reality are omitted when their absence will not mislead judgment; traps whose omission can cause wrong scope/preserve/remove/Verification decisions must remain.
 5. **Decision-complete, not information-complete**: necessary work/relations already established by current Evidence must not be hidden merely for progressive execution, but file/symbol/line/include inventories and patch plans do not gain output authority merely because Research knows them.
-6. **Task abstraction / Executor judgment**: Tasks are outcome + judgment. An open same-shaped surface covered by one discriminator is scanned by the Executor; enumerate paths/files only when the set is closed, cannot be reliably inferred, and enumeration itself is the decision rule. Ordinary technical Unknowns stay with the Executor whenever Goal/priority/boundary/authority already support a safe decision; unresolved status alone does not make them Human decisions.
+6. **Task abstraction / Executor judgment**: Tasks are outcome + judgment. An open same-shaped surface covered by one discriminator is scanned by the Executor; enumerate paths/files only when the set is closed, cannot be reliably inferred, and enumeration itself is the decision rule. Ordinary technical Unknowns stay with the Executor whenever Goal/priority/boundary/authority already support a safe decision; unresolved status alone does not make them Human decisions. If several genuine Human-owned blockers are already known for the same handoff, surface them together rather than serially turning them into model defaults.
 7. **Law vs intelligence**: `must/must not` comes only from Human, repo authority, or verified reality. High-confidence model implementation advice remains reversible intelligence.
 8. **Graph discipline**: Graph expresses only real dependency / parallel / shared-write / join relations. It does not turn executable deltas, Verification, Evidence, or Completion Hook into nodes or create a Graph engine/scheduler. Necessary relations already known and stable are expressed once, without using “complete” as a reason to enumerate patch detail.
 9. **Starting baseline**: keep only reproducible baseline signals that act as coverage or attribution anchors; never invent commands/targets. Any baseline used as a scope/coverage/attribution premise must be recomputed with the same authoritative probe before the first affected material work. A mismatch stales dependent assumptions/Evidence and pauses work that depends on that premise until affected state is repaired from current reality; unrelated work/Evidence remains reusable.
@@ -123,9 +123,9 @@ Research finds mixed-state instances and a set of candidate objects. The Executo
 PASS: factual uncertainty does not promote classification into a Human decision; ordinary execution facts stay with the Executor. Candidate objects also do not acquire hard acceptance authority merely because Research observed them. Only objects established by authority/Evidence as part of the completion claim may receive concrete hard checks; the rest use a stable predicate + coverage oracle.
 
 ### S17 — Higher-level choice is not filled by a lower-level mechanism
-Research has found multiple plausible implementations M1/M2/M3, but an unresolved choice U still changes what must be true in the completed world, a responsibility boundary, or authority rather than merely changing implementation path.
+Research has found multiple plausible implementations M1/M2/M3, but one or more unresolved choices U still change what must be true in the completed world, a responsibility boundary, or authority rather than merely changing implementation path.
 
-PASS: Prompt Atlas keeps U at the correct upstream semantic layer. If repo/upstream authority cannot decide it and it genuinely belongs to Human authority, Ask; otherwise name the unresolved upstream decision accurately. Do not substitute M1/M2/M3 for U merely because one looks plausible. Once authority settles U, the handoff keeps outcome/constraints/proof while How stays with the Executor.
+PASS: Prompt Atlas keeps U at the correct upstream semantic layer. If repo/upstream authority cannot decide it and it genuinely belongs to Human authority, Ask; otherwise name the unresolved upstream decision accurately. Do not substitute M1/M2/M3 for U merely because one looks plausible. When several Human-owned U are already known for the same handoff, surface them together instead of guessing U1 first and exposing U2/U3 only after Human correction. Once authority settles U, the handoff keeps outcome/constraints/proof while How stays with the Executor.
 
 ### S18 — Higher-level correction recompiles the delivered handoff
 Prompt Atlas compiled and materialized an autonomous handoff under higher-level decision D; the Human later changes D to D'. Existing Execution contains several concrete mechanism choices that depended on D.
@@ -135,7 +135,7 @@ PASS: re-enter at the highest layer affected by D→D' and invalidate dependent 
 ### S19 — Materialization failure is not successful delivery
 Prompt Atlas can already generate a plausible autonomous Taskbook, but writing the temporary artifact fails, the tool is unavailable, or no write is attempted.
 
-PASS: do not emit `Status: Executable` as though handoff were delivered. Continue materialization when recovery is possible; if completion is genuinely unavailable now, return accurate `Blocked` with the resume condition. Chat prose may explain the blocker but cannot substitute for the authoritative handoff artifact.
+PASS: do not emit `Status: Executable` as though handoff were delivered, and do not end the turn with a promise to write it later. Continue materialization when recovery is possible; if completion is genuinely unavailable now, return accurate `Blocked` with the resume condition. Chat prose may explain the blocker but cannot substitute for the authoritative handoff artifact.
 
 ## Leader parity smoke
 
@@ -143,14 +143,14 @@ Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 
 1. Research may be deep while the final Taskbook stays short; existing rich specs are referenced rather than copied into Taskbook prose;
 2. the Taskbook stays at outcome/Goal altitude: materially different implementations can satisfy the same task definition, and a mechanism discovered during Research does not become law merely because it looks good;
-3. factual/execution Unknowns stay with the Executor, while unresolved choices that genuinely change completed-world semantics / authority are not silently filled by an implementation default;
+3. factual/execution Unknowns stay with the Executor, while unresolved choices that genuinely change completed-world semantics / authority are not silently filled by an implementation default; concurrently known Human-owned blockers for the same handoff are not serially guessed;
 4. baseline / command / provider grounding is real, with recheck / mismatch gating when a baseline becomes an execution premise;
 5. observed candidates do not acquire acceptance authority merely by being discovered;
 6. failure stop-loss / rollback / anti-cheat / resume state are executable;
 7. visible verification is the default path; hidden / independent Evidence activates only on a concrete material false-green / gameability / independence risk;
 8. Human correction re-enters at the correct semantic layer rather than substituting another mechanism at the rejected lower layer;
 9. a means named by the Human is traced back to its outcome before entering the Goal; a reversible default made on the Human's behalf stays model-owned, with its basis and the Evidence that would overturn it stated, never silently merged into Human intent;
-10. autonomous handoff is complete only after its authoritative artifact materializes; a material correction to the same task continues compilation and updates that artifact instead of stopping at explanation or a chat delta.
+10. autonomous handoff is complete only after its authoritative artifact materializes; a material correction to the same task continues compilation and updates that artifact instead of stopping at explanation, a chat delta, or an unwritten delivery promise.
 
 Prompt Atlas does not copy Leader's `/goal` surface, fixed sections, or file-name conventions.
 
@@ -166,7 +166,7 @@ C. candidate/current Northstar/Prompt Atlas
 
 Cover at least these domain-neutral property stimuli and replace domain/nouns between runs:
 
-- **altitude / authority**: plausible How exists while a higher-level choice remains unresolved; then add one higher-level correction to test re-entry;
+- **altitude / authority**: plausible How exists while one or more higher-level choices remain unresolved; when several Human-owned blockers are already visible, verify they are not serially guessed as defaults; then add one higher-level correction to test re-entry;
 - **simple local change**: verify thin context does not make simple work vague or import complex ceremony;
 - **upstream invariant**: an explicit authority and a separate unresolved upstream choice coexist; verify the former is preserved and the latter is not silently completed by the model;
 - **handoff lifecycle**: request autonomous handoff into a runtime temporary artifact, then provide a material correction after the first delivery; verify the candidate continues to update the authoritative artifact and returns a new terminal status/path rather than leaving the revision in conversation.
@@ -177,10 +177,10 @@ Score 0–2 on Goal fidelity, semantic altitude, judgment/task abstraction, cove
 
 - candidate introduces no critical regression;
 - property judgment remains stable under domain/name perturbation and does not depend on a concrete repo object;
-- unresolved higher-level choice is not downgraded into an implementation fact, and a Research mechanism is not prewritten as binding How;
+- unresolved higher-level choice is not downgraded into an implementation fact, and a Research mechanism is not prewritten as binding How; concurrently visible Human-owned blockers for the same handoff are not serially guessed as model defaults;
 - simple local change does not become vague or materially inflated because of the thin-context rewrite;
 - explicit upstream authority is respected while genuinely unresolved upstream choice is not invented by Prompt Atlas;
-- autonomous handoff must actually materialize; after a material correction it must continue to an updated authoritative artifact rather than an acknowledgment-only / conversation-delta stop;
+- autonomous handoff must actually materialize; after a material correction it must continue to an updated authoritative artifact rather than an acknowledgment-only / conversation-delta stop, and cannot end with an unwritten delivery promise;
 - claim behavioral parity/uplift only when clean-session Evidence shows candidate is at least as strong as Leader/main.
 
 ## Claim boundary
