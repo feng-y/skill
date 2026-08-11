@@ -1,8 +1,6 @@
-# Architecture Reasoning Kernel
+# Architecture Reasoning Details
 
-本文件只拥有 Architecture Evolution 的 architecture judgement，不规定固定推理流程或输出模板。
-
-核心只有四个结构判断，加一个 evolution gate：**Layering & dependency、Cohesion & simplicity、Abstraction vs specific、Primary vs auxiliary responsibility、Real evolution。** `change locality / knowledge / SOT / control / lifecycle / variation / complexity relocation` 只在能区分这些判断时作为 evidence 使用。
+本文件展开 [SKILL.md](../SKILL.md) 中五个 architecture rules 的判别边界与反例；主 Skill 拥有稳定 architecture contract，本文件不建立第二套流程或输出规范。`change locality / knowledge / SOT / control / lifecycle / variation / complexity relocation` 只在能区分主 Skill 的结构判断时作为 evidence 使用。
 
 ## Architecture or local
 
