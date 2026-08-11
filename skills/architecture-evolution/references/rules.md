@@ -14,7 +14,7 @@
 
 ## Cohesion & simplicity
 
-模块围绕一个主要 capability/responsibility 组织，闭合完成该责任所需的内部 knowledge/state/lifecycle，避免 caller 重新拼装内部事实。两个结构都正确时，优先概念更少、public surface 更小、repo 更容易解释和修改的方案。
+模块围绕一个主要 capability/responsibility 组织，闭合完成该责任所需的内部 knowledge/state/lifecycle，避免 caller 重新拼装内部事实；相邻 subsystem 已有正确 authoritative owner 时保持清晰 relation/contract，不为“内聚”无证据吞并其责任。两个结构都正确时，优先概念更少、public surface 更小、repo 更容易解释和修改的方案。
 
 ## Abstraction vs specific
 
