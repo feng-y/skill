@@ -8,7 +8,7 @@
 
 - **Structural adjustment** — 用最小 current → target 对比说明 layer/dependency、module/capability boundary、abstraction/specific 或 primary responsibility 要发生什么结构变化；不复述文件 inventory。
 - **Long-term architecture** — 少量长期必须成立的 boundary / invariant，说明未来需求来了以后系统仍应保持什么结构；只保留稳定方向，不写未来可能性清单。
-- **Top Architecture Improvements** — 最多 3 个，按架构价值排序；不足 3 个不补数。每个 improvement 都必须是一个真实可推进的 bounded architecture outcome，而不是 research question、knowledge task、愿望或实现步骤。
+- **Top Architecture Improvements** — 最多 3 个；不足 3 个不补数。优先保留能减少最多跨边界 knowledge/dependency/accidental complexity、或解除后续结构性阻塞的 improvement，而不是实现最容易或描述最宏大的项。每个 improvement 都必须是一个真实可推进的 bounded architecture outcome，而不是 research question、knowledge task、愿望或实现步骤。
 - **Route** — 只表达 improvements 之间真实的 architecture dependency：为什么 B 必须在 A 的结构事实成立后才能推进。没有 dependency 就允许并行；不制造 roadmap ceremony。
 - **Boundary / completion** — 整体 in/out scope、must-preserve，以及完成这些 improvement 后什么结构事实成立、什么旧结构不再 authoritative。
 
