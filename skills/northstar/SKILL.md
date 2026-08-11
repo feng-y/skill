@@ -30,7 +30,7 @@ Evidence
 **2. Ground.** 用当前 repo/runtime reality 与已有 tests、schema、ADR、Architecture Intent、验收脚本等 authority 关闭事实问题。已有 rich spec 直接引用，不复制一份更弱的散文 SOT。Research 只做到足以改变 Goal、boundary、authority 或 completion proof；普通实现细节不为“更完整”继续调研。
 
 **3. Shape.** 把输入收敛成 Stable Goal，并处理真正影响它的 Unknown。判断一句话是否属于任务定义，只问：**换一种 materially different 的实现仍满足它，Human 是否接受？** Unknown 按 consequence 路由：
-- 会改变 completed-world semantics / authority，且 repo/upstream 无法决定 → **Human-owned choice**，把当前已知选择一次暴露；
+- 会改变 completed-world semantics / authority，且 repo/upstream 无法决定 → **Human-owned choice**；只问这些选择，把当前已知的一次问全，必要时给出 consequences 与 recommendation；
 - repo/runtime 可确定的事实 → **probe / authority** 关闭；
 - 只影响 implementation How → **Executor-owned**，留到执行；
 - Human 不在场而 Northstar 必须先做的可回退默认 → **model-owned**，保留依据和什么 Evidence 会推翻它。
@@ -43,10 +43,10 @@ Evidence
 
 ## Compile rules
 
-- **Outcome 高于 means。** 只有 Human/repo authority 才能把实现形状变成 binding law。
+- **Outcome 高于 means。** 只有 Human/repo/upstream authority 才能把实现形状变成 binding law。
 - **Decision-complete，不追求 information-complete。** 当前已知且会改变 Executor judgment 的 relation 一次编译；可以从 authoritative reality 可靠重算的细节不搬进 Taskbook。
 - **Law 与 intelligence 分开。** `must / must not` 必须有 authority；高置信方案仍可由 Executor 用更好的实现替换。
 - **Verification 冻结 proof，不冻结调试流程。** Evidence 必须真实运行、覆盖 claim、传播失败；不能通过削弱 judge 制造 PASS。
 - **Execution state 不等于 outcome state。** `implement-notes` 只保存 Executor progress、关键 decision/Evidence、blocker 与 resume point。
 
-任何 material Human clarification / correction 都从最高受影响的 Take / Ground / Shape 重新进入，复用仍有效 judgment，重编译依赖结论，并再次完整 Deliver 当前 outcome。之前交付过从不构成 completion state，也不能只回复 delta/解释。autonomous 修订优先更新当前 artifact；路径不可写时写入新的可用 artifact，并显示当前 authoritative path。不要输出 ready/completed/executable/status token。
+任何 material Human clarification / correction 都从最高受影响的 Flow step 重新进入，复用仍有效 judgment，重编译依赖结论，并再次完整 Deliver 当前 outcome。之前交付过从不构成 completion state，也不能只回复 delta/解释。autonomous 修订优先更新当前 artifact；路径不可写时写入新的可用 artifact，并显示当前 authoritative path。不要输出 ready/completed/executable/status token。
