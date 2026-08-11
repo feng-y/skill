@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "收敛 Goal，并生成带分层验证和真实 Evidence 的中文任务书"
-  default_prompt: "使用 $northstar。Northstar 定义任务，不设计 patch：Research 只取得会改变 Goal/boundary/judgment/required Verification 的事实；Compile 只保留会改变 Executor 判断的内容。Goal 写 outcome + decision priority + allowed/forbidden boundary + must-preserve。Task 用 outcome + judgment 驱动 Executor 扫完整同类 surface，不写文件 checklist；普通技术 Unknown 在 Goal/boundary/priority 足以裁决时留给 Executor。可安全重算的行号/include/inventory 省略，不写会误判的 trap 必须保留。`必须/不许` 只来自 Human/repo authority/verified reality。Evidence 证明 judgment 与 completion claim，不默认逐文件/逐 symbol 建账。优先建立可复算 baseline；Verification 冻结 required proof，不冻结调试流程；Completion 包含 success、3 次失败 stop-loss、baseline 回滚和 anti-cheat。执行状态写入现有 implement-notes。自主 Taskbook 默认 ≤4000 字符。Taskbook 交付即 STOP，不执行 material Goal work、不修改目标 workspace、不启动 Executor。"
+  short_description: "收敛 Goal，定义任务而不预写实现"
+  default_prompt: "使用 $northstar。把 Human 表达编译成目标、手段、约束：从点名的手段反推它服务的结果来定义什么算完成，手段默认可替换、留给 Executor，只保留 Human/repo authority 真正 binding 的约束。优先引用已有规格；上游意图未决就指出缺口，不用实现机制补空。"
