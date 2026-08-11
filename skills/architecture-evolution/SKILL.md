@@ -15,7 +15,7 @@ North Star：**从真实 change pressure、系统现实和稳定约束中判断�
 2. 需要 architecture judgement 时读 [rules.md](references/rules.md)；
 3. 遇到历史 mode、compat、旧 config/registration、loader/provider identity、serialized identity 或 residual state 时按需读 [legacy-lenses.md](references/legacy-lenses.md)；
 4. 当前方案局部都合理但整体概念变多，或 conceptual integrity / essential-vs-accidental complexity / complexity relocation 难以判断时，按需读 [brooks-constraints.md](references/brooks-constraints.md)；
-5. architecture decision 收敛后读 [decision-contract.md](references/decision-contract.md) 完成 Compile；
+5. architecture decision 收敛后读 [program-contract.md](references/program-contract.md) 完成 Compile；
 6. [validation.md](references/validation.md) 只用于显式 smoke/eval，正常运行不读。
 
 ## 何时使用
