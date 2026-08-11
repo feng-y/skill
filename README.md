@@ -32,38 +32,15 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 - `prompt-atlas` — English version of the shared Northstar/Prompt Atlas semantics for recovering a stable Goal and compiling one truthful autonomous taskbook or exact blocker.
 - `northstar` — Chinese version of the same semantics and behavior; changes should stay synchronized with Prompt Atlas rather than evolving as an independent control surface.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `architecture-evolution` — turn vague architecture concerns and real change pressure into one evidence-backed, bounded Architecture Intent that is ready for downstream design.
+- `architecture-evolution` — reason from a named module or capability to a Target Architecture and a few concrete structural improvements, stopping before implementation design.
 
 ## Architecture Evolution usage
 
-Use `architecture-evolution` when the architecture direction is still fuzzy. Give the relevant repository area and the recurring pressure or concern; the Skill should inspect the available code and evidence itself.
-
-Typical inputs:
-
-```text
-Use $architecture-evolution on this historical module. Its boundary feels wrong,
-provider branches keep growing, and callers know too much internal ordering.
-Find the architecture intent worth pursuing.
-```
-
-```text
-Use $architecture-evolution on FeatureStreaming and Predict ParseRequest.
-They have parallel paths, but I am not sure whether they should be unified,
-adapted, or kept distinct. Recover the real architecture intent first.
-```
+Use `architecture-evolution` when a module keeps accumulating structural pressure or its long-term architecture is still unclear. Give the relevant area and the pressure; the Skill grounds the decision in repo reality and returns either a local/no-evolution judgment, an unresolved architecture decision, or a compiled Architecture Program.
 
 ```text
 Use $architecture-evolution on <module-or-capability>.
-Given its current code and change pressure, identify the next architecture
-direction worth pursuing. Do not jump to an implementation plan.
+Given its current pressure and repo reality, decide the target architecture and the highest-value structural improvements worth advancing.
 ```
 
-The Skill grounds the direction in repository evidence, distinguishes architecture pressure from a local fix, applies architecture judgement, and returns one of:
-
-- `No architecture intent` — keep the work local; there is not enough architecture pressure.
-- `Intent unresolved` — one evidence gap or Human-owned decision still changes the direction.
-- `Architecture intent ready` — one bounded intent is stable enough for downstream design.
-
-A ready intent explains the problem, background, direction, and boundary, and fixes one stable outcome-level acceptance rule. It may briefly name a few basic target shapes when useful, but stops before concrete target design; lint/test/verification methods remain downstream choices.
-
-Skip this Skill when the target architecture and implementation boundary are already clear, or when the current request is specifically for a complete design, taskbook, code review, or direct implementation.
+The authoritative runtime semantics live in [`skills/architecture-evolution/SKILL.md`](skills/architecture-evolution/SKILL.md) and its routed references; this README does not duplicate them.
