@@ -15,7 +15,7 @@
 - ready intent 的物理 section 只有 Problem / Background / Direction / Boundary；`Stable acceptance rule` 位于 Direction，Possible shapes 仅按需出现；
 - stable acceptance 只描述 outcome / boundary / replacement 何时成立，不固定 lint/test/evidence provider、当前 symbol/residue 或 variation representation；具体验证方法和 Target Design 属于下游；
 - 未关闭且会改变 intent / boundary 的 Material Unknown 只能返回 `Intent unresolved`，ready 不携带 active Material Unknown；
-- 已 ready intent 收到 material Human correction 时只 reopen 受影响判断；未重新收敛则 `Intent unresolved`，重新收敛后返回完整 current Architecture Intent，不以旧 intent + conversation delta 代替；
+- 已 ready intent 收到 material Human correction 时只 reopen 受影响判断并重新判当前状态：architecture pressure / structural cause 不再成立则 `No architecture intent`，Material Unknown 未关闭则 `Intent unresolved`，仍 ready 才重新输出完整 current Architecture Intent；不以旧 intent + conversation delta 代替当前结果；
 - 最终输出跟随用户主要语言；
 - 三个状态保持互斥：`No architecture intent / Intent unresolved / Architecture intent ready`；
 - 不进入具体 Target Design；
@@ -74,11 +74,11 @@ Research 已定位一个 family switch、若干纯转发 arm、重复前奏和�
 
 通过：`Status: Intent unresolved`；指出 claim at risk 和最小 probe / Human decision，不同时返回 ready。
 
-### R2 — Ready correction replaces the current intent
+### R2 — Ready correction replaces the current result
 
 已经输出 `Status: Architecture intent ready`；Human 随后 materially 修正 Direction、Boundary 或 acceptance premise，其中一部分旧 judgment 仍有效。
 
-通过：只 reopen correction 影响的判断及其依赖结论并复用其余 Evidence；若 correction 留下会改变 intent / boundary 的 Human-owned 决定或 Material Unknown，则返回 `Intent unresolved`。重新收敛后重新输出完整 current Architecture Intent；只确认 correction、只给 delta、或让旧 intent + patch 同时充当 active truth 都失败。
+通过：只 reopen correction 影响的判断及其依赖结论并复用其余 Evidence，然后重新判当前状态。若 correction 推翻 architecture pressure / structural cause，返回 `No architecture intent`；若留下会改变 intent / boundary 的 Human-owned 决定或 Material Unknown，返回 `Intent unresolved`；仍 ready 才重新输出完整 current Architecture Intent。只确认 correction、只给 delta、或让旧 intent + patch 同时充当 active truth 都失败。
 
 ### L1 — Legacy identity is not runtime behavior
 
@@ -116,7 +116,7 @@ B. 加载 architecture-evolution
 | Acceptance quality | 没有 outcome 判据，或冻结验证套餐/当前代码 residue | 有验收描述但仍混入实现形状 | 一个 stable outcome-level acceptance rule，判断 knowledge/responsibility/dependency/replacement 是否真正退出；provider 与当前 residue 留给下游 |
 | Output discipline | 输出 taxonomy/Brooks/trace 或重型协议 | 大致精简但有多余 machinery | 仅 Problem / Background / Direction / Boundary，Possible shapes 按需，Material Unknown 不泄漏到 ready |
 | Target-design boundary | 直接规定 module/class/API/migration | 偶有责任放置或调用流泄漏 | freeze why/outcome/boundary，how 保持开放并在 basic shape 前后正确停止 |
-| Status / invocation | 状态/适用范围错误，或 ready correction 只留成 delta | 正确但冗长 | 三状态互斥；local/已明确设计/直接实现请求正确退出；material correction 正确 re-enter 并形成唯一 current intent |
+| Status / invocation | 状态/适用范围错误，或 ready correction 只留成 delta | 正确但冗长 | 三状态互斥；local/已明确设计/直接实现请求正确退出；material correction 正确 re-enter 并形成唯一 current result |
 
 ## V0 pass gate
 
@@ -148,7 +148,7 @@ B. 加载 architecture-evolution
 - `acceptance-provider-freeze` — 把 build/test/replay 或当前 target 列表冻结进 stable acceptance；
 - `acceptance-residue-freeze` — 把当前 member/switch arm/helper/flag 的逐项消失冻结成 architecture acceptance，而不是判断其承载的 knowledge/responsibility/dependency 是否退出；
 - `premature-design` — intent 阶段决定具体 module/class/API/responsibility/call flow/migration；
-- `correction-delta-stop` — ready intent 收到 material correction 后只回复确认/delta，没有重新形成唯一 current intent；
+- `correction-delta-stop` — ready intent 收到 material correction 后只回复确认/delta，没有重新形成唯一 current result；
 - `output-protocol-regression` — ready 输出重新出现 Brooks/taxonomy/Challenge/重型 proof machinery；
 - `legacy-runtime-collapse` — 把 compat/serialized identity 与 runtime behavior 混为一谈；
 - `search-absence-deletion` — 因 local search 无 reader 就宣告 identity/config 可删除；
