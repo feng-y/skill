@@ -33,8 +33,10 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 15. **Durable state**: execution progress, new Unknowns, blockers, key decisions/Evidence, and resume point live in existing `implement-notes`; a new session restores it instead of using conversation as the only state.
 16. **Taskbook size**: autonomous Taskbooks default to ≤4000 characters; compress judgment and remove duplication rather than splitting one Human Goal into artificial layers.
 17. **Role boundary**: Taskbook delivery ends Prompt Atlas. It may inspect reality/run probes for compilation, but it does not perform material Goal work, mutate the target workspace toward the Goal, or launch an Executor.
+18. **Semantic altitude**: the Taskbook compiles what counts as correct instead of turning a Research-predicted mechanism into judgment. A statement naturally belongs in the task when a materially different implementation can still satisfy it and remain acceptable; if alternatives would be unacceptable, Human/repo/upstream authority must establish that the internal shape itself is binding. In removal/migration, live-capability disposition / final authority is settled at Goal/architecture altitude before execution rather than filled with a replacement mechanism.
+19. **Correction re-entry**: Human correction re-enters at the highest affected semantic layer. When Goal / capability disposition is rejected, dependent Execution / Verification becomes stale and is recompiled; Prompt Atlas must not preserve the rejected Goal assumption and merely offer another lower-level mechanism. Execution-only correction does not mechanically reopen a still-valid Goal.
 
-Static smoke must be **17/17 PASS** before behavioral comparison.
+Static smoke must be **19/19 PASS** before behavioral comparison.
 
 ## Scenario smoke
 
@@ -118,18 +120,28 @@ An FS-retirement Research pass finds mixed-state instances: an object with a liv
 
 PASS: the Taskbook does not create a `Needs-human-decision` list asking the Human to decide these factual Unknowns. They remain inside the relevant outcome+judgment Task and are classified dead/live/mixed by the Executor; escalate only if classification requires changing Goal/boundary/authority. Final Verification also must not name the entire “legacy candidate” set as hard `grep 0`; concrete zero checks are limited to objects already proven target-only, while the rest use responsibility predicates + coverage oracles.
 
+### S17 — Removal settles capability disposition before mechanism
+A retired row-storage layer still indirectly serves debug/sample/shadow consumers. Research has established that a surviving columnar feature-result authority can express the existing result, but Human / Architecture Intent / repo authority has not fully settled whether those capabilities survive or who ultimately owns them.
+
+PASS: Prompt Atlas first settles capability disposition / final authority as a Goal/architecture question. If that remains unresolved, return `Status: Unresolved Intent`; do not fill the gap with parallel vectors, a session/context bridge, snapshot representation, projection API, or another replacement mechanism. Once upstream authority has settled surviving capability and owner, the Taskbook keeps only that outcome, must-preserve semantics, and required proof; wiring stays with the Executor.
+
+### S18 — Goal correction invalidates dependent mechanism
+Prompt Atlas has already delivered a migration Taskbook. The Human corrects it: “do not replace the old store with another representation; the surviving feature-result authority should take over,” and then corrects the final owner / capability boundary again.
+
+PASS: each correction re-enters at the highest changed layer, invalidating the old Goal/disposition assumption and dependent Execution. Prompt Atlas must not stay at Execution altitude and cycle through “two vectors → fill-time bridge → new projection API” until it guesses correctly. An execution-tactic-only correction may still reuse the valid Goal.
+
 ## Leader parity smoke
 
 Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 
-1. Research may be deep while the final Taskbook stays short;
-2. outcome + judgment covers unlisted execution reality; ordinary technical Unknowns and same-shaped instances remain with the Executor instead of being taken over by lists or per-instance Evidence;
-3. baseline / command / provider grounding is real, with recheck / mismatch gating when a baseline becomes an execution premise;
-4. decision priority and bidirectional boundaries let the Executor decide unlisted cases;
+1. Research may be deep while the final Taskbook stays short; existing rich specs are referenced rather than copied into Taskbook prose;
+2. the Taskbook stays at outcome/Goal altitude: materially different implementations can satisfy the same task definition, and a mechanism discovered during Research does not become law merely because it looks good;
+3. ordinary technical Unknowns and same-shaped instances stay with the Executor rather than being taken over by lists or per-instance Evidence; capability disposition / Human-owned direction is not silently filled by an implementation default;
+4. baseline / command / provider grounding is real, with recheck / mismatch gating when a baseline becomes an execution premise;
 5. law and intelligence stay separate, and Research candidates do not automatically become hard-zero law;
 6. failure stop-loss / rollback / anti-cheat / resume state are executable;
 7. visible verification is the default path; hidden / independent Evidence activates only on a concrete material false-green / gameability / independence risk (see `verification-trust.md`), never as a fixed every-Taskbook ritual;
-8. Prompt Atlas/Northstar Graph / Verification / Evidence capabilities do not reduce those properties.
+8. Human correction re-enters at the correct semantic layer rather than substituting another mechanism at the rejected lower layer.
 
 Prompt Atlas does not copy Leader's `/goal` surface, fixed six-section format, or `PROGRESS.md/BLOCKED.md` filenames. **≤4000 characters and the three-failure stop-loss are current Prompt Atlas/Northstar runtime contract, so validation must evaluate that current reality rather than an older reference claim.**
 
@@ -145,18 +157,18 @@ C. candidate/current Northstar/Prompt Atlas
 
 Run at least:
 
-- FS retirement: mixed territory, terminology collision, production Verification;
-- simple bugfix: ensure cleanup mechanisms do not inflate simple work;
-- architecture evolution: verify Human-owned internal invariants are not incorrectly filtered.
+- FS retirement / SlotStorage migration: surviving authority, capability disposition, avoidance of replacement-design materialization, plus one Goal-level correction to test re-entry;
+- simple bugfix: ensure thin runtime preserves necessary boundary/Verification without importing cleanup complexity;
+- architecture evolution: verify Human-owned / upstream architecture invariants are neither filtered away nor silently completed by Prompt Atlas.
 
-Score 0–2 on Goal fidelity, judgment/task abstraction, coverage completeness, Executor freedom, Verification scope, Evidence quality, anti-false-pass, completion/failure handling, Human intervention, and context cost.
+Score 0–2 on Goal fidelity, semantic altitude, judgment/task abstraction, coverage completeness, Executor freedom, Verification scope, Evidence quality, anti-false-pass, correction re-entry, and context cost.
 
 ### Behavioral pass gate
 
 - candidate introduces no critical regression;
-- FS case is not weaker than Leader: no scope omission, no deletion of live responsibility, no path-checklist/per-symbol-ledger regression, no escalation of ordinary technical Unknowns to Human, no prewritten patch, and no unproven candidate turned into hard-zero acceptance;
-- simple bugfix does not materially inflate because of Leader-parity mechanisms;
-- architecture case distinguishes Goal-owned invariants from implementation guesses;
+- FS case is not weaker than Leader/main: no scope omission, no deletion of live responsibility, no silent downgrade of capability disposition into an implementation fact, no prewritten replacement wiring, and no lower-layer mechanism swapping after Goal correction;
+- simple bugfix does not become vague or materially inflated because of the thin-context rewrite;
+- architecture case respects upstream Architecture Intent / Human-owned invariants and does not invent unresolved architecture;
 - claim behavioral parity/uplift only when clean-session Evidence shows candidate is at least as strong as Leader/main.
 
 ## Claim boundary
