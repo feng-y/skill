@@ -60,10 +60,11 @@ ownership 只能扩到 evidence 支持的 invariant。相邻 subsystem 已有正
    - 同一业务是否存在多套语义或事实解释？
    - 是否可能错误合并不同 bounded context？
 
-2. **Stable Abstraction with Explicit Variation**
+2. **Stable Abstraction with Owned Variation**
    - caller 是否依赖 implementation difference 而不是业务能力？
    - 哪些 variation 是 essential，哪些只是历史残留？
    - current implementation partition 本身不证明 variation 应长期存在。
+   - variation 应由正确 boundary / owner 承担，但不预设用 flag、metadata、显式声明、虚函数或其他 representation 承载；representation 属于后续 Target Design。
 
 3. **Cohesive Capability Ownership**
    - capability、invariant、state、lifetime 是否有清楚 owner？
@@ -88,6 +89,8 @@ Intent 必须指向真实减少，而不是再加一层。至少应有一项旧�
 
 Observed partition 是 evidence，不是 architecture boundary。只有它承载稳定 semantics/invariant、闭合 ownership、essential variation 或长期 change boundary 时，才值得成为后续设计的基本形态。
 
+Replacement / exit 优先表达真正退出的知识、责任、语义分叉、依赖或长期兼容负担；当前 symbol/member/switch arm/flag 只是 evidence，除非 Human/repo authority 把该形状本身定义为 invariant，否则不冻结成 stable acceptance。若两个 materially different Target Design 都满足同一 durable outcome / boundary，却仅因其中一个保留某个当前 residue 就会被判失败，acceptance 海拔过低。
+
 好的 architecture direction 优先表达为少量 stable invariant / boundary：什么必须始终成立，哪些变化仍允许局部自主。不要把 class/API/library choice 当成架构规范。一个 invariant 稳定到值得长期约束时，应优先能被 repo structure 或 tooling 清楚表达并在适合时机械检查；文档可以解释它，但不替代 enforcement。本 Skill 只识别这个 judgement，不设计具体 lint/test。
 
 局部 target shape 即使合理，也不能替代 durable architecture outcome。当 repo 已有仍有效且明确点名当前 area 的 architecture/evolution goal 时，intent 必须说明该 area 对这个 goal 的贡献；ownership/interface/dependency 收紧只作为结构杠杆。没有已声明目标时，从跨边界 pressure 收敛最小 durable outcome，不发明战略口号。下游不应重新发现 why；why、direction 和 boundary 固定，how 保持开放。
@@ -104,7 +107,7 @@ Claim at risk → Minimal probe → Evidence → Intent changed / retained
 
 ## Evidence lifetime
 
-同一事实或 judgment 只保留一份当前 authoritative state。前提未变就复用；新 authoritative evidence 改变前提时，只 reopen 并替换受影响判断，不把新旧 snapshot 并列为 active truth。
+同一事实或 judgment 只保留一份当前 authoritative state。前提未变就复用；新 authoritative evidence 或 Human material correction 改变前提时，只 reopen 并替换受影响判断及其依赖结论，不把新旧 snapshot 并列为 active truth。
 
 ## Challenge
 
