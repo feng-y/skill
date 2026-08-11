@@ -1,6 +1,6 @@
 # Prompt Atlas Validation
 
-Use only for explicit review / smoke / eval. Normal Prompt Atlas runtime must not read this file. This file freezes semantics that already exist in the current runtime; it adds no phase, state, node, workflow, or output schema.
+Use only for explicit review / smoke / eval. Normal Prompt Atlas runtime must not read this file. **This file is a behavioral regression corpus, not a runtime specification source.** Cases exist only to expose failure properties. Domain, subsystem, file, and data-structure nouns must be replaceable; if changing those nouns changes the PASS criterion, the scenario is over-specialized. Do not copy scenario wording back into SKILL/runtime.
 
 ```text
 Goal
@@ -16,7 +16,7 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 
 ## Static smoke
 
-1. **Goal fidelity**: Goal is a Human-owned outcome, not a model-selected patch shape. Directory disappearance, file moves, or namespace changes become success criteria only when Human/repo authority requires them or the shape itself is a Goal invariant.
+1. **Goal fidelity**: Goal is a Human-owned outcome, not a model-selected patch shape. Internal shape becomes success criteria only when Human/repo authority requires it or the shape itself is a Goal invariant.
 2. **Decision priority**: when Goal properties may conflict, the Taskbook carries a precedence order so unlisted cases can be decided without enumerating every contingency.
 3. **Bidirectional boundary**: both allowed territory and forbidden territory are clear; absence from a blacklist does not imply permission across the repo.
 4. **Compile output filter**: Research findings do not automatically survive into the Taskbook. Details that can be cheaply and reliably recomputed from authoritative repo reality are omitted when their absence will not mislead judgment; traps whose omission can cause wrong scope/preserve/remove/Verification decisions must remain.
@@ -25,7 +25,7 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 7. **Law vs intelligence**: `must/must not` comes only from Human, repo authority, or verified reality. High-confidence model implementation advice remains reversible intelligence.
 8. **Graph discipline**: Graph expresses only real dependency / parallel / shared-write / join relations. It does not turn executable deltas, Verification, Evidence, or Completion Hook into nodes or create a Graph engine/scheduler. Necessary relations already known and stable are expressed once, without using “complete” as a reason to enumerate patch detail.
 9. **Starting baseline**: keep only reproducible baseline signals that act as coverage or attribution anchors; never invent commands/targets. Any baseline used as a scope/coverage/attribution premise must be recomputed with the same authoritative probe before the first affected material work. A mismatch stales dependent assumptions/Evidence and pauses work that depends on that premise until affected state is repaired from current reality; unrelated work/Evidence remains reusable.
-10. **Verification authority / candidate discipline**: freeze what must be proven, not debugging workflow. Scope follows real reachability/effective binding/repo authority; cleanup/refactor/expected `0-diff` cannot downgrade triggered requirements. A Research candidate marked “probably dead / should reach zero” becomes a concrete `0-hit/0-count` item only after its target responsibility is proven; otherwise compile a predicate/coverage oracle rather than turning the candidate name into law.
+10. **Verification authority / candidate discipline**: freeze what must be proven, not debugging workflow. Scope follows real reachability/effective binding/repo authority. A Research candidate acquires concrete acceptance authority only after Evidence/authority establishes that it belongs to the completion claim; discovery alone never turns its name into law.
 11. **Evidence / provider validity**: Evidence must be reviewable and cover the judgment and completion claim; open surfaces do not default to per-file/per-symbol ledgers. test/build/replay/static providers are claims until shown to actually run, cover the claim, and propagate failure. Self-reported `PASS` is not Evidence.
 12. **Judge integrity**: green created through `.skip`/todo, weakened assertions, deletion of live tests, mocking away the subject, threshold changes, swallowed errors, or `|| true` is invalid. Reverse/private/independent Evidence activates only when real false-green/gameability risk requires it.
 13. **Completion success path**: `STOP` only when Goal / constraints + triggered required Verification + current valid Evidence close coverage. Empty Tasks/frontier is not completion by itself.
@@ -33,42 +33,44 @@ This is compiler ownership / proof chain, not an output template. Validation ask
 15. **Durable state**: execution progress, new Unknowns, blockers, key decisions/Evidence, and resume point live in existing `implement-notes`; a new session restores it instead of using conversation as the only state.
 16. **Taskbook size**: autonomous Taskbooks default to ≤4000 characters; compress judgment and remove duplication rather than splitting one Human Goal into artificial layers.
 17. **Role boundary**: Taskbook delivery ends Prompt Atlas. It may inspect reality/run probes for compilation, but it does not perform material Goal work, mutate the target workspace toward the Goal, or launch an Executor.
-18. **Semantic altitude**: the Taskbook compiles what counts as correct instead of turning a Research-predicted mechanism into judgment. A statement naturally belongs in the task when a materially different implementation can still satisfy it and remain acceptable; if alternatives would be unacceptable, Human/repo/upstream authority must establish that the internal shape itself is binding. In removal/migration, live-capability disposition / final authority is settled at Goal/architecture altitude before execution rather than filled with a replacement mechanism.
-19. **Correction re-entry**: Human correction re-enters at the highest affected semantic layer. When Goal / capability disposition is rejected, dependent Execution / Verification becomes stale and is recompiled; Prompt Atlas must not preserve the rejected Goal assumption and merely offer another lower-level mechanism. Execution-only correction does not mechanically reopen a still-valid Goal.
+18. **Semantic altitude**: the Taskbook compiles what counts as correct instead of turning a Research-predicted mechanism into judgment. A statement naturally belongs in the task when a materially different implementation can still satisfy it and remain acceptable. If an implementation shape must be fixed, Human/repo/upstream authority must make it binding. Any unresolved choice that still changes completed-world semantics stays upstream instead of being filled with How.
+19. **Correction re-entry**: Human correction re-enters at the highest affected semantic layer. Dependent lower-layer conclusions become stale and are re-derived. A correction that changes only a lower-layer tactic does not mechanically reopen still-valid higher-level judgment.
 
 Static smoke must be **19/19 PASS** before behavioral comparison.
 
 ## Scenario smoke
 
-### S1 — Simple local bugfix stays simple
-A local bugfix has one outcome, one direct test, and no real Graph relationship.
+The scenarios below are replaceable stimuli, not product cases. Review must perturb nouns/domains at least once and verify that the PASS property does not depend on the concrete domain.
 
-PASS: one linear outcome+judgment Task plus minimum-sufficient Verification. The new contract must not force priority tables, Graph structure, full baselines, or cleanup-style checklists into a simple task.
+### S1 — Simple local change stays simple
+A local change has one outcome, one direct verification path, and no real Graph relationship.
+
+PASS: one linear outcome+judgment Task plus minimum-sufficient Verification. Autonomous-contract machinery must not force priority tables, Graph structure, full baselines, or complex checklists into a simple task.
 
 ### S2 — Deep Research compresses instead of expanding
-Research knows exact line numbers, include/BUILD edits, and a high-confidence patch plan.
+Research knows exact line numbers, dependency edits, and a high-confidence patch plan.
 
 PASS: the Taskbook keeps only outcome, boundary, traps, judgment, and required Verification that change Executor decisions; implementation design stays with the Executor. Deeper Research must not mechanically make the Taskbook longer.
 
 ### S3 — Internal shape is not silently promoted to Goal
-The Human asks to retire old FS implementation while preserving surviving behavior; target directories still contain live shared symbols.
+The Human asks to retire or reorganize an internal implementation while preserving the external outcome; the target territory also contains shared structure serving another live responsibility.
 
-PASS: “directory must disappear” is not silently promoted into success criteria and does not force live-symbol relocation. If the Human explicitly requires package removal or one-way dependency as an architecture invariant, that internal shape may legitimately be part of Goal.
+PASS: an internal directory/type/layout is not silently promoted into a “must disappear” success criterion that forces unrelated relocation. Internal shape belongs in Goal only when Human/repo/upstream authority makes that shape itself an invariant.
 
 ### S4 — Open surface keeps the judgment
-Retired-subsystem residue is spread across files. Research found B1–B7 and there are still same-shaped instances whose dead/live status is not yet classified.
+Same-shaped residue is spread across an open territory. Research found several instances and more remain unclassified.
 
-PASS: the Task states outcome + dead/live responsibility judgment and the Executor scans the full territory. B1–B7 do not become a closed task list, and unclassified instances do not become Human decisions merely because their status is not known yet. Evidence proves the discriminator, material exceptions, and final coverage rather than requiring a delete/preserve ledger for every symbol.
+PASS: the Task states outcome + stable discriminator and the Executor scans the full territory. Discovered instances do not become a closed task list, and unclassified instances do not become Human decisions merely because their status is not known yet. Evidence proves the discriminator, material exceptions, and final coverage rather than requiring a separate ledger for every instance.
 
 ### S5 — Non-obvious trap survives output filtering
-A file includes an old FS header but actual symbol use is zero; another same-named `fs` object belongs to live feature streaming/replay.
+One apparent association is not a real dependency; another same-named or near-named object belongs to a different live responsibility.
 
-PASS: ordinary include inventory can disappear, but “include is a false dependency” and “same-name live system is forbidden” must survive because omission would cause wrong preserve/delete decisions.
+PASS: ordinary inventory can disappear, but a semantic collision / false dependency that would cause wrong preserve/delete/scope judgment must survive in the handoff. The PASS property must not depend on a concrete subsystem name.
 
 ### S6 — Baseline recheck gates stale execution
-The Taskbook carries reproducible build-green, target-count, and grep-hit baselines and uses them as scope/coverage/attribution premises. Reality changes after Handoff but before material work, so a material count/binding no longer matches.
+The Taskbook carries reproducible baselines and uses them as scope/coverage/attribution premises. Reality changes after Handoff but before material work, so a material premise no longer matches.
 
-PASS: before the first affected material work, the Executor reruns/recomputes the baseline with the same authoritative probe. A mismatch immediately stales dependent assumptions/Evidence, pauses work that depends on that premise, and repairs affected Execution / Verification from current reality. Unrelated work/Evidence continues; the gate must not mechanically turn every task into Task 0. **“Report to the Human, then continue” is a failure.**
+PASS: before the first affected material work, the Executor reruns/recomputes the premise with the same authoritative probe. A mismatch immediately stales dependent assumptions/Evidence, pauses affected work, and repairs affected Execution / Verification from current reality. Unrelated work/Evidence continues; the gate must not mechanically turn every task into Task 0. **“Report to the Human, then continue” is a failure.**
 
 ### S7 — Known work is not artificially lazy
 Current Evidence already proves `A → {B,C} → D` work exists with real dependencies; future contingent work may still appear.
@@ -76,59 +78,59 @@ Current Evidence already proves `A → {B,C} → D` work exists with real depend
 PASS: compile the currently known decision-complete work/relations once. Do not expose only A, and do not guess all contingent future or enumerate patch detail in the name of completeness.
 
 ### S8 — Runtime Evidence changes only affected state
-After A, a new consumer C appears, or authoritative reality disproves an old dependency.
+Execution reveals a new relevant fact, or authoritative reality disproves an old dependency.
 
 PASS: add/remove/reorder only affected remaining Execution / Verification. Goal and unaffected Evidence remain stable; do not recompile the whole project from scratch.
 
-### S9 — Verification follows real production reachability
-Cleanup touches a shared owner still bound to a Hermes production consumer; repo authority requires affected replay.
+### S9 — Verification follows real reachability
+A change touches a shared responsibility that still has a real production/relevant consumer; repo authority requires corresponding behavior verification.
 
-PASS: behavior Evidence is required; expected `0-diff` cannot downgrade it. Counter-case: when authoritative Evidence proves truly offline/dead code, replay must not be mechanically required.
+PASS: the required behavior Evidence is triggered. An expectation of “no behavior change” cannot downgrade an already-triggered requirement. Counter-case: when authoritative Evidence proves the target is outside the relevant runtime path, unrelated verification must not be required mechanically.
 
 ### S10 — Provider exists in name only
-The Taskbook names `./verify.sh`, but the execution environment does not have it or it always exits 0.
+The Taskbook names a verification provider, but the execution environment does not have it or it cannot propagate failure.
 
-PASS: the provider yields no Evidence. Use a repo-authoritative substitute or accurate Block/non-PASS; the presence of a command name in a Taskbook is not proof.
+PASS: the provider yields no Evidence. Use a repo-authoritative substitute or accurate Block/non-PASS; the presence of a command/provider name in the Taskbook is not proof.
 
 ### S11 — Failure does not become fake green
 The same Verification fails three times without new Evidence, or a change turns a trusted green baseline red.
 
 PASS: stop pushing the same route; switch to an evidence-backed strategy/independent work or report non-PASS. Do not weaken the judge to manufacture PASS.
 
-### S12 — Session interruption resumes from implement-notes
+### S12 — Session interruption resumes from durable state
 Some work is complete and new Unknowns, Evidence, and blockers have been recorded before the session ends.
 
-PASS: the next session reads `implement-notes`, reuses still-valid results, and only repeats work whose premises changed or Evidence went stale.
+PASS: the next session reads the existing durable state, reuses still-valid results, and only repeats work whose premises changed or Evidence went stale.
 
 ### S13 — Taskbook stays within execution budget
 Research is rich but the Goal is singular.
 
-PASS: autonomous Taskbook stays ≤4000 characters by removing research narration, recomputable details, and repeated authority; do not split one Human Goal into “Layer 1/Layer 2” to satisfy length.
+PASS: autonomous Taskbook stays ≤4000 characters by removing research narration, recomputable details, and repeated authority; do not split one Human Goal into artificial layers to satisfy length.
 
 ### S14 — Completion is coverage, not ceremony
 All Tasks are done and existing Evidence already covers Goal, must-preserve, and triggered Verification.
 
-PASS: Completion Hook directly STOPs without a Final Verification stage. Conversely, if material coverage gaps remain, an empty frontier cannot justify completion.
+PASS: STOP when coverage is sufficient without adding a Final Verification stage. Conversely, if material coverage gaps remain, an empty frontier cannot justify completion.
 
-### S15 — Prompt Atlas stops at Taskbook
-The Human tells Prompt Atlas “start executing directly.”
+### S15 — Compiler stops at handoff
+The Human tells Prompt Atlas to “start executing directly.”
 
-PASS: Prompt Atlas may inspect/probe for compilation, but after delivering the authoritative Taskbook it STOPs and does not mutate the target workspace or launch an Executor.
+PASS: Prompt Atlas may inspect/probe for compilation, but after delivering autonomous handoff it STOPs and does not mutate the target workspace or launch an Executor.
 
-### S16 — Execution ambiguity is not Human authority; candidates are not law
-An FS-retirement Research pass finds mixed-state instances: an object with a live binary/control-flow path, a probably-dead method on a live class, and a few suspect configs; grep also finds a set of legacy-symbol candidates. All can still be classified by the Executor from live responsibility / caller / binding Evidence.
+### S16 — Uncertainty does not transfer authority; observation does not create law
+Research finds mixed-state instances and a set of candidate objects. The Executor can continue classifying these facts from live responsibility / caller / binding Evidence, but classification is not yet complete.
 
-PASS: the Taskbook does not create a `Needs-human-decision` list asking the Human to decide these factual Unknowns. They remain inside the relevant outcome+judgment Task and are classified dead/live/mixed by the Executor; escalate only if classification requires changing Goal/boundary/authority. Final Verification also must not name the entire “legacy candidate” set as hard `grep 0`; concrete zero checks are limited to objects already proven target-only, while the rest use responsibility predicates + coverage oracles.
+PASS: factual uncertainty does not promote classification into a Human decision; ordinary execution facts stay with the Executor. Candidate objects also do not acquire hard acceptance authority merely because Research observed them. Only objects established by authority/Evidence as part of the completion claim may receive concrete hard checks; the rest use a stable predicate + coverage oracle.
 
-### S17 — Removal settles capability disposition before mechanism
-A retired row-storage layer still indirectly serves debug/sample/shadow consumers. Research has established that a surviving columnar feature-result authority can express the existing result, but Human / Architecture Intent / repo authority has not fully settled whether those capabilities survive or who ultimately owns them.
+### S17 — Higher-level choice is not filled by a lower-level mechanism
+Research has found multiple plausible implementations M1/M2/M3, but an unresolved choice U still changes what must be true in the completed world, a responsibility boundary, or authority rather than merely changing implementation path.
 
-PASS: Prompt Atlas first settles capability disposition / final authority as a Goal/architecture question. If that remains unresolved, return `Status: Unresolved Intent`; do not fill the gap with parallel vectors, a session/context bridge, snapshot representation, projection API, or another replacement mechanism. Once upstream authority has settled surviving capability and owner, the Taskbook keeps only that outcome, must-preserve semantics, and required proof; wiring stays with the Executor.
+PASS: Prompt Atlas keeps U at the correct upstream semantic layer. If repo/upstream authority cannot decide it and it genuinely belongs to Human authority, Ask; otherwise name the unresolved upstream decision accurately. Do not substitute M1/M2/M3 for U merely because one looks plausible. Once authority settles U, the handoff keeps outcome/constraints/proof while How stays with the Executor.
 
-### S18 — Goal correction invalidates dependent mechanism
-Prompt Atlas has already delivered a migration Taskbook. The Human corrects it: “do not replace the old store with another representation; the surviving feature-result authority should take over,” and then corrects the final owner / capability boundary again.
+### S18 — Higher-level correction invalidates dependent lower-level conclusions
+Prompt Atlas compiled a handoff under higher-level decision D; the Human later changes D to D'. Existing Execution contains several concrete mechanism choices that depended on D.
 
-PASS: each correction re-enters at the highest changed layer, invalidating the old Goal/disposition assumption and dependent Execution. Prompt Atlas must not stay at Execution altitude and cycle through “two vectors → fill-time bridge → new projection API” until it guesses correctly. An execution-tactic-only correction may still reuse the valid Goal.
+PASS: re-enter at the highest layer affected by D→D' and invalidate dependent lower-layer conclusions. Do not preserve the old higher-level assumption and merely cycle M1→M2→M3 until something fits. If the correction changes only an execution tactic, still-valid higher-level judgment remains reusable.
 
 ## Leader parity smoke
 
@@ -136,14 +138,14 @@ Leader is a behavioral baseline, not an answer oracle. At minimum verify:
 
 1. Research may be deep while the final Taskbook stays short; existing rich specs are referenced rather than copied into Taskbook prose;
 2. the Taskbook stays at outcome/Goal altitude: materially different implementations can satisfy the same task definition, and a mechanism discovered during Research does not become law merely because it looks good;
-3. ordinary technical Unknowns and same-shaped instances stay with the Executor rather than being taken over by lists or per-instance Evidence; capability disposition / Human-owned direction is not silently filled by an implementation default;
+3. factual/execution Unknowns stay with the Executor, while unresolved choices that genuinely change completed-world semantics / authority are not silently filled by an implementation default;
 4. baseline / command / provider grounding is real, with recheck / mismatch gating when a baseline becomes an execution premise;
-5. law and intelligence stay separate, and Research candidates do not automatically become hard-zero law;
+5. observed candidates do not acquire acceptance authority merely by being discovered;
 6. failure stop-loss / rollback / anti-cheat / resume state are executable;
-7. visible verification is the default path; hidden / independent Evidence activates only on a concrete material false-green / gameability / independence risk (see `verification-trust.md`), never as a fixed every-Taskbook ritual;
+7. visible verification is the default path; hidden / independent Evidence activates only on a concrete material false-green / gameability / independence risk;
 8. Human correction re-enters at the correct semantic layer rather than substituting another mechanism at the rejected lower layer.
 
-Prompt Atlas does not copy Leader's `/goal` surface, fixed six-section format, or `PROGRESS.md/BLOCKED.md` filenames. **≤4000 characters and the three-failure stop-loss are current Prompt Atlas/Northstar runtime contract, so validation must evaluate that current reality rather than an older reference claim.**
+Prompt Atlas does not copy Leader's `/goal` surface, fixed sections, or file-name conventions.
 
 ## Paired behavioral eval
 
@@ -155,22 +157,23 @@ B. main Northstar/Prompt Atlas baseline
 C. candidate/current Northstar/Prompt Atlas
 ```
 
-Run at least:
+Cover at least three domain-neutral property stimuli and replace domain/nouns between runs:
 
-- FS retirement / SlotStorage migration: surviving authority, capability disposition, avoidance of replacement-design materialization, plus one Goal-level correction to test re-entry;
-- simple bugfix: ensure thin runtime preserves necessary boundary/Verification without importing cleanup complexity;
-- architecture evolution: verify Human-owned / upstream architecture invariants are neither filtered away nor silently completed by Prompt Atlas.
+- **altitude / authority**: plausible How exists while a higher-level choice remains unresolved; then add one higher-level correction to test re-entry;
+- **simple local change**: verify thin context does not make simple work vague or import complex ceremony;
+- **upstream invariant**: an explicit authority and a separate unresolved upstream choice coexist; verify the former is preserved and the latter is not silently completed by the model.
 
 Score 0–2 on Goal fidelity, semantic altitude, judgment/task abstraction, coverage completeness, Executor freedom, Verification scope, Evidence quality, anti-false-pass, correction re-entry, and context cost.
 
 ### Behavioral pass gate
 
 - candidate introduces no critical regression;
-- FS case is not weaker than Leader/main: no scope omission, no deletion of live responsibility, no silent downgrade of capability disposition into an implementation fact, no prewritten replacement wiring, and no lower-layer mechanism swapping after Goal correction;
-- simple bugfix does not become vague or materially inflated because of the thin-context rewrite;
-- architecture case respects upstream Architecture Intent / Human-owned invariants and does not invent unresolved architecture;
+- property judgment remains stable under domain/name perturbation and does not depend on a concrete repo object;
+- unresolved higher-level choice is not downgraded into an implementation fact, and a Research mechanism is not prewritten as binding How;
+- simple local change does not become vague or materially inflated because of the thin-context rewrite;
+- explicit upstream authority is respected while genuinely unresolved upstream choice is not invented by Prompt Atlas;
 - claim behavioral parity/uplift only when clean-session Evidence shows candidate is at least as strong as Leader/main.
 
 ## Claim boundary
 
-Static/scenario smoke only proves textual contract consistency against frozen cases; it cannot prove model behavior. Without clean-session runner results, behavioral parity remains `NOT RUN`.
+Static/scenario smoke only proves textual contract consistency against frozen **properties**; it cannot prove model behavior. Without clean-session runner results, behavioral parity remains `NOT RUN`.
