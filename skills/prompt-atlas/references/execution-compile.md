@@ -40,6 +40,6 @@ Stay minimum-sufficient. Research details the Executor can reliably reconstruct 
 
 Write the complete current Taskbook to an OS/runtime-provided Markdown artifact outside the current repo/workspace. The artifact carries the task definition only; do not add ready/completed/executable metadata. For a revision, update the current Taskbook when possible; if that path is not writable, write the revision to an available runtime artifact and surface the actual authoritative path.
 
-`implement-notes` owns only Executor progress, material decisions / Evidence, blockers, and resume point. It does not own Taskbook/outcome completion and must not suppress recompilation or full re-delivery after a material Human update.
+`implement-notes` stores only Executor progress, material decisions / Evidence, blockers, and resume point.
 
 Keep autonomous Taskbooks short; when content grows, remove duplication and implementation intelligence before adding more guidance.
