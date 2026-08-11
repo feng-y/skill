@@ -185,4 +185,4 @@ Score 0–2 on Goal fidelity, semantic altitude, judgment/task abstraction, cove
 
 ## Claim boundary
 
-Static/scenario smoke only proves textual contract consistency against frozen **properties**; it cannot prove model behavior. Without a clean-session runner results, behavioral parity remains `NOT RUN`.
+Static/scenario smoke only proves textual contract consistency against frozen **properties**; it cannot prove model behavior. Without clean-session runner results, behavioral parity remains `NOT RUN`.
