@@ -26,7 +26,7 @@ Split work only when judgment or dependency genuinely differs. Graph expresses r
 
 Ordinary factual / implementation Unknowns stay with the Executor to resolve from current repo reality. Reopen an upstream decision only when the conclusion would change Goal / authority.
 
-Still-valid work / Evidence aligned with the Goal can be reused. New Evidence stales only conclusions that depend on it.
+Still-valid work / Evidence aligned with the Goal can be reused. New Evidence stales only conclusions that depend on it. A material Human correction to the current handoff is also Evidence: re-enter at the highest affected layer, replace only dependent compiled conclusions, then continue to complete the handoff rather than leaving the correction as a conversation-only patch.
 
 ## Verification / Evidence
 
@@ -37,5 +37,7 @@ Evidence must support the real completion claim rather than activity narration o
 ## Handoff
 
 Stay minimum-sufficient. Research details the Executor can reliably reconstruct do not belong in the Taskbook; keep only non-obvious facts whose omission would cause a wrong Goal, boundary, or verification decision.
+
+An autonomous handoff must materialize as a Markdown artifact in an OS/runtime temporary location outside the current repo/workspace; do not fix `/tmp`, a filename, or a directory convention. The artifact is the authoritative Taskbook, and delivery is complete only after it is successfully written, which is the precondition for `Status: Executable`. If a later material Human correction changes the current contract, rewrite the same artifact when possible; if it is no longer accessible, materialize a replacement and explicitly supersede the earlier handoff. Explaining the correction or appending a chat-only delta is not completed handoff. If the artifact cannot be written, return accurate Blocked with the resume condition.
 
 Use the existing `implement-notes` for execution state: progress, material decisions / Evidence, blockers, and resume point. Keep autonomous Taskbooks short; when content grows, remove duplication and implementation intelligence before adding more guidance.
