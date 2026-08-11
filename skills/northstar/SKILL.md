@@ -39,7 +39,7 @@ Evidence
 
 **4. Compile.** Goal / authority 收敛后，只保 fresh Executor 真正需要的当前 Taskbook：Goal/outcome、binding authority、priority/boundary/must-preserve、当前已知且真实的 Execution dependency，以及完成必须证明什么。Graph 只表达真实关系；Research narration、可重算 inventory、file/symbol/line 细节和 implementation intelligence 默认删除。复杂 autonomous execution 时读 [execution-compile.md](references/execution-compile.md)；只有具体 false-green / judge-trust 风险时读 [verification-trust.md](references/verification-trust.md)。
 
-**5. Deliver.** 这是本轮唯一交付点。仍有 Human-owned choice 就完整指出当前所有缺口；事实/环境 blocker 就说明 blocker 与恢复条件；普通 prompt / brief / contract 直接完整返回当前文本。autonomous handoff 必须把**同一份当前 Taskbook**写入 OS/runtime 提供、位于 repo/workspace 外的 Markdown artifact，并显示实际 authoritative path；聊天正文或“稍后写入”不能代替 materialization。
+**5. Deliver.** 这是本轮唯一交付点。仍有 Human-owned choice 就完整指出当前所有缺口；事实/环境 blocker 就说明 blocker 与恢复条件；普通 prompt / brief / contract 直接完整返回当前文本。autonomous handoff 必须把**同一份当前 Taskbook**写入 OS/runtime 提供、位于 repo/workspace 外的 Markdown artifact，并显示实际 authoritative path；聊天正文或“稍后写入”不能代替 materialization。最终只交当前有效 outcome / gap / path，不附 Research trace、中途推导或旧版本任务书。
 
 ## Compile rules
 
