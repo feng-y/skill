@@ -18,6 +18,6 @@ Omit preference-only ordering and transitive edges. If Evidence already proves `
 
 Runtime Evidence changes only the affected remaining Graph: add a prerequisite/consumer when proven real, remove a dependency when disproven, and split/merge/reorder remaining work when implementation reality changes. Reopen completed work only when its Evidence premise or proven behavior is affected.
 
-One blocked branch must not freeze independent ready branches; a join waits only for genuinely required upstream results. **Ready frontier describes what can run now; it must not shrink the Human Goal or rename visible work into a new Layer/phase Goal.**
+One blocked branch must not freeze independent ready branches; a join waits only for genuinely required upstream results. Graph must respect the Goal / ready-frontier boundary already owned by `SKILL.md`; it does not redefine scope or phase Goals here.
 
 Graph does not create ImplementationNode / ProbeNode / VerificationNode taxonomies; those are work/actions. Evidence is reality output, not a node. Do not add a persistent Graph object, second taskbook, fixed Agent topology, manager, or scheduler.
