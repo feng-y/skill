@@ -1,8 +1,8 @@
 # When Goal is not settled yet
 
-Read only when ordinary interpretation plus reality checks still cannot determine which Goal the Human will ultimately accept.
+Read only when ordinary interpretation plus reality checks still cannot determine which Goal the Human will ultimately accept, or when a choice about whether to proceed, investment, and long-lived commitment remains unsettled.
 
-If the problem is no longer one Goal-vs-How or Human-choice judgment, but coupled Unknowns need source alignment or long-lived module responsibility, boundary, or dependency direction needs architecture judgment, return to the main Skill and route to the corresponding specialist capability. Do not grow a parallel process here.
+If the problem is no longer one Goal-vs-How or Human-choice judgment but coupled Unknowns need source alignment, or long-lived module responsibility, boundary, or dependency direction needs architecture judgment, return to the main Skill and route to the corresponding specialist capability. The specialist may form Evidence, options, and a decision surface, but any choice that still requires the Human returns to the Prompt Atlas Ask frontier rather than being closed by the specialist. Do not grow a parallel process here.
 
 ## Is this Goal or How?
 
@@ -15,6 +15,12 @@ Yes usually means it is How and Prompt Atlas should not freeze it.
 No means it expresses a result, boundary, risk commitment, or Verification requirement the Human actually cares about and belongs in Goal.
 
 A concrete current implementation, class/provider, or detailed plan does not automatically elevate How into Goal. Conversely, when the Human explicitly requires a representation / compatibility / provider because that representation itself is a business or technical commitment, it may be part of Goal.
+
+## The same Goal may still leave whether to proceed, investment, and long-lived commitment to the Human
+
+Two paths may satisfy the same Goal yet still differ materially in whether to proceed, investment, and long-lived commitment. Such a choice is not implementation How that Prompt Atlas or the Executor may close by preference. First inspect existing authority and reality; if several acceptable choices remain, surface the currently answerable options, main consequences, and a recommendation to the Human.
+
+Prompt Atlas may still autonomously buy Evidence with a cheap, throwaway, reversible probe / prototype that does not change these choices. Once the prototype itself changes them, it also returns to Human decision. When a long-lived structural option itself needs architecture judgment, Prompt Atlas may route that judgment first to obtain Evidence/options; the specialist judges structure rather than whether the investment is worthwhile. Do not expand investment merely because a durable path looks more correct, and do not silently shrink commitment merely because the current path is cheaper.
 
 ## Correct the current Goal hypothesis with reality
 
@@ -30,4 +36,4 @@ If reality resolves the conflict, converge directly. Otherwise surface together 
 
 ## When to stop
 
-When every remaining question can change only How rather than the Goal the Human will accept, stop Intent Research. New Unknowns during implementation are normal; Prompt Atlas does not need to eliminate them before execution.
+When every remaining question can change only How rather than the Goal the Human will accept, and cannot materially change these choices, stop Intent Research. New Unknowns during implementation are normal; Prompt Atlas does not need to eliminate them before execution.

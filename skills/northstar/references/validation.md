@@ -6,8 +6,8 @@
 
 1. 主 Skill 结构接近成熟 taskbook skill：**角色/边界 → 调研 → Ask → 写书 → 交付 → 写书规则 → 发出前自检**。Northstar 的额外能力通过这些动作里的 judgment 表达，不依赖额外 lifecycle/status 或一套平行术语。
 2. 输入还是 problem space 或 means-heavy 时，不会急着写 Taskbook；先确认 Human 最终会接受什么 Goal。
-3. 未决问题按真正的 resolution owner 路由：普通事实自己 probe；耦合 Unknown / source-alignment / full-map 问题在可用时交给 `$unknowns-first`；文字讨论不足以可靠判断而廉价 concrete artifact 能提高判断质量时，使用可用 prototype / concrete-sample capability；长期模块责任/边界/依赖方向/Target Architecture 在可用时交给 `$architecture-evolution`；只影响 implementation How 的问题留给 Executor。specialist 只负责 Evidence / option / artifact / decision surface；凡仍需要 Human 拍板且会改变 Goal 的 choice 必须返回 Northstar 当前 Ask frontier，specialist 不自行串行 Ask / 关闭。
-4. Ask 一轮集中**当前前提已闭合、可以独立回答**的 Human-owned 选择，并给关键后果/推荐；依赖尚未拍板前提的 downstream choice 不提前问。Human 回答部分问题、插入新约束或中断后，Northstar 从受影响判断继续，Goal 稳定后必须继续写书/交付。
+3. 未决问题按真正的 resolution owner 路由：普通事实自己 probe；耦合 Unknown / source-alignment / full-map 问题在可用时交给 `$unknowns-first`；文字讨论不足以可靠判断而廉价 concrete artifact 能提高判断质量时，使用可用 prototype / concrete-sample capability；长期模块责任/边界/依赖方向/Target Architecture 在可用时交给 `$architecture-evolution`；只影响 implementation How 的问题留给 Executor。specialist 只负责 Evidence / option / artifact / decision surface；凡仍需要 Human 拍板且会改变 Goal 或 materially 改变是否做、投入与长期承诺的 choice 必须返回 Northstar 当前 Ask frontier，specialist 不自行串行 Ask / 关闭。
+4. Ask 一轮集中**当前前提已闭合、可以独立回答**的 Human-owned 选择，并给关键后果/推荐；依赖尚未拍板前提的 downstream choice 不提前问。Human 回答部分问题、插入新约束或中断后，Northstar 从受影响判断继续，所有仍需 Human 拍板的选择稳定后必须继续写书/交付。
 5. 当继续 Research 只会影响 How 时停止；已有 authoritative spec 直接引用，当前 workspace 是 reality，不要求 clean state，也不把已有 diff 当 correctness proof。
 6. Taskbook 只把真正有 authority 的要求写成 binding rule；当前最佳实现保持可替换。执行内容表达 outcome/judgment/boundary/dependency，不退化成 file/helper/test 的 predicted-patch checklist。
 7. 复杂执行时，当前能安全推进的一部分不能替换或缩小完整 Goal；只记录会改变执行选择的真实依赖，不提前把未来 contingent work 切成假任务。
@@ -130,11 +130,16 @@ Human 要“比较 Redis / RocksDB / 自研 KV，并判断未来一年是否值�
 
 PASS：Goal 是**形成有 Evidence 的迁移决策**，Taskbook 的工作围绕比较标准、必要 Research / probe / bounded experiment、关键风险和 decision proof 展开；不得默认生成“实施 RocksDB 迁移”的生产改造任务，也不得为了看起来可执行而编造 build-style hard metric。若最终 decision 是“不迁移”，只要 Evidence 和判断满足 Goal，也可以完成。
 
+### S23 — 同一个期望结果下，是否做、投入与长期承诺仍属于 Human
+Human 已明确期望的功能结果，但当前还可选择临时最小实现、明显更大且长期维护的结构投资，或暂缓本轮工作并接受当前代价；另有一个廉价、可丢弃、可回退的 probe 能降低选择不确定性。
+
+PASS：Northstar 可以自主做这个 cheap probe 并把 Evidence 合回当前 decision；如果长期结构 option 本身还需要架构判断，也可以先调用 `$architecture-evolution` 获得 Evidence/options/decision surface，但 AE 不能替 Human 关闭是否做、投入与长期承诺的选择。若 Human/authority 尚未决定这些选择，Northstar 向 Human 给出当前可回答的 options、主要后果和推荐；不得因为“长期结构更正确”擅自扩大投入，也不得因为“当前路径更便宜”默认缩成临时方案。Human 已明确选择或已有 authority 绑定时，不得重复 Ask。prototype 本身一旦改变是否做、投入与长期承诺，也必须回到 Human decision。
+
 ## 与 Leader 的比较
 
 Leader 是 Northstar 的**结构与 taskbook 质量基线**：角色清楚；调研 → Ask → 写书 → 交付的动作稳定；能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；任务书保持目标/判断高度；Verification 是独立判卷面；执行者不能靠改 judge 制造成功。这里比较的是 taskbook generation / verification-contract baseline，不宣称 Leader 的 post-run manager acceptance 或 multi-agent lifecycle parity。
 
-Northstar 在这个基线之上必须额外表现出问题处理与 handoff 控制力：**输入还不是可执行 Goal 时先定准 Goal；Ask 只展开当前可回答的 Human decision frontier，回答/中断后继续产出；未决问题先路由到能真正解决它的 owner/capability，而不是统一 Research/Ask；specialist 暴露的 Human Goal choice 统一回 Northstar Ask；文字不足以可靠裁决时能用 bounded prototype 提高决策 fidelity；保留 Executor 对 How 的判断空间；复杂执行只推进当前安全部分但不丢完整 Goal；开发粒度和 Verification 粒度独立；每次成功 Taskbook 都真正 materialize 到 authoritative file；Human 后续修改后完整重交付。**
+Northstar 在这个基线之上必须额外表现出问题处理与 handoff 控制力：**输入还不是可执行 Goal 时先定准 Goal；Ask 只展开当前可回答的 Human decision frontier，回答/中断后继续产出；未决问题先路由到能真正解决它的 owner/capability，而不是统一 Research/Ask；specialist 暴露的 Human-owned choice 统一回 Northstar Ask；文字不足以可靠裁决时能用 bounded prototype 提高决策 fidelity；保留 Executor 对 How 的判断空间；复杂执行只推进当前安全部分但不丢完整 Goal；开发粒度和 Verification 粒度独立；每次成功 Taskbook 都真正 materialize 到 authoritative file；Human 后续修改后完整重交付。**
 
 如果结构越来越不像成熟 taskbook skill，或者这些额外能力在 eval 中不可观察，Northstar 都视为退化。
 
@@ -148,6 +153,6 @@ Northstar 不复制 Wayfinder 的 tracker/ticket protocol，也不自己拥有�
 
 ## Behavioral eval
 
-在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、dependent Human-choice frontier、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Taskbook altitude、verification-command truth、partial-safe execution、development-vs-verification granularity、simple executable Goal、file materialization、Human correction 后完整重交付。
+在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、是否做/投入/长期承诺 decision、dependent Human-choice frontier、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Taskbook altitude、verification-command truth、partial-safe execution、development-vs-verification granularity、simple executable Goal、file materialization、Human correction 后完整重交付。
 
 没有 clean-session 结果时，只能说 static/scenario contract review 通过；behavioral parity/uplift 标记 `NOT RUN`。

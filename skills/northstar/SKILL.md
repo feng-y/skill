@@ -1,6 +1,6 @@
 ---
 name: northstar
-description: 把模糊想法、problem space 或零散要求先收敛成 Human 真正认可的 Goal，再编译成 fresh Executor 可独立执行的 prompt、brief 或 Taskbook。能由 repo/runtime 决定的事实先查，只把真正改变 Goal 的选择留给 Human，实现 How 留给 Executor。
+description: 把模糊想法、problem space 或零散要求先收敛成 Human 真正认可的 Goal，再编译成 fresh Executor 可独立执行的 prompt、brief 或 Taskbook。能由 repo/runtime 决定的事实先查，只把真正改变 Goal，或 materially 改变是否做、投入与长期承诺的选择留给 Human，实现 How 留给 Executor。
 ---
 
 # Northstar · 先定准 Goal，再交给执行
@@ -15,19 +15,19 @@ Taskbook 保持 `Goal → Execution → Verification → Evidence` 的因果链�
 
 ## 流程
 
-**1. 调研。** 从 Human 最新且仍有效的表达开始。先恢复候选 Goal，再查会改变 Goal、binding constraint 或第一项安全 material work 的 reality。Human 当前描述、旧 plan 和 Northstar 的当前理解都可以被 repo/runtime、真实 consumer、已有规格和当前 workspace 校正。
+**1. 调研。** 从 Human 最新且仍有效的表达开始。先恢复候选 Goal，再查会改变 Goal、Human-owned choice、binding constraint 或第一项安全 material work 的 reality。Human 当前描述、旧 plan 和 Northstar 的当前理解都可以被 repo/runtime、真实 consumer、已有规格和当前 workspace 校正。
 
 自己能查的事实不问 Human。已有 authoritative tests/schema/ADR/Architecture Intent/验收脚本直接引用，不再复制一份；当前 workspace 中仍有效的修改就是 starting reality，不默认要求 clean state。继续 Research 只会改变 How 时就停。
 
-未决问题不统一变成 Research 或 Ask。普通的 Goal/How 难分、隐藏约束或要求冲突，读 [intent-shaping.md](references/intent-shaping.md)。如果多个耦合 Unknown 或 source alignment 让 Goal / Taskbook 还不能决策完整，且当前环境有 `$unknowns-first`，交给它；如果继续文字讨论仍不能可靠决定，而一个廉价、可丢弃的具体产物能显著提高判断质量，就用可用的 prototype / concrete-sample capability（`$unknowns-first` 可承担这类 local move）；prototype 只回答当前决策问题，不是 Goal 实现，结论再合回 Goal / Taskbook。如果真正未定的是长期模块责任、边界、依赖方向或 Target Architecture，且有 `$architecture-evolution`，交给它判断。
+未决问题不统一变成 Research 或 Ask。普通的 Goal/How 难分、关于是否做、投入与长期承诺的选择未定、隐藏约束或要求冲突，读 [intent-shaping.md](references/intent-shaping.md)。如果多个耦合 Unknown 或 source alignment 让 Goal / Taskbook 还不能决策完整，且当前环境有 `$unknowns-first`，交给它；如果继续文字讨论仍不能可靠决定，而一个廉价、可丢弃的具体产物能显著提高判断质量，就用可用的 prototype / concrete-sample capability（`$unknowns-first` 可承担这类 local move）；prototype 只回答当前决策问题，不是 Goal 实现，结论再合回 Goal / Taskbook。如果真正未定的是长期模块责任、边界、依赖方向或 Target Architecture，且有 `$architecture-evolution`，交给它判断；若该结构判断只是不同投入路径中的一个 option，AE 只提供 Evidence/options/decision surface，是否做、投入与长期承诺的选择仍回 Northstar Ask。
 
-Specialist 负责 Evidence、option、artifact 和暴露 decision surface；凡最终需要 Human 拍板且会改变 Goal 的 choice，一律返回 Northstar，合并进当前 Ask frontier，specialist 不自行串行 Ask / 关闭。prototype 需要 Human reaction 时同样如此。Northstar 只把 specialist 的当前 decision / Evidence 合回 Goal 或 Taskbook，不复制其协议、不把它变成第二份任务书。对应 capability 不可用时，只做关闭当前 Goal / Taskbook 所必需的最小等价判断；只影响 How 的问题仍留给 Executor。
+Specialist 负责 Evidence、option、artifact 和暴露 decision surface；凡最终需要 Human 拍板的 choice，一律返回 Northstar，合并进当前 Ask frontier，specialist 不自行串行 Ask / 关闭。prototype 需要 Human reaction 时同样如此。Northstar 只把 specialist 的当前 decision / Evidence 合回 Goal 或 Taskbook，不复制其协议、不把它变成第二份任务书。对应 capability 不可用时，只做关闭当前 Goal / Taskbook 所必需的最小等价判断；只影响 How 的问题仍留给 Executor。
 
-**2. Ask。** Northstar 是 Goal-level Human decision 的唯一 Ask owner。只问 reality 无法决定、而答案会改变 Human 最终接受 Goal 的选择。把**当前前提已经闭合、可以独立回答**的 Human-owned 选择尽量一轮问全，说明它会改变什么、主要后果和推荐；依赖另一个尚未拍板选择的问题先不问，等前提关闭后再展开。事实题自己查，只影响 How 的问题留给 Executor。
+**2. Ask。** Northstar 是 Goal 以及是否做、投入与长期承诺这类 Human decision 的唯一 Ask owner。只问 reality 无法决定、而答案会改变 Human 最终接受 Goal，或 materially 改变是否做、投入规模、承诺寿命、长期维护责任或风险姿态的选择。把**当前前提已经闭合、可以独立回答**的 Human-owned 选择尽量一轮问全，说明它会改变什么、主要后果和推荐；依赖另一个尚未拍板选择的问题先不问，等前提关闭后再展开。事实题自己查，只影响 How 的问题留给 Executor。
 
-Human 可能只回答一部分、插入新约束、纠正前提或中断。每次都以最新 Human 输入为准，保留仍有效判断，只重开受影响部分；一旦 Goal 已足够稳定，就继续写书，不能因为之前 Ask 过而停在确认、解释或 delta。Human 不在场而必须先做选择时，只能采用可回退、且不会改变 Goal、允许修改范围、Verification 或授权的显式默认，并保留依据。
+Human 可能只回答一部分、插入新约束、纠正前提或中断。每次都以最新 Human 输入为准，保留仍有效判断，只重开受影响部分；一旦所有仍需 Human 拍板的选择都足够稳定，就继续写书，不能因为之前 Ask 过而停在确认、解释或 delta。Human 不在场而必须先做选择时，只能采用可回退、且不会改变任何 Human-owned choice、允许修改范围、Verification 或授权的显式默认，并保留依据。
 
-**3. 写书。** Goal 稳定后，写当前完整 Taskbook。只保留 fresh Executor 不知道就可能判断错、越界或无法证明完成的信息；Research narration、能可靠重算的 inventory、file/symbol/line 明细和 predicted patch 默认删除。
+**3. 写书。** Goal 与所有仍需 Human 拍板的选择收敛后，写当前完整 Taskbook。只保留 fresh Executor 不知道就可能判断错、越界或无法证明完成的信息；Research narration、能可靠重算的 inventory、file/symbol/line 明细和 predicted patch 默认删除。
 
 简单任务直接写完。任务很长、存在多个不同判断、真实依赖、执行中才会逐步显现后续工作或跨 session 继续时，读 [execution-compile.md](references/execution-compile.md)。只有存在具体“实现其实错了但检查仍可能 PASS”的风险时，才读 [verification-trust.md](references/verification-trust.md)。
 
