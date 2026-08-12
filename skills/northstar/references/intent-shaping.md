@@ -1,30 +1,25 @@
-# Intent Shaping under uncertain territory
+# 当 Human 还没真正决定结果
 
-只在主 Skill 的 `Shape` 仍无法从当前输入形成稳定 Goal，或明显存在会改变 Goal / boundary / authority 的 blind spot 时读取。这里不重复 Unknown routing；routing 仍由 `SKILL.md` 拥有。
+只在 `SKILL.md` 已经查过现实，但仍无法确定 Human 最终会接受哪个结果时读取。
 
-## Map is not territory
+Prompt、已有 plan 和 Northstar 自己都只是 map；repo、runtime、历史约束和真实使用者才会暴露 map 没写出来的东西。这里的目标不是把 Unknown 全找完，而是找到**会改变 Human 对“做完”的判断**的那一个缺口。
 
-Human 的 prompt、已有 plan 和本 Skill 都只是 map；repo、运行环境、历史约束和真实使用者才是 territory。不要因为 map 写得详细就假设 Unknown 已关闭，也不要为了理论上的完整性穷尽所有 Unknown。
+## 找选择，不找信息
 
-只寻找**会改变 Stable Goal 的 Unknown**。优先检查这些容易被 prompt 漏掉、但会改变完成后世界的地方：
+看到新的事实时只问：
 
-- tacit business / compatibility / risk constraint；
-- 已有 authoritative spec、precedent、reference implementation 或历史决定；
-- “什么算好”的 quality bar / acceptance authority；
-- repo 外 consumer、serialized/config identity、部署或授权边界；
-- 同名概念在 repo 中指向不同 live responsibility 的 collision；
-- 当前 working tree / 已完成但未验证 work 与 Human Goal 的真实关系。
+> 如果这个事实换一个值，Human 会不会接受不同的完成结果？
 
-这些只是 blind-spot lens，不是每次固定 checklist。发现一个候选后先问：**它若取不同值，会不会改变主 Skill 已定义的 Goal contract？** 不会就留给 Executor 或忽略。
+不会，就不属于 Intent shaping；留给 Executor 或忽略。会，才继续追。
 
-## Smallest decisive probe
+因此可以按需看业务/兼容约束、已有规格和历史决定、真实 consumer、repo 外 contract、当前 working tree 等，但它们只是可能藏着选择的地方，不是固定 checklist。
 
-能由 repo/runtime authority 关闭的 Unknown，用最小 decisive probe 关闭，而不是问 Human。优先取得能够区分 materially different Goal 的 Evidence；不要为了“了解更多”扩大 Research。
+## 能查的先查
 
-Reality 可以推翻模型推荐的 means，但不能替 Human 改 outcome。Human 明确的 priority、boundary、authorization 或 verification requirement 仍保持 authority。
+repo/runtime 能决定的事实自己 probe，不让 Human 猜。Reality 可以推翻一个实现手段，但不能替 Human 改结果。
 
-## Stable Goal closure
+如果现实已经把选择排掉，就回主流程继续 Compile。只有几个 materially different 的完成结果仍都说得通，而且现实无法替 Human 决定时，才把这些选择一次交给 Human；必要时给后果和推荐。
 
-使用 `SKILL.md` 的 Goal contract 作为唯一 closure 标准。若两个 materially different completed worlds 仍都符合当前 Human 表达，而且 repo/upstream authority 不能决定，就把差异、后果与推荐一次交给 Human；不要拿一个 implementation How 偷填。
+## 什么时候停
 
-若剩余 Unknown 已可在稳定 Goal / priority / boundary 下由 Executor 根据 live Evidence 裁决，**停止 Intent Research 并 Compile**。Planning 不需要、也不应该提前消灭 implementation 中才会出现的 Unknown。
+一旦剩余不确定性只会影响“怎么做”，而不会改变 Human 接受的结果，就停止 Intent Research。Implementation 中继续出现 Unknown 是正常的，不需要 Northstar 提前消灭。
