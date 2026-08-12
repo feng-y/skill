@@ -18,6 +18,6 @@
 
 运行时新 Evidence 只修改受影响的 remaining Graph：真实 prerequisite / consumer 出现则增加必要 relation；旧 dependency 被证明不存在则删除；implementation reality 改变时可拆分、合并或重排剩余 work。已完成 work 只有其 Evidence premise 或所证明行为被影响时才重开。
 
-一个 branch blocked 不应冻结独立 ready branch；join 只等待真实 required upstream result。**Ready frontier 只是现在能做什么，不能反向缩小 Human Goal，也不能把当前可见工作命名成新的 Layer/阶段 Goal。**
+一个 branch blocked 不应冻结独立 ready branch；join 只等待真实 required upstream result。Graph 必须遵守 `SKILL.md` 已定义的 Goal / ready-frontier boundary，不在本层重新定义 scope 或阶段 Goal。
 
 Graph 不创建 ImplementationNode / ProbeNode / VerificationNode 等 taxonomy；这些都只是 work/action。Evidence 是 reality output，不是 node。不要增加 persistent Graph object、第二本 taskbook、固定 Agent topology 或 manager/scheduler。
