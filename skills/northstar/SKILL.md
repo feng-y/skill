@@ -19,7 +19,7 @@ Taskbook 保持 `Goal → Execution → Verification → Evidence` 的因果链�
 
 自己能查的事实不问 Human。已有 authoritative tests/schema/ADR/Architecture Intent/验收脚本直接引用，不再复制一份；当前 workspace 中仍有效的修改就是 starting reality，不默认要求 clean state。继续 Research 只会改变 How 时就停。
 
-未决问题不统一变成 Research 或 Ask。普通的 Goal/How 难分、隐藏约束或要求冲突，读 [intent-shaping.md](references/intent-shaping.md)。如果多个耦合 Unknown 或 source alignment 让 Goal / Taskbook 还不能决策完整，且当前环境有 `$unknowns-first`，交给它；如果真正未定的是长期模块责任、边界、依赖方向或 Target Architecture，且有 `$architecture-evolution`，交给它判断。Northstar 只把 specialist 返回的当前 decision / Evidence 合回 Goal 或 Taskbook，不复制其协议、不把它变成第二份任务书。对应 capability 不可用时，只做关闭当前 Goal / Taskbook 所必需的最小等价判断；只影响 How 的问题仍留给 Executor。
+未决问题不统一变成 Research 或 Ask。普通的 Goal/How 难分、隐藏约束或要求冲突，读 [intent-shaping.md](references/intent-shaping.md)。如果多个耦合 Unknown 或 source alignment 让 Goal / Taskbook 还不能决策完整，且当前环境有 `$unknowns-first`，交给它；如果继续文字讨论仍不能可靠决定，而一个廉价、可丢弃的具体产物能显著提高判断质量，就用可用的 prototype / concrete-sample capability（`$unknowns-first` 可承担这类 local move）；prototype 只回答当前决策问题，不是 Goal 实现，结论再合回 Goal / Taskbook。如果真正未定的是长期模块责任、边界、依赖方向或 Target Architecture，且有 `$architecture-evolution`，交给它判断。Northstar 只把 specialist 返回的当前 decision / Evidence 合回 Goal 或 Taskbook，不复制其协议、不把它变成第二份任务书。对应 capability 不可用时，只做关闭当前 Goal / Taskbook 所必需的最小等价判断；只影响 How 的问题仍留给 Executor。
 
 **2. Ask。** 只问 reality 无法决定、而答案会改变 Human 最终接受 Goal 的选择。把**当前前提已经闭合、可以独立回答**的 Human-owned 选择尽量一轮问全，说明它会改变什么、主要后果和推荐；依赖另一个尚未拍板选择的问题先不问，等前提关闭后再展开。事实题自己查，只影响 How 的问题留给 Executor。
 
@@ -51,7 +51,7 @@ Taskbook 交付不是 completion state。Human 后续任何 material clarificati
 
 ## 发出前自检
 
-1. Goal 和 means 分开了吗？Human 真正必须拍板的选择都已 Ask，能查的事实没有甩给 Human？需要 specialist resolution 的问题有没有被通用 Research/Ask 吞掉？
+1. Goal 和 means 分开了吗？Human 真正必须拍板的选择都已 Ask，能查的事实没有甩给 Human？需要 specialist resolution 或 concrete prototype 的问题有没有被通用 Research/Ask 吞掉？
 2. Taskbook 是否引用现有 authority，而不是制造第二份 SOT？`must / must not` 是否都有真实 authority？
 3. 执行内容是否仍在 outcome / judgment / responsibility / dependency 高度，而不是 predicted patch 清单？
 4. 当前可推进范围有没有偷换完整 Goal？未来 contingent work 有没有被提前猜成任务？
