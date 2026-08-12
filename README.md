@@ -30,7 +30,7 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 ## Skills
 
 - `prompt-atlas` — English counterpart to Northstar: shape Human intent into the right Goal, preserve Executor judgment, and compile a high-altitude Taskbook whose successful delivery is materialized to an authoritative external Markdown file.
-- `northstar` — Chinese counterpart to Prompt Atlas. It probes reality before asking, can resume after Human clarification or interruption, keeps implementation How with the Executor, and separates implementation granularity from Verification granularity.
+- `northstar` — Chinese counterpart to Prompt Atlas. It probes reality before asking, resumes after Human clarification or interruption, keeps implementation How with the Executor, and designs implementation granularity separately from Verification granularity.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
 - `architecture-evolution` — start from a named module's repo reality, re-identify capability/boundary and stable variation, then converge a Target Architecture and a few concrete structural improvements before implementation design.
 
