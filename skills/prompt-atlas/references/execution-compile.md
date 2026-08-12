@@ -2,9 +2,11 @@
 
 Read only after Goal is settled but the task is long, needs several different judgments, real ordering, stronger Verification, or continuation across sessions. This file only keeps a complex Taskbook executable; it does not redefine Goal or Human / Executor responsibility.
 
-## When to split work
+## How to split implementation work
 
-If one judgment applies to a set of objects, keep them as one piece of work and let the Executor scan the agreed scope. Do not split by file, function, or currently discovered instance. Split only when the local result, judgment rule, real dependency, or Verification requirement is different.
+If one result and judgment apply to a set of objects, keep them as one piece of work and let the Executor scan the agreed scope. Do not split by file, function, or currently discovered instance. Split only when the local result, judgment rule, real dependency, or binding constraint is different.
+
+Each piece of work should say what must be true when it is done, what judgment applies, and how it truly relates to other work. It is not a predicted patch. Do not default to `edit file A → add helper B → update caller C → run test D` as task granularity.
 
 If one fact blocks the first safe material work, put that check first. Do not turn it into another broad Research phase.
 
@@ -24,7 +26,11 @@ A baseline belongs in the Taskbook only when it helps detect missing coverage or
 
 If later judgment depends on a baseline, the Executor re-obtains it before first relying on it. A mismatch invalidates only work and Evidence that depended on that premise; still-valid work remains reusable.
 
-## Verification
+## How to split Verification
+
+Verification does not map one-to-one to implementation work. Start from completion claims, then decide what authoritative Evidence each claim needs. If one Evidence path covers several implementation changes, combine it. If one implementation change carries several independent claims, verify them separately.
+
+Verification granularity follows **the behavior, boundary, risk, and authority that must be proven**, not the number of commits, files, or tasks. Prefer final observable behavior and long-lived constraints. Local unit/build checks may contribute Evidence, but being close to an implementation step does not make them sufficient proof of Goal completion.
 
 The Taskbook freezes what must be proven for Goal completion, not how the Executor debugs. A candidate discovered during Research does not automatically become a `0-hit / 0-count` requirement; use that only when the object has been proven to need removal and zero itself is part of Goal.
 
@@ -34,4 +40,4 @@ Failure must remain honest. If a trusted baseline turns green→red, recover or 
 
 ## Continue across sessions
 
-For a longer autonomous run, use existing `implement-notes` for progress, key decisions/Evidence, blockers, and the resume point. A new session reads it first and redoes only work whose premise changed or Evidence became stale. Do not create a second Taskbook, persistent Graph, or manager state.
+For a longer run, use existing `implement-notes` for progress, key decisions/Evidence, blockers, and the resume point. A new session reads it first and redoes only work whose premise changed or Evidence became stale. Do not create a second Taskbook, persistent Graph, or manager state.
