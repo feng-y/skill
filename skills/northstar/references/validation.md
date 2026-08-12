@@ -6,13 +6,13 @@
 
 1. 主 Skill 结构接近成熟 taskbook skill：**角色/边界 → 调研 → Ask → 写书 → 交付 → 写书规则 → 发出前自检**。Northstar 的额外能力通过这些动作里的 judgment 表达，不依赖额外 lifecycle/status 或一套平行术语。
 2. 输入还是 problem space 或 means-heavy 时，不会急着写 Taskbook；先确认 Human 最终会接受什么 Goal。
-3. 未决问题按真正的 resolution owner 路由：普通事实自己 probe；耦合 Unknown / source-alignment / full-map 问题在可用时交给 `$unknowns-first`；文字讨论不足以可靠判断而廉价 concrete artifact 能提高判断质量时，使用可用 prototype / concrete-sample capability；长期模块责任/边界/依赖方向/Target Architecture 在可用时交给 `$architecture-evolution`；Human-owned Goal 选择才 Ask；只影响 implementation How 的问题留给 Executor。specialist 不可用时只做关闭当前 Goal/Taskbook 所需的最小等价判断，不复制第二套协议。
+3. 未决问题按真正的 resolution owner 路由：普通事实自己 probe；耦合 Unknown / source-alignment / full-map 问题在可用时交给 `$unknowns-first`；文字讨论不足以可靠判断而廉价 concrete artifact 能提高判断质量时，使用可用 prototype / concrete-sample capability；长期模块责任/边界/依赖方向/Target Architecture 在可用时交给 `$architecture-evolution`；只影响 implementation How 的问题留给 Executor。specialist 只负责 Evidence / option / artifact / decision surface；凡仍需要 Human 拍板且会改变 Goal 的 choice 必须返回 Northstar 当前 Ask frontier，specialist 不自行串行 Ask / 关闭。
 4. Ask 一轮集中**当前前提已闭合、可以独立回答**的 Human-owned 选择，并给关键后果/推荐；依赖尚未拍板前提的 downstream choice 不提前问。Human 回答部分问题、插入新约束或中断后，Northstar 从受影响判断继续，Goal 稳定后必须继续写书/交付。
 5. 当继续 Research 只会影响 How 时停止；已有 authoritative spec 直接引用，当前 workspace 是 reality，不要求 clean state，也不把已有 diff 当 correctness proof。
 6. Taskbook 只把真正有 authority 的要求写成 binding rule；当前最佳实现保持可替换。执行内容表达 outcome/judgment/boundary/dependency，不退化成 file/helper/test 的 predicted-patch checklist。
 7. 复杂执行时，当前能安全推进的一部分不能替换或缩小完整 Goal；只记录会改变执行选择的真实依赖，不提前把未来 contingent work 切成假任务。
 8. 开发粒度与 Verification 粒度独立：开发按结果/判断/依赖拆，Verification 按 completion claim / risk / authority 拆，不要求一一对应。
-9. Verification 写必须证明什么，不规定调试过程；不能通过削弱 judge 制造 PASS，额外 trust 检查只在具体假绿风险下启用。
+9. Verification 写必须证明什么，不规定调试过程；不能通过削弱 judge 制造 PASS，额外 trust 检查只在具体假绿风险下启用。Taskbook 若固定 concrete verification command / target / parameter，必须已有 reality Evidence 证明它存在且确实验证对应 claim；否则只固定 verification obligation。
 10. 成功 Taskbook 必须把同一完整正文 materialize 到 repo/workspace 外 authoritative Markdown file 并显示 path；只在 chat 输出失败。
 11. Human 在 Ask 后或 Taskbook 交付后给出 material clarification/correction，都重新判断受影响部分并再次完整交付当前 Taskbook；之前 Ask/交付过不是 completion state。specialist / prototype 的输出只作为当前 decision/Evidence 合回 Goal/Taskbook，不成为第二份 Northstar SOT 或 binding implementation。
 
@@ -118,13 +118,23 @@ PASS：第一轮一起问 A/C，并给后果/推荐；不提前问 B。A 回答�
 ### S20 — 讨论不足以做出设计判断
 Goal 已经基本明确，但一个关键行为/接口/状态模型选择继续靠文字讨论仍有多种都“说得通”的答案；做一个很小、可丢弃的 concrete artifact 就能让 Human 或 reality 直接比较。
 
-PASS：优先用可用的 prototype / concrete-sample capability回答这个决策，再把结论/Evidence 合回 Goal 或 Taskbook。把 prototype 当生产实现继续打磨、把其内部结构直接冻结成 binding How、或继续增加抽象讨论而拒绝低成本具体化，都失败。若现有文字/reality 已足以判断，也不得为了展示 prototype 能力而强制做原型。
+PASS：优先用可用的 prototype / concrete-sample capability 回答这个决策，再把结论/Evidence 合回 Goal 或 Taskbook。把 prototype 当生产实现继续打磨、把其内部结构直接冻结成 binding How、或继续增加抽象讨论而拒绝低成本具体化，都失败。若现有文字/reality 已足以判断，也不得为了展示 prototype 能力而强制做原型。
+
+### S21 — specialist 发现 Human choice，但 Ask 仍只有一个 owner
+Northstar 当前已经知道一个可以独立回答的 Human Goal choice C；随后 `$unknowns-first` 或 prototype 又暴露出另一个需要 Human 拍板的 Goal choice B，并给出了依赖、选项和 Evidence。
+
+PASS：specialist 返回 B 的 decision surface，不直接问 Human。Northstar 把 B 合回当前 decision frontier；若 B 与 C 的前提都已闭合，就在同一轮 Ask B/C；若 B 仍依赖其他未决前提，就只 Ask 当前可回答集合。specialist 先问 B、回来后 Northstar 再问 C，或者 prototype 自己取得 Human reaction 并把它当 Goal 决策关闭，都失败。
+
+### S22 — exploration / selection Goal 不退化成 build task
+Human 要“比较 Redis / RocksDB / 自研 KV，并判断未来一年是否值得迁移”，当前并没有授权任何生产迁移。
+
+PASS：Goal 是**形成有 Evidence 的迁移决策**，Taskbook 的工作围绕比较标准、必要 Research / probe / bounded experiment、关键风险和 decision proof 展开；不得默认生成“实施 RocksDB 迁移”的生产改造任务，也不得为了看起来可执行而编造 build-style hard metric。若最终 decision 是“不迁移”，只要 Evidence 和判断满足 Goal，也可以完成。
 
 ## 与 Leader 的比较
 
-Leader 是 Northstar 的**结构与 taskbook 质量基线**：角色清楚；调研 → Ask → 写书 → 交付的动作稳定；能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；任务书保持目标/判断高度；Verification 是独立判卷面；执行者不能靠改 judge 制造成功。
+Leader 是 Northstar 的**结构与 taskbook 质量基线**：角色清楚；调研 → Ask → 写书 → 交付的动作稳定；能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；任务书保持目标/判断高度；Verification 是独立判卷面；执行者不能靠改 judge 制造成功。这里比较的是 taskbook generation / verification-contract baseline，不宣称 Leader 的 post-run manager acceptance 或 multi-agent lifecycle parity。
 
-Northstar 在这个基线之上必须额外表现出问题处理与 handoff 控制力：**输入还不是可执行 Goal 时先定准 Goal；Ask 只展开当前可回答的 Human decision frontier，回答/中断后继续产出；未决问题先路由到能真正解决它的 owner/capability，而不是统一 Research/Ask；文字不足以可靠裁决时能用 bounded prototype 提高决策 fidelity；保留 Executor 对 How 的判断空间；复杂执行只推进当前安全部分但不丢完整 Goal；开发粒度和 Verification 粒度独立；每次成功 Taskbook 都真正 materialize 到 authoritative file；Human 后续修改后完整重交付。**
+Northstar 在这个基线之上必须额外表现出问题处理与 handoff 控制力：**输入还不是可执行 Goal 时先定准 Goal；Ask 只展开当前可回答的 Human decision frontier，回答/中断后继续产出；未决问题先路由到能真正解决它的 owner/capability，而不是统一 Research/Ask；specialist 暴露的 Human Goal choice 统一回 Northstar Ask；文字不足以可靠裁决时能用 bounded prototype 提高决策 fidelity；保留 Executor 对 How 的判断空间；复杂执行只推进当前安全部分但不丢完整 Goal；开发粒度和 Verification 粒度独立；每次成功 Taskbook 都真正 materialize 到 authoritative file；Human 后续修改后完整重交付。**
 
 如果结构越来越不像成熟 taskbook skill，或者这些额外能力在 eval 中不可观察，Northstar 都视为退化。
 
@@ -132,12 +142,12 @@ Northstar 在这个基线之上必须额外表现出问题处理与 handoff 控�
 
 Wayfinder 的高价值基线是 **Map + resolution routing**：Map 作为跨 session 的 canonical decision control plane，保存 destination、已经做出的 decisions 和仍需解决的问题；当前问题再按性质交给 research、prototype、grilling/task 等 resolution capability，grilling 路径还会调用 domain-modeling。Map 的价值来自这些不同能力的结果不断回写同一个 destination，直到没有阻塞后续执行的 decision。
 
-Northstar 不复制 Wayfinder 的 tracker/ticket protocol，也不自己拥有第二套持久 Map。本 repo 已有对应 owner：耦合 Unknown / source alignment / full-map 工作交给 `unknowns-first`，长期结构判断交给 `architecture-evolution`；普通 Human choice 由 Northstar Ask，纯 How 留给 Executor。prototype 也是 resolution capability：只有 concrete artifact 能显著提高某个当前判断的 fidelity 时才用，结果回写 Goal/Taskbook，artifact 本身不升级为 Northstar 的 production contract。Northstar 的责任是**识别当前问题需要哪种 resolution capability，把结果合回同一个 Goal/Taskbook，并继续到高质量 handoff**。
+Northstar 不复制 Wayfinder 的 tracker/ticket protocol，也不自己拥有第二套持久 Map。本 repo 已有对应 owner：耦合 Unknown / source alignment / full-map 工作交给 `unknowns-first`，长期结构判断交给 `architecture-evolution`；普通 Human choice 由 Northstar Ask，纯 How 留给 Executor。prototype 也是 resolution capability：只有 concrete artifact 能显著提高某个当前判断的 fidelity 时才用，结果回写 Goal/Taskbook，artifact 本身不升级为 Northstar 的 production contract。Northstar 的责任是**识别当前问题需要哪种 resolution capability，把 specialist 暴露的 Human choice 汇回同一个 Ask frontier，再把 resolution 结果合回同一个 Goal/Taskbook，继续到高质量 handoff**。
 
-Wayfinder 的 fog/frontier 等语义可以支持这个过程，但不是 Northstar 对齐 Wayfinder 的主要 benchmark。如果 Northstar 只是记住“map != reality / 不提前切未来”，却不会选择 resolution capability，视为没有吸收 Wayfinder 的核心价值。
+当前组合吸收的是 Wayfinder 的 resolution model，不宣称覆盖它的 persistent tracker / ticket identity / claim-concurrency / cross-session decision orchestration model。fog/frontier 等语义可以支持过程，但不是 Northstar 对齐 Wayfinder 的主要 benchmark。
 
 ## Behavioral eval
 
-在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、prototype-needed decision、dependent Human-choice frontier、Ask interruption/reply、mixed constraint/implementation、replaceable implementation advice、Taskbook altitude、partial-safe execution、development-vs-verification granularity、simple executable Goal、file materialization、Human correction 后完整重交付。
+在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、dependent Human-choice frontier、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Taskbook altitude、verification-command truth、partial-safe execution、development-vs-verification granularity、simple executable Goal、file materialization、Human correction 后完整重交付。
 
 没有 clean-session 结果时，只能说 static/scenario contract review 通过；behavioral parity/uplift 标记 `NOT RUN`。
