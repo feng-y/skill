@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
-  short_description: "Settle the Human outcome, then write for the Executor"
-  default_prompt: "Use $prompt-atlas. First settle what result the Human actually wants. Investigate facts repo/runtime can decide; ask the Human only for choices reality cannot make and that would change the completed outcome. Once Goal is clear, keep only what a fresh Executor could otherwise misjudge or fail to prove; leave implementation How to the Executor."
+  short_description: "Settle Goal, then write for the Executor"
+  default_prompt: "Use $prompt-atlas. First settle the Human's Goal. Investigate reality the repo/runtime can decide; ask the Human only for choices reality cannot make and that would change Goal. Once Goal is clear, keep only what a fresh Executor could otherwise misjudge or fail to prove; leave implementation How to the Executor."
