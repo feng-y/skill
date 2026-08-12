@@ -6,7 +6,7 @@ Eval / review only. Normal runtime must not read this file. It tests behavior an
 
 1. The main Skill follows a mature taskbook structure: **roles/boundary → Research → Ask → Write → Deliver → writing rules → pre-delivery check**. Prompt Atlas expresses additional capability through judgment inside those actions rather than through lifecycle/status or a parallel terminology layer.
 2. When input is still a problem space or means-heavy, it does not rush into Taskbook writing; it first settles what Goal the Human will actually accept.
-3. Unsettled questions route to the resolution owner that can actually close them: ordinary facts are probed directly; coupled Unknown / source-alignment / full-map problems route to `$unknowns-first` when available; long-lived module responsibility/boundary/dependency-direction/Target-Architecture judgments route to `$architecture-evolution` when available; only Human-owned Goal choices go to Ask; implementation How stays with the Executor. If a specialist is unavailable, make only the smallest equivalent judgment needed to close the current Goal/Taskbook rather than copying a second protocol.
+3. Unsettled questions route to the resolution owner that can actually close them: ordinary facts are probed directly; coupled Unknown / source-alignment / full-map problems route to `$unknowns-first` when available; when text discussion cannot decide reliably but a cheap concrete artifact would improve judgment, use an available prototype / concrete-sample capability; long-lived module responsibility/boundary/dependency-direction/Target-Architecture judgments route to `$architecture-evolution` when available; only Human-owned Goal choices go to Ask; implementation How stays with the Executor. If a specialist is unavailable, make only the smallest equivalent judgment needed to close the current Goal/Taskbook rather than copying a second protocol.
 4. Ask batches the Human-owned choices whose prerequisites are already settled and that can be answered independently now, with consequences/recommendation. Downstream choices that still depend on an open Human decision are not asked early. After a partial answer, new constraint, interruption, or correction, Prompt Atlas resumes from affected judgment and continues to Write/Deliver once Goal is stable.
 5. Research stops when more context changes only How; authoritative specs are referenced directly; current workspace is reality, not a reason to require clean state or treat an existing diff as correctness proof.
 6. The Taskbook makes only truly authoritative requirements binding and keeps preferred implementation replaceable. Execution content stays at outcome/judgment/boundary/dependency altitude rather than a predicted file/helper/test checklist.
@@ -14,7 +14,7 @@ Eval / review only. Normal runtime must not read this file. It tests behavior an
 8. Implementation granularity and Verification granularity are independent: implementation splits by result/judgment/dependency, Verification by completion claim / risk / authority, with no one-to-one requirement.
 9. Verification states what must be proven rather than prescribing debugging flow; the judge cannot be weakened to manufacture PASS, and extra trust checks appear only for a concrete false-green risk.
 10. Every successful Taskbook is materialized as the same complete body to an authoritative Markdown file outside repo/workspace and the real path is surfaced; chat-only delivery fails.
-11. After either an Ask or a prior Taskbook delivery, material Human clarification/correction reopens affected judgment and fully re-delivers the current Taskbook. Previous Ask/delivery is not completion state. Specialist output is folded back only as current decision/Evidence; it never becomes a second Prompt Atlas SOT.
+11. After either an Ask or a prior Taskbook delivery, material Human clarification/correction reopens affected judgment and fully re-delivers the current Taskbook. Previous Ask/delivery is not completion state. Specialist / prototype output is folded back only as current decision/Evidence; it never becomes a second Prompt Atlas SOT or binding implementation.
 
 Static smoke must PASS 11/11.
 
@@ -93,7 +93,7 @@ PASS: do not weaken the judge. Add only the minimum check that falsifies the con
 ### S15 — A simple Goal stays simple
 The Human already supplied a clear result, boundaries, and Verification, and repo reality introduces no upstream fork.
 
-PASS: Research briefly, then Write/Deliver. Do not force a full map, architecture specialist, or extra Ask merely to demonstrate stronger problem-solving capability.
+PASS: Research briefly, then Write/Deliver. Do not force a full map, prototype, architecture specialist, or extra Ask merely to demonstrate stronger problem-solving capability.
 
 ### S16 — Successful output must land in a file
 Goal is stable and Prompt Atlas has produced the complete Taskbook.
@@ -115,11 +115,16 @@ There are three Human-owned choices. A and C can be answered independently now. 
 
 PASS: ask A/C together in the first round with consequences/recommendation; do not ask B yet. After A closes, ask B if it still exists. Asking only A serializes C unnecessarily; asking A/B/C together forces the Human to guess B before its premise is known. Both fail.
 
+### S20 — Discussion is too low-fidelity to settle a design decision
+Goal is mostly clear, but a key behavior/interface/state-model choice still has several textually plausible answers. A tiny throwaway concrete artifact would let the Human or reality compare them directly.
+
+PASS: use an available prototype / concrete-sample capability to answer that decision, then fold the resulting decision/Evidence into Goal or Taskbook. Polishing the prototype into production work, freezing its internal structure as binding How, or continuing abstract discussion while rejecting cheap concretization all fail. If text/reality already decides the question, forcing a prototype also fails.
+
 ## Comparison with Leader
 
 Leader is Prompt Atlas's **structural and taskbook-quality baseline**: clear roles; stable Research → Ask → Write → Deliver actions; research facts before asking; batch real Human choices; reference existing specs; keep Taskbook at goal/judgment altitude; treat Verification as an independent judging surface; and never let the Executor weaken the judge to manufacture success.
 
-Prompt Atlas must add upstream problem-solving and handoff control on top of that baseline: **settle Goal when input is not yet executable; Ask only the currently answerable Human-decision frontier and continue after answers/interruption; route unsettled questions to the owner/capability that can actually resolve them instead of collapsing everything into Research/Ask; preserve Executor judgment over How; advance only safe work without losing full Goal; separate implementation granularity from Verification granularity; materialize every successful Taskbook to an authoritative file; and fully re-deliver after later Human changes.**
+Prompt Atlas must add upstream problem-solving and handoff control on top of that baseline: **settle Goal when input is not yet executable; Ask only the currently answerable Human-decision frontier and continue after answers/interruption; route unsettled questions to the owner/capability that can actually resolve them instead of collapsing everything into Research/Ask; use a bounded prototype when text alone cannot reliably settle a decision; preserve Executor judgment over How; advance only safe work without losing full Goal; separate implementation granularity from Verification granularity; materialize every successful Taskbook to an authoritative file; and fully re-deliver after later Human changes.**
 
 If its structure drifts away from a mature taskbook skill, or these additional capabilities are not observable in eval, Prompt Atlas has regressed.
 
@@ -127,12 +132,12 @@ If its structure drifts away from a mature taskbook skill, or these additional c
 
 Wayfinder's high-value baseline is **Map + resolution routing**: the Map is a canonical cross-session decision control plane containing the destination, decisions already made, and work still needing resolution; the current question is then routed by type to research, prototype, grilling/task and related specialist capability such as domain-modeling. The value comes from those different resolution capabilities feeding decisions back into one destination until no decision remains that blocks later execution.
 
-Prompt Atlas does not copy Wayfinder's tracker/ticket protocol or own a second persistent Map. This repo already has the relevant owners: coupled Unknown / source-alignment / full-map work belongs to `unknowns-first`; long-lived structural judgment belongs to `architecture-evolution`; ordinary Human choices stay in Prompt Atlas Ask; pure How stays with the Executor. Prompt Atlas is responsible for **recognizing which resolution capability the current problem needs, folding its result back into the same Goal/Taskbook, and continuing to a high-quality handoff**.
+Prompt Atlas does not copy Wayfinder's tracker/ticket protocol or own a second persistent Map. This repo already has the relevant owners: coupled Unknown / source-alignment / full-map work belongs to `unknowns-first`; long-lived structural judgment belongs to `architecture-evolution`; ordinary Human choices stay in Prompt Atlas Ask; pure How stays with the Executor. Prototype is another resolution capability: use it only when a concrete artifact can materially raise the fidelity of the current judgment, then fold the answer back into Goal/Taskbook rather than turning the artifact into a production contract. Prompt Atlas is responsible for **recognizing which resolution capability the current problem needs, folding its result back into the same Goal/Taskbook, and continuing to a high-quality handoff**.
 
 Wayfinder's fog/frontier semantics can support that process, but they are not the primary benchmark. If Prompt Atlas remembers only “map != reality / do not pre-slice the future” while failing to choose the right resolution capability, it has not absorbed Wayfinder's core value.
 
 ## Behavioral eval
 
-Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, specialist-capability routing, dependent Human-choice frontier, Ask interruption/reply, mixed constraint/implementation, replaceable implementation advice, Taskbook altitude, partial-safe execution, implementation-vs-verification granularity, simple executable Goal, file materialization, and full re-delivery after Human correction.
+Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, specialist-capability routing, prototype-needed decision, dependent Human-choice frontier, Ask interruption/reply, mixed constraint/implementation, replaceable implementation advice, Taskbook altitude, partial-safe execution, implementation-vs-verification granularity, simple executable Goal, file materialization, and full re-delivery after Human correction.
 
 Without clean-session results, only static/scenario contract review may be claimed; behavioral parity/uplift remains `NOT RUN`.
