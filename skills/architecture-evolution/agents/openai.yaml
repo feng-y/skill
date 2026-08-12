@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
-  short_description: "从指定模块收敛目标架构并编译可推进改进"
-  default_prompt: "使用 $architecture-evolution 处理指定模块或 capability。以 repo reality 为准收敛 best-known Target Architecture；Target Architecture 收敛后只编译真正改善结构的少量 Architecture Improvements，并停在 Implementation Design 之前。"
+  short_description: "从模块现实收敛目标架构与结构改进"
+  default_prompt: "使用 $architecture-evolution。按调研 → 判断 → 写 Program → 交付推进：从指定 module/capability 的 repo reality 与直接上下游重识别 responsibility/boundary；当前 taxonomy 与 proposed shape 只作 Evidence。收敛 best-known Target Architecture 后，只保留最多 3 个完成即产生 structural gain + real exit 的 Improvements，停在 Implementation Design 之前。成功 Program 以同一正文写入 repo/workspace 外 handoff file；Human material correction 后重算并完整重交付。"

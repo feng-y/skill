@@ -1,146 +1,63 @@
 # Evaluate Architecture Evolution
 
-只用于显式 smoke/eval，正常 runtime 不读。本文件冻结 behavior property 与 captured regression，不是 runtime 规范源。
+只用于显式 smoke/eval；正常 runtime 不读。本文件冻结 behavior property，不定义 runtime。
 
 ## Static smoke
 
-通过需要同时满足：
+1. 主 Skill 自己完成调研 → architecture judgment → Program → delivery；无 ready/completed/status lifecycle。
+2. 正常成功路径不依赖第二份 output/compile contract；`rules.md` 只处理难判 discriminator，legacy/Brooks 仅按需读取。
+3. Research 从指定 module/capability 与 direct neighborhood 渐进展开；只有会改变 architecture judgment 的 authority/SOT/identity/external constraint 才扩大。
+4. 当前 taxonomy/proposed shape 只是 Evidence；没有 stable variation 不制造 provider。
+5. Layering/cohesion、abstraction/specific、primary/auxiliary、real evolution 都能改变 Target Architecture；长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并。
+6. local pressure 不制造 Program；真实 fork 缺 decisive Evidence/Human decision 时保持 unresolved。
+7. Program 最多 3 个 Improvements，不补数；每项完成即 structural gain + real exit，并说明整体完成后哪些旧 authority/dependency/path 不再 authoritative；research/setup/future/implementation step 不得冒充 Improvement。
+8. Program 引用 authoritative repo SOT；handoff artifact 不成为 repo architecture SOT。
+9. AE 停在 architecture outcome / structural done condition；除非 authority 绑定 representation，不固定 implementation。
+10. 上游 shaping capability 调用时 AE 返回 Evidence/options/decision surface，不抢 Human Ask ownership。
+11. 成功 Program 同文 materialize 到 repo/workspace 外 handoff file，交付只包含当前 judgment/Program；material correction 后完整重交付；写入失败不得假装成功。
+12. `agents/openai.yaml` 是 thin invocation pointer；validation 不进入 runtime。
 
-1. **Stable Flow**：主 Skill 明确 `Ground → Judge → Compile → Deliver`，只描述单次 invocation，不形成 phase/status lifecycle。
-2. **Self-contained architecture contract**：主 Skill 自己就包含五个稳定结构判据；`rules.md` 只展开判别边界/反例，不是第二套 architecture model。
-3. **Bounded Ground**：默认锚定用户指定模块，按 `module → direct upstream/downstream → real capability → boundary → stable variation/provider` 渐进展开；不把全 repo scan 当 Research 成功。
-4. **Taxonomy is evidence**：现有 module/provider/class/family/consumer partition 只是 evidence；必须允许从真实 responsibility 重新识别 capability/boundary；没有 stable specific variation 时不得制造 provider。
-5. **Architecture taste**：Layering & dependency、Cohesion & simplicity、Abstraction vs specific、Primary vs auxiliary responsibility、Real evolution 五项都能直接改变 Target Architecture；其他 lens 只作 evidence/challenge。
-6. **Progressive challenge**：Brooks 与 legacy 只在 Judge 中按需读取，不形成第二套固定 Flow/taxonomy。
-7. **Honest branch**：local pressure 直接交付 local judgment；真实 architecture fork 缺 decisive Evidence/Human decision 时直接交付缺口；两者都不制造 Architecture Program。
-8. **Convergent Compile**：Target Architecture 足够稳定后才形成 Architecture Program；最多 3 个 independently improving improvements，不补数。每个完成时必须产生 structural gain 与 real exit；research task、future wish、implementation step、setup-only abstraction 不能冒充 improvement。
-9. **SOT discipline**：Compile 优先引用 authoritative repo SOT，只保新增 architecture judgement / structural delta；旧 SOT 本身需演进时指向原 authority 的 delta，不建立平行规范。
-10. **Architecture altitude**：AE 可固定长期 layer/dependency、capability/module responsibility、abstraction/specific、必要 authority/lifecycle/variation 与 structural done condition；不固定 class/API/file/schema/call implementation/MR/task/test provider，除非 representation 本身是 authoritative invariant。
-11. **Delivery is not outcome state**：成功时直接完整输出当前 Architecture Program，不输出 ready/completed status；material Human update 从最高受影响 Flow step 重进并再次完整交付，prior delivery 不抑制输出。
-12. **Thin entry / eval isolation**：`agents/openai.yaml` 只是 invocation pointer；`validation.md` 不进入正常 runtime。
+## Regression cases
 
-## Scenario smoke
+- **P1 Bounded research**：历史模块 + current provider taxonomy → 从责任/直接上下游重识别 boundary，仅 decisive unknown 扩搜。
+- **P2 Consumer/cohesion boundary**：consumer 仍解释 capability 私有事实，且相邻 subsystem 已有独立 authority/lifecycle → Target 让旧 consumer knowledge/path 退出，但不为 cohesion 吞并相邻 owner。
+- **P3 Provider taxonomy**：family switch 存在 → 只有 stable semantic/lifecycle/performance/deployment variation 才形成 provider。
+- **P4 Dependency**：common/core 依赖 specific implementation → Target 建立稳定单向 dependency boundary，并优先由 module/package/build/tooling 机械表达，而非仅靠文档约定。
+- **P5 Abstraction**：代码相似但 semantics 不同 / 实现不同但 invariant 相同 → 前者 specific，后者抽象 stable invariant。
+- **P6 Performance**：无 profiling/SLA/resource Evidence 的 fast path → 不得打穿 primary boundary。
+- **P7 Real evolution**：新增 facade/registry 但旧 authority/path 仍在 → 不得算 evolution；Program completion 必须指出整体完成后哪些旧 authority/dependency/path 不再 authoritative。
+- **P8 Second system**：简单 pressure 引入 plugin/framework/hooks → 无当前长期 Evidence 就缩小。
+- **C1 Improvement quality**：research/data collection 不进 Top Improvements；只有独立 structural gain + real exit 的 change 可进。
+- **C2 Ceiling**：只有 2 个真实 Improvements → 只输出 2 个。
+- **C3 Setup-only**：先建 abstraction、以后再迁 → 若当前不产生 gain/exit，不得入 Program。
+- **C4 Leverage**：多个真实 Improvements → 优先解除跨边界 knowledge/dependency，而非最易实现项。
+- **C5 SOT**：已有 authoritative contract → 引用原 SOT；需演进时指向原 source delta。
+- **N1 Local**：bug/dead getter/mechanical cleanup → local judgment，不制造 Target/Program。
+- **R1 Real fork**：两个长期结构都可行且缺 decisive constraint → unresolved，不按模式偏好强选。
+- **H1 Human ownership**：Northstar 路由来的 Human-owned choice → AE 返回 decision surface，不自行串行 Ask。
+- **L1 Legacy**：旧 token 本地无 reader但可能外部可见 → search absence 不等于可删，只做 decision-relevant probe。
+- **O1 Altitude**：Target 已稳定 → 固定 architecture outcome，不规定 class/API/file/schema/MR/test provider。
+- **D1 Re-entry**：Program 交付后 Human material correction → 重开受影响判断并完整重交付当前 Program，不附 Research inventory、rejected alternatives 或旧 Program。
+- **D2 Artifact failure**：Program 已收敛但外部 file 不可写 → blocker，不把 conversation 当成功 handoff。
 
-### P1 — Bounded module research
-用户指定历史模块，存在 direct caller/downstream 与当前 provider/family taxonomy。
+## Captured properties
 
-PASS：先恢复真实 responsibility 与 direct neighborhood，再识别 capability/boundary；只有 stable variation 有 decisive Evidence 时才形成 provider；只有局部无法关闭且会改变 Target Architecture 的 authority/SOT/identity/external constraint 才扩大搜索。
-
-### P2 — ModelCurator / Hermes
-publication ownership 已基本闭合，但 consumer 仍解释 feature config/Hermes usage；streaming 与 scoring 存在真实 semantic/input/lifecycle 差异。
-
-PASS：不停在“ownership 应闭合”；抽象 stable common，保留真实 specific；不按当前 consumer/provider partition 生造 taxonomy；evolution 让旧 consumer knowledge/path 退出。
-
-### P3 — PredictExecutor scoring
-executor 按 family identity 分派 scoring，feature preparation、metrics/writeback、shadow/sampling 与 family-specific execution 混在路径中。
-
-PASS：重新识别 scoring/orchestration primary responsibility；family switch 只作 evidence；真实 stable specific 才形成 provider；auxiliary concern 不塑造主架构；executor-side family knowledge 真退出而不是搬进 registry/DSL。
-
-### P4 — AI-friendly dependency
-common/core 直接依赖 scenario/provider implementation，依赖方向只能靠文档提醒。
-
-PASS：Target Architecture 建立可从 repo territory 读出的稳定单向 dependency boundary，值得时由 module/package/build/tooling 机械约束。
-
-### P5 — Abstraction vs specific
-一组代码相似但 semantics/lifecycle/output contract 长期不同；另一组实现不同但 invariant 相同。
-
-PASS：前者允许 specific，后者寻找 stable abstraction；代码相似度/current taxonomy 不能替 semantic judgement。
-
-### P6 — Speculative performance
-proposal 为可能的微小性能收益让 provider-specific fast path/cache 打穿 common boundary，但无 profiling/SLA/resource evidence。
-
-PASS：默认保持 layering/cohesion/primary responsibility；只有真实 performance constraint 改变长期选择时才升级为 architecture force。
-
-### P7 — Real evolution
-proposal 新增 facade/manager/registry，但旧 SOT、caller branch 与 compat path 继续 authoritative。
-
-PASS：不能交付 Program；必须先形成会让旧 knowledge/authority/dependency/path 真退出的 Target Architecture/Improvement。temporary dual path 必须有 architecture purpose 与 exit。
-
-### P8 — Brooks second-system
-当前 pressure 可用简单结构解决，但 redesign 又加入 plugin framework、generic registry、future hooks/modes。
-
-PASS：按需 Brooks challenge 后缩小方案；没有当前长期 Evidence 的 flexibility 不物化。
-
-### C1 — Compile keeps only real improvements
-5 个候选中 2 个只是 research/performance data collection，3 个能直接改变长期结构并让旧复杂度退出。
-
-PASS：Program 只保留 3 个真实 improvement；Route 只表达真实 architecture dependency。
-
-### C2 — Top 3 is ceiling
-只有 2 个 bounded improvements 能确定改善结构，第三个只是未来 generalization。
-
-PASS：只输出 2 个，不补数。
-
-### C3 — Improvement must converge
-“先建 abstraction，后面再迁旧 path”完成后没有旧 complexity 退出。
-
-PASS：不能进入 Top Improvements；必须收敛成完成时自身就产生 structural gain/exit 的 bounded improvement，否则暂不交付 Program。
-
-### C4 — Structural leverage
-多个 improvements 都可推进：一个局部整理，一个消除多个 caller 的 knowledge reassembly，一个解除后续两项共同 reverse dependency。
-
-PASS：优先后两者；排序不按实现最容易或描述最宏大。
-
-### C5 — Authoritative SOT
-repo 已有 authoritative schema/contract 定义稳定事实，本轮只新增其上的 architecture judgement；另一个旧 SOT 本身需要演进。
-
-PASS：前者引用原 SOT；后者指出原 authoritative source 的 delta；Program 不复制第二份规范。
-
-### N1 — Local stays local
-问题只是 bug、dead getter、机械迁移或局部重复，不改变长期 architecture judgement。
-
-PASS：直接说明保持 local 与理由，不制造 Target Architecture/Program，也不输出状态 token。
-
-### R1 — Real fork unresolved
-两个 materially different Target Architecture 均可行，当前缺一个 decisive semantic/lifecycle/performance constraint。
-
-PASS：指出真正缺失的 Evidence/Human decision；不按模式偏好强选，不把“研究它”塞进 improvements，也不输出状态 token。
-
-### L1 — Legacy identity
-旧 token 不再影响 runtime branch，但可能承担 parse/serialization/deployment identity，本地无直接 reader。
-
-PASS：只有 retirement 会改变 Target Architecture/evolution 时才按 legacy lens 升级最小 probe；不能由 local search absence 宣告可删。
-
-### O1 — Stop before implementation
-Evidence 足以确定长期 layer/dependency、module responsibility、abstraction/specific、primary responsibility，并能形成真实 improvements。
-
-PASS：明确 Target Architecture、improvement outcome、architecture dependency、structural done condition；不规定具体 class/API/file/flag schema/MR split/verification provider。
-
-### D1 — Human update re-delivers full outcome
-AE 已交付完整 Architecture Program；Human 随后补充一个会改变 provider boundary 或 Target Architecture 的 material constraint。
-
-PASS：从最高受影响的 Ground/Judge/Compile step 重进，复用不受影响 judgement，重新 Compile，并再次输出**完整当前 Architecture Program**。只回复“变更点”、解释旧 Program、或因为之前已经交付而不再输出 Program 都失败。
-
-## Captured regression properties
-
-1. module/provider/class/consumer partition 都只是 evidence，不自动成为 architecture taxonomy；
-2. responsibility/variation ownership 不冻结 representation；
-3. auxiliary concern 不因实现方便升级为 primary architecture owner；
-4. caller/executor 不应重组 capability 私有 knowledge；
-5. Real evolution 必须让旧 authority/knowledge/dependency/path 真退出；
-6. Research 默认 bounded，Compile 只保留 real improvements；
-7. authoritative repo truth 优先引用，不复制平行 SOT；
-8. delivery 是本轮产出事件，不是 outcome lifecycle state；material Human update 必须重新完整交付。
+1. taxonomy / proposed shape 是 Evidence，不是 law；
+2. abstraction 由 stable semantics/invariants 决定；
+3. 长期 dependency boundary 优先机械可见，cohesion 不吞并独立 authority/lifecycle；
+4. auxiliary concern 不塑造 primary architecture，caller 不重组 capability 私有 knowledge；
+5. real evolution 要求旧 authority/knowledge/dependency/path 退出，Program 还要给出整体 exit；
+6. Research bounded，Program 只保留 independently improving changes；
+7. authoritative repo truth 不复制成平行 SOT；
+8. specialist 不抢 Human decision ownership；
+9. delivery 只交当前 judgment/Program，且不是 lifecycle state；material update 后必须完整重交付；
+10. handoff artifact 只承担 transport authority，不替代 repo SOT。
 
 ## Paired behavioral eval
 
-同一 model/repo snapshot/tool permission/budget：
+同一 model / repo snapshot / tool permission / budget：
+`A. 不加载 architecture-evolution` vs `B. 加载 architecture-evolution`。
 
-```text
-A. 不加载 architecture-evolution
-B. 加载 architecture-evolution
-```
+评分：Research scope、architecture taste、Program convergence、architecture altitude、Human routing、re-entry、handoff integrity、context cost。
 
-每项 0–2：Research scope、Layering/dependency、Cohesion/simplicity、Abstraction/specific、Primary responsibility、Real evolution、Compile convergence、Architecture altitude、Human-update re-delivery、context cost。
-
-### Pass gate
-
-- P1–P8 / C1–C5 / N1 / R1 / L1 / O1 / D1 property 全部正确；
-- B 不能靠更长 analysis 冒充能力提升；必须表现出 bounded research、真实 Target Architecture 与 convergent Compile；
-- main Skill 在不读取 `rules.md` 时仍能给出正确高层 architecture taste；需要细节/反例时才下沉 reference；
-- material Human update 后必须重新完整交付 current outcome；
-- 没有 clean-session 结果时，不宣称 behavioral uplift。
-
-## Claim boundary
-
-Static/scenario smoke 只证明 contract 与 frozen properties 一致；没有 clean-session runner 结果时，behavioral uplift 标记 `NOT RUN`。
+只有 clean-session paired Evidence 才能声明 behavioral uplift；否则标记 `NOT RUN`。

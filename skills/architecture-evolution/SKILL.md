@@ -1,32 +1,35 @@
 ---
 name: architecture-evolution
-description: 用于架构方向模糊、历史模块持续演进或“下一刀应该改什么”这类输入：从指定模块的真实 repo reality 重新识别 capability/boundary，收敛 Target Architecture，并编译成少量真实改善结构的 Architecture Improvements。
+description: 用于架构方向模糊、历史模块持续演进或“下一刀应该改什么”这类输入：从指定模块的 repo reality 重识别 capability/boundary，收敛 Target Architecture，并写成少量真实改善结构的 Architecture Improvements。
 ---
 
 # Architecture Evolution · 从模块现实收敛目标架构
 
-AE 不是架构建议生成器。它从一个真实模块及其 change pressure 出发，重新判断 capability、boundary、stable variation 和长期依赖方向，得到 best-known Target Architecture，再把大段 reasoning 压成少量可以持续收敛的结构改进。
+**Human** 提供 change pressure 并拍板业务/兼容/风险等长期承诺；**Architecture Evolution** 调研 reality、做 architecture judgment 并写 Architecture Program；**Implementation agent** 决定具体 implementation。repo reality / authoritative SOT 是事实与约束 authority，不由当前 taxonomy 或 AE 的方案代替。
 
-三个责任面：**Human** 提供目标压力、业务/兼容/风险等真正需要 Human authority 的约束；**Architecture Evolution** owns bounded research、architecture judgment 与 Architecture Program compile；**Implementation agent** owns class/API/file、具体调用形状、迁移 patch 与验证实现。repo reality / authoritative SOT 是证据与约束 authority，不由当前 module/provider taxonomy 代替。
+## 流程
 
-## Flow
+**1. 调研。** 从指定 module/capability 看真实 responsibility、直接 upstream/downstream 和 consumer knowledge，再重识别 boundary 与 stable variation。当前 module/class/provider/family 只作 Evidence；只有长期 semantic/contract/lifecycle/performance/deployment difference 才证明 specific boundary。只为会改变 architecture judgment 的 authority/SOT/identity/external constraint 扩大搜索；继续 Research 只改变 How 时就停。
 
-**1. Ground.** 锚定用户指定模块，先看真实 responsibility 与直接 upstream/downstream，再重新识别它实际提供/参与的 capability，重划 capability boundary。现有 module/class/provider/family 只作 evidence；只有 semantics/contract/lifecycle/performance/deployment 等长期差异证明 stable specific variation 时才形成 provider boundary。局部无法关闭且会改变 architecture decision 的 authority/SOT/identity/external constraint，才 targeted 扩大搜索。
+**2. 判断。** 先判 architecture vs local，再收敛 best-known Target Architecture；不让第一个 plausible shape 胜出，也不制造假 alternatives。repo/runtime 能关闭的 decisive fact 先查；真正 Human-owned 的业务/兼容/风险承诺才交给 Human。若由 Northstar 等上游调用，只返回 Evidence/options/decision surface，不另开 Human Ask。高层判断不足时读 [rules.md](references/rules.md)；legacy retirement 读 [legacy-lenses.md](references/legacy-lenses.md)；proposal 局部合理但整体膨胀时读 [brooks-constraints.md](references/brooks-constraints.md)。
 
-**2. Judge.** 用下面的 architecture rules 判断这是不是 architecture work、Target Architecture 应是什么、旧复杂度如何真实退出。不要停在第一个 plausible shape，也不要为了显得全面制造假 alternatives。只有 materially different 的长期 layer/module/abstraction/responsibility placement 才值得比较；缺 decisive evidence 时指出真正缺失的 repo/runtime Evidence 或 Human decision，不按模式偏好强选。需要细化边界时读 [rules.md](references/rules.md)；legacy identity 会改变 retirement 时读 [legacy-lenses.md](references/legacy-lenses.md)；proposal 局部都合理但整体开始膨胀时按需读 [brooks-constraints.md](references/brooks-constraints.md)。
+**3. 写 Program。** Target Architecture 稳定后，只保留 target delta、少量 long-lived invariants、最多 3 个按 structural leverage 排序的 Improvements 及真实依赖；不补数。每个 Improvement 完成时都必须独立产生 structural gain + real exit；Program 同时说明整体完成后哪些旧 authority/dependency/path 不再 authoritative。research/setup/future wish/implementation step 不能冒充 Improvement。已有 authoritative SOT 直接引用；SOT 本身要变时指向原 authority 的 delta，不建平行规范。
 
-**3. Compile.** Target Architecture 足够稳定后读 [program-contract.md](references/program-contract.md)，只编译会让当前结构真实变好的 Architecture Program。最多保留 3 个 improvements，不补数；每个完成时都必须产生 structural gain，并让旧 knowledge/authority/dependency/path 有真实 exit。research task、future wish、纯铺路 abstraction 或 implementation step 不能冒充 improvement。
+**4. 交付。** local 就交付 local judgment；缺 decisive Evidence/Human decision 就交付缺口与继续条件；收敛后完整返回当前 Program，并把同一正文写入 OS/runtime 提供、位于 repo/workspace 外的 handoff Markdown file，显示实际 path。交付只包含当前 judgment/Program，不附 Research inventory、rejected alternatives、旧 Program 或 challenge trace。artifact 只负责 handoff，不替代 repo SOT。Human material correction 重开最高受影响判断并完整重交付；artifact 写失败就报告 blocker，不能把 chat 当 handoff。不要输出 ready/completed/executable/status token。
 
-**4. Deliver.** 这是本轮唯一交付点：如果 pressure 本质是 local，完整说明为什么保持 local；如果 architecture choice 仍缺 decisive Evidence/Human decision，完整指出缺口；如果已收敛，完整交付当前 Architecture Program。最终只交当前 architecture judgment / Program，不附 Research inventory、完整 alternatives、Brooks trace 或旧版本 Program。任何 material Human clarification/correction 都从最高受影响的 Flow step 重新进入，重推依赖结论并再次完整 Deliver 当前 outcome；之前交付过不构成 completion state。不要输出 ready/completed/status token。
+## 架构判断
 
-## Architecture rules
+- **Architecture vs local。** 只有 pressure 会改变长期 responsibility、dependency、abstraction boundary、primary responsibility 或旧结构退出时才升级；文件大、目录乱、switch/duplication 多本身不够。
+- **Layering + cohesion。** 保持少量稳定单向依赖，common/policy 不知道 specific；长期 dependency boundary 优先由 repo territory/module/package/build/tooling 直接表达，而不是只靠文档维持。模块围绕主要 capability 闭合 knowledge/state/lifecycle，caller 不重组私有事实；已有独立 authority/lifecycle 的相邻 subsystem 保持 relation/contract，不为内聚吞并。两个结构都成立时选概念更少、public surface 更小的。
+- **Abstraction vs specific。** 抽象稳定 semantics/invariant，不抽象表面相似；没有 stable variation 不制造 provider，有真实长期差异也不强行统一。Human 点名的 provider/facade/layer/registry 默认只是 candidate means，除非 authority 绑定 representation。
+- **Primary vs auxiliary。** primary responsibility 决定 boundary；auxiliary concern 不反向塑造主结构。未经 profiling/SLA/resource Evidence 的性能收益不能打穿 boundary。
+- **Real evolution。** 旧 knowledge/authority/reverse dependency/special path/compatibility 必须真实退出或停止 authoritative；`old → new abstraction → old` 只是 complexity relocation。temporary dual path 必须有 purpose + exit；无当前长期 Evidence 的 future hook/mode/registry/framework 不物化。
 
-- **Layering & dependency.** 保持少量清晰层和稳定单向依赖；common/policy 不知道 specific provider/scenario，值得长期约束的方向优先能从 repo territory / tooling 直接看见。
-- **Cohesion & simplicity.** 一个模块围绕一个主要 capability/responsibility 组织，闭合完成责任所需的内部 knowledge/state/lifecycle；两个结构都正确时选概念更少、public surface 更小、repo 更容易解释和修改的方案。
-- **Abstraction vs specific.** 只抽象稳定共同 semantics/invariant；稳定且重要的差异保持 specific。代码相似和当前 provider partition 都不能替代 semantic judgment；没有 stable variation 不制造 provider，有真实差异也不为表面统一强行消除。
-- **Primary vs auxiliary responsibility.** primary responsibility 决定主要 boundary 与组织；被判为 auxiliary 的 concern 附着在主结构上，不反向塑造它。未经 profiling/SLA/resource Evidence 证明的性能收益不能打穿结构边界。
-- **Real evolution.** 新架构必须让旧 knowledge、authority、reverse dependency、special path 或 compatibility 真实退出或停止 authoritative；`old A → new abstraction → old B` 只是 complexity relocation。temporary dual path 必须有 architecture purpose 与 exit。
+只有 Human、repo/upstream authority 或 verified reality 能把内容绑定成长期 invariant。除非 representation 本身被 authority 固定，AE 只固定 architecture outcome / structural done condition，不提前固定 class/API/file/schema/call shape/MR/task/test provider；Implementation Design 在 Program 之后。
 
-## Architecture altitude
+## 发出前自检
 
-AE 可以固定长期 layer/dependency、capability/module responsibility、abstraction/specific、必要 authority/SOT/control/lifecycle direction、essential variation 和 structural done condition；除非 representation 本身是 Human/repo/technical invariant，否则不固定 class/API/file/helper/schema/call implementation/MR/task/test provider。Implementation Design 从 Architecture Program 之后开始。
+1. Target 是否来自真实 responsibility/dependency/variation，而不是当前 taxonomy/proposed shape？
+2. 是否同时满足 layering/cohesion、正确 abstraction/specific、primary responsibility 与 real exit？
+3. 每个 Improvement 是否完成即 structural gain + real exit，Program 整体 exit 是否明确，且没有 research/setup/future/implementation step？
+4. authoritative SOT 是否只引用或指向原 source delta？是否保持 architecture altitude？若已收敛，Program 是否完整 materialize，Human 新输入后是否完整重交付？
