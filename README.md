@@ -1,6 +1,24 @@
-# Skill Collection
+# skill
 
-Install individual skills with:
+Personal agent skills following the [Agent Skills](https://agentskills.io/) directory convention.
+
+## Install
+
+Discover and select skills interactively:
+
+```bash
+npx skills@latest add feng-y/skill
+```
+
+Install all skills (currently installs Prompt Atlas, Northstar, Unknowns First, and Architecture Evolution):
+
+```bash
+npx skills@latest add feng-y/skill --all
+```
+
+Prompt Atlas and Northstar are two language surfaces of the same Skill semantics: **Prompt Atlas is the English version and Northstar is the Chinese version**. Their runtime model, decision boundaries, taskbook semantics, Verification/Evidence behavior, and eval cases should remain behaviorally aligned; changes to one should be synchronized to the other unless the difference is purely language-specific. Because their invocation territory overlaps, install the language surface you want to use unless you are explicitly comparing the two.
+
+Install one skill:
 
 ```bash
 npx skills@latest add feng-y/skill --skill prompt-atlas
