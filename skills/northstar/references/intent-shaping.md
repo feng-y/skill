@@ -1,25 +1,33 @@
-# 当 Human 还没真正决定 Goal
+# 当 Goal 还没有定准
 
-只在 `SKILL.md` 已经查过 reality，但仍无法确定 Human 最终会接受哪个 Goal 时读取。
+只在主 Skill 已经开始 Ground / Shape，但仍无法形成 Stable Goal 时读取。这里不重新定义 Unknown routing；只处理两个容易让 Goal 写错的判断。
 
-Prompt、已有 plan 和 Northstar 自己都只是 map；repo、runtime、历史约束和真实使用者会暴露 map 没写出来的东西。这里不是把未知全找完，而是找到**会改变 Goal 的那个选择**。
+## Semantic altitude
 
-## 找选择，不找信息
+一句话应该留在 Goal，还是留给 Executor，先做这个测试：
 
-看到新的事实时只问：
+> **换一种 materially different 的实现仍满足它，Human 会接受吗？**
 
-> 如果这个事实换一个值，Human 会不会接受不同的 Goal？
+会 → 它通常是 How / intelligence，不应被 Northstar 固定。
 
-不会，就留给 Executor 或忽略。会，才继续追。
+不会 → 它描述的是 Human 真正在乎的结果、边界、风险承诺或验收要求，应留在 Goal。
 
-业务/兼容约束、已有规格和历史决定、真实 consumer、repo 外 contract、当前 workspace 都可能藏着这种选择，但它们只是按需查看的地方，不是 checklist。
+当前实现、已有 class/provider、某个计划写得很具体，都不能自动把 How 抬成 Goal。反过来，Human 明确要求某种 representation / compatibility / provider，因为它本身就是业务或技术承诺时，这个 representation 可以成为 Goal 的一部分。
 
-## 能查的先查
+## Map is not territory
 
-reality 能决定的事实自己 probe，不让 Human 猜。Reality 可以推翻一个实现手段，但不能替 Human 改 Goal。
+Prompt、已有 plan 和 Northstar 自己都只是 map；repo、runtime、历史约束和真实使用者可能暴露 map 没写出来、但会改变 Goal 的事实。
 
-如果 reality 已经把分叉排掉，就回主流程继续 Compile。只有几个 materially different 的 Goal 仍都说得通，而且 reality 无法替 Human 决定时，才把这些选择一次交给 Human；必要时给后果和推荐。
+只沿这种差异追 reality：已有 authoritative spec / precedent、真实 consumer、repo 外 contract、serialized/config identity、部署/授权约束、当前 workspace 与 Human Goal 的真实关系。它们是按需 lens，不是 checklist。
 
-## 只剩 How 就停
+找到候选后只问：**如果它取另一个值，Stable Goal 会不会不同？** 不会就停止展开。
 
-一旦剩余未知只会改变 How，不会改变 Goal，就停止 Research。Implementation 中继续出现新问题是正常的，不需要 Northstar 提前消灭。
+## Decision priority
+
+如果 Human 同时给出的要求会发生真实冲突，Stable Goal 必须让 Executor 知道冲突时什么优先。priority 只能来自 Human、已有 authority 或不可替代的现实约束；Northstar 不能因为某个实现更方便而偷偷重排。
+
+reality 能排掉冲突就直接收敛；否则把仍需要 Human 拍板的冲突一次问清，并说明选择的主要后果与推荐。
+
+## Stop shaping
+
+当剩余问题只会改变 How，而不会再改变 Human 会接受的 Goal，就停止 Intent Research，回主流程 Compile。Implementation 中继续出现新 Unknown 是正常的；Northstar 不需要在执行前把它们消灭。
