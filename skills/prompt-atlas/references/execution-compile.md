@@ -1,35 +1,37 @@
 # When a simple Taskbook is not enough
 
-Read only after Goal is settled, when the work is long, needs several different judgments, has real ordering constraints, needs stronger verification, or must continue across sessions. Keep using the Compile judgment from `SKILL.md`; this file only explains how to organize complex execution.
+Read only after Stable Goal is settled but the task is long, needs several different judgments, real ordering, stronger Verification, or continuation across sessions. This file does not redefine Goal, Unknown routing, or Law vs intelligence; it only organizes complex execution.
 
-## Write judgments, not Research notes
+## Split work only when judgment changes
 
-Facts the Executor can reliably recompute from repo/runtime reality usually stay out. Keep facts whose omission would make the Executor remove the wrong thing, preserve the wrong thing, cross a boundary, or miss required verification. Deeper Research should compress into fewer stable judgments, not a longer fact dump.
+If one judgment applies to a set of objects, keep them as one piece of work and let the Executor scan the agreed scope. Do not split by file, function, or currently discovered instance. Split only when the local result, judgment rule, real dependency, or Verification requirement is different.
 
-Still-valid work already in the workspace is the starting point. Do not redo it, shrink Goal to match the current diff, or treat “already changed” as correctness Evidence.
+If one fact blocks the first safe material work, put that check first. Do not turn it into another broad Research phase.
 
-A baseline belongs in the Taskbook only when it helps show that nothing was missed or separates “already broken” from “this change broke it.” Commands, targets, and parameters must come from the real environment rather than invention.
+## Ready frontier
 
-## Split work only when the judgment changes
+**Goal is the complete destination; frontier is the work current reality says is safe to advance now. They cannot replace each other.**
 
-If many objects can be handled by the same rule, keep them as one piece of work and let the Executor scan the agreed area. Do not split by file, function, or currently discovered instance. Split only when the local result, judgment rule, real dependency, or required proof is materially different.
+When only part can proceed safely, shrink frontier rather than Goal. As execution Evidence makes later work decidable, expand frontier. Adjacent residue also does not enter Goal merely because it was discovered.
 
-If one missing fact makes even the first safe material change impossible, put closing that fact first; do not turn it into another broad Research phase.
+Usually no execution graph is needed. Write a relation only when it changes the next choice: B truly waits for A, two items can safely run in parallel, several items write the same authoritative surface, or several results must be verified together. Write only relations current reality supports; work that depends on future Evidence should be added only when it becomes real. A blocked branch must not freeze unrelated frontier work.
 
-Most tasks do not need an execution graph. Write a relation only when it changes what can happen next: B must wait for A's result, two pieces can safely run in parallel, several pieces write the same authoritative file, or several pieces must be verified together. Include only relations current reality already proves. Work that can only be discovered later should be added when it becomes real. One blocked branch must not freeze unrelated work.
+## Starting point and baseline
 
-## Say what proves Goal, not how to debug
+Still-valid workspace changes aligned with Goal are the execution starting point. Do not redo them, do not shrink Goal to the current diff, and do not treat “already changed” as correctness Evidence.
 
-The Taskbook states what Evidence must exist when Goal is complete. Build/test/replay order, “test after every file,” and other failure-localization tactics belong to the Executor unless Human/repo rules make them binding.
+A baseline belongs in the Taskbook only when it helps detect missing coverage or distinguish “already broken” from “this change broke it.” Commands, targets, and parameters must come from real authority, not invention.
 
-If the Taskbook relies on a baseline as a premise, the Executor re-obtains it before the first work that depends on it. A mismatch invalidates only dependent work and Evidence; still-valid parts continue.
+If later judgment depends on a baseline, the Executor re-obtains it before first relying on it. A mismatch invalidates only work and Evidence that depended on that premise; still-valid work remains reusable.
 
-Finding a candidate during Research does not make `0-hit / 0-count` binding. Use a zero check only when the item is already proven to be something that must disappear and zero itself is part of Goal.
+## Verification
 
-If there is a concrete risk that the implementation is wrong while checks still show PASS, read [verification-trust.md](verification-trust.md). Otherwise do not add another judging mechanism.
+The Taskbook freezes what must be proven for Goal completion, not how the Executor debugs. A candidate discovered during Research does not automatically become a `0-hit / 0-count` requirement; use that only when the object has been proven to need removal and zero itself is part of Goal.
 
-Failure must stay honest: if a trusted baseline goes green→red, recover it or report the regression; if the same approach keeps failing without new Evidence, change to a justified strategy, switch to independent work, or report a blocker. Never manufacture success through skip/todo, weakened assertions, deleting live tests, mocking away the target, swallowing failures, or `|| true`.
+If there is a concrete risk that the implementation is wrong while checks still show PASS, read [verification-trust.md](verification-trust.md). Otherwise do not add extra judging machinery.
 
-## Make long work resumable
+Failure must remain honest. If a trusted baseline turns green→red, recover or report it accurately. If the same approach fails repeatedly without new Evidence, switch to a justified strategy, work an independent branch, or report a blocker. Never manufacture success with skip/todo, weakened assertions, deleted live tests, mocked-away targets, swallowed failures, or `|| true`.
 
-For a longer autonomous run, use existing `implement-notes` to record progress, material decisions and Evidence, blockers, and where the next session should resume. A new session reads it first and repeats only work whose premise changed or whose Evidence went stale. Do not create a second Taskbook, persistent execution graph, or manager state.
+## Continue across sessions
+
+For a longer autonomous run, use existing `implement-notes` for progress, key decisions/Evidence, blockers, and the resume point. A new session reads it first and redoes only work whose premise changed or Evidence became stale. Do not create a second Taskbook, persistent Graph, or manager state.
