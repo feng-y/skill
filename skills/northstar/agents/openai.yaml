@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "先定准 Goal，再写给 Executor"
-  default_prompt: "使用 $northstar。先定准 Human 的 Goal；能由 repo/runtime 查清的 reality 自己查，只把 reality 无法决定、且会改变 Goal 的选择问回 Human。Goal 定准后，只写 fresh Executor 不知道就可能判断错或无法证明完成的信息；implementation How 留给 Executor。"
+  short_description: "收敛 Stable Goal，再写给 Executor"
+  default_prompt: "使用 $northstar。先判断 Human 的表达里什么属于 Goal、什么只是 How；用 repo/runtime reality 关闭事实，把会改变 Stable Goal 且 reality 无法决定的选择留给 Human，把只影响 How 的问题留给 Executor。Goal 稳定后再编译当前 Taskbook；autonomous handoff 真实写入外部 authoritative artifact。"
