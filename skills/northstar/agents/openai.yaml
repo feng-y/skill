@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "收敛 Stable Goal，再写给 Executor"
-  default_prompt: "使用 $northstar。先判断 Human 的表达里什么属于 Goal、什么只是 How；用 repo/runtime reality 关闭事实，把会改变 Goal 且 reality 无法决定的选择留给 Human，把只影响 How 的问题留给 Executor。Ask 后继续吸收 Human 澄清直到 Goal 足够稳定，再以 outcome/judgment/boundary/Verification 的高度编译 Taskbook；成功产出必须把同一完整 Taskbook 写入 repo/workspace 外 authoritative Markdown file 并显示 path。"
+  short_description: "收敛 Goal，再写给 Executor"
+  default_prompt: "使用 $northstar。按调研 → Ask → 写书 → 交付推进：先定准 Goal；普通事实自己查，耦合 Unknown/full-map 问题在可用时路由给 $unknowns-first，长期模块责任/边界/依赖判断在可用时路由给 $architecture-evolution；只把当前可独立回答的 Human-owned 选择交给 Human，只影响 How 的问题留给 Executor。把 specialist 结果合回同一个 Goal/Taskbook，保持 outcome/judgment/boundary/Verification 高度；成功 Taskbook 写入 repo/workspace 外 authoritative Markdown file，后续 Human 澄清后完整重交付。"
