@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "先定准 Human 要的结果，再写给 Executor"
-  default_prompt: "使用 $northstar。先确认 Human 最终要什么；能由 repo/runtime 查清的事实自己查，只把现实无法决定、且会改变完成结果的选择问回 Human。Goal 定准后，只写 fresh Executor 不知道就可能判断错或无法证明完成的信息；实现 How 留给 Executor。"
+  short_description: "先定准 Goal，再写给 Executor"
+  default_prompt: "使用 $northstar。先定准 Human 的 Goal；能由 repo/runtime 查清的 reality 自己查，只把 reality 无法决定、且会改变 Goal 的选择问回 Human。Goal 定准后，只写 fresh Executor 不知道就可能判断错或无法证明完成的信息；implementation How 留给 Executor。"
