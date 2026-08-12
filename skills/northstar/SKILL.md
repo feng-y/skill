@@ -41,7 +41,7 @@ Taskbook 交付不是 completion state。Human 后续任何 material clarificati
 
 **保持 Taskbook 高度。** 执行内容优先表达**完成后什么成立、按什么判断、责任边界在哪里、哪些依赖是真的**。不要默认写成“改 A 文件 → 加 B helper → 更新 C caller → 跑 D test”的 predicted-patch checklist。只有 representation 本身被 authority 固定时，才把实现细节升成约束。同一个判断能覆盖开放 surface 时写判断，不把当前发现的实例冻结成封闭 checklist。
 
-**不要提前切完未知的未来。** 当前 reality 只能支持先做一部分时，只缩当前可推进工作，不缩 Human 的完整 Goal。只写已经会改变执行选择的真实依赖；必须等执行 Evidence 才能知道的后续工作，等它变得真实再加入，不提前把 fog 切成假任务。新的 Evidence 推翻某个前提时，只重算依赖这个前提的工作和 Verification，其他仍有效部分继续复用。
+**不要提前切完未知的未来。** 当前 reality 只能支持先做一部分时，只缩当前可推进工作，不缩 Human 的完整 Goal。只写已经会改变执行选择的真实依赖；必须等执行 Evidence 才能知道的后续工作，等它变得真实再加入，不提前把还不能说明的未来切成假任务。新的 Evidence 推翻某个前提时，只重算依赖这个前提的工作和 Verification，其他仍有效部分继续复用。
 
 **开发和 Verification 分别切。** 开发按结果、判断和真实依赖拆；Verification 按 completion claim、风险和 authoritative Evidence 拆。两者不要求一一对应：一个 Verification 可以覆盖多项开发，一个开发也可能需要多种 Evidence。Verification 固定“Goal 完成必须证明什么”，不规定 Executor 的 debugging flow，也不因为某个 test 靠近某项代码改动就把它当成 Goal 完成证明。
 
