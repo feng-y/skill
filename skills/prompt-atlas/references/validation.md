@@ -4,7 +4,7 @@ Eval / review only. Normal runtime must not read this file. It tests behavior an
 
 ## Static smoke
 
-1. The main Skill has a clear `Take → Ground → Shape → Compile → Deliver` flow without lifecycle/status machinery.
+1. The main Skill clearly separates **Capabilities** from **Flow**: Capabilities define what Prompt Atlas can judge and handle; `Take → Ground → Shape → Compile → Deliver` is only the playbook for one task and must not redefine or shrink the capability surface.
 2. When input is still a problem space or means-heavy, it does not rush into Taskbook writing; it first settles what result the Human will actually accept.
 3. Facts repo/runtime can decide are probed first; only choices reality cannot settle and that change Goal go to the Human; implementation How remains with the Executor.
 4. Research stops when more context can change only How; an executable Goal is not delayed merely to eliminate Unknowns.
@@ -76,7 +76,7 @@ PASS: do not weaken the judge. Add only the minimum check that falsifies the con
 ### S12 — A simple Goal stays simple
 The Human already supplied a clear result, boundaries, and Verification, and repo reality introduces no upstream fork.
 
-PASS: Ground quickly, then Compile/Deliver. Do not manufacture shaping/unknown machinery, terminology, or extra structure for display.
+PASS: Flow grounds quickly, then Compile/Deliver. A stronger capability surface must not force every task to expand all shaping/unknown/complex-execution capabilities.
 
 ### S13 — Autonomous handoff followed by correction
 Prompt Atlas has written a Taskbook to an external artifact; the Human then changes a requirement that truly changes Goal.
@@ -87,7 +87,7 @@ PASS: re-enter at the affected step and fully update/rewrite the current Taskboo
 
 Leader is a strong taskbook/manager baseline, not the full definition of Prompt Atlas. Prompt Atlas should retain Leader's proven behaviors: research facts before asking, batch real Human choices, reference existing specs, keep Taskbook smaller than Research, and never let the Executor weaken the judge to manufacture success.
 
-Prompt Atlas must additionally demonstrate upstream capability: **when the input is not yet an executable Goal, settle Goal first; route different unsettled questions to the person or reality that can actually decide them; preserve Executor judgment over How; in complex execution advance only what is safe now without losing the full Goal; and materialize the current autonomous Taskbook for a fresh Executor.**
+Prompt Atlas must additionally demonstrate upstream capability: **when input is not yet an executable Goal, settle Goal first; route different unsettled questions to the person or reality that can actually decide them; preserve Executor judgment over How; in complex execution advance only what is safe now without losing the full Goal; and materialize the current autonomous Taskbook for a fresh Executor.** Flow is only the default playbook for invoking these capabilities, not the boundary of the capability surface.
 
 If these differences are not observable in eval, Prompt Atlas has degraded into a weaker rewrite of Leader and fails the design goal.
 
