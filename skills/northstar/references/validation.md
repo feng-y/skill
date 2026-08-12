@@ -4,7 +4,7 @@
 
 ## Static smoke
 
-1. 主 Skill 有清楚的 `Take → Ground → Shape → Compile → Deliver`，但没有 lifecycle/status machine。
+1. 主 Skill 明确区分 **Capabilities** 与 **Flow**：Capabilities 说明 Northstar 能判断/处理什么；`Take → Ground → Shape → Compile → Deliver` 只是一次任务的处理手册，不能重新定义或缩小能力面。
 2. 输入还是 problem space 或 means-heavy 时，不会急着写 Taskbook；先确认 Human 最终会接受什么结果。
 3. repo/runtime 能决定的事实先自己 probe；reality 无法决定且会改变 Goal 的选择才问 Human；只影响 implementation How 的问题留给 Executor。
 4. 当继续 Research 只会影响 How 时停止；不为了“消灭未知”延迟已经可以交付的 Goal。
@@ -76,7 +76,7 @@ PASS：不能弱化判据；只针对这个具体风险增加能反证它的最�
 ### S12 — 简单 Goal 不被复杂化
 Human 已经给出清楚结果、边界和 Verification，repo reality 也没有上游分叉。
 
-PASS：快速 Ground 后直接 Compile/Deliver，不为了展示 shaping/unknown machinery 制造问题、术语或额外结构。
+PASS：Flow 快速 Ground 后直接 Compile/Deliver；不能因为 Capability 面更强，就强制每次展开所有 shaping/unknown/complex-execution 能力。
 
 ### S13 — autonomous handoff 与后续纠正
 Northstar 已把 Taskbook 写到外部 artifact；Human 随后修改一个真正影响 Goal 的要求。
@@ -87,7 +87,7 @@ PASS：从受影响步骤重新判断并完整更新/重写当前 Taskbook，显
 
 Leader 是高质量 taskbook/manager baseline，不是 Northstar 的完整定位。Northstar 应保留 Leader 已证明有用的行为：能查的事实先查、真正需要 Human 拍板的选择集中问、已有规格直接引用、Taskbook 不抄 Research、Executor 不能靠改 judge 制造成功。
 
-Northstar 必须额外表现出上游能力：**输入还不是可直接执行的 Goal 时，先把 Goal 定准；把不同未决问题交给真正能决定它的人或 reality；保留 Executor 对 How 的判断空间；复杂执行只推进当前安全部分但不丢完整 Goal；autonomous handoff 真正 materialize 当前 Taskbook。**
+Northstar 必须额外表现出上游能力：**输入还不是可直接执行的 Goal 时先把 Goal 定准；把不同未决问题交给真正能决定它的人或 reality；保留 Executor 对 How 的判断空间；复杂执行只推进当前安全部分但不丢完整 Goal；autonomous handoff 真正 materialize 当前 Taskbook。** Flow 只是调用这些能力的默认手册，不是 Northstar 能力的边界。
 
 如果这些差异在 eval 中不可观察，Northstar 就退化成 Leader 的弱化改写，视为失败。
 
