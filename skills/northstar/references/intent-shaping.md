@@ -1,6 +1,6 @@
 # 当 Goal 还没有定准
 
-只在主 Skill 已经开始 Ground / Shape，但仍无法确定 Human 最终会接受哪个 Goal 时读取。这里不再建立另一套术语，只处理会把 Goal 写错的几个情况。
+只在主 Skill 已经开始 Ground / Shape，但仍无法确定 Human 最终会接受哪个 Goal 时读取。
 
 ## 这是 Goal，还是 How
 
