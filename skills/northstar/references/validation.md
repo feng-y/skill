@@ -4,13 +4,13 @@
 
 ## Static smoke
 
-1. 主 Skill 明确区分 **Capabilities** 与 **Flow**：Capabilities 说明 Northstar 能判断/处理什么；`Take → Ground → Shape → Compile → Deliver` 只是一次任务的处理手册，不能重新定义或缩小能力面。
+1. 主 Skill 结构接近成熟 taskbook skill：**角色/边界 → 调研 → Ask → 写书 → 交付 → 写书规则 → 发出前自检**。Northstar 的额外能力通过这些动作里的 judgment 表达，不依赖额外 lifecycle/status 或一套平行术语。
 2. 输入还是 problem space 或 means-heavy 时，不会急着写 Taskbook；先确认 Human 最终会接受什么 Goal。
 3. repo/runtime 能决定的事实先自己 probe；reality 无法决定且会改变 Goal 的选择才 Ask Human；只影响 implementation How 的问题留给 Executor。
-4. Ask 会集中当前已知 Human-owned 选择并给关键后果/推荐；Human 回答部分问题、插入新约束或中断后，Northstar 能从受影响判断继续，Goal 稳定后必须继续 Compile/Deliver，不能停在确认/解释。
+4. Ask 会集中当前已知 Human-owned 选择并给关键后果/推荐；Human 回答部分问题、插入新约束或中断后，Northstar 能从受影响判断继续，Goal 稳定后必须继续写书/交付，不能停在确认/解释。
 5. 当继续 Research 只会影响 How 时停止；已有 authoritative spec 直接引用，当前 workspace 是 reality，不要求 clean state，也不把已有 diff 当 correctness proof。
 6. Taskbook 只把真正有 authority 的要求写成 binding rule；当前最佳实现保持可替换。执行内容表达 outcome/judgment/boundary/dependency，不退化成 file/helper/test 的 predicted-patch checklist。
-7. 复杂执行时，当前能安全推进的一部分不能替换或缩小完整 Goal；只记录会改变执行选择的真实依赖。
+7. 复杂执行时，当前能安全推进的一部分不能替换或缩小完整 Goal；只记录会改变执行选择的真实依赖，不提前把未来 contingent work 切成假任务。
 8. 开发粒度与 Verification 粒度独立：开发按结果/判断/依赖拆，Verification 按 completion claim / risk / authority 拆，不要求一一对应。
 9. Verification 写必须证明什么，不规定调试过程；不能通过削弱 judge 制造 PASS，额外 trust 检查只在具体假绿风险下启用。
 10. 成功 Taskbook 必须把同一完整正文 materialize 到 repo/workspace 外 authoritative Markdown file 并显示 path；只在 chat 输出失败。
@@ -38,7 +38,7 @@ PASS：第一个自己 probe，第二个问 Human，第三个留给 Executor；�
 ### S4 — Ask 被回答/打断后继续产出
 Northstar 已经 Ask 两个 Human-owned choice；Human 只回答一个，同时补充一个新的 binding constraint。
 
-PASS：吸收回答和新约束，重新判断仍未关闭的选择；若此时 Goal 已稳定则直接继续 Compile/Deliver。只回复“收到/还差一个问题”而没有基于最新信息继续收敛，或因为之前已经 Ask 过而不再产出，失败。
+PASS：吸收回答和新约束，重新判断仍未关闭的选择；若此时 Goal 已稳定则直接继续写书/交付。只回复“收到/还差一个问题”而没有基于最新信息继续收敛，或因为之前已经 Ask 过而不再产出，失败。
 
 ### S5 — 具体方案里混着真正约束
 Human 给了一长段实现设计，其中一半换实现后仍满足需求，另一半实际上是兼容性承诺。
@@ -83,7 +83,7 @@ PASS：开发保持 A/B 两项；Verification 可以是“集成 claim + A 的�
 ### S13 — 已知依赖与未来未知并存
 当前 reality 已证明 `A → {B,C} → D`，同时执行未来还可能暴露新的工作。
 
-PASS：写清已经确定、会改变执行选择的关系；不故意只给 A，也不提前猜未来 contingent work。
+PASS：写清已经确定、会改变执行选择的关系；不故意只给 A，也不提前猜未来 contingent work。未来工作等 Evidence 使它成为真实问题后再加入。
 
 ### S14 — PASS 可能是假绿
 验收脚本可以被 skip、mock 或改阈值绕过，或者根本没有观察目标行为。
@@ -93,7 +93,7 @@ PASS：不能弱化判据；只针对这个具体风险增加能反证它的最�
 ### S15 — 简单 Goal 不被复杂化
 Human 已经给出清楚结果、边界和 Verification，repo reality 也没有上游分叉。
 
-PASS：Flow 快速 Ground 后直接 Compile/Deliver；不能因为 Capability 面更强，就强制每次展开所有 shaping/unknown/complex-execution 能力。
+PASS：快速调研后直接写书/交付；不能为了展示 Goal shaping / Unknown / complex-execution 能力而制造额外阶段或问题。
 
 ### S16 — 成功产出必须落文件
 Goal 已稳定，Northstar 已生成完整 Taskbook。
@@ -107,11 +107,22 @@ PASS：从受影响判断重新进入，完整更新当前 artifact；如果旧 
 
 ## 与 Leader 的比较
 
-Leader 是高质量 taskbook/manager baseline，不是 Northstar 的完整定位。Northstar 至少不能丢掉这些已证明有用的能力：能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；任务书保持目标/判断高度而不是 Research 或 predicted patch；Verification 是独立判卷面；执行者不能靠改 judge 制造成功。
+Leader 是 Northstar 的**结构与 taskbook 质量基线**：角色清楚；调研 → Ask → 写书 → 交付的动作稳定；能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；任务书保持目标/判断高度；Verification 是独立判卷面；执行者不能靠改 judge 制造成功。
 
-Northstar 必须额外表现出上游与 handoff 控制力：**输入还不是可执行 Goal 时先定准 Goal；Ask 后能吸收 Human 中断/澄清并继续产出；把不同未决问题交给真正能决定它的人或 reality；保留 Executor 对 How 的判断空间；复杂执行只推进当前安全部分但不丢完整 Goal；开发粒度和 Verification 粒度独立；每次成功 Taskbook 都真正 materialize 到 authoritative file；Human 后续修改后完整重交付。**
+Northstar 在这个基线之上必须额外表现出问题处理与 handoff 控制力：**输入还不是可执行 Goal 时先定准 Goal；Ask 后能吸收 Human 中断/澄清并继续产出；把不同未决问题交给真正能决定它的人或 reality；保留 Executor 对 How 的判断空间；复杂执行只推进当前安全部分但不丢完整 Goal；开发粒度和 Verification 粒度独立；每次成功 Taskbook 都真正 materialize 到 authoritative file；Human 后续修改后完整重交付。**
 
-如果这些差异在 eval 中不可观察，Northstar 就退化成 Leader 的弱化改写，视为失败。
+如果结构越来越不像成熟 taskbook skill，或者这些额外能力在 eval 中不可观察，Northstar 都视为退化。
+
+## 与 Wayfinder 理念的比较
+
+不要求 Northstar 复制 Wayfinder 的 map/ticket/tracker 机制，但复杂问题处理应保持同一类原则：
+
+- prompt / plan 是 map，不是 reality；真实 repo/runtime/Evidence 可以修正它；
+- Goal 类似 destination，当前可安全推进的工作不能替换完整 Goal；
+- 不能现在说清的未来工作保持未决，不把 fog 预切成貌似精确的任务；
+- Evidence 让后续工作变得真实时再 materialize；某个前提失效只使依赖它的 work/Verification 失效，不重做仍有效部分。
+
+这些是 problem-solving capability，不要求成为 runtime 术语或持久 issue-map 协议。
 
 ## Behavioral eval
 
