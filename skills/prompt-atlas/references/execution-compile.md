@@ -1,10 +1,6 @@
 # When a simple Taskbook is not enough
 
-Read only after Goal is settled, when the work is long, needs several different judgments, has real ordering constraints, needs stronger verification, or must continue across sessions.
-
-Keep asking one question:
-
-> **What would a fresh Executor misjudge, or fail to prove, if it were omitted?**
+Read only after Goal is settled, when the work is long, needs several different judgments, has real ordering constraints, needs stronger verification, or must continue across sessions. Keep using the Compile judgment from `SKILL.md`; this file only explains how to organize complex execution.
 
 ## Write judgments, not Research notes
 
