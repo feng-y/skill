@@ -43,7 +43,7 @@ Human、repo/upstream authority 或 verified reality 真正绑定的内容可以
 
 Taskbook 只保留 fresh Executor 不知道就可能判断错、越界或无法证明完成的信息。Research narration、能可靠重算的 inventory、file/symbol/line 明细和 predicted patch 默认删除；同一个判断能覆盖开放 surface 时写判断，不把当前实例冻结成 checklist。
 
-Taskbook 中的执行内容优先表达 **要改变的结果、判断规则、责任边界和真实依赖**，而不是“改哪个文件、加哪个 helper、跑哪个局部 test”的逐步清单。只有 representation 本身被 Human/repo/technical authority 固定时，才把实现细节升成约束。这个高度至少不能弱于一个高质量 Leader taskbook。
+执行内容优先表达 **要改变的结果、判断规则、责任边界和真实依赖**，而不是“改哪个文件、加哪个 helper、跑哪个局部 test”的逐步清单。只有 representation 本身被 Human/repo/technical authority 固定时，才把实现细节升成约束。
 
 较长 run、多个不同判断、执行中才逐步展开的工作或真实 dependency，需要读 [execution-compile.md](references/execution-compile.md)。当前只能安全推进一部分时，可以缩当前工作，不能缩 Human 的完整 Goal。
 
@@ -63,13 +63,13 @@ Taskbook 的一次交付不是 completion state。Human 后续给出 material cl
 
 Flow 是一次具体任务的处理顺序，不重新定义上面的能力。
 
-**1. Take。** 从 Human 最新且仍有效的表达开始，恢复候选 Goal、明确约束和明显 means；不要因为 How 写得具体就提前锁定实现。
+**1. Take。** 从 Human 最新且仍有效的表达开始，恢复候选 Goal、明确约束和明显 means。
 
-**2. Ground。** 查会改变 Goal、约束或第一项安全执行的 reality。已有 authoritative spec 直接引用；当前 workspace 中仍有效的修改就是 reality，不默认要求 clean state。当继续 Research 只会改变 How，就停止。
+**2. Ground。** 查会改变 Goal、约束或第一项安全执行的 reality；已有 authoritative spec 直接引用，当前 workspace 中仍有效的修改作为 reality 复用。当继续 Research 只会改变 How，就停止。
 
-**3. Shape。** 用上面的 Goal shaping / Ask 能力关闭执行前必须关闭的分叉。需要 Human 决定时，把当前已知的真正选择一次问清，并说明主要后果与推荐。Human 回答或中断后，从受影响判断继续；剩余问题都可以由 Executor 在同一个 Goal 下判断时，进入 Compile。
+**3. Shape。** 调用 Goal shaping / Ask 能力关闭执行前必须关闭的分叉；Human 回答或中断后从受影响判断继续。剩余问题都可以由 Executor 在同一个 Goal 下判断时，进入 Compile。
 
-**4. Compile。** 把已经收敛的 Goal、binding constraints、会改变 Executor 判断的 reality、真实依赖和 required Verification 写成当前 Taskbook。开发拆分与 Verification 拆分分别按各自判断，不机械配对；简单任务直接完成，复杂执行按需读取 `execution-compile.md`，具体假绿风险按需读取 `verification-trust.md`。
+**4. Compile。** 调用上面的 Taskbook / Verification 能力编译当前完整任务定义；简单任务直接完成，复杂执行或具体假绿风险再读对应 reference。
 
 **5. Deliver。** 若仍缺 Human 必须决定的选择，就交付这些选择；若 reality 暂时阻止安全继续，就说明 blocker 和恢复条件；否则完整返回当前 Taskbook，并把同一正文 materialize 到 authoritative Markdown file，显示实际 path。
 
