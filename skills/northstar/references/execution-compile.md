@@ -22,7 +22,7 @@
 
 当前 workspace 中已经与 Goal 对齐的修改就是执行起点：不要求重做，也不能因为已有 diff 就缩小 Goal；“已经改了”本身也不是正确性 Evidence。
 
-baseline 只有在它真的帮助判断有没有漏项，或区分“原来就坏”与“这次改坏”时才值得写。命令、target、参数必须来自真实环境，不能编造。
+baseline 只有在它真的帮助判断有没有漏项，或区分“原来就坏”与“这次改坏”时才值得写。具体 command / target / parameter 是否能被 Taskbook 固定，遵守主 Skill 的 Verification evidence 规则；没有 reality Evidence 证明其存在且语义正确，就只保留 verification obligation，不编造命令。
 
 如果 Taskbook 把某个 baseline 当作后续判断前提，Executor 在第一次依赖它之前重新取得；结果不一致时，只重算依赖这个前提的工作和 Evidence，其他仍有效部分继续复用。
 
