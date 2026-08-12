@@ -1,28 +1,9 @@
-# Verification Trust
+# When PASS may be lying
 
-Read only when visible Verification has a **concrete and material false-green / gameability / independence risk**. Normal Verification scope, provider triggers, and Evidence freshness/reuse belong to [execution-compile.md](execution-compile.md); this file owns only whether a PASS can be trusted.
+Read only when there is a concrete risk that **the implementation is wrong while the current verification still reports PASS**. Without that risk, return to normal verification in `execution-compile.md` and add nothing else.
 
-## Trust question
+First state how failure could escape detection. Typical cases are simple: the check never observes the real target; the implementer can modify or bypass the judge; a fixed sample can be overfit; failures do not propagate; or the decisive claim exists only as self-report.
 
-Without a binding independence requirement, ask only:
+Then add the smallest check that can disprove that risk. For example, trigger one controlled failure to prove the alarm really fires, use a sample the implementer could not tailor to, or have someone not involved in the implementation re-obtain Evidence in the authoritative environment. Any extra check must come from the same public Goal; it must not introduce a hidden new requirement.
 
-> Is there a concrete failure mode where Goal / required Verification is not actually satisfied, yet the Executor can still obtain visible PASS?
-
-If not, stop adding trust machinery. General uncertainty, incomplete exploration, or “more verification feels safer” is not a trust gap.
-
-Material gaps include a judge that does not observe the target, an oracle the Executor can modify or bypass, fixed samples that can be overfit, failures that do not propagate, or decisive Evidence that exists only as implementer self-report.
-
-## Judge integrity
-
-Unless Human/repo authority explicitly permits it while preserving equivalent trusted proof, do not manufacture PASS through skip/todo, weakened assertions or coverage, deleting live tests, mocking away the real target, lowering thresholds, swallowing failure propagation, or modifying the acceptance judge.
-
-When a key judge may be empty, false-green, or silently broken, inject one controlled local failure to prove the failure signal, restore it, then run normal Verification. This reverse check proves judge sensitivity only; it does not replace Goal behavior Evidence.
-
-## Additional trust Evidence
-
-Add only the minimum Evidence that directly attacks the concrete gap:
-
-- **isolated/private check**: derived from the same public Goal / Verification requirement and adds no hidden requirement; it must be created before execution and stay isolated to retain private-evidence value;
-- **independent Evidence**: when a decisive claim cannot be trusted from the implementation chain itself, a non-implementing subject re-obtains Evidence in the authoritative environment. Using the same model/provider neither proves nor disproves independence by itself.
-
-These do not form a fixed Acceptance workflow and are not required for every task. If necessary trust Evidence cannot be obtained, report the evidence gap accurately rather than downgrading it into PASS.
+No approach may manufacture green by using skip/todo, weakening assertions, deleting live tests, mocking away the target, changing thresholds, swallowing failures, or editing the acceptance check. If the needed counter-evidence cannot be obtained, report the evidence gap accurately rather than downgrading it to PASS.
