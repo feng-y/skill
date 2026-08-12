@@ -15,7 +15,7 @@ Compile 是输出过滤器，不是 Research 转录器。准备写入 Taskbook �
 
 Task 默认是 **outcome + judgment**，让 Executor 在一个稳定判据下处理完整同类 surface；不是 executable delta、文件清单或 predicted patch。只有 outcome、judgment、dependency、authority、risk 或 required Verification 真不同才拆 Task。
 
-开放 surface 写 discriminator + territory，让 Executor 扫全集；不要把 Research 已发现的实例变成封闭 checklist。Human 已确认的 strategy / priority / boundary / must-preserve 原样保持，不能因当前 ready frontier 较小而缩 Goal。
+开放 surface 写 discriminator + territory，让 Executor 扫全集；不要把 Research 已发现的实例变成封闭 checklist。直接沿用 `SKILL.md` 已收敛的 Goal contract，本文件只在其边界内组织 work。
 
 当前 workspace 中仍与 Goal 对齐的修改作为 starting reality 复用；“已经改了”不是 correctness Evidence，也不要求 clean checkout 后重做。
 
@@ -33,11 +33,11 @@ Task 默认是 **outcome + judgment**，让 Executor 在一个稳定判据下处
 
 ## Verification / Evidence
 
-冻结**完成必须证明什么**，不冻结 debugging / failure-localization 流程。provider、target、scope 若依赖实际 change surface / binding / runtime reality，就编译稳定 trigger/authority，让 Executor 在触发时 materialize 具体 action。
+沿用 `SKILL.md` 的 Verification contract；复杂 Taskbook 只额外 materialize provider / target / scope 的稳定 trigger 与 authority，让 Executor 按实际 change surface / binding / runtime reality 触发具体 action。
 
 Research candidate 不自动获得 hard acceptance authority。`0-hit / 0-count` 只有在对象已被证明属于 target responsibility、且归零本身承担 completion claim 时才 binding；否则写 discriminator + coverage oracle。
 
-Evidence 必须真实运行、覆盖 claim、传播失败。前提仍有效的 Evidence 可复用，新 Evidence 只让依赖它的结论 stale。具体 false-green / gameability / independence 风险存在时再读 [verification-trust.md](verification-trust.md)。
+前提仍有效的 Evidence 可复用，新 Evidence 只让依赖它的结论 stale。具体 false-green / gameability / independence 风险存在时再读 [verification-trust.md](verification-trust.md)。
 
 ## Success and failure judgment
 
@@ -47,4 +47,4 @@ Executor 只有在 Goal contract + triggered required Verification + current val
 
 ## Durable execution state
 
-跨会话只用现有 `implement-notes` 保存 execution progress、new Unknown、关键 decision/Evidence、blocker 和 resume point。新 session 先恢复它，只重做前提变化或 Evidence stale 的部分。它不保存 Northstar outcome completion state，也不形成第二本 Taskbook。
+对于复杂/autonomous run，把 `SKILL.md` 已定义的 execution state 写入现有 `implement-notes`：progress、new Unknown、关键 decision/Evidence、blocker 和 resume point。新 session 先恢复它，只重做前提变化或 Evidence stale 的部分；不要形成第二本 Taskbook。
