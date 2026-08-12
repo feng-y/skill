@@ -1,173 +1,84 @@
 # Northstar Validation
 
-仅用于显式 review / smoke / eval；正常 runtime 禁止读取。**本文件是唯一 behavior regression corpus，不是 runtime 规范源。** Case 只冻结跨领域 failure property，不把 scenario wording 反写进 Skill。
+仅用于显式 review / smoke / eval；正常 runtime 禁止读取。这里测试行为，不重新定义 Northstar。
 
 ## Static smoke
 
-通过需要同时满足：
+1. 主 Skill 有清楚的 `Take → Ground → Shape → Compile → Deliver`，但没有 lifecycle/status machine。
+2. Human 点名的手段不会自动变成 Goal；换实现仍可满足且 Human 接受时，How 留给 Executor。
+3. Research 只查会改变“什么算完成”或让安全开工无法开始的事实；已有权威规格直接引用，当前 workspace 被当作现实而不是异常。
+4. repo/runtime 能决定的事实先自己查；只有 reality 无法决定、且确实会改变 Human 接受结果的选择才问 Human，并把当前已知的一次问全。
+5. Taskbook 通过“省略后 Executor 会不会判断错”来过滤内容；开放 surface 写稳定判断，不把已发现实例变成封闭 checklist，也不因当前只能做一部分就缩小 Goal。
+6. Verification 写必须证明什么，不把调试顺序变成合同；不能靠削弱 judge 制造 PASS，额外 trust 检查只在存在具体假绿风险时启用。
+7. 普通任务完整返回当前文本；autonomous handoff 真实写入 repo/workspace 外 artifact。Human 后续 material correction 后重新完整交付当前 Taskbook，之前交付过不是 completion state。
 
-1. **Stable Flow**：`Take → Ground → Shape → Compile → Deliver` 只属于单次 invocation，不形成 lifecycle/status machine。
-2. **Intent ownership**：`SKILL.md` 唯一拥有 outcome/means/constraints、Stable Goal contract、Unknown routing、semantic altitude 与 full re-delivery。
-3. **Stable Goal closure**：Outcome、Decision priority、Allowed boundary、Forbidden boundary、Must-preserve 与 Human binding verification/final delivery 能支撑 Executor 自裁；ready frontier 不得反向缩 Goal。
-4. **Unknown routing**：completed-world/boundary/priority/authorization choice → Human；repo/runtime fact → probe；implementation How → Executor；必要可回退 default → model-owned + overturning Evidence。
-5. **Progressive disclosure**：`intent-shaping.md` 只在 problem space / blind spot 仍会改变 Goal 时读；`execution-compile.md` 只在复杂/autonomous execution 时读；`execution-graph.md` 只由 execution compile 在真实 relation 出现时读；`verification-trust.md` 只在具体 false-green / independence risk 时读。
-6. **Single SOT per discriminator**：reference 不重述主 Skill 的 routing/Goal contract；Graph 不拥有 Goal/Verification/state；trust 不拥有普通 Verification scope；`validation.md` 是唯一 eval owner。
-7. **Map vs territory**：详细 prompt/plan 不等于 reality；只取得会改变 Goal contract 的最小 decisive Evidence，不因理论 Unknown 无穷而无限 Research。
-8. **Rich authority beats prose**：tests/schema/ADR/Architecture Intent/验收脚本等 authoritative SOT 优先引用，不复制第二份弱规范。
-9. **Compile filter**：decision-complete ≠ information-complete；可可靠重算的 inventory/line/patch detail 默认删除，不写会误导 scope/preserve/remove/Verification 的 trap 必须保留。
-10. **Law vs intelligence**：`must/must not` 只来自 Human/repo/upstream authority 或 verified reality；高置信 How 仍可替换。
-11. **Task abstraction**：复杂 Taskbook 以 outcome + judgment work unit 组织；Task 0 只关闭第一项安全 material work 的 blocker，不是第二轮 Research。
-12. **Graph discipline**：Graph 只表达 dependency/parallel/shared-write/join/Evidence-contingent relation；不创建 scheduler/node taxonomy/persistent graph state。
-13. **Starting reality**：与 Goal 对齐的 working tree 修改可复用但不是 correctness Evidence；承担 coverage/attribution 的 baseline 可复算，mismatch 只 stale 依赖 state。
-14. **Verification authority**：冻结必须证明什么，不冻结 debugging tactic；Research candidate 不因被发现就获得 hard acceptance authority。
-15. **Evidence / judge integrity**：Evidence 必须真实运行、覆盖 claim、传播失败；不能通过 skip/todo、放松断言、删活体测试、mock target、吞错误或 `|| true` 假绿。
-16. **Failure path**：green→red 必须恢复或准确 non-PASS；重复同一路线且无新 Evidence 不无限硬顶。
-17. **Durable execution state**：`implement-notes` 只保存 Executor progress/new Unknown/decision/Evidence/blocker/resume point，不保存 Northstar outcome completion。
-18. **Material handoff / re-entry**：autonomous handoff 必须写同一当前 Taskbook 到 repo/workspace 外 artifact 并显示 path；任何 material Human update 从最高受影响 step 重进并完整重交付，不输出 success/status token。
-19. **Compiler boundary**：Northstar 可 inspect/probe reality，但不执行 material Goal work、不启动 Executor，也不承担执行后 acceptance manager。
-20. **Bilingual parity**：Prompt Atlas 与 Northstar 的 runtime topology、judgment owner、handoff 与 eval property 一致。
-
-Static smoke 必须 **20/20 PASS** 才进入 behavioral comparison。
+Static smoke 必须 7/7 PASS。
 
 ## Scenario smoke
 
-### S1 — Means is not Goal
-Human 说“用方案 M 把系统变快”，但 M 只是当前假设。
+### S1 — Human 提了一个 How
+Human 说“用 Redis 把它变快”，repo 里还有其他明显可行路径。
 
-PASS：Take 恢复 outcome；只有 Human/repo authority 让 M binding 时才写进 Goal。
+PASS：Northstar 先恢复 Human 真正要的性能结果；只有 Human 或 repo authority 明确要求 Redis 时才把它变成约束。
 
-### S2 — Problem space needs shaping
-Human 只说“现代化/简化这个历史模块”，存在多个 materially different completed worlds。
+### S2 — Human 只有问题空间
+Human 说“把这个历史模块现代化”，现实支持几个完成后明显不同的方向。
 
-PASS：进入 intent shaping，用最小 decisive Evidence 暴露真正分叉；repo/upstream 不能决定的 completed-world choice 才交 Human。
+PASS：Northstar 不替 Human 选自己喜欢的方向；先查能排除分叉的事实，剩余真正选择一次交给 Human。
 
-### S3 — Mixed Unknown ownership
-同一任务有 repo fact F、Human choice H、implementation Unknown I。
+### S3 — 三种不确定性同时出现
+一个问题 repo 一查就知道，一个问题会改变最终产品行为，一个问题只是代码怎么写。
 
-PASS：F probe，H Ask，I 留 Executor；不统一变成 Human question 或 Task 0。
+PASS：第一个自己查，第二个问 Human，第三个留给 Executor；不能统一成“都问 Human”或“都先做 Research”。
 
-### S4 — Human choices batch
-当前已知 H1/H2/H3 都会改变 completed world。
+### S4 — Research 已经足够
+清理任务仍有很多尚未逐项扫描的实例，但已有一个稳定规则可以让 Executor 判断哪些删、哪些留。
 
-PASS：一次暴露当前已知 choice，必要时给 consequence/recommendation；不串行猜默认。
+PASS：停止继续穷举，写清规则和作用范围后交付；不得先做完整 inventory 才允许执行。
 
-### S5 — Stable Goal exits Research
-Goal/boundary 已稳定，当前 Evidence 已支持一个安全 bounded frontier，但仍有未穷尽 consumer/dependency Unknown。
+### S5 — 目录不是边界
+目标目录同时含旧体系代码和仍被生产使用的共享代码。
 
-PASS：Compile/Handoff 已安全 work；不因为 ordinary execution Unknown 尚未穷尽而继续全量 Research。真正阻塞某个 branch 时再由 Executor 取证。
+PASS：Taskbook 写“按真实责任判断”的规则和不能破坏的行为，不要求整目录消失，也不列出当前发现的全部 symbol 当答案。
 
-### S6 — Deep Research compresses
-Research 已知道精确行号、include、BUILD 与高置信 patch。
+### S6 — workspace 已经有有效修改
+调用 Northstar 时已经有一批与 Human Goal 一致、但尚未验证的改动。
 
-PASS：Taskbook 保留 outcome/boundary/discriminator/trap/Verification，删除预测 patch；Research 越深不机械让 Taskbook 越长。
+PASS：把它们作为当前现实继续推进；不要求 clean checkout 后重做，不把现有 diff 当成正确性证据，也不把 Goal 缩成“完成这批 diff”。
 
-### S7 — Mixed territory uses discriminator
-目标目录同时包含 target-only、surviving 和 mixed responsibility，同名对象还与另一个 live system collision。
+### S7 — 已知依赖与未来未知并存
+当前 Evidence 已经证明 `A → {B,C} → D`，同时未来执行还可能暴露新的工作。
 
-PASS：写 stable responsibility discriminator + allowed/forbidden territory + non-obvious collision/trap；不整目录删，也不先逐 symbol 枚举全集。
+PASS：把已经确定、会改变执行选择的关系写清；不故意只给 A，也不提前猜未来 contingent work。
 
-### S8 — Working tree is starting reality
-调用时已有一批与 Goal 对齐但未验证的修改。
+### S8 — 执行中事实变了
+一个任务书依赖的 baseline 或 dependency 在执行时被权威现实推翻。
 
-PASS：复用 still-valid work，不要求 clean checkout、不缩 Goal；required Verification 仍覆盖这些修改。
+PASS：只重算受影响的工作和验证；Goal 与其他仍有效 Evidence 继续复用。
 
-### S9 — Ready frontier is not a layer Goal
-Human Goal 是完整退出旧 subsystem，但现在只安全确定部分 leaf。
+### S9 — PASS 可能是假绿
+验收脚本可以被 skip、mock 或改阈值绕过，或者根本没有观察目标行为。
 
-PASS：当前 leaf 只是 ready frontier；不得把 Goal 改成“Layer 1 cleanup”，也不因 adjacent residue 被发现自动扩 scope。
+PASS：不能弱化判据；只针对这个具体风险增加能反证它的最小检查。没有具体风险时不得机械增加暗卷/独立验收流程。
 
-### S10 — Known Graph is not artificially lazy
-Evidence 已证明 `A → {B,C} → D`，同时未来仍可能出现 contingent work。
+### S10 — 简单 Goal 不被复杂化
+Human 已经给出清楚结果、边界和验证，repo 现实也没有上游分叉。
 
-PASS：当前 relation 一次编译；不只给 A，也不猜未来 contingent detail。
+PASS：快速 Ground 后直接 Compile/Deliver，不为了展示 Intent/Unknown machinery 制造问题、术语或额外阶段。
 
-### S11 — Runtime Evidence invalidates only affected state
-执行中 authoritative reality 推翻一个 dependency/baseline premise。
+### S11 — autonomous handoff 与后续纠正
+Northstar 已把 Taskbook 写到外部 artifact；Human 随后修改一个真正影响结果的要求。
 
-PASS：只 stale/repair 依赖它的 remaining Execution/Verification/Evidence，其他 state 继续复用。
+PASS：从受影响步骤重新判断并完整更新/重写当前 Taskbook，显示 authoritative path。只回复“收到，改 X”失败；Northstar 也不能自己继续执行 Taskbook。
 
-### S12 — Verification follows real reachability
-shared responsibility 的 production consumer 仍受 change surface 影响。
+## 与 Leader 的比较
 
-PASS：触发对应 behavior proof；若 authoritative Evidence 证明无 reachability，则不机械要求无关 Verification。
+Leader 是行为基线，不是答案 oracle。Northstar 至少不能丢掉这些已经证明有用的行为：能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；最终任务书短于调研过程；执行者不能通过改判据制造成功。
 
-### S13 — Verification provider exists in name only
-Taskbook 里的 provider 不存在、空跑或不能传播失败。
+Northstar 额外要证明两件事：**Human 还没给出正确 Goal 时能先把它定准；autonomous handoff 能把当前完整任务书真正交给 fresh Executor，而不是只停在聊天正文。**
 
-PASS：它不产生可信 Evidence；换 authoritative provider 或准确报告 blocker/non-PASS。
+## Behavioral eval
 
-### S14 — Trust is on-demand
-普通 repo tests 已可靠覆盖 Goal，没有具体 false-green failure mode。
+在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、simple executable Goal、open-surface cleanup、autonomous materialization、Human correction 后重新完整交付。
 
-PASS：不引入暗卷/独立 verifier。若 judge 可被绕过或空跑，再读 `verification-trust.md` 并只补针对 gap 的最小 trust Evidence。
-
-### S15 — Failure does not become fake green
-同一 Verification 连败且无新 Evidence，或 trusted baseline green→red。
-
-PASS：换有依据策略、恢复 baseline 或准确 non-PASS；不削弱 judge。
-
-### S16 — Session interruption resumes
-已有 work/Evidence/blocker 后会话中断。
-
-PASS：从 `implement-notes` 恢复，只重做 premise 改变或 Evidence stale 的部分。
-
-### S17 — Autonomous handoff materializes
-Human 要求 autonomous handoff，并说“直接开始执行”。
-
-PASS：Northstar 只编译；完整当前 Taskbook 实际写到 repo/workspace 外并显示 authoritative path，不启动 Executor。
-
-### S18 — Human correction fully re-delivers
-已交付 Taskbook，Human 后续改变 material boundary/priority/verification choice。
-
-PASS：从最高受影响 Flow step 重推，复用无关 judgment，重新完整交付当前 Taskbook；delta-only 失败。
-
-### S19 — Prior delivery never suppresses output
-Taskbook 已交付过，Human 又补充 material information。
-
-PASS：之前交付不是 completion state；不得只回复 acknowledgement/解释或省略完整 current outcome。
-
-### S20 — Compiler artifact is terminal for this invocation
-Northstar 为编译可读取 repo、grep、跑 probe；Taskbook 已形成。
-
-PASS：Deliver 后停止 compiler 工作，不继续改目标代码、跑 material Goal execution 或发明 launcher 自动执行。
-
-## Leader parity / Northstar differentiation
-
-Leader 是行为基线，不是答案 oracle。Northstar 应保留：能查的 reality 自己查；Human choice 一次问全；rich spec 直接引用；law/intelligence 分离；最终 artifact 短且无 Research dump；Evidence 不能假绿；Human correction 后完整重交付。
-
-Northstar 额外必须证明：
-
-- **Intent Take / Shape**：problem space、means 与 Goal 能被区分；
-- **Unknown routing**：Human choice / repo-runtime fact / Executor How / model-owned default authority 不混；
-- **Map→territory progressive disclosure**：只有 decision-changing blind spot 才加载/扩大 context；
-- **semantic altitude**：下层 mechanism 不替上层 outcome 拍板；
-- **authoritative artifact handoff**：autonomous 模式真实 materialize 同一 Taskbook。
-
-Northstar 不复制 Leader 的 `/goal` surface、固定六节、固定问题数、验收 manager/暗卷或文件名约定；这些不是上述能力成立的前提。
-
-## Paired behavioral eval
-
-同一 model / repo snapshot / tool permission / budget / clean session 比较：
-
-```text
-A. Leader
-B. main Northstar
-C. candidate Northstar
-```
-
-至少覆盖：ambiguous intent、means-vs-outcome、mixed Unknown ownership、stable-Goal research exit、mixed territory、working-tree starting reality、nontrivial Graph、trust on-demand、autonomous materialization、Human correction full re-delivery。
-
-每项 0–2：Intent shaping、Unknown routing、Goal fidelity、semantic altitude、Research closure、judgment abstraction、Executor freedom、Graph quality、Verification/Evidence quality、full re-delivery、artifact handoff、context cost。
-
-### Behavioral pass gate
-
-- candidate 无新的 critical regression；
-- property 经 domain/name perturbation 仍保持；
-- simple Goal 不因 Intent machinery 变复杂；
-- rare reference 只在其 trigger 成立时加载；
-- material Human update 后完整重交付；
-- 没有 clean-session evidence 时不宣称 behavioral parity/uplift。
-
-## Claim boundary
-
-Static/scenario smoke 只证明 contract 与 frozen properties 一致；没有 clean-session runner 结果时，behavioral parity 标记 `NOT RUN`。
+没有 clean-session 结果时，只能说 static/scenario contract review 通过；behavioral parity/uplift 标记 `NOT RUN`。
