@@ -1,6 +1,6 @@
 # 当 Goal 还没有定准
 
-只在主 Skill 已经开始 Ground / Shape，但仍无法确定 Human 最终会接受哪个 Goal 时读取。
+只在普通的输入理解与 reality 检查仍无法确定 Human 最终会接受哪个 Goal 时读取。
 
 ## 这是 Goal，还是 How
 
@@ -30,4 +30,4 @@ reality 能排掉冲突就直接收敛；否则把真正需要 Human 拍板的�
 
 ## 什么时候停
 
-当剩余问题只会改变 How，而不会再改变 Human 会接受的 Goal，就停止 Intent Research，回主流程 Compile。Implementation 中继续出现新 Unknown 是正常的；Northstar 不需要在执行前把它们消灭。
+当剩余问题只会改变 How，而不会再改变 Human 会接受的 Goal，就停止 Intent Research。Implementation 中继续出现新 Unknown 是正常的；Northstar 不需要在执行前把它们消灭。
