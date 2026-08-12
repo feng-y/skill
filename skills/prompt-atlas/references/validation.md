@@ -1,84 +1,104 @@
 # Prompt Atlas Validation
 
-Use only for explicit review / smoke / eval. Normal runtime must not read this file. It tests behavior; it does not redefine Prompt Atlas.
+Eval / review only. Normal runtime must not read this file. It tests behavior; it does not redefine Prompt Atlas.
 
 ## Static smoke
 
-1. The main Skill has a clear `Take → Ground → Shape → Compile → Deliver` flow without a lifecycle/status machine.
-2. A means named by the Human does not automatically become Goal; when a materially different implementation would still satisfy the Human, How remains with the Executor.
-3. Research closes only facts that can change what counts as done or prevent safe material work from starting; rich repo authority is referenced directly, and the current workspace is treated as reality rather than an error state.
-4. Facts repo/runtime can settle are investigated first. Only choices reality cannot make and that genuinely change the Human's accepted outcome are returned to the Human, surfaced together rather than serially.
-5. The Taskbook filters content by whether omission would make the Executor judge incorrectly. Open surfaces carry a stable judgment rather than a closed checklist, and the currently safe frontier never shrinks the full Goal.
-6. Verification states what must be proven rather than prescribing debugging order. The judge cannot be weakened to manufacture PASS, and extra trust checks appear only for a concrete false-green risk.
-7. Normal tasks return the complete current text; autonomous handoff actually writes the same Taskbook to an artifact outside repo/workspace. After material Human correction, the complete current Taskbook is delivered again; prior delivery is not completion state.
+1. The main Skill has a clear `Take → Ground → Shape → Compile → Deliver` flow without lifecycle/status machinery.
+2. `Shape` closes on Stable Goal, not on “all information has been researched.”
+3. Named means do not automatically enter Goal; Semantic altitude uses the materially-different-implementation test to separate Goal from How.
+4. Unknown routing has a clear owner: reality-settleable facts are probed; only choices that change Stable Goal and cannot be settled by reality go to the Human; How remains with the Executor.
+5. Decision priority enters shaping only when there is a real conflict and cannot be silently chosen for implementation convenience.
+6. Compile distinguishes Law vs intelligence: binding rules have authority; implementation advice remains replaceable.
+7. In a complex Taskbook, ready frontier cannot shrink or replace Goal; new Evidence updates only affected work.
+8. Verification freezes what must be proven; the judge cannot be weakened to manufacture PASS, and extra trust checks appear only for a concrete false-green risk.
+9. Autonomous handoff materializes outside repo/workspace; material Human correction fully re-delivers the current Taskbook, and prior delivery is not completion state.
 
-Static smoke requires 7/7 PASS.
+Static smoke must PASS 9/9.
 
 ## Scenario smoke
 
-### S1 — The Human names a How
-The Human says “use Redis to make it faster,” while repo reality still supports other plausible approaches.
+### S1 — Human names a How
+The Human says “use Redis to make it faster,” while the repo supports other credible paths.
 
-PASS: Prompt Atlas recovers the performance outcome first. Redis becomes binding only when Human/repo authority actually requires it.
+PASS: Prompt Atlas recovers the actual performance Goal. Redis becomes Goal only when Human/repo authority makes Redis itself non-replaceable.
 
-### S2 — The Human only gives a problem space
-The Human says “modernize this historical module,” and reality supports several materially different end states.
+### S2 — Human supplies only a problem space
+The Human says “modernize this legacy module,” while reality supports several materially different finished outcomes.
 
-PASS: Prompt Atlas does not choose its favorite architecture for the Human. It investigates facts that can remove forks, then surfaces only the remaining real choices.
+PASS: Prompt Atlas does not rush into Taskbook writing. It first looks for reality that removes branches, then surfaces the remaining Human-owned Goal choices together.
 
-### S3 — Three kinds of uncertainty appear together
-One question is answerable from the repo, one changes final product behavior, and one is only about code shape.
+### S3 — Three kinds of Unknown appear together
+One question is repo-factual, one changes what Goal the Human accepts, and one changes only code How.
 
-PASS: investigate the first, ask the Human about the second, leave the third to the Executor. Do not turn all three into Human questions or a Research backlog.
+PASS: probe the first, ask the Human the second, leave the third to the Executor. Do not collapse them into “ask all” or “research all.”
 
-### S4 — Research is already sufficient
-A cleanup still has many unenumerated instances, but one stable rule is enough for the Executor to decide what should be removed or kept.
+### S4 — Semantic altitude
+The Human supplies a detailed implementation design; half could be replaced while preserving the requirement, while half is actually a compatibility commitment.
 
-PASS: stop enumerating, write the rule and its territory, and hand off. A complete inventory is not a prerequisite.
+PASS: leave the replaceable half with the Executor and keep the commitment in Goal. Concrete wording alone must not put both at the same altitude.
 
-### S5 — A directory is not the boundary
-The target directory contains both legacy-only code and shared code still used in production.
+### S5 — Decision priority
+The Human simultaneously requires “zero compatibility break” and “remove the old protocol completely,” and reality proves they conflict.
 
-PASS: the Taskbook carries the responsibility rule and behavior that must survive. It does not require the directory to disappear or list every currently found symbol as the answer.
+PASS: Prompt Atlas does not choose based on preferred architecture. It checks existing authority, then asks the Human which requirement wins if the conflict remains.
 
-### S6 — The workspace already contains useful work
-Prompt Atlas starts with a set of changes aligned with the Human Goal but not yet verified.
+### S6 — Research is sufficient
+A cleanup task still has many unscanned instances, but a stable rule lets the Executor decide what to remove and preserve.
 
-PASS: continue from that reality. Do not require a clean checkout, treat the diff as correctness Evidence, or shrink Goal to “finish this diff.”
+PASS: stop exhaustive discovery, write the rule and scope, and deliver. Full inventory is not a prerequisite.
 
-### S7 — Known relations and future unknowns coexist
-Current Evidence proves `A → {B,C} → D`, while execution may still reveal contingent work later.
+### S7 — Law vs intelligence
+Research suggests a provider pattern, but Human/repo authority requires only a behavior and dependency direction.
 
-PASS: compile the established relations because they change execution choices; do not intentionally hide them behind A, and do not predict future contingent work.
+PASS: behavior/dependency are binding law; provider pattern is intelligence and may be replaced by a better compliant implementation.
 
-### S8 — Reality changes during execution
-A baseline or dependency assumed by the Taskbook is contradicted by authoritative runtime evidence.
+### S8 — Existing workspace work
+Prompt Atlas is invoked with still-valid changes already aligned to Goal but not fully verified.
 
-PASS: invalidate only dependent work and verification; preserve the Goal and still-valid Evidence.
+PASS: treat them as reality and continue. Do not demand a clean checkout, treat the diff as correctness proof, or shrink Goal to “finish this diff.”
 
-### S9 — PASS may be false green
-The acceptance check can be bypassed by skip, mock, threshold changes, or it never observes the real behavior.
+### S9 — Ready frontier
+Full Goal needs A/B/C; current reality makes only A safe to advance, while whether B is needed depends on Evidence from A.
 
-PASS: never weaken the judge. Add only the smallest check that counters this specific failure mode. Without a concrete risk, do not mechanically add hidden or independent review machinery.
+PASS: keep the full Goal and set frontier to A. After A's Evidence arrives, decide B/C. Do not redefine Goal as A.
 
-### S10 — A simple Goal stays simple
-The Human already gave a clear outcome, boundaries, and proof, and repo reality exposes no upstream fork.
+### S10 — Known dependency plus future discovery
+Current reality proves `A → {B,C} → D`, while execution may expose additional contingent work later.
 
-PASS: Ground briefly, then Compile/Deliver. Do not create questions, terminology, or phases merely to demonstrate the intent machinery.
+PASS: write the relations that already change execution choice; do not intentionally expose only A, and do not predict contingent future work.
 
-### S11 — Autonomous handoff is corrected later
-Prompt Atlas has already written the Taskbook to an external artifact; the Human then changes a requirement that materially affects the outcome.
+### S11 — PASS may be false-green
+Visible verification can be bypassed with skip/mock/threshold changes, or it does not actually observe target behavior.
 
-PASS: re-enter at the affected step, update or rewrite the complete current Taskbook, and surface the authoritative path. A delta-only reply fails. Prompt Atlas must not execute the Taskbook itself.
+PASS: do not weaken the judge. Add only the minimum check that falsifies the concrete risk. No generic hidden-test/independent-review ceremony without a concrete risk.
 
-## Compare with Leader
+### S12 — A simple Goal stays simple
+The Human already supplied a clear Goal, boundaries, and Verification, and repo reality introduces no upstream fork.
 
-Leader is a behavioral baseline, not an answer oracle. Prompt Atlas must at least preserve these useful behaviors: investigate facts before asking the Human; batch real Human choices; reference existing specs directly; keep the final Taskbook shorter than the Research behind it; and prevent the Executor from manufacturing success by changing the judge.
+PASS: Ground quickly, then Compile/Deliver. Do not manufacture shaping, Unknown, or frontier machinery for display.
 
-Prompt Atlas must additionally show two capabilities: **when the Human has not yet supplied the right Goal, it can settle what outcome the Human actually wants; and for autonomous work it can materially hand the complete current Taskbook to a fresh Executor instead of stopping at chat prose.**
+### S13 — Autonomous handoff followed by correction
+Prompt Atlas has written a Taskbook to an external artifact; the Human then changes a requirement that truly changes Goal.
+
+PASS: re-enter at the affected step and fully update/rewrite the current Taskbook, surfacing the authoritative path. A delta-only reply fails; Prompt Atlas must not execute the Taskbook itself.
+
+## Comparison with Leader
+
+Leader is a strong taskbook/manager baseline, not the full definition of Prompt Atlas. Prompt Atlas should retain Leader's proven behaviors: research facts before asking, batch real Human choices, reference existing specs, keep Taskbook smaller than Research, and never let the Executor weaken the judge to manufacture success.
+
+Prompt Atlas must additionally prove an upstream layer that Leader does not define as its center:
+
+- when input is still a problem space or means-heavy, converge Stable Goal before writing the Taskbook;
+- route Unknowns by authority instead of escalating uncertainty uniformly to the Human;
+- use Semantic altitude to preserve Executor implementation freedom;
+- let complex-run frontier evolve with reality without replacing the full Goal;
+- materialize the current autonomous Taskbook for a fresh Executor.
+
+If these differences are not observable in eval, Prompt Atlas has degraded into a weaker rewrite of Leader and fails the design goal.
 
 ## Behavioral eval
 
-Under the same model / repo snapshot / tool permission / clean session, cover at least: ambiguous problem space, named means, mixed fact/Human/How, a simple executable Goal, open-surface cleanup, autonomous materialization, and full re-delivery after Human correction.
+Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, semantic-altitude split, conflicting priorities, law-vs-intelligence, frontier expansion, simple executable Goal, autonomous materialization, and full re-delivery after Human correction.
 
 Without clean-session results, only static/scenario contract review may be claimed; behavioral parity/uplift remains `NOT RUN`.
