@@ -1,30 +1,25 @@
-# Intent Shaping under uncertain territory
+# When the Human has not decided the outcome
 
-Read only when the main Skill's `Shape` still cannot form a stable Goal from current input, or a blind spot may materially change Goal / boundary / authority. This file does not own Unknown routing; `SKILL.md` remains the routing SOT.
+Read only when `SKILL.md` has already checked reality but still cannot tell which final result the Human would accept.
 
-## Map is not territory
+The prompt, current plan, and Prompt Atlas itself are only maps. The repo, runtime, historical constraints, and real users can expose something the map omitted. The goal here is not to enumerate every Unknown; it is to find **the missing choice that can change what the Human calls done**.
 
-The Human prompt, current plan, and this Skill are maps. The repo, runtime, historical constraints, and real consumers are the territory. A detailed map does not prove Unknowns are closed, but Northstar also must not exhaust every theoretical Unknown before execution.
+## Find the choice, not more information
 
-Look only for **Unknowns that can still change the Stable Goal**. High-value blind spots often include:
+For every new fact ask:
 
-- tacit business / compatibility / risk constraints;
-- existing authoritative specs, precedents, reference implementations, or prior decisions;
-- the quality bar / acceptance authority that defines what “good” means;
-- external consumers, serialized/config identity, deployment, or authorization boundaries;
-- naming collisions where one term maps to different live responsibilities;
-- the real relationship between current working-tree changes / existing work and the Human Goal.
+> If this fact had a different value, could the Human accept a different completed outcome?
 
-These are lenses, not a mandatory checklist. For each candidate ask: **Would a different answer change the Goal contract defined in `SKILL.md`?** If not, leave it to the Executor or ignore it.
+If not, it is not an intent-shaping problem; leave it to the Executor or ignore it. If yes, keep investigating.
 
-## Smallest decisive probe
+Business or compatibility constraints, existing specs and prior decisions, real consumers, external contracts, and current workspace state can all reveal such a choice, but they are places to look rather than a mandatory checklist.
 
-Close facts with the smallest repo/runtime probe that can distinguish materially different Goals. Prefer authoritative reality over asking the Human about facts; stop expanding Research once additional context no longer changes upstream judgment.
+## Let reality answer first
 
-Reality may invalidate a proposed means, but it cannot silently replace the Human outcome. Human-owned priority, boundary, authorization, and explicit verification requirements remain authoritative.
+If repo/runtime evidence can settle the fact, probe it instead of asking the Human to guess. Reality may invalidate a proposed means, but it cannot silently rewrite the Human's outcome.
 
-## Stable Goal closure
+If reality removes the fork, return to the main flow and Compile. Only when several materially different completed outcomes still remain plausible and reality cannot decide between them should Prompt Atlas surface those choices together, with consequences and a recommendation when useful.
 
-Use the Goal contract in `SKILL.md` as the only closure criterion. If materially different completed worlds remain compatible with the current Human wording and repo/upstream authority cannot settle them, surface the difference, consequences, and a recommendation together; do not fill the gap with implementation How.
+## Stop when only How remains
 
-If remaining Unknowns can be resolved during execution under a stable Goal / priority / boundary using live Evidence, **stop Intent Research and Compile**. Planning does not need to eliminate Unknowns that only implementation can reveal.
+Once the remaining uncertainty can change only how the work is implemented, stop Intent Research. Unknowns appearing during implementation are normal; Prompt Atlas does not need to eliminate them in advance.
