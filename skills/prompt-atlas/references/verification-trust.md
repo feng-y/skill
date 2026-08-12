@@ -1,37 +1,28 @@
-# Verification / Evidence Trust
+# Verification Trust
 
-Read only when Evidence trust or independence can change completion judgment. Provider executability, claim coverage, Evidence freshness/provenance/reuse, and ordinary scope judgment remain owned by [execution-compile.md](execution-compile.md).
+Read only when visible Verification has a **concrete and material false-green / gameability / independence risk**. Normal Verification scope, provider triggers, and Evidence freshness/reuse belong to [execution-compile.md](execution-compile.md); this file owns only whether a PASS can be trusted.
 
-Default to existing protected repo Verification when it sufficiently covers the Goal. An explicit Human or repo-verification-authority requirement for independent verification remains binding.
+## Trust question
 
-## Trust judgment
+Without a binding independence requirement, ask only:
 
-When no binding independence requirement exists, ask one question: **is there a concrete and material failure mode that could let the Executor obtain visible PASS while the Goal or required Verification is not actually established?**
+> Is there a concrete failure mode where Goal / required Verification is not actually satisfied, yet the Executor can still obtain visible PASS?
 
-If not, stop adding judge machinery. If yes, name that failure mode and add only the minimum trust Evidence needed to falsify it. Typical causes are a judge that does not observe the real target, an Executor-controlled or directly targetable oracle/fixed sample, material coverage or scope supported only by the implementer's own derivation, or decisive Evidence available only as Executor self-report. General uncertainty is not a trust gap; ordinary coverage/scope remains an execution-compile judgment.
+If not, stop adding trust machinery. General uncertainty, incomplete exploration, or “more verification feels safer” is not a trust gap.
+
+Material gaps include a judge that does not observe the target, an oracle the Executor can modify or bypass, fixed samples that can be overfit, failures that do not propagate, or decisive Evidence that exists only as implementer self-report.
 
 ## Judge integrity
 
-Unless Human/Goal authority explicitly permits a judge change and equivalent trustworthy Verification remains, do not manufacture PASS by weakening assertions or coverage, skipping checks, mocking away the real object, lowering thresholds, swallowing failure propagation, or editing verification scripts. Breaking an authoritative baseline is a regression; freeze metrics such as test count, coverage, schema, or replay baseline only when the repo itself treats them as judges.
+Unless Human/repo authority explicitly permits it while preserving equivalent trusted proof, do not manufacture PASS through skip/todo, weakened assertions or coverage, deleting live tests, mocking away the real target, lowering thresholds, swallowing failure propagation, or modifying the acceptance judge.
 
-When a critical judge may no-op, false-green, or fail silently, create one bounded controlled failure, confirm that the signal turns red, restore state, then run normal Verification. Reverse validation proves judge integrity, not Goal behavior.
+When a key judge may be empty, false-green, or silently broken, inject one controlled local failure to prove the failure signal, restore it, then run normal Verification. This reverse check proves judge sensitivity only; it does not replace Goal behavior Evidence.
 
-## Visible and private Evidence
+## Additional trust Evidence
 
-**Visible Verification** is Executor-visible and is the default. Use a small amount of **private Evidence** only when the Trust judgment identifies a failure mode that isolated observation can actually falsify, or binding authority itself requires private verification.
+Add only the minimum Evidence that directly attacks the concrete gap:
 
-Private checks must derive from the same public Goal and Verification requirement and cannot add hidden requirements. They may vary samples, scope derivation, or observation paths, but must target the identified gap. To carry private-evidence value, form them before implementation and isolate them from the Executor when the runtime allows it; disclosure before implementation reduces them to visible Evidence. More private checks do not add trust by count alone.
+- **isolated/private check**: derived from the same public Goal / Verification requirement and adds no hidden requirement; it must be created before execution and stay isolated to retain private-evidence value;
+- **independent Evidence**: when a decisive claim cannot be trusted from the implementation chain itself, a non-implementing subject re-obtains Evidence in the authoritative environment. Using the same model/provider neither proves nor disproves independence by itself.
 
-## Independent Evidence
-
-Use independent Evidence when Executor self-proof is insufficient, visible/private judges remain manipulable, a material coverage/claim conclusion depends only on the implementer's own derivation, or binding authority explicitly requires independent reacquisition.
-
-Independence comes from not materially implementing the work and independently facing the Goal, repo verification authority, protected baselines, and real environment. Model/provider identity alone neither proves nor defeats independence.
-
-Independent Evidence is a conditional trust mechanism, not a fixed Acceptor role or Acceptance workflow. If required independent Evidence cannot be obtained, report the exact evidence gap; do not downgrade it into PASS.
-
-## Non-PASS
-
-Fabricated, skipped, stale, under-covered, unreviewable, judge-weakened, materially contradictory, improperly claimed private Evidence, or missing required independent Evidence cannot support PASS.
-
-The next legitimate route is to obtain new valid Evidence, adjust remaining Execution/Graph and reverify, report a truthful blocker, or return to the relevant Human-owned Goal/authority boundary. Do not hide evidence gaps behind completion or acceptance terminology.
+These do not form a fixed Acceptance workflow and are not required for every task. If necessary trust Evidence cannot be obtained, report the evidence gap accurately rather than downgrading it into PASS.
