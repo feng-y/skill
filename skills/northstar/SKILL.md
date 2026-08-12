@@ -15,11 +15,11 @@ Taskbook 保持 `Goal → Execution → Verification → Evidence` 的因果链�
 
 ## 流程
 
-**1. 调研。** 从 Human 最新且仍有效的表达开始。先恢复候选 Goal，再查会改变 Goal、binding constraint 或第一项安全 material work 的 reality。Prompt、旧 plan 和 Northstar 自己都只是 map；repo/runtime、真实 consumer、已有规格和当前 workspace 才能校正它。
+**1. 调研。** 从 Human 最新且仍有效的表达开始。先恢复候选 Goal，再查会改变 Goal、binding constraint 或第一项安全 material work 的 reality。Human 当前描述、旧 plan 和 Northstar 的当前理解都可以被 repo/runtime、真实 consumer、已有规格和当前 workspace 校正。
 
 自己能查的事实不问 Human。已有 authoritative tests/schema/ADR/Architecture Intent/验收脚本直接引用，不再复制一份；当前 workspace 中仍有效的修改就是 starting reality，不默认要求 clean state。继续 Research 只会改变 How 时就停。
 
-未决问题不统一变成 Research 或 Ask。普通的 Goal/How 难分、隐藏约束或要求冲突，读 [intent-shaping.md](references/intent-shaping.md)。如果多个耦合 Unknown、source alignment 或完整 map 才能把问题说清，且当前环境有 `$unknowns-first`，交给它决定最合适的 probe / interview / concrete sample / prototype / full-map move；如果真正未定的是长期模块责任、边界、依赖方向或 Target Architecture，且有 `$architecture-evolution`，交给它判断。Northstar 只把 specialist 返回的当前 decision / Evidence 合回 Goal 或 Taskbook，不复制其协议、不把它变成第二份任务书。对应 capability 不可用时，只做关闭当前 Goal / Taskbook 所必需的最小等价判断；只影响 How 的问题仍留给 Executor。
+未决问题不统一变成 Research 或 Ask。普通的 Goal/How 难分、隐藏约束或要求冲突，读 [intent-shaping.md](references/intent-shaping.md)。如果多个耦合 Unknown 或 source alignment 让 Goal / Taskbook 还不能决策完整，且当前环境有 `$unknowns-first`，交给它；如果真正未定的是长期模块责任、边界、依赖方向或 Target Architecture，且有 `$architecture-evolution`，交给它判断。Northstar 只把 specialist 返回的当前 decision / Evidence 合回 Goal 或 Taskbook，不复制其协议、不把它变成第二份任务书。对应 capability 不可用时，只做关闭当前 Goal / Taskbook 所必需的最小等价判断；只影响 How 的问题仍留给 Executor。
 
 **2. Ask。** 只问 reality 无法决定、而答案会改变 Human 最终接受 Goal 的选择。把**当前前提已经闭合、可以独立回答**的 Human-owned 选择尽量一轮问全，说明它会改变什么、主要后果和推荐；依赖另一个尚未拍板选择的问题先不问，等前提关闭后再展开。事实题自己查，只影响 How 的问题留给 Executor。
 
