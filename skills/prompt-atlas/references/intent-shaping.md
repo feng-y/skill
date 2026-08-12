@@ -1,6 +1,6 @@
 # When Goal is not settled yet
 
-Read only after the main Skill has begun Ground / Shape but still cannot determine which Goal the Human will ultimately accept. This file does not introduce another vocabulary; it handles a few cases that commonly make Goal wrong.
+Read only after the main Skill has begun Ground / Shape but still cannot determine which Goal the Human will ultimately accept.
 
 ## Is this Goal or How?
 
