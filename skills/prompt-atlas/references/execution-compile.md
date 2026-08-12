@@ -22,7 +22,7 @@ Usually no execution graph is needed. Write a relation only when it changes the 
 
 Still-valid workspace changes aligned with Goal are the execution starting point. Do not redo them, do not shrink Goal to the current diff, and do not treat “already changed” as correctness Evidence.
 
-A baseline belongs in the Taskbook only when it helps detect missing coverage or distinguish “already broken” from “this change broke it.” Commands, targets, and parameters must come from real authority, not invention.
+A baseline belongs in the Taskbook only when it helps detect missing coverage or distinguish “already broken” from “this change broke it.” Whether a concrete command / target / parameter may be fixed in the Taskbook follows the main Skill's Verification evidence rule: without reality Evidence that it exists and has the intended semantics, keep only the verification obligation instead of inventing a command.
 
 If later judgment depends on a baseline, the Executor re-obtains it before first relying on it. A mismatch invalidates only work and Evidence that depended on that premise; still-valid work remains reusable.
 
