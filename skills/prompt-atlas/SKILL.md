@@ -43,7 +43,7 @@ When Human requirements conflict, Prompt Atlas must recover a real priority rath
 
 The Taskbook keeps only information whose omission would make a fresh Executor judge incorrectly, cross a boundary, or fail to prove completion. Remove Research narration, reliably recomputable inventory, file/symbol/line detail, and predicted patches by default. If one judgment covers an open surface, write that judgment rather than freezing discovered instances into a checklist.
 
-Execution content should express **the result to change, the judgment to apply, responsibility boundaries, and real dependencies**, not a step-by-step list of files, helpers, call sites, and local tests. Implementation detail becomes binding only when the representation itself is fixed by Human/repo/technical authority. Taskbook altitude must not be weaker than a strong Leader taskbook.
+Execution content should express **the result to change, the judgment to apply, responsibility boundaries, and real dependencies**, not a step-by-step list of files, helpers, call sites, and local tests. Implementation detail becomes binding only when the representation itself is fixed by Human/repo/technical authority.
 
 For longer runs, several genuinely different judgments, work that becomes clear only during execution, or real dependencies, read [execution-compile.md](references/execution-compile.md). When only part is safe to advance now, current work may shrink; the Human's full Goal must not.
 
@@ -63,13 +63,13 @@ A delivered Taskbook is not a completion state. After a material Human clarifica
 
 Flow is the playbook for one concrete task; it does not redefine the capabilities above.
 
-**1. Take.** Start from the Human's latest still-valid wording. Recover the candidate Goal, explicit constraints, and obvious means; do not lock How merely because it is concrete.
+**1. Take.** Start from the Human's latest still-valid wording and recover the candidate Goal, explicit constraints, and obvious means.
 
-**2. Ground.** Inspect reality that can change Goal, constraints, or the first safe material work. Reference authoritative specs directly. Still-valid workspace changes are part of current reality; do not assume a clean state. Stop when more Research would change only How.
+**2. Ground.** Inspect reality that can change Goal, constraints, or the first safe material work. Reference authoritative specs directly and reuse still-valid workspace work as current reality. Stop when more Research would change only How.
 
-**3. Shape.** Use the Goal-shaping and Ask capabilities above to close only forks that must be closed before execution. When the Human must decide, surface all current real choices together with major consequences and a recommendation when useful. After a Human answer or interruption, resume from the affected judgment. Once every remaining question can be judged by the Executor under the same Goal, move to Compile.
+**3. Shape.** Invoke Goal-shaping / Ask capabilities to close only forks that must be closed before execution. After a Human answer or interruption, resume from the affected judgment. Move to Compile once every remaining question can be judged by the Executor under the same Goal.
 
-**4. Compile.** Write the settled Goal, binding constraints, reality that changes Executor judgment, real dependencies, and required Verification into the current Taskbook. Split implementation and Verification independently rather than pairing them mechanically. Simple tasks finish here; use `execution-compile.md` only for complex execution and `verification-trust.md` only for a concrete false-green risk.
+**4. Compile.** Apply the Taskbook / Verification capabilities above to compile the complete current task definition. Simple tasks finish directly; only complex execution or a concrete false-green risk loads the corresponding reference.
 
 **5. Deliver.** If a choice still genuinely belongs to the Human, deliver those choices. If reality prevents safe continuation, state the blocker and resume condition. Otherwise return the complete current Taskbook and materialize the same body to the authoritative Markdown file, surfacing the actual path.
 
