@@ -43,7 +43,7 @@ Taskbook 交付不是 completion state。Human 后续任何 material clarificati
 
 **富规格直接引用。** 已有 authoritative spec 能表达要求时直接引用它。不要把 schema、测试、设计约束或已有 contract 改写成第二份 prose SOT。
 
-**保持 Taskbook 高度。** 执行内容优先表达**完成后什么成立、按什么判断、责任边界在哪里、哪些依赖是真的**。不要默认写成“改 A 文件 → 加 B helper → 更新 C caller → 跑 D test”的 predicted-patch checklist。只有 representation 本身被 authority 固定时，才把实现细节升成约束。同一个判断能覆盖开放 surface 时写判断，不把当前发现的实例冻结成封闭 checklist。
+**保持 Taskbook 高度。** 执行内容优先表达**完成后什么成立、按什么判断、责任边界在哪里、哪些依赖是真的**。不要默认写成“改 A 文件 → 加 B helper → 更新 C caller → 跑 D test”的 predicted-patch checklist。只有 representation 本身被 authority 固定时，才把实现细节升成约束。同一个判断能覆盖开放 surface 时写判断，不把当前发现的实例冻结成封闭 checklist。已定结论留在能统领后续判断的最高有用层级；后续内容优先增加新的决策价值，不为局部自包含而逐层重述。Verification / Evidence 可在需要明确完成证明时带上足够上下文，但不重新展开已定语义。
 
 **不要提前切完未知的未来。** 当前 reality 只能支持先做一部分时，只缩当前可推进工作，不缩 Human 的完整 Goal。只写已经会改变执行选择的真实依赖；必须等执行 Evidence 才能知道的后续工作，等它变得真实再加入，不提前把还不能说明的未来切成假任务。新的 Evidence 推翻某个前提时，只重算依赖这个前提的工作和 Verification，其他仍有效部分继续复用。
 

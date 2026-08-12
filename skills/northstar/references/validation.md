@@ -135,6 +135,11 @@ Human 已明确期望的功能结果，但当前还可选择临时最小实现�
 
 PASS：Northstar 可以自主做这个 cheap probe 并把 Evidence 合回当前 decision；如果长期结构 option 本身还需要架构判断，也可以先调用 `$architecture-evolution` 获得 Evidence/options/decision surface，但 AE 不能替 Human 关闭是否做、投入与长期承诺的选择。若 Human/authority 尚未决定这些选择，Northstar 向 Human 给出当前可回答的 options、主要后果和推荐；不得因为“长期结构更正确”擅自扩大投入，也不得因为“当前路径更便宜”默认缩成临时方案。Human 已明确选择或已有 authority 绑定时，不得重复 Ask。prototype 本身一旦改变是否做、投入与长期承诺，也必须回到 Human decision。
 
+### S24 — 已定语义不被逐层展开
+Goal 已经明确一次迁移只改变 ownership，运行行为和数据语义保持不变。写书时 Starting Reality、Execution、Verification 都有机会再次描述这层含义。
+
+PASS：Goal 保留完整结论；Starting Reality 只补真实现状，Execution 只补会改变执行判断或边界的信息，不把“行为不变”拆成默认值、size、指针访问等同义清单。Verification / Evidence 可以薄回指该结论并说明如何证明它。若 repo Evidence 证明某个局部语义本身是独立风险或边界，则单独写它不算失败。
+
 ## 与 Leader 的比较
 
 Leader 是 Northstar 的**结构与 taskbook 质量基线**：角色清楚；调研 → Ask → 写书 → 交付的动作稳定；能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；任务书保持目标/判断高度；Verification 是独立判卷面；执行者不能靠改 judge 制造成功。这里比较的是 taskbook generation / verification-contract baseline，不宣称 Leader 的 post-run manager acceptance 或 multi-agent lifecycle parity。
@@ -153,6 +158,6 @@ Northstar 不复制 Wayfinder 的 tracker/ticket protocol，也不自己拥有�
 
 ## Behavioral eval
 
-在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、是否做/投入/长期承诺 decision、dependent Human-choice frontier、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Taskbook altitude、verification-command truth、partial-safe execution、development-vs-verification granularity、simple executable Goal、file materialization、Human correction 后完整重交付。
+在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、是否做/投入/长期承诺 decision、dependent Human-choice frontier、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Taskbook altitude、settled-meaning carry-forward、verification-command truth、partial-safe execution、development-vs-verification granularity、simple executable Goal、file materialization、Human correction 后完整重交付。
 
 没有 clean-session 结果时，只能说 static/scenario contract review 通过；behavioral parity/uplift 标记 `NOT RUN`。

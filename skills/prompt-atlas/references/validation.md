@@ -135,6 +135,11 @@ The Human has fixed the desired functional result, but current choices still inc
 
 PASS: Prompt Atlas may run the cheap probe and fold its Evidence back into the current decision. If the long-lived structural option itself still needs architecture judgment, it may also call `$architecture-evolution` first for Evidence/options/decision surface, but AE must not close the choice about whether to proceed, investment, and long-lived commitment for the Human. If Human/authority has not settled those choices, Prompt Atlas surfaces the currently answerable options, main consequences, and a recommendation; it must not expand investment merely because the long-lived structure looks more correct, and must not silently choose the temporary path merely because the current path is cheaper. If the Human already chose or authority already binds the choice, do not Ask again. Once the prototype itself changes whether to proceed, investment, or long-lived commitment, it also returns to Human decision.
 
+### S24 — Settled meaning is not re-expanded layer by layer
+Goal already states that a migration changes ownership while runtime behavior and data semantics remain unchanged. Starting Reality, Execution, and Verification could each repeat that meaning.
+
+PASS: keep the full conclusion in Goal; Starting Reality adds actual state, and Execution adds only information that changes execution judgment or boundary rather than unpacking “behavior unchanged” into synonymous checklists of defaults, size, or pointer access. Verification / Evidence may thinly carry the conclusion forward to state how it will be proven. A local semantic with repo Evidence showing it is an independent risk or boundary may still be stated explicitly.
+
 ## Comparison with Leader
 
 Leader is Prompt Atlas's **structural and taskbook-quality baseline**: clear roles; stable Research → Ask → Write → Deliver actions; research facts before asking; batch real Human choices; reference existing specs; keep Taskbook at goal/judgment altitude; treat Verification as an independent judging surface; and never let the Executor weaken the judge to manufacture success. This comparison is about taskbook generation / verification-contract quality, not lifecycle parity with Leader's post-run manager acceptance or multi-agent execution management.
@@ -153,6 +158,6 @@ The current combination absorbs Wayfinder's resolution model; it does not claim 
 
 ## Behavioral eval
 
-Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, specialist-capability routing, specialist-discovered Human-choice aggregation, prototype-needed decision, whether-to-proceed/investment/long-lived-commitment decision, dependent Human-choice frontier, Ask interruption/reply, exploration/selection Goal, mixed constraint/implementation, replaceable implementation advice, Taskbook altitude, verification-command truth, partial-safe execution, implementation-vs-verification granularity, simple executable Goal, file materialization, and full re-delivery after Human correction.
+Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, specialist-capability routing, specialist-discovered Human-choice aggregation, prototype-needed decision, whether-to-proceed/investment/long-lived-commitment decision, dependent Human-choice frontier, Ask interruption/reply, exploration/selection Goal, mixed constraint/implementation, replaceable implementation advice, Taskbook altitude, settled-meaning carry-forward, verification-command truth, partial-safe execution, implementation-vs-verification granularity, simple executable Goal, file materialization, and full re-delivery after Human correction.
 
 Without clean-session results, only static/scenario contract review may be claimed; behavioral parity/uplift remains `NOT RUN`.
