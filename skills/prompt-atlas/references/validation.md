@@ -4,13 +4,13 @@ Eval / review only. Normal runtime must not read this file. It tests behavior an
 
 ## Static smoke
 
-1. The main Skill clearly separates **Capabilities** from **Flow**: Capabilities define what Prompt Atlas can judge and handle; `Take → Ground → Shape → Compile → Deliver` is only the playbook for one task and must not redefine or shrink the capability surface.
+1. The main Skill follows a mature taskbook structure: **roles/boundary → Research → Ask → Write → Deliver → writing rules → pre-delivery check**. Prompt Atlas expresses additional capability through judgment inside those actions rather than through lifecycle/status or a parallel terminology layer.
 2. When input is still a problem space or means-heavy, it does not rush into Taskbook writing; it first settles what Goal the Human will actually accept.
 3. Facts repo/runtime can decide are probed first; only choices reality cannot settle and that change Goal are asked of the Human; implementation How remains with the Executor.
-4. Ask batches currently known Human-owned choices with consequences/recommendation. After a partial answer, new constraint, interruption, or correction, Prompt Atlas resumes from the affected judgment and continues to Compile/Deliver once Goal is stable instead of remaining in acknowledgement/explanation mode.
+4. Ask batches currently known Human-owned choices with consequences/recommendation. After a partial answer, new constraint, interruption, or correction, Prompt Atlas resumes from the affected judgment and continues to Write/Deliver once Goal is stable instead of remaining in acknowledgement/explanation mode.
 5. Research stops when more context changes only How; authoritative specs are referenced directly; current workspace is reality, not a reason to require clean state or treat an existing diff as correctness proof.
 6. The Taskbook makes only truly authoritative requirements binding and keeps preferred implementation replaceable. Execution content stays at outcome/judgment/boundary/dependency altitude rather than a predicted file/helper/test checklist.
-7. In complex execution, the subset safe to advance now cannot replace or shrink the full Goal; only real dependencies that change execution choice are recorded.
+7. In complex execution, the subset safe to advance now cannot replace or shrink the full Goal; only real dependencies that change execution choice are recorded, and contingent future work is not pre-sliced into speculative tasks.
 8. Implementation granularity and Verification granularity are independent: implementation splits by result/judgment/dependency, Verification by completion claim / risk / authority, with no one-to-one requirement.
 9. Verification states what must be proven rather than prescribing debugging flow; the judge cannot be weakened to manufacture PASS, and extra trust checks appear only for a concrete false-green risk.
 10. Every successful Taskbook is materialized as the same complete body to an authoritative Markdown file outside repo/workspace and the real path is surfaced; chat-only delivery fails.
@@ -38,7 +38,7 @@ PASS: probe the first, ask the Human the second, leave the third to the Executor
 ### S4 — Ask is answered or interrupted, then output continues
 Prompt Atlas has asked two Human-owned choices. The Human answers only one and adds a new binding constraint.
 
-PASS: absorb the answer and new constraint, re-judge any remaining choice, and if Goal is now stable continue directly to Compile/Deliver. A reply that only acknowledges, repeats the prior Ask, or suppresses output because an Ask already happened fails.
+PASS: absorb the answer and new constraint, re-judge any remaining choice, and if Goal is now stable continue directly to Write/Deliver. A reply that only acknowledges, repeats the prior Ask, or suppresses output because an Ask already happened fails.
 
 ### S5 — A concrete plan mixes implementation with a real constraint
 The Human supplies a detailed implementation design; half could be replaced while preserving the requirement, while half is actually a compatibility commitment.
@@ -83,7 +83,7 @@ PASS: keep A/B as implementation work; Verification is the integration claim plu
 ### S13 — Known dependency plus future discovery
 Current reality proves `A → {B,C} → D`, while execution may expose additional contingent work later.
 
-PASS: write the relations that already change execution choice; do not intentionally expose only A, and do not predict contingent future work.
+PASS: write the relations that already change execution choice; do not intentionally expose only A, and do not predict contingent future work. Add future work only when Evidence makes it real.
 
 ### S14 — PASS may be false-green
 Visible verification can be bypassed with skip/mock/threshold changes, or it does not actually observe target behavior.
@@ -93,7 +93,7 @@ PASS: do not weaken the judge. Add only the minimum check that falsifies the con
 ### S15 — A simple Goal stays simple
 The Human already supplied a clear result, boundaries, and Verification, and repo reality introduces no upstream fork.
 
-PASS: Flow grounds quickly, then Compile/Deliver. A stronger capability surface must not force every task to expand all shaping/unknown/complex-execution capabilities.
+PASS: Research briefly, then Write/Deliver. Do not manufacture extra phases or questions merely to demonstrate Goal-shaping, Unknown, or complex-execution capability.
 
 ### S16 — Successful output must land in a file
 Goal is stable and Prompt Atlas has produced the complete Taskbook.
@@ -107,11 +107,22 @@ PASS: re-enter affected judgment and fully update the current artifact. If the o
 
 ## Comparison with Leader
 
-Leader is a strong taskbook/manager baseline, not the full definition of Prompt Atlas. Prompt Atlas must at least retain these proven capabilities: research facts before asking; batch real Human choices; reference existing specs; keep Taskbook at goal/judgment altitude instead of Research or predicted patch; treat Verification as an independent judging surface; and never let the Executor weaken the judge to manufacture success.
+Leader is Prompt Atlas's **structural and taskbook-quality baseline**: clear roles; stable Research → Ask → Write → Deliver actions; research facts before asking; batch real Human choices; reference existing specs; keep Taskbook at goal/judgment altitude; treat Verification as an independent judging surface; and never let the Executor weaken the judge to manufacture success.
 
-Prompt Atlas must additionally demonstrate upstream and handoff control: **settle Goal when input is not yet executable; absorb Human interruption/clarification after Ask and continue to output; route unsettled questions to the authority that can decide them; preserve Executor judgment over How; advance only safe work without losing full Goal; separate implementation granularity from Verification granularity; materialize every successful Taskbook to an authoritative file; and fully re-deliver after later Human changes.**
+Prompt Atlas must add upstream problem-solving and handoff control on top of that baseline: **settle Goal when input is not yet executable; absorb Human interruption/clarification after Ask and continue to output; route unsettled questions to the authority that can decide them; preserve Executor judgment over How; advance only safe work without losing full Goal; separate implementation granularity from Verification granularity; materialize every successful Taskbook to an authoritative file; and fully re-deliver after later Human changes.**
 
-If these differences are not observable in eval, Prompt Atlas has degraded into a weaker rewrite of Leader and fails the design goal.
+If its structure drifts away from a mature taskbook skill, or these additional capabilities are not observable in eval, Prompt Atlas has regressed.
+
+## Comparison with Wayfinder principles
+
+Prompt Atlas does not need Wayfinder's persistent map/ticket/tracker machinery, but complex problem solving should preserve the same class of principles:
+
+- prompt / plan is a map, not reality; repo/runtime/Evidence may correct it;
+- Goal acts as the destination, so currently safe work cannot replace the full Goal;
+- future work that cannot yet be specified stays unresolved rather than being pre-sliced from fog into precise-looking tasks;
+- Evidence materializes later work when it becomes real, and an invalidated premise only invalidates dependent work/Verification rather than forcing still-valid work to restart.
+
+These are problem-solving capabilities, not required runtime terminology or a persistent issue-map protocol.
 
 ## Behavioral eval
 
