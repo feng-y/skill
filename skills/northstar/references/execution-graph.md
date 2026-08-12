@@ -1,40 +1,23 @@
-# 执行图：静态编排与运行时演化
+# Execution Graph Judgment
 
-不要为了画 Graph 先拆 Task。只有当前 Task 粒度会掩盖**会改变执行判断的关系**时才使用 Graph：真实 dependency、并行、shared write、有意义的 Task Group boundary 或 join。
+只由 [execution-compile.md](execution-compile.md) 在多个 work unit 之间确有真实 **dependency / parallel / shared write / join / Evidence-contingent relation** 时读取。Graph 只拥有 execution relation，不拥有 Goal、Task taxonomy、Verification authority、state machine 或 scheduler。
 
-Graph 只承载**当前 Evidence 已经支持的执行关系**。它不是 semantic SOT、未来工作清单、scheduler 或 workflow model。
+## Compile current relations
 
-## 静态编排
+只表达当前 Evidence 已支持、会改变执行判断的关系：
 
-编译当前 Evidence 支持的 **decision-complete Graph**：把当前已知、会改变 execution judgment、且边界足够稳定的必要 work / relation 一次表达清楚；不为了 lazy 故意隐藏，也不因为“完整”枚举 file/symbol/patch detail。仍实质依赖未来 Evidence 的 contingent work 不提前猜。
+- `depends on`：下游真实消费上游结果，或上游是安全执行前提；
+- `may run in parallel`：没有 dependency，也没有 material write conflict；
+- `shared write`：多个 work 会修改同一 authoritative surface，需要显式 ownership / ordering；
+- `join`：组合 outcome / Verification 与各分支局部完成实质不同；
+- `re-verify after`：后续 work 已知会使已有 Evidence 失效。
 
-- `depends on`：只有下游确实消费上游结果，或上游是安全执行前提时才写；
-- `may run in parallel`：没有 dependency 和 write conflict 时才写；
-- Task Group / join：只有组合 Verification 与局部检查实质不同且关系已经成立时才写；
-- re-verification：只有后续工作已知可能让已有 Evidence 失效时才写。
+省略纯顺序偏好和传递依赖。当前 Evidence 已证明 `A → {B,C} → D` 就一次编译，不故意只给 A；真正依赖未来 Evidence 才知道是否存在的 work 不提前猜。
 
-省略传递依赖和单纯先后顺序，不为了让 Graph 看起来完整制造 node；但当前 Evidence 已经能确定 `A → {B,C} → D` 时，就直接编译这个结构，不故意退化成只给 A。
+## Let Evidence evolve only affected relations
 
-只有 B/C/D **是否存在、影响范围或必要关系**仍取决于 A 的未来 Evidence 时，才只编译当前已知结构与 decision boundary；等运行时 Evidence 到来后，只把真正成立的后续工作加入同一本 Graph。
+运行时新 Evidence 只修改受影响的 remaining Graph：真实 prerequisite / consumer 出现则增加必要 relation；旧 dependency 被证明不存在则删除；implementation reality 改变时可拆分、合并或重排剩余 work。已完成 work 只有其 Evidence premise 或所证明行为被影响时才重开。
 
-## 运行时演化
+一个 branch blocked 不应冻结独立 ready branch；join 只等待真实 required upstream result。**Ready frontier 只是现在能做什么，不能反向缩小 Human Goal，也不能把当前可见工作命名成新的 Layer/阶段 Goal。**
 
-Executor 面对当前 ready frontier。新 Evidence 只调整剩余 Graph：
-
-- 新的真实 prerequisite、consumer 或 affected surface 被证明存在 → 在受影响下游前增加必要 work；
-- 原 dependency 或 branch 被证明不存在 → 删除，让 ready work 继续；
-- implementation reality 改变 → 拆分、合并或重排剩余 Task；
-- 一个分支 Blocked，但其他分支独立 → 继续 ready work；
-- join 只等待真实 required upstream result；
-- actual change surface、binding/config、provider validity 或组合行为使新的 Verification obligation/action 真实适用 → 把该 verification/probe 作为当前 execution action 放在最低有意义边界；
-- 已编译 Verification 的 scope/placement 被新 Evidence 推翻 → 只修正受影响部分。
-
-这里不创建 ImplementationNode / ProbeNode / VerificationNode 等 taxonomy：实现、probe、verification 都只是当前需要执行的 action，Graph 只表达它们之间真实存在的关系。**Evidence 是 action 的 reality output，Completion Hook 是 Taskbook 的 judgment；两者都不是 Graph node。**
-
-已完成工作不因 Graph 改写机械重开；只有它的 Evidence 前提或所证明行为被影响时才重新取证。
-
-Task Group 仍然只是普通 Task 之上的 Verification boundary。不要增加 Graph object/schema、persistent Graph state、scheduler、固定 Agent topology 或第二本 taskbook。repo/runtime 已有正常 progress record 就复用；没有就直接在当前执行上下文维护 frontier。
-
-稳定规则只有一句：
-
-> **当前 Evidence 已经使其成为必要且稳定的 execution relation 一次编译；真正 contingent 的 work / Verification 由 Evidence 使其成为现实时再扩展 Graph。**
+Graph 不创建 ImplementationNode / ProbeNode / VerificationNode 等 taxonomy；这些都只是 work/action。Evidence 是 reality output，不是 node。不要增加 persistent Graph object、第二本 taskbook、固定 Agent topology 或 manager/scheduler。
