@@ -1,28 +1,9 @@
-# Verification Trust
+# 当 PASS 可能撒谎
 
-只在 visible Verification 可能产生**具体且 material 的 false-green / gameability / independence 风险**时读取。正常 Verification scope、provider trigger、Evidence freshness/reuse 由 [execution-compile.md](execution-compile.md) 拥有；本文件只判断“这个 PASS 能不能信”。
+只在存在一个具体风险：**实现其实错了，但当前验证仍可能显示 PASS** 时读取。没有这个风险，就回 `execution-compile.md` 的正常验证，不再加机制。
 
-## Trust question
+先说清失败会怎么漏过去。常见情况只有几类：验证没有真正观察目标；实现者能修改或绕过判据；固定样本很容易被针对；失败不会传播；关键结论只能靠实现者自己宣称。
 
-没有 binding independence requirement 时只问：
+然后只补能反证这个风险的最小检查。例如制造一次受控失败确认报警真的会响，换一个实现者事先不知道的样本，或让未参与实现的主体在权威环境重新取证。额外检查必须来自同一个公开 Goal，不能偷偷增加新要求。
 
-> 是否存在一个具体 failure mode，使 Goal / required Verification 没有真正成立时，Executor 仍可能得到 visible PASS？
-
-没有就停止增加 trust mechanism。一般 uncertainty、coverage 未完全展开或“多验一次更放心”都不是 trust gap。
-
-常见 material gap 是：judge 没有真实观察目标；Executor 可以修改/绕过 oracle；固定样本可被针对优化；关键失败不能传播；决定性 Evidence 只能由实现者自报。
-
-## Judge integrity
-
-除非 Human/repo authority 明确允许且仍有等价可信证明，否则不得通过 skip/todo、放松断言或 coverage、删活体测试、mock 绕过真实对象、改阈值、吞失败传播或修改验收脚本制造 PASS。
-
-关键 judge 可能空跑、假绿或静默失效时，可以制造一次受控局部失败确认失败信号，再恢复并运行正常 Verification。这个 reverse check 只证明 judge 能报错，不代替 Goal behavior Evidence。
-
-## Additional trust Evidence
-
-只有前面的具体 gap 能被额外观察反证时，才增加最小 trust Evidence：
-
-- **isolated/private check**：从同一个公开 Goal / Verification requirement 推导，不增加隐藏要求；必须在执行前形成并保持隔离，否则按 visible check 计算；
-- **independent Evidence**：关键 claim 不能由参与实现的同一推导链可信证明时，由未参与实现的主体在 authoritative environment 重新取证。是否使用相同模型/provider 本身不决定独立性。
-
-这些不是固定 Acceptance workflow，也不要求每个任务都存在。必要 trust Evidence 拿不到时准确报告 evidence gap，不能降级成 PASS。
+无论哪种方式，都不能通过 skip/todo、放松断言、删活体测试、mock 绕过目标、改阈值、吞失败或修改验收脚本来制造绿灯。必要的反证拿不到时就准确报告 evidence gap，不能降级成 PASS。
