@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "收敛 Human intent，路由 Unknown，再编译任务"
-  default_prompt: "使用 $northstar。先做 Intent Take/Shape：从 Human 最新表达区分 outcome、means、constraints，用 repo/runtime authority 关闭事实 Unknown，把会改变 completed-world semantics 的选择留给 Human，把 implementation How 留给 Executor；Goal 收敛后再编译 minimum-sufficient Taskbook。"
+  short_description: "先定准 Human 要的结果，再写给 Executor"
+  default_prompt: "使用 $northstar。先确认 Human 最终要什么；能由 repo/runtime 查清的事实自己查，只把现实无法决定、且会改变完成结果的选择问回 Human。Goal 定准后，只写 fresh Executor 不知道就可能判断错或无法证明完成的信息；实现 How 留给 Executor。"
