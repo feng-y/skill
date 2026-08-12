@@ -19,9 +19,11 @@ Taskbook 保持 `Goal → Execution → Verification → Evidence` 的因果链�
 
 自己能查的事实不问 Human。已有 authoritative tests/schema/ADR/Architecture Intent/验收脚本直接引用，不再复制一份；当前 workspace 中仍有效的修改就是 starting reality，不默认要求 clean state。继续 Research 只会改变 How 时就停。
 
-未决问题不统一变成 Research 或 Ask。普通的 Goal/How 难分、隐藏约束或要求冲突，读 [intent-shaping.md](references/intent-shaping.md)。如果多个耦合 Unknown 或 source alignment 让 Goal / Taskbook 还不能决策完整，且当前环境有 `$unknowns-first`，交给它；如果继续文字讨论仍不能可靠决定，而一个廉价、可丢弃的具体产物能显著提高判断质量，就用可用的 prototype / concrete-sample capability（`$unknowns-first` 可承担这类 local move）；prototype 只回答当前决策问题，不是 Goal 实现，结论再合回 Goal / Taskbook。如果真正未定的是长期模块责任、边界、依赖方向或 Target Architecture，且有 `$architecture-evolution`，交给它判断。Northstar 只把 specialist 返回的当前 decision / Evidence 合回 Goal 或 Taskbook，不复制其协议、不把它变成第二份任务书。对应 capability 不可用时，只做关闭当前 Goal / Taskbook 所必需的最小等价判断；只影响 How 的问题仍留给 Executor。
+未决问题不统一变成 Research 或 Ask。普通的 Goal/How 难分、隐藏约束或要求冲突，读 [intent-shaping.md](references/intent-shaping.md)。如果多个耦合 Unknown 或 source alignment 让 Goal / Taskbook 还不能决策完整，且当前环境有 `$unknowns-first`，交给它；如果继续文字讨论仍不能可靠决定，而一个廉价、可丢弃的具体产物能显著提高判断质量，就用可用的 prototype / concrete-sample capability（`$unknowns-first` 可承担这类 local move）；prototype 只回答当前决策问题，不是 Goal 实现，结论再合回 Goal / Taskbook。如果真正未定的是长期模块责任、边界、依赖方向或 Target Architecture，且有 `$architecture-evolution`，交给它判断。
 
-**2. Ask。** 只问 reality 无法决定、而答案会改变 Human 最终接受 Goal 的选择。把**当前前提已经闭合、可以独立回答**的 Human-owned 选择尽量一轮问全，说明它会改变什么、主要后果和推荐；依赖另一个尚未拍板选择的问题先不问，等前提关闭后再展开。事实题自己查，只影响 How 的问题留给 Executor。
+Specialist 负责 Evidence、option、artifact 和暴露 decision surface；凡最终需要 Human 拍板且会改变 Goal 的 choice，一律返回 Northstar，合并进当前 Ask frontier，specialist 不自行串行 Ask / 关闭。prototype 需要 Human reaction 时同样如此。Northstar 只把 specialist 的当前 decision / Evidence 合回 Goal 或 Taskbook，不复制其协议、不把它变成第二份任务书。对应 capability 不可用时，只做关闭当前 Goal / Taskbook 所必需的最小等价判断；只影响 How 的问题仍留给 Executor。
+
+**2. Ask。** Northstar 是 Goal-level Human decision 的唯一 Ask owner。只问 reality 无法决定、而答案会改变 Human 最终接受 Goal 的选择。把**当前前提已经闭合、可以独立回答**的 Human-owned 选择尽量一轮问全，说明它会改变什么、主要后果和推荐；依赖另一个尚未拍板选择的问题先不问，等前提关闭后再展开。事实题自己查，只影响 How 的问题留给 Executor。
 
 Human 可能只回答一部分、插入新约束、纠正前提或中断。每次都以最新 Human 输入为准，保留仍有效判断，只重开受影响部分；一旦 Goal 已足够稳定，就继续写书，不能因为之前 Ask 过而停在确认、解释或 delta。Human 不在场而必须先做选择时，只能采用可回退、且不会改变 Goal、允许修改范围、Verification 或授权的显式默认，并保留依据。
 
@@ -45,15 +47,15 @@ Taskbook 交付不是 completion state。Human 后续任何 material clarificati
 
 **不要提前切完未知的未来。** 当前 reality 只能支持先做一部分时，只缩当前可推进工作，不缩 Human 的完整 Goal。只写已经会改变执行选择的真实依赖；必须等执行 Evidence 才能知道的后续工作，等它变得真实再加入，不提前把还不能说明的未来切成假任务。新的 Evidence 推翻某个前提时，只重算依赖这个前提的工作和 Verification，其他仍有效部分继续复用。
 
-**开发和 Verification 分别切。** 开发按结果、判断和真实依赖拆；Verification 按 completion claim、风险和 authoritative Evidence 拆。两者不要求一一对应：一个 Verification 可以覆盖多项开发，一个开发也可能需要多种 Evidence。Verification 固定“Goal 完成必须证明什么”，不规定 Executor 的 debugging flow，也不因为某个 test 靠近某项代码改动就把它当成 Goal 完成证明。
+**开发和 Verification 分别切。** 开发按结果、判断和真实依赖拆；Verification 按 completion claim、风险和 authoritative Evidence 拆。两者不要求一一对应：一个 Verification 可以覆盖多项开发，一个开发也可能需要多种 Evidence。Verification 固定“Goal 完成必须证明什么”，不规定 Executor 的 debugging flow，也不因为某个 test 靠近某项代码改动就把它当成 Goal 完成证明。Taskbook 若固定 concrete verification command / target / parameter，必须有 reality Evidence 证明它存在且确实验证对应 claim；否则只固定 verification obligation，让 Executor 在真实环境里选择并验证具体命令。
 
 **失败不能伪装成功。** 不能通过 skip/todo、放松断言、删活体测试、mock 掉目标、吞失败或 `|| true` 制造 PASS。较长 run 使用现有 `implement-notes` 保存 progress、关键 decision/Evidence、blocker 和 resume point；新 session 只重做前提变化或 Evidence 失效的部分，不另造第二份 Taskbook、持久 Graph 或 manager state。
 
 ## 发出前自检
 
-1. Goal 和 means 分开了吗？Human 真正必须拍板的选择都已 Ask，能查的事实没有甩给 Human？需要 specialist resolution 或 concrete prototype 的问题有没有被通用 Research/Ask 吞掉？
+1. Goal 和 means 分开了吗？Human 真正必须拍板的选择都已回到 Northstar Ask frontier，能查的事实没有甩给 Human？需要 specialist resolution 或 concrete prototype 的问题有没有被通用 Research/Ask 吞掉？
 2. Taskbook 是否引用现有 authority，而不是制造第二份 SOT？`must / must not` 是否都有真实 authority？
 3. 执行内容是否仍在 outcome / judgment / responsibility / dependency 高度，而不是 predicted patch 清单？
 4. 当前可推进范围有没有偷换完整 Goal？未来 contingent work 有没有被提前猜成任务？
-5. 开发粒度和 Verification 粒度是否各自按自己的判断设计？完成证明是否覆盖真实 Goal，且没有假绿捷径？
+5. 开发粒度和 Verification 粒度是否各自按自己的判断设计？完成证明是否覆盖真实 Goal，且没有假绿捷径？固定的 concrete verification command 是否有 reality Evidence？
 6. 成功 Taskbook 是否以同一完整正文落到 authoritative file 并显示真实 path？Human 新输入后是否重新完整交付，而不是只回复 delta？
