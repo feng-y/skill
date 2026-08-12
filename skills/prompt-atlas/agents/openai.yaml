@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
-  short_description: "Settle Human intent, route Unknowns, then compile the task"
-  default_prompt: "Use $prompt-atlas. Start with Intent Take/Shape: separate outcome, means, and constraints from the Human's latest wording; close factual Unknowns through repo/runtime authority, keep completed-world choices with the Human, and leave implementation How to the Executor. Compile a minimum-sufficient Taskbook only after Goal converges."
+  short_description: "Settle the Human outcome, then write for the Executor"
+  default_prompt: "Use $prompt-atlas. First settle what result the Human actually wants. Investigate facts repo/runtime can decide; ask the Human only for choices reality cannot make and that would change the completed outcome. Once Goal is clear, keep only what a fresh Executor could otherwise misjudge or fail to prove; leave implementation How to the Executor."
