@@ -1,45 +1,50 @@
-# Autonomous handoff guidance
+# Complex Execution Compile
 
-Read only when a simple task definition is not enough for longer autonomous execution.
+Read only after Goal is stable when a fresh Executor needs multiple work units, execution-time discovery, baseline / resume state, or non-trivial Verification to complete independently. Goal semantics, Unknown ownership, and final artifact transport remain owned by `SKILL.md`.
 
-```text
-Goal
-  ↓
-Execution / Graph
-  ↓
-Verification
-  ↓
-Evidence
-```
+## Output filter
 
-This is an interface, not a process template. The Taskbook defines target state and proof of completion; the Executor materializes How.
+Compile is an output filter, not a Research transcript. Before carrying a fact into the Taskbook ask:
 
-## Goal
+1. Can the Executor reliably recompute it from authoritative reality at low cost? If yes, prefer a discriminator over inventory / line / patch detail.
+2. Would omission materially increase the risk of wrong scope, wrong preserve/remove judgment, wrong Verification, or unsafe execution? If yes, keep that trap / counterexample / non-obvious reality.
 
-Keep the Human-owned outcome plus only the priority / boundary / must-preserve constraints that genuinely limit execution choices. A proposed implementation from the Human is a hypothesis by default unless Human or repo authority explicitly makes it binding.
+More Evidence should compress into fewer, more stable judgments rather than more instructions.
 
-Prefer existing repo specifications: tests, schemas, ADRs, Architecture Intents, acceptance scripts, and executable references. Do not translate them into a weaker prose copy.
+## Work units
 
-## Execution
+A Task is normally **outcome + judgment** so the Executor can handle a whole same-shaped surface under one stable discriminator; it is not an executable delta, file list, or predicted patch. Split only when outcome, judgment, dependency, authority, risk, or required Verification materially differs.
 
-Split work only when judgment or dependency genuinely differs. Graph expresses real dependencies; it does not turn files, functions, BUILD edits, or debugging order into nodes.
+For an open surface, provide discriminator + territory and let the Executor scan it. Do not turn discovered instances into a closed checklist. Human-confirmed strategy / priority / boundary / must-preserve remain binding and must not be shrunk because the current ready frontier is smaller.
 
-Ordinary factual / implementation Unknowns stay with the Executor to resolve from current repo reality. Reopen an upstream decision only when the conclusion would change Goal / authority.
+Still-valid working-tree changes aligned with Goal are starting reality; they are reusable but are not correctness Evidence, and they do not require a clean checkout.
 
-Still-valid work / Evidence aligned with the Goal can be reused. New Evidence stales only conclusions that depend on it.
+**Task 0** closes only a small fact that truly blocks the first safe material work, or a binding Verification trigger that must be settled before material work. It is not a second Research phase, full inventory, or default preflight.
+
+## Starting baseline
+
+Only baselines that carry coverage / attribution / stale detection belong in the Taskbook. Commands, targets, and arguments must come from real authority; if the environment is unavailable, require the Executor to verify them rather than inventing them.
+
+A baseline used as an execution premise is recomputed before first affected material work. Mismatch stales only work / Evidence that depends on that premise; repair affected Execution / Verification while reusing unrelated still-valid state.
+
+## Graph
+
+Stay linear when there is no real relation. Only when multiple work units have judgment-changing **dependency, parallel, shared-write, join, or Evidence-contingent relations** read [execution-graph.md](execution-graph.md). Task size alone does not justify a Graph.
 
 ## Verification / Evidence
 
-State what must be proven for completion, not the debugging workflow. Prefer authoritative Human / repo checks. If a baseline matters, keep only signals that genuinely carry coverage / attribution and ground them in current reality.
+Freeze **what completion must prove**, not debugging / failure-localization workflow. If provider, target, or scope depends on actual change surface / binding / runtime reality, compile a stable trigger/authority and let the Executor materialize the concrete action when triggered.
 
-Evidence must support the real completion claim rather than activity narration or self-declared PASS. If verification fails, fix the implementation or report accurately; do not weaken the judge to manufacture success. Read [verification-trust.md](verification-trust.md) only for a concrete false-green / gameability / independence risk.
+Research candidates do not automatically gain hard acceptance authority. `0-hit / 0-count` becomes binding only when the object is proven to belong to target responsibility and zero itself carries the completion claim; otherwise use a discriminator + coverage oracle.
 
-## Handoff
+Evidence must actually run, cover the claim, and propagate failure. Evidence whose premise remains valid may be reused; new Evidence stales only dependent conclusions. Read [verification-trust.md](verification-trust.md) only for a concrete false-green / gameability / independence risk.
 
-Stay minimum-sufficient. Research details the Executor can reliably reconstruct do not belong in the Taskbook; keep only non-obvious facts whose omission would cause a wrong Goal, boundary, or verification decision.
+## Success and failure judgment
 
-Write the complete current Taskbook to an OS/runtime-provided Markdown artifact outside the current repo/workspace. The artifact carries the task definition only; do not add ready/completed/executable metadata. For a revision, update the current Taskbook when possible; if that path is not writable, write the revision to an available runtime artifact and surface the actual authoritative path.
+The Executor may stop only when Goal contract + triggered required Verification + current valid Evidence cover the completion claim; an empty frontier is not completion proof.
 
-`implement-notes` stores only Executor progress, material decisions / Evidence, blockers, and resume point.
+Failure needs an executable path too: when a trusted baseline goes green→red, restore it or report accurately; when the same route repeatedly fails without new Evidence, do not grind indefinitely—change to an evidence-backed strategy, switch to independent ready work, or report blocker/non-PASS. Never manufacture PASS by skip/todo, weakened assertions, deleting live tests, mocking away the target, swallowing failure, `|| true`, or equivalent judge weakening.
 
-Keep autonomous Taskbooks short; when content grows, remove duplication and implementation intelligence before adding more guidance.
+## Durable execution state
+
+Use existing `implement-notes` only for execution progress, new Unknowns, material decisions/Evidence, blockers, and resume point. A new session restores it and redoes only work whose premise changed or Evidence became stale. It does not store Prompt Atlas outcome completion state or become a second Taskbook.
