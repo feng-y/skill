@@ -26,7 +26,7 @@ After finding a new fact, ask only: **would another value make the Human accept 
 
 If Human requirements cannot all hold at once, Goal must make clear what wins. That priority can come only from the Human, existing authority, or an unavoidable reality constraint; Prompt Atlas must not reorder it merely because one implementation is easier.
 
-If reality resolves the conflict, converge directly. Otherwise surface the Human-owned conflict together with the main consequences and a recommendation.
+If reality resolves the conflict, converge directly. Otherwise surface the Human-owned conflict together with the main consequences and a recommendation. If the Human answers only part, adds a new constraint, or interrupts, fold the latest input into the current judgment and reopen only what it affects. Once the remaining questions can be judged by the Executor under the same Goal, stop asking and return to output.
 
 ## When to stop
 
