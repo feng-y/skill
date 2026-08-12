@@ -2,7 +2,7 @@
 
 Read only when ordinary interpretation plus reality checks still cannot determine which Goal the Human will ultimately accept.
 
-If the problem is no longer one Goal-vs-How or Human-choice judgment, but coupled Unknowns need a map/source-alignment pass or long-lived module responsibility, boundary, or dependency direction needs architecture judgment, return to the main Skill and route to the corresponding specialist capability. Do not grow a parallel process here.
+If the problem is no longer one Goal-vs-How or Human-choice judgment, but coupled Unknowns need source alignment or long-lived module responsibility, boundary, or dependency direction needs architecture judgment, return to the main Skill and route to the corresponding specialist capability. Do not grow a parallel process here.
 
 ## Is this Goal or How?
 
@@ -16,13 +16,11 @@ No means it expresses a result, boundary, risk commitment, or Verification requi
 
 A concrete current implementation, class/provider, or detailed plan does not automatically elevate How into Goal. Conversely, when the Human explicitly requires a representation / compatibility / provider because that representation itself is a business or technical commitment, it may be part of Goal.
 
-## Do not mistake the map for reality
+## Correct the current Goal hypothesis with reality
 
-The prompt, current plan, and Prompt Atlas itself are maps. The repo, runtime, historical constraints, and real consumers may expose facts the map omitted but that can still change Goal.
+The Human's current wording and an existing plan may omit facts that would change Goal. Only when they can change the result the Human will ultimately accept, inspect authoritative specs or precedents, real consumers, external contracts, serialized/config identity, deployment or authorization constraints, and the actual relationship between current workspace work and Human Goal.
 
-Prefer checking differences such as authoritative specs or precedents, real consumers, external contracts, serialized/config identity, deployment or authorization constraints, and the real relationship between current workspace work and Human Goal. These are lenses, not a checklist.
-
-After finding a new fact, ask only: **would another value make the Human accept a different Goal?** If not, stop expanding.
+After finding a new fact, ask only: **would another value make the Human accept a different Goal?** If not, stop expanding. If the differences have become coupled enough to need a full unknown/source map, return to the main flow and let the specialist owner handle it.
 
 ## When requirements conflict
 
