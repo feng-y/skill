@@ -1,188 +1,153 @@
 # Prompt Atlas Validation
 
-Use only for explicit review / smoke / eval. Normal Prompt Atlas runtime must not read this file. **This file is a behavioral regression corpus, not a runtime specification source.** Cases exist only to expose failure properties. Domain, subsystem, file, and data-structure nouns must be replaceable; if changing those nouns changes the PASS criterion, the scenario is over-specialized. Do not copy scenario wording back into SKILL/runtime.
-
-```text
-Goal
-  ↓
-Execution / Graph
-  ↓
-Verification
-  ↓
-Evidence
-```
-
-This is compiler ownership / proof chain, not an output template. Validation asks whether the Taskbook covers the Executor's real decisions with minimum-sufficient information, not whether it looks information-complete.
+Eval / review only. Normal runtime must not read this file. It tests behavior and does not require runtime to use particular terminology.
 
 ## Static smoke
 
-1. **Goal fidelity**: Goal is a Human-owned outcome, not a model-selected patch shape. Internal shape becomes success criteria only when Human/repo authority requires it or the shape itself is a Goal invariant.
-2. **Decision priority**: when Goal properties may conflict, the Taskbook carries a precedence order so unlisted cases can be decided without enumerating every contingency.
-3. **Bidirectional boundary**: both allowed territory and forbidden territory are clear; absence from a blacklist does not imply permission across the repo.
-4. **Compile output filter**: Research findings do not automatically survive into the Taskbook. Details that can be cheaply and reliably recomputed from authoritative repo reality are omitted when their absence will not mislead judgment; traps whose omission can cause wrong scope/preserve/remove/Verification decisions must remain.
-5. **Decision-complete, not information-complete**: necessary work/relations already established by current Evidence must not be hidden merely for progressive execution, but file/symbol/line/include inventories and patch plans do not gain output authority merely because Research knows them.
-6. **Task abstraction / Executor judgment**: Tasks are outcome + judgment. An open same-shaped surface covered by one discriminator is scanned by the Executor; enumerate paths/files only when the set is closed, cannot be reliably inferred, and enumeration itself is the decision rule. Ordinary technical Unknowns stay with the Executor whenever Goal/priority/boundary/authority already support a safe decision; unresolved status alone does not make them Human decisions. If several genuine Human-owned blockers are already known for the same handoff, surface them together rather than serially turning them into model defaults.
-7. **Law vs intelligence**: `must/must not` comes only from Human, repo authority, or verified reality. High-confidence model implementation advice remains reversible intelligence.
-8. **Graph discipline**: Graph expresses only real dependency / parallel / shared-write / join relations. It does not turn executable deltas, Verification, Evidence, or Completion Hook into nodes or create a Graph engine/scheduler. Necessary relations already known and stable are expressed once, without using “complete” as a reason to enumerate patch detail.
-9. **Starting baseline**: keep only reproducible baseline signals that act as coverage or attribution anchors; never invent commands/targets. Any baseline used as a scope/coverage/attribution premise must be recomputed with the same authoritative probe before the first affected material work. A mismatch stales dependent assumptions/Evidence and pauses work that depends on that premise until affected state is repaired from current reality; unrelated work/Evidence remains reusable.
-10. **Verification authority / candidate discipline**: freeze what must be proven, not debugging workflow. Scope follows real reachability/effective binding/repo authority. A Research candidate acquires concrete acceptance authority only after Evidence/authority establishes that it belongs to the completion claim; discovery alone never turns its name into law.
-11. **Evidence / provider validity**: Evidence must be reviewable and cover the judgment and completion claim; open surfaces do not default to per-file/per-symbol ledgers. test/build/replay/static providers are claims until shown to actually run, cover the claim, and propagate failure. Self-reported `PASS` is not Evidence.
-12. **Judge integrity**: green created through `.skip`/todo, weakened assertions, deletion of live tests, mocking away the subject, threshold changes, swallowed errors, or `|| true` is invalid. Reverse/private/independent Evidence activates only when real false-green/gameability risk requires it.
-13. **Completion success path**: `STOP` only when Goal / constraints + triggered required Verification + current valid Evidence close coverage. Empty Tasks/frontier is not completion by itself.
-14. **Completion failure path**: after the same Verification fails three times with no new Evidence, stop pushing the same route; switch to an evidence-backed strategy/independent work or report accurate non-PASS. If a trusted baseline goes green→red, restore it or report the regression honestly.
-15. **Durable state**: execution progress, new Unknowns, blockers, key decisions/Evidence, and resume point live in existing `implement-notes`; a new session restores it instead of using conversation as the only state.
-16. **Taskbook size**: autonomous Taskbooks default to ≤4000 characters; when over, compress judgment and remove duplication / implementation intelligence first, rather than splitting one Human Goal into artificial layers.
-17. **Role boundary / material handoff**: Prompt Atlas STOPs after ordinary text output is delivered. An autonomous Taskbook is delivered only after it is actually written outside the repo/workspace and its authoritative path is surfaced; only then may Prompt Atlas STOP. It may inspect reality/run probes for compilation, but it does not perform material Goal work, mutate the target workspace toward the Goal, or launch an Executor.
-18. **Semantic altitude**: the Taskbook compiles what counts as correct instead of turning a Research-predicted mechanism into judgment. A statement naturally belongs in the task when a materially different implementation can still satisfy it and remain acceptable. If an implementation shape must be fixed, Human/repo/upstream authority must make it binding. Any unresolved choice that still changes completed-world semantics stays upstream instead of being filled with How.
-19. **Correction re-entry / continuation**: Human correction re-enters at the highest affected semantic layer, and dependent lower-layer conclusions become stale and are re-derived. After a material correction, reconverge from that layer: while Human-owned upstream intent / authority remains unsettled, remain `Unresolved Intent`; once it reconverges to an executable handoff, re-deliver the updated authoritative Taskbook before reaching `Executable`. A correction that changes only a lower-layer tactic does not mechanically reopen still-valid higher-level judgment; acknowledgment, explanation, or a conversation-only delta is not completion.
+1. The main Skill follows a mature taskbook structure: **roles/boundary → Research → Ask → Write → Deliver → writing rules → pre-delivery check**. Prompt Atlas expresses additional capability through judgment inside those actions rather than through lifecycle/status or a parallel terminology layer.
+2. When input is still a problem space or means-heavy, it does not rush into Taskbook writing; it first settles what Goal the Human will actually accept.
+3. Unsettled questions route to the resolution owner that can actually close them: ordinary facts are probed directly; coupled Unknown / source-alignment / full-map problems route to `$unknowns-first` when available; when text discussion cannot decide reliably but a cheap concrete artifact would improve judgment, use an available prototype / concrete-sample capability; long-lived module responsibility/boundary/dependency-direction/Target-Architecture judgments route to `$architecture-evolution` when available; implementation How stays with the Executor. Specialists own Evidence / options / artifacts / decision surfaces only; any choice that still requires the Human and would change Goal must return to the Prompt Atlas Ask frontier rather than being serially asked or closed by the specialist.
+4. Ask batches the Human-owned choices whose prerequisites are already settled and that can be answered independently now, with consequences/recommendation. Downstream choices that still depend on an open Human decision are not asked early. After a partial answer, new constraint, interruption, or correction, Prompt Atlas resumes from affected judgment and continues to Write/Deliver once Goal is stable.
+5. Research stops when more context changes only How; authoritative specs are referenced directly; current workspace is reality, not a reason to require clean state or treat an existing diff as correctness proof.
+6. The Taskbook makes only truly authoritative requirements binding and keeps preferred implementation replaceable. Execution content stays at outcome/judgment/boundary/dependency altitude rather than a predicted file/helper/test checklist.
+7. In complex execution, the subset safe to advance now cannot replace or shrink the full Goal; only real dependencies that change execution choice are recorded, and contingent future work is not pre-sliced into speculative tasks.
+8. Implementation granularity and Verification granularity are independent: implementation splits by result/judgment/dependency, Verification by completion claim / risk / authority, with no one-to-one requirement.
+9. Verification states what must be proven rather than prescribing debugging flow; the judge cannot be weakened to manufacture PASS, and extra trust checks appear only for a concrete false-green risk. If the Taskbook fixes a concrete verification command / target / parameter, reality Evidence must already show that it exists and actually proves the intended claim; otherwise only the verification obligation is fixed.
+10. Every successful Taskbook is materialized as the same complete body to an authoritative Markdown file outside repo/workspace and the real path is surfaced; chat-only delivery fails.
+11. After either an Ask or a prior Taskbook delivery, material Human clarification/correction reopens affected judgment and fully re-delivers the current Taskbook. Previous Ask/delivery is not completion state. Specialist / prototype output is folded back only as current decision/Evidence; it never becomes a second Prompt Atlas SOT or binding implementation.
 
-Static smoke must be **19/19 PASS** before behavioral comparison.
+Static smoke must PASS 11/11.
 
 ## Scenario smoke
 
-The scenarios below are replaceable stimuli, not product cases. Review must perturb nouns/domains at least once and verify that the PASS property does not depend on the concrete domain.
+### S1 — Human names a How
+The Human says “use Redis to make it faster,” while the repo supports other credible paths.
 
-### S1 — Simple local change stays simple
-A local change has one outcome, one direct verification path, and no real Graph relationship.
+PASS: Prompt Atlas recovers the actual performance Goal. Redis becomes fixed only when Human/repo authority makes Redis itself non-replaceable.
 
-PASS: one linear outcome+judgment Task plus minimum-sufficient Verification. Autonomous-contract machinery must not force priority tables, Graph structure, full baselines, or complex checklists into a simple task.
+### S2 — Human supplies only a problem space
+The Human says “modernize this legacy module,” while reality supports several materially different finished outcomes.
 
-### S2 — Deep Research compresses instead of expanding
-Research knows exact line numbers, dependency edits, and a high-confidence patch plan.
+PASS: Prompt Atlas does not rush into Taskbook writing. It first looks for reality that removes branches, then handles only unsettled judgments that can still change Goal.
 
-PASS: the Taskbook keeps only outcome, boundary, traps, judgment, and required Verification that change Executor decisions; implementation design stays with the Executor. Deeper Research must not mechanically make the Taskbook longer.
+### S3 — Three unsettled questions appear together
+One question is repo-factual, one changes the Goal the Human will accept, and one changes only code How.
 
-### S3 — Internal shape is not silently promoted to Goal
-The Human asks to retire or reorganize an internal implementation while preserving the external outcome; the target territory also contains shared structure serving another live responsibility.
+PASS: probe the first, ask the Human the second, leave the third to the Executor. Do not collapse them into “ask all” or “research all.”
 
-PASS: an internal directory/type/layout is not silently promoted into a “must disappear” success criterion that forces unrelated relocation. Internal shape belongs in Goal only when Human/repo/upstream authority makes that shape itself an invariant.
+### S4 — Ask is answered or interrupted, then output continues
+Prompt Atlas has asked two Human-owned choices. The Human answers only one and adds a new binding constraint.
 
-### S4 — Open surface keeps the judgment
-Same-shaped residue is spread across an open territory. Research found several instances and more remain unclassified.
+PASS: absorb the answer and new constraint, re-judge any remaining choice, and if Goal is now stable continue directly to Write/Deliver. A reply that only acknowledges, repeats the prior Ask, or suppresses output because an Ask already happened fails.
 
-PASS: the Task states outcome + stable discriminator and the Executor scans the full territory. Discovered instances do not become a closed task list, and unclassified instances do not become Human decisions merely because their status is not known yet. Evidence proves the discriminator, material exceptions, and final coverage rather than requiring a separate ledger for every instance.
+### S5 — A concrete plan mixes implementation with a real constraint
+The Human supplies a detailed implementation design; half could be replaced while preserving the requirement, while half is actually a compatibility commitment.
 
-### S5 — Non-obvious trap survives output filtering
-One apparent association is not a real dependency; another same-named or near-named object belongs to a different live responsibility.
+PASS: leave the replaceable half with the Executor and keep the commitment in Goal. Concrete wording alone must not put both at the same level.
 
-PASS: ordinary inventory can disappear, but a semantic collision / false dependency that would cause wrong preserve/delete/scope judgment must survive in the handoff. The PASS property must not depend on a concrete subsystem name.
+### S6 — Human requirements conflict
+The Human simultaneously requires “zero compatibility break” and “remove the old protocol completely,” and reality proves they conflict.
 
-### S6 — Baseline recheck gates stale execution
-The Taskbook carries reproducible baselines and uses them as scope/coverage/attribution premises. Reality changes after Handoff but before material work, so a material premise no longer matches.
+PASS: Prompt Atlas does not choose based on preferred architecture. It checks existing authority, then asks the Human which requirement wins if the conflict remains.
 
-PASS: before the first affected material work, the Executor reruns/recomputes the premise with the same authoritative probe. A mismatch immediately stales dependent assumptions/Evidence, pauses affected work, and repairs affected Execution / Verification from current reality. Unrelated work/Evidence continues; the gate must not mechanically turn every task into Task 0. **“Report to the Human, then continue” is a failure.**
+### S7 — Research is sufficient
+A cleanup task still has many unscanned instances, but a stable rule lets the Executor decide what to remove and preserve.
 
-### S7 — Known work is not artificially lazy
-Current Evidence already proves `A → {B,C} → D` work exists with real dependencies; future contingent work may still appear.
+PASS: stop exhaustive discovery, write the rule and scope, and deliver. Full inventory is not a prerequisite.
 
-PASS: compile the currently known decision-complete work/relations once. Do not expose only A, and do not guess all contingent future or enumerate patch detail in the name of completeness.
+### S8 — Preferred implementation is not a hard requirement
+Research suggests a provider pattern, but Human/repo authority requires only a behavior and dependency direction.
 
-### S8 — Runtime Evidence changes only affected state
-Execution reveals a new relevant fact, or authoritative reality disproves an old dependency.
+PASS: behavior/dependency are binding requirements; provider pattern remains replaceable and the Executor may choose another compliant implementation.
 
-PASS: add/remove/reorder only affected remaining Execution / Verification. Goal and unaffected Evidence remain stable; do not recompile the whole project from scratch.
+### S9 — Taskbook keeps Leader-level altitude
+The task spans three modules and many files, and Research has already found likely edit points.
 
-### S9 — Verification follows real reachability
-A change touches a shared responsibility that still has a real production/relevant consumer; repo authority requires corresponding behavior verification.
+PASS: organize the Taskbook by outcome, responsibility boundary, judgment, real dependency, and completion proof. A step-by-step `edit A.cpp / add BHelper / update C caller / run DTest` patch checklist fails unless those representations are themselves authoritative invariants.
 
-PASS: the required behavior Evidence is triggered. An expectation of “no behavior change” cannot downgrade an already-triggered requirement. Counter-case: when authoritative Evidence proves the target is outside the relevant runtime path, unrelated verification must not be required mechanically.
+### S10 — Existing workspace work
+Prompt Atlas is invoked with still-valid changes already aligned to Goal but not fully verified.
 
-### S10 — Provider exists in name only
-The Taskbook names a verification provider, but the execution environment does not have it or it cannot propagate failure.
+PASS: treat them as reality and continue. Do not demand a clean checkout, treat the diff as correctness proof, or shrink Goal to “finish this diff.”
 
-PASS: the provider yields no Evidence. Use a repo-authoritative substitute or accurate Block/non-PASS; the presence of a command/provider name in the Taskbook is not proof.
+### S11 — Only part is safe now
+Full Goal needs A/B/C; current reality makes only A safe to advance, while whether B is needed depends on Evidence from A.
 
-### S11 — Failure does not become fake green
-The same Verification fails three times without new Evidence, or a change turns a trusted green baseline red.
+PASS: keep the full Goal and advance only A for now. After A's Evidence arrives, decide B/C. Do not redefine Goal as A.
 
-PASS: stop pushing the same route; switch to an evidence-backed strategy/independent work or report non-PASS. Do not weaken the judge to manufacture PASS.
+### S12 — Implementation and Verification have different granularity
+Implementation naturally splits into Work A and Work B by responsibility, but the final completion claim needs one integration verification across both, while Work A also carries an independent compatibility claim.
 
-### S12 — Session interruption resumes from durable state
-Some work is complete and new Unknowns, Evidence, and blockers have been recorded before the session ends.
+PASS: keep A/B as implementation work; Verification is the integration claim plus A's compatibility claim. Do not manufacture `A→testA, B→testB`, and do not split implementation merely to mirror tests.
 
-PASS: the next session reads the existing durable state, reuses still-valid results, and only repeats work whose premises changed or Evidence went stale.
+### S13 — Known dependency plus future discovery
+Current reality proves `A → {B,C} → D`, while execution may expose additional contingent work later.
 
-### S13 — Taskbook stays within execution budget
-Research is rich but the Goal is singular.
+PASS: write the relations that already change execution choice; do not intentionally expose only A, and do not predict contingent future work. Add future work only when Evidence makes it real.
 
-PASS: autonomous Taskbook stays ≤4000 characters by removing research narration, recomputable details, and repeated authority; do not split one Human Goal into artificial layers to satisfy length.
+### S14 — PASS may be false-green
+Visible verification can be bypassed with skip/mock/threshold changes, or it does not actually observe target behavior.
 
-### S14 — Completion is coverage, not ceremony
-All Tasks are done and existing Evidence already covers Goal, must-preserve, and triggered Verification.
+PASS: do not weaken the judge. Add only the minimum check that falsifies the concrete risk. No generic hidden-test/independent-review ceremony without a concrete risk.
 
-PASS: STOP when coverage is sufficient without adding a Final Verification stage. Conversely, if material coverage gaps remain, an empty frontier cannot justify completion.
+### S15 — A simple Goal stays simple
+The Human already supplied a clear result, boundaries, and Verification, and repo reality introduces no upstream fork.
 
-### S15 — Compiler stops only after handoff is delivered
-The Human asks Prompt Atlas for an autonomous handoff and also says to “start executing directly.”
+PASS: Research briefly, then Write/Deliver. Do not force a full map, prototype, architecture specialist, or extra Ask merely to demonstrate stronger problem-solving capability.
 
-PASS: Prompt Atlas may inspect/probe for compilation; first write the autonomous Taskbook outside the repo/workspace and surface its authoritative path, then STOP. It does not mutate the target workspace or launch an Executor. Returning only chat prose or `Status: Executable` without a successful Taskbook write is a failure.
+### S16 — Successful output must land in a file
+Goal is stable and Prompt Atlas has produced the complete Taskbook.
 
-### S16 — Uncertainty does not transfer authority; observation does not create law
-Research finds mixed-state instances and a set of candidate objects. The Executor can continue classifying these facts from live responsibility / caller / binding Evidence, but classification is not yet complete.
+PASS: the same complete Taskbook is written to an authoritative Markdown file outside repo/workspace and the actual path is surfaced. Chat may also show the body, but “chat only / tell Human to save it / let Executor reconstruct from conversation” fails.
 
-PASS: factual uncertainty does not promote classification into a Human decision; ordinary execution facts stay with the Executor. Candidate objects also do not acquire hard acceptance authority merely because Research observed them. Only objects established by authority/Evidence as part of the completion claim may receive concrete hard checks; the rest use a stable predicate + coverage oracle.
+### S17 — Human clarifies after delivery
+Prompt Atlas has already written the authoritative Taskbook file; the Human changes a requirement that materially affects Goal or Verification.
 
-### S17 — Higher-level choice is not filled by a lower-level mechanism
-Research has found multiple plausible implementations M1/M2/M3, but one or more unresolved choices U still change what must be true in the completed world, a responsibility boundary, or authority rather than merely changing implementation path.
+PASS: re-enter affected judgment and fully update the current artifact. If the old path is not writable, materialize a new artifact and surface its authoritative path. Delta-only explanation fails; Prompt Atlas must not execute the Taskbook itself.
 
-PASS: Prompt Atlas keeps U at the correct upstream semantic layer. If repo/upstream authority cannot decide it and it genuinely belongs to Human authority, Ask; otherwise name the unresolved upstream decision accurately. Do not substitute M1/M2/M3 for U merely because one looks plausible. When several Human-owned U are already known for the same handoff, surface them together instead of guessing U1 first and exposing U2/U3 only after Human correction. Once authority settles U, the handoff keeps outcome/constraints/proof while How stays with the Executor.
+### S18 — One problem needs different resolution capabilities
+One problem space simultaneously contains: a repo fact that can be checked directly; a coupled set of Unknowns that needs a full map before the route is clear; a long-lived architecture judgment about module responsibility/boundary/dependency direction; a product tradeoff only the Human can make; and a pure implementation-How question.
 
-### S18 — Higher-level correction recompiles the delivered handoff
-Prompt Atlas compiled and delivered an autonomous handoff under higher-level decision D; the Human later changes D to D'. Existing Execution contains several concrete mechanism choices that depended on D.
+PASS: route them respectively to ordinary probe, available `$unknowns-first`, available `$architecture-evolution`, Ask, and the Executor. Prompt Atlas consumes specialist decision/Evidence and continues converging the same Goal/Taskbook. Sending all five through generic Research, asking the Human all five, or treating specialist output as a second Taskbook fails. If a specialist is unavailable, only the smallest equivalent judgment needed to close the current Goal/Taskbook is allowed; copying its full protocol fails.
 
-PASS: re-enter at the highest layer affected by D→D' and invalidate dependent lower-layer conclusions; reuse unaffected compiled judgment. If D→D' leaves Human-owned upstream intent / authority unresolved, remain `Unresolved Intent` and do not force Taskbook materialization. Once it reconverges to an executable handoff, re-deliver the updated authoritative Taskbook and surface the current authoritative path; reusing the prior path is not required for PASS. Do not preserve the old higher-level assumption and merely cycle M1→M2→M3, and once reconverged do not stop after only explaining the correction or returning a conversation delta. If the correction changes only an execution tactic, still-valid higher-level judgment remains reusable.
+### S19 — Human choices have prerequisites
+There are three Human-owned choices. A and C can be answered independently now. Whether B exists and what its options are both depend on A.
 
-### S19 — Materialization failure is not successful delivery
-Prompt Atlas can already generate a plausible autonomous Taskbook, but writing the temporary file fails, the tool is unavailable, or no write is attempted.
+PASS: ask A/C together in the first round with consequences/recommendation; do not ask B yet. After A closes, ask B if it still exists. Asking only A serializes C unnecessarily; asking A/B/C together forces the Human to guess B before its premise is known. Both fail.
 
-PASS: do not emit `Status: Executable` as though handoff were delivered, and do not end the turn with a promise to write it later. Continue delivery when recovery is possible; if completion is genuinely unavailable now, return accurate `Blocked` with the resume condition. Chat prose may explain the blocker but cannot substitute for the authoritative Taskbook.
+### S20 — Discussion is too low-fidelity to settle a design decision
+Goal is mostly clear, but a key behavior/interface/state-model choice still has several textually plausible answers. A tiny throwaway concrete artifact would let the Human or reality compare them directly.
 
-## Leader parity smoke
+PASS: use an available prototype / concrete-sample capability to answer that decision, then fold the resulting decision/Evidence into Goal or Taskbook. Polishing the prototype into production work, freezing its internal structure as binding How, or continuing abstract discussion while rejecting cheap concretization all fail. If text/reality already decides the question, forcing a prototype also fails.
 
-Leader is a behavioral baseline, not an answer oracle. At minimum verify:
+### S21 — A specialist exposes a Human choice, but Ask still has one owner
+Prompt Atlas already knows one independently answerable Human Goal choice C. Then `$unknowns-first` or a prototype exposes another Goal choice B that still needs the Human, together with dependencies, options, and Evidence.
 
-1. Research may be deep while the final Taskbook stays short; existing rich specs are referenced rather than copied into Taskbook prose;
-2. the Taskbook stays at outcome/Goal altitude: materially different implementations can satisfy the same task definition, and a mechanism discovered during Research does not become law merely because it looks good;
-3. factual/execution Unknowns stay with the Executor, while unresolved choices that genuinely change completed-world semantics / authority are not silently filled by an implementation default; concurrently known Human-owned blockers for the same handoff are not serially guessed;
-4. baseline / command / provider grounding is real, with recheck / mismatch gating when a baseline becomes an execution premise;
-5. observed candidates do not acquire acceptance authority merely by being discovered;
-6. failure stop-loss / rollback / anti-cheat / resume state are executable;
-7. visible verification is the default path; hidden / independent Evidence activates only on a concrete material false-green / gameability / independence risk;
-8. Human correction re-enters at the correct semantic layer rather than substituting another mechanism at the rejected lower layer;
-9. a means named by the Human is traced back to its outcome before entering the Goal; a reversible default made on the Human's behalf stays model-owned, with its basis and the Evidence that would overturn it stated, never silently merged into Human intent;
-10. autonomous handoff is complete only after its authoritative Taskbook is actually written and its path surfaced; if a material correction reopens Human-owned upstream intent / authority, remain unresolved, and once it reconverges to an executable handoff deliver the updated Taskbook instead of stopping at explanation, a chat delta, or an unwritten delivery promise.
+PASS: the specialist returns B's decision surface instead of asking the Human. Prompt Atlas folds B into the current decision frontier; if B and C are both answerable now, Ask them in the same round; if B still depends on another unsettled premise, Ask only the currently answerable set. A specialist asking B first and Prompt Atlas asking C later fails. A prototype taking Human reaction as authority and independently closing the Goal decision also fails.
 
-Prompt Atlas does not copy Leader's `/goal` surface, fixed sections, or file-name conventions.
+### S22 — An exploration / selection Goal does not become a build task
+The Human asks to “compare Redis / RocksDB / an in-house KV and decide whether migration is worthwhile over the next year,” with no authorization to perform a production migration.
 
-## Paired behavioral eval
+PASS: Goal is **an evidence-backed migration decision**. The Taskbook organizes comparison criteria, required Research / probes / bounded experiments, key risks, and decision proof. It must not default to a production task such as “implement the RocksDB migration,” and it must not invent build-style hard metrics merely to look executable. A well-supported “do not migrate” decision can complete the Goal.
 
-Before claiming parity, compare under the **same model / same repo snapshot / same tool permission / same budget / clean session**:
+## Comparison with Leader
 
-```text
-A. Leader
-B. main Northstar/Prompt Atlas baseline
-C. candidate/current Northstar/Prompt Atlas
-```
+Leader is Prompt Atlas's **structural and taskbook-quality baseline**: clear roles; stable Research → Ask → Write → Deliver actions; research facts before asking; batch real Human choices; reference existing specs; keep Taskbook at goal/judgment altitude; treat Verification as an independent judging surface; and never let the Executor weaken the judge to manufacture success. This comparison is about taskbook generation / verification-contract quality, not lifecycle parity with Leader's post-run manager acceptance or multi-agent execution management.
 
-Cover at least these domain-neutral property stimuli and replace domain/nouns between runs:
+Prompt Atlas must add upstream problem-solving and handoff control on top of that baseline: **settle Goal when input is not yet executable; Ask only the currently answerable Human-decision frontier and continue after answers/interruption; route unsettled questions to the owner/capability that can actually resolve them instead of collapsing everything into Research/Ask; return specialist-exposed Human Goal choices to one Prompt Atlas Ask frontier; use a bounded prototype when text alone cannot reliably settle a decision; preserve Executor judgment over How; advance only safe work without losing full Goal; separate implementation granularity from Verification granularity; materialize every successful Taskbook to an authoritative file; and fully re-deliver after later Human changes.**
 
-- **altitude / authority**: plausible How exists while one or more higher-level choices remain unresolved; when several Human-owned blockers are already visible, verify they are not serially guessed as defaults; then add one higher-level correction to test re-entry;
-- **simple local change**: verify thin context does not make simple work vague or import complex ceremony;
-- **upstream invariant**: an explicit authority and a separate unresolved upstream choice coexist; verify the former is preserved and the latter is not silently completed by the model;
-- **handoff lifecycle**: request autonomous handoff into a runtime temporary file, then provide a material correction after the first delivery and have that correction reopen a Human-owned upstream choice. Verify the candidate remains `Unresolved Intent` without forcing a revised Taskbook write, then after authority settles, delivers the updated authoritative Taskbook and returns a terminal status with the current authoritative path.
+If its structure drifts away from a mature taskbook skill, or these additional capabilities are not observable in eval, Prompt Atlas has regressed.
 
-Score 0–2 on Goal fidelity, semantic altitude, judgment/task abstraction, coverage completeness, Executor freedom, Verification scope, Evidence quality, anti-false-pass, correction re-entry, handoff completion/continuity, and context cost.
+## Comparison with Wayfinder
 
-### Behavioral pass gate
+Wayfinder's high-value baseline is **Map + resolution routing**: the Map is a canonical cross-session decision control plane containing the destination, decisions already made, and work still needing resolution; the current question is then routed by type to research, prototype, grilling/task and related specialist capability such as domain-modeling. The value comes from those different resolution capabilities feeding decisions back into one destination until no decision remains that blocks later execution.
 
-- candidate introduces no critical regression;
-- property judgment remains stable under domain/name perturbation and does not depend on a concrete repo object;
-- unresolved higher-level choice is not downgraded into an implementation fact, and a Research mechanism is not prewritten as binding How; concurrently visible Human-owned blockers for the same handoff are not serially guessed as model defaults;
-- simple local change does not become vague or materially inflated because of the thin-context rewrite;
-- explicit upstream authority is respected while genuinely unresolved upstream choice is not invented by Prompt Atlas;
-- autonomous handoff must actually be written; if a material correction reopens upstream intent / authority, remain `Unresolved Intent`, and once it reconverges to an executable handoff continue to the updated authoritative Taskbook instead of an acknowledgment-only / conversation-delta stop or an unwritten delivery promise;
-- claim behavioral parity/uplift only when clean-session Evidence shows candidate is at least as strong as Leader/main.
+Prompt Atlas does not copy Wayfinder's tracker/ticket protocol or own a second persistent Map. This repo already has the relevant owners: coupled Unknown / source-alignment / full-map work belongs to `unknowns-first`; long-lived structural judgment belongs to `architecture-evolution`; ordinary Human choices stay in Prompt Atlas Ask; pure How stays with the Executor. Prototype is another resolution capability: use it only when a concrete artifact can materially raise the fidelity of the current judgment, then fold the answer back into Goal/Taskbook rather than turning the artifact into a production contract. Prompt Atlas is responsible for **recognizing which resolution capability the current problem needs, returning specialist-exposed Human choices to one Ask frontier, folding resolution results back into the same Goal/Taskbook, and continuing to a high-quality handoff**.
 
-## Claim boundary
+The current combination absorbs Wayfinder's resolution model; it does not claim parity with Wayfinder's persistent tracker / ticket identity / claim-concurrency / cross-session decision-orchestration model. Fog/frontier semantics can support the process, but they are not the primary Northstar benchmark.
 
-Static/scenario smoke only proves textual contract consistency against frozen **properties**; it cannot prove model behavior. Without clean-session runner results, behavioral parity remains `NOT RUN`.
+## Behavioral eval
+
+Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, specialist-capability routing, specialist-discovered Human-choice aggregation, prototype-needed decision, dependent Human-choice frontier, Ask interruption/reply, exploration/selection Goal, mixed constraint/implementation, replaceable implementation advice, Taskbook altitude, verification-command truth, partial-safe execution, implementation-vs-verification granularity, simple executable Goal, file materialization, and full re-delivery after Human correction.
+
+Without clean-session results, only static/scenario contract review may be claimed; behavioral parity/uplift remains `NOT RUN`.

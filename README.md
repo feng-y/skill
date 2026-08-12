@@ -16,7 +16,7 @@ Install all skills (currently installs Prompt Atlas, Northstar, Unknowns First, 
 npx skills@latest add feng-y/skill --all
 ```
 
-Prompt Atlas and Northstar are two language surfaces of the same Skill semantics: **Prompt Atlas is the English version and Northstar is the Chinese version**. Their runtime model, decision boundaries, taskbook semantics, Verification/Evidence behavior, and eval cases should remain behaviorally aligned; changes to one should be synchronized to the other unless the difference is purely language-specific. Because their invocation territory overlaps, install the language surface you want to use unless you are explicitly comparing the two.
+Prompt Atlas is the English version of Northstar; Northstar is the Chinese version of Prompt Atlas. They should behave the same, so changes to one should be mirrored to the other unless the difference is purely language-specific. Since they cover the same tasks, install the language surface you want unless you are explicitly comparing them.
 
 Install one skill:
 
@@ -29,14 +29,14 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 
 ## Skills
 
-- `prompt-atlas` — English version of the shared Northstar/Prompt Atlas semantics for recovering a stable Goal and compiling one truthful autonomous taskbook or exact blocker.
-- `northstar` — Chinese version of the same semantics and behavior; changes should stay synchronized with Prompt Atlas rather than evolving as an independent control surface.
+- `prompt-atlas` — English counterpart to Northstar: shape Human intent into the right Goal, preserve Executor judgment, and compile a high-altitude Taskbook whose successful delivery is materialized to an authoritative external Markdown file.
+- `northstar` — Chinese counterpart to Prompt Atlas. It probes reality before asking, resumes after Human clarification or interruption, keeps implementation How with the Executor, and separates how work is organized from how completion is proven.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `architecture-evolution` — reason from a named module or capability to a Target Architecture and a few concrete structural improvements, stopping before implementation design.
+- `architecture-evolution` — start from a named module's repo reality, re-identify capability/boundary and stable variation, then converge a Target Architecture and a few concrete structural improvements before implementation design.
 
 ## Architecture Evolution usage
 
-Use `architecture-evolution` when a module keeps accumulating structural pressure or its long-term architecture is still unclear. Give the relevant area and the pressure; the Skill grounds the decision in repo reality and returns either a local/no-evolution judgment, an unresolved architecture decision, or a compiled Architecture Program.
+Use `architecture-evolution` when a module keeps accumulating structural pressure or its long-term architecture is still unclear. Give the relevant area and the pressure; the Skill grounds the decision in repo reality and returns either a local/no-evolution judgment, the decisive missing evidence/choice, or a compiled Architecture Program.
 
 ```text
 Use $architecture-evolution on <module-or-capability>.

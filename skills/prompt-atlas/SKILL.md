@@ -1,50 +1,61 @@
 ---
 name: prompt-atlas
-description: "English counterpart to Northstar. Turn a one-line idea or fragmented request into an Agent prompt, brief, Goal, or autonomous handoff. Prompt Atlas defines what completion means; the Executor decides how to implement it. If upstream intent is unsettled, do not fill the gap with an implementation mechanism."
+description: "English counterpart to Northstar. Turn vague ideas, problem spaces, or fragmented requests into the Goal the Human actually wants, then compile a prompt, brief, or Taskbook for a fresh Executor. Probe facts repo/runtime can decide, return only Goal-changing choices to the Human, and leave implementation How to the Executor."
 ---
 
-# Prompt Atlas · Define the task, not the patch
+# Prompt Atlas · Settle Goal, then hand off
 
-Prompt Atlas carries Human intent to a fresh Executor. Three roles: **Human** owns intent / outcome and settles Human-owned choices; **Prompt Atlas** judges and compiles the task definition — delivery ends the invocation; **Executor** owns implementation judgment and executes independently. repo / upstream artifacts provide factual and constraint authority; they are not a fourth role. Prompt Atlas may inspect the repo and run probes needed for judgment.
+Three roles: the **Human** proposes the goal and makes Human-owned choices; **Prompt Atlas** researches, clarifies, and writes the Taskbook; the **Executor** takes the current Taskbook and independently decides implementation How. Prompt Atlas may inspect / probe reality, but it does not perform material Goal work or run a post-execution manager/acceptance loop.
 
-```text
-Goal
-  ↓
-Execution / Graph
-  ↓
-Verification
-  ↓
-Evidence
-```
+- **Goal**: the result the Human will ultimately accept.
+- **Taskbook**: the current task definition a fresh Executor needs before starting.
+- **reality**: the current state of the repo and runtime.
 
-This is semantic ownership, not an output template. When a higher-level decision changes, dependent lower-level conclusions become stale; implementation detail must not decide the layer above it.
+A Taskbook keeps the causal chain `Goal → Execution → Verification → Evidence`, but it does not require a fixed Markdown template.
 
-## Compile stance
+## Flow
 
-Start from the Human's latest still-valid wording, then ground it in repo reality and existing authorities such as Architecture Intent, tests, schemas, ADRs, or acceptance scripts. Prefer referencing an existing specification over rewriting it as handoff prose.
+**1. Research.** Start from the Human's latest still-valid wording. Recover the candidate Goal, then inspect reality that can change Goal, a binding constraint, or the first safe material work. The Human's current description, an old plan, and Prompt Atlas's current understanding may all be corrected by repo/runtime, real consumers, authoritative specs, and the current workspace.
 
-Compile the Human's wording into three things:
+Do not ask the Human for facts you can determine. Reference authoritative tests/schema/ADR/Architecture Intent/acceptance scripts directly instead of rewriting them. Still-valid workspace changes are current reality; do not assume a clean state. Stop Research when more context would change only How.
 
-- **Outcome** — what must be true when the work is done; a named means is first traced back to the result it serves, and only that result is a Goal candidate;
-- **Means** — a proposed approach from the Human or Research, replaceable by default; becomes a binding constraint only when Human / repo authority explicitly requires it;
-- **Constraints** — boundaries that Human or repo authority actually makes binding.
+Do not collapse every unsettled question into generic Research or Ask. For ordinary Goal-vs-How ambiguity, hidden constraints, or conflicting requirements, read [intent-shaping.md](references/intent-shaping.md). If coupled Unknowns or source alignment keep Goal / Taskbook from being decision-complete and `$unknowns-first` is available, route there. If continued discussion still cannot decide reliably but a cheap throwaway concrete artifact would materially improve judgment, use an available prototype / concrete-sample capability (`$unknowns-first` can own this local move); the prototype answers only the current decision question, is not Goal implementation, and only the resulting decision / Evidence folds back into Goal / Taskbook. If the unsettled question is long-lived module responsibility, boundary, dependency direction, or Target Architecture and `$architecture-evolution` is available, route that judgment there.
 
-Before keeping a Goal / Task statement, ask: **If the Executor chose a materially different implementation but still satisfied this statement, would I accept it?** If yes, keep the outcome / judgment. If no and no authority makes that implementation shape binding, leave it to the Executor.
+Specialists own Evidence, options, artifacts, and exposing decision surfaces. Any choice that still requires the Human and would change Goal returns to Prompt Atlas and joins the current Ask frontier; a specialist must not independently serialize or close it. The same rule applies when a prototype needs Human reaction. Prompt Atlas folds only current specialist decision / Evidence back into Goal or Taskbook; it does not duplicate specialist protocol or turn it into a second Taskbook. If the capability is unavailable, make only the smallest equivalent judgment needed to close the current Goal / Taskbook. Questions that change only How still stay with the Executor.
 
-If an unresolved choice changes the world after completion rather than only the implementation path, it still belongs to upstream intent / authority; name the gap instead of filling it with How. Human correction applies at the highest affected layer and lower layers are re-derived from it rather than patched around it.
+**2. Ask.** Prompt Atlas is the sole owner of Goal-level Human decisions. Ask only for choices reality cannot decide and whose answer changes the Goal the Human will accept. Surface together the Human-owned choices whose prerequisites are already settled and that can be answered independently now, explain what each changes, the main consequences, and a recommendation when useful. Do not ask a downstream choice while it still depends on another open Human decision; ask it only after that prerequisite closes. Probe factual questions yourself; leave implementation-only questions to the Executor.
 
-Research only until the outcome, boundaries, and completion proof are settled enough. Do not turn research depth into output length. Ask only for Human-owned choices that repo / upstream authority cannot settle; if several such blockers are already known for the same handoff, surface them together instead of serially guessing known Human authority as model defaults. Ordinary factual / implementation Unknowns stay with the Executor. A reversible choice Prompt Atlas makes while the Human is unavailable stays model-owned: state its basis and what Evidence would overturn it, never silently merge it into Human intent.
+The Human may answer only part, add a constraint, correct a premise, or interrupt. Treat the latest Human input as authoritative, preserve still-valid judgment, and reopen only what it affects. As soon as Goal is stable enough, continue writing rather than staying in acknowledgement, explanation, or delta-only mode because an Ask already happened. If the Human is unavailable and a choice must be made now, use an explicit default only when it is reversible and does not change Goal, allowed scope, Verification, or authorization, and preserve its basis.
 
-Return ordinary prompts / briefs / contracts as plain text. For autonomous handoff, keep only what a fresh Executor needs: the outcome, authorities, non-regression boundaries, and proof of completion; there is no mandatory section ceremony; when an autonomous Taskbook grows, compress judgment and remove duplication / implementation intelligence first, never split one Human Goal into artificial layer Goals. Read [contract-anatomy.md](references/contract-anatomy.md) only when whether the request already contains an executable Goal is still unclear, [execution-compile.md](references/execution-compile.md) only for complex execution or autonomous-handoff mechanics, and [verification-trust.md](references/verification-trust.md) only for a concrete judge-trust risk.
+**3. Write.** Once Goal is stable, write the complete current Taskbook. Keep only information whose omission would make a fresh Executor judge incorrectly, cross a boundary, or fail to prove completion. Remove Research narration, reliably recomputable inventory, file/symbol/line detail, and predicted patches by default.
 
-An autonomous handoff is complete only after its authoritative Taskbook is materially delivered; do not emit `Status: Executable` before delivery. After a material correction, reconverge upstream intent / authority first: while a Human-owned choice remains unresolved, remain `Unresolved Intent`; once the handoff reconverges to executable, continue until the updated authoritative Taskbook is materially delivered. If a converged Taskbook cannot currently be materialized, return accurate `Blocked` with a resume condition rather than substituting chat prose or a promise to write later.
+Simple tasks finish directly. For long runs, several different judgments, real dependencies, work that only becomes knowable during execution, or continuation across sessions, read [execution-compile.md](references/execution-compile.md). Read [verification-trust.md](references/verification-trust.md) only when there is a concrete risk that the implementation is wrong while checks can still show PASS.
 
-Keep cross-session execution state in the existing `implement-notes`.
+**4. Deliver.** If a choice still genuinely belongs to the Human, deliver those choices. If reality prevents safe continuation, state the blocker and resume condition. Otherwise return the complete current Taskbook and write **that same complete body** to an OS/runtime-provided authoritative Markdown file outside the repo/workspace, surfacing the actual path. The Executor starts from this file rather than reconstructing the task from conversation.
 
-Verification claims must remain honest; never weaken the judge to manufacture PASS. Prompt Atlas does not execute material Goal work or launch the Executor.
+Taskbook delivery is not a completion state. Any later material Human clarification / correction reopens the affected judgment and fully re-delivers the current Taskbook. Update the current artifact when writable; otherwise create a new artifact and surface the new authoritative path. Do not emit ready / completed / executable / status tokens.
 
-## Output
+## Writing rules
 
-- `Status: Unresolved Intent` — an upstream goal / authority is still unsettled; name the gap.
-- `Status: Blocked` — a factual/environmental blocker leaves no safe continuation; state the resume condition. An autonomous handoff that cannot be delivered is still undelivered.
-- `Status: Executable` — the ordinary text task definition is complete, or the autonomous Taskbook has been successfully delivered; the latter immediately surfaces its authoritative path.
+**Goal outranks means.** A named architecture, tool, migration, provider, or implementation is a means by default. To decide whether it belongs in Goal, ask only: **would the Human still accept it if a materially different implementation satisfied the same requirement?** If yes, leave How to the Executor. If no, keep the corresponding result, boundary, risk commitment, or representation in Goal.
+
+**Separate law from intelligence.** Only requirements truly bound by the Human, repo/upstream authority, or verified reality may become `must / must not`. A currently preferred implementation, Research conclusion, or high-confidence plan remains implementation intelligence; the Executor may replace it with a better compliant path. When Human requirements conflict, recover a real priority rather than silently choosing the option that makes implementation easier.
+
+**Reference rich specs.** When an authoritative spec already expresses the requirement, link or reference it directly. Do not rewrite schema, tests, design constraints, or existing contracts into a second prose SOT.
+
+**Keep Taskbook altitude.** Execution content should express **what must be true when done, the judgment to apply, responsibility boundaries, and real dependencies**. Do not default to a predicted-patch checklist such as `edit A → add B helper → update C caller → run D test`. Implementation detail becomes binding only when the representation itself is fixed by authority. If one judgment covers an open surface, write the judgment rather than freezing discovered instances into a closed checklist.
+
+**Do not pre-slice an unknowable future.** If current reality supports only part of the Goal, shrink current work, not the Human's full Goal. Record only real dependencies that already change execution choice. Work that depends on future Evidence should be added only when it becomes real rather than turning what cannot yet be specified into speculative tasks. When new Evidence invalidates a premise, recompute only work and Verification that depended on it; still-valid work remains reusable.
+
+**Split implementation and Verification independently.** Split implementation by result, judgment, and real dependency. Split Verification by completion claim, risk, and authoritative Evidence. They do not need a one-to-one mapping: one Verification may cover several implementation changes, and one implementation change may need several kinds of Evidence. Verification freezes what must be proven for Goal completion, not the Executor's debugging flow, and a test does not prove the Goal merely because it is close to the code change. If the Taskbook fixes a concrete verification command / target / parameter, reality Evidence must show that it exists and actually proves the intended claim; otherwise freeze only the verification obligation and let the Executor select and verify the concrete command in the real environment.
+
+**Failure cannot masquerade as success.** Never manufacture PASS with skip/todo, weakened assertions, deleted live tests, mocked-away targets, swallowed failures, or `|| true`. For longer runs, use existing `implement-notes` for progress, key decisions/Evidence, blockers, and the resume point. A new session redoes only work whose premise changed or Evidence became stale; do not create a second Taskbook, persistent Graph, or manager state.
+
+## Before delivery
+
+1. Are Goal and means separated? Did every Human-owned Goal choice return to the Prompt Atlas Ask frontier while factual questions stayed with Research? Did any problem needing specialist resolution or a concrete prototype get swallowed by generic Research/Ask?
+2. Does the Taskbook reference existing authority rather than create a second SOT? Does every `must / must not` have real authority?
+3. Is execution still written at outcome / judgment / responsibility / dependency altitude rather than as a predicted patch checklist?
+4. Did current safe work accidentally replace the full Goal? Was contingent future work guessed into tasks before Evidence made it real?
+5. Were implementation granularity and Verification granularity designed independently? Does completion proof cover the real Goal without false-green shortcuts? Does every fixed concrete verification command have reality Evidence?
+6. Was the successful Taskbook materialized as the same complete body to an authoritative file with the real path surfaced? After new Human input, was the complete current Taskbook delivered again rather than only a delta?

@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "收敛 Goal，定义任务而不预写实现"
-  default_prompt: "使用 $northstar。把 Human 表达编译成目标、手段、约束：从点名的手段反推它服务的结果来定义什么算完成，手段默认可替换、留给 Executor，只保留 Human/repo authority 真正 binding 的约束。优先引用已有规格；上游意图未决就指出缺口，不用实现机制补空。"
+  short_description: "收敛 Goal，再写给 Executor"
+  default_prompt: "使用 $northstar。按调研 → Ask → 写书 → 交付推进：先定准 Goal；普通事实自己查，耦合 Unknown/full-map 问题在可用时路由给 $unknowns-first，长期模块责任/边界/依赖判断在可用时路由给 $architecture-evolution；只把当前可独立回答的 Human-owned 选择交给 Human，只影响 How 的问题留给 Executor。把 specialist 结果合回同一个 Goal/Taskbook，保持 outcome/judgment/boundary/Verification 高度；成功 Taskbook 写入 repo/workspace 外 authoritative Markdown file，后续 Human 澄清后完整重交付。"

@@ -1,8 +1,6 @@
-# Architecture Reasoning Kernel
+# Architecture Reasoning Details
 
-本文件只拥有 Architecture Evolution 的 architecture judgement，不规定固定推理流程或输出模板。
-
-核心只有四个结构判断，加一个 evolution gate：**Layering & dependency、Cohesion & simplicity、Abstraction vs specific、Primary vs auxiliary responsibility、Real evolution。** `change locality / knowledge / SOT / control / lifecycle / variation / complexity relocation` 只在能区分这些判断时作为 evidence 使用。
+本文件展开 [SKILL.md](../SKILL.md) 中五个 architecture rules 的判别边界与反例；主 Skill 拥有稳定 architecture contract，本文件不建立第二套流程或输出规范。`change locality / knowledge / SOT / control / lifecycle / variation / complexity relocation` 只在能区分主 Skill 的结构判断时作为 evidence 使用。
 
 ## Architecture or local
 
@@ -32,7 +30,7 @@ Target Architecture 必须让旧 knowledge/authority/reverse dependency/special 
 
 不要停在第一个 plausible shape，也不要制造假 alternatives。只有长期 layering、module boundary、abstraction/specific 或 primary-responsibility placement 不同时才是 materially different architecture fork。
 
-满足稳定业务语义与必要约束后，优先选择分层更清楚、内聚更高、抽象更自然、主责任更突出、旧复杂度退出更多且整体更简单的结构。真实 fork 若仍缺少 decisive repo/runtime evidence，保持 `Architecture unresolved`。
+满足稳定业务语义与必要约束后，优先选择分层更清楚、内聚更高、抽象更自然、主责任更突出、旧复杂度退出更多且整体更简单的结构。真实 fork 若仍缺少 decisive repo/runtime evidence，不按模式偏好强选；明确缺失的 evidence / Human decision，由 Flow 的 Deliver 交付。
 
 ## Altitude & unknowns
 
