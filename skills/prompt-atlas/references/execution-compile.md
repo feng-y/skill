@@ -15,7 +15,7 @@ More Evidence should compress into fewer, more stable judgments rather than more
 
 A Task is normally **outcome + judgment** so the Executor can handle a whole same-shaped surface under one stable discriminator; it is not an executable delta, file list, or predicted patch. Split only when outcome, judgment, dependency, authority, risk, or required Verification materially differs.
 
-For an open surface, provide discriminator + territory and let the Executor scan it. Do not turn discovered instances into a closed checklist. Human-confirmed strategy / priority / boundary / must-preserve remain binding and must not be shrunk because the current ready frontier is smaller.
+For an open surface, provide discriminator + territory and let the Executor scan it. Do not turn discovered instances into a closed checklist. Apply the Goal contract already settled in `SKILL.md`; this file only organizes work within it.
 
 Still-valid working-tree changes aligned with Goal are starting reality; they are reusable but are not correctness Evidence, and they do not require a clean checkout.
 
@@ -33,11 +33,11 @@ Stay linear when there is no real relation. Only when multiple work units have j
 
 ## Verification / Evidence
 
-Freeze **what completion must prove**, not debugging / failure-localization workflow. If provider, target, or scope depends on actual change surface / binding / runtime reality, compile a stable trigger/authority and let the Executor materialize the concrete action when triggered.
+Apply the Verification contract owned by `SKILL.md`; complex Taskbooks additionally materialize stable provider / target / scope triggers and authority so the Executor can select concrete actions from actual change surface / binding / runtime reality.
 
 Research candidates do not automatically gain hard acceptance authority. `0-hit / 0-count` becomes binding only when the object is proven to belong to target responsibility and zero itself carries the completion claim; otherwise use a discriminator + coverage oracle.
 
-Evidence must actually run, cover the claim, and propagate failure. Evidence whose premise remains valid may be reused; new Evidence stales only dependent conclusions. Read [verification-trust.md](verification-trust.md) only for a concrete false-green / gameability / independence risk.
+Evidence whose premise remains valid may be reused; new Evidence stales only dependent conclusions. Read [verification-trust.md](verification-trust.md) only for a concrete false-green / gameability / independence risk.
 
 ## Success and failure judgment
 
@@ -47,4 +47,4 @@ Failure needs an executable path too: when a trusted baseline goes green→red, 
 
 ## Durable execution state
 
-Use existing `implement-notes` only for execution progress, new Unknowns, material decisions/Evidence, blockers, and resume point. A new session restores it and redoes only work whose premise changed or Evidence became stale. It does not store Prompt Atlas outcome completion state or become a second Taskbook.
+For complex/autonomous runs, materialize the execution state already defined by `SKILL.md` in existing `implement-notes`: progress, new Unknowns, material decisions/Evidence, blockers, and resume point. A new session restores it and redoes only work whose premise changed or Evidence became stale; do not create a second Taskbook.
