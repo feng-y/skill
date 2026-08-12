@@ -1,4 +1,4 @@
 interface:
   display_name: "Prompt Atlas"
   short_description: "Settle Goal before writing for the Executor"
-  default_prompt: "Use $prompt-atlas. First decide what in the Human's request truly belongs to Goal. Probe facts repo/runtime can settle; return only Goal-changing choices to the Human; leave implementation How to the Executor. Once Goal is stable, compile the current Taskbook, and for autonomous handoff materialize that same Taskbook to an authoritative external artifact."
+  default_prompt: "Use $prompt-atlas. First decide what in the Human request truly belongs to Goal; probe facts repo/runtime can settle; return only Goal-changing choices to the Human; leave implementation How to the Executor. After an Ask, keep absorbing Human clarification until Goal is stable enough, then compile at outcome/judgment/boundary/Verification altitude. Every successful Taskbook must materialize the same complete body to an authoritative Markdown file outside repo/workspace and surface the path."
