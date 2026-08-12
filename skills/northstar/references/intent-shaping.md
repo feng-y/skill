@@ -2,6 +2,8 @@
 
 只在普通的输入理解与 reality 检查仍无法确定 Human 最终会接受哪个 Goal 时读取。
 
+如果已经不是单一 Goal/How 或 Human choice 的判断，而是多个耦合 Unknown 需要展开 map/source alignment，或长期模块责任、边界、依赖方向本身需要架构判断，回主 Skill 路由给对应 specialist capability；不要在这里继续堆一套平行流程。
+
 ## 这是 Goal，还是 How
 
 先做一个测试：
@@ -26,7 +28,7 @@ Prompt、已有 plan 和 Northstar 自己都只是 map；repo、runtime、历史
 
 如果 Human 同时给出的要求无法一起满足，Goal 必须让 Executor 知道什么优先。这个优先级只能来自 Human、已有 authority 或不可替代的 reality；Northstar 不能因为某个实现更方便就偷偷重排。
 
-reality 能排掉冲突就直接收敛；否则把真正需要 Human 拍板的冲突一次问清，并说明主要后果与推荐。Human 只回答一部分、插入新约束或中断时，把最新输入合入当前判断，只重新打开受影响部分；一旦剩余问题都能由 Executor 在同一个 Goal 下继续，就停止 Ask 并回主流程产出。
+reality 能排掉冲突就直接收敛；否则把**当前前提已经闭合、可以独立回答**的 Human-owned 冲突一起问清，并说明主要后果与推荐。依赖另一个尚未拍板前提的后续选择，等前提关闭后再问。Human 只回答一部分、插入新约束或中断时，把最新输入合入当前判断，只重新打开受影响部分；一旦剩余问题都能由 Executor 在同一个 Goal 下继续，就停止 Ask 并回主流程产出。
 
 ## 什么时候停
 
