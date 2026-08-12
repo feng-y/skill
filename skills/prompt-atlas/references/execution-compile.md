@@ -1,20 +1,20 @@
 # When a simple Taskbook is not enough
 
-Read only after Stable Goal is settled but the task is long, needs several different judgments, real ordering, stronger Verification, or continuation across sessions. This file does not redefine Goal, Unknown routing, or Law vs intelligence; it only organizes complex execution.
+Read only after Goal is settled but the task is long, needs several different judgments, real ordering, stronger Verification, or continuation across sessions. This file only keeps a complex Taskbook executable; it does not redefine Goal or Human / Executor responsibility.
 
-## Split work only when judgment changes
+## When to split work
 
 If one judgment applies to a set of objects, keep them as one piece of work and let the Executor scan the agreed scope. Do not split by file, function, or currently discovered instance. Split only when the local result, judgment rule, real dependency, or Verification requirement is different.
 
 If one fact blocks the first safe material work, put that check first. Do not turn it into another broad Research phase.
 
-## Ready frontier
+## When only part is safe to advance
 
-**Goal is the complete destination; frontier is the work current reality says is safe to advance now. They cannot replace each other.**
+**The work that is safe now must not replace the full Goal.**
 
-When only part can proceed safely, shrink frontier rather than Goal. As execution Evidence makes later work decidable, expand frontier. Adjacent residue also does not enter Goal merely because it was discovered.
+If current reality supports only part of the work, advance only that part while keeping the full Human Goal. As new Evidence makes later work decidable, add it then. Adjacent residue also does not enter Goal merely because it was discovered.
 
-Usually no execution graph is needed. Write a relation only when it changes the next choice: B truly waits for A, two items can safely run in parallel, several items write the same authoritative surface, or several results must be verified together. Write only relations current reality supports; work that depends on future Evidence should be added only when it becomes real. A blocked branch must not freeze unrelated frontier work.
+Usually no execution graph is needed. Write a relation only when it changes the next choice: B truly waits for A, two items can safely run in parallel, several items write the same authoritative surface, or several results must be verified together. Write only relations current reality supports; work that depends on future Evidence should be added only when it becomes real. A blocked branch must not freeze unrelated work.
 
 ## Starting point and baseline
 
