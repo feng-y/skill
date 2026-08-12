@@ -26,7 +26,7 @@ Prompt、已有 plan 和 Northstar 自己都只是 map；repo、runtime、历史
 
 如果 Human 同时给出的要求无法一起满足，Goal 必须让 Executor 知道什么优先。这个优先级只能来自 Human、已有 authority 或不可替代的 reality；Northstar 不能因为某个实现更方便就偷偷重排。
 
-reality 能排掉冲突就直接收敛；否则把真正需要 Human 拍板的冲突一次问清，并说明主要后果与推荐。
+reality 能排掉冲突就直接收敛；否则把真正需要 Human 拍板的冲突一次问清，并说明主要后果与推荐。Human 只回答一部分、插入新约束或中断时，把最新输入合入当前判断，只重新打开受影响部分；一旦剩余问题都能由 Executor 在同一个 Goal 下继续，就停止 Ask 并回主流程产出。
 
 ## 什么时候停
 
