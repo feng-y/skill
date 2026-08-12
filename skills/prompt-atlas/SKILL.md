@@ -17,9 +17,11 @@ A Taskbook keeps the causal chain `Goal → Execution → Verification → Evide
 
 **1. Research.** Start from the Human's latest still-valid wording. Recover the candidate Goal, then inspect reality that can change Goal, a binding constraint, or the first safe material work. The prompt, an old plan, and Prompt Atlas itself are only maps; repo/runtime, real consumers, authoritative specs, and the current workspace can correct them.
 
-Do not ask the Human for facts you can determine. Reference authoritative tests/schema/ADR/Architecture Intent/acceptance scripts directly instead of rewriting them. Still-valid workspace changes are current reality; do not assume a clean state. Stop Research when more context would change only How. If the input is still only a problem space, Goal and How are hard to separate, a hidden constraint may matter, or requirements genuinely conflict, read [intent-shaping.md](references/intent-shaping.md).
+Do not ask the Human for facts you can determine. Reference authoritative tests/schema/ADR/Architecture Intent/acceptance scripts directly instead of rewriting them. Still-valid workspace changes are current reality; do not assume a clean state. Stop Research when more context would change only How.
 
-**2. Ask.** Ask only for choices reality cannot decide and whose answer changes the Goal the Human will accept. Surface currently known Human-owned choices together when practical, explain what each changes, the main consequences, and a recommendation when useful. Probe factual questions yourself; leave implementation-only questions to the Executor.
+Do not collapse every unsettled question into generic Research or Ask. For ordinary Goal-vs-How ambiguity, hidden constraints, or conflicting requirements, read [intent-shaping.md](references/intent-shaping.md). If coupled Unknowns, source alignment, or a full map are needed to make the problem decidable and `$unknowns-first` is available, let it choose the appropriate probe / interview / concrete sample / prototype / full-map move. If the unsettled question is long-lived module responsibility, boundary, dependency direction, or Target Architecture and `$architecture-evolution` is available, route that judgment there. Prompt Atlas consumes only the specialist's current decision / Evidence back into Goal or Taskbook; it does not duplicate the specialist protocol or turn it into a second Taskbook. If the capability is unavailable, make only the smallest equivalent judgment needed to close the current Goal / Taskbook. Questions that change only How still stay with the Executor.
+
+**2. Ask.** Ask only for choices reality cannot decide and whose answer changes the Goal the Human will accept. Surface together the Human-owned choices whose prerequisites are already settled and that can be answered independently now, explain what each changes, the main consequences, and a recommendation when useful. Do not ask a downstream choice while it still depends on another open Human decision; ask it only after that prerequisite closes. Probe factual questions yourself; leave implementation-only questions to the Executor.
 
 The Human may answer only part, add a constraint, correct a premise, or interrupt. Treat the latest Human input as authoritative, preserve still-valid judgment, and reopen only what it affects. As soon as Goal is stable enough, continue writing rather than staying in acknowledgement, explanation, or delta-only mode because an Ask already happened. If the Human is unavailable and a choice must be made now, use an explicit default only when it is reversible and does not change Goal, allowed scope, Verification, or authorization, and preserve its basis.
 
@@ -49,7 +51,7 @@ Taskbook delivery is not a completion state. Any later material Human clarificat
 
 ## Before delivery
 
-1. Are Goal and means separated? Were Human-owned choices actually Asked while factual questions stayed with Research?
+1. Are Goal and means separated? Were Human-owned choices actually Asked while factual questions stayed with Research? Did any problem needing specialist resolution get swallowed by generic Research/Ask?
 2. Does the Taskbook reference existing authority rather than create a second SOT? Does every `must / must not` have real authority?
 3. Is execution still written at outcome / judgment / responsibility / dependency altitude rather than as a predicted patch checklist?
 4. Did current safe work accidentally replace the full Goal? Was contingent future work guessed into tasks before Evidence made it real?
