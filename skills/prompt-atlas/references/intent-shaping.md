@@ -1,6 +1,6 @@
 # When Goal is not settled yet
 
-Read only after the main Skill has begun Ground / Shape but still cannot determine which Goal the Human will ultimately accept.
+Read only when ordinary interpretation plus reality checks still cannot determine which Goal the Human will ultimately accept.
 
 ## Is this Goal or How?
 
@@ -30,4 +30,4 @@ If reality resolves the conflict, converge directly. Otherwise surface the Human
 
 ## When to stop
 
-When every remaining question can change only How rather than the Goal the Human will accept, stop Intent Research and return to Compile. New Unknowns during implementation are normal; Prompt Atlas does not need to eliminate them before execution.
+When every remaining question can change only How rather than the Goal the Human will accept, stop Intent Research. New Unknowns during implementation are normal; Prompt Atlas does not need to eliminate them before execution.
