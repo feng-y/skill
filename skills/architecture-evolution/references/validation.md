@@ -32,6 +32,7 @@
 - **V1 Low-value cleanup**：一个候选 change 能删掉旧 helper/namespace、让 dependency 更干净，也满足 structural gain + real exit，但没有已证实 change 因此变得更独立、局部或可验证 → 不得仅因结构更漂亮进入 Top Improvements；最多作为 local cleanup/附带退出处理。
 - **V2 Positive leverage**：一类真实需求每次都要跨多个 owner 重组私有 knowledge；候选 Target 让该 capability 的 responsibility/dependency/authority 闭合，后续同类变化可在单一边界内完成并由稳定 Evidence 验证，同时旧跨边界 path 退出 → 这是优先 Architecture Improvement，即使实际 patch 不大。
 - **V3 AI-native as consequence**：候选结构让后续 change 的 owner、allowed dependency、authoritative state 和完成 Evidence 可从局部 repo territory/tooling 发现并验证，减少跨边界 reconstruction → 可作为正确 boundary 的正向收益；若为了 agent/navigation 便利而破坏 primary responsibility 或制造额外层，则失败。
+- **V4 Planned pressure is evidence**：已批准 roadmap / binding requirement 已明确未来一类变化，即使尚未发生多次，也算真实 change pressure；AE 可以据此选择能解除其结构约束的 Improvement。仅凭“以后可能有用”的猜测仍不得物化 future hook/framework。
 - **C1 Improvement quality**：research/data collection 不进 Top Improvements；只有解除真实 pressure 暴露的结构约束，并同时产生长期演进收益、structural gain + real exit 的 change 可进。
 - **C2 Ceiling**：只有 2 个真实 Improvements → 只输出 2 个。
 - **C3 Setup-only**：先建 abstraction、以后再迁 → 若当前不产生 gain/exit，不得入 Program。
@@ -48,7 +49,7 @@
 ## Captured properties
 
 1. taxonomy / proposed shape 是 Evidence，不是 law；
-2. Target / Improvements 必须从真实 change pressure 暴露的结构约束出发，使一类已证实变化更独立、局部或可验证；结构正确但不改变后续演进能力的 cleanup 不够；
+2. Target / Improvements 必须从真实 change pressure 暴露的结构约束出发，使一类已证实变化更独立、局部或可验证；已批准 roadmap / binding future requirement 也可构成 pressure Evidence，纯猜测不行；结构正确但不改变后续演进能力的 cleanup 不够；
 3. abstraction 由 stable semantics/invariants 决定；
 4. 长期 dependency boundary 优先机械可见，cohesion 不吞并独立 authority/lifecycle；正确 boundary 还应让后续 change 所需的 owner/authority/Evidence 更局部可发现和验证，但 AI convenience 不得塑造 primary architecture；
 5. auxiliary concern 不塑造 primary architecture，caller 不重组 capability 私有 knowledge；
