@@ -20,10 +20,10 @@ description: 用于架构方向模糊、历史模块持续演进或“下一刀�
 ## 架构判断
 
 - **Architecture vs local。** 只有 pressure 会改变长期 responsibility、dependency、abstraction boundary、primary responsibility 或旧结构退出时才升级；文件大、目录乱、switch/duplication 多本身不够。
-- **Layering + cohesion。** 保持少量稳定单向依赖，common/policy 不知道 specific；长期 dependency boundary 优先由 repo territory/module/package/build/tooling 直接表达，而不是只靠文档维持。模块围绕主要 capability 闭合 knowledge/state/lifecycle，caller 不重组私有事实；已有独立 authority/lifecycle 的相邻 subsystem 保持 relation/contract，不为内聚吞并。两个结构都成立时选概念更少、public surface 更小的。
+- **Layering + cohesion。** 保持少量稳定单向依赖，common/policy 不知道 specific；长期 dependency boundary 优先由 repo territory/module/package/build/tooling 直接表达，而不是只靠文档维持。反复依赖 guidance 才能解释 ownership 或允许的 dependency direction，是 boundary 可能未被 repo 清楚表达的 Evidence；先区分不可消除的 domain semantics 与替结构歧义兜底的 prose。模块围绕主要 capability 闭合 knowledge/state/lifecycle，caller 不重组私有事实；已有独立 authority/lifecycle 的相邻 subsystem 保持 relation/contract，不为内聚吞并。两个结构都成立时选概念更少、public surface 更小的。
 - **Abstraction vs specific。** 抽象稳定 semantics/invariant，不抽象表面相似；没有 stable variation 不制造 provider，有真实长期差异也不强行统一。Human 点名的 provider/facade/layer/registry 默认只是 candidate means，除非 authority 绑定 representation。
 - **Primary vs auxiliary。** primary responsibility 决定 boundary；auxiliary concern 不反向塑造主结构。未经 profiling/SLA/resource Evidence 的性能收益不能打穿 boundary。
-- **Real evolution。** 旧 knowledge/authority/reverse dependency/special path/compatibility 必须真实退出或停止 authoritative；`old → new abstraction → old` 只是 complexity relocation。temporary dual path 必须有 purpose + exit；无当前长期 Evidence 的 future hook/mode/registry/framework 不物化。
+- **Real evolution。** 旧 knowledge/authority/reverse dependency/special path/compatibility，以及只为补偿旧结构歧义存在的 guidance，必须随对应结构退出而真实退出或停止 authoritative；`old → new abstraction → old` 只是 complexity relocation。temporary dual path 必须有 purpose + exit；无当前长期 Evidence 的 future hook/mode/registry/framework 不物化。
 
 只有 Human、repo/upstream authority 或 verified reality 能把内容绑定成长期 invariant。除非 representation 本身被 authority 固定，AE 只固定 architecture outcome / structural done condition，不提前固定 class/API/file/schema/call shape/MR/task/test provider；Implementation Design 在 Program 之后。
 
