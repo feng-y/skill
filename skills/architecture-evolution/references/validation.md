@@ -10,7 +10,7 @@
 4. 当前 taxonomy/proposed shape 只是 Evidence；没有 stable variation 不制造 provider。
 5. Layering/cohesion、abstraction/specific、primary/auxiliary、real evolution 都能改变 Target Architecture；长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并；反复解释 ownership/dependency 的 guidance 可作为结构歧义 Evidence，但必须与不可消除的 domain semantics 区分。
 6. local pressure 不制造 Program；真实 fork 缺 decisive Evidence/Human decision 时保持 unresolved。
-7. Program 最多 3 个 Improvements，不补数；每项必须同时解除真实 change pressure、产生可说明的长期演进收益、structural gain + real exit，并按长期 leverage 排序；只有整洁/规范收益的 change 不得冒充 Improvement。
+7. Program 最多 3 个 Improvements，不补数；每项必须解除由真实 change pressure 暴露的结构约束，使一类已证实变化更独立、局部或可验证，并同时产生 structural gain + real exit；只有整洁/规范收益的 change 不得冒充 Improvement。
 8. Program 引用 authoritative repo SOT；handoff artifact 不成为 repo architecture SOT。
 9. AE 停在 architecture outcome / structural done condition；除非 authority 绑定 representation，不固定 implementation。
 10. 上游 shaping capability 调用时 AE 返回 Evidence/options/decision surface，不抢 Human Ask ownership。
@@ -29,13 +29,13 @@
 - **P8 Second system**：简单 pressure 引入 plugin/framework/hooks → 无当前长期 Evidence 就缩小。
 - **P9 Prose-compensated boundary**：同一 ownership/dependency 规则在 AGENTS/comment/runbook 中反复解释，而 repo territory/build dependency 仍无法直接表达 → 把这种重复 guidance 作为 architecture Evidence 继续判断；若它只是不可从结构推出的 domain semantics，则保留 guidance，不得为了“agent 更好读”强行改 architecture。
 - **P10 Guidance exit**：Architecture Improvement 已把原本只能靠 prose 约束的 owner/dependency 物化进 module/package/build/tooling → 对应补偿性 guidance 应退出或停止 authoritative；若仍有独立 domain semantic/contract，则只删除已被结构替代的部分。
-- **V1 Low-value cleanup**：一个候选 change 能删掉旧 helper/namespace、让 dependency 更干净，也满足 structural gain + real exit，但当前或反复出现的 change pressure 并未因此更容易、更独立或更可验证 → 不得仅因结构更漂亮进入 Top Improvements；最多作为 local cleanup/附带退出处理。
+- **V1 Low-value cleanup**：一个候选 change 能删掉旧 helper/namespace、让 dependency 更干净，也满足 structural gain + real exit，但没有已证实 change 因此变得更独立、局部或可验证 → 不得仅因结构更漂亮进入 Top Improvements；最多作为 local cleanup/附带退出处理。
 - **V2 Positive leverage**：一类真实需求每次都要跨多个 owner 重组私有 knowledge；候选 Target 让该 capability 的 responsibility/dependency/authority 闭合，后续同类变化可在单一边界内完成并由稳定 Evidence 验证，同时旧跨边界 path 退出 → 这是优先 Architecture Improvement，即使实际 patch 不大。
 - **V3 AI-native as consequence**：候选结构让后续 change 的 owner、allowed dependency、authoritative state 和完成 Evidence 可从局部 repo territory/tooling 发现并验证，减少跨边界 reconstruction → 可作为正确 boundary 的正向收益；若为了 agent/navigation 便利而破坏 primary responsibility 或制造额外层，则失败。
-- **C1 Improvement quality**：research/data collection 不进 Top Improvements；只有同时产生长期演进收益、structural gain + real exit 的 change 可进。
+- **C1 Improvement quality**：research/data collection 不进 Top Improvements；只有解除真实 pressure 暴露的结构约束，并同时产生长期演进收益、structural gain + real exit 的 change 可进。
 - **C2 Ceiling**：只有 2 个真实 Improvements → 只输出 2 个。
 - **C3 Setup-only**：先建 abstraction、以后再迁 → 若当前不产生 gain/exit，不得入 Program。
-- **C4 Leverage**：多个真实 Improvements → 优先解除当前/反复 change pressure 对 capability 独立演进的结构约束，而不是最易实现、最整洁或只减少表面 cross-boundary dependency 的项。
+- **C4 Leverage**：多个真实 Improvements → 优先让已证实 change 更独立、局部、可验证的项，而不是最易实现、最整洁或只减少表面 cross-boundary dependency 的项。
 - **C5 SOT**：已有 authoritative contract → 引用原 SOT；需演进时指向原 source delta。
 - **N1 Local**：bug/dead getter/mechanical cleanup → local judgment，不制造 Target/Program。
 - **R1 Real fork**：两个长期结构都可行且缺 decisive constraint → unresolved，不按模式偏好强选。
@@ -48,7 +48,7 @@
 ## Captured properties
 
 1. taxonomy / proposed shape 是 Evidence，不是 law；
-2. Target / Improvements 必须从真实 change pressure 的长期演进收益出发，结构正确但不改变后续演进能力的 cleanup 不够；
+2. Target / Improvements 必须从真实 change pressure 暴露的结构约束出发，使一类已证实变化更独立、局部或可验证；结构正确但不改变后续演进能力的 cleanup 不够；
 3. abstraction 由 stable semantics/invariants 决定；
 4. 长期 dependency boundary 优先机械可见，cohesion 不吞并独立 authority/lifecycle；正确 boundary 还应让后续 change 所需的 owner/authority/Evidence 更局部可发现和验证，但 AI convenience 不得塑造 primary architecture；
 5. auxiliary concern 不塑造 primary architecture，caller 不重组 capability 私有 knowledge；
