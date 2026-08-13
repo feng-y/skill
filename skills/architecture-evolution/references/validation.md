@@ -8,7 +8,7 @@
 2. 正常成功路径不依赖第二份 output/compile contract；`rules.md` 只处理难判 discriminator，legacy/Brooks 仅按需读取。
 3. Research 从指定 module/capability 与 direct neighborhood 渐进展开；只有会改变 architecture judgment 的 authority/SOT/identity/external constraint 才扩大。
 4. 当前 taxonomy/proposed shape 只是 Evidence；没有 stable variation 不制造 provider。
-5. Layering/cohesion、abstraction/specific、primary/auxiliary、real evolution 都能改变 Target Architecture；长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并。
+5. Layering/cohesion、abstraction/specific、primary/auxiliary、real evolution 都能改变 Target Architecture；长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并；反复解释 ownership/dependency 的 guidance 可作为结构歧义 Evidence，但必须与不可消除的 domain semantics 区分。
 6. local pressure 不制造 Program；真实 fork 缺 decisive Evidence/Human decision 时保持 unresolved。
 7. Program 最多 3 个 Improvements，不补数；每项完成即 structural gain + real exit，并说明整体完成后哪些旧 authority/dependency/path 不再 authoritative；research/setup/future/implementation step 不得冒充 Improvement。
 8. Program 引用 authoritative repo SOT；handoff artifact 不成为 repo architecture SOT。
@@ -27,6 +27,8 @@
 - **P6 Performance**：无 profiling/SLA/resource Evidence 的 fast path → 不得打穿 primary boundary。
 - **P7 Real evolution**：新增 facade/registry 但旧 authority/path 仍在 → 不得算 evolution；Program completion 必须指出整体完成后哪些旧 authority/dependency/path 不再 authoritative。
 - **P8 Second system**：简单 pressure 引入 plugin/framework/hooks → 无当前长期 Evidence 就缩小。
+- **P9 Prose-compensated boundary**：同一 ownership/dependency 规则在 AGENTS/comment/runbook 中反复解释，而 repo territory/build dependency 仍无法直接表达 → 把这种重复 guidance 作为 architecture Evidence 继续判断；若它只是不可从结构推出的 domain semantics，则保留 guidance，不得为了“agent 更好读”强行改 architecture。
+- **P10 Guidance exit**：Architecture Improvement 已把原本只能靠 prose 约束的 owner/dependency 物化进 module/package/build/tooling → 对应补偿性 guidance 应退出或停止 authoritative；若仍有独立 domain semantic/contract，则只删除已被结构替代的部分。
 - **C1 Improvement quality**：research/data collection 不进 Top Improvements；只有独立 structural gain + real exit 的 change 可进。
 - **C2 Ceiling**：只有 2 个真实 Improvements → 只输出 2 个。
 - **C3 Setup-only**：先建 abstraction、以后再迁 → 若当前不产生 gain/exit，不得入 Program。
@@ -46,12 +48,13 @@
 2. abstraction 由 stable semantics/invariants 决定；
 3. 长期 dependency boundary 优先机械可见，cohesion 不吞并独立 authority/lifecycle；
 4. auxiliary concern 不塑造 primary architecture，caller 不重组 capability 私有 knowledge；
-5. real evolution 要求旧 authority/knowledge/dependency/path 退出，Program 还要给出整体 exit；
+5. real evolution 要求旧 authority/knowledge/dependency/path 退出，已被结构替代的补偿性 guidance 同样退出；
 6. Research bounded，Program 只保留 independently improving changes；
 7. authoritative repo truth 不复制成平行 SOT；
-8. specialist 不抢 Human decision ownership；
-9. delivery 只交当前 judgment/Program，且不是 lifecycle state；material update 后必须完整重交付；
-10. handoff artifact 只承担 transport authority，不替代 repo SOT。
+8. repeated ownership/dependency prose 只是 architecture Evidence，必须先区分 structural ambiguity 与 irreducible domain semantics；
+9. specialist 不抢 Human decision ownership；
+10. delivery 只交当前 judgment/Program，且不是 lifecycle state；material update 后必须完整重交付；
+11. handoff artifact 只承担 transport authority，不替代 repo SOT。
 
 ## Paired behavioral eval
 
