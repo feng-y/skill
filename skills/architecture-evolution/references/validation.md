@@ -10,7 +10,7 @@
 4. 当前 taxonomy/proposed shape 只是 Evidence；没有 stable variation 不制造 provider。
 5. Layering/cohesion、abstraction/specific、primary/auxiliary、real evolution 都能改变 Target Architecture；长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并；反复解释 ownership/dependency 的 guidance 可作为结构歧义 Evidence，但必须与不可消除的 domain semantics 区分。
 6. local pressure 不制造 Program；真实 fork 缺 decisive Evidence/Human decision 时保持 unresolved。
-7. Program 最多 3 个 Improvements，不补数；每项必须解除由真实 change pressure 暴露的结构约束，使一类已证实变化更独立、局部或可验证，并同时产生 structural gain + real exit；只有整洁/规范收益的 change 不得冒充 Improvement。
+7. Program 最多 3 个 Improvements，不补数；每项必须解除由有 Evidence 的真实 change pressure 暴露的结构约束，使一类已证实变化更独立、局部或可验证，并同时产生 structural gain + real exit；只有整洁/规范收益的 change 不得冒充 Improvement。
 8. Program 引用 authoritative repo SOT；handoff artifact 不成为 repo architecture SOT。
 9. AE 停在 architecture outcome / structural done condition；除非 authority 绑定 representation，不固定 implementation。
 10. 上游 shaping capability 调用时 AE 返回 Evidence/options/decision surface，不抢 Human Ask ownership。
@@ -49,7 +49,7 @@
 ## Captured properties
 
 1. taxonomy / proposed shape 是 Evidence，不是 law；
-2. Target / Improvements 必须从真实 change pressure 暴露的结构约束出发，使一类已证实变化更独立、局部或可验证；已批准 roadmap / binding future requirement 也可构成 pressure Evidence，纯猜测不行；结构正确但不改变后续演进能力的 cleanup 不够；
+2. Target / Improvements 必须从有 Evidence 的真实 change pressure 暴露的结构约束出发，使一类已证实变化更独立、局部或可验证；已批准 roadmap / binding future requirement 也可构成 pressure Evidence，纯猜测不行；结构正确但不改变后续演进能力的 cleanup 不够；
 3. abstraction 由 stable semantics/invariants 决定；
 4. 长期 dependency boundary 优先机械可见，cohesion 不吞并独立 authority/lifecycle；正确 boundary 还应让后续 change 所需的 owner/authority/Evidence 更局部可发现和验证，但 AI convenience 不得塑造 primary architecture；
 5. auxiliary concern 不塑造 primary architecture，caller 不重组 capability 私有 knowledge；
