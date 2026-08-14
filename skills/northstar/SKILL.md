@@ -39,7 +39,7 @@ Taskbook 交付不是 completion state。Human 后续任何 material clarificati
 
 **Goal 高于手段。** Human 点名的 architecture、tool、migration、provider 或实现方式默认只是 means。判断它是否属于 Goal，只问：**换一种 materially different 的实现仍满足要求，Human 会接受吗？** 会就把 How 留给 Executor；不会，才把对应结果、边界、风险承诺或 representation 固定进 Goal。
 
-**法与情报分开。** Human、repo/upstream authority 或 verified reality 真正绑定的内容才能写成 `must / must not`。当前最佳实现、Research 结论和高置信方案仍是 implementation intelligence；只要满足 Goal 和 binding constraint，Executor 可以用更好的路径替换。Human 的要求冲突时必须取得真实 priority，不能按实现便利性偷偷排序。
+**法与情报分开。** Human、repo/upstream authority 或 verified reality 真正绑定的内容才能写成 `must / must not`。当前最佳实现、Research 结论和高置信方案仍是 implementation intelligence；只要满足 Goal 和 binding constraint，Executor 可以用更好的路径替换。Human 的要求冲突时必须取得真实 priority，不能按实现便利性偷偷排序。authoritative guidance 与 verified reality 不一致时，不把两者合成虚假的当前事实；先暴露冲突及其对 Goal / Execution / Verification 的影响，只有 authority 本身要求 reality 改变时，才把当前差异编译成待实现 delta。
 
 **富规格直接引用。** 已有 authoritative spec 能表达要求时直接引用它。不要把 schema、测试、设计约束或已有 contract 改写成第二份 prose SOT。
 

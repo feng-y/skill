@@ -8,9 +8,9 @@
 2. 正常成功路径不依赖第二份 output/compile contract；`rules.md` 只处理难判 discriminator，legacy/Brooks 仅按需读取。
 3. Research 从指定 module/capability 与 direct neighborhood 渐进展开；只有会改变 architecture judgment 的 authority/SOT/identity/external constraint 才扩大。
 4. 当前 taxonomy/proposed shape 只是 Evidence；没有 stable variation 不制造 provider。
-5. Layering/cohesion、abstraction/specific、primary/auxiliary、real evolution 都能改变 Target Architecture；长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并。
+5. Layering/cohesion、abstraction/specific、primary/auxiliary、real evolution 都能改变 Target Architecture；长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并；反复解释 ownership/dependency 的 guidance 可作为结构歧义 Evidence，但必须与不可消除的 domain semantics 区分。
 6. local pressure 不制造 Program；真实 fork 缺 decisive Evidence/Human decision 时保持 unresolved。
-7. Program 最多 3 个 Improvements，不补数；每项完成即 structural gain + real exit，并说明整体完成后哪些旧 authority/dependency/path 不再 authoritative；research/setup/future/implementation step 不得冒充 Improvement。
+7. Program 最多 3 个 Improvements，不补数；每项必须解除由有 Evidence 的真实 change pressure 暴露的结构约束，压缩一类已证实变化的传播范围，使其更少跨 owner / authority / dependency / verification surface，并同时产生 structural gain + real exit；只有整洁/规范收益的 change 不得冒充 Improvement。
 8. Program 引用 authoritative repo SOT；handoff artifact 不成为 repo architecture SOT。
 9. AE 停在 architecture outcome / structural done condition；除非 authority 绑定 representation，不固定 implementation。
 10. 上游 shaping capability 调用时 AE 返回 Evidence/options/decision surface，不抢 Human Ask ownership。
@@ -27,10 +27,17 @@
 - **P6 Performance**：无 profiling/SLA/resource Evidence 的 fast path → 不得打穿 primary boundary。
 - **P7 Real evolution**：新增 facade/registry 但旧 authority/path 仍在 → 不得算 evolution；Program completion 必须指出整体完成后哪些旧 authority/dependency/path 不再 authoritative。
 - **P8 Second system**：简单 pressure 引入 plugin/framework/hooks → 无当前长期 Evidence 就缩小。
-- **C1 Improvement quality**：research/data collection 不进 Top Improvements；只有独立 structural gain + real exit 的 change 可进。
+- **P9 Prose-compensated boundary**：同一 ownership/dependency 规则在 AGENTS/comment/runbook 中反复解释，而 repo territory/build dependency 仍无法直接表达 → 把这种重复 guidance 作为 architecture Evidence 继续判断；若它只是不可从结构推出的 domain semantics，则保留 guidance，不得为了“agent 更好读”强行改 architecture。
+- **P10 Guidance exit**：Architecture Improvement 已把原本只能靠 prose 约束的 owner/dependency 物化进 module/package/build/tooling → 对应补偿性 guidance 应退出或停止 authoritative；若仍有独立 domain semantic/contract，则只删除已被结构替代的部分。
+- **V1 Low-value cleanup**：一个候选 change 能删掉旧 helper/namespace、让 dependency 更干净，也满足 structural gain + real exit，但同一类真实 change 仍需跨原有 owner / authority / verification surfaces → 不得仅因结构更漂亮进入 Top Improvements；最多作为 local cleanup/附带退出处理。
+- **V2 Positive leverage**：一类真实需求每次都要跨多个 owner 重组私有 knowledge；候选 Target 让 capability responsibility/dependency/authority 闭合，使后续同类变化从跨多个 owner 收敛到单一 owner，并由稳定 Evidence 验证，同时旧跨边界 path 退出 → 这是优先 Architecture Improvement，即使实际 patch 不大。
+- **V3 AI-native as consequence**：候选结构让后续 change 的 owner、allowed dependency、authoritative state 和完成 Evidence 可从局部 repo territory/tooling 发现并验证，减少跨边界 reconstruction → 可作为传播范围被压缩后的正向收益；若为了 agent/navigation 便利而破坏 primary responsibility 或制造额外层，则失败。
+- **V4 Planned pressure is evidence**：已批准 roadmap / binding requirement 已明确未来一类变化，即使尚未发生多次，也算真实 change pressure；AE 可以据此选择能解除其结构约束的 Improvement。仅凭“以后可能有用”的猜测仍不得物化 future hook/framework。
+- **V5 Propagation compression**：两个候选都满足架构约束并有 real exit；A 只让现有模块内部更清楚，B 让同一类真实 change 从 `多个 owner + 多份 authority + 多处验证` 收敛为 `一个 owner + 一个 authority + 局部验证` → 优先 B。若所谓“压缩”只是隐藏真实跨边界语义或把已有独立 authority/lifecycle 的 owner 错吞成一个，则失败。
+- **C1 Improvement quality**：research/data collection 不进 Top Improvements；只有解除真实 pressure 暴露的结构约束、压缩真实 change propagation，并同时产生 structural gain + real exit 的 change 可进。
 - **C2 Ceiling**：只有 2 个真实 Improvements → 只输出 2 个。
 - **C3 Setup-only**：先建 abstraction、以后再迁 → 若当前不产生 gain/exit，不得入 Program。
-- **C4 Leverage**：多个真实 Improvements → 优先解除跨边界 knowledge/dependency，而非最易实现项。
+- **C4 Leverage**：多个真实 Improvements → 优先显著减少同类 change 必须跨越的 owner / authority / dependency / verification surface，而不是最易实现、最整洁或只减少表面 dependency 的项。
 - **C5 SOT**：已有 authoritative contract → 引用原 SOT；需演进时指向原 source delta。
 - **N1 Local**：bug/dead getter/mechanical cleanup → local judgment，不制造 Target/Program。
 - **R1 Real fork**：两个长期结构都可行且缺 decisive constraint → unresolved，不按模式偏好强选。
@@ -43,21 +50,23 @@
 ## Captured properties
 
 1. taxonomy / proposed shape 是 Evidence，不是 law；
-2. abstraction 由 stable semantics/invariants 决定；
-3. 长期 dependency boundary 优先机械可见，cohesion 不吞并独立 authority/lifecycle；
-4. auxiliary concern 不塑造 primary architecture，caller 不重组 capability 私有 knowledge；
-5. real evolution 要求旧 authority/knowledge/dependency/path 退出，Program 还要给出整体 exit；
-6. Research bounded，Program 只保留 independently improving changes；
-7. authoritative repo truth 不复制成平行 SOT；
-8. specialist 不抢 Human decision ownership；
-9. delivery 只交当前 judgment/Program，且不是 lifecycle state；material update 后必须完整重交付；
-10. handoff artifact 只承担 transport authority，不替代 repo SOT。
+2. Target / Improvements 必须从有 Evidence 的真实 change pressure 暴露的结构约束出发，并压缩一类已证实变化的传播范围；已批准 roadmap / binding future requirement 也可构成 pressure Evidence，纯猜测不行；结构正确但不改变 change propagation 的 cleanup 不够；
+3. abstraction 由 stable semantics/invariants 决定；
+4. 长期 dependency boundary 优先机械可见，cohesion 不吞并独立 authority/lifecycle；正确 boundary 还应让后续 change 所需的 owner/authority/Evidence 更局部可发现和验证，但 AI convenience 不得塑造 primary architecture；
+5. auxiliary concern 不塑造 primary architecture，caller 不重组 capability 私有 knowledge；
+6. real evolution 要求旧 authority/knowledge/dependency/path 退出，已被结构替代的补偿性 guidance 同样退出；
+7. Research bounded，Program 只保留 independently improving changes；
+8. authoritative repo truth 不复制成平行 SOT；
+9. repeated ownership/dependency prose 只是 architecture Evidence，必须先区分 structural ambiguity 与 irreducible domain semantics；
+10. specialist 不抢 Human decision ownership；
+11. delivery 只交当前 judgment/Program，且不是 lifecycle state；material update 后必须完整重交付；
+12. handoff artifact 只承担 transport authority，不替代 repo SOT。
 
 ## Paired behavioral eval
 
 同一 model / repo snapshot / tool permission / budget：
 `A. 不加载 architecture-evolution` vs `B. 加载 architecture-evolution`。
 
-评分：Research scope、architecture taste、Program convergence、architecture altitude、Human routing、re-entry、handoff integrity、context cost。
+评分：Research scope、change-pressure alignment、change-propagation leverage、architecture taste、Program leverage/convergence、architecture altitude、Human routing、re-entry、handoff integrity、context cost。
 
 只有 clean-session paired Evidence 才能声明 behavioral uplift；否则标记 `NOT RUN`。
