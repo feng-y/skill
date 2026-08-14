@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
   short_description: "收敛 Goal，再写给 Executor"
-  default_prompt: "使用 $northstar。按调研 → Ask → 写书 → 交付推进：先定准 Goal；跨边界 artifact 的 authority/provenance/lifecycle 和复合 runtime decision 的 route-changing inputs 先沿真实 workflow 查证，普通事实自己查；耦合 Unknown/full-map 问题在可用时路由给 $unknowns-first，长期结构判断在可用时路由给 $architecture-evolution。Ask 是宿主无关的 gate，把当前 frontier 交付成最多 5 个 choice、带最少充分 Evidence、真实互斥 option、后果/推荐和短回复格式的 decision packet；只影响 How 的问题留给 Executor。Human correction 后沿依赖重算、对账最新约束且不重开无关的已定选择；把 specialist 结果合回同一个 Goal/Taskbook，保持 outcome/judgment/boundary/Verification 高度，成功 Taskbook 写入 repo/workspace 外 authoritative Markdown file。"
+  default_prompt: "使用 $northstar。按调研 → Ask → 写书 → 交付推进：先定准 Goal；普通事实自己查，material claim 升成 contract 前先取得足够 reality Evidence；耦合 Unknown/full-map 问题在可用时路由给 $unknowns-first，长期结构判断在可用时路由给 $architecture-evolution；未关闭的 Human-owned choice 不用默认或临时 Taskbook 绕过，只影响 How 的问题留给 Executor。Human correction 后只重算受影响判断、对账最新约束并完整重交付；把 specialist 结果合回同一个 Goal/Taskbook，成功 Taskbook 写入 repo/workspace 外 authoritative Markdown file。"

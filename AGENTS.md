@@ -10,7 +10,7 @@
 - **Evidence before materialization.** Observation、distinction、partition、role、variation、provider、execution shape、case difference 默认只是 reasoning/evidence。只有它对应稳定 semantic、invariant、ownership 或长期 change boundary 时，才考虑物化。
 - **New structure must remove something.** 新 abstraction / layer / protocol 必须让重复知识、分支、依赖、责任泄漏、旧路径或旧结构真实退出。若只是 `old A → new layer → old B`，默认是 complexity relocation。
 - **Protocol complexity needs reality.** 复杂协议必须由真实跨边界不确定性、独立生命周期、失败语义或稳定多实现需求证明；普通单 owner / 同进程 / 同步协作不因“解耦”自动升级成协议。
-- **Generalize before promotion.** Concrete incidents enter committed validation only after becoming a transferable discriminator; project-specific actors, artifacts, stage order, inventories and expected solutions stay outside Skill semantics. Runtime guidance requires independent authority or the same discriminator across at least two materially different cases. If existing semantics already cover a failure, keep the runtime unchanged.
+- **Incidents stay in eval by default.** Concrete incidents / failures can enter validation / regression directly. Runtime guidance requires independent authority or cross-case Evidence for a transferable invariant / discriminator; a single example becoming green is not improvement Evidence. If existing semantics already cover the failure, keep runtime unchanged.
 - **Runtime and eval stay separate.** runtime 只保留正常运行需要的 stable invariant / authority / boundary；具体 incident/counterexample 留在 eval；behavioral claim 必须由真实 eval 支撑。不要因 regression 增加而同步扩大 runtime context。
 - **Northstar / Prompt Atlas stay bilingual, not divergent.** 两者是同一 Skill semantics 的中文/英文 surface。对 Goal / Execution / Verification / Evidence、Unknown、Taskbook、Completion Hook、trust 或 eval case 的行为性修改必须双边同步；只允许语言、名称和纯表达层差异。若要改变其中一边的 semantics，先把它当作 shared semantic change review，而不是独立 Skill 演化。
 
@@ -20,7 +20,7 @@
 - **Load only decision-relevant context.** Always-on / current context 中的信息必须能实际改变当前 judgment。背景、历史、示例和未来可能有用的信息优先 routing/reference，按需 progressive disclosure。
 - **Encode discriminators, not remembered answers.** 描述让两个 case 真正不同的 discriminator / invariant，而不是记住某个 case 的结论。例如 `scope follows actual reachability / authority`，而不是 `cleanup 要 replay`。
 - **Prefer territory over duplicated descriptions.** 默认事实优先级：`current code / test / config / runtime evidence > stable repo contract > authoritative current docs > historical explanation > case narrative`。能从 repo reality 重新判断的事实，不复制成第二份易漂移 SOT。
-- **Forward eval tests generalization, not fit.** Compare heterogeneous cases and regressions. A single example becoming green is not improvement evidence; a failure already covered by current invariants remains eval evidence rather than new prompt text.
+- **Examples do not become runtime priors.** Example、incident、captured output、regression 用于 eval；runtime 只保留有 authority 或 generalization Evidence 支持的 general invariant。
 
 ## Review gate
 
@@ -28,7 +28,7 @@
 
 1. 新增 context / structure 支持哪个具体 judgment 或责任？
 2. 已有语义为什么不能拥有它？
-3. 它是否有 independent authority，或至少两个 materially different cases 共同支持同一 stable invariant / discriminator？
+3. 它有 independent authority，或有跨 case Evidence 支持为 stable invariant / discriminator，还是一次 case 的答案？
 4. 它加入后什么旧规则、知识、结构或复杂度会退出？
 5. 它能否下沉到按需 reference 或 eval，而不是进入 always-on runtime？
 
