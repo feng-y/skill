@@ -17,17 +17,21 @@ Taskbook 保持 `Goal → Execution → Verification → Evidence` 的因果链�
 
 **1. 调研。** 从 Human 最新且仍有效的表达开始。先恢复候选 Goal，再查会改变 Goal、Human-owned choice、binding constraint 或第一项安全 material work 的 reality。Human 当前描述、旧 plan 和 Northstar 的当前理解都可以被 repo/runtime、真实 consumer、已有规格和当前 workspace 校正。
 
+**Evidence gate：**凡 actor / owner、artifact authority / provenance、lifecycle、runtime decision 或 compatibility role 会改变 Goal、Ask、binding constraint、Verification 或第一项安全 material work，先沿真实 workflow 查到足以判断的 territory Evidence。跨 boundary artifact 要证明真实 provenance、ownership / readiness、consumer 与 failure semantics；runtime behavior 由多个输入共同决定时，保留所有 route-changing input，不能坍缩成一个被观察到的 source。查不到就保持为显式 Unknown，不能把当前叙述、产物存在或高置信推断升成契约；只有所有 route-changing 事实都已被 authority / Evidence 关闭或暴露为真正未决，调研才完成。
+
 自己能查的事实不问 Human。已有 authoritative tests/schema/ADR/Architecture Intent/验收脚本直接引用，不再复制一份；当前 workspace 中仍有效的修改就是 starting reality，不默认要求 clean state。继续 Research 只会改变 How 时就停。
 
 未决问题不统一变成 Research 或 Ask。普通的 Goal/How 难分、关于是否做、投入与长期承诺的选择未定、隐藏约束或要求冲突，读 [intent-shaping.md](references/intent-shaping.md)。如果多个耦合 Unknown 或 source alignment 让 Goal / Taskbook 还不能决策完整，且当前环境有 `$unknowns-first`，交给它；如果继续文字讨论仍不能可靠决定，而一个廉价、可丢弃的具体产物能显著提高判断质量，就用可用的 prototype / concrete-sample capability（`$unknowns-first` 可承担这类 local move）；prototype 只回答当前决策问题，不是 Goal 实现，结论再合回 Goal / Taskbook。如果真正未定的是长期模块责任、边界、依赖方向或 Target Architecture，且有 `$architecture-evolution`，交给它判断；若该结构判断只是不同投入路径中的一个 option，AE 只提供 Evidence/options/decision surface，是否做、投入与长期承诺的选择仍回 Northstar Ask。
 
 Specialist 负责 Evidence、option、artifact 和暴露 decision surface；凡最终需要 Human 拍板的 choice，一律返回 Northstar，合并进当前 Ask frontier，specialist 不自行串行 Ask / 关闭。prototype 需要 Human reaction 时同样如此。Northstar 只把 specialist 的当前 decision / Evidence 合回 Goal 或 Taskbook，不复制其协议、不把它变成第二份任务书。对应 capability 不可用时，只做关闭当前 Goal / Taskbook 所必需的最小等价判断；只影响 How 的问题仍留给 Executor。
 
-**2. Ask。** Northstar 是 Goal 以及是否做、投入与长期承诺这类 Human decision 的唯一 Ask owner。只问 reality 无法决定、而答案会改变 Human 最终接受 Goal，或 materially 改变是否做、投入规模、承诺寿命、长期维护责任或风险姿态的选择。把**当前前提已经闭合、可以独立回答**的 Human-owned 选择尽量一轮问全，说明它会改变什么、主要后果和推荐；依赖另一个尚未拍板选择的问题先不问，等前提关闭后再展开。事实题自己查，只影响 How 的问题留给 Executor。
+**2. Ask。** Ask 是不依赖宿主交互模式的 gate，Northstar 是 Goal 以及是否做、投入与长期承诺这类 Human decision 的唯一 Ask owner。只要 reality 还不能关闭一个会改变 Human 最终接受 Goal，或 materially 改变是否做、投入规模、承诺寿命、长期维护责任或风险姿态的 choice，就停在 Ask，不用 provisional Taskbook 或隐含默认绕过。
 
-Human 可能只回答一部分、插入新约束、纠正前提或中断。每次都以最新 Human 输入为准，保留仍有效判断，只重开受影响部分；一旦所有仍需 Human 拍板的选择都足够稳定，就继续写书，不能因为之前 Ask 过而停在确认、解释或 delta。Human 不在场而必须先做选择时，只能采用可回退、且不会改变任何 Human-owned choice、允许修改范围、Verification 或授权的显式默认，并保留依据。
+把当前可独立回答的 Human-owned frontier 交付成一轮可直接回复的 **decision packet**，最多 5 个 choice：先用最少但足够的 Evidence 说明已关闭的边界和每个 choice 会改变什么；可枚举 choice 给 2–4 个真实、互斥、同层级的 option，使用稳定 label，并写主要后果与明确推荐；不能可靠枚举时给 bounded free-response contract，不编造 option。最后给一行短回复格式。依赖另一个尚未拍板 choice 的问题等前提关闭后再展开；事实题自己查，只影响 How 的问题留给 Executor。
 
-**3. 写书。** Goal 与所有仍需 Human 拍板的选择收敛后，写当前完整 Taskbook。只保留 fresh Executor 不知道就可能判断错、越界或无法证明完成的信息；Research narration、能可靠重算的 inventory、file/symbol/line 明细和 predicted patch 默认删除。
+Human 可能只回答一部分、插入新约束、纠正前提或中断。每次先做 **invalidation pass**：替换被纠正前提，沿依赖重算 Goal、Ask、Taskbook 与 Verification，删除失效陈述；再把每项最新、仍有效的 material Human constraint 对账到 Goal / Taskbook / Verification 或显式 authority conflict，不能静默遗漏、扩大或降级。不依赖被纠正前提、且已由 Human / authority 关闭的选择保持关闭，不得借修订重新 Ask。所有仍需 Human 拍板的选择稳定后就继续写书，不能停在确认、解释或 delta-only mode。Human 不在场而必须先做选择时，只能采用可回退、且不会改变任何 Human-owned choice、允许修改范围、Verification 或授权的显式默认，并保留依据。
+
+**3. 写书。** Goal、Evidence gate、最近一次 invalidation pass 与所有仍需 Human 拍板的选择都关闭后，写当前完整 Taskbook。只保留 fresh Executor 不知道就可能判断错、越界或无法证明完成的信息；Research narration、能可靠重算的 inventory、file/symbol/line 明细和 predicted patch 默认删除。
 
 简单任务直接写完。任务很长、存在多个不同判断、真实依赖、执行中才会逐步显现后续工作或跨 session 继续时，读 [execution-compile.md](references/execution-compile.md)。只有存在具体“实现其实错了但检查仍可能 PASS”的风险时，才读 [verification-trust.md](references/verification-trust.md)。
 
@@ -39,7 +43,7 @@ Taskbook 交付不是 completion state。Human 后续任何 material clarificati
 
 **Goal 高于手段。** Human 点名的 architecture、tool、migration、provider 或实现方式默认只是 means。判断它是否属于 Goal，只问：**换一种 materially different 的实现仍满足要求，Human 会接受吗？** 会就把 How 留给 Executor；不会，才把对应结果、边界、风险承诺或 representation 固定进 Goal。
 
-**法与情报分开。** Human、repo/upstream authority 或 verified reality 真正绑定的内容才能写成 `must / must not`。当前最佳实现、Research 结论和高置信方案仍是 implementation intelligence；只要满足 Goal 和 binding constraint，Executor 可以用更好的路径替换。Human 的要求冲突时必须取得真实 priority，不能按实现便利性偷偷排序。authoritative guidance 与 verified reality 不一致时，不把两者合成虚假的当前事实；先暴露冲突及其对 Goal / Execution / Verification 的影响，只有 authority 本身要求 reality 改变时，才把当前差异编译成待实现 delta。
+**法与情报分开。** Human、repo/upstream authority 或 verified reality 真正绑定的内容才能写成 `must / must not`。当前最佳实现、Research 结论和高置信方案仍是 implementation intelligence；跨边界机制叙述和产物存在，在 actor、lifecycle、provenance 与 authority 经真实 workflow 验证前也仍是 intelligence。只要满足 Goal 和 binding constraint，Executor 可以用更好的路径替换。Human 的要求冲突时必须取得真实 priority，不能按实现便利性偷偷排序。authoritative guidance 与 verified reality 不一致时，不把两者合成虚假的当前事实；先暴露冲突及其对 Goal / Execution / Verification 的影响，只有 authority 本身要求 reality 改变时，才把当前差异编译成待实现 delta。
 
 **富规格直接引用。** 已有 authoritative spec 能表达要求时直接引用它。不要把 schema、测试、设计约束或已有 contract 改写成第二份 prose SOT。
 
@@ -53,8 +57,8 @@ Taskbook 交付不是 completion state。Human 后续任何 material clarificati
 
 ## 发出前自检
 
-1. Goal 和 means 分开了吗？Human 真正必须拍板的选择都已回到 Northstar Ask frontier，能查的事实没有甩给 Human？需要 specialist resolution 或 concrete prototype 的问题有没有被通用 Research/Ask 吞掉？
-2. Taskbook 是否引用现有 authority，而不是制造第二份 SOT？`must / must not` 是否都有真实 authority？
+1. Goal 和 means 分开了吗？Human 真正必须拍板的选择都已回到 Northstar Ask frontier，能查的事实没有甩给 Human？Ask 是否是 compact、可一次回复的 decision packet？需要 specialist resolution 或 concrete prototype 的问题有没有被通用 Research/Ask 吞掉？
+2. Taskbook 是否引用现有 authority，而不是制造第二份 SOT？每个跨边界 artifact 的 authority / provenance / lifecycle / failure、复合 runtime decision 的 route-changing inputs 和每个 `must / must not` 是否都有真实 Evidence？最近一次 Human correction 的 invalidation 与 constraint 对账是否完成，且未重开无关的已定选择？
 3. 执行内容是否仍在 outcome / judgment / responsibility / dependency 高度，而不是 predicted patch 清单？
 4. 当前可推进范围有没有偷换完整 Goal？未来 contingent work 有没有被提前猜成任务？
 5. 开发粒度和 Verification 粒度是否各自按自己的判断设计？完成证明是否覆盖真实 Goal，且没有假绿捷径？固定的 concrete verification command 是否有 reality Evidence？
