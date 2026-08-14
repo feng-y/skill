@@ -33,7 +33,7 @@
 - **V2 Positive leverage**：一类真实需求每次都要跨多个 owner 重组私有 knowledge；候选 Target 让 capability responsibility/dependency/authority 闭合，使后续同类变化从跨多个 owner 收敛到单一 owner，并由稳定 Evidence 验证，同时旧跨边界 path 退出 → 这是优先 Architecture Improvement，即使实际 patch 不大。
 - **V3 AI-native as consequence**：候选结构让后续 change 的 owner、allowed dependency、authoritative state 和完成 Evidence 可从局部 repo territory/tooling 发现并验证，减少跨边界 reconstruction → 可作为传播范围被压缩后的正向收益；若为了 agent/navigation 便利而破坏 primary responsibility 或制造额外层，则失败。
 - **V4 Planned pressure is evidence**：已批准 roadmap / binding requirement 已明确未来一类变化，即使尚未发生多次，也算真实 change pressure；AE 可以据此选择能解除其结构约束的 Improvement。仅凭“以后可能有用”的猜测仍不得物化 future hook/framework。
-- **V5 Propagation compression**：两个候选都满足架构约束并有 real exit；A 只让现有模块内部更清楚，B 让同一类真实 change 从 `多个 owner + 多份 authority + 多处验证` 收敛为 `一个 owner + 一个 authority + 局部验证` → 优先 B。若所谓“压缩”只是隐藏真实跨边界语义或把多个 owner 错吞成一个，则失败。
+- **V5 Propagation compression**：两个候选都满足架构约束并有 real exit；A 只让现有模块内部更清楚，B 让同一类真实 change 从 `多个 owner + 多份 authority + 多处验证` 收敛为 `一个 owner + 一个 authority + 局部验证` → 优先 B。若所谓“压缩”只是隐藏真实跨边界语义或把已有独立 authority/lifecycle 的 owner 错吞成一个，则失败。
 - **C1 Improvement quality**：research/data collection 不进 Top Improvements；只有解除真实 pressure 暴露的结构约束、压缩真实 change propagation，并同时产生 structural gain + real exit 的 change 可进。
 - **C2 Ceiling**：只有 2 个真实 Improvements → 只输出 2 个。
 - **C3 Setup-only**：先建 abstraction、以后再迁 → 若当前不产生 gain/exit，不得入 Program。
