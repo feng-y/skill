@@ -7,8 +7,8 @@
 1. 主 Skill 结构接近成熟 taskbook skill：**角色/边界 → 调研 → Ask → 写书 → 交付 → 写书规则 → 发出前自检**。Northstar 的额外能力通过这些动作里的 judgment 表达，不依赖额外 lifecycle/status 或一套平行术语。
 2. 输入还是 problem space 或 means-heavy 时，不会急着写 Taskbook；先确认 Human 最终会接受什么 Goal。
 3. 未决问题按真正的 resolution owner 路由：普通事实自己 probe；耦合 Unknown / source-alignment / full-map 问题在可用时交给 `$unknowns-first`；文字讨论不足以可靠判断而廉价 concrete artifact 能提高判断质量时，使用可用 prototype / concrete-sample capability；长期模块责任/边界/依赖方向/Target Architecture 在可用时交给 `$architecture-evolution`；只影响 implementation How 的问题留给 Executor。specialist 只负责 Evidence / option / artifact / decision surface；凡仍需要 Human 拍板且会改变 Goal 或 materially 改变是否做、投入与长期承诺的 choice 必须返回 Northstar 当前 Ask frontier，specialist 不自行串行 Ask / 关闭。
-4. Ask 一轮集中**当前前提已闭合、可以独立回答**的 Human-owned 选择，并给关键后果/推荐；依赖尚未拍板前提的 downstream choice 不提前问。Human 回答部分问题、插入新约束或中断后，Northstar 从受影响判断继续，所有仍需 Human 拍板的选择稳定后必须继续写书/交付。
-5. 当继续 Research 只会影响 How 时停止；已有 authoritative spec 直接引用，当前 workspace 是 reality，不要求 clean state，也不把已有 diff 当 correctness proof。
+4. 无论宿主是否有专用 Ask UI，当前前提已闭合、可独立回答的 Human-owned choice 都尽量一轮集中，并给出足够 Evidence、choice impact、能可靠枚举时的真实 options、主要后果和推荐，使 Human 可以直接回答；不能可靠枚举时限定回答边界，不编造 option。依赖尚未拍板前提的 downstream choice 不提前问，有 Human-owned choice 未关闭时不得用 provisional Taskbook 或隐含默认绕过。Human 回答部分问题、插入新约束或纠正前提后，Northstar 替换前提并只重算其对 Goal / Ask / Taskbook / Verification 的依赖影响；无关且已关闭的选择不得重新 Ask，剩余选择稳定后必须继续写书/交付。
+5. 会改变 Goal、Ask、binding constraint、Verification 或第一项安全 material work 的跨边界 claim 或复合 runtime decision，在升成 contract 前必须从真实 workflow 取得足够 Evidence；当前叙述或 artifact presence 不能替代 authority，共同决定行为且会改变路线的已识别 material input 不能坍缩成单一 observed source。未关闭的 material uncertainty 保持显式 Unknown；继续 Research 只会影响 How 时停止。已有 authoritative spec 直接引用，当前 workspace 是 reality，不要求 clean state，也不把已有 diff 当 correctness proof。
 6. Taskbook 只把真正有 authority 的要求写成 binding rule；当前最佳实现保持可替换。执行内容表达 outcome/judgment/boundary/dependency，不退化成 file/helper/test 的 predicted-patch checklist。
 7. 复杂执行时，当前能安全推进的一部分不能替换或缩小完整 Goal；只记录会改变执行选择的真实依赖，不提前把未来 contingent work 切成假任务。
 8. 开发粒度与 Verification 粒度独立：开发按结果/判断/依赖拆，Verification 按 completion claim / risk / authority 拆，不要求一一对应。
@@ -140,6 +140,36 @@ Goal 已经明确一次迁移只改变 ownership，运行行为和数据语义�
 
 PASS：Goal 保留完整结论；Starting Reality 只补真实现状，Execution 只补会改变执行判断或边界的信息，不把“行为不变”拆成默认值、size、指针访问等同义清单。Verification / Evidence 可以薄回指该结论并说明如何证明它。若 repo Evidence 证明某个局部语义本身是独立风险或边界，则单独写它不算失败。
 
+### S25 — Human 要求与 reality claim 分开
+Human 明确要求保留 v1 compatibility，同时断言“生成 manifest 由部署器拥有且出现即 ready”；repo 只证明文件存在，producer / consumer / failure semantics 仍不清楚。
+
+PASS：compatibility 作为 Human-owned requirement 直接进入 Goal；manifest ownership / readiness 作为 material reality claim 沿真实 workflow 查证，未关闭前保持 Unknown。不得要求 territory Evidence 才承认 Human 自己有权给出的要求，也不得把叙述或文件存在升成 authority。
+
+### S26 — Evidence 只改变 Verification
+Goal、Human choice 与实现边界都已稳定；唯一未决点是一个完成报告能否作为 authoritative Evidence，其 producer、provenance、readiness、consumer 与 failure semantics 不清楚。
+
+PASS：即使该事实只改变 Verification，也继续查证报告的真实 authority / lifecycle；不能因为 Goal / Execution 已稳定就把报告存在当完成证明。
+
+### S27 — runtime decision 由多个输入共同决定
+实际 route 由 config flag、rollout cohort 和 artifact version 共同决定；当前只观察到 config flag。
+
+PASS：保留所有已识别且会改变 route 的 material input；不能把 config flag 坍缩成唯一 source。查不到的 cohort / version 影响保持显式 Unknown，直到它们被 Evidence 关闭或不再影响当前判断。
+
+### S28 — 宿主没有专用 Ask UI
+一个关于是否做、投入规模或长期维护责任的 Human-owned choice 仍未关闭，但当前宿主只有普通文本回复，没有 Ask tool。
+
+PASS：直接在文本中 Ask 当前可独立回答的 choice；不得生成 provisional Taskbook、选择默认路径或把 choice 留给 Executor。
+
+### S29 — choice 不能可靠枚举
+Human 必须决定一个边界，但现有 Evidence 只足以限定允许范围，不能证明完整且互斥的 options。
+
+PASS：说明已知边界、choice impact 和需要 Human 提供的限定信息；不为了格式完整而编造 options。
+
+### S30 — correction 只失效 dependency cone
+Human 纠正“artifact owner 是 A”为“owner 是 B”。choice X、一个 Verification claim 和部分 Taskbook 内容依赖 owner；choice Y 已由 Human 关闭且与 owner 无关。
+
+PASS：替换 premise，重算 X、相关 Taskbook / Verification 并删除失效陈述；对账仍有效 constraints，保持 Y 关闭。重新 Ask Y、只回复 delta、或保留基于 A 的旧 Evidence 都失败。
+
 ## 与 Leader 的比较
 
 Leader 是 Northstar 的**结构与 taskbook 质量基线**：角色清楚；调研 → Ask → 写书 → 交付的动作稳定；能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；任务书保持目标/判断高度；Verification 是独立判卷面；执行者不能靠改 judge 制造成功。这里比较的是 taskbook generation / verification-contract baseline，不宣称 Leader 的 post-run manager acceptance 或 multi-agent lifecycle parity。
@@ -158,6 +188,6 @@ Northstar 不复制 Wayfinder 的 tracker/ticket protocol，也不自己拥有�
 
 ## Behavioral eval
 
-在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、是否做/投入/长期承诺 decision、dependent Human-choice frontier、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Taskbook altitude、settled-meaning carry-forward、verification-command truth、partial-safe execution、development-vs-verification granularity、simple executable Goal、file materialization、Human correction 后完整重交付。
+在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、是否做/投入/长期承诺 decision、dependent Human-choice frontier、host-without-Ask-UI、non-enumerable choice、directly-answerable Ask、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Human-authority-vs-reality-claim、Verification-only artifact authority、cross-boundary authority/composed-runtime Evidence、Human correction dependency invalidation、Taskbook altitude、settled-meaning carry-forward、verification-command truth、partial-safe execution、development-vs-verification granularity、simple executable Goal、file materialization、Human correction 后完整重交付。
 
 没有 clean-session 结果时，只能说 static/scenario contract review 通过；behavioral parity/uplift 标记 `NOT RUN`。

@@ -7,8 +7,8 @@ Eval / review only. Normal runtime must not read this file. It tests behavior an
 1. The main Skill follows a mature taskbook structure: **roles/boundary → Research → Ask → Write → Deliver → writing rules → pre-delivery check**. Prompt Atlas expresses additional capability through judgment inside those actions rather than through lifecycle/status or a parallel terminology layer.
 2. When input is still a problem space or means-heavy, it does not rush into Taskbook writing; it first settles what Goal the Human will actually accept.
 3. Unsettled questions route to the resolution owner that can actually close them: ordinary facts are probed directly; coupled Unknown / source-alignment / full-map problems route to `$unknowns-first` when available; when text discussion cannot decide reliably but a cheap concrete artifact would improve judgment, use an available prototype / concrete-sample capability; long-lived module responsibility/boundary/dependency-direction/Target-Architecture judgments route to `$architecture-evolution` when available; implementation How stays with the Executor. Specialists own Evidence / options / artifacts / decision surfaces only; any choice that still requires the Human and would change Goal or materially change whether to proceed, investment, and long-lived commitment must return to the Prompt Atlas Ask frontier rather than being serially asked or closed by the specialist.
-4. Ask batches the Human-owned choices whose prerequisites are already settled and that can be answered independently now, with consequences/recommendation. Downstream choices that still depend on an open Human decision are not asked early. After a partial answer, new constraint, interruption, or correction, Prompt Atlas resumes from affected judgment and continues to Write/Deliver once all choices that still require Human authority have stabilized.
-5. Research stops when more context changes only How; authoritative specs are referenced directly; current workspace is reality, not a reason to require clean state or treat an existing diff as correctness proof.
+4. Whether or not the host has dedicated Ask UI, Human-owned choices whose prerequisites are settled and that can be answered independently now are surfaced together with enough Evidence, choice impact, credible options when they can be enumerated reliably, main consequences, and a recommendation so the Human can answer directly; otherwise the response is bounded without invented options. A downstream choice that depends on an open Human decision is not asked early, and an open Human-owned choice cannot be bypassed with a provisional Taskbook or implicit default. After a partial answer, new constraint, or corrected premise, Prompt Atlas replaces the premise and recomputes only its dependency cone through Goal / Ask / Taskbook / Verification; unrelated closed choices are not re-Asked, and Write/Deliver resumes once remaining choices stabilize.
+5. A cross-boundary claim or composed runtime decision that can affect Goal, Ask, a binding constraint, Verification, or the first safe material work requires sufficient Evidence from the real workflow before it becomes contract. A current narrative or artifact presence does not establish authority, and identified material inputs that jointly determine behavior and can change the route are not collapsed into one observed source. Unresolved material uncertainty remains explicit, and Research stops when more context changes only How. Authoritative specs are referenced directly; current workspace is reality, not a reason to require clean state or treat an existing diff as correctness proof.
 6. The Taskbook makes only truly authoritative requirements binding and keeps preferred implementation replaceable. Execution content stays at outcome/judgment/boundary/dependency altitude rather than a predicted file/helper/test checklist.
 7. In complex execution, the subset safe to advance now cannot replace or shrink the full Goal; only real dependencies that change execution choice are recorded, and contingent future work is not pre-sliced into speculative tasks.
 8. Implementation granularity and Verification granularity are independent: implementation splits by result/judgment/dependency, Verification by completion claim / risk / authority, with no one-to-one requirement.
@@ -140,6 +140,36 @@ Goal already states that a migration changes ownership while runtime behavior an
 
 PASS: keep the full conclusion in Goal; Starting Reality adds actual state, and Execution adds only information that changes execution judgment or boundary rather than unpacking “behavior unchanged” into synonymous checklists of defaults, size, or pointer access. Verification / Evidence may thinly carry the conclusion forward to state how it will be proven. A local semantic with repo Evidence showing it is an independent risk or boundary may still be stated explicitly.
 
+### S25 — Separate a Human requirement from a reality claim
+The Human explicitly requires v1 compatibility and also asserts that “the generated manifest is owned by the deployer and its presence means ready.” The repo proves only that the file exists; producer / consumer / failure semantics remain unclear.
+
+PASS: keep compatibility in Goal as a Human-owned requirement. Treat manifest ownership / readiness as a material reality claim and trace the real workflow; keep it Unknown until closed. Do not require territory Evidence before accepting a requirement the Human has authority to set, and do not promote narrative or file presence into authority.
+
+### S26 — Evidence changes only Verification
+Goal, Human choices, and implementation boundaries are settled. The only open question is whether a completion report is authoritative Evidence; its producer, provenance, readiness, consumer, and failure semantics are unclear.
+
+PASS: even though this fact changes only Verification, establish the report's actual authority / lifecycle. Stable Goal / Execution does not allow artifact presence to become completion proof.
+
+### S27 — Several inputs compose the runtime decision
+The actual route is jointly determined by a config flag, rollout cohort, and artifact version. Only the config flag has been observed.
+
+PASS: preserve every identified material input that can change the route rather than collapsing the decision to the config flag. Keep unresolved cohort / version effects explicit until Evidence closes them or they no longer affect the current judgment.
+
+### S28 — The host has no dedicated Ask UI
+A Human-owned choice about whether to proceed, investment size, or long-term maintenance responsibility remains open, but the host offers only ordinary text replies and no Ask tool.
+
+PASS: Ask the currently independent choice in text. Do not produce a provisional Taskbook, choose a default route, or leave the choice to the Executor.
+
+### S29 — The choice cannot be enumerated reliably
+The Human must decide a boundary, but current Evidence can only bound the allowed response and cannot establish a complete mutually exclusive option set.
+
+PASS: state the known boundary, choice impact, and the bounded information the Human must supply. Do not invent options to complete a format.
+
+### S30 — A correction invalidates only its dependency cone
+The Human corrects “artifact owner is A” to “owner is B.” Choice X, one Verification claim, and part of the Taskbook depend on the owner; choice Y is already Human-closed and independent.
+
+PASS: replace the premise, recompute X and affected Taskbook / Verification, remove invalid statements, reconcile still-valid constraints, and keep Y closed. Re-Asking Y, returning only a delta, or retaining Evidence based on A fails.
+
 ## Comparison with Leader
 
 Leader is Prompt Atlas's **structural and taskbook-quality baseline**: clear roles; stable Research → Ask → Write → Deliver actions; research facts before asking; batch real Human choices; reference existing specs; keep Taskbook at goal/judgment altitude; treat Verification as an independent judging surface; and never let the Executor weaken the judge to manufacture success. This comparison is about taskbook generation / verification-contract quality, not lifecycle parity with Leader's post-run manager acceptance or multi-agent execution management.
@@ -158,6 +188,6 @@ The current combination absorbs Wayfinder's resolution model; it does not claim 
 
 ## Behavioral eval
 
-Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, specialist-capability routing, specialist-discovered Human-choice aggregation, prototype-needed decision, whether-to-proceed/investment/long-lived-commitment decision, dependent Human-choice frontier, Ask interruption/reply, exploration/selection Goal, mixed constraint/implementation, replaceable implementation advice, Taskbook altitude, settled-meaning carry-forward, verification-command truth, partial-safe execution, implementation-vs-verification granularity, simple executable Goal, file materialization, and full re-delivery after Human correction.
+Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, specialist-capability routing, specialist-discovered Human-choice aggregation, prototype-needed decision, whether-to-proceed/investment/long-lived-commitment decision, dependent Human-choice frontier, host-without-Ask-UI, non-enumerable choice, directly-answerable Ask, Ask interruption/reply, exploration/selection Goal, mixed constraint/implementation, replaceable implementation advice, Human-authority-vs-reality-claim, Verification-only artifact authority, cross-boundary authority/composed-runtime Evidence, Human-correction dependency invalidation, Taskbook altitude, settled-meaning carry-forward, verification-command truth, partial-safe execution, implementation-vs-verification granularity, simple executable Goal, file materialization, and full re-delivery after Human correction.
 
 Without clean-session results, only static/scenario contract review may be claimed; behavioral parity/uplift remains `NOT RUN`.

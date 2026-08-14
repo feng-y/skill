@@ -15,7 +15,9 @@ Taskbook 保持 `Goal → Execution → Verification → Evidence` 的因果链�
 
 ## 流程
 
-**1. 调研。** 从 Human 最新且仍有效的表达开始。先恢复候选 Goal，再查会改变 Goal、Human-owned choice、binding constraint 或第一项安全 material work 的 reality。Human 当前描述、旧 plan 和 Northstar 的当前理解都可以被 repo/runtime、真实 consumer、已有规格和当前 workspace 校正。
+**1. 调研。** 从 Human 最新且仍有效的表达开始。先恢复候选 Goal，再查会改变 Goal、Human-owned choice、binding constraint、Verification / Evidence 或第一项安全 material work 的 reality。Human 当前描述、旧 plan 和 Northstar 的当前理解都可以被 repo/runtime、真实 consumer、已有规格和当前 workspace 校正。
+
+上述判断所依赖的 material reality claim，在升成 contract 前必须有足够 territory Evidence。跨 boundary artifact 的存在或机制叙述不能替代 authority；需要时沿真实 workflow 核对 actor / owner、provenance、lifecycle、consumer 与 failure semantics。runtime behavior 由多个输入共同决定时，保留已识别且会改变路线的 material input，不能坍缩成一个 observed source。无法关闭的 material uncertainty 保持显式 Unknown。
 
 自己能查的事实不问 Human。已有 authoritative tests/schema/ADR/Architecture Intent/验收脚本直接引用，不再复制一份；当前 workspace 中仍有效的修改就是 starting reality，不默认要求 clean state。继续 Research 只会改变 How 时就停。
 
@@ -23,9 +25,11 @@ Taskbook 保持 `Goal → Execution → Verification → Evidence` 的因果链�
 
 Specialist 负责 Evidence、option、artifact 和暴露 decision surface；凡最终需要 Human 拍板的 choice，一律返回 Northstar，合并进当前 Ask frontier，specialist 不自行串行 Ask / 关闭。prototype 需要 Human reaction 时同样如此。Northstar 只把 specialist 的当前 decision / Evidence 合回 Goal 或 Taskbook，不复制其协议、不把它变成第二份任务书。对应 capability 不可用时，只做关闭当前 Goal / Taskbook 所必需的最小等价判断；只影响 How 的问题仍留给 Executor。
 
-**2. Ask。** Northstar 是 Goal 以及是否做、投入与长期承诺这类 Human decision 的唯一 Ask owner。只问 reality 无法决定、而答案会改变 Human 最终接受 Goal，或 materially 改变是否做、投入规模、承诺寿命、长期维护责任或风险姿态的选择。把**当前前提已经闭合、可以独立回答**的 Human-owned 选择尽量一轮问全，说明它会改变什么、主要后果和推荐；依赖另一个尚未拍板选择的问题先不问，等前提关闭后再展开。事实题自己查，只影响 How 的问题留给 Executor。
+**2. Ask。** Northstar 是 Goal 以及是否做、投入与长期承诺这类 Human decision 的唯一 Ask owner。只问 reality 无法决定、而答案会改变 Human 最终接受 Goal，或 materially 改变是否做、投入规模、承诺寿命、长期维护责任或风险姿态的选择。无论宿主是否提供专用 Ask UI，只要这样的 choice 仍未关闭，就停下来问，不用 provisional Taskbook 或隐含默认绕过。
 
-Human 可能只回答一部分、插入新约束、纠正前提或中断。每次都以最新 Human 输入为准，保留仍有效判断，只重开受影响部分；一旦所有仍需 Human 拍板的选择都足够稳定，就继续写书，不能因为之前 Ask 过而停在确认、解释或 delta。Human 不在场而必须先做选择时，只能采用可回退、且不会改变任何 Human-owned choice、允许修改范围、Verification 或授权的显式默认，并保留依据。
+把当前前提已经闭合、可以独立回答的 Human-owned 选择尽量一轮问全，给出足够 Evidence，说明它会改变什么，并在能可靠枚举时给出真实 options、主要后果和推荐，使 Human 可以直接回答；不能可靠枚举时限定回答边界，不编造 options。依赖另一个尚未拍板 choice 的问题等前提关闭后再展开；事实题自己查，只影响 How 的问题留给 Executor。
+
+Human 可能只回答一部分、插入新约束、纠正前提或中断。每次先替换被纠正前提，只重算依赖它的 Goal、Ask、Taskbook、Verification 与 Evidence，并删除失效陈述；再把每项最新、仍有效的 material Human constraint 对账到 Goal / Taskbook / Verification 或显式 authority conflict，不能静默遗漏、扩大或降级。不依赖被纠正前提、且已由 Human / authority 关闭的选择保持关闭，不得借修订重新 Ask。所有仍需 Human 拍板的选择稳定后就继续写书，不能停在确认、解释或 delta-only mode。Human 不在场而必须先做选择时，只能采用可回退、且不会改变任何 Human-owned choice、允许修改范围、Verification 或授权的显式默认，并保留依据。
 
 **3. 写书。** Goal 与所有仍需 Human 拍板的选择收敛后，写当前完整 Taskbook。只保留 fresh Executor 不知道就可能判断错、越界或无法证明完成的信息；Research narration、能可靠重算的 inventory、file/symbol/line 明细和 predicted patch 默认删除。
 
@@ -39,7 +43,7 @@ Taskbook 交付不是 completion state。Human 后续任何 material clarificati
 
 **Goal 高于手段。** Human 点名的 architecture、tool、migration、provider 或实现方式默认只是 means。判断它是否属于 Goal，只问：**换一种 materially different 的实现仍满足要求，Human 会接受吗？** 会就把 How 留给 Executor；不会，才把对应结果、边界、风险承诺或 representation 固定进 Goal。
 
-**法与情报分开。** Human、repo/upstream authority 或 verified reality 真正绑定的内容才能写成 `must / must not`。当前最佳实现、Research 结论和高置信方案仍是 implementation intelligence；只要满足 Goal 和 binding constraint，Executor 可以用更好的路径替换。Human 的要求冲突时必须取得真实 priority，不能按实现便利性偷偷排序。authoritative guidance 与 verified reality 不一致时，不把两者合成虚假的当前事实；先暴露冲突及其对 Goal / Execution / Verification 的影响，只有 authority 本身要求 reality 改变时，才把当前差异编译成待实现 delta。
+**法与情报分开。** Human、repo/upstream authority 或 verified reality 真正绑定的内容才能写成 `must / must not`。当前最佳实现、Research 结论和高置信方案仍是 implementation intelligence；跨边界机制叙述和产物存在，在 actor、lifecycle、provenance 与 authority 经真实 workflow 验证前也仍是 intelligence。只要满足 Goal 和 binding constraint，Executor 可以用更好的路径替换。Human 的要求冲突时必须取得真实 priority，不能按实现便利性偷偷排序。authoritative guidance 与 verified reality 不一致时，不把两者合成虚假的当前事实；先暴露冲突及其对 Goal / Execution / Verification 的影响，只有 authority 本身要求 reality 改变时，才把当前差异编译成待实现 delta。
 
 **富规格直接引用。** 已有 authoritative spec 能表达要求时直接引用它。不要把 schema、测试、设计约束或已有 contract 改写成第二份 prose SOT。
 
@@ -53,8 +57,8 @@ Taskbook 交付不是 completion state。Human 后续任何 material clarificati
 
 ## 发出前自检
 
-1. Goal 和 means 分开了吗？Human 真正必须拍板的选择都已回到 Northstar Ask frontier，能查的事实没有甩给 Human？需要 specialist resolution 或 concrete prototype 的问题有没有被通用 Research/Ask 吞掉？
-2. Taskbook 是否引用现有 authority，而不是制造第二份 SOT？`must / must not` 是否都有真实 authority？
+1. Goal 和 means 分开了吗？Human 真正必须拍板的选择都已回到 Northstar Ask frontier，能查的事实没有甩给 Human？Ask 是否集中当前可独立回答的 choices，并让 Human 可以直接回答？需要 specialist resolution 或 concrete prototype 的问题有没有被通用 Research/Ask 吞掉？
+2. Taskbook 是否引用现有 authority，而不是制造第二份 SOT？会改变当前判断的跨边界 claim、复合 runtime decision 的 material input 和每个 `must / must not` 是否都有真实 Evidence？最近一次 Human correction 是否只重算受影响依赖、完成 constraint 对账且未重开无关的已定选择？
 3. 执行内容是否仍在 outcome / judgment / responsibility / dependency 高度，而不是 predicted patch 清单？
 4. 当前可推进范围有没有偷换完整 Goal？未来 contingent work 有没有被提前猜成任务？
 5. 开发粒度和 Verification 粒度是否各自按自己的判断设计？完成证明是否覆盖真实 Goal，且没有假绿捷径？固定的 concrete verification command 是否有 reality Evidence？
