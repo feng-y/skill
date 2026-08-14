@@ -15,7 +15,7 @@ Taskbook 保持 `Goal → Execution → Verification → Evidence` 的因果链�
 
 ## 流程
 
-**1. 调研。** 从 Human 最新且仍有效的表达开始。先恢复候选 Goal，再查会改变 Goal、Human-owned choice、binding constraint、Verification 或第一项安全 material work 的 reality。Human 当前描述、旧 plan 和 Northstar 的当前理解都可以被 repo/runtime、真实 consumer、已有规格和当前 workspace 校正。
+**1. 调研。** 从 Human 最新且仍有效的表达开始。先恢复候选 Goal，再查会改变 Goal、Human-owned choice、binding constraint、Verification / Evidence 或第一项安全 material work 的 reality。Human 当前描述、旧 plan 和 Northstar 的当前理解都可以被 repo/runtime、真实 consumer、已有规格和当前 workspace 校正。
 
 上述判断所依赖的 material reality claim，在升成 contract 前必须有足够 territory Evidence。跨 boundary artifact 的存在或机制叙述不能替代 authority；需要时沿真实 workflow 核对 actor / owner、provenance、lifecycle、consumer 与 failure semantics。runtime behavior 由多个输入共同决定时，保留已识别且会改变路线的 material input，不能坍缩成一个 observed source。无法关闭的 material uncertainty 保持显式 Unknown。
 
@@ -29,7 +29,7 @@ Specialist 负责 Evidence、option、artifact 和暴露 decision surface；凡�
 
 把当前前提已经闭合、可以独立回答的 Human-owned 选择尽量一轮问全，给出足够 Evidence，说明它会改变什么，并在能可靠枚举时给出真实 options、主要后果和推荐，使 Human 可以直接回答；不能可靠枚举时限定回答边界，不编造 options。依赖另一个尚未拍板 choice 的问题等前提关闭后再展开；事实题自己查，只影响 How 的问题留给 Executor。
 
-Human 可能只回答一部分、插入新约束、纠正前提或中断。每次先替换被纠正前提，只重算依赖它的 Goal、Ask、Taskbook 与 Verification，并删除失效陈述；再把每项最新、仍有效的 material Human constraint 对账到 Goal / Taskbook / Verification 或显式 authority conflict，不能静默遗漏、扩大或降级。不依赖被纠正前提、且已由 Human / authority 关闭的选择保持关闭，不得借修订重新 Ask。所有仍需 Human 拍板的选择稳定后就继续写书，不能停在确认、解释或 delta-only mode。Human 不在场而必须先做选择时，只能采用可回退、且不会改变任何 Human-owned choice、允许修改范围、Verification 或授权的显式默认，并保留依据。
+Human 可能只回答一部分、插入新约束、纠正前提或中断。每次先替换被纠正前提，只重算依赖它的 Goal、Ask、Taskbook、Verification 与 Evidence，并删除失效陈述；再把每项最新、仍有效的 material Human constraint 对账到 Goal / Taskbook / Verification 或显式 authority conflict，不能静默遗漏、扩大或降级。不依赖被纠正前提、且已由 Human / authority 关闭的选择保持关闭，不得借修订重新 Ask。所有仍需 Human 拍板的选择稳定后就继续写书，不能停在确认、解释或 delta-only mode。Human 不在场而必须先做选择时，只能采用可回退、且不会改变任何 Human-owned choice、允许修改范围、Verification 或授权的显式默认，并保留依据。
 
 **3. 写书。** Goal 与所有仍需 Human 拍板的选择收敛后，写当前完整 Taskbook。只保留 fresh Executor 不知道就可能判断错、越界或无法证明完成的信息；Research narration、能可靠重算的 inventory、file/symbol/line 明细和 predicted patch 默认删除。
 
