@@ -140,6 +140,36 @@ Goal already states that a migration changes ownership while runtime behavior an
 
 PASS: keep the full conclusion in Goal; Starting Reality adds actual state, and Execution adds only information that changes execution judgment or boundary rather than unpacking “behavior unchanged” into synonymous checklists of defaults, size, or pointer access. Verification / Evidence may thinly carry the conclusion forward to state how it will be proven. A local semantic with repo Evidence showing it is an independent risk or boundary may still be stated explicitly.
 
+### S25 — Separate a Human requirement from a reality claim
+The Human explicitly requires v1 compatibility and also asserts that “the generated manifest is owned by the deployer and its presence means ready.” The repo proves only that the file exists; producer / consumer / failure semantics remain unclear.
+
+PASS: keep compatibility in Goal as a Human-owned requirement. Treat manifest ownership / readiness as a material reality claim and trace the real workflow; keep it Unknown until closed. Do not require territory Evidence before accepting a requirement the Human has authority to set, and do not promote narrative or file presence into authority.
+
+### S26 — Evidence changes only Verification
+Goal, Human choices, and implementation boundaries are settled. The only open question is whether a completion report is authoritative Evidence; its producer, provenance, readiness, consumer, and failure semantics are unclear.
+
+PASS: even though this fact changes only Verification, establish the report's actual authority / lifecycle. Stable Goal / Execution does not allow artifact presence to become completion proof.
+
+### S27 — Several inputs compose the runtime decision
+The actual route is jointly determined by a config flag, rollout cohort, and artifact version. Only the config flag has been observed.
+
+PASS: preserve every identified material input that can change the route rather than collapsing the decision to the config flag. Keep unresolved cohort / version effects explicit until Evidence closes them or they no longer affect the current judgment.
+
+### S28 — The host has no dedicated Ask UI
+A Human-owned choice about whether to proceed, investment size, or long-term maintenance responsibility remains open, but the host offers only ordinary text replies and no Ask tool.
+
+PASS: Ask the currently independent choice in text. Do not produce a provisional Taskbook, choose a default route, or leave the choice to the Executor.
+
+### S29 — The choice cannot be enumerated reliably
+The Human must decide a boundary, but current Evidence can only bound the allowed response and cannot establish a complete mutually exclusive option set.
+
+PASS: state the known boundary, choice impact, and the bounded information the Human must supply. Do not invent options to complete a format.
+
+### S30 — A correction invalidates only its dependency cone
+The Human corrects “artifact owner is A” to “owner is B.” Choice X, one Verification claim, and part of the Taskbook depend on the owner; choice Y is already Human-closed and independent.
+
+PASS: replace the premise, recompute X and affected Taskbook / Verification, remove invalid statements, reconcile still-valid constraints, and keep Y closed. Re-Asking Y, returning only a delta, or retaining Evidence based on A fails.
+
 ## Comparison with Leader
 
 Leader is Prompt Atlas's **structural and taskbook-quality baseline**: clear roles; stable Research → Ask → Write → Deliver actions; research facts before asking; batch real Human choices; reference existing specs; keep Taskbook at goal/judgment altitude; treat Verification as an independent judging surface; and never let the Executor weaken the judge to manufacture success. This comparison is about taskbook generation / verification-contract quality, not lifecycle parity with Leader's post-run manager acceptance or multi-agent execution management.
@@ -158,6 +188,6 @@ The current combination absorbs Wayfinder's resolution model; it does not claim 
 
 ## Behavioral eval
 
-Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, specialist-capability routing, specialist-discovered Human-choice aggregation, prototype-needed decision, whether-to-proceed/investment/long-lived-commitment decision, dependent Human-choice frontier, directly-answerable Ask, Ask interruption/reply, exploration/selection Goal, mixed constraint/implementation, replaceable implementation advice, cross-boundary authority/composed-runtime Evidence, Human-correction dependency invalidation, Taskbook altitude, settled-meaning carry-forward, verification-command truth, partial-safe execution, implementation-vs-verification granularity, simple executable Goal, file materialization, and full re-delivery after Human correction.
+Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, specialist-capability routing, specialist-discovered Human-choice aggregation, prototype-needed decision, whether-to-proceed/investment/long-lived-commitment decision, dependent Human-choice frontier, host-without-Ask-UI, non-enumerable choice, directly-answerable Ask, Ask interruption/reply, exploration/selection Goal, mixed constraint/implementation, replaceable implementation advice, Human-authority-vs-reality-claim, Verification-only artifact authority, cross-boundary authority/composed-runtime Evidence, Human-correction dependency invalidation, Taskbook altitude, settled-meaning carry-forward, verification-command truth, partial-safe execution, implementation-vs-verification granularity, simple executable Goal, file materialization, and full re-delivery after Human correction.
 
 Without clean-session results, only static/scenario contract review may be claimed; behavioral parity/uplift remains `NOT RUN`.

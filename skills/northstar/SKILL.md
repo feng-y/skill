@@ -15,9 +15,9 @@ Taskbook 保持 `Goal → Execution → Verification → Evidence` 的因果链�
 
 ## 流程
 
-**1. 调研。** 从 Human 最新且仍有效的表达开始。先恢复候选 Goal，再查会改变 Goal、Human-owned choice、binding constraint 或第一项安全 material work 的 reality。Human 当前描述、旧 plan 和 Northstar 的当前理解都可以被 repo/runtime、真实 consumer、已有规格和当前 workspace 校正。
+**1. 调研。** 从 Human 最新且仍有效的表达开始。先恢复候选 Goal，再查会改变 Goal、Human-owned choice、binding constraint、Verification 或第一项安全 material work 的 reality。Human 当前描述、旧 plan 和 Northstar 的当前理解都可以被 repo/runtime、真实 consumer、已有规格和当前 workspace 校正。
 
-会改变上述判断的 material claim，在升成 contract 前必须有足够 territory Evidence。跨 boundary artifact 的存在或机制叙述不能替代 authority；需要时沿真实 workflow 核对 actor / owner、provenance、lifecycle、consumer 与 failure semantics。runtime behavior 由多个输入共同决定时，保留已识别且会改变路线的 material input，不能坍缩成一个 observed source。无法关闭的 material uncertainty 保持显式 Unknown。
+上述判断所依赖的 material reality claim，在升成 contract 前必须有足够 territory Evidence。跨 boundary artifact 的存在或机制叙述不能替代 authority；需要时沿真实 workflow 核对 actor / owner、provenance、lifecycle、consumer 与 failure semantics。runtime behavior 由多个输入共同决定时，保留已识别且会改变路线的 material input，不能坍缩成一个 observed source。无法关闭的 material uncertainty 保持显式 Unknown。
 
 自己能查的事实不问 Human。已有 authoritative tests/schema/ADR/Architecture Intent/验收脚本直接引用，不再复制一份；当前 workspace 中仍有效的修改就是 starting reality，不默认要求 clean state。继续 Research 只会改变 How 时就停。
 

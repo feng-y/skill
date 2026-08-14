@@ -140,6 +140,36 @@ Goal 已经明确一次迁移只改变 ownership，运行行为和数据语义�
 
 PASS：Goal 保留完整结论；Starting Reality 只补真实现状，Execution 只补会改变执行判断或边界的信息，不把“行为不变”拆成默认值、size、指针访问等同义清单。Verification / Evidence 可以薄回指该结论并说明如何证明它。若 repo Evidence 证明某个局部语义本身是独立风险或边界，则单独写它不算失败。
 
+### S25 — Human 要求与 reality claim 分开
+Human 明确要求保留 v1 compatibility，同时断言“生成 manifest 由部署器拥有且出现即 ready”；repo 只证明文件存在，producer / consumer / failure semantics 仍不清楚。
+
+PASS：compatibility 作为 Human-owned requirement 直接进入 Goal；manifest ownership / readiness 作为 material reality claim 沿真实 workflow 查证，未关闭前保持 Unknown。不得要求 territory Evidence 才承认 Human 自己有权给出的要求，也不得把叙述或文件存在升成 authority。
+
+### S26 — Evidence 只改变 Verification
+Goal、Human choice 与实现边界都已稳定；唯一未决点是一个完成报告能否作为 authoritative Evidence，其 producer、provenance、readiness、consumer 与 failure semantics 不清楚。
+
+PASS：即使该事实只改变 Verification，也继续查证报告的真实 authority / lifecycle；不能因为 Goal / Execution 已稳定就把报告存在当完成证明。
+
+### S27 — runtime decision 由多个输入共同决定
+实际 route 由 config flag、rollout cohort 和 artifact version 共同决定；当前只观察到 config flag。
+
+PASS：保留所有已识别且会改变 route 的 material input；不能把 config flag 坍缩成唯一 source。查不到的 cohort / version 影响保持显式 Unknown，直到它们被 Evidence 关闭或不再影响当前判断。
+
+### S28 — 宿主没有专用 Ask UI
+一个关于是否做、投入规模或长期维护责任的 Human-owned choice 仍未关闭，但当前宿主只有普通文本回复，没有 Ask tool。
+
+PASS：直接在文本中 Ask 当前可独立回答的 choice；不得生成 provisional Taskbook、选择默认路径或把 choice 留给 Executor。
+
+### S29 — choice 不能可靠枚举
+Human 必须决定一个边界，但现有 Evidence 只足以限定允许范围，不能证明完整且互斥的 options。
+
+PASS：说明已知边界、choice impact 和需要 Human 提供的限定信息；不为了格式完整而编造 options。
+
+### S30 — correction 只失效 dependency cone
+Human 纠正“artifact owner 是 A”为“owner 是 B”。choice X、一个 Verification claim 和部分 Taskbook 内容依赖 owner；choice Y 已由 Human 关闭且与 owner 无关。
+
+PASS：替换 premise，重算 X、相关 Taskbook / Verification 并删除失效陈述；对账仍有效 constraints，保持 Y 关闭。重新 Ask Y、只回复 delta、或保留基于 A 的旧 Evidence 都失败。
+
 ## 与 Leader 的比较
 
 Leader 是 Northstar 的**结构与 taskbook 质量基线**：角色清楚；调研 → Ask → 写书 → 交付的动作稳定；能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；任务书保持目标/判断高度；Verification 是独立判卷面；执行者不能靠改 judge 制造成功。这里比较的是 taskbook generation / verification-contract baseline，不宣称 Leader 的 post-run manager acceptance 或 multi-agent lifecycle parity。
@@ -158,6 +188,6 @@ Northstar 不复制 Wayfinder 的 tracker/ticket protocol，也不自己拥有�
 
 ## Behavioral eval
 
-在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、是否做/投入/长期承诺 decision、dependent Human-choice frontier、directly-answerable Ask、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、cross-boundary authority/composed-runtime Evidence、Human correction dependency invalidation、Taskbook altitude、settled-meaning carry-forward、verification-command truth、partial-safe execution、development-vs-verification granularity、simple executable Goal、file materialization、Human correction 后完整重交付。
+在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、是否做/投入/长期承诺 decision、dependent Human-choice frontier、host-without-Ask-UI、non-enumerable choice、directly-answerable Ask、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Human-authority-vs-reality-claim、Verification-only artifact authority、cross-boundary authority/composed-runtime Evidence、Human correction dependency invalidation、Taskbook altitude、settled-meaning carry-forward、verification-command truth、partial-safe execution、development-vs-verification granularity、simple executable Goal、file materialization、Human correction 后完整重交付。
 
 没有 clean-session 结果时，只能说 static/scenario contract review 通过；behavioral parity/uplift 标记 `NOT RUN`。

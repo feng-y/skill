@@ -15,9 +15,9 @@ A Taskbook keeps the causal chain `Goal → Execution → Verification → Evide
 
 ## Flow
 
-**1. Research.** Start from the Human's latest still-valid wording. Recover the candidate Goal, then inspect reality that can change Goal, a Human-owned choice, a binding constraint, or the first safe material work. The Human's current description, an old plan, and Prompt Atlas's current understanding may all be corrected by repo/runtime, real consumers, authoritative specs, and the current workspace.
+**1. Research.** Start from the Human's latest still-valid wording. Recover the candidate Goal, then inspect reality that can change Goal, a Human-owned choice, a binding constraint, Verification, or the first safe material work. The Human's current description, an old plan, and Prompt Atlas's current understanding may all be corrected by repo/runtime, real consumers, authoritative specs, and the current workspace.
 
-A material claim that can change one of those judgments needs sufficient territory Evidence before it becomes contract. Artifact presence or a cross-boundary mechanism narrative does not establish authority; when material, trace the real workflow to establish actor / owner, provenance, lifecycle, consumer, and failure semantics. When several inputs compose runtime behavior, preserve the identified material inputs that can change the route rather than collapsing the decision to one observed source. Keep unresolved material uncertainty explicit.
+A material reality claim that can change one of those judgments needs sufficient territory Evidence before it becomes contract. Artifact presence or a cross-boundary mechanism narrative does not establish authority; when material, trace the real workflow to establish actor / owner, provenance, lifecycle, consumer, and failure semantics. When several inputs compose runtime behavior, preserve the identified material inputs that can change the route rather than collapsing the decision to one observed source. Keep unresolved material uncertainty explicit.
 
 Do not ask the Human for facts you can determine. Reference authoritative tests/schema/ADR/Architecture Intent/acceptance scripts directly instead of rewriting them. Still-valid workspace changes are current reality; do not assume a clean state. Stop Research when more context would change only How.
 
