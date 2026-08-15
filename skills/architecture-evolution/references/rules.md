@@ -1,8 +1,8 @@
-# Architecture Judgment Details
+# 难判时的四个问题
 
-只在主 Skill 的高层判断仍不足以区分当前 case 时读取；这里只提供 discriminator，不拥有第二套 Flow/model/output contract。
+只在主文件不足以区分当前问题时读取。这里不增加流程，只提供四个判定问题。
 
-- **Architecture or local**：局部坏味道只有迫使长期 responsibility/dependency/abstraction boundary/旧 authority-path 改变时才升级；文件大小、目录形状、switch/duplication、一次 change locality 都不能单独证明。
-- **Stable variation**：specific/provider boundary 必须由长期 semantic/contract/lifecycle/performance architecture/deployment difference 支撑；当前 taxonomy、代码相似度和未来扩展愿望都只是 Evidence。
-- **Real fork**：只有长期 layering、module boundary、abstraction/specific 或 primary-responsibility placement 不同才是 architecture alternative；representation 差异不是。
-- **Altitude / unknowns**：只有会改变 architecture-vs-local、Target Architecture 或 real evolution 的 unknown 才阻塞；其他 unknown 与 concrete representation 留给 Implementation Design / execution。
+1. **是否真的要改长期结构？** 只有长期责任、依赖、抽象边界或旧权威路径必须变化，才升级为架构问题。文件大小、目录形状、分支、重复或一次变化跨得很远，都不能单独证明。
+2. **差异是否会长期存在？** 只有语义、契约、生命周期、性能架构或部署方式的稳定差异，才值得形成独立边界。当前命名、代码相似和未来扩展愿望都只是线索。
+3. **两个方向是否真的不同？** 只有长期分层、模块边界、抽象与特化关系或主要责任归属不同，才是架构选项。类名、接口和文件形状不同不算。
+4. **未知是否阻塞当前判断？** 只有会改变“局部还是架构”、目标架构或旧结构退出的未知才阻塞；其他未知和具体表示留给实现设计。
