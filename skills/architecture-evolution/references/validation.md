@@ -34,6 +34,7 @@
 - **V3 AI-native as consequence**：候选结构让后续 change 的 owner、allowed dependency、authoritative state 和完成 Evidence 可从局部 repo territory/tooling 发现并验证，减少跨边界 reconstruction → 可作为传播范围被压缩后的正向收益；若为了 agent/navigation 便利而破坏 primary responsibility 或制造额外层，则失败。
 - **V4 Planned pressure is evidence**：已批准 roadmap / binding requirement 已明确未来一类变化，即使尚未发生多次，也算真实 change pressure；AE 可以据此选择能解除其结构约束的 Improvement。仅凭“以后可能有用”的猜测仍不得物化 future hook/framework。
 - **V5 Propagation compression**：两个候选都满足架构约束并有 real exit；A 只让现有模块内部更清楚，B 让同一类真实 change 从 `多个 owner + 多份 authority + 多处验证` 收敛为 `一个 owner + 一个 authority + 局部验证` → 优先 B。若所谓“压缩”只是隐藏真实跨边界语义或把已有独立 authority/lifecycle 的 owner 错吞成一个，则失败。
+- **V6 Durable leverage**：一次性 migration 当前确实跨多个 owner / authority / verification surface；候选 Target 也能把这一次 change 压缩到更局部并有 real exit，但 migration 完成后没有持续存在的 pressure、已证实会重复的一类变化或 binding future requirement 继续经过该 boundary → 不得仅凭当前一次 propagation compression 晋级为优先 Architecture Improvement；只保留当前 change 必需的最小结构调整。若未来变化由 roadmap / authority 明确绑定，则按 V4 处理，不要求历史重复。
 - **C1 Improvement quality**：research/data collection 不进 Top Improvements；只有解除真实 pressure 暴露的结构约束、压缩真实 change propagation，并同时产生 structural gain + real exit 的 change 可进。
 - **C2 Ceiling**：只有 2 个真实 Improvements → 只输出 2 个。
 - **C3 Setup-only**：先建 abstraction、以后再迁 → 若当前不产生 gain/exit，不得入 Program。
@@ -50,7 +51,7 @@
 ## Captured properties
 
 1. taxonomy / proposed shape 是 Evidence，不是 law；
-2. Target / Improvements 必须从有 Evidence 的真实 change pressure 暴露的结构约束出发，并压缩一类已证实变化的传播范围；已批准 roadmap / binding future requirement 也可构成 pressure Evidence，纯猜测不行；结构正确但不改变 change propagation 的 cleanup 不够；
+2. Target / Improvements 必须从有 Evidence 的真实 change pressure 暴露的结构约束出发，并压缩一类已证实变化的传播范围；这种 leverage 必须作用于持续存在的 pressure、已证实会重复的一类变化或 binding future requirement，而不能只优化一项完成后即消失的一次性 change；已批准 roadmap / binding future requirement 不要求历史重复，纯猜测不行；结构正确但不改变 change propagation 的 cleanup 不够；
 3. abstraction 由 stable semantics/invariants 决定；
 4. 长期 dependency boundary 优先机械可见，cohesion 不吞并独立 authority/lifecycle；正确 boundary 还应让后续 change 所需的 owner/authority/Evidence 更局部可发现和验证，但 AI convenience 不得塑造 primary architecture；
 5. auxiliary concern 不塑造 primary architecture，caller 不重组 capability 私有 knowledge；
