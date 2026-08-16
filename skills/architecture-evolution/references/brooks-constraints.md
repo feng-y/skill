@@ -1,9 +1,9 @@
-# Brooks Challenge Lenses
+# Brooks 反证
 
-只在 proposal 已 plausible、但整体 complexity/克制性仍可疑时读取。`SKILL.md` owns stable architecture judgment；这里只提供反证。
+只在方案已经说得通，但整体复杂度仍可疑时读取。主文件负责架构判断；这里只用三个问题挑战方案。
 
-- **Conceptual Integrity**：系统应由少量一致 design ideas 解释；stable specific variation 可以保留，不等于统一 implementation。
-- **Essential vs Accidental Complexity**：历史 representation、重复解释、兼容残留或当前 provider/class/deployment 形状制造的复杂度仍要被挑战；新 abstraction 只包装 accidental complexity 时不算改进。
-- **Second-System Effect**：没有当前长期 Evidence，不物化 flexibility、extension point、mode、hook、registry 或 generic framework。
+1. **系统是否仍由少量一致的设计思想解释？** 稳定且真实的差异可以保留，不必为了统一而统一实现。
+2. **新结构是在消除复杂度，还是只包住复杂度？** 历史表示、重复说明、兼容残留，以及当前类、提供者或部署形状制造的复杂度，都应继续被挑战。
+3. **是否正在建设“第二个系统”？** 没有当前长期证据，不预留通用扩展、模式、钩子、注册表或框架。
 
-反证成立就缩小、替换或保持 unresolved；Program 不输出 Brooks 名称、评分或 trace。
+反证成立就缩小、替换方案或保持未决。最终方案不输出 Brooks 名称、评分或推理轨迹。

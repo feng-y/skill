@@ -1,9 +1,9 @@
-# Legacy Architecture Lenses
+# 旧身份和兼容边界
 
-只在 architecture judgment 涉及旧 mode/token/config/registration/provider/serialized identity 时读取。
+只在判断涉及旧模式、标记、配置项、注册名、提供者名称或序列化身份时读取。
 
-兼容 identity 不等于 runtime behavior；即使不再驱动运行时，也可能仍属于 parse/serialization/deployment/repo 外 contract。本地 search absence 不能证明它已死亡。
+不再驱动运行时，不等于可以删除。旧身份仍可能属于解析、存储、发布、部署或仓库外契约；本地搜索不到使用方，也不能证明它已经失效。
 
-只有 identity/authority retirement 会改变 Target Architecture 或 real exit 时，才做最小 probe；否则 must-preserve 或 out of scope。必要时按 `parse → storage → publication → dispatch → observation → identity` 追踪，只查会改变当前 judgment 的链路。
+只有旧身份或权威来源能否退出会改变目标架构时，才做最小调查。必要时沿“解析 → 存储 → 发布 → 分发 → 观测 → 外部身份”追踪，只查会改变当前判断的环节；否则按必须保留或超出范围处理。
 
-本 lens 只判断 identity/authority 能否退休及是否需保留 compat boundary，不规定兼容实现、迁移 task、发布或验证流程。
+这里只判断旧身份、权威来源和兼容边界能否退出，不规定兼容实现、迁移任务、发布方式或验证流程。

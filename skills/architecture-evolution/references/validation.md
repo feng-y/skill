@@ -16,6 +16,7 @@
 10. 上游 shaping capability 调用时 AE 返回 Evidence/options/decision surface，不抢 Human Ask ownership。
 11. 成功 Program 同文 materialize 到 repo/workspace 外 handoff file，交付只包含当前 judgment/Program；material correction 后完整重交付；写入失败不得假装成功。
 12. `agents/openai.yaml` 是 thin invocation pointer；validation 不进入 runtime。
+13. 主文件只保留执行所需的少量判断，使用普通中文表达；具体案例留在 validation，难判细则按需读取，不为同一语义再建一套术语。
 
 ## Regression cases
 
@@ -31,7 +32,7 @@
 - **P10 Guidance exit**：Architecture Improvement 已把原本只能靠 prose 约束的 owner/dependency 物化进 module/package/build/tooling → 对应补偿性 guidance 应退出或停止 authoritative；若仍有独立 domain semantic/contract，则只删除已被结构替代的部分。
 - **V1 Low-value cleanup**：一个候选 change 能删掉旧 helper/namespace、让 dependency 更干净，也满足 structural gain + real exit，但同一类真实 change 仍需跨原有 owner / authority / verification surfaces → 不得仅因结构更漂亮进入 Top Improvements；最多作为 local cleanup/附带退出处理。
 - **V2 Positive leverage**：一类真实需求每次都要跨多个 owner 重组私有 knowledge；候选 Target 让 capability responsibility/dependency/authority 闭合，使后续同类变化从跨多个 owner 收敛到单一 owner，并由稳定 Evidence 验证，同时旧跨边界 path 退出 → 这是优先 Architecture Improvement，即使实际 patch 不大。
-- **V3 AI-native as consequence**：候选结构让后续 change 的 owner、allowed dependency、authoritative state 和完成 Evidence 可从局部 repo territory/tooling 发现并验证，减少跨边界 reconstruction → 可作为传播范围被压缩后的正向收益；若为了 agent/navigation 便利而破坏 primary responsibility 或制造额外层，则失败。
+- **V3 可局部理解是结果**：候选结构让后续修改所需的责任、允许依赖、权威状态、重要约束和完成证据能从局部仓库结构或工具中发现并验证，减少跨边界重建知识 → 可作为清晰边界的正向结果；若只是增加文档、导航或上下文说明，或为了智能体方便而破坏主要责任、制造额外层，则失败。
 - **V4 Planned pressure is evidence**：已批准 roadmap / binding requirement 已明确未来一类变化，即使尚未发生多次，也算真实 change pressure；AE 可以据此选择能解除其结构约束的 Improvement。仅凭“以后可能有用”的猜测仍不得物化 future hook/framework。
 - **V5 Propagation compression**：两个候选都满足架构约束并有 real exit；A 只让现有模块内部更清楚，B 让同一类真实 change 从 `多个 owner + 多份 authority + 多处验证` 收敛为 `一个 owner + 一个 authority + 局部验证` → 优先 B。若所谓“压缩”只是隐藏真实跨边界语义或把已有独立 authority/lifecycle 的 owner 错吞成一个，则失败。
 - **V6 Durable leverage**：一次性 migration 当前确实跨多个 owner / authority / verification surface；候选 Target 也能把这一次 change 压缩到更局部并有 real exit，但 migration 完成后没有持续存在的 pressure、已证实会重复的一类变化或 binding future requirement 继续经过该 boundary → 不得仅凭当前一次 propagation compression 晋级为优先 Architecture Improvement；只保留当前 change 必需的最小结构调整。若未来变化由 roadmap / authority 明确绑定，则按 V4 处理，不要求历史重复。
@@ -53,7 +54,7 @@
 1. taxonomy / proposed shape 是 Evidence，不是 law；
 2. Target / Improvements 必须从有 Evidence 的真实 change pressure 暴露的结构约束出发，并压缩一类已证实变化的传播范围；这种 leverage 必须作用于持续存在的 pressure、已证实会重复的一类变化或 binding future requirement，而不能只优化一项完成后即消失的一次性 change；已批准 roadmap / binding future requirement 不要求历史重复，纯猜测不行；结构正确但不改变 change propagation 的 cleanup 不够；
 3. abstraction 由 stable semantics/invariants 决定；
-4. 长期 dependency boundary 优先机械可见，cohesion 不吞并独立 authority/lifecycle；正确 boundary 还应让后续 change 所需的 owner/authority/Evidence 更局部可发现和验证，但 AI convenience 不得塑造 primary architecture；
+4. 长期依赖边界优先由仓库结构和工具直接表达，内聚不能吞并已有独立权威来源和生命周期的系统；清晰边界还应让后续修改所需的责任、重要约束和完成证据更局部可发现和验证，但这只是好架构的结果，不是单独重构的理由；
 5. auxiliary concern 不塑造 primary architecture，caller 不重组 capability 私有 knowledge；
 6. real evolution 要求旧 authority/knowledge/dependency/path 退出，已被结构替代的补偿性 guidance 同样退出；
 7. Research bounded，Program 只保留 independently improving changes；
