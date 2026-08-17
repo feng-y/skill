@@ -8,10 +8,10 @@
 2. 正常成功路径不依赖第二份 output/compile contract；`strategic-design.md`、`rules.md`、legacy/Brooks 都只在对应判断需要时读取。
 3. Research 从指定 module/capability 与 direct neighborhood 渐进展开，同时只恢复会改变当前范围战略设计的 repo/system identity 与 architecture intent；已有架构意图、领域文档、真实 consumer、代码、ADR 与修改历史按各自 authority 使用，任何单一来源都不能独自定义 identity，修改历史/热点只作 discovery，不直接证明 architecture improvement。
 4. 当前 taxonomy/proposed shape 是 Evidence；没有 stable variation 不制造 provider。Provider、layer、facade、registry 等都只是 Strategic Design 可能确认或否定的结构手段，不因用户点名或当前代码形态自动成立。
-5. Target Architecture 不能把当前 module/capability taxonomy 当固定候选集合后做局部优化。先依据 repo identity、领域语义、durable change 与 binding constraints 判断哪些能力/约束真正塑造主架构；必要但通用的 supporting concern 不因复杂度获得同等战略权重。能力边界要能拥有并隐藏长期 design knowledge / decision；会改变 Target 的边界关系必须在 dependency direction 前被解释。长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并。
+5. Target Architecture 不能把当前 module/capability taxonomy 当固定候选集合后做局部优化。先依据 repo identity、领域语义、durable change 与 binding constraints 判断哪些能力/约束真正塑造主架构；必要但通用的辅助关注点不因复杂度获得同等战略权重。能力边界要能拥有并隐藏长期 design knowledge / decision；会改变 Target 的边界关系必须在 dependency direction 前被解释。长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并。
 6. 架构晋级可以由 durable change pressure 证明，也可以由当前最可信战略设计与现实之间造成持续工程摩擦的偏离证明；单个 smell/local pressure 不制造 Program，真实 fork 缺 decisive Evidence/Human decision 时保持 unresolved。
 7. Strategic Design 先独立确定长期结构；现实与 Target 的 gap 只形成 Program 候选。当前迁移成本、局部实现 pressure、执行风险和已有 patch 只能改变现在选择哪一刀、推进到哪里，不能把更便宜或更容易的现实形态重定义成 Target；binding roadmap、durable change pressure 和长期风险承诺仍可改变 Strategic Design。Program 最多 3 个 Improvements，不补数；必要时可以只有战略设计结论/权威架构来源的澄清或更新。
-8. Target 只固定当前 Evidence 足以支持且会长期改变后续判断的最小战略结构；缺 Evidence 的未来 capability/provider/layer/relationship 保持开放，不因“完整架构图”愿望预先物化。
+8. Target 只固定当前 Evidence 足以支持且会长期改变后续判断的最小战略结构；缺 Evidence 的未来 capability/provider/layer/跨边界关系保持开放，不因“完整架构图”愿望预先物化。
 9. 每项 Improvement 必须把一个已确认的战略结论变成更真实的结构：改善责任闭合、减少私有知识泄漏和不必要耦合、在已成立边界上形成稳定依赖与信息隐藏，并产生 real exit；只增加 layer/interface/provider 名称而旧 owner/knowledge/path 仍在，不算 evolution。
 10. Program 引用或更新原 authoritative architecture source；候选战略设计与当前现实必须和既有 SOT 区分，handoff artifact 不成为 repo architecture SOT。
 11. AE 停在 architecture outcome / structural done condition；除非 authority 绑定 representation，不固定 implementation。
@@ -40,10 +40,10 @@
 - **P16 Capability boundary is not enough**：两个 capability 的 responsibility、authority 与跨 capability 依赖已清楚，但其中一个 capability 内部仍让稳定语义依赖具体实现，或仍有会长期影响理解、修改、切分或验证的内部结构复杂性 → Target 不得停在 capability boundary；继续收敛内部稳定语义、具体实现隔离边界和单向依赖。已有仍有效的 layering/dependency authority 应在内部目标结构中实例化并优先机械约束；若 authority 前提已失效则不再约束候选，并把原 source 的演进纳入战略设计；没有 authority 不自造固定层数或命名。
 - **P17 ModelCurator anchor / two-scale target**：用户从 `ModelCurator` 及周边 feature completion、runner/getter/generation 等叶子摩擦进入，但 repo identity 与 Evidence 表明长期责任落在 Feature 与 Infer/QServer family 两类能力，且 repo authority 约束能力内分层与单向依赖 → `ModelCurator` 只作调查锚点；Target 先按预期能力重新收敛责任、权威和边界，再设计跨能力与能力内部依赖。叶子 gap 只能作为 Evidence、退出条件或由目标结构推出的改进，不能替代两尺度战略设计；运行时 pipeline 不能冒充代码依赖方向。
 - **P18 Repo identity prevents local rationalization**：用户从历史模块 `X` 进入，`X` 内部责任和单向依赖可以被整理得自洽，但 repo 核心职责、真实 consumer 与长期变化都表明这里实际承载的是更大的 capability，或其中一部分应属于其他 owner → Target 不得把 `X` 当长期边界后继续优化；先恢复预期 capability decomposition，再判断哪些当前模块保留、合并、拆分或退出。
-- **P19 Strategic focus / binding driver**：repo identity 的核心是 inference execution，但 logging/metrics 子系统实现复杂、近期修改很多 → 没有 binding requirement 证明它会改变 inference 的责任、生命周期、交互或部署时，不得让 observability concern 反过来塑造主架构。反之，已绑定的 latency SLO、fault isolation 或 zero-downtime rollout 若确实改变 lifecycle/deployment boundary，就必须作为 Strategic Design Evidence，而不能因“非业务逻辑”被忽略。
-- **P20 Hidden design decision**：A、B 两个候选都能形成表面高内聚模块；A 仍让 caller 理解 backend selection/config/lifecycle 等会独立变化的私有决定，B 让一个 capability owner 独占并隐藏这些 design knowledge → A 的 boundary 不成立，不能仅凭文件集中或单向依赖判优。
-- **P21 Material boundary relationship**：能力 A/B 的 owner 与 dependency direction 已明确，但真实 workflow 还要求跨边界转换语义、遵循独立 authority 或协调/隔离 lifecycle，且这些关系会改变失败或变化传播 → Target 不能只画 `A → B` 就结束；必须说明这些 material relationship。若没有这类关系，则不得为了完整图谱强行枚举关系 taxonomy。
-- **P22 Minimal Target**：当前 Evidence 只足以确定 A/B 两个长期能力及其 boundary，而未来可能出现的 C/provider/layer 尚不会改变当前判断 → Target 只固定 A/B，C 保持开放；不得为了“最终架构完整”预先设计未来 provider、hook 或 relationship map。
+- **P19 Strategic focus / binding driver**：repo identity 的核心是 inference execution，但 logging/metrics 子系统实现复杂、近期修改很多 → 没有 binding requirement 证明它会改变 inference 的责任、生命周期、交互或部署时，不得让观测类辅助关注点反过来塑造主架构。反之，已绑定的 latency SLO、fault isolation 或 zero-downtime rollout 若确实改变 lifecycle/deployment boundary，就必须作为 Strategic Design Evidence，而不能因“非业务逻辑”被忽略。
+- **P20 Hidden design decision**：A、B 两个候选都能形成表面高内聚模块；A 仍让 caller 理解 backend selection/config/lifecycle 等会独立变化的私有决定，B 让一个 capability owner 独占并隐藏这些设计知识 → A 的 boundary 不成立，不能仅凭文件集中或单向依赖判优。
+- **P21 Boundary relationship**：能力 A/B 的 owner 与 dependency direction 已明确，但真实 workflow 还要求跨边界转换语义、遵循独立 authority 或协调/隔离 lifecycle，且这些关系会改变失败或变化传播 → Target 不能只画 `A → B` 就结束；必须说明这些会改变设计的关系。若没有这类关系，则不得为了完整图谱强行枚举关系 taxonomy。
+- **P22 Minimal Target**：当前 Evidence 只足以确定 A/B 两个长期能力及其 boundary，而未来可能出现的 C/provider/layer 尚不会改变当前判断 → Target 只固定 A/B，C 保持开放；不得为了“最终架构完整”预先设计未来 provider、hook 或跨边界关系图。
 - **V1 Low-value cleanup**：一个候选 change 能删掉旧 helper/namespace、让 dependency 更干净，也满足 structural gain + real exit，但同一类真实 change 仍需跨原有 owner / authority / verification surfaces → 不得仅因结构更漂亮进入 Top Improvements；最多作为 local cleanup/附带退出处理。
 - **V2 Positive leverage**：一类真实需求每次都要跨多个 owner 重组私有 knowledge；Strategic Design 确认这些 knowledge/state/authority 本应由一个 capability owner 闭合，候选 Improvement 能使后续同类变化从跨多个 owner 收敛到单一 owner，并让旧跨边界 path 退出 → 这是优先 Architecture Improvement，即使实际 patch 不大。
 - **V3 可局部理解是结果**：候选结构让后续修改所需的责任、允许依赖、权威状态、重要约束和完成证据能从局部仓库结构或工具中发现并验证，减少跨边界重建知识 → 可作为清晰边界被当前演进物化后的正向结果；若只是增加文档、导航或上下文说明，或为了智能体方便而破坏主要责任、制造额外层，则失败。
@@ -79,9 +79,9 @@
 ## Captured properties
 
 1. taxonomy / proposed shape 是 Evidence，不是 law；当前 module/capability 划分和 provider/layer 等手段同样不能先验成为 Target；
-2. Strategic Design 是核心：先恢复会约束当前范围的 repo/system identity 与 architecture intent，识别真正塑造主架构的长期能力 / binding constraints，再据此、领域语义和长期变化形成 capability decomposition；不能把 supporting concern 或现有模块局部合理化成目标结构；
-3. capability boundary 应拥有并隐藏长期 design knowledge / decision，使对应变化能在 owner 内被吸收；会改变 Target 的 authority / semantic / lifecycle / isolation relationship 先解释，再设计 dependency direction；
-4. Target 只固定当前 Evidence 足以支持且会长期改变判断的最小战略结构，不预编未来 capability/provider/layer/relationship；
+2. Strategic Design 是核心：先恢复会约束当前范围的 repo/system identity 与 architecture intent，识别真正塑造主架构的长期能力 / binding constraints，再据此、领域语义和长期变化形成 capability decomposition；不能把辅助关注点或现有模块局部合理化成目标结构；
+3. capability boundary 应拥有并隐藏长期 design knowledge / decision，使对应变化能在 owner 内被吸收；会改变 Target 的 authority / semantic / lifecycle / isolation 边界关系先解释，再设计 dependency direction；
+4. Target 只固定当前 Evidence 足以支持且会长期改变判断的最小战略结构，不预编未来 capability/provider/layer/跨边界关系；
 5. Program 是战略设计在当前 reality 上的战术落地；当前迁移成本、局部实现 pressure、执行风险与已有 patch 只决定现在做什么，不反向定义 Target；binding roadmap、durable change pressure 与长期风险承诺仍可改变 Strategic Design；
 6. abstraction 由 stable semantics/invariants 决定；能力与责任边界成立后再设计稳定单向依赖；
 7. Improvement 应使已确认责任的 knowledge/state/behavior/authority/lifecycle/verification 更闭合，减少 caller 对私有事实的重组和不必要 coupling，并在正确边界上形成稳定 dependency / information hiding；
@@ -100,6 +100,6 @@
 同一 model / repo snapshot / tool permission / budget：
 `A. 不加载 architecture-evolution` vs `B. 加载 architecture-evolution`。
 
-评分：Research scope、repo-identity grounding、strategic-focus、strategic-design quality、hidden-knowledge boundary、material-relationship quality、target-minimality、strategic/tactical separation、change-pressure alignment、intent/reality discrimination、architecture taste、Program leverage/convergence、architecture altitude、Human routing、re-entry、handoff integrity、context cost。
+评分：Research scope、repo-identity grounding、strategic-focus、strategic-design quality、hidden-knowledge boundary、boundary-relationship quality、target-minimality、strategic/tactical separation、change-pressure alignment、intent/reality discrimination、architecture taste、Program leverage/convergence、architecture altitude、Human routing、re-entry、handoff integrity、context cost。
 
 只有 clean-session paired Evidence 才能声明 behavioral uplift；否则标记 `NOT RUN`。
