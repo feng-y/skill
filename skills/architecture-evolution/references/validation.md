@@ -29,7 +29,7 @@
 
 ### Strategic Design
 
-- **P1 Fork-driven research**：历史模块 + current provider taxonomy → 先形成当前 best-known judgment；只有一个仍未解决且会 materially 改变当前架构判断（包括 Target / Program）的明确 fork / Unknown 才允许向 direct neighborhood、repo identity 或 history 扩搜，每个 probe 都必须能区分 material alternatives。现有 Evidence 足够后停止，不得为了“战略设计更完整”展开全 repo inventory。
+- **P1 Fork-driven research**：历史模块 + current provider taxonomy → 先恢复足以约束当前范围的最小 repo identity / architecture intent；之后只有明确且会 materially 改变当前架构判断（包括 Target / Program）的 unresolved fork / Unknown 才驱动继续扩搜，每个 probe 都必须能区分 material alternatives。现有 Evidence 足够后停止，不得为了“战略设计更完整”展开全 repo inventory，也不把相关 Unknown 强制串行化。
 - **P2 Current shape is not Target**：历史模块 `X` 内部可以整理得自洽，但 repo identity、真实 consumer 与长期变化表明这里实际承载更大的 capability，或一部分应属于其他 owner → 不得把 `X` 当长期 boundary 后继续局部优化。
 - **P3 Provider variation**：存在 family switch → 只有 stable semantic / contract / lifecycle / performance architecture / deployment variation 才形成 provider boundary；当前命名、代码相似或未来扩展愿望不够。
 - **P4 Boundary before dependency**：`common/core → specific implementation` 或依赖图可被整理成单向 → 先确认长期 responsibility / capability decomposition 正确；单向依赖不能挽救知识仍散落在错误 owner 的结构。
