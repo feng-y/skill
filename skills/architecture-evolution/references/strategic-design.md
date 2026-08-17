@@ -1,12 +1,12 @@
 # 战略设计
 
-只在 Target Architecture 不清、已有设计互相冲突，或 capability / boundary / relationship 的依据仍难判断时读取。本文件只提供会改变 Target 的判定问题，不增加第二套流程。
+只在主 Skill 的判断与 bounded Evidence 之后，仍存在会 materially 改变 Target 的 strategic fork、authority conflict 或 boundary discriminator 时读取。本文件只提供会改变 Target 的判定问题，不增加第二套流程。
 
 战略设计回答系统长期应该是什么；当前 Program 只回答现实条件下值得先推进哪一刀。迁移成本、实现难度、局部 pressure 或已有 patch 可以改变 Program，不能把较便宜、较容易或已经存在的结构重新定义成 Target。只有新的领域事实、长期约束、权威或已验证 reality 推翻战略前提时，才重算受影响的 Target。
 
 ## 判断 Target
 
-候选 Target 必须能回答这些问题；没有决策价值的问题不必机械展开。
+默认形成一个 best-known Target；只有 Evidence 同时支持 materially different 的长期结构、且仍缺 decisive constraint 时，才保留多个候选。候选 Target 必须能回答这些问题；没有决策价值的问题不必机械展开。
 
 - **战略锚点。** 这个 repo / 系统为什么存在，在更大系统中承担什么核心职责？当前范围预期负责什么，什么明确属于其他 owner？哪些长期能力或 binding constraints 真正塑造主要架构，哪些只是必要支撑？
 - **责任边界。** 一个候选 owner 应独占并隐藏什么长期设计知识 / 决定？哪类未来变化应该在这里被吸收，而不要求 caller 或其他能力同步重建这些知识？由此判断哪些 knowledge、state、behavior、authority、lifecycle 和 verification 应共同闭合。
@@ -29,7 +29,7 @@
 
 业务、质量或运行约束只有在 authority / Evidence 证明它长期 binding，并会实质改变责任、生命周期、交互、部署或 failure boundary 时，才参与塑造 Target。一般性的“更快、更可靠、更解耦”愿望不能凭空制造结构。
 
-Research 保持 bounded：只恢复足以判断当前范围预期角色和 decisive unknown 的 repo-level Evidence；不要为了 Strategic Design 展开完整 repo inventory。当前目录树、类关系、模块名和已有实现都只是 reality，不能自动成为 capability decomposition。
+Research 只围绕一个明确、仍未解决且会改变 Target 的 fork / Unknown 扩展；每个新增 probe 都应能区分 material alternatives。若现有 Evidence 已足以判断，就停止扩搜；若剩余 fork 本质是 Human-owned commitment / trade-off，而不是可继续调查的事实问题，也停止 autonomous research。已获得的 Evidence 默认跨 responsibility / boundary / dependency 等 judgment 复用；只有新 Evidence 或 Human decision 推翻其前提时，才重查对应部分。不要为了新的 judgment pass 或“更完整理解”重新扫描 repo。
 
 ## 挑战候选 Target
 
@@ -40,7 +40,7 @@ Research 保持 bounded：只恢复足以判断当前范围预期角色和 decis
 3. **切分**：合理范围的需求能否主要沿责任边界拆开，而不是按文件或技术层硬切？先排除需求本身混合多个业务结果或 ownership 尚未决定。
 4. **验证**：主要行为能否从对应责任附近获得可靠 Evidence，而不是绕过边界拼装内部细节？先区分架构问题与测试基础设施 / 外部环境成本。
 
-真实独立的 authority、lifecycle 和 domain semantics 可以合理跨边界。多个候选都成立时，再比较后续变化传播：优先让持续或已明确的未来变化少跨 responsibility / authority / dependency / verification surface，但不能吞并真实独立 owner、复制事实或隐藏跨边界语义。
+真实独立的 authority、lifecycle 和 domain semantics 可以合理跨边界。只有真实 strategic fork 仍存在时才保留多个候选；多个候选都成立时，再比较后续变化传播：优先让持续或已明确的未来变化少跨 responsibility / authority / dependency / verification surface，但不能吞并真实独立 owner、复制事实或隐藏跨边界语义。
 
 ## 持久化
 
