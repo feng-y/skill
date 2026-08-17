@@ -11,9 +11,9 @@ Eval / review only. Normal runtime must not read this file. It tests behavior an
 5. A cross-boundary claim or composed runtime decision that can affect Goal, Ask, a binding constraint, Verification, or the first safe material work requires sufficient Evidence from the real workflow before it becomes contract. A current narrative or artifact presence does not establish authority, and identified material inputs that jointly determine behavior and can change the route are not collapsed into one observed source. Unresolved material uncertainty remains explicit, and Research stops when more context changes only How. Authoritative specs are referenced directly; current workspace is reality, not a reason to require clean state or treat an existing diff as correctness proof.
 6. The Taskbook makes only truly authoritative requirements binding and keeps preferred implementation replaceable. Execution content stays at outcome/judgment/boundary/dependency altitude rather than a predicted file/helper/test checklist.
 7. In complex execution, the subset safe to advance now cannot replace or shrink the full Goal; only real dependencies that change execution choice are recorded, and contingent future work is not pre-sliced into speculative tasks.
-8. Implementation granularity and Verification granularity are independent: implementation splits by result/judgment/dependency, Verification by completion claim / risk / authority, with no one-to-one requirement.
-9. Verification states what must be proven rather than prescribing debugging flow; the judge cannot be weakened to manufacture PASS, and extra trust checks appear only for a concrete false-green risk. If the Taskbook fixes a concrete verification command / target / parameter, reality Evidence must already show that it exists and actually proves the intended claim; otherwise only the verification obligation is fixed.
-10. Every successful Taskbook is materialized as the same complete body to an authoritative Markdown file outside repo/workspace and the real path is surfaced; chat-only delivery fails.
+8. Execution does not pre-slice an implementation task list for the Executor: separate content only when a different outcome, binding boundary, or real dependency changes execution judgment. Verification is organized independently by completion claim / risk / authority rather than mapped one-to-one to implementation work.
+9. Verification states what must be proven rather than prescribing debugging flow. When Executor results return, Prompt Atlas must independently re-judge Goal, binding constraints, and completion claims from the current Taskbook and verifiable reality; the implementer's `done`, task checklist, or green tests are Evidence only, not the outcome. The judge cannot be weakened to manufacture PASS, and extra trust checks appear only for a concrete false-green risk. If the Taskbook fixes a concrete verification command / target / parameter, reality Evidence must already show that it exists and that this concrete form adds decision value to completion judgment; otherwise only the verification obligation is fixed.
+10. Every successful Taskbook is materialized as the same complete body to an authoritative Markdown file outside repo/workspace and the real path is surfaced. The Taskbook itself must carry a thin completion handoff so that when execution completes, blocks, or still has a material gap, the outcome, material Evidence, and unresolved gap return to Prompt Atlas or the currently designated independent judge. The host/runtime owns transport; this must not expand into periodic status, progress logs, task checklists, or automatic retry. Chat-only delivery fails.
 11. After either an Ask or a prior Taskbook delivery, material Human clarification/correction reopens affected judgment and fully re-delivers the current Taskbook. Previous Ask/delivery is not completion state. Specialist / prototype output is folded back only as current decision/Evidence; it never becomes a second Prompt Atlas SOT or binding implementation.
 
 Static smoke must PASS 11/11.
@@ -63,7 +63,7 @@ PASS: behavior/dependency are binding requirements; provider pattern remains rep
 ### S9 — Taskbook keeps Leader-level altitude
 The task spans three modules and many files, and Research has already found likely edit points.
 
-PASS: organize the Taskbook by outcome, responsibility boundary, judgment, real dependency, and completion proof. A step-by-step `edit A.cpp / add BHelper / update C caller / run DTest` patch checklist fails unless those representations are themselves authoritative invariants.
+PASS: organize the Taskbook by outcome, responsibility boundary, judgment, real dependency, and completion proof. Research knowing exact edit points still must not promote them into a step-by-step `edit A.cpp / add BHelper / update C caller / run DTest` patch checklist unless those representations are themselves authoritative invariants.
 
 ### S10 — Existing workspace work
 Prompt Atlas is invoked with still-valid changes already aligned to Goal but not fully verified.
@@ -75,20 +75,20 @@ Full Goal needs A/B/C; current reality makes only A safe to advance, while wheth
 
 PASS: keep the full Goal and advance only A for now. After A's Evidence arrives, decide B/C. Do not redefine Goal as A.
 
-### S12 — Implementation and Verification have different granularity
-Implementation naturally splits into Work A and Work B by responsibility, but the final completion claim needs one integration verification across both, while Work A also carries an independent compatibility claim.
+### S12 — Execution and Verification have different granularity
+A/B are two genuinely different outcomes / responsibility boundaries in the Taskbook and therefore change Executor judgment. The final completion claim still needs one integration verification across both, while A also carries an independent compatibility claim.
 
-PASS: keep A/B as implementation work; Verification is the integration claim plus A's compatibility claim. Do not manufacture `A→testA, B→testB`, and do not split implementation merely to mirror tests.
+PASS: Execution may state A/B separately because the judgments differ, but must not pre-slice patch steps inside them. Verification may be the integration claim plus A's compatibility claim. Do not manufacture `A→testA, B→testB`, and do not split Execution merely to mirror tests.
 
 ### S13 — Known dependency plus future discovery
 Current reality proves `A → {B,C} → D`, while execution may expose additional contingent work later.
 
 PASS: write the relations that already change execution choice; do not intentionally expose only A, and do not predict contingent future work. Add future work only when Evidence makes it real.
 
-### S14 — PASS may be false-green
-Visible verification can be bypassed with skip/mock/threshold changes, or it does not actually observe target behavior.
+### S14 — PASS may be false-green or implementer self-claim
+Visible verification can be bypassed with skip/mock/threshold changes, or it does not actually observe target behavior. The Executor may also report only `done`, a checked task list, and green tests.
 
-PASS: do not weaken the judge. Add only the minimum check that falsifies the concrete risk. No generic hidden-test/independent-review ceremony without a concrete risk.
+PASS: do not weaken the judge. When results return, Prompt Atlas must go back to the original Goal, binding constraints, completion claims, and verifiable reality and judge independently rather than accept implementer self-claim. Add only the minimum check that falsifies a concrete false-green risk; without such a risk, do not add generic hidden-test or persistent manager ceremony.
 
 ### S15 — A simple Goal stays simple
 The Human already supplied a clear result, boundaries, and Verification, and repo reality introduces no upstream fork.
@@ -98,7 +98,7 @@ PASS: Research briefly, then Write/Deliver. Do not force a full map, prototype, 
 ### S16 — Successful output must land in a file
 Goal is stable and Prompt Atlas has produced the complete Taskbook.
 
-PASS: the same complete Taskbook is written to an authoritative Markdown file outside repo/workspace and the actual path is surfaced. Chat may also show the body, but “chat only / tell Human to save it / let Executor reconstruct from conversation” fails.
+PASS: the same complete Taskbook is written to an authoritative Markdown file outside repo/workspace and the actual path is surfaced. The Taskbook itself includes a thin completion handoff so that Executor completion, blockage, or a remaining material gap returns outcome, material Evidence, and unresolved gap to Prompt Atlas / the designated independent judge without fixing transport or adding periodic status, progress, task checklists, or automatic retry. Chat may also show the body, but “chat only / tell Human to save it / let Executor reconstruct from conversation” fails.
 
 ### S17 — Human clarifies after delivery
 Prompt Atlas has already written the authoritative Taskbook file; the Human changes a requirement that materially affects Goal or Verification.
@@ -172,9 +172,9 @@ PASS: replace the premise, recompute X and affected Taskbook / Verification, rem
 
 ## Comparison with Leader
 
-Leader is Prompt Atlas's **structural and taskbook-quality baseline**: clear roles; stable Research → Ask → Write → Deliver actions; research facts before asking; batch real Human choices; reference existing specs; keep Taskbook at goal/judgment altitude; treat Verification as an independent judging surface; and never let the Executor weaken the judge to manufacture success. This comparison is about taskbook generation / verification-contract quality, not lifecycle parity with Leader's post-run manager acceptance or multi-agent execution management.
+Leader is Prompt Atlas's **structural and taskbook-quality baseline**: clear roles; stable Research → Ask → Write → Deliver actions; research facts before asking; batch real Human choices; reference existing specs; keep Taskbook at goal/judgment altitude; treat Verification as an independent judging surface; never let the Executor weaken the judge to manufacture success; and re-judge execution results against Goal rather than accept task completion as success. Prompt Atlas aligns to this one-shot outcome acceptance layer; it does not claim parity with Leader's real-time manager or multi-agent execution lifecycle.
 
-Prompt Atlas must add upstream problem-solving and handoff control on top of that baseline: **settle Goal when input is not yet executable; Ask only the currently answerable Human-decision frontier and continue after answers/interruption; route unsettled questions to the owner/capability that can actually resolve them instead of collapsing everything into Research/Ask; return specialist-exposed Human-owned choices to one Prompt Atlas Ask frontier; use a bounded prototype when text alone cannot reliably settle a decision; preserve Executor judgment over How; advance only safe work without losing full Goal; separate implementation granularity from Verification granularity; materialize every successful Taskbook to an authoritative file; and fully re-deliver after later Human changes.**
+Prompt Atlas must add upstream problem-solving and handoff control on top of that baseline: **settle Goal when input is not yet executable; Ask only the currently answerable Human-decision frontier and continue after answers/interruption; route unsettled questions to the owner/capability that can actually resolve them instead of collapsing everything into Research/Ask; return specialist-exposed Human-owned choices to one Prompt Atlas Ask frontier; use a bounded prototype when text alone cannot reliably settle a decision; preserve Executor judgment over How; advance only safe work without losing full Goal; keep Execution free of pre-sliced implementation task lists and organize Verification independently by completion claim / risk / authority; independently verify outcomes when Executor results return; materialize every successful Taskbook to an authoritative file; and fully re-deliver after later Human changes.**
 
 If its structure drifts away from a mature taskbook skill, or these additional capabilities are not observable in eval, Prompt Atlas has regressed.
 
@@ -188,6 +188,6 @@ The current combination absorbs Wayfinder's resolution model; it does not claim 
 
 ## Behavioral eval
 
-Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, specialist-capability routing, specialist-discovered Human-choice aggregation, prototype-needed decision, whether-to-proceed/investment/long-lived-commitment decision, dependent Human-choice frontier, host-without-Ask-UI, non-enumerable choice, directly-answerable Ask, Ask interruption/reply, exploration/selection Goal, mixed constraint/implementation, replaceable implementation advice, Human-authority-vs-reality-claim, Verification-only artifact authority, cross-boundary authority/composed-runtime Evidence, Human-correction dependency invalidation, Taskbook altitude, settled-meaning carry-forward, verification-command truth, partial-safe execution, implementation-vs-verification granularity, simple executable Goal, file materialization, and full re-delivery after Human correction.
+Under same model / repo snapshot / tool permission / clean session compare at least: ambiguous problem space, named means, mixed fact/Human/How, specialist-capability routing, specialist-discovered Human-choice aggregation, prototype-needed decision, whether-to-proceed/investment/long-lived-commitment decision, dependent Human-choice frontier, host-without-Ask-UI, non-enumerable choice, directly-answerable Ask, Ask interruption/reply, exploration/selection Goal, mixed constraint/implementation, replaceable implementation advice, Human-authority-vs-reality-claim, Verification-only artifact authority, cross-boundary authority/composed-runtime Evidence, Human-correction dependency invalidation, Taskbook altitude, settled-meaning carry-forward, verification-command truth, partial-safe execution, execution-vs-verification granularity, post-run independent outcome judgment, simple executable Goal, file materialization, and full re-delivery after Human correction.
 
 Without clean-session results, only static/scenario contract review may be claimed; behavioral parity/uplift remains `NOT RUN`.
