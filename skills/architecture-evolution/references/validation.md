@@ -6,9 +6,9 @@
 
 1. 主 Skill 自己完成调研 → architecture judgment → Program → delivery；无 ready/completed/status lifecycle。
 2. 正常成功路径不依赖第二份 output/compile contract；`strategic-design.md`、`rules.md`、legacy/Brooks 都只在对应判断需要时读取。
-3. Research 从指定 module/capability 与 direct neighborhood 渐进展开；已有架构意图、领域文档、ADR 与修改历史按各自 authority 使用，修改历史/热点 只作 discovery，不直接证明 architecture improvement。
+3. Research 把指定 module/capability 当锚点，从叶子摩擦上溯到能拥有长期变化并解释结构根因的最小稳定责任范围；收敛前对点名当前 capability/family 或声明约束所有 domain/结构工作的 repo-wide architecture/ADR authority 做一次 bounded probe。已有架构意图、领域文档、ADR 与修改历史按各自 authority 使用，修改历史/热点只作 discovery，不直接证明 architecture improvement。
 4. 当前 taxonomy/proposed shape 只是 Evidence；没有 stable variation 不制造 provider。
-5. Layering/cohesion、abstraction/specific、primary/auxiliary、real evolution 都能改变 Target Architecture；长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并；反复解释 ownership/dependency 的 guidance 可作为结构歧义 Evidence，但必须与不可消除的 domain semantics 区分。
+5. Target Architecture 用责任图收敛 capability/product-family owner 关系，用源码依赖图收敛相关 owner 内部拓扑；两图的稳定 owner 一一对应，共享 seam 有明确 owner，不能把多个 owner 合并进一条层序，也不能用 runtime pipeline 替代源码依赖。直接涉及当前范围的 authoritative constraints 必须逐条进入两图或有 premise-invalid/unresolved Evidence；作用于每个 domain/provider 的 fixed layers、forbidden dependencies、cross-domain ingress 与 mechanical checks 必须逐 owner 写明 used/omitted layers、forward imports、Providers ingress 和 enforcement，不能只全局声明。Layering/cohesion、abstraction/specific、primary/auxiliary、real evolution 都能改变 Target；独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并；反复解释 ownership/dependency 的 guidance 可作为结构歧义 Evidence，但必须与不可消除的 domain semantics 区分。
 6. 架构晋级可以由 durable change pressure 证明，也可以由当前最可信战略设计与现实之间造成持续工程摩擦的偏离证明；单个 smell/local pressure 不制造 Program，真实 fork 缺 decisive Evidence/Human decision 时保持 unresolved。
 7. 目标结构不是 obligation list；现实与目标之间的 gap 只形成候选演进。Program 最多 3 个 Improvements，不补数；必要时可以只有目标结构/权威架构来源的澄清或更新。每项 Improvement 必须在当前压力、长期结构收益、real exit、迁移成本与风险之间有足够理由优先现在推进；未选 gap 可以延期、保留或等待更多 Evidence。
 8. Program 引用或更新原 authoritative architecture source；候选战略设计与当前现实必须和既有 SOT 区分，handoff artifact 不成为 repo architecture SOT。
@@ -35,6 +35,8 @@
 - **P13 Docs have distinct authority**：CONTEXT/domain glossary 给出业务语言、ADR 记录历史 trade-off、git history 给出 hot spot → 三者都可提供 Evidence，但任何一个都不能单独充当 Target Architecture。
 - **P14 Strategic design before persistence**：repo 没有 architecture doc，但领域责任、权威归属、依赖与长期差异已有足够 Evidence → AE 应先形成当前范围的 当前最可信战略设计；是否写入 repo 是后续持久化判断，不能因缺文档而停止。
 - **P15 Architecture doc is persistence, not oracle**：已有架构文档与新 Evidence 冲突 → 用战略设计重新检验双方，不得把文档当成不可挑战的规则，也不得因 reality 已存在就自动覆盖文档。
+- **P16 Named module is an anchor**：用户点名一个类，但多个叶子摩擦由其所属 capability/family 的责任与依赖共同制造 → 以该类为入口找到最小稳定设计中心；不得把当前类边界直接抬升为 Target，也不得扩成全 repo 蓝图。
+- **P17 Provider two-scale target**：`ModelCurator` 周围已有 feature completion、raw runner、getter 或 generation 等叶子 gap，但 repo reality 指向 Feature Provider 与 Infer/QServer family 的稳定 owner，且权威 contract 固定 owner 内 domain layers 与机械前向依赖 → Target 先收敛跨 Provider 的责任、依赖和通用/特化，再收敛每个相关 Provider 的内部依赖拓扑；叶子 gap 只能成为 Evidence、退出条件或由 Target 直接推出的演进，不能替代这两层战略设计。
 - **V1 Low-value cleanup**：一个候选 change 能删掉旧 helper/namespace、让 dependency 更干净，也满足 structural gain + real exit，但同一类真实 change 仍需跨原有 owner / authority / verification surfaces → 不得仅因结构更漂亮进入 Top Improvements；最多作为 local cleanup/附带退出处理。
 - **V2 Positive leverage**：一类真实需求每次都要跨多个 owner 重组私有 knowledge；候选 Target 让 capability responsibility/dependency/authority 闭合，使后续同类变化从跨多个 owner 收敛到单一 owner，并由稳定 Evidence 验证，同时旧跨边界 path 退出 → 这是优先 Architecture Improvement，即使实际 patch 不大。
 - **V3 可局部理解是结果**：候选结构让后续修改所需的责任、允许依赖、权威状态、重要约束和完成证据能从局部仓库结构或工具中发现并验证，减少跨边界重建知识 → 可作为清晰边界的正向结果；若只是增加文档、导航或上下文说明，或为了智能体方便而破坏主要责任、制造额外层，则失败。
@@ -77,6 +79,7 @@
 10. specialist 不抢 Human decision ownership；
 11. delivery 交当前 judgment、必要的目标结构变化与 Program，且不是 lifecycle state；material update 后必须完整重交付；
 12. handoff artifact 只承担 transport authority，不替代 repo SOT。
+13. 命名模块是调查锚点，不是默认设计边界；Target 在最小稳定责任范围内用责任图和源码依赖图分别解释 owner 间关系与 owner 内部依赖，仍适用的 repo contract 在前提失效前约束候选结构。
 
 ## Paired behavioral eval
 
