@@ -10,7 +10,7 @@
 4. 当前 taxonomy/proposed shape 只是 Evidence；没有 stable variation 不制造 provider。Provider、layer、facade、registry 等都只是 Strategic Design 可能确认或否定的结构手段，不因用户点名或当前代码形态自动成立。
 5. Target Architecture 不能把当前 module/capability taxonomy 当固定候选集合后做局部优化；先依据 repo identity、领域语义与长期变化恢复预期 capability decomposition，再用 cohesion/coupling、理解/修改/切分/验证压力挑战它。责任边界成立后才设计 layering/dependency direction；长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并；反复解释 ownership/dependency 的 guidance 可作为结构歧义 Evidence，但必须与不可消除的 domain semantics 区分。
 6. 架构晋级可以由 durable change pressure 证明，也可以由当前最可信战略设计与现实之间造成持续工程摩擦的偏离证明；单个 smell/local pressure 不制造 Program，真实 fork 缺 decisive Evidence/Human decision 时保持 unresolved。
-7. Strategic Design 先独立确定长期结构；现实与 Target 的 gap 只形成 Program 候选。当前 pressure、迁移成本、实现风险和已有 patch 只能改变现在选择哪一刀、推进到哪里，不能把更便宜或更容易的现实形态重定义成 Target。Program 最多 3 个 Improvements，不补数；必要时可以只有战略设计结论/权威架构来源的澄清或更新。
+7. Strategic Design 先独立确定长期结构；现实与 Target 的 gap 只形成 Program 候选。当前迁移成本、局部实现 pressure、执行风险和已有 patch 只能改变现在选择哪一刀、推进到哪里，不能把更便宜或更容易的现实形态重定义成 Target；binding roadmap、durable change pressure 和长期风险承诺仍可改变 Strategic Design。Program 最多 3 个 Improvements，不补数；必要时可以只有战略设计结论/权威架构来源的澄清或更新。
 8. 每项 Improvement 必须把一个已确认的战略结论变成更真实的结构：改善责任闭合、减少私有知识泄漏和不必要耦合、在已成立边界上形成稳定依赖与信息隐藏，并产生 real exit；只增加 layer/interface/provider 名称而旧 owner/knowledge/path 仍在，不算 evolution。
 9. Program 引用或更新原 authoritative architecture source；候选战略设计与当前现实必须和既有 SOT 区分，handoff artifact 不成为 repo architecture SOT。
 10. AE 停在 architecture outcome / structural done condition；除非 authority 绑定 representation，不固定 implementation。
@@ -74,7 +74,7 @@
 
 1. taxonomy / proposed shape 是 Evidence，不是 law；当前 module/capability 划分和 provider/layer 等手段同样不能先验成为 Target；
 2. Strategic Design 是核心：先恢复会约束当前范围的 repo/system identity 与 architecture intent，再据此、领域语义和长期变化形成预期 capability decomposition、稳定 variation/boundary 与长期依赖；不能把现有模块局部合理化成目标结构；
-3. Program 是战略设计在当前 reality 上的战术落地；当前 pressure、迁移成本、风险与已有 patch 只决定现在做什么，不反向定义 Target；
+3. Program 是战略设计在当前 reality 上的战术落地；当前迁移成本、局部实现 pressure、执行风险与已有 patch 只决定现在做什么，不反向定义 Target；binding roadmap、durable change pressure 与长期风险承诺仍可改变 Strategic Design；
 4. abstraction 由 stable semantics/invariants 决定；能力与责任边界先成立，再设计稳定单向依赖；
 5. Improvement 应使已确认责任的 knowledge/state/behavior/authority/lifecycle/verification 更闭合，减少 caller 对私有事实的重组和不必要 coupling，并在正确边界上形成稳定 dependency / information hiding；
 6. 长期依赖边界优先由仓库结构和工具直接表达；内聚不能吞并已有独立权威来源和生命周期的系统；
