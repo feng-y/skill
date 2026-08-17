@@ -11,7 +11,7 @@
 5. Target Architecture 不能把当前 module/capability taxonomy 当固定候选集合后做局部优化。先依据 repo identity、领域语义、durable change 与 binding constraints 判断哪些能力/约束真正塑造主架构；必要但通用的辅助关注点不因复杂度获得同等战略权重。能力边界要能拥有并隐藏长期 design knowledge / decision；会改变 Target 的边界关系必须在 dependency direction 前被解释。长期 dependency boundary 优先由 repo/module/package/build/tooling 表达，独立 authority/lifecycle 的相邻 subsystem 不因 cohesion 被吞并。
 6. 架构晋级可以由 durable change pressure 证明，也可以由当前最可信战略设计与现实之间造成持续工程摩擦的偏离证明；单个 smell/local pressure 不制造 Program，真实 fork 缺 decisive Evidence/Human decision 时保持 unresolved。
 7. Strategic Design 先独立确定长期结构；现实与 Target 的 gap 只形成 Program 候选。当前迁移成本、局部实现 pressure、执行风险和已有 patch 只能改变现在选择哪一刀、推进到哪里，不能把更便宜或更容易的现实形态重定义成 Target；binding roadmap、durable change pressure 和长期风险承诺仍可改变 Strategic Design。Program 最多 3 个 Improvements，不补数；必要时可以只有战略设计结论/权威架构来源的澄清或更新。
-8. Target 只固定当前 Evidence 足以支持且会长期改变后续判断的最小战略结构；缺 Evidence 的未来 capability/provider/layer/跨边界关系保持开放，不因“完整架构图”愿望预先物化。
+8. Target 必须包含当前 Evidence 足以支持且会长期改变后续判断的结构，同时保持最小充分：缺 Evidence 的未来 capability/provider/layer/跨边界关系保持开放，不因“完整架构图”愿望预先物化，也不能为了极简遗漏已有战略事实。
 9. 每项 Improvement 必须把一个已确认的战略结论变成更真实的结构：改善责任闭合、减少私有知识泄漏和不必要耦合、在已成立边界上形成稳定依赖与信息隐藏，并产生 real exit；只增加 layer/interface/provider 名称而旧 owner/knowledge/path 仍在，不算 evolution。
 10. Program 引用或更新原 authoritative architecture source；候选战略设计与当前现实必须和既有 SOT 区分，handoff artifact 不成为 repo architecture SOT。
 11. AE 停在 architecture outcome / structural done condition；除非 authority 绑定 representation，不固定 implementation。
@@ -81,7 +81,7 @@
 1. taxonomy / proposed shape 是 Evidence，不是 law；当前 module/capability 划分和 provider/layer 等手段同样不能先验成为 Target；
 2. Strategic Design 是核心：先恢复会约束当前范围的 repo/system identity 与 architecture intent，识别真正塑造主架构的长期能力 / binding constraints，再据此、领域语义和长期变化形成 capability decomposition；不能把辅助关注点或现有模块局部合理化成目标结构；
 3. capability boundary 应拥有并隐藏长期 design knowledge / decision，使对应变化能在 owner 内被吸收；会改变 Target 的 authority / semantic / lifecycle / isolation 边界关系先解释，再设计 dependency direction；
-4. Target 只固定当前 Evidence 足以支持且会长期改变判断的最小战略结构，不预编未来 capability/provider/layer/跨边界关系；
+4. Target 必须包含当前 Evidence 已足以支持、并会长期改变判断的战略事实，同时保持最小充分；不预编未来 capability/provider/layer/跨边界关系，也不为极简遗漏已知约束；
 5. Program 是战略设计在当前 reality 上的战术落地；当前迁移成本、局部实现 pressure、执行风险与已有 patch 只决定现在做什么，不反向定义 Target；binding roadmap、durable change pressure 与长期风险承诺仍可改变 Strategic Design；
 6. abstraction 由 stable semantics/invariants 决定；能力与责任边界成立后再设计稳定单向依赖；
 7. Improvement 应使已确认责任的 knowledge/state/behavior/authority/lifecycle/verification 更闭合，减少 caller 对私有事实的重组和不必要 coupling，并在正确边界上形成稳定 dependency / information hiding；
