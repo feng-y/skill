@@ -32,15 +32,19 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 - `prompt-atlas` — English counterpart to Northstar: shape Human intent into the right Goal, preserve Executor judgment, and compile a high-altitude Taskbook whose successful delivery is materialized to an authoritative external Markdown file.
 - `northstar` — Chinese counterpart to Prompt Atlas. It probes reality before asking, resumes after Human clarification or interruption, keeps implementation How with the Executor, and separates how work is organized from how completion is proven.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `architecture-evolution` — start from a named module's repo reality, re-identify capability/boundary and stable variation, then converge a Target Architecture and a few concrete structural improvements before implementation design.
+- `architecture-evolution` — recover the long-term structure of a module or capability from repo reality and design knowledge, distinguish local problems from architecture problems, and select the few highest-leverage evolutions worth advancing now.
 
 ## Architecture Evolution usage
 
-Use `architecture-evolution` when a module keeps accumulating structural pressure or its long-term architecture is still unclear. Give the relevant area and the pressure; the Skill grounds the decision in repo reality and returns either a local/no-evolution judgment, the decisive missing evidence/choice, or a compiled Architecture Program.
+Use `architecture-evolution` when a module keeps accumulating structural pressure, its long-term architecture is unclear, or several valid architecture directions compete for investment.
 
 ```text
 Use $architecture-evolution on <module-or-capability>.
-Given its current pressure and repo reality, decide the target architecture and the highest-value structural improvements worth advancing.
+Given its current pressure and repo reality, decide the long-term structure and the highest-value architecture improvements worth advancing now.
 ```
 
-The authoritative runtime semantics live in [`skills/architecture-evolution/SKILL.md`](skills/architecture-evolution/SKILL.md) and its routed references; this README does not duplicate them.
+Architecture Evolution may conclude that the problem is local, that a decisive fact or Human choice is still missing, that only the strategic design should be clarified, or that a small set of architecture improvements is worth advancing. A target-structure gap is not automatically a task.
+
+See [`skills/architecture-evolution/README.md`](skills/architecture-evolution/README.md) for the capability overview and [`skills/architecture-evolution/OPERATIONS.md`](skills/architecture-evolution/OPERATIONS.md) for the operating guide.
+
+The authoritative runtime semantics remain in [`skills/architecture-evolution/SKILL.md`](skills/architecture-evolution/SKILL.md) and its routed references; user documentation does not define a second runtime contract.
