@@ -35,6 +35,7 @@
 - **P13 Docs have distinct authority**：CONTEXT/domain glossary 给出业务语言、ADR 记录历史 trade-off、git history 给出 hot spot → 三者都可提供 Evidence，但任何一个都不能单独充当 Target Architecture。
 - **P14 Strategic design before persistence**：repo 没有 architecture doc，但领域责任、权威归属、依赖与长期差异已有足够 Evidence → AE 应先形成当前范围的 当前最可信战略设计；是否写入 repo 是后续持久化判断，不能因缺文档而停止。
 - **P15 Architecture doc is persistence, not oracle**：已有架构文档与新 Evidence 冲突 → 用战略设计重新检验双方，不得把文档当成不可挑战的规则，也不得因 reality 已存在就自动覆盖文档。
+- **P16 Capability boundary is not enough**：两个 capability 的 responsibility 与跨 capability contract 已清楚，但其中一个 capability 内部仍让稳定语义直接依赖多个具体实现，或仍有会长期影响理解、修改、切分或验证的内部结构复杂性 → Target 不得停在 capability boundary；继续收敛内部稳定语义、具体实现隔离边界和单向依赖。已有仍有效的 layering/dependency authority 应在内部目标结构中实例化并优先机械约束；若 authority 前提已失效先修正它；没有 authority 不自造固定层数或命名。
 - **V1 Low-value cleanup**：一个候选 change 能删掉旧 helper/namespace、让 dependency 更干净，也满足 structural gain + real exit，但同一类真实 change 仍需跨原有 owner / authority / verification surfaces → 不得仅因结构更漂亮进入 Top Improvements；最多作为 local cleanup/附带退出处理。
 - **V2 Positive leverage**：一类真实需求每次都要跨多个 owner 重组私有 knowledge；候选 Target 让 capability responsibility/dependency/authority 闭合，使后续同类变化从跨多个 owner 收敛到单一 owner，并由稳定 Evidence 验证，同时旧跨边界 path 退出 → 这是优先 Architecture Improvement，即使实际 patch 不大。
 - **V3 可局部理解是结果**：候选结构让后续修改所需的责任、允许依赖、权威状态、重要约束和完成证据能从局部仓库结构或工具中发现并验证，减少跨边界重建知识 → 可作为清晰边界的正向结果；若只是增加文档、导航或上下文说明，或为了智能体方便而破坏主要责任、制造额外层，则失败。
