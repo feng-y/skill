@@ -20,7 +20,7 @@
 6. abstraction 由 stable semantics / invariants 决定；能力和责任边界成立后再设计稳定单向依赖，通用语义不依赖具体实现。
 7. Improvement 必须物化已确认的战略结构：责任更闭合、caller 更少重组私有事实、coupling 更低、dependency / information hiding 更稳定，并产生 structural gain + real exit。
 8. real evolution 要求旧 authority / knowledge / dependency / special path 退出；已被结构替代的补偿性 guidance 同样退出。只增加新层而旧结构仍 authoritative 是 complexity relocation。
-9. Research 只由仍未解决、且会改变 Target / Program 的明确 fork / Unknown 驱动；每个新增 probe 必须能区分 material alternatives。Evidence 足够后停止扩搜，已有 Evidence 默认跨 judgment 复用，除非其前提被新 Evidence / Human decision 推翻，不为新的 judgment pass 重扫 repo。
+9. Research 只由仍未解决、且会 materially 改变当前架构判断（包括 Target / Program）的明确 fork / Unknown 驱动；每个新增 probe 必须能区分 material alternatives。Evidence 足够后停止扩搜，已有 Evidence 默认跨 judgment 复用，除非其前提被新 Evidence / Human decision 推翻，不为新的 judgment pass 重扫 repo。
 10. 当前 org / team topology 只作 reality / feasibility challenge，不自动成为长期 architecture law。
 11. specialist 不抢 Human decision ownership；若剩余 material fork 本质是业务、兼容、风险、投入或 ownership 等 Human-owned trade-off，而非可继续调查的事实问题，就停止 autonomous research，返回 Evidence、best-known recommendation、真实选项和 decision surface。
 12. 稳定战略设计结论优先维护原 authoritative architecture source；delivery 交当前 Strategic Design、必要的 Target 变化与 Program。material correction / Human decision 后保留仍有效 Evidence / Target，只重算受影响判断；只有前提失效才重查对应 Evidence，并完整重交付。
@@ -29,7 +29,7 @@
 
 ### Strategic Design
 
-- **P1 Fork-driven research**：历史模块 + current provider taxonomy → 先形成当前 best-known judgment；只有一个仍未解决且会改变 Target / Program 的明确 fork / Unknown 才允许向 direct neighborhood、repo identity 或 history 扩搜，每个 probe 都必须能区分 material alternatives。现有 Evidence 足够后停止，不得为了“战略设计更完整”展开全 repo inventory。
+- **P1 Fork-driven research**：历史模块 + current provider taxonomy → 先形成当前 best-known judgment；只有一个仍未解决且会 materially 改变当前架构判断（包括 Target / Program）的明确 fork / Unknown 才允许向 direct neighborhood、repo identity 或 history 扩搜，每个 probe 都必须能区分 material alternatives。现有 Evidence 足够后停止，不得为了“战略设计更完整”展开全 repo inventory。
 - **P2 Current shape is not Target**：历史模块 `X` 内部可以整理得自洽，但 repo identity、真实 consumer 与长期变化表明这里实际承载更大的 capability，或一部分应属于其他 owner → 不得把 `X` 当长期 boundary 后继续局部优化。
 - **P3 Provider variation**：存在 family switch → 只有 stable semantic / contract / lifecycle / performance architecture / deployment variation 才形成 provider boundary；当前命名、代码相似或未来扩展愿望不够。
 - **P4 Boundary before dependency**：`common/core → specific implementation` 或依赖图可被整理成单向 → 先确认长期 responsibility / capability decomposition 正确；单向依赖不能挽救知识仍散落在错误 owner 的结构。
