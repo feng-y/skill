@@ -9,15 +9,15 @@ AE 的核心是战略设计：判断这个 repo / 系统长期应该由什么能
 
 ## 流程
 
-**1. 看方向与现实。** 从用户给出的模块、能力或工程摩擦开始，恢复足以改变当前判断的 repo identity / architecture intent，并核对当前责任、依赖、权威、生命周期、公开边界和真实工程摩擦。当前目录、代码、文档或单一来源都不能独自定义 Target；只查会改变判断的事实，不做全 repo inventory。
+**1. 看方向与现实。** 从用户给出的模块、能力或工程摩擦开始，恢复足以改变当前判断的 repo identity / architecture intent，并核对当前责任、依赖、权威、生命周期、公开边界和真实工程摩擦。当前目录、代码、文档或单一来源都不能独自定义 Target。Research 只为仍未解决、且会改变 Target 或当前 Program 的明确 Unknown / fork 向外扩展；每个新增 probe 都应能区分 material alternatives。现有 Evidence 已足以判断，或剩余 fork 已是 Human-owned choice，就停止扩搜并复用已有 Evidence，不为新的 judgment pass 重扫 repo。
 
-**2. 做战略设计。** 按下方“判断”形成当前范围的 Target Architecture。当前 module / class / package 只是 reality，不是长期 capability 的固定候选。目标结构不清、已有设计互相冲突，或边界依据仍难判断时，读 [strategic-design.md](references/strategic-design.md)。
+**2. 做战略设计。** 按下方“判断”形成当前范围的 Target Architecture。当前 module / class / package 只是 reality，不是长期 capability 的固定候选。先用主判断和 bounded Evidence 收敛；只有仍存在会 materially 改变 Target 的 unresolved strategic fork、authority conflict 或 boundary discriminator 时，才读 [strategic-design.md](references/strategic-design.md)。
 
-只有长期责任、边界、依赖、抽象或权威应变化，或长期 binding 的业务 / 质量 / 运行约束会实质改变这些结构时，才升级为架构问题。单个坏味道、一次性迁移、纯整洁问题或泛化的“更快、更可靠、更解耦”愿望都不够。
+只有长期责任、边界、依赖、抽象或权威应变化，或长期 binding 的业务 / 质量 / 运行约束会实质改变这些结构时，才升级为架构问题。单个坏味道、一次性迁移、纯整洁问题或泛化的“更快、更可靠、更解耦”愿望都不够。若剩余 material fork 不是可继续调查的 Evidence 问题，而是 Human-owned 的业务、兼容、风险、投入或 ownership 取舍，停止自主探索，返回当前 Evidence、best-known recommendation、真实选项和 decision surface。
 
 **3. 选当前 Program。** Target 先独立成立；现实与 Target 的 gap 只形成候选，不自动成为任务。当前迁移成本、执行风险和收益只决定现在推进哪一刀、推进到哪里。最多选择 3 个当前最有价值且可独立改善结构的 Improvements；没有值得立即改 repo 的内容时，可以只交战略设计结论。
 
-**4. 交付。** 局部问题只给局部判断；缺关键事实或人的决定时，说明缺口与继续条件。收敛后完整给出当前 Strategic Design、必要的 Target 变化和 Program，并把同一正文写入仓库或工作区外的 Markdown 交接文件。若获授权，稳定结论更新原 authoritative architecture source；否则交接文件不成为 repo SOT。实质修正后重算受影响判断并完整重交付；写入失败就是阻塞。不要输出 `ready`、`completed`、`executable` 或 `status` 状态词。
+**4. 交付。** 局部问题只给局部判断；缺关键事实或人的决定时，说明缺口与继续条件。收敛后完整给出当前 Strategic Design、必要的 Target 变化和 Program，并把同一正文写入仓库或工作区外的 Markdown 交接文件。若获授权，稳定结论更新原 authoritative architecture source；否则交接文件不成为 repo SOT。实质修正或 Human decision 后保留仍有效的 Evidence / Target，只重算受影响判断；只有新 Evidence 使已有前提失效时才重查对应部分，并完整重交付。写入失败就是阻塞。不要输出 `ready`、`completed`、`executable` 或 `status` 状态词。
 
 ## 判断
 
@@ -33,7 +33,7 @@ AE 的核心是战略设计：判断这个 repo / 系统长期应该由什么能
 
 ## 按需读取
 
-- [strategic-design.md](references/strategic-design.md)：Target 不清、已有设计冲突，或 capability / boundary / relationship 的依据仍难判断；
+- [strategic-design.md](references/strategic-design.md)：主判断与 bounded Evidence 后仍有会改变 Target 的 strategic fork、authority conflict 或 boundary discriminator；
 - [legacy-lenses.md](references/legacy-lenses.md)：旧模式、标记、配置、注册名或其他兼容身份能否退出会改变 Target / Program；
 - [brooks-constraints.md](references/brooks-constraints.md)：候选结构已经说得通，但整体复杂度、第二系统或 complexity relocation 仍可疑。
 
