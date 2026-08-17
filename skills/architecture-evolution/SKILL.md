@@ -9,7 +9,7 @@ AE 的核心是战略设计：判断这个 repo / 系统长期应该由什么能
 
 ## 流程
 
-**1. 看方向与现实。** 从用户入口恢复会改变当前架构判断的 repo identity / architecture intent，并核对责任、依赖、权威、生命周期、公开边界和真实摩擦。当前形态或单一来源都不能定义 Target。Research 只为一个会 materially 改变判断的 unresolved fork / Unknown 扩展；probe 必须能区分 material alternatives。Evidence 足够，或剩余 fork 已确认只能由 Human 取舍时就停止，复用已有 Evidence，不因新的 judgment pass 重扫 repo。
+**1. 看方向与现实。** 从用户入口恢复会改变当前架构判断的 repo identity / architecture intent，并核对责任、依赖、权威、生命周期、公开边界和真实摩擦。当前形态或单一来源都不能定义 Target。Research 只为明确且会 materially 改变判断的 unresolved fork / Unknown 扩展；probe 必须能区分 material alternatives。Evidence 足够，或剩余 fork 已确认只能由 Human 取舍时就停止，复用已有 Evidence，不因新的 judgment pass 重扫 repo。
 
 **2. 做战略设计。** 按下方“判断”形成 Target；当前 module / class / package 只是 reality。只有主判断与 bounded Evidence 后仍有会改变 Target 的 strategic fork、authority conflict 或 boundary discriminator，才读 [strategic-design.md](references/strategic-design.md)。
 
