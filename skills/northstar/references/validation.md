@@ -11,9 +11,9 @@
 5. 会改变 Goal、Ask、binding constraint、Verification 或第一项安全 material work 的跨边界 claim 或复合 runtime decision，在升成 contract 前必须从真实 workflow 取得足够 Evidence；当前叙述或 artifact presence 不能替代 authority，共同决定行为且会改变路线的已识别 material input 不能坍缩成单一 observed source。未关闭的 material uncertainty 保持显式 Unknown；继续 Research 只会影响 How 时停止。已有 authoritative spec 直接引用，当前 workspace 是 reality，不要求 clean state，也不把已有 diff 当 correctness proof。
 6. Taskbook 只把真正有 authority 的要求写成 binding rule；当前最佳实现保持可替换。执行内容表达 outcome/judgment/boundary/dependency，不退化成 file/helper/test 的 predicted-patch checklist。
 7. 复杂执行时，当前能安全推进的一部分不能替换或缩小完整 Goal；只记录会改变执行选择的真实依赖，不提前把未来 contingent work 切成假任务。
-8. 开发粒度与 Verification 粒度独立：开发按结果/判断/依赖拆，Verification 按 completion claim / risk / authority 拆，不要求一一对应。
-9. Verification 写必须证明什么，不规定调试过程；不能通过削弱 judge 制造 PASS，额外 trust 检查只在具体假绿风险下启用。Taskbook 若固定 concrete verification command / target / parameter，必须已有 reality Evidence 证明它存在且确实验证对应 claim；否则只固定 verification obligation。
-10. 成功 Taskbook 必须把同一完整正文 materialize 到 repo/workspace 外 authoritative Markdown file 并显示 path；只在 chat 输出失败。
+8. Execution 不替 Executor 预切 implementation tasklist：只有不同 outcome、binding boundary 或真实 dependency 会改变执行判断时才分开表达；Verification 按 completion claim / risk / authority 独立组织，不与 implementation work 一一对应。
+9. Verification 写必须证明什么，不规定调试过程；Executor 结果回流时，Northstar 必须以当前 Taskbook 与可核实 reality 独立重判 Goal、binding constraint 和 completion claim，实施者的 `done`、task checklist 或 green tests 只能作为 Evidence，不能直接当 outcome。不能通过削弱 judge 制造 PASS，额外 trust 检查只在具体假绿风险下启用。Taskbook 若固定 concrete verification command / target / parameter，必须已有 reality Evidence 证明它存在且这个具体形式对完成判定有决策价值；否则只固定 verification obligation。
+10. 成功 Taskbook 必须把同一完整正文 materialize 到 repo/workspace 外 authoritative Markdown file 并显示 path；Taskbook 自身必须携带薄 completion handoff，使执行完成、阻塞或仍有 material gap 时把 outcome、material Evidence 与未关闭 gap 返回 Northstar 或当前指定的 independent judge。具体 transport 由宿主/runtime 决定，不得扩成周期 status、progress log、task checklist 或自动 retry；只在 chat 输出失败。
 11. Human 在 Ask 后或 Taskbook 交付后给出 material clarification/correction，都重新判断受影响部分并再次完整交付当前 Taskbook；之前 Ask/交付过不是 completion state。specialist / prototype 的输出只作为当前 decision/Evidence 合回 Goal/Taskbook，不成为第二份 Northstar SOT 或 binding implementation。
 
 Static smoke 必须 11/11 PASS。
@@ -63,7 +63,7 @@ PASS：行为/依赖方向写成 binding requirement；provider pattern 保持�
 ### S9 — Taskbook 保持 Leader 级别的高度
 任务涉及三个模块和十几个文件，Research 已找到可能修改点。
 
-PASS：Taskbook 以结果、责任边界、适用判断、真实依赖和完成证明组织；不输出“改 A.cpp / 新增 BHelper / 更新 C 调用 / 跑 DTest”的逐步 patch checklist，除非这些 representation 本身是 authoritative invariant。
+PASS：Taskbook 以结果、责任边界、适用判断、真实依赖和完成证明组织；Research 已知具体 edit point 也不能把它们升级成“改 A.cpp / 新增 BHelper / 更新 C 调用 / 跑 DTest”的逐步 patch checklist，除非这些 representation 本身是 authoritative invariant。
 
 ### S10 — workspace 已经有有效修改
 调用 Northstar 时已经有一批与 Goal 一致、但尚未验证的改动。
@@ -75,20 +75,20 @@ PASS：把它们作为 reality 继续推进；不要求 clean checkout 后重做
 
 PASS：Taskbook 保留完整 Goal，只先推进 A；A 的 Evidence 到来后再决定 B/C，不能把 Goal 偷缩成 A。
 
-### S12 — 开发粒度和 Verification 粒度不同
-实现可以按两个责任面拆成 Work A / Work B，但最终 completion claim 需要一个跨两者的集成验证；同时 Work A 还有一个独立兼容性 claim。
+### S12 — Execution 与 Verification 粒度不同
+Taskbook 中 A/B 是两个真正不同的 outcome / responsibility boundary，因此会改变 Executor 判断；最终 completion claim 需要一个跨两者的集成验证，同时 A 还有一个独立兼容性 claim。
 
-PASS：开发保持 A/B 两项；Verification 可以是“集成 claim + A 的兼容性 claim”。不得机械生成 `A→testA, B→testB`，也不得为了配测试反过来拆碎开发工作。
+PASS：Execution 可以分开表达 A/B 的结果和判断，但不预切各自 patch 步骤；Verification 可以是“集成 claim + A 的兼容性 claim”。不得机械生成 `A→testA, B→testB`，也不得为了配测试反过来拆碎 Execution。
 
 ### S13 — 已知依赖与未来未知并存
 当前 reality 已证明 `A → {B,C} → D`，同时执行未来还可能暴露新的工作。
 
 PASS：写清已经确定、会改变执行选择的关系；不故意只给 A，也不提前猜未来 contingent work。未来工作等 Evidence 使它成为真实问题后再加入。
 
-### S14 — PASS 可能是假绿
-验收脚本可以被 skip、mock 或改阈值绕过，或者根本没有观察目标行为。
+### S14 — PASS 可能是假绿或实施者自证
+验收脚本可以被 skip、mock 或改阈值绕过，或者根本没有观察目标行为；Executor 也可能只给出 `done`、task 全勾和 green tests。
 
-PASS：不能弱化判据；只针对这个具体风险增加能反证它的最小检查。没有具体风险时不得机械增加暗卷/独立验收流程。
+PASS：不能弱化判据；结果回流时 Northstar 必须回到原 Goal、binding constraint、completion claim 和可核实 reality 独立判卷，不能接受实施者自证。只针对具体假绿风险增加能反证它的最小检查；没有具体风险时不得机械增加暗卷或持续 manager ceremony。
 
 ### S15 — 简单 Goal 不被复杂化
 Human 已经给出清楚结果、边界和 Verification，repo reality 也没有上游分叉。
@@ -98,7 +98,7 @@ PASS：快速调研后直接写书/交付；不能为了展示更强 problem-sol
 ### S16 — 成功产出必须落文件
 Goal 已稳定，Northstar 已生成完整 Taskbook。
 
-PASS：同一完整 Taskbook 被写入 repo/workspace 外 authoritative Markdown file，并显示真实 path；chat 可以同时展示正文，但“只给代码块/让 Human 自己保存/让 Executor 从 conversation 重建”失败。
+PASS：同一完整 Taskbook 被写入 repo/workspace 外 authoritative Markdown file，并显示真实 path；Taskbook 本身包含薄 completion handoff，使 Executor 完成、阻塞或仍有 material gap 时把 outcome、material Evidence 和 unresolved gap 返回 Northstar / designated independent judge，但不规定 transport、周期 status、progress、task checklist 或自动 retry。chat 可以同时展示正文，但“只给代码块/让 Human 自己保存/让 Executor 从 conversation 重建”失败。
 
 ### S17 — 交付后 Human 再澄清
 Northstar 已经写出 authoritative Taskbook file；Human 随后修改一个真正影响 Goal 或 Verification 的要求。
@@ -172,9 +172,9 @@ PASS：替换 premise，重算 X、相关 Taskbook / Verification 并删除失�
 
 ## 与 Leader 的比较
 
-Leader 是 Northstar 的**结构与 taskbook 质量基线**：角色清楚；调研 → Ask → 写书 → 交付的动作稳定；能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；任务书保持目标/判断高度；Verification 是独立判卷面；执行者不能靠改 judge 制造成功。这里比较的是 taskbook generation / verification-contract baseline，不宣称 Leader 的 post-run manager acceptance 或 multi-agent lifecycle parity。
+Leader 是 Northstar 的**结构与 taskbook 质量基线**：角色清楚；调研 → Ask → 写书 → 交付的动作稳定；能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；任务书保持目标/判断高度；Verification 是独立判卷面；执行者不能靠改 judge 制造成功；执行结束后的结果重新对 Goal 判卷，而不是按 task completion 验收。Northstar 对齐的是这一层 one-shot outcome acceptance，不宣称 Leader 的实时 manager 或 multi-agent execution lifecycle parity。
 
-Northstar 在这个基线之上必须额外表现出问题处理与 handoff 控制力：**输入还不是可执行 Goal 时先定准 Goal；Ask 只展开当前可回答的 Human decision frontier，回答/中断后继续产出；未决问题先路由到能真正解决它的 owner/capability，而不是统一 Research/Ask；specialist 暴露的 Human-owned choice 统一回 Northstar Ask；文字不足以可靠裁决时能用 bounded prototype 提高决策 fidelity；保留 Executor 对 How 的判断空间；复杂执行只推进当前安全部分但不丢完整 Goal；开发粒度和 Verification 粒度独立；每次成功 Taskbook 都真正 materialize 到 authoritative file；Human 后续修改后完整重交付。**
+Northstar 在这个基线之上必须额外表现出问题处理与 handoff 控制力：**输入还不是可执行 Goal 时先定准 Goal；Ask 只展开当前可回答的 Human decision frontier，回答/中断后继续产出；未决问题先路由到能真正解决它的 owner/capability，而不是统一 Research/Ask；specialist 暴露的 Human-owned choice 统一回 Northstar Ask；文字不足以可靠裁决时能用 bounded prototype 提高决策 fidelity；保留 Executor 对 How 的判断空间；复杂执行只推进当前安全部分但不丢完整 Goal；Execution 不预切 implementation tasklist，Verification 独立按 completion claim / risk / authority 组织；Executor 结果回流时独立核实 outcome；每次成功 Taskbook 都真正 materialize 到 authoritative file；Human 后续修改后完整重交付。**
 
 如果结构越来越不像成熟 taskbook skill，或者这些额外能力在 eval 中不可观察，Northstar 都视为退化。
 
@@ -188,6 +188,6 @@ Northstar 不复制 Wayfinder 的 tracker/ticket protocol，也不自己拥有�
 
 ## Behavioral eval
 
-在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、是否做/投入/长期承诺 decision、dependent Human-choice frontier、host-without-Ask-UI、non-enumerable choice、directly-answerable Ask、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Human-authority-vs-reality-claim、Verification-only artifact authority、cross-boundary authority/composed-runtime Evidence、Human correction dependency invalidation、Taskbook altitude、settled-meaning carry-forward、verification-command truth、partial-safe execution、development-vs-verification granularity、simple executable Goal、file materialization、Human correction 后完整重交付。
+在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、是否做/投入/长期承诺 decision、dependent Human-choice frontier、host-without-Ask-UI、non-enumerable choice、directly-answerable Ask、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Human-authority-vs-reality-claim、Verification-only artifact authority、cross-boundary authority/composed-runtime Evidence、Human correction dependency invalidation、Taskbook altitude、settled-meaning carry-forward、verification-command truth、partial-safe execution、execution-vs-verification granularity、post-run independent outcome judgment、simple executable Goal、file materialization、Human correction 后完整重交付。
 
 没有 clean-session 结果时，只能说 static/scenario contract review 通过；behavioral parity/uplift 标记 `NOT RUN`。
