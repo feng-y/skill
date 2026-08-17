@@ -20,16 +20,16 @@
 6. abstraction 由 stable semantics / invariants 决定；能力和责任边界成立后再设计稳定单向依赖，通用语义不依赖具体实现。
 7. Improvement 必须物化已确认的战略结构：责任更闭合、caller 更少重组私有事实、coupling 更低、dependency / information hiding 更稳定，并产生 structural gain + real exit。
 8. real evolution 要求旧 authority / knowledge / dependency / special path 退出；已被结构替代的补偿性 guidance 同样退出。只增加新层而旧结构仍 authoritative 是 complexity relocation。
-9. Research bounded。current code / config / test / runtime 证明 reality；authoritative repo / domain / architecture sources 约束 intent；history / friction 只提供 change pressure。任何单一 source 都不是 oracle。
+9. Research 只由仍未解决、且会 materially 改变当前架构判断（包括 Target / Program）的明确 fork / Unknown 驱动；每个新增 probe 必须能区分 material alternatives。Evidence 足够后停止扩搜，已有 Evidence 默认跨 judgment 复用，除非其前提被新 Evidence / Human decision 推翻，不为新的 judgment pass 重扫 repo。
 10. 当前 org / team topology 只作 reality / feasibility challenge，不自动成为长期 architecture law。
-11. specialist 不抢 Human decision ownership；上游 shaping capability 调用 AE 时只返回 Evidence、方向和 Human decision surface。
-12. 稳定战略设计结论优先维护原 authoritative architecture source；delivery 交当前 Strategic Design、必要的 Target 变化与 Program，material correction 后重算受影响判断并完整重交付。
+11. specialist 不抢 Human decision ownership；若剩余 material fork 本质是业务、兼容、风险、投入或 ownership 等 Human-owned trade-off，而非可继续调查的事实问题，就停止 autonomous research，返回 Evidence、best-known recommendation、真实选项和 decision surface。
+12. 稳定战略设计结论优先维护原 authoritative architecture source；delivery 交当前 Strategic Design、必要的 Target 变化与 Program。material correction / Human decision 后保留仍有效 Evidence / Target，只重算受影响判断；只有前提失效才重查对应 Evidence，并完整重交付。
 
 ## Regression cases
 
 ### Strategic Design
 
-- **P1 Bounded research**：历史模块 + current provider taxonomy → 先恢复会改变当前范围预期角色的 repo identity / architecture intent，再查 direct neighborhood 和 decisive unknown；不得为了“战略设计”展开全 repo inventory。
+- **P1 Fork-driven research**：历史模块 + current provider taxonomy → 先恢复足以约束当前范围的最小 repo identity / architecture intent；之后只有明确且会 materially 改变当前架构判断（包括 Target / Program）的 unresolved fork / Unknown 才驱动继续扩搜，每个 probe 都必须能区分 material alternatives。现有 Evidence 足够后停止，不得为了“战略设计更完整”展开全 repo inventory，也不把相关 Unknown 强制串行化。
 - **P2 Current shape is not Target**：历史模块 `X` 内部可以整理得自洽，但 repo identity、真实 consumer 与长期变化表明这里实际承载更大的 capability，或一部分应属于其他 owner → 不得把 `X` 当长期 boundary 后继续局部优化。
 - **P3 Provider variation**：存在 family switch → 只有 stable semantic / contract / lifecycle / performance architecture / deployment variation 才形成 provider boundary；当前命名、代码相似或未来扩展愿望不够。
 - **P4 Boundary before dependency**：`common/core → specific implementation` 或依赖图可被整理成单向 → 先确认长期 responsibility / capability decomposition 正确；单向依赖不能挽救知识仍散落在错误 owner 的结构。
@@ -43,6 +43,7 @@
 - **P12 Scoped strategic design**：当前只处理 runtime / provider → 恢复足以判断其在 repo 中预期角色的战略锚点，再只设计该范围；不得因为需要 repo identity 就生成全 repo blueprint。
 - **P13 Capability boundary is not enough**：跨 capability responsibility 已清楚，但某 capability 内部仍让稳定语义依赖具体实现，或长期设计知识继续泄漏 → Target 不得停在 capability boundary；继续收敛内部稳定语义与允许依赖。
 - **P14 Organization is a challenge, not law**：当前 team 恰好按 `X/Y` 分工或跨团队沟通很贵 → 可作为 feasibility / friction Evidence，但不能仅据 org chart 固化 Target boundary。若 Target 需要现实中不存在的 owner / coordination path，应暴露组织或 rollout 依赖，而不是默认改写责任模型。
+- **P15 Evidence reuse**：一次 probe 已确认 capability owner、lifecycle 与真实 consumer，随后 dependency / abstraction / verification judgment 仍基于同一前提 → 默认复用已获得 Evidence，不重新打开同一批文件；只有新的 material fork 或 Evidence 表明原前提可能失效时，才重查受影响部分。
 
 ### Evolution and leverage
 
@@ -71,11 +72,11 @@
 ### Boundaries and re-entry
 
 - **N1 Local**：bug / dead getter / mechanical cleanup → local judgment，不制造 Target / Program。
-- **R1 Real fork**：两个长期结构都可行且缺 decisive constraint → 保持 unresolved，不按模式偏好强选。
-- **H1 Human ownership**：Northstar 等上游路由来的 Human-owned choice → AE 返回 decision surface，不自行接管 Ask。
+- **R1 Real fork**：默认形成一个 best-known Target；只有两个 materially different 长期结构都被 Evidence 支持、且最小 probe 后仍缺 decisive constraint 时才同时保留，不能为了“方案比较”主动制造候选。
+- **H1 Human-owned fork**：剩余 material fork 取决于业务、兼容、风险、投入或 ownership 等 Human-owned choice，而不是更多 repo Evidence → 立即停止 autonomous research，返回当前 Evidence、best-known recommendation、真实 alternatives 与 decision surface；Human 决定后沿单一路径继续，不重新分析已淘汰方向。
 - **L1 Legacy**：旧 token / identity 本地无 reader 但可能外部可见 → search absence 不等于可删；只有能否退出会改变 Target / Program 时做最小 probe。
 - **O1 Altitude**：Target 已稳定 → 固定 architecture outcome / structural done condition，不规定 class / API / file / schema / MR / test provider。
-- **D1 Re-entry**：Program 交付后出现 material correction → 若改变战略前提，重算受影响 Strategic Design 再重选 Improvements；若只改变当前成本 / execution reality，保留仍有效 Target，只重算受影响 Program，并完整重交付。
+- **D1 Re-entry**：Program 交付后出现 material correction / Human decision → 保留仍有效 Evidence / Target，只重算受影响 Strategic Design / Program；只有新 Evidence 使原前提失效时才重查对应部分，并完整重交付。
 - **D2 Artifact failure**：Program 已收敛但外部 handoff file 不可写 → blocker，不把 conversation 当成功 handoff。
 
 ## Paired behavioral eval
@@ -83,6 +84,6 @@
 同一 model / repo snapshot / tool permission / budget：
 `A. 不加载 architecture-evolution` vs `B. 加载 architecture-evolution`。
 
-评分：Research scope、repo-identity grounding、strategic-focus、strategic-design quality、hidden-knowledge boundary、boundary-relationship quality、target-sufficiency、strategic/tactical separation、change-pressure alignment、intent/reality discrimination、architecture taste、Program leverage / convergence、architecture altitude、Human routing、re-entry、handoff integrity、context cost。
+评分：Research scope、research-stop quality、Evidence reuse、repo-identity grounding、strategic-focus、strategic-design quality、hidden-knowledge boundary、boundary-relationship quality、target-sufficiency、strategic/tactical separation、Human convergence、change-pressure alignment、intent/reality discrimination、architecture taste、Program leverage / convergence、architecture altitude、re-entry、handoff integrity、context cost。
 
-只有 clean-session paired Evidence 才能声明 behavioral uplift；否则标记 `NOT RUN`。
+同时记录 total / tool-return token、probe 数、文件读取数与重复读取；只有在 architecture judgment 不退化的前提下，较低成本才算改进。只有 clean-session paired Evidence 才能声明 behavioral uplift；否则标记 `NOT RUN`。
