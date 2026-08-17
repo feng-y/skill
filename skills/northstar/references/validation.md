@@ -15,7 +15,7 @@
 9. Verification 写必须证明什么，不规定调试过程；不能通过削弱 judge 制造 PASS，额外 trust 检查只在具体假绿风险下启用。发现可运行的 concrete command / target / parameter 本身不足以把它固定进 Taskbook；只有 authority、不可替代的反证边界或 completion claim 的明确性要求它时才固定，否则只保留 verification obligation。
 10. 成功 Taskbook 必须把同一完整正文 materialize 到 repo/workspace 外 authoritative Markdown file 并显示 path；只在 chat 输出失败。
 11. Human 在 Ask 后或 Taskbook 交付后给出 material clarification/correction，都重新判断受影响部分并再次完整交付当前 Taskbook；之前 Ask/交付过不是 completion state。specialist / prototype 的输出只作为当前 decision/Evidence 合回 Goal/Taskbook，不成为第二份 Northstar SOT 或 binding implementation。
-12. Executor 结果返回后，Northstar 按原 authoritative Taskbook 的 Goal / binding constraint / completion claim / Evidence 独立判卷，不把“改完了、测试绿了、task list 全勾”当 completion proof；evidence gap 保持 gap。Goal/contract 未变化时，未通过结论只指出 claim/Evidence/blocker，不编译新的 repair tasklist 或接管 debugging；只有 material premise / Human choice / binding boundary 被新 Evidence 改变时才重进受影响写书流程。
+12. Executor 结果返回后，Northstar 按原 authoritative Taskbook 的 Goal / binding constraint / completion claim / Evidence 独立判卷，不把“改完了、测试绿了、task list 全勾”当 completion proof；evidence gap 保持 gap。Goal/contract 未变化时，未通过结论只指出 claim/Evidence/blocker，不编译新的 repair tasklist 或接管 debugging；只有 material premise / Human choice / binding boundary 被新 Evidence 改变，或原 completion claim / Verification authority 被证明需要修正时，才重进受影响写书流程。
 
 Static smoke 必须 12/12 PASS。
 
@@ -174,7 +174,7 @@ PASS：替换 premise，重算 X、相关 Taskbook / Verification 并删除失�
 ### S31 — Executor 自报完成后重新按 Goal 判卷
 Executor 返回：“实现完成，目标文件都改了，42 个测试全绿”，并附 diff 与测试日志。Taskbook 的 Goal 还要求一个跨边界行为成立，但现有 Evidence 只证明局部测试，没有观察该行为；Goal、Human choice 和 binding boundary 本身没有变化。
 
-PASS：Northstar 从原 Taskbook 的 completion claim 出发，明确局部 checks 已成立但跨边界 claim 仍缺 Evidence，因此不能把整项工作判成完成。它指出缺失的 claim/Evidence，而不是把 Executor 的 task list 或测试数量当验收标准，也不自动生成“再改 X 文件/加 Y test”的 repair plan。只有后续 Evidence 证明原 premise 或 boundary 已变化时，才重算受影响 Taskbook；否则继续使用同一 contract。
+PASS：Northstar 从原 Taskbook 的 completion claim 出发，明确局部 checks 已成立但跨边界 claim 仍缺 Evidence，因此不能把整项工作判成完成。它指出缺失的 claim/Evidence，而不是把 Executor 的 task list 或测试数量当验收标准，也不自动生成“再改 X 文件/加 Y test”的 repair plan。只有后续 Evidence 证明原 premise / boundary 或原 completion claim / Verification authority 需要修正时，才重算受影响 Taskbook；否则继续使用同一 contract。
 
 ## 与 Leader 的比较
 
