@@ -9,15 +9,15 @@ AE 的核心是战略设计：判断这个 repo / 系统长期应该由什么能
 
 ## 流程
 
-**1. 看方向与现实。** 从用户给出的模块、能力或工程摩擦开始，恢复足以改变当前判断的 repo identity / architecture intent，并核对当前责任、依赖、权威、生命周期、公开边界和真实工程摩擦。当前目录、代码、文档或单一来源都不能独自定义 Target。Research 只为仍未解决、且会 materially 改变当前架构判断（包括 Target 或 Program）的明确 Unknown / fork 向外扩展；每个新增 probe 都应能区分 material alternatives。现有 Evidence 已足以判断，或剩余 fork 已确认不是可继续调查的 Evidence 问题而是 Human-owned choice，就停止扩搜并复用已有 Evidence，不为新的 judgment pass 重扫 repo。
+**1. 看方向与现实。** 从用户入口恢复会改变当前架构判断的 repo identity / architecture intent，并核对责任、依赖、权威、生命周期、公开边界和真实摩擦。当前形态或单一来源都不能定义 Target。Research 只为一个会 materially 改变判断的 unresolved fork / Unknown 扩展；probe 必须能区分 material alternatives。Evidence 足够，或剩余 fork 已确认只能由 Human 取舍时就停止，复用已有 Evidence，不因新的 judgment pass 重扫 repo。
 
-**2. 做战略设计。** 按下方“判断”形成当前范围的 Target Architecture。当前 module / class / package 只是 reality，不是长期 capability 的固定候选。先用主判断和 bounded Evidence 收敛；只有仍存在会 materially 改变 Target 的 unresolved strategic fork、authority conflict 或 boundary discriminator 时，才读 [strategic-design.md](references/strategic-design.md)。
+**2. 做战略设计。** 按下方“判断”形成 Target；当前 module / class / package 只是 reality。只有主判断与 bounded Evidence 后仍有会改变 Target 的 strategic fork、authority conflict 或 boundary discriminator，才读 [strategic-design.md](references/strategic-design.md)。
 
-只有长期责任、边界、依赖、抽象或权威应变化，或长期 binding 的业务 / 质量 / 运行约束会实质改变这些结构时，才升级为架构问题。单个坏味道、一次性迁移、纯整洁问题或泛化的“更快、更可靠、更解耦”愿望都不够。若剩余 material fork 不是可继续调查的 Evidence 问题，而是 Human-owned 的业务、兼容、风险、投入或 ownership 取舍，停止自主探索，返回当前 Evidence、best-known recommendation、真实选项和 decision surface。
+只有长期责任、边界、依赖、抽象或权威应变化，或长期 binding 的业务 / 质量 / 运行约束会实质改变这些结构时，才升级为架构问题；smell、一次性迁移、纯整洁或泛化的质量愿望都不够。剩余 material fork 若不是事实问题而是 Human-owned 的业务、兼容、风险、投入或 ownership 取舍，停止 research，返回 Evidence、best-known recommendation、真实选项和 decision surface。
 
 **3. 选当前 Program。** Target 先独立成立；现实与 Target 的 gap 只形成候选，不自动成为任务。当前迁移成本、执行风险和收益只决定现在推进哪一刀、推进到哪里。最多选择 3 个当前最有价值且可独立改善结构的 Improvements；没有值得立即改 repo 的内容时，可以只交战略设计结论。
 
-**4. 交付。** 局部问题只给局部判断；缺关键事实或人的决定时，说明缺口与继续条件。收敛后完整给出当前 Strategic Design、必要的 Target 变化和 Program，并把同一正文写入仓库或工作区外的 Markdown 交接文件。若获授权，稳定结论更新原 authoritative architecture source；否则交接文件不成为 repo SOT。实质修正或 Human decision 后保留仍有效的 Evidence / Target，只重算受影响判断；只有新 Evidence 使已有前提失效时才重查对应部分，并完整重交付。写入失败就是阻塞。不要输出 `ready`、`completed`、`executable` 或 `status` 状态词。
+**4. 交付。** 局部问题只给局部判断；缺关键事实或人的决定时，说明缺口与继续条件。收敛后完整给出当前 Strategic Design、必要的 Target 变化和 Program，并把同一正文写入仓库或工作区外的 Markdown 交接文件。若获授权，稳定结论更新原 authoritative architecture source；否则交接文件不成为 repo SOT。Human decision / 实质修正后保留仍有效 Evidence / Target，只重算受影响判断；前提失效才重查对应部分，并完整重交付。写入失败就是阻塞。不要输出 `ready`、`completed`、`executable` 或 `status` 状态词。
 
 ## 判断
 
