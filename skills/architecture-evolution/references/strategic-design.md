@@ -23,7 +23,7 @@
 
 - current code / config / test / runtime 证明当前 reality；
 - repo contract、仍有效的 architecture source、domain source、ADR 等约束 intended semantics / responsibility / boundary；
--真实 consumer、workflow 与外部契约帮助确认系统实际角色、authority 和 lifecycle；
+- 真实 consumer、workflow 与外部契约帮助确认系统实际角色、authority 和 lifecycle；
 - history 与工程摩擦帮助发现 durable change pressure，但 hotspot / 一次性困难不能单独证明 Architecture Improvement；
 - 外部文章、项目和通用 pattern 只用于挑战候选，不替代当前 repo 的 Evidence。
 
