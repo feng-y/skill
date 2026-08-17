@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
   short_description: "做战略设计，判断目标结构与下一步演进"
-  default_prompt: "使用 $architecture-evolution。依据仓库事实、已有设计知识和真实工程摩擦做当前范围的战略设计，收敛责任、依赖、通用/特化和信息隐藏，判断是实现偏离、已有意图过时还是局部问题，并区分长期目标结构与当前演进，只选择最多 3 个现在值得推进且能让旧结构真实退出的改进；未选 gap 不自动成为任务。不要预定实现。收敛后将同一正文写入仓库或工作区外的交接文件；用户作实质修正后，重算受影响判断并完整重交付。"
+  default_prompt: "使用 $architecture-evolution 对当前范围做战略设计，并依据 Skill 自身 contract 从 Target Architecture 与 reality 的 gap 中选择当前值得推进的演进。"
