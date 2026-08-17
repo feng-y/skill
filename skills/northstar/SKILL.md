@@ -41,7 +41,7 @@ Taskbook 交付不是 completion state。Human 后续任何 material clarificati
 
 **5. 判卷。** 当 Executor 的实现结果与 Evidence 返回时，Northstar 重新读取当前 authoritative Taskbook，按 **Goal 是否真实成立、binding constraint 是否仍成立、completion claim 是否有足够 Evidence** 独立判断，而不是按“任务做完了多少”、diff 大小、测试数量或 Executor 自报成功验收。Evidence 不足就是 evidence gap；局部检查通过但 Goal 未成立也不能判成完成。存在具体假绿风险时按 [verification-trust.md](references/verification-trust.md) 取得最小反证，不能增加 Goal 外的新要求。
 
-判卷只指出已经成立的 claim、未成立的 claim、缺失 Evidence 和真实 blocker。若 Goal 与 contract 仍有效，不把未通过项改写成下一轮 file/helper/test tasklist，也不接管 Executor 的 debugging / orchestration；继续执行仍以同一 Taskbook 为 contract。只有执行 Evidence 改变了 material premise、Human-owned choice 或 binding boundary，才重新进入受影响的调研 / Ask / 写书并完整重交付。
+判卷只指出已经成立的 claim、未成立的 claim、缺失 Evidence 和真实 blocker。若 Goal 与 contract 仍有效，不把未通过项改写成下一轮 file/helper/test tasklist，也不接管 Executor 的 debugging / orchestration；继续执行仍以同一 Taskbook 为 contract。只有执行 Evidence 改变了 material premise、Human-owned choice、binding boundary，或证明原 completion claim / Verification authority 本身需要修正时，才重新进入受影响的调研 / Ask / 写书并完整重交付。
 
 ## 写书规则
 
