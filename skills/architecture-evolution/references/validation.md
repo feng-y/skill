@@ -20,7 +20,7 @@
 6. abstraction 由 stable semantics / invariants 决定；能力和责任边界成立后再设计稳定单向依赖，通用语义不依赖具体实现。
 7. Improvement 必须物化已确认的战略结构：责任更闭合、caller 更少重组私有事实、coupling 更低、dependency / information hiding 更稳定，并产生 structural gain + real exit。
 8. real evolution 要求旧 authority / knowledge / dependency / special path 退出；已被结构替代的补偿性 guidance 同样退出。只增加新层而旧结构仍 authoritative 是 complexity relocation。
-9. Research 只由仍未解决、且会 materially 改变当前架构判断（包括 Target / Program）的明确 fork / Unknown 驱动；每个新增 probe 必须能区分 material alternatives。Evidence 足够后停止扩搜，已有 Evidence 默认跨 judgment 复用，除非其前提被新 Evidence / Human decision 推翻，不为新的 judgment pass 重扫 repo。
+9. Research 只由仍未解决、且会 materially 改变当前架构判断（包括 Target / Program）的明确 fork / Unknown 驱动；每个新增 probe 必须能区分 material alternatives。若两个长期结构都能被现有 Evidence 支持、继续 prose judgment 不能提高区分度，而一个廉价、可丢弃的 structural probe 能直接挑战 boundary / ownership hypothesis，则做最小 probe；probe 只产生当前判断需要的 Evidence，不自动进入 Program、production path 或 architecture SOT。Evidence 足够后停止扩搜，已有 Evidence 默认跨 judgment 复用，除非其前提被新 Evidence / Human decision 推翻，不为新的 judgment pass 重扫 repo。
 10. 当前 org / team topology 只作 reality / feasibility challenge，不自动成为长期 architecture law。
 11. specialist 不抢 Human decision ownership；若剩余 material fork 本质是业务、兼容、风险、投入或 ownership 等 Human-owned trade-off，而非可继续调查的事实问题，就停止 autonomous research，返回 Evidence、best-known recommendation、真实选项和 decision surface。
 12. 稳定战略设计结论优先维护原 authoritative architecture source；delivery 交当前 Strategic Design、必要的 Target 变化与 Program。material correction / Human decision 后保留仍有效 Evidence / Target，只重算受影响判断；只有前提失效才重查对应 Evidence，并完整重交付。
@@ -44,6 +44,7 @@
 - **P13 Capability boundary is not enough**：跨 capability responsibility 已清楚，但某 capability 内部仍让稳定语义依赖具体实现，或长期设计知识继续泄漏 → Target 不得停在 capability boundary；继续收敛内部稳定语义与允许依赖。
 - **P14 Organization is a challenge, not law**：当前 team 恰好按 `X/Y` 分工或跨团队沟通很贵 → 可作为 feasibility / friction Evidence，但不能仅据 org chart 固化 Target boundary。若 Target 需要现实中不存在的 owner / coordination path，应暴露组织或 rollout 依赖，而不是默认改写责任模型。
 - **P15 Evidence reuse**：一次 probe 已确认 capability owner、lifecycle 与真实 consumer，随后 dependency / abstraction / verification judgment 仍基于同一前提 → 默认复用已获得 Evidence，不重新打开同一批文件；只有新的 material fork 或 Evidence 表明原前提可能失效时，才重查受影响部分。
+- **P16 Falsifiable Target / structural probe**：repo identity、authority 与长期变化同时支持两个 materially different 的 ownership Target；继续读同一批代码或写更多设计 prose 都不能区分，但迁一个代表性 consumer 就能观察它是否仍需穿透旧 owner 的私有 knowledge → 只做这个最小、可丢弃的 migration slice 作为 probe。按候选 boundary 完成 slice 后，若 consumer 仍需旧 owner internals，就把它作为候选 boundary 的 disconfirming Evidence 并只重算受影响 Target；migration 过渡期同时修改 old / new owner 本身不算失败。若新 boundary 成立，也只把结论 / Evidence 合回 Strategic Design。不得因为 probe 代码存在就把它自动升成 Program、production path、长期 provider / layer 或 architecture SOT；已有 Evidence 已足够区分时也不得为了“验证感”强制做 probe。
 
 ### Evolution and leverage
 
@@ -84,6 +85,6 @@
 同一 model / repo snapshot / tool permission / budget：
 `A. 不加载 architecture-evolution` vs `B. 加载 architecture-evolution`。
 
-评分：Research scope、research-stop quality、Evidence reuse、repo-identity grounding、strategic-focus、strategic-design quality、hidden-knowledge boundary、boundary-relationship quality、target-sufficiency、strategic/tactical separation、Human convergence、change-pressure alignment、intent/reality discrimination、architecture taste、Program leverage / convergence、architecture altitude、re-entry、handoff integrity、context cost。
+评分：Research scope、research-stop quality、Evidence reuse、repo-identity grounding、strategic-focus、strategic-design quality、architecture-hypothesis falsifiability、structural-probe quality、hidden-knowledge boundary、boundary-relationship quality、target-sufficiency、strategic/tactical separation、Human convergence、change-pressure alignment、intent/reality discrimination、architecture taste、Program leverage / convergence、architecture altitude、re-entry、handoff integrity、context cost。
 
 同时记录 total / tool-return token、probe 数、文件读取数与重复读取；只有在 architecture judgment 不退化的前提下，较低成本才算改进。只有 clean-session paired Evidence 才能声明 behavioral uplift；否则标记 `NOT RUN`。

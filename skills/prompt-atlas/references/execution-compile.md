@@ -1,10 +1,10 @@
 # When a simple Taskbook is not enough
 
-Read only after Goal is settled and complexity itself changes execution judgment, for example distinct outcomes / boundaries, real dependencies, later work that only execution Evidence can reveal, or cross-session continuation. This file only decides how those differences enter the Taskbook. It does not redefine Goal or precompile an implementation work plan for the Executor.
+Read only after Goal is settled and complexity itself changes execution or Verification judgment, for example distinct outcomes / boundaries, real dependencies, later work that only execution Evidence can reveal, verification cost / Evidence selection that changes completion proof, or cross-session continuation. This file only decides how those differences enter the Taskbook. It does not redefine Goal or precompile a file-by-file or function-by-function implementation plan for the Executor.
 
 ## Execution granularity
 
-A Taskbook does not decompose implementation tasks for the Executor. Separate content only when a different result, judgment rule, binding constraint, or real dependency changes execution choice. Otherwise state one outcome / judgment over the open surface and let the Executor decide files, functions, work order, and local checks from the current repo.
+A Taskbook should still compile a complex Goal to a level a fresh Executor can directly advance. Separate work when a distinct outcome / responsibility, binding boundary, or real dependency changes execution judgment. Also preserve a material cut when collapsing it would force a fresh Executor to rediscover something already supported by sufficient Evidence. In contrast, files, functions, helpers, call order, and local checks remain Executor How recovered from the current repo; do not expand them into a predicted-patch checklist merely to make the Taskbook look more executable.
 
 A concrete edit point, helper, caller, or test found during Research does not gain authority merely because it is known. Unless the representation itself is fixed by Human / repo authority, or omitting it would make a fresh Executor judge incorrectly, cross a boundary, or fail to prove completion, keep it out of the Taskbook.
 
@@ -16,7 +16,7 @@ If an unresolved fact determines whether material work is safe, keep it as an Un
 
 If current reality supports only part of the work, keep the full Goal and identify only the safe frontier current Evidence establishes. As execution Evidence makes later work decidable, update the affected part then. Adjacent residue does not enter Goal merely because it was discovered.
 
-Usually no execution graph is needed. Record a relation only when it changes Executor choice, such as a real prerequisite, parallel conflict, shared authoritative surface, or results that must be verified together. Record only relations current reality supports. Work that depends on future Evidence enters only when that Evidence makes it real. A blocked branch must not freeze unrelated work.
+Usually no execution graph is needed. Record a relation only when it changes Executor choice, such as a real prerequisite, independently parallel work, a parallel conflict, shared authoritative surface, or results that must be verified together. Record only relations current reality supports. Work that depends on future Evidence enters only when that Evidence makes it real. A blocked branch must not freeze unrelated work.
 
 ## Starting point and baseline
 
@@ -29,6 +29,8 @@ If later judgment depends on a baseline, the Executor re-obtains it when first t
 ## Verification and final judgment
 
 Verification does not map one-to-one to implementation work. Start from completion claims, then decide what authoritative Evidence each claim needs. Combine Evidence that covers several changes; separate independent claims even when they come from one change.
+
+First require Evidence to provide sufficient confidence for the completion claim. Among verification paths that meet that bar, prefer the lower-cost and more direct one rather than requiring a failing test before implementation by default. Reuse authoritative existing tests, builds, replays, integration checks, or runtime Evidence when they directly prove the claim. Add the smallest focused test / check when new behavior, a durable regression risk, or a claim not reliably covered by existing Evidence requires it. For complex legacy / infrastructure boundaries, broad mock- or fixture-heavy unit tests that merely mirror implementation detail without adding material confidence are not a default obligation.
 
 Verification granularity follows **the behavior, boundary, risk, and authority that must be proven**, not the number of commits, files, tasks, or local tests. Prefer final observable behavior and long-lived constraints. Unit/build checks may contribute Evidence, but proximity to a change does not make them sufficient proof of Goal completion.
 
