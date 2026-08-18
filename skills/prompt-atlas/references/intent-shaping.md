@@ -16,6 +16,14 @@ No means it expresses a result, boundary, risk commitment, or Verification requi
 
 A concrete current implementation, class/provider, or detailed plan does not automatically elevate How into Goal. Conversely, when the Human explicitly requires a representation / compatibility / provider because that representation itself is a business or technical commitment, it may be part of Goal.
 
+## Grill when the Human has not formed the judgment yet
+
+A Human-owned choice is not always ready to be presented as options. When the Human is still working out what problem actually matters or which trade-off matters most, do not rush to freeze the framing or ask for a choice.
+
+Re-understand the problem from the Human's current position. When there is a current inclination, argue the strongest case for it and the strongest case against it; when only the framing is unsettled, compare the most credible interpretations instead. Then identify the real disagreement, contradiction, and hidden assumptions. If a fact can be established by Research and would decide that disagreement, investigate it first; when several coupled facts need source alignment, return to the main flow and use `$unknowns-first`, then continue the same judgment from its Evidence rather than asking the Human factual questions. If reality is already sufficient and what remains is Human preference, value judgment, or trade-off, ask only the one question that best distinguishes the competing views now; do not stack several questions into one Grill turn or hide the recommendation inside the question.
+
+After the Human answers, re-judge. If what remains is still Human judgment, continue another Grill turn; if it has become a factual, prototype, or other specialist problem, return to the main flow and use the existing routing. Once the real trade-off is clear, stop Grill and return to normal Ask rules, batching the Human-owned choices that are now independently answerable. Do not force Grill when Goal / choice is already clear merely to appear deeper.
+
 ## The same Goal may still leave whether to proceed, investment, and long-lived commitment to the Human
 
 Two paths may satisfy the same Goal yet still differ materially in whether to proceed, investment, and long-lived commitment. Such a choice is not implementation How that Prompt Atlas or the Executor may close by preference. First inspect existing authority and reality; if several acceptable choices remain, surface the currently answerable options, main consequences, and a recommendation to the Human.
