@@ -1,10 +1,10 @@
 # 当简单 Taskbook 不够
 
-只在 Goal 已经定准，且复杂度本身会改变执行判断时读取，例如存在不同 outcome / boundary、真实依赖、执行 Evidence 才能显现的后续工作或跨会话 continuation。这里只处理这些差异怎样进入 Taskbook，不重新定义 Goal，也不替 Executor 预编译工作计划。
+只在 Goal 已经定准，且复杂度本身会改变执行或 Verification 判断时读取，例如存在不同 outcome / boundary、真实依赖、执行 Evidence 才能显现的后续工作、验证成本 / Evidence 选择会改变完成证明，或跨会话 continuation。这里只处理这些差异怎样进入 Taskbook，不重新定义 Goal，也不替 Executor 预编译逐文件、逐函数的 implementation plan。
 
 ## Execution 写到什么粒度
 
-Taskbook 不替 Executor 分解 implementation task。只在不同结果、判断规则、binding constraint 或真实依赖会改变执行选择时分开表达；否则写一个覆盖开放 surface 的 outcome / judgment，让 Executor 在当前 repo 中自行决定文件、函数、工作顺序和局部检查。
+Taskbook 仍要把复杂 Goal 编译到 fresh Executor 可以直接推进的粒度。只有不同 outcome / responsibility、binding boundary 或真实依赖会改变执行判断时，才分开形成 work；如果不分开会迫使 fresh Executor 重新发现一个已经有充分 Evidence 的 material cut，也应保留这个 cut。反过来，文件、函数、helper、调用顺序和局部检查仍由 Executor 从当前 repo 决定；不要为了“更可执行”把这些 How 展开成 predicted-patch checklist。
 
 Research 已经发现具体 edit point、helper、caller 或 test，不会自动提高它们的 authority。除非 representation 本身被 Human / repo authority 固定，或遗漏该细节会让 fresh Executor 判断错、越界或无法证明完成，否则不写进 Taskbook。
 
@@ -16,7 +16,7 @@ Research 已经发现具体 edit point、helper、caller 或 test，不会自动
 
 如果 reality 只支持先做一部分，就保留完整 Goal，并只标出当前已证明的安全 frontier。执行中新的 Evidence 让后续工作变得可判断时，再更新受影响部分；相邻 residue 也不能因为被发现就自动扩进 Goal。
 
-通常不需要执行图。只有关系会改变 Executor 选择时才写，例如真实 prerequisite、并行冲突、共享 authoritative surface 或必须共同验收的结果。只写当前 reality 已经证明的关系；必须等执行后才知道的后续工作，等 Evidence 使它成为真实问题后再加入。一个分支 blocked，不应冻结与它无关的工作。
+通常不需要执行图。只有关系会改变 Executor 选择时才写，例如真实 prerequisite、可独立并行的 work、并行冲突、共享 authoritative surface 或必须共同验收的结果。只写当前 reality 已经证明的关系；必须等执行后才知道的后续工作，等 Evidence 使它成为真实问题后再加入。一个分支 blocked，不应冻结与它无关的工作。
 
 ## 起点与 baseline
 
@@ -29,6 +29,8 @@ baseline 只有在它真的改变后续判断，或区分“原来就坏”与�
 ## Verification 与最终判卷
 
 Verification 不跟 implementation work 一一配对。先列 completion claim，再判断每个 claim 需要什么 authoritative Evidence；相同 Evidence 能覆盖多个改动就合并，一个改动涉及多个独立 claim 就分别验证。
+
+先要求 Evidence 对 completion claim 提供足够置信度；在满足这个条件的验证方式中，优先选择成本更低、对 claim 更直接的路径，而不默认要求先构造失败测试再实现。已有 authoritative test / build / replay / integration / runtime Evidence 能直接证明 claim 时优先复用；新行为、稳定 regression risk 或现有 Evidence 无法可靠覆盖的 claim，再增加最小 focused test / check。为复杂 legacy / infrastructure 边界强造大量 mock、fixture 或高成本 UT，但它们只重复实现细节而没有增加 material confidence，不是默认义务。
 
 验证粒度由**要证明的行为、边界、风险和 authority**决定，而不是 commit、文件、task 或局部测试数量。优先最终可观察行为和长期约束；unit/build check 可以贡献 Evidence，但不能因为它靠近改动就自动代表 Goal 已完成。
 
