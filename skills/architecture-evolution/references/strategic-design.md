@@ -2,14 +2,14 @@
 
 只在主 Skill + bounded Evidence 后仍有会改变 Target 的 strategic fork、authority conflict 或 boundary discriminator 时读取；这里只补判定，不加第二套流程。
 
-战略设计回答系统长期应该是什么；当前 Program 只回答现实条件下值得先推进哪一刀。迁移成本、实现难度、局部 pressure 或已有 patch 可以改变 Program，不能把较便宜、较容易或已经存在的结构重新定义成 Target。只有新的领域事实、长期约束、权威或已验证 reality 推翻战略前提时，才重算受影响的 Target。
+战略设计回答系统长期应该是什么；当前 Program 只回答现实条件下值得先推进哪一刀。迁移成本、实现难度、局部 pressure 或已有 patch 可以改变 Program，不能把较便宜、较容易或已经存在的结构重新定义成 Target。只有新的领域事实、长期约束、权威或已验证 reality 推翻战略前提时，才重算受影响的 Target。候选 Target 是当前最可信的 architecture judgment，不因描述完整或结构漂亮自动成立；material boundary / ownership 判断应能被后续 Evidence 证实或推翻。
 
 ## 判断 Target
 
 默认一个 best-known Target；只有 Evidence 同时支持 materially different 的长期结构且缺 decisive constraint，才保留多个候选。候选 Target 必须能回答这些问题；没有决策价值的问题不必机械展开。
 
 - **战略锚点。** 这个 repo / 系统为什么存在，在更大系统中承担什么核心职责？当前范围预期负责什么，什么明确属于其他 owner？哪些长期能力或 binding constraints 真正塑造主要架构，哪些只是必要支撑？
-- **责任边界。** 一个候选 owner 应独占并隐藏什么长期设计知识 / 决定？哪类未来变化应该在这里被吸收，而不要求 caller 或其他能力同步重建这些知识？由此判断哪些 knowledge、state、behavior、authority、lifecycle 和 verification 应共同闭合。
+- **责任边界。** 一个候选 owner 应独占并隐藏什么长期设计知识 / 决定？哪类未来变化应该在这里被吸收，而不要求 caller 或其他能力同步重建这些知识？由此判断哪些 knowledge、state、behavior、authority、lifecycle 和 verification 应共同闭合。按候选 boundary 完成代表性 slice 后，若 consumer 仍必须穿透旧 owner 或重组其私有事实，这才是 boundary 的反证；migration 过渡期同时修改 old / new owner 本身不构成反证。
 - **分开还是吸收。** 哪些差异只是能力内部 implementation / config variation，哪些因为独立语义、契约、权威、生命周期、性能架构、部署或其他长期约束必须保持独立？没有稳定差异，不制造 provider / layer。
 - **边界关系。** 只有当跨边界的 authority、语义共享 / 翻译、生命周期协同 / 隔离或失败传播会改变 Target 时，才把这种关系显式出来。没有这类事实时，一个稳定依赖方向已经足够，不为完整图谱枚举关系 taxonomy。
 - **依赖与抽象。** 能力和责任边界先成立，再设计 dependency direction、general / specific 与 information hiding。稳定语义不依赖具体实现；单向依赖不能挽救错误的 capability decomposition。
@@ -29,7 +29,7 @@
 
 业务、质量或运行约束只有在 authority / Evidence 证明它长期 binding，并会实质改变责任、生命周期、交互、部署或 failure boundary 时，才参与塑造 Target。一般性的“更快、更可靠、更解耦”愿望不能凭空制造结构。
 
-Research 只为会改变 Target 的 unresolved fork / Unknown 扩展；probe 必须区分 material alternatives。Evidence 足够，或剩余 fork 已确认只能由 Human 取舍，就停止。已有 Evidence 跨 judgment 复用；只有前提失效才重查，不为新的 judgment pass 或“更完整理解”重扫 repo。
+Research 只为会改变 Target 的 unresolved fork / Unknown 扩展；probe 必须区分 material alternatives。两个长期结构都说得通、继续文字推理不能提高判断质量，而一个廉价且可丢弃的 structural probe 能明显区分它们时，做最小 probe，例如迁一个代表性 consumer、切一条真实 dependency、跑能区分性能架构的 benchmark 或观察一次真实 lifecycle。probe 只回答当前 architecture hypothesis，不自动成为 Program、长期 abstraction 或 production path；结果只把受影响的 Target judgment 收紧、推翻或保留。Evidence 足够，或剩余 fork 已确认只能由 Human 取舍，就停止。已有 Evidence 跨 judgment 复用；只有前提失效才重查，不为新的 judgment pass 或“更完整理解”重扫 repo。
 
 ## 挑战候选 Target
 
@@ -44,6 +44,6 @@ Research 只为会改变 Target 的 unresolved fork / Unknown 扩展；probe 必
 
 ## 持久化
 
-只有跨变化仍会复用、未来会继续改变判断的稳定结论，才更新 repo 已有的 authoritative architecture source。记录责任、边界、依赖、通用 / 特化、重要约束和仍未决的结构问题；不要记录目录清单、实现步骤、一次性 migration 或当前代码说明。
+只有跨变化仍会复用、未来会继续改变判断的稳定结论，才更新 repo 已有的 authoritative architecture source。记录责任、边界、依赖、通用 / 特化、重要约束和仍未决的结构问题；不要记录目录清单、实现步骤、一次性 migration、probe artifact 或当前代码说明。
 
 已有权威来源优先原位更新，不建平行 SOT。repo 没有架构来源时，也不要因为一次 AE run 自动创建全量 `ARCHITECTURE.md`；只有结论已经稳定、未来确实会复用且用户授权时，才建立最小来源。
