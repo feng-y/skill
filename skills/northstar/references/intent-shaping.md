@@ -16,6 +16,14 @@
 
 当前实现、已有 class/provider、某个计划写得很具体，都不能自动把 How 抬成 Goal。反过来，如果 Human 明确要求某种 representation / compatibility / provider，因为它本身就是业务或技术承诺，它就可以成为 Goal 的一部分。
 
+## Human 还没想清楚时，先 Grill
+
+Human-owned choice 不一定已经适合直接列 options。Human 自己也还在探索“真正要解决什么”或哪种取舍更重要时，不要急着替他固定 framing 或要求选择。
+
+先站在 Human 当前处境重新理解问题。已有当前倾向时，分别用最有力的方式论证支持和反对它的理由；只是 framing 未定时，比较最可信的不同解释。再找出真正的核心分歧、矛盾和隐含假设。若决定这个分歧的是可以查证的事实，先 Research；多个耦合事实需要 source alignment 时回主流程交给 `$unknowns-first`，取得 Evidence 后继续同一个判断，不把事实题问给 Human。若事实已经足够、剩下的是 Human 的偏好、价值判断或取舍，只问当前最能区分这些立场的一个问题；不要在一轮 Grill 里并排问多个，也不要把推荐藏进问题。
+
+Human 回答后重新判断：若剩下的仍是 Human judgment，再做下一轮 Grill；若已经变成事实、prototype 或其他 specialist 问题，回主流程按既有 routing 处理。一旦真正的取舍已经清楚，就停止 Grill，回主流程按正常 Ask 规则合并当前可独立回答的 Human-owned choices。Goal / choice 本来已经清楚时，不要为了“更深入”强制 Grill。
+
 ## 同一个 Goal，是否做、投入与长期承诺仍可能需要 Human 决定
 
 两个路径即使满足同一个 Goal，只要它们在是否做、投入与长期承诺上 materially different，就不是 Northstar / Executor 可以按自身偏好默认关闭的 How。先查已有 authority 与 reality；仍有多个可接受选择时，把当前可回答的 options、主要后果与推荐交给 Human。
