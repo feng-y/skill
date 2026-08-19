@@ -32,7 +32,7 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 - `prompt-atlas` — English counterpart to Northstar: shape Human intent into the right Goal, preserve Executor judgment, and compile a high-altitude Taskbook whose successful delivery is materialized to an authoritative external Markdown file.
 - `northstar` — Chinese counterpart to Prompt Atlas. It probes reality before asking, resumes after Human clarification or interruption, keeps implementation How with the Executor, and separates how work is organized from how completion is proven.
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `architecture-evolution` — start from a named module's repo reality, re-identify capability/boundary and stable variation, then converge a Target Architecture and a few concrete structural improvements before implementation design.
+- `architecture-evolution` — start from a named module's repo reality, re-identify capability/boundary and stable variation, then converge a Target Architecture, identify high-value evolution anchors, and concentrate the current structural move before implementation design.
 
 ## Runtime tools
 
@@ -40,11 +40,11 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 
 ## Architecture Evolution usage
 
-Use `architecture-evolution` when a module keeps accumulating structural pressure or its long-term architecture is still unclear. Give the relevant area and the pressure; the Skill grounds the decision in repo reality and returns either a local/no-evolution judgment, the decisive missing evidence/choice, or a compiled Architecture Program.
+Use `architecture-evolution` when a module keeps accumulating structural pressure or its long-term architecture is still unclear. Give the relevant area and the pressure; the Skill grounds the decision in repo reality and returns either a local/no-evolution judgment, the decisive missing evidence/choice, or a focused Architecture Program.
 
 ```text
 Use $architecture-evolution on <module-or-capability>.
-Given its current pressure and repo reality, decide the target architecture and the highest-value structural improvements worth advancing.
+Given its current pressure and repo reality, decide the target architecture, identify the highest-value evolution anchors, and converge the current structural move worth advancing.
 ```
 
 The authoritative runtime semantics live in [`skills/architecture-evolution/SKILL.md`](skills/architecture-evolution/SKILL.md) and its routed references; this README does not duplicate them.
