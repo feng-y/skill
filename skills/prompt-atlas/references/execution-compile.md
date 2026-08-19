@@ -22,7 +22,7 @@ Usually no execution graph is needed. Record a relation only when it changes Exe
 
 Still-valid workspace changes aligned with Goal are the execution starting point. Do not redo them, do not shrink Goal to the current diff, and do not treat “already changed” as correctness Evidence.
 
-A baseline belongs in the Taskbook only when it changes later judgment or distinguishes “already broken” from “this change broke it.” A concrete command / target / parameter may be included as a **current fallback verification path** when reality Evidence shows that it exists, has the intended semantics, directly covers a completion claim or key risk, and omitting it would materially increase under-verification risk. That path is not permanent authority and does not freeze the corresponding implementation.
+A baseline belongs in the Taskbook only when it changes later judgment or distinguishes “already broken” from “this change broke it.” If a baseline depends on a concrete command / target / parameter, decide whether that concrete form belongs in the Taskbook using the fallback-verification-path rule below; Research finding the command is not itself a reason to freeze it.
 
 If later judgment depends on a baseline, the Executor re-obtains it when first truly relying on it. A mismatch invalidates only work and Evidence that depended on that premise; still-valid work remains reusable.
 
