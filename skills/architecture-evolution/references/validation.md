@@ -14,7 +14,7 @@
 
 1. 当前 module / capability taxonomy、provider / layer 等表示只是 Evidence，不先验定义 Target Architecture。
 2. Strategic Design 是核心 judgment：从 repo identity / architecture intent、领域语义、durable change 和真正 architecture-significant 的 binding constraints 恢复长期能力与责任；复杂或高频变化的辅助关注点不能自动塑造主架构。
-3. capability boundary 应拥有并隐藏长期 design knowledge / decision，使对应变化在 owner 内被吸收；只有会改变 Target 的 authority / semantic / lifecycle / isolation 关系才需要显式，再设计 dependency direction。主要行为及完成变化所需的关键判断若长期必须跨无关责任或隐含知识重建，是 boundary / knowledge placement 可能未闭合的 Evidence，不是独立架构目标。
+3. capability boundary 应拥有并隐藏长期 design knowledge / decision，使对应变化在 owner 内被吸收；只有会改变 Target 的 authority / semantic / lifecycle / isolation 关系才需要显式，再设计 dependency direction。长期 dependency 也必须能由真实 semantic / authority / lifecycle / failure relationship 解释；代码位置、调用便利、历史 ownership 或实现复用本身不足以证明长期关系。主要行为及完成变化所需的关键判断若长期必须跨无关责任或隐含知识重建，是 boundary / knowledge placement 可能未闭合的 Evidence，不是独立架构目标。
 4. Target 必须包含当前 Evidence 已足以支持、未来仍会复用且会改变后续判断的战略事实，并保持最小充分；不把 reality 合理化成 Target，也不预编未来 capability / provider / layer / hook。
 5. Program 是 Target 在当前 reality 上集中推进的一条演进主线。Target gap 先压缩成不超过 3 个高价值演进锚点作为 attention funnel；锚点不是 backlog。迁移成本、局部实现 pressure、执行风险与已有 patch 只决定聚焦什么和推进到哪里，不反向定义 Target；binding roadmap、durable change pressure 与长期承诺可以改变 Strategic Design。
 6. abstraction 由 stable semantics / invariants 决定；能力和责任边界成立后再设计稳定单向依赖，通用语义不依赖具体实现。
@@ -45,6 +45,8 @@
 - **P14 Organization is a challenge, not law**：当前 team 恰好按 `X/Y` 分工或跨团队沟通很贵 → 可作为 feasibility / friction Evidence，但不能仅据 org chart 固化 Target boundary。若 Target 需要现实中不存在的 owner / coordination path，应暴露组织或 rollout 依赖，而不是默认改写责任模型。
 - **P15 Evidence reuse**：一次 probe 已确认 capability owner、lifecycle 与真实 consumer，随后 dependency / abstraction / verification judgment 仍基于同一前提 → 默认复用已获得 Evidence，不重新打开同一批文件；只有新的 material fork 或 Evidence 表明原前提可能失效时，才重查受影响部分。
 - **P16 Falsifiable Target / structural probe**：repo identity、authority 与长期变化同时支持两个 materially different 的 ownership Target；继续读同一批代码或写更多设计 prose 都不能区分，但迁一个代表性 consumer 就能观察它是否仍需穿透旧 owner 的私有 knowledge → 只做这个最小、可丢弃的 migration slice 作为 probe。按候选 boundary 完成 slice 后，若 consumer 仍需旧 owner internals，就把它作为候选 boundary 的 disconfirming Evidence 并只重算受影响 Target；migration 过渡期同时修改 old / new owner 本身不算失败。若新 boundary 成立，也只把结论 / Evidence 合回 Strategic Design。不得因为 probe 代码存在就把它自动升成 Program、production path、长期 provider / layer 或 architecture SOT；已有 Evidence 已足够区分时也不得为了“验证感”强制做 probe。
+- **P17 Unjustified dependency reopens ownership**：B 依赖 A 只因为 helper/config 历史上放在 A、调用方便或复用了 A 的实现，但长期 responsibility、semantic contract、authority、lifecycle 与 failure relationship 都不能解释 B 为什么必须知道 A → 不把现状依赖合理化成 Target，也不为了“去耦合”直接删 edge；先把它作为 Evidence 重判 knowledge 应由谁隐藏、responsibility/boundary 是否放错，再决定 dependency 是否退出或改向。
+- **P18 Legitimate dependency stays**：A/B responsibility 已正确分开，B 必须消费 A 的稳定 semantic contract / authority，或两者存在会真实改变生命周期、隔离或 failure propagation 的长期关系 → dependency 可以继续存在并保持稳定单向；不得为了追求更低 coupling 吞并独立 owner、复制 authority 或用 facade 把真实关系藏起来。
 
 ### Evolution and leverage
 

@@ -11,7 +11,7 @@
 5. 会改变 Goal、Ask、binding constraint、Verification 或第一项安全 material work 的跨边界 claim 或复合 runtime decision，在升成 contract 前必须从真实 workflow 取得足够 Evidence；当前叙述或 artifact presence 不能替代 authority，共同决定行为且会改变路线的已识别 material input 不能坍缩成单一 observed source。未关闭的 material uncertainty 保持显式 Unknown；继续 Research 只会影响 How 时停止。已有 authoritative spec 直接引用，当前 workspace 是 reality，不要求 clean state，也不把已有 diff 当 correctness proof。
 6. Taskbook 只把真正有 authority 的要求写成 binding rule；当前最佳实现保持可替换。执行内容表达 outcome/judgment/boundary/dependency，不退化成 file/helper/test 的 predicted-patch checklist。
 7. 复杂执行时，当前能安全推进的一部分不能替换或缩小完整 Goal；只记录会改变执行选择的真实依赖，不提前把未来 contingent work 切成假任务。
-8. Execution 把不同 outcome / responsibility、binding boundary 或真实 dependency 所形成的 material work cut 编译到 fresh Executor 可直接推进；不能为了“保持高度”把已由 Evidence 支持的 material cut 合并回一个抽象任务，也不能继续下钻成逐文件、逐函数的 implementation checklist。Verification 按 completion claim / risk / authority 独立组织，不与 implementation work 一一对应；独立 Verification claim 本身不反向制造新的 Execution work item。
+8. Execution 把不同 outcome / responsibility、binding boundary 或真实 dependency 所形成的 material work cut 编译到 fresh Executor 可直接推进；不能为了“保持高度”把已由 Evidence 支持的 material cut 合并回一个抽象任务，也不能继续下钻成逐文件、逐函数的 implementation checklist。Taskbook 的书写顺序本身不制造 dependency；没有真实 dependency 的 material work 不被强制串行或强制并行，也不能为了暴露并行度继续拆碎 cohesive work。Verification 按 completion claim / risk / authority 独立组织，不与 implementation work 一一对应；独立 Verification claim 本身不反向制造新的 Execution work item。
 9. Verification 写必须证明什么。先要求 Evidence 对 completion claim 提供足够置信度；在满足这个条件的验证路径中，优先选择成本更低、对 claim 更直接的方式，而不默认要求先构造 failing test 再实现。已有 authoritative test / build / replay / integration / runtime Evidence 能直接证明 claim 时优先复用；新行为、稳定 regression risk 或现有 Evidence 覆盖不足时再补最小 focused test / check。若 Verification 的成本或 Evidence 选择本身会改变 completion judgment，即使实现简单也应读取 execution-compile guidance。Executor 结果回流时，Northstar 必须以当前 Taskbook 与可核实 reality 独立重判 Goal、binding constraint 和 completion claim，实施者的 `done`、task checklist 或 green tests 只能作为 Evidence，不能直接当 outcome。不能通过削弱 judge 制造 PASS，额外 trust 检查只在具体假绿风险下启用。若 repo reality 已确认一组 authoritative test/build/replay/integration 路径直接覆盖关键 completion claim，且只留下抽象 obligation 会明显增加 under-verification 风险，Taskbook 应保留它作为当前 fallback verification path；implementation / binding / reality 改变后必须重算并取得等价或更强 Evidence，不能机械运行 stale command，也不能因路径变化少验证。
 10. 成功 Taskbook 必须把同一完整正文 materialize 到 repo/workspace 外 authoritative Markdown file 并显示 path；Taskbook 自身必须携带薄 completion handoff，使执行完成、阻塞或仍有 material gap 时把 outcome、material Evidence 与未关闭 gap 返回 Northstar 或当前指定的 independent judge。具体 transport 由宿主/runtime 决定，不得扩成周期 status、progress log、task checklist 或自动 retry；只在 chat 输出失败。
 11. Human 在 Ask 后或 Taskbook 交付后给出 material clarification/correction，都重新判断受影响部分并再次完整交付当前 Taskbook；之前 Ask/交付过不是 completion state。specialist / prototype 的输出只作为当前 decision/Evidence 合回 Goal/Taskbook，不成为第二份 Northstar SOT 或 binding implementation。
@@ -180,6 +180,16 @@ Research 已经查清一个跨模块改造的具体 edit points、候选 helper 
 
 PASS：Taskbook 把实现写在 outcome / responsibility / boundary 高度，不把已知 edit points、helper、调用顺序重新编译成 implementation plan；但 Verification 可以保留已核实的 targeted tests、build 与当前 replay binding 作为 fallback verification path，防止 fresh Executor 只跑便宜的局部 UT 就宣称完成。若实现改变 owner/binding，Executor 必须按 repo authority 重算 replay 并取得等价或更强 Evidence。把 implementation How 和 verifier command 一起删成“自行实现、跑相关测试”，或反过来把 fallback verifier 冻结成不可调整的 command checklist，都失败。
 
+### S33 — Taskbook 文本顺序不是执行依赖
+Evidence 已确认 A/B 是两个独立的 material outcomes；Taskbook 为可读性先写 A 再写 B，且不存在 prerequisite、共享 authoritative surface、冲突或必须共同验收的关系。
+
+PASS：保留 A/B 两个有决策价值的 work cut，但不因为文本顺序制造 `A → B`。也不要求把它们强制 fan-out；Executor 按当前 reality 自行选择串行、并行或交错推进。仅因 B 写在后面就要求等待 A，或反过来把“无依赖”编译成“必须并行”，都失败。
+
+### S34 — 并行不能制造更细的 Execution
+一个 responsibility migration 同时涉及 interface、implementation、caller 和 regression coverage；这些改动共同关闭同一个 ownership boundary，彼此没有独立 outcome / responsibility / binding boundary / dependency。
+
+PASS：Execution 保持一个 cohesive material work cut，不为了暴露更多并行度把它拆成四个 task/node。Verification 仍可按独立 completion claim 组织；把 verifier 粒度反向投影成 implementation task，或为了并行把一个责任结果拆碎，都失败。
+
 ## 与 Leader 的比较
 
 Leader 是 Northstar 的**结构与 taskbook 质量基线**：角色清楚；调研 → Ask → 写书 → 交付的动作稳定；能查的事实先查；真正需要 Human 拍板的选择集中问；已有规格直接引用；任务书保持目标/判断高度；Verification 是独立判卷面；执行者不能靠改 judge 制造成功；执行结束后的结果重新对 Goal 判卷，而不是按 task completion 验收。Northstar 对齐的是这一层 one-shot outcome acceptance，不宣称 Leader 的实时 manager 或 multi-agent execution lifecycle parity。
@@ -198,6 +208,6 @@ Northstar 不复制 Wayfinder 的 tracker/ticket protocol，也不自己拥有�
 
 ## Behavioral eval
 
-在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、是否做/投入/长期承诺 decision、dependent Human-choice frontier、host-without-Ask-UI、non-enumerable choice、directly-answerable Ask、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Human-authority-vs-reality-claim、Verification-only artifact authority、cross-boundary authority/composed-runtime Evidence、Human correction dependency invalidation、Taskbook altitude、material-work decomposition、settled-meaning carry-forward、verification-command truth、verification fallback vs implementation How、verification sufficiency/cost、partial-safe execution、execution-vs-verification granularity、post-run independent outcome judgment、simple executable Goal、file materialization、Human correction 后完整重交付。
+在 same model / repo snapshot / tool permission / clean session 下至少比较：ambiguous problem space、named means、mixed fact/Human/How、specialist-capability routing、specialist-discovered Human choice aggregation、prototype-needed decision、是否做/投入/长期承诺 decision、dependent Human-choice frontier、host-without-Ask-UI、non-enumerable choice、directly-answerable Ask、Ask interruption/reply、exploration/selection Goal、mixed constraint/implementation、replaceable implementation advice、Human-authority-vs-reality-claim、Verification-only artifact authority、cross-boundary authority/composed-runtime Evidence、Human correction dependency invalidation、Taskbook altitude、material-work decomposition、settled-meaning carry-forward、verification-command truth、verification fallback vs implementation How、verification sufficiency/cost、partial-safe execution、execution-vs-verification granularity、narrative-order dependency、cohesion-vs-parallelism、post-run independent outcome judgment、simple executable Goal、file materialization、Human correction 后完整重交付。
 
 没有 clean-session 结果时，只能说 static/scenario contract review 通过；behavioral parity/uplift 标记 `NOT RUN`。

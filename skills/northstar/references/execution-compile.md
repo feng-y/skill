@@ -16,7 +16,7 @@ Research 已经发现具体 edit point、helper、caller 或 test，不会自动
 
 如果 reality 只支持先做一部分，就保留完整 Goal，并只标出当前已证明的安全 frontier。执行中新的 Evidence 让后续工作变得可判断时，再更新受影响部分；相邻 residue 也不能因为被发现就自动扩进 Goal。
 
-通常不需要执行图。只有关系会改变 Executor 选择时才写，例如真实 prerequisite、可独立并行的 work、并行冲突、共享 authoritative surface 或必须共同验收的结果。只写当前 reality 已经证明的关系；必须等执行后才知道的后续工作，等 Evidence 使它成为真实问题后再加入。一个分支 blocked，不应冻结与它无关的工作。
+通常不需要执行图。Taskbook 的书写顺序本身不形成 execution dependency。只有关系会改变 Executor 选择时才写，例如真实 prerequisite、并行冲突、共享 authoritative surface 或必须共同验收的结果；没有这种关系的 material work 不形成顺序约束，是否串行、并行或交错推进由 Executor 根据 reality 决定。不要为了获得更多并行度把一个 cohesive material cut 拆碎。只写当前 reality 已经证明的关系；必须等执行后才知道的后续工作，等 Evidence 使它成为真实问题后再加入。一个分支 blocked，不应冻结与它无关的工作。
 
 ## 起点与 baseline
 
