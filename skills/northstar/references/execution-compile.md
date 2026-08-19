@@ -22,7 +22,7 @@ Research 已经发现具体 edit point、helper、caller 或 test，不会自动
 
 当前 workspace 中已经与 Goal 对齐的修改就是执行起点：不要求重做，也不能因为已有 diff 就缩小 Goal；“已经改了”本身也不是正确性 Evidence。
 
-baseline 只有在它真的改变后续判断，或区分“原来就坏”与“这次改坏”时才值得写。具体 command / target / parameter 若已由 reality Evidence 证明存在、语义正确，并且它直接覆盖 completion claim 或关键风险、删掉会明显提高 under-verification 风险，可以作为**当前 fallback verification path** 写入 Taskbook；它不是永久 authority，也不把对应实现方式固定下来。
+baseline 只有在它真的改变后续判断，或区分“原来就坏”与“这次改坏”时才值得写。若 baseline 依赖具体 command / target / parameter，这个具体形式是否进入 Taskbook 按下方 fallback verification path 的判断处理；Research 找到了命令本身不是固定它的理由。
 
 如果后续判断依赖某个 baseline，Executor 在第一次真正依赖它时重新取得；结果不一致时，只重算依赖这个前提的工作和 Evidence，其他仍有效部分继续复用。
 
