@@ -65,14 +65,14 @@
 - **E2 Best next move**：A、B 都符合 Target；A 更接近最终形态但当前收益低，B 能解除正在发生的结构摩擦并让旧 authority / path 退出 → 当前优先 B，不因此把 B 的局部形态抬成新 Target。
 - **E3 Tactical pressure cannot redefine Target**：Target 已确认 capability `X` 应拥有某类 knowledge / lifecycle，但完整迁移当前很贵 → 可以局部推进、延期或不改 repo；不得把现有跨 `X/Y` ownership 重新解释为长期正确结构。
 - **E4 Materialization**：Target 已确认一个 capability / provider boundary；当前 Program 只新增接口或目录，但 caller 仍重组私有 knowledge、specific implementation 仍反向影响 stable layer、旧 switch / path 仍 authoritative → 不得判为有效 evolution。
-- **C1 Anchor quality**：research / data collection 不成为演进锚点；只有已确认战略结构上的 material correction、真实 pressure 或可产生 durable structural leverage 的切入点才进入高价值锚点集合。
+- **C1 Anchor quality**：research / data collection 不成为演进锚点；只有对应已确认战略结构上的 material correction，且有真实 pressure、durable change pressure 或可产生 durable structural leverage 的切入点，才进入高价值锚点集合。
 - **C2 Attention ceiling**：候选很多 → 在进入关系判断前只保留不超过 3 个高价值锚点；只有 2 个就保留 2 个，不补数。这个上限限制 attention，不要求最终交付 3 个项目。
 - **C3 Setup-only**：先建 abstraction、以后再迁；如果当前不产生 gain / exit → 不得成为当前 Program。
 - **C4 Leverage**：多个真实锚点 → 优先显著减少同类 change 和关键判断必须跨越的 owner / authority / dependency / verification surface，而不是最易实现、最整洁或只减少表面 dependency 的项。
 - **C5 SOT**：已有 authoritative architecture source → 引用原 SOT；需要演进时更新原处，不建平行规范。
 - **C6 Aggregate one correction**：config ownership、lifecycle ownership、runtime behavior ownership 被识别成 3 个锚点，但 Evidence 表明它们都来自 capability `X` 未成为真实 owner，且任何一个单独推进都会让 caller 继续持有同一 authority / private knowledge → 不得按 3 个 backlog item 平铺；聚合成一个围绕 `X` ownership closure 的当前演进主线，再界定当前可产生 real exit 的切面。
 - **C7 Do not over-aggregate**：provider ownership、logging isolation、deployment boundary 位于相邻代码且都值得改，但长期语义、authority / lifecycle 与 structural gain / exit 各自独立 → 不得因为“集中推进”吞成一个大重构；分别保留为独立锚点，只选择当前最高价值 focus。
-- **C8 Focus convergence**：已经得到 3 个高价值锚点 → 不能把三项直接当 Program 交付。先判断聚合关系和 leverage，通常收敛到一个当前 focus，并继续 shaping 其责任、边界、依赖、完成条件与 real exit；其余锚点只有在会改变当前判断时保留，而不是默认 backlog。
+- **C8 Focus convergence**：已经得到 3 个高价值锚点 → 不能把三项直接当 Program 交付。先判断聚合关系和 leverage，通常收敛到一个当前 focus，并继续 shaping 其 architecture outcome、责任、边界、依赖、structural done condition 与 real exit；其余锚点只有在会改变当前判断时保留，而不是默认 backlog。
 
 ### Boundaries and re-entry
 
