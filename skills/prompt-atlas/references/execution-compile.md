@@ -16,7 +16,7 @@ If an unresolved fact determines whether material work is safe, keep it as an Un
 
 If current reality supports only part of the work, keep the full Goal and identify only the safe frontier current Evidence establishes. As execution Evidence makes later work decidable, update the affected part then. Adjacent residue does not enter Goal merely because it was discovered.
 
-Usually no execution graph is needed. Record a relation only when it changes Executor choice, such as a real prerequisite, independently parallel work, a parallel conflict, shared authoritative surface, or results that must be verified together. Record only relations current reality supports. Work that depends on future Evidence enters only when that Evidence makes it real. A blocked branch must not freeze unrelated work.
+Usually no execution graph is needed. Taskbook prose order does not itself create an execution dependency. Record a relation only when it changes Executor choice, such as a real prerequisite, a parallel conflict, shared authoritative surface, or results that must be verified together. Material work without such a relation carries no ordering constraint; the Executor decides from reality whether to run it serially, in parallel, or interleaved. Do not split a cohesive material cut merely to expose more parallelism. Record only relations current reality supports. Work that depends on future Evidence enters only when that Evidence makes it real. A blocked branch must not freeze unrelated work.
 
 ## Starting point and baseline
 
