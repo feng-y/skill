@@ -15,7 +15,7 @@ AE 的核心是战略设计：判断这个 repo / 系统长期应该由什么能
 
 只有长期责任、边界、依赖、抽象或权威应变化，或长期 binding 的业务 / 质量 / 运行约束会实质改变这些结构时，才升级为架构问题；smell、一次性迁移、纯整洁或泛化的质量愿望都不够。剩余 material fork 若不是事实问题而是 Human-owned 的业务、兼容、风险、投入或 ownership 取舍，停止 research，返回 Evidence、best-known recommendation、真实选项和 decision surface。
 
-**3. 找锚点并收敛当前 Program。** Target 先独立成立；现实与 Target 的 gap 只形成候选，不自动成为任务。先把 material observations 压缩成不超过 3 个当前最有价值的演进锚点，用来限制 attention 和比较 leverage，而不是生成 backlog。若多个锚点实际属于同一个 responsibility / authority correction，且分开推进会继续保留同一旧知识、旧权威、反向依赖、特殊路径或补偿性 guidance，就聚合成一条更完整但仍聚焦的演进主线；只有长期责任、语义、权威、生命周期或 structural gain / exit 真正独立时才保持分开。随后集中当前最值得推进的 Program，继续收敛它的责任、边界、依赖、完成条件和 real exit，直到形成足以独立改善 Target 的当前演进切面，或遇到必须由 Human 决定的 strategic choice。当前迁移成本、执行风险和收益只决定聚焦哪一刀、推进到哪里；没有值得立即改 repo 的内容时，可以只交战略设计结论。
+**3. 找锚点并收敛当前 Program。** Target 先独立成立；现实与 Target 的 gap 只形成候选，不自动成为任务。先把 material observations 压缩成不超过 3 个当前最有价值的演进锚点，用来限制 attention 和比较 leverage，而不是生成 backlog。若多个锚点实际属于同一个 responsibility / authority correction，且分开推进会继续保留同一旧知识、旧权威、反向依赖、特殊路径或补偿性 guidance，就聚合成一条更完整但仍聚焦的演进主线；只有长期责任、语义、权威、生命周期或 structural gain / exit 真正独立时才保持分开。随后集中当前最值得推进的 Program，继续收敛它的责任、边界、依赖、structural done condition 和 real exit，直到形成足以独立改善 Target 的当前演进切面，或遇到必须由 Human 决定的 strategic choice。当前迁移成本、执行风险和收益只决定聚焦哪一刀、推进到哪里；没有值得立即改 repo 的内容时，可以只交战略设计结论。
 
 **4. 交付。** 局部问题只给局部判断；缺关键事实或人的决定时，说明缺口与继续条件。收敛后完整给出当前 Strategic Design、必要的 Target 变化和当前 Program，并把同一正文写入仓库或工作区外的 Markdown 交接文件；其余仍独立的锚点只有在会改变当前判断时才保留，不作为默认 backlog。若获授权，稳定结论更新原 authoritative architecture source；否则交接文件不成为 repo SOT。Human decision / 实质修正后保留仍有效 Evidence / Target，只重算受影响判断；前提失效才重查对应部分，并完整重交付。写入失败就是阻塞。不要输出 `ready`、`completed`、`executable` 或 `status` 状态词。
 
