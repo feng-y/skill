@@ -22,7 +22,7 @@ Research 已经发现具体 edit point、helper、caller 或 test，不会自动
 
 当前 workspace 中已经与 Goal 对齐的修改就是执行起点：不要求重做，也不能因为已有 diff 就缩小 Goal；“已经改了”本身也不是正确性 Evidence。
 
-baseline 只有在它真的改变后续判断，或区分“原来就坏”与“这次改坏”时才值得写。具体 command / target / parameter 是否能被 Taskbook 固定，遵守主 Skill 的 Verification evidence 规则；不仅要有 reality Evidence 证明其存在和语义正确，还要证明这个具体形式本身对 completion judgment 有决策价值。否则只保留 verification obligation。
+baseline 只有在它真的改变后续判断，或区分“原来就坏”与“这次改坏”时才值得写。若 baseline 依赖具体 command / target / parameter，这个具体形式是否进入 Taskbook 按下方 fallback verification path 的判断处理；Research 找到了命令本身不是固定它的理由。
 
 如果后续判断依赖某个 baseline，Executor 在第一次真正依赖它时重新取得；结果不一致时，只重算依赖这个前提的工作和 Evidence，其他仍有效部分继续复用。
 
@@ -31,6 +31,8 @@ baseline 只有在它真的改变后续判断，或区分“原来就坏”与�
 Verification 不跟 implementation work 一一配对。先列 completion claim，再判断每个 claim 需要什么 authoritative Evidence；相同 Evidence 能覆盖多个改动就合并，一个改动涉及多个独立 claim 就分别验证。
 
 先要求 Evidence 对 completion claim 提供足够置信度；在满足这个条件的验证方式中，优先选择成本更低、对 claim 更直接的路径，而不默认要求先构造失败测试再实现。已有 authoritative test / build / replay / integration / runtime Evidence 能直接证明 claim 时优先复用；新行为、稳定 regression risk 或现有 Evidence 无法可靠覆盖的 claim，再增加最小 focused test / check。为复杂 legacy / infrastructure 边界强造大量 mock、fixture 或高成本 UT，但它们只重复实现细节而没有增加 material confidence，不是默认义务。
+
+当 current reality 已确认一组 test / build / replay / integration 路径能直接覆盖关键 completion claim，而且只写抽象 obligation 容易让 fresh Executor 用更便宜但不足的检查宣称完成时，Taskbook 应保留这组**当前 fallback verification path**。这是 verification 兜底，不是 implementation plan：Executor 仍负责具体 verifier composition；若 implementation、binding 或 reality 改变使当前 path 不再准确，必须从 repo authority 重新推导并取得等价或更强 Evidence，不能机械执行 stale command，也不能因为路径变化而少验证。
 
 验证粒度由**要证明的行为、边界、风险和 authority**决定，而不是 commit、文件、task 或局部测试数量。优先最终可观察行为和长期约束；unit/build check 可以贡献 Evidence，但不能因为它靠近改动就自动代表 Goal 已完成。
 
