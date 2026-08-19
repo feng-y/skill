@@ -53,7 +53,7 @@ Executor 的完成报告或 Evidence 回到 Northstar 时，不重新编译一�
 
 **不要提前切完未知的未来。** 当前 reality 只能支持先做一部分时，只缩当前可推进工作，不缩 Human 的完整 Goal。只写已经会改变执行选择的真实依赖；必须等执行 Evidence 才能知道的后续工作，等它变得真实再加入，不提前把还不能说明的未来切成假任务。新的 Evidence 推翻某个前提时，只重算依赖这个前提的工作和 Verification，其他仍有效部分继续复用。
 
-**Execution 只编译有决策价值的 work decomposition。** 当不同结果、责任边界、binding boundary 或真实依赖会改变 Executor 判断时，把它们分开表达到 fresh Executor 可以直接推进；如果一个已被 Evidence 支持的 material cut 被省略后只能由 Executor 重新发现，也保留这个 cut。除此之外让 Executor 自己决定文件/函数改动、实现顺序和局部验证。Verification 独立按 completion claim、风险和 authoritative Evidence 组织，不与 implementation work 一一对应；独立 Verification claim 本身不反向制造新的 Execution work item。Taskbook 若固定 concrete verification command / target / parameter，必须有 reality Evidence 证明它存在、且这个具体形式本身对完成证明有决策价值；否则只固定 verification obligation，让 Executor 在真实环境里选择并验证具体命令。
+**Execution 只编译有决策价值的 work decomposition。** 当不同结果、责任边界、binding boundary 或真实依赖会改变 Executor 判断时，把它们分开表达到 fresh Executor 可以直接推进；如果一个已被 Evidence 支持的 material cut 被省略后只能由 Executor 重新发现，也保留这个 cut。除此之外让 Executor 自己决定文件/函数改动、实现顺序和局部验证。Verification 独立按 completion claim、风险和 authoritative Evidence 组织，不与 implementation work 一一对应；独立 Verification claim 本身不反向制造新的 Execution work item。Verification 先固定必须证明的 completion claim / Evidence obligation；若 current reality 已确认一条 authoritative、直接覆盖关键风险、且删掉会明显提高 under-verification 风险的 test/build/replay/integration 路径，Taskbook 可以把它作为**当前 fallback verification path**一并交给 Executor。这个 path 不是 binding implementation，也不是永久 verifier representation；若 implementation、binding 或 reality 变化使它失准，Executor 必须从 repo authority 重新推导并取得等价或更强 Evidence，不能机械执行 stale command，也不能因路径变化少验证。
 
 **完成必须重新对 Goal 判卷。** 执行结束时，用当前 reality 和 Evidence 判断 Goal、binding constraint 与约定的 completion claim 是否真的成立；patch 已落、task 全勾或 tests 全绿都只能作为 Evidence，不能替代 outcome judgment。若 Evidence 只证明局部实现或仍有 material gap，就准确保留 gap。结果返回 Northstar 时由 Northstar 独立复核，而不是复述 Executor 的完成声明；同一 Goal / authority 下仍可修复的 gap 不升级成新的 Human decision。不能通过 skip/todo、放松断言、删活体测试、mock 掉目标、吞失败或 `|| true` 制造 PASS。Northstar 不因此成为执行 manager；它只负责编译并在结果返回时应用 Goal、claims 与 Evidence boundary。
 
@@ -63,5 +63,5 @@ Executor 的完成报告或 Evidence 回到 Northstar 时，不重新编译一�
 2. Taskbook 是否引用现有 authority，而不是制造第二份 SOT？会改变当前判断的跨边界 claim、复合 runtime decision 的 material input 和每个 `must / must not` 是否都有真实 Evidence？最近一次 Human correction 是否只重算受影响依赖、完成 constraint 对账且未重开无关的已定选择？
 3. 执行内容是否仍在 outcome / judgment / responsibility / dependency 高度，而不是 predicted patch 清单？
 4. 当前可推进范围有没有偷换完整 Goal？未来 contingent work 有没有被提前猜成任务？
-5. Execution 是否把真正改变判断的 material work 编译到 fresh Executor 可直接推进，同时避免替它预切 implementation checklist？Verification / Evidence 是否足以让独立 judge 在执行结束后重新对 Goal 判卷，而不是把 patch/task/test completion 当成功？固定的 concrete verification command 是否真的有额外决策价值和 reality Evidence？
+5. Execution 是否把真正改变判断的 material work 编译到 fresh Executor 可直接推进，同时避免替它预切 implementation checklist？Verification / Evidence 是否先写清必须证明什么，并在当前已知可靠 verifier path 能防止 under-verification 时保留 fallback？若 implementation / binding / reality 改变，是否要求重算 verifier 而不是机械执行旧 command？
 6. 成功 Taskbook 是否以同一完整正文落到 authoritative file 并显示真实 path？Taskbook 自身是否包含薄 completion handoff，而没有引入 progress/status/retry 协议？Human 新输入后是否重新完整交付，而不是只回复 delta？Executor 结果回流时是否独立核实 outcome，而不是接受实现者自证？
