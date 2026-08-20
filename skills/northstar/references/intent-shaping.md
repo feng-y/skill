@@ -1,47 +1,43 @@
 # 当 Goal 还没有定准
 
-只在普通的输入理解与 reality 检查仍无法确定 Human 最终会接受哪个 Goal，或关于是否做、投入与长期承诺的选择仍未关闭时读取。
+只在普通理解与 bounded reality 检查后，Human 最终会接受哪个 Goal 仍不清楚，或真正需要 Human authority 的选择仍未关闭时读取。这里负责 Goal shaping，不建立第二套 Northstar workflow。
 
-如果已经不是单一 Goal/How 或 Human choice 的判断，而是多个耦合 Unknown 需要 source alignment，或长期模块责任、边界、依赖方向本身需要架构判断，回主 Skill 路由给对应 specialist capability；specialist 可以形成 Evidence/options/decision surface，但其中需要 Human 拍板的 choice 仍回 Northstar Ask，不要让 specialist 替 Human 关闭。不要在这里继续堆一套平行流程。
+## Goal 还是 How
 
-## 这是 Goal，还是 How
-
-先做一个测试：
+只问一个问题：
 
 > **换一种 materially different 的实现仍满足它，Human 会接受吗？**
 
-会，通常说明它只是 How，不该被 Northstar 固定。
+会，通常是 How，留给 Executor。不会，且它表达 Human 真正在乎的结果、边界、兼容/风险承诺或 representation，则进入 Goal / binding constraint。当前实现、class/provider、候选方案写得再具体，也不会因此获得 authority。
 
-不会，说明它描述的是 Human 真正在乎的结果、边界、风险承诺或验收要求，应留在 Goal。
+Human requirement 与 reality claim 分开：Human 有权给出的要求可以直接 binding；关于 owner、producer、consumer、readiness、runtime behavior 等事实仍需 reality Evidence，不能用 Human/模型叙述或 artifact presence 代替。
 
-当前实现、已有 class/provider、某个计划写得很具体，都不能自动把 How 抬成 Goal。反过来，如果 Human 明确要求某种 representation / compatibility / provider，因为它本身就是业务或技术承诺，它就可以成为 Goal 的一部分。
+## 哪些选择必须给 Human
 
-## Human 还没想清楚时，先 Grill
+reality 无法关闭，且不同答案会改变 Human 最终接受的 Goal，或 materially 改变**是否做、投入规模、承诺寿命、长期维护责任或风险姿态**时，由 Northstar Ask。两个 implementation 都能满足同一功能结果，也可能因为投入/长期承诺 materially different 而仍属于 Human choice。
 
-Human-owned choice 不一定已经适合直接列 options。Human 自己也还在探索“真正要解决什么”或哪种取舍更重要时，不要急着替他固定 framing 或要求选择。
+当前前提已闭合、可以独立回答的 Human-owned choices 尽量同一轮给出：说明会改变什么，给足 Evidence；能可靠枚举时给真实 options、主要后果和推荐，不能可靠枚举就限定回答边界，不编造 option。依赖另一个尚未拍板前提的 downstream choice 等前提关闭后再问。Human 不在场而必须先做选择时，只能采用可回退、且不会改变任何 Human-owned choice、allowed boundary、Verification 或授权的显式默认，并保留依据；真正 Human-owned choice 不能被默认关闭。
 
-先站在 Human 当前处境重新理解问题。已有当前倾向时，分别用最有力的方式论证支持和反对它的理由；只是 framing 未定时，比较最可信的不同解释。再找出真正的核心分歧、矛盾和隐含假设。若决定这个分歧的是可以查证的事实，先 Research；多个耦合事实需要 source alignment 时回主流程交给 `$unknowns-first`，取得 Evidence 后继续同一个判断，不把事实题问给 Human。若事实已经足够、剩下的是 Human 的偏好、价值判断或取舍，只问当前最能区分这些立场的一个问题；不要在一轮 Grill 里并排问多个，也不要把推荐藏进问题。
+## Human 还没形成 trade-off 时
 
-Human 回答后重新判断：若剩下的仍是 Human judgment，再做下一轮 Grill；若已经变成事实、prototype 或其他 specialist 问题，回主流程按既有 routing 处理。一旦真正的取舍已经清楚，就停止 Grill，回主流程按正常 Ask 规则合并当前可独立回答的 Human-owned choices。Goal / choice 本来已经清楚时，不要为了“更深入”强制 Grill。
+只有 Human 自己还在探索“真正的问题是什么”或“哪种取舍更重要”时才 Grill，不把清楚的 choice 再复杂化。
 
-## 同一个 Goal，是否做、投入与长期承诺仍可能需要 Human 决定
+有当前倾向时分别给出支持/反对它的最强理由；framing 本身未定时比较最可信的解释，找出真正分歧、矛盾和隐含假设。若一个可查事实能裁决分歧，先 Research；事实已经足够而剩下的是价值判断时，一次只问当前最能区分立场的一个问题。Human 回答后重新判断 owner：仍是 Human judgment 才继续 Grill；变成事实、prototype 或 specialist judgment 就交回对应 owner。一旦 trade-off 清楚，回正常 Ask batching。
 
-两个路径即使满足同一个 Goal，只要它们在是否做、投入与长期承诺上 materially different，就不是 Northstar / Executor 可以按自身偏好默认关闭的 How。先查已有 authority 与 reality；仍有多个可接受选择时，把当前可回答的 options、主要后果与推荐交给 Human。
+## Specialist 与 prototype
 
-Northstar 仍可自主做廉价、可丢弃、可回退且不会改变这些选择的 probe / prototype 来购买 Evidence；一旦 prototype 本身改变这些选择，也回到 Human decision。需要判断长期结构 option 时，可以先回主 Skill 路由 architecture judgment 来获得 Evidence/options；specialist 判断结构，不替 Human 判断是否值得投入。不要因为“长期更正确”擅自扩大投入，也不要因为“当前路径更便宜”偷偷缩小承诺。
+只有当前 Goal / Human choice 无法由 bounded local judgment 关闭时才扩大：
 
-## 用 reality 校正当前 Goal 假设
+- 多个耦合 Unknown / source alignment 需要完整判断时，可交 `$unknowns-first`；
+- 长期 module responsibility、boundary、dependency direction 或 Target Architecture 未定时，可交 `$architecture-evolution`；
+- 文字讨论仍不能可靠决定，而一个廉价、可丢弃、可回退的 concrete artifact 能明显提高判断质量时，可以做最小 prototype / sample。
 
-Human 当前表达和已有 plan 可能漏掉会改变 Goal 的事实。只在它们可能改变 Human 最终接受结果时，检查 authoritative spec / precedent、真实 consumer、repo 外 contract、serialized/config identity、部署/授权约束，以及当前 workspace 与 Human Goal 的真实关系。
+specialist / prototype 只回答当前 decision question，返回 decision / Evidence / option surface；不成为第二份 Taskbook，也不替 Human 关闭 Human-owned choice。不要为了减少 Executor 的 implementation uncertainty 调 specialist。
 
-发现一个新事实后，只问：**它换一个值，Human 会不会接受另一个 Goal？** 不会就停止展开；如果差异已经耦合到需要完整 unknown/source map，回主流程交给对应 specialist owner。
+## reality、冲突与停止
 
-## 要求发生冲突时
+只检查会改变当前 Goal / Human choice 的 reality。发现新事实后问：**它换一个值，会不会让 Human 接受另一个 Goal 或 materially different commitment？** 不会就停止展开。
 
-如果 Human 同时给出的要求无法一起满足，Goal 必须让 Executor 知道什么优先。这个优先级只能来自 Human、已有 authority 或不可替代的 reality；Northstar 不能因为某个实现更方便就偷偷重排。
+Human requirements 冲突时，priority 只能来自 Human、已有 authority 或不可替代 reality；不能按实现便利性偷偷排序。Human correction 替换被纠正 premise，只重新打开依赖它的 Goal/choice；无关且已关闭的选择保持关闭。
 
-reality 能排掉冲突就直接收敛；否则把**当前前提已经闭合、可以独立回答**的 Human-owned 冲突一起问清，并说明主要后果与推荐。依赖另一个尚未拍板前提的后续选择，等前提关闭后再问。Human 只回答一部分、插入新约束或中断时，把最新输入合入当前判断，只重新打开受影响部分；一旦剩余问题都能由 Executor 在同一个 Goal 下继续，就停止 Ask 并回主流程产出。
-
-## 什么时候停
-
-当剩余问题只会改变 How，而不会再改变 Human 会接受的 Goal，也不会 materially 改变这些选择时，就停止 Intent Research。Implementation 中继续出现新 Unknown 是正常的；Northstar 不需要在执行前把它们消灭。
+当剩余问题只改变 Executor How，而不再改变 Human 会接受的 Goal、Human-owned commitment 或 binding boundary 时，停止 Intent Research。执行期继续出现 Unknown 是正常的。
