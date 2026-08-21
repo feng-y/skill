@@ -32,7 +32,7 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 - `prompt-atlas` — English counterpart to Northstar: take Human intent, close only ambiguity that can change the executable contract, then compile that contract for a fresh Executor while leaving implementation How open; Graph structures the Execution portion only.
 - `northstar` — Chinese counterpart to Prompt Atlas: 接住 Human intent，只关闭会改变 executable contract 的歧义，再编译成 fresh Executor 可直接推进并证明完成的 executable Taskbook；Graph 只组织 Execution，implementation How 仍由 Executor 决定。
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `architecture-evolution` — start from a named module's repo reality, re-identify capability/boundary and stable variation, then converge a Target Architecture, identify high-value evolution anchors, and concentrate the current structural move before implementation design.
+- `architecture-evolution` — take one goal, several related goals, or a named scope; recover their real architecture change pressure from repo reality, then design an AI-native Target with cohesive responsibility, justified internal variation/layering, stable one-way dependencies, smaller cross-boundary change/verification surfaces, and a focused structural evolution Program with real exits.
 
 ## Runtime tools
 
@@ -40,11 +40,11 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 
 ## Architecture Evolution usage
 
-Use `architecture-evolution` when a module keeps accumulating structural pressure or its long-term architecture is still unclear. Give the relevant area and the pressure; the Skill grounds the decision in repo reality and returns either a local/no-evolution judgment, the decisive missing evidence/choice, or a focused Architecture Program.
+Use `architecture-evolution` when one or more goals create structural pressure, or when a named module/subsystem needs to evolve toward a clearer long-term responsibility. The named module is an investigation scope, not automatically the Target boundary. The Skill grounds the goals in repo reality, derives the capability/module boundary and justified layering/dependency direction, then returns either a local/no-evolution judgment, the decisive missing evidence/choice, or a focused Architecture Program.
 
 ```text
-Use $architecture-evolution on <module-or-capability>.
-Given its current pressure and repo reality, decide the target architecture, identify the highest-value evolution anchors, and converge the current structural move worth advancing.
+Use $architecture-evolution for these goals: <goal-or-related-goals>.
+Ground them in current repo reality, identify the architecture change pressure, derive the AI-native Target Architecture, and converge the highest-value structural evolution Program without designing implementation How.
 ```
 
-The authoritative runtime semantics live in [`skills/architecture-evolution/SKILL.md`](skills/architecture-evolution/SKILL.md) and its routed references; this README does not duplicate them.
+The authoritative runtime semantics live in [`skills/architecture-evolution/SKILL.md`](skills/architecture-evolution/SKILL.md) and its routed references; optional examples under `skills/architecture-evolution/references/` illustrate delivery and anti-patterns but do not define a second contract.

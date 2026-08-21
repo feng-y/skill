@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
-  short_description: "做战略设计，判断目标结构与下一步演进"
-  default_prompt: "使用 $architecture-evolution 对当前范围做战略设计，并依据 Skill 自身 contract 从 Target Architecture 与 reality 的 gap 中选择当前值得推进的演进。"
+  short_description: "从 Goal 推导 AI-native 目标架构与演进主线"
+  default_prompt: "使用 $architecture-evolution。给定一个 Goal、几个相关 Goal 或指定模块，先从 repo identity / reality 恢复这些 Goal 施加的 architecture change pressure，再判断 capability / module responsibility、cohesion、必要的 internal variation / layering 与稳定 dependency direction，形成让代表性变化更局部可理解、修改和验证的 AI-native Target；最后从 Target / reality gap 中收敛不超过 3 个高价值锚点和当前 Program，要求 structural gain + real exit，不预定 implementation How。"
