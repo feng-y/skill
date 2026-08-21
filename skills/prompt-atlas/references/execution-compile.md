@@ -1,6 +1,6 @@
 # When a simple Taskbook is not enough
 
-Read only after Goal is settled and complexity itself changes the Graph structure of Execution or Verification judgment. This reference helps Prompt Atlas compile a complex handoff; it does not redefine Goal or design the Executor's patch, debugging flow, or scheduler.
+Read only after Intent take has settled Goal, Human-owned choices, and binding boundaries far enough that a fresh Executor does not need to redo intent judgment and can safely begin material work, and complexity itself changes the Graph structure of Execution or Verification judgment. This reference helps Prompt Atlas complete a complex Intent compile; it does not redefine Intent / Goal or design the Executor's patch, debugging flow, or scheduler.
 
 ## Execution
 
