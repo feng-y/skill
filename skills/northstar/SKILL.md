@@ -1,6 +1,6 @@
 ---
 name: northstar
-description: 把模糊想法、problem space 或零散要求收敛成 Human 真正认可的 Goal，再编译成 fresh Executor 可独立执行的 prompt、brief 或 Taskbook。Northstar 定义什么算完成和哪些判断会约束执行；implementation How 留给 Executor。Executor 结果回流时仍以同一 Taskbook 判断完成，不接管执行。
+description: 把模糊想法、problem space 或零散要求收敛成 Human 真正认可的 Goal，再把当前 Evidence 支持的 material work 编译成 fresh Executor 可独立推进的 Taskbook。Taskbook 的 Execution 是 best-known Graph；Northstar 定义什么算完成和哪些判断会约束执行，implementation How 留给 Executor。Executor outcome / Evidence 回流后按同一 Goal 判卷，并只重算受影响的 Graph。
 ---
 
 # Northstar · 定准 Goal，编译任务，不设计 patch
@@ -8,10 +8,12 @@ description: 把模糊想法、problem space 或零散要求收敛成 Human 真�
 三个角色：**Human** 决定最终接受的结果和真正需要 Human authority 的选择；**Northstar** 调研必要 reality、收敛 Goal、编译 Taskbook；**Executor** 从当前 repo/runtime 决定 implementation How 并执行。Northstar 可以 inspect / probe reality，但不做 Goal 本身的 material work，也不拥有 architecture design、完整 research、execution orchestration 或 verifier implementation。
 
 - **Goal**：Human 最终会验收的结果。
-- **Taskbook**：fresh Executor 开工前需要的最小充分任务定义。
+- **Taskbook**：fresh Executor 开工前需要的最小充分任务定义；其中 Execution 按当前 Evidence 编译成 best-known Graph。
 - **reality**：repo / runtime 当前真实状态。
 
-Taskbook 保持 `Goal → Execution → Verification → Evidence` 的因果链，但这是 semantic ownership，不是固定模板或执行流程。上层判断变化时只重算依赖它的下层内容；下层 How 不能替上层拍板。Taskbook 同时也是后续完成验收的唯一 contract；Executor 结果回流时仍按同一 Goal / binding / completion claims 判断，不对外暴露额外 Judge 角色、阶段或第二套 lifecycle。
+Taskbook 保持 `Goal → Execution Graph → Verification → Evidence` 的因果链，但这是 semantic ownership，不是固定模板、Graph schema 或执行流程。Graph 只表达 material work 与真实 dependency；上层判断变化时只重算依赖它的下层内容，下层 How 不能替上层拍板。Taskbook 同时也是后续完成验收的唯一 contract。
+
+整体工作通过同一 loop 前进：`Goal / reality → compile Graph → Executor outcome / Evidence → reality 更新 → judge / recompile affected Graph → ...`，直到 Goal 被证明或出现真实 blocker / Human-owned choice。这个 loop 由宿主/runtime 承载；Northstar 被调用时只负责当前 shaping、compile 或 outcome judgment，不启动 Executor、不调度 ready work，也不引入第二套 lifecycle。
 
 ## 流程
 
@@ -29,15 +31,17 @@ Human-owned choice 只在 reality 无法决定、且答案会改变 Human 最终
 - completion claims / Evidence obligations；
 - 只有省略会明显提高 under-verification 风险时，才保留当前已核实的 fallback verification path。
 
-不同 outcome、responsibility、binding boundary 或 real dependency 会改变 Executor 判断时，保留对应 material work cut；否则不要把 file/function/helper/caller、局部顺序、patch idea 或 test proximity 编译成任务清单。Taskbook 文本顺序本身不制造 dependency，没有真实 dependency 的 work 不被强制串行或并行，也不为了并行拆碎 cohesive work。当前只能安全推进一部分时，缩当前 work frontier，不缩 Human 的完整 Goal；必须等 execution Evidence 才能知道的未来工作不提前猜。
+Execution 必须形成当前 Evidence 支持的 **best-known complete Graph**：不同 outcome、responsibility、binding boundary 或 real dependency 会改变 Executor 判断时，保留对应 material work cut 与关系；当前已经成立的 `A → {B,C} → D` 不为了“thin”故意只写 A。相反，若 B/C 的存在、scope 或 dependency 仍取决于 A 的未来 execution Evidence，就让 Graph 停在当前已知 frontier，不提前猜 B/C。Taskbook 可以用 prose 呈现，简单任务也可以退化成单节点或线性 Graph，但文本顺序本身不制造 dependency，没有真实 dependency 的 work 保持独立，也不为了并行拆碎 cohesive work。
 
-简单任务直接写完。只有复杂度本身会改变 Execution 或 Verification 判断时读 [execution-compile.md](references/execution-compile.md)；只有存在具体“实现错了但检查仍可能 PASS”的风险时读 [verification-trust.md](references/verification-trust.md)。
+file/function/helper/caller、局部顺序、patch idea 或 test proximity 默认仍是 Executor How。当前只能安全推进一部分时，缩当前 work frontier，不缩 Human 的完整 Goal；一个 branch blocked 不冻结与它无关的 work。
 
-**3. 交付。** 若仍缺 Human-owned choice，只交付当前可回答的 decision surface；若 reality 阻止安全继续，说明 blocker 和恢复条件。否则返回完整 Taskbook，并把**同一正文**写入 OS/runtime 提供、位于 repo/workspace 外的 authoritative Markdown file，显示真实 path。Taskbook 只带薄 completion handoff：执行完成、阻塞或仍有 material gap 时，返回 outcome、material Evidence 与 unresolved gap；transport 由宿主/runtime 决定，不扩成 progress/status/checklist/retry 协议。
+简单任务直接写完。只有复杂度本身会改变 Execution Graph 或 Verification 判断时读 [execution-compile.md](references/execution-compile.md)；只有存在具体“实现错了但检查仍可能 PASS”的风险时读 [verification-trust.md](references/verification-trust.md)。
 
-Human 后续 material clarification / correction 从最高受影响判断重新进入，只重算 dependency cone、删除失效陈述、对账仍有效 constraints 并完整重交付当前 Taskbook；无关且已关闭的选择和仍有效 Evidence 保持有效。交付不是 completion state，也不要输出 ready/completed/executable/status token。
+**3. 交付。** 若仍缺 Human-owned choice，只交付当前可回答的 decision surface；若 reality 阻止安全继续，说明 blocker 和恢复条件。否则返回完整 Taskbook，并把**同一正文**写入 OS/runtime 提供、位于 repo/workspace 外的 authoritative Markdown file，显示真实 path。Taskbook 只带薄 completion handoff：执行完成、阻塞或产生 material Evidence / gap 时，返回 outcome、material Evidence 与 unresolved gap；transport 由宿主/runtime 决定，不扩成 progress/status/checklist/retry 协议。
 
-当输入本身已经是 Executor outcome / completion report / Evidence 且存在当前 authoritative Taskbook 时，不重新编译 implementation plan；内部读取 [outcome-judgment.md](references/outcome-judgment.md)，先按 Taskbook 建立 judging surface，再核对 claim-relevant current reality，最后才把 Executor report 当 candidate Evidence。完成验收区分已被反证与尚未证明，按 material-claim coverage 判断 whole Goal；Taskbook 仍有效时只返回精确 gap / missing Evidence，新 reality 推翻 contract premise / authority / completion claim 时才重开受影响 dependency cone。这个能力保持为隐藏 acceptance semantics，不形成显式 Judge mode、repair planner 或 manager loop。
+Human 后续 material clarification / correction 从最高受影响判断重新进入，只重算 dependency cone、删除失效陈述、对账仍有效 constraints，并按最新 reality 完整重交付当前 Taskbook；无关且已关闭的选择和仍有效 Evidence 保持有效。交付不是 completion state，也不要输出 ready/completed/executable/status token。
+
+当输入本身已经是 Executor outcome / completion report / Evidence 且存在当前 authoritative Taskbook 时，内部读取 [outcome-judgment.md](references/outcome-judgment.md)，先按 Taskbook 建立 judging surface，再核对 claim-relevant current reality，最后才把 Executor report 当 candidate Evidence。先判断 whole Goal：Goal 已证明就接受；Taskbook 仍有效且只是已有 claim 缺 Evidence / 未成立时，只返回精确 gap；新的 Evidence 若让原先 contingent 的 material work 成为真实工作，或改变剩余 work / dependency，就只重编受影响的 Execution Graph cone 并完整重交付 Taskbook；新 reality 推翻 Goal premise / authority / completion contract 时，才从更高的受影响判断重新进入。这个 loop 保持为同一 Taskbook 的 Evidence-driven evolution，不形成显式 Judge mode、repair planner 或 manager lifecycle。
 
 ## 判断原则
 
@@ -51,5 +55,6 @@ Human 后续 material clarification / correction 从最高受影响判断重新�
 
 1. Goal、Human authority、binding boundary 是否已定准，而 implementation How 仍属于 Executor？
 2. Research 是否只关闭当前 Taskbook judgment 真正依赖的 reality，并在 safe-start 后停止？
-3. Taskbook 是否 minimum-sufficient：material work / real dependency / completion proof 足够，但没有 predicted patch、伪 dependency 或 speculative future？
-4. 结果回流时是否仍复用同一 Taskbook contract，按 Taskbook → reality → Executor report 验收，而没有暴露第二个 mode 或变成 repair manager？
+3. Execution 是否是 best-known complete Graph：当前已知 material work / real dependency 没有被压平或漏掉，同时 contingent future 没有被提前猜？
+4. Verification / Evidence 是否证明 Goal，而不是镜像 Graph node 或 implementation checklist？
+5. outcome 回流后是否只更新受 Evidence 影响的 Graph / judgment cone，复用仍有效 Goal、work 和 Evidence，而没有升级成 manager loop？
