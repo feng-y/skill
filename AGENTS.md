@@ -12,7 +12,14 @@
 - **Protocol complexity needs reality.** 复杂协议必须由真实跨边界不确定性、独立生命周期、失败语义或稳定多实现需求证明；普通单 owner / 同进程 / 同步协作不因“解耦”自动升级成协议。
 - **Incidents stay in eval by default.** Concrete incidents / failures can enter validation / regression directly. Runtime guidance requires independent authority or cross-case Evidence for a transferable invariant / discriminator; a single example becoming green is not improvement Evidence. If existing semantics already cover the failure, keep runtime unchanged.
 - **Runtime and eval stay separate.** runtime 只保留正常运行需要的 stable invariant / authority / boundary；具体 incident/counterexample 留在 eval；behavioral claim 必须由真实 eval 支撑。不要因 regression 增加而同步扩大 runtime context。
-- **Northstar / Prompt Atlas stay bilingual, not divergent.** 两者是同一 Skill semantics 的中文/英文 surface。对 Goal / Execution / Verification / Evidence、Unknown、Taskbook、Completion Hook、trust 或 eval case 的行为性修改必须双边同步；只允许语言、名称和纯表达层差异。若要改变其中一边的 semantics，先把它当作 shared semantic change review，而不是独立 Skill 演化。
+- **Northstar / Prompt Atlas stay bilingual, not divergent.** 两者是同一 Skill semantics 的中文/英文 surface。对 Intent take / Intent compile、Goal / Execution / Verification / Evidence、Unknown、Taskbook、Completion Hook、trust 或 eval case 的行为性修改必须双边同步；只允许语言、名称和纯表达层差异。若要改变其中一边的 semantics，先把它当作 shared semantic change review，而不是独立 Skill 演化。
+
+## Graph and loop
+
+- **Work is a graph.** Material engineering work 默认按 work / outcome 与真实 dependency 组成的 Graph 判断，而不是按 prose list 判断。简单或线性工作只是 Graph 的退化形式；复杂度只决定多少关系需要显式表达。独立分支保持独立，文本顺序不能制造 dependency。
+- **Keep a best-known complete graph.** 当前 Evidence 已支持的 material work 与真实关系应完整表达，不为了“thin”或 lazy 故意漏掉已知结构。若下游 work 的存在、scope 或 dependency 仍取决于上游 outcome，就停在当前 frontier，不提前猜后续 Graph。Graph completeness 跟随当前 decision-relevant knowledge；不得为了让 Graph 更完整而扩大 Research、inventory 或预证只会改变实现 How 的未来工作。
+- **Progress through a loop.** Research、execution、review、verification 都会产生新 Evidence；用已经足以改变当前判断的 Evidence 扩展、删除、拆分、合并或重算受影响的 dependency cone，并保留无关分支和仍有效 Evidence。一个 branch blocked 不冻结独立 work，一个 premise 改变也不要求全量重来。
+- **Graph / loop are engineering forms, not new semantics.** 不为了“使用 Graph / Loop”新增 Graph object/schema、node taxonomy、persistent state、scheduler、manager protocol 或第二套 lifecycle。既有 semantic owner 继续负责；只有真实 ownership、lifecycle、failure semantics 或稳定多实现需求要求时，才物化额外 runtime structure。
 
 ## Context engineering and judgment quality
 
