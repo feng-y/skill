@@ -1,17 +1,17 @@
 # When a simple Taskbook is not enough
 
-Read only after Goal is settled and complexity itself changes Execution Graph or Verification judgment. This reference helps Prompt Atlas compile a complex handoff; it does not redefine Goal or design the Executor's patch, debugging flow, or scheduler.
+Read only after Goal is settled and complexity itself changes the Graph structure of Execution or Verification judgment. This reference helps Prompt Atlas compile a complex handoff; it does not redefine Goal or design the Executor's patch, debugging flow, or scheduler.
 
 ## Execution
 
-Compile a complex Goal into the **best-known complete Graph** a fresh Executor can directly advance:
+Compile a complex Goal's Execution as the **best-known complete Graph** a fresh Executor can directly advance:
 
 - separate material work cuts when distinct outcomes, responsibilities, binding boundaries, or real dependencies change execution judgment;
 - preserve an Evidence-backed material cut / relation when omitting it would only force the Executor to rediscover it;
 - express dependency only when a real prerequisite, shared authoritative surface / conflict, jointly required outcome, or equivalent relation truly changes Executor choice;
 - keep file/function/helper/caller detail, local edit order, patch shape, and local checks as How by default.
 
-Graph completeness follows current knowledge. When current Evidence establishes `A → {B,C} → D`, express that structure now instead of hiding B/C/D merely to stay lazy or thin. Stop at the current frontier only when B/C/D existence, scope, or dependency still depends on future execution Evidence from A; extend the Graph after Evidence makes the downstream work real. Do not invent placeholder nodes, phases, or taxonomy for future work whose shape is not yet established.
+Graph completeness follows current **decision-relevant knowledge**. When current Evidence establishes `A → {B,C} → D`, express that structure now instead of hiding B/C/D merely to stay lazy or thin. Stop at the current frontier only when B/C/D existence, scope, or dependency still depends on future execution Evidence from A; extend the Graph after Evidence makes the downstream work real. **Best-known complete is not research-complete**: do not expand inventory, prove candidate implementations, scan territory that can only change How, or invent placeholder nodes/phases/taxonomy merely to complete the Graph.
 
 Taskbook prose order does not create dependency. Work without a real dependency remains independent rather than being forced serial or parallel; one blocked branch does not freeze unrelated work; cohesive work is not fragmented merely to expose parallelism. A simple or linear task is only a degenerate Graph and does not require a diagram, Graph schema, or explicit node object.
 
@@ -40,8 +40,8 @@ At execution end, Evidence must support Goal, binding constraints, and completio
 
 ## Loop
 
-Prompt Atlas does not own cross-session progress, retry, debugging, or the runtime scheduler, but the Taskbook must evolve cleanly through the host execution loop: `Graph → outcome / Evidence → reality → affected Graph`.
+Prompt Atlas does not own cross-session progress, retry, debugging, or the runtime scheduler, but the Taskbook must evolve cleanly through the host execution loop: `Graph → Executor outcome / candidate Evidence → Taskbook + current reality judgment → established Evidence / new reality → affected Graph`.
 
-New Evidence recomputes only the dependency cone it actually affects. Extend the Graph when it makes contingent work real; remove a branch / dependency when Evidence proves it absent; split, merge, or reorder remaining work when scope, binding, or material relations change; and recompute corresponding Verification when completion claims / coverage are affected. Unrelated branches, still-valid work, and Evidence remain valid. Completed work does not reopen mechanically merely because the Graph changes, unless its Evidence premise or proven behavior was affected.
+Executor reports, task checklists, and test output are candidate Evidence / navigation until independently verified; they cannot directly change reality or the Graph. Only established new Evidence / reality recomputes the dependency cone it actually affects. Extend the Graph when it makes contingent work real; remove a branch / dependency when Evidence proves it absent; split, merge, or reorder remaining work when scope, binding, or material relations change; and recompute corresponding Verification when completion claims / coverage are affected. Unrelated branches, still-valid work, and Evidence remain valid. Completed work does not reopen mechanically merely because the Graph changes, unless its Evidence premise or proven behavior was affected.
 
 The Graph is the structure of Execution inside the Taskbook, not another runtime object. Do not add persistent Graph state, node taxonomy, a scheduler, manager protocol, or a second Taskbook merely to use Graph / Loop. Reuse host progress/state when it already exists; Prompt Atlas does not invent one when it does not.
