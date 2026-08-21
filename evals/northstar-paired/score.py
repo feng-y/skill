@@ -8,6 +8,14 @@ from collections import defaultdict
 
 
 ARMS = ("base", "candidate")
+PAIR_EQUAL_FIELDS = (
+    "target_repo",
+    "target_ref",
+    "model",
+    "prompt_sha256",
+    "tool_profile",
+    "host_config",
+)
 
 
 def pct(value: float) -> str:
@@ -20,7 +28,7 @@ def num(value: float) -> str:
     return f"{value:.2f}"
 
 
-def delta_pct(base: float, candidate: float):
+def relative_delta(base: float, candidate: float):
     if base == 0:
         return None if candidate != 0 else 0.0
     return (candidate - base) / base
@@ -58,7 +66,17 @@ def non_negative_number(value, name, where):
 def validate_record(record, where):
     if not isinstance(record, dict):
         raise ValueError(f"{where}: record must be an object")
-    for key in ("case_id", "arm", "skill_ref", "target_repo", "target_ref", "model"):
+    for key in (
+        "case_id",
+        "arm",
+        "skill_ref",
+        "target_repo",
+        "target_ref",
+        "model",
+        "prompt_sha256",
+        "tool_profile",
+        "host_config",
+    ):
         value = require(record, key, where)
         if not isinstance(value, str) or not value:
             raise ValueError(f"{where}: {key} must be a non-empty string")
@@ -87,8 +105,8 @@ def validate_record(record, where):
             raise ValueError(f"{where}: every clarification needs boolean contract_changing")
 
     compiled_work = require(record, "compiled_work", where)
-    if not isinstance(compiled_work, list):
-        raise ValueError(f"{where}: compiled_work must be a list")
+    if not isinstance(compiled_work, list) or not compiled_work:
+        raise ValueError(f"{where}: compiled_work must be a non-empty list")
     for item in compiled_work:
         if not isinstance(item, dict) or not isinstance(item.get("evidence_supported"), bool):
             raise ValueError(f"{where}: every compiled_work item needs boolean evidence_supported")
@@ -114,6 +132,18 @@ def validate_pairs(records):
     if missing:
         detail = ", ".join(f"{case}/{repeat}:{arm}" for ((case, repeat), arm) in missing)
         raise ValueError(f"incomplete pairs: {detail}")
+
+    for (case_id, repeat), arms in sorted(grouped.items()):
+        base = arms["base"]
+        candidate = arms["candidate"]
+        if base["skill_ref"] == candidate["skill_ref"]:
+            raise ValueError(f"case={case_id!r} repeat={repeat}: base and candidate skill_ref must differ")
+        for field in PAIR_EQUAL_FIELDS:
+            if base[field] != candidate[field]:
+                raise ValueError(
+                    f"case={case_id!r} repeat={repeat}: paired field {field!r} differs "
+                    f"({base[field]!r} != {candidate[field]!r})"
+                )
     return grouped
 
 
@@ -149,9 +179,12 @@ def aggregate(records):
 
 
 def render_metric(name, base, candidate, is_rate=False):
-    delta = delta_pct(base, candidate)
     display = pct if is_rate else num
-    delta_text = "n/a" if delta is None else f"{delta * 100:+.2f}%"
+    if is_rate:
+        delta_text = f"{(candidate - base) * 100:+.2f} pp"
+    else:
+        delta = relative_delta(base, candidate)
+        delta_text = "n/a" if delta is None else f"{delta * 100:+.2f}%"
     return f"| {name} | {display(base)} | {display(candidate)} | {delta_text} |"
 
 
