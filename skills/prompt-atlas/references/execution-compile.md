@@ -1,15 +1,15 @@
 # When a simple Taskbook is not enough
 
-Read only after Intent take has settled Goal, Human-owned choices, and binding boundaries far enough that a fresh Executor does not need to redo intent judgment and can safely begin material work, and complexity itself changes the Graph structure of Execution or Verification judgment. This reference helps Prompt Atlas complete a complex Intent compile; it does not redefine Intent / Goal or design the Executor's patch, debugging flow, or scheduler.
+Read only after Intent take has settled Goal, Human-owned choices, and binding boundaries far enough that a fresh Executor does not need to redo intent judgment and can safely begin material work, and complexity itself changes the Graph structure of Execution or Verification judgment. This reference does not define Intent compile itself or redefine Intent / Goal. The executable contract from Intent compile must already be established; this reference only helps Prompt Atlas structure complex Execution / Verification and does not design the Executor's patch, debugging flow, or scheduler.
 
 ## Execution
 
-Compile a complex Goal's Execution as the **best-known complete Graph** a fresh Executor can directly advance:
+The Graph structures only established Execution inside the executable contract; it cannot determine Intent, Goal, or binding constraints in reverse. Compile a complex Goal's Execution as the **best-known complete Graph** a fresh Executor can directly advance:
 
 - separate material work cuts when distinct outcomes, responsibilities, binding boundaries, or real dependencies change execution judgment;
 - preserve an Evidence-backed material cut / relation when omitting it would only force the Executor to rediscover it;
 - express dependency only when a real prerequisite, shared authoritative surface / conflict, jointly required outcome, or equivalent relation truly changes Executor choice;
-- keep file/function/helper/caller detail, local edit order, patch shape, and local checks as How by default.
+- keep file/function/helper/caller detail, local edit order, patch shape, implementation choice, and local checks as How by default.
 
 Graph completeness follows current **decision-relevant knowledge**. When current Evidence establishes `A → {B,C} → D`, express that structure now instead of hiding B/C/D merely to stay lazy or thin. Stop at the current frontier only when B/C/D existence, scope, or dependency still depends on future execution Evidence from A; extend the Graph after Evidence makes the downstream work real. **Best-known complete is not research-complete**: do not expand inventory, prove candidate implementations, scan territory that can only change How, or invent placeholder nodes/phases/taxonomy merely to complete the Graph.
 
