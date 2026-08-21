@@ -1,6 +1,6 @@
 ---
 name: architecture-evolution
-description: 给定一个目标、几个关联目标或一个需要演进的模块，依据 repo identity、仓库现实和长期约束识别这些目标施加的真实架构压力，推导能更好吸收当前与同类未来变化的 AI-native Target Architecture，再从 reality / Target gap 中收敛当前最值得推进的结构演进。重点是让责任和知识更内聚、跨边界 coupling 更少、内部变化被正确分层隔离、长期依赖稳定单向，并让主要变化可以在正确 owner 附近理解、修改和验证；不把高内聚低耦合当脱离目标的通用重构口号。
+description: 给定一个目标、几个关联目标或一个需要演进的模块，依据 repo identity、仓库现实和长期约束识别这些目标施加的真实架构压力，推导能更好吸收当前与同类未来变化的 AI-native Target Architecture，再从 reality / Target gap 中收敛当前最值得推进的结构演进。重点是让责任和知识更内聚、跨边界 coupling 更少，只在真实 variation 需要时隔离内部变化，长期依赖保持稳定且可解释的单向关系，并让主要变化可以在正确 owner 附近理解、修改和验证；不把高内聚低耦合当脱离目标的通用重构口号。
 ---
 
 # Architecture Evolution · Goal 驱动的 AI-native 架构演进
