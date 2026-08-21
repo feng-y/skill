@@ -1,6 +1,6 @@
 # 当简单 Taskbook 不够
 
-只在 Goal 已定准，且复杂度本身会改变 Execution 的 Graph 结构或 Verification 判断时读取。这里只帮助 Northstar 编译复杂 handoff，不重新定义 Goal，也不替 Executor 设计 patch、调试流程或 scheduler。
+只在 Intent take 已经把 Goal、Human-owned choice 与 binding boundary 收敛到 fresh Executor 不需要重做 intent judgment、且能安全开始 material work，且复杂度本身会改变 Execution 的 Graph 结构或 Verification 判断时读取。这里只帮助 Northstar 完成复杂 Intent compile，不重新定义 Intent / Goal，也不替 Executor 设计 patch、调试流程或 scheduler。
 
 ## Execution
 
