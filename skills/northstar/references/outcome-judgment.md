@@ -54,7 +54,7 @@ Evidence 必须对当前 claim 有足够直接性、authority、provenance、fre
 
 ## 判卷之后
 
-判卷先产生当前 judgment，再决定同一 Goal 的 Execution Graph 是否需要更新；不能跳过 judgment 直接把 Executor report 编成 repair plan：
+判卷先产生当前 judgment，再决定同一 Goal 的 Execution 中 Graph 是否需要更新；不能跳过 judgment 直接把 Executor report 编成 repair plan：
 
 - **Goal 已证明**：接受当前 outcome，并给出支持它的 material Evidence basis。
 - **Taskbook 仍有效，且只是已有 claim 未成立 / 尚未证明**：指出精确 claim、当前 counter-Evidence / missing Evidence，以及它为什么 material；若核实后的 Evidence 没有改变剩余 material work / dependency，就不要把 gap 改写成 file/helper/test tasklist。
@@ -64,4 +64,4 @@ Evidence 必须对当前 claim 有足够直接性、authority、provenance、fre
 
 普通 implementation failure 不返回 Human。只有出现新的 Human-owned choice / 授权，或 reality 使安全继续本身需要 Human 决定时才回 Human。
 
-输出保持 minimum-sufficient：若只需要 judgment，就给结论、material claim basis 与真实 gap；若 established Evidence 已改变 Execution 的 Graph，则返回按受影响 cone 重编后的完整 Taskbook。不要输出 execution progress、debug narrative 或持续监督协议。
+输出保持 minimum-sufficient：若只需要 judgment，就给结论、material claim basis 与真实 gap；若 established Evidence 已改变 Execution 中的 Graph，则返回按受影响 cone 重编后的完整 Taskbook。不要输出 execution progress、debug narrative 或持续监督协议。
