@@ -59,7 +59,7 @@ Judgment produces the current decision first and only then decides whether the G
 - **Goal is proven**: accept the current outcome and state the material Evidence basis.
 - **Taskbook remains valid and only an existing claim is false / unproven**: identify the exact claim, current counter-Evidence / missing Evidence, and why it is material. If verified Evidence does not change remaining material work / dependencies, do not rewrite the gap into a file/helper/test tasklist.
 - **Taskbook remains valid, but established Evidence / new reality makes previously contingent material work real or changes remaining work / dependencies**: re-enter only the affected Execution dependency cone; use the Graph to extend, remove, split, merge, or reorder only work the new reality affects, then fully re-deliver the Taskbook from latest reality. Unrelated Graph, Goal, and still-valid Evidence remain reusable.
-- **New reality invalidates a Taskbook premise / authority / completion contract**: re-enter from the higher affected shaping / compile dependency cone. Do not use an invalid contract as a repair specification.
+- **New reality invalidates a Taskbook premise / authority / completion contract**: re-enter from the higher affected Intent take / Intent compile judgment. Do not use an invalid contract as a repair specification.
 - **Authoritative reality required for judgment is unavailable**: state the blocker and resume condition accurately; do not accept Executor self-report as a substitute.
 
 Ordinary implementation failure does not return to the Human. Return only for a new Human-owned choice / authorization, or when reality makes safe continuation itself require Human authority.
