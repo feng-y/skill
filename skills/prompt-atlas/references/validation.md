@@ -151,6 +151,26 @@ Executor Evidence reveals that one verifier authority / material premise in the 
 
 PASS: the first case reopens only the affected shaping/compile dependency cone and does not use the invalid Taskbook as a repair checklist. The second keeps the same Taskbook and returns the exact false/unproven claim plus Evidence gap. Escalating both to the Human or turning both into repair plans fails.
 
+### S27 — Known Graph cannot be flattened merely to stay thin
+Current Evidence establishes A as a prerequisite, B/C as independent after A, and D as dependent on their combined outcome; every material boundary is already stable.
+
+PASS: compile the best-known `A → {B,C} → D` now. Returning only A, leaving B/C/D for “the Executor to discover,” or collapsing the structure into one non-judgable abstract task all fail. The Graph may be rendered as prose; no diagram or schema is required.
+
+### S28 — A blocked branch does not freeze an independent Graph branch
+After A, B/C are independent. B is blocked by an external permission while C already has its prerequisites.
+
+PASS: Taskbook dependency semantics must allow C to continue. Treating prose order as `B → C`, freezing C because B is blocked, or adding a scheduler/protocol merely to represent parallelism all fail.
+
+### S29 — Outcome Evidence must drive the next Graph turn
+The current Taskbook keeps the full Goal but compiles only A because B/C existence depends on A's outcome. Executor returns authoritative Evidence proving B is required, C does not exist, and Goal is not complete yet.
+
+PASS: independently judge the current outcome first, then use the Evidence to expand only the affected Graph with B and fully re-deliver the Taskbook. Merely replying “Goal incomplete,” retaining the old speculative C, restarting all Research, or compiling B into a file/helper repair checklist all fail.
+
+### S30 — Graph / Loop are not a new runtime ontology
+A complex task naturally has dependencies, branching, and Evidence-driven refinement, while repo/runtime has no independent need for a Graph service, persistent scheduler, or new lifecycle.
+
+PASS: reason and compile with Execution Graph + Evidence loop while keeping Taskbook as the only contract and the host responsible for transport/runtime progress. Adding GraphNode taxonomy, a Graph manager, persistent Graph state, a second Taskbook, or another Judge/Planner lifecycle all fail.
+
 ## Quality lineage
 
 Leader is only a **Taskbook / outcome-judgment quality baseline**: material altitude, real dependency, completion proof, and whole-Goal acceptance are useful; its manager structure / execution lifecycle is not Prompt Atlas identity. Wayfinder/Grill/Unknowns/AE contribute conditional resolution ideas, not an orchestration mandate.
@@ -159,8 +179,8 @@ Leader is only a **Taskbook / outcome-judgment quality baseline**: material alti
 
 A clean-session comparison should track three classes of metrics:
 
-- **compile quality guardrails**: Goal fidelity, Human authority, material-work/dependency correctness, Verification sufficiency;
-- **judge quality guardrails**: false accept / false reject, self-report resistance, whole-Goal coverage, false-vs-unproven distinction, contract-invalidation routing;
-- **startup efficiency**: time/tool calls/tokens/repo reads to first useful handoff, plus material-replan rate after handoff.
+- **compile quality guardrails**: Goal fidelity, Human authority, best-known Graph completeness, real-dependency / independence correctness, speculative-downstream rate, Verification sufficiency;
+- **judge / loop quality guardrails**: false accept / false reject, self-report resistance, whole-Goal coverage, false-vs-unproven distinction, Evidence-triggered Graph update correctness, contract-invalidation routing;
+- **startup / evolution efficiency**: time/tool calls/tokens/repo reads to first useful handoff, material-replan rate after handoff, and the rate of recomputing unrelated dependency cones.
 
 Without paired clean-session Evidence, claim only static/scenario contract review, not behavioral uplift.
