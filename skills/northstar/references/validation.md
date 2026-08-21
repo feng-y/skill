@@ -4,12 +4,12 @@
 
 ## Static smoke
 
-1. **Northstar identity**：Human owns accepted outcome / Human-owned commitments；Northstar 先完成 Intent take，再做 Intent compile 产出 executable Taskbook；Executor owns implementation How。Northstar 不拥有 architecture design、complete research、execution orchestration、scheduler 或 verifier implementation。
+1. **Northstar identity**：Human owns accepted outcome / Human-owned commitments；Northstar 先完成 Intent take，只关闭会改变 executable contract 的 ambiguity，再做 Intent compile 产出 executable Taskbook；Executor owns implementation How。Northstar 不拥有 architecture design、complete research、execution orchestration、scheduler 或 verifier implementation。
 2. **Intent > means**：点名 architecture/tool/provider/file shape 默认是可替换 means；只有 Human/repo/upstream authority 让 representation 本身 binding 时才进入 Goal/constraint。
 3. **Bounded Research**：只关闭会改变 Goal、Human choice、binding boundary、material-work judgment、completion obligation 或 safe-start frontier 的 reality；Taskbook judgment/binding rule 真正依赖的 reality claim 才必须在 handoff 前取得足够 Evidence；不能为了 Graph completeness 扩大 Research。
 4. **Human authority**：普通 factual / implementation uncertainty 不升级 Human；会改变 Human 接受的 Goal，或 materially 改变是否做、投入、长期维护承诺或风险姿态的选择才进入 Ask。
-5. **Executable Taskbook**：Intent compile 的产出必须让 fresh Executor 不需要重做 Human intent judgment、重新定义 material boundary 或发明 completion proof就能开始 material work；Goal 摘要、task list、Research narration、file/symbol/helper/patch plan 都不能替代 executable contract。
-6. **Material work + Graph structure**：`Goal → Execution → Verification → Evidence` 的 semantic ownership 不变；Execution 必须按当前 Evidence 支持的 Graph 表达 material work / real dependency。Taskbook prose order 不制造 dependency，没有真实 dependency 的 work 不强制串/并行，也不为并行拆碎 cohesive work。
+5. **Executable Taskbook + Executor freedom**：Intent compile 的产出必须让 fresh Executor 不需要重做 Human intent judgment、重新定义 material boundary 或发明 completion proof就能开始 material work，同时不得把可替换 implementation choice 升级成 contract。Goal 摘要、task list、Research narration、file/symbol/helper/patch plan 都不能替代 executable contract。
+6. **Material work + Graph structure**：`Goal → Execution → Verification → Evidence` 的 semantic ownership 不变；Intent compile 先确定 executable contract，Graph 只结构化其中 Execution 的 material work / real dependency。Taskbook prose order 不制造 dependency，没有真实 dependency 的 work 不强制串/并行，也不为并行拆碎 cohesive work。
 7. **Execution / Verification 分离**：Verification 固定 completion claims / Evidence obligations，不与 implementation work 或 Graph node 一一对应；authoritative fallback path 只在省略会明显增加 under-verification 时保留，失准后由 Executor 重推。
 8. **Progressive future**：当前只能安全推进一部分时不缩 Human Goal；future work 只有 established execution Evidence 使其成为真实问题后才加入。
 9. **Handoff / correction**：成功 Taskbook 以同一正文 materialize 到 repo/workspace 外 authoritative file，并只带薄 completion handoff；Human material correction 只重算受影响的 intent / compile dependency cone 后完整重交付。
@@ -164,7 +164,7 @@ PASS：Taskbook 的 dependency 语义必须允许 C 继续；把 prose 顺序当
 ### S29 — Outcome Evidence 必须驱动下一轮 Graph
 当前 Taskbook 为完整 Goal 只编译 A，因为 B/C 是否存在取决于 A outcome。Executor 返回 report 与 candidate Evidence，声称 B 必须做、C 不存在，Goal 尚未完成。
 
-PASS：先按当前 Taskbook + current reality 独立判断并核实 candidate Evidence；只有 Evidence 成立后，才只扩展受影响 Graph 为后续 B并完整重交付 Taskbook。直接相信 report、继续只回复“Goal 未完成”、提前保留旧猜测 C、全量重做 Research，或把 B 编成 file/helper repair checklist 都失败。
+PASS：先按当前 Taskbook + current reality 独立判断并核实 candidate Evidence；只有 Evidence 成立后，才只扩展受影响 Graph 为后续 B 并完整重交付 Taskbook。直接相信 report、继续只回复“Goal 未完成”、提前保留旧猜测 C、全量重做 Research，或把 B 编成 file/helper repair checklist 都失败。
 
 ### S30 — Graph / Loop 不是新 runtime ontology
 复杂任务天然存在 dependency、branching 和 Evidence-driven refinement，但 repo/runtime 没有独立 Graph service、持久 scheduler 或新 lifecycle 的真实需求。
@@ -204,7 +204,12 @@ PASS：Graph 只能组织已经成立的 Execution，不能用“Graph 已完整
 ### S37 — Intent correction 只重编受影响 cone
 Human 后续澄清兼容范围比原 Goal 更窄；一个 material work branch 和对应 Verification 依赖旧范围，另一个 ownership 修正与兼容范围无关。
 
-PASS：从受影响的 Intent take / Intent compile judgment 更新 Goal/constraint，并只重编其依赖 cone后完整重交付；无关 work / Evidence 继续有效。全量重置、只回复 delta、或继续保留旧兼容范围均失败。
+PASS：从受影响的 Intent take / Intent compile judgment 更新 Goal/constraint，并只重编其依赖 cone 后完整重交付；无关 work / Evidence 继续有效。全量重置、只回复 delta、或继续保留旧兼容范围均失败。
+
+### S38 — Intent compile 保留 Executor freedom
+Human 要求把线上 `P99` 压到给定阈值并保持兼容；repo reality 表明 Redis/cache、算法优化或数据结构调整都可能满足 Goal，Human 没有把任何一种实现设为 binding。
+
+PASS：Intent compile 固定 latency outcome、compatibility boundary、必要 material work / dependency 与 completion claims，但把 Redis/cache/算法/具体文件改法继续留给 Executor。把候选实现升级成 binding constraint、为了“executable”写 patch plan，或因为不选实现就认为 Taskbook 不可执行都失败。
 
 ## Quality lineage
 
@@ -214,7 +219,7 @@ Leader 只作为 **Taskbook / outcome-judgment quality baseline**：material alt
 
 clean-session 对比至少观察三类指标：
 
-- **intent / compile quality guardrails**：Intent fidelity、Goal fidelity、Human authority、executable-handoff sufficiency、best-known Graph completeness、real-dependency / independence correctness、speculative downstream rate、verification sufficiency；
+- **intent / compile quality guardrails**：Intent fidelity、Goal fidelity、Human authority、contract-changing ambiguity precision、executable-handoff sufficiency、Executor-freedom preservation / implementation-constraint leakage、best-known Graph completeness、real-dependency / independence correctness、speculative downstream rate、verification sufficiency；
 - **judge / loop quality guardrails**：false accept / false reject、self-report resistance、whole-Goal coverage、false-vs-unproven distinction、candidate-Evidence gating、Evidence-triggered Graph update correctness、contract-invalidation routing；
 - **startup / evolution efficiency**：time/tool-calls/tokens/repo-reads to first executable handoff、Graph-driven unnecessary Research rate、handoff 后 material replan 比例、无关 dependency cone 被重复重算的比例。
 
