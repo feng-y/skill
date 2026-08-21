@@ -1,15 +1,15 @@
 # 当简单 Taskbook 不够
 
-只在 Intent take 已经把 Goal、Human-owned choice 与 binding boundary 收敛到 fresh Executor 不需要重做 intent judgment、且能安全开始 material work，且复杂度本身会改变 Execution 的 Graph 结构或 Verification 判断时读取。这里只帮助 Northstar 完成复杂 Intent compile，不重新定义 Intent / Goal，也不替 Executor 设计 patch、调试流程或 scheduler。
+只在 Intent take 已经把 Goal、Human-owned choice 与 binding boundary 收敛到 fresh Executor 不需要重做 intent judgment、且能安全开始 material work，且复杂度本身会改变 Execution 的 Graph 结构或 Verification 判断时读取。这里不定义 Intent compile 本身，也不重新定义 Intent / Goal；Intent compile 的 executable contract 必须先成立，这里只帮助 Northstar 组织其中复杂的 Execution / Verification，不替 Executor 设计 patch、调试流程或 scheduler。
 
 ## Execution
 
-复杂 Goal 的 Execution 按 fresh Executor 可以直接推进的 **best-known complete Graph** 编译：
+Graph 只负责结构化 executable contract 中已经成立的 Execution；不能从 Graph 反推 Intent、Goal 或 binding constraint。复杂 Goal 的 Execution 按 fresh Executor 可以直接推进的 **best-known complete Graph** 编译：
 
 - 不同 outcome、responsibility、binding boundary 或 real dependency 会改变执行判断时，分开表达对应 material work cut；
 - 一个已由 Evidence 支持、且省略只会迫使 Executor 重新发现的 material cut / relation 应保留；
 - 只有真实 prerequisite、共享 authoritative surface / conflict、或必须共同成立的 outcome 等关系真正改变 Executor 选择时，才表达 dependency；
-- file/function/helper/caller、局部 edit 顺序、patch shape 和 local check 默认仍是 How。
+- file/function/helper/caller、局部 edit 顺序、patch shape、implementation choice 和 local check 默认仍是 How。
 
 Graph 的完整度跟随当前 **decision-relevant knowledge**：当前 Evidence 已能确定 `A → {B,C} → D` 时就一次表达，不为了 lazy / thin 故意只给 A；只有 B/C/D 的存在、scope 或 dependency 仍取决于 A 的未来 execution Evidence 时，才停在当前 frontier，等 Evidence 让后续 work 成为 reality 后再扩展。**best-known complete 不等于 research-complete**：不能为了补齐 Graph 扩大 inventory、验证候选 implementation、扫描只会改变 How 的 territory，或为未形成的未来工作创造占位 node、phase、taxonomy。
 
