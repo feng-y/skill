@@ -12,7 +12,7 @@
 - **Protocol complexity needs reality.** 复杂协议必须由真实跨边界不确定性、独立生命周期、失败语义或稳定多实现需求证明；普通单 owner / 同进程 / 同步协作不因“解耦”自动升级成协议。
 - **Incidents stay in eval by default.** Concrete incidents / failures can enter validation / regression directly. Runtime guidance requires independent authority or cross-case Evidence for a transferable invariant / discriminator; a single example becoming green is not improvement Evidence. If existing semantics already cover the failure, keep runtime unchanged.
 - **Runtime and eval stay separate.** runtime 只保留正常运行需要的 stable invariant / authority / boundary；具体 incident/counterexample 留在 eval；behavioral claim 必须由真实 eval 支撑。不要因 regression 增加而同步扩大 runtime context。
-- **Northstar / Prompt Atlas stay bilingual, not divergent.** 两者是同一 Skill semantics 的中文/英文 surface。对 Goal / Execution / Verification / Evidence、Unknown、Taskbook、Completion Hook、trust 或 eval case 的行为性修改必须双边同步；只允许语言、名称和纯表达层差异。若要改变其中一边的 semantics，先把它当作 shared semantic change review，而不是独立 Skill 演化。
+- **Northstar / Prompt Atlas stay bilingual, not divergent.** 两者是同一 Skill semantics 的中文/英文 surface。对 Intent take / Intent compile、Goal / Execution / Verification / Evidence、Unknown、Taskbook、Completion Hook、trust 或 eval case 的行为性修改必须双边同步；只允许语言、名称和纯表达层差异。若要改变其中一边的 semantics，先把它当作 shared semantic change review，而不是独立 Skill 演化。
 
 ## Graph and loop
 
