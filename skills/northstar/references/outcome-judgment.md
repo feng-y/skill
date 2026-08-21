@@ -1,6 +1,6 @@
 # Outcome Judgment
 
-只在输入已经是 Executor outcome / completion report / Evidence，且存在当前 authoritative Taskbook 时读取。这里负责**独立判卷**：判断 Taskbook 承诺的完成世界是否已经成为 current reality，同时作为 Execution Graph 的 Evidence feedback boundary。先判当前 outcome，再决定受影响 Graph 是否需要演进；它不是 execution replay、repair planning 或 manager loop。
+只在输入已经是 Executor outcome / completion report / Evidence，且存在当前 authoritative Taskbook 时读取。这里负责**独立判卷**：判断 Taskbook 承诺的完成世界是否已经成为 current reality，同时作为 Execution 中 Graph 演进的 Evidence feedback boundary。先判当前 outcome、核实 candidate Evidence，再决定受影响 Graph 是否需要演进；它不是 execution replay、repair planning 或 manager loop。
 
 ## Judge context：先合同，再现实，再报告
 
@@ -8,7 +8,7 @@
 
 1. 先读取当前 authoritative Taskbook，以及之后仍有效的 Human correction / repo authority；从中恢复 Goal、binding constraints、completion claims 和真正需要证明的 material boundaries。
 2. 再针对这些 claims 检查 current repo/runtime reality，只读取足以判断 outcome 的 territory；不要因为 Executor 改过哪些文件就把 judging scope 缩成 diff。
-3. 最后消费 Executor report / task checklist / test output。它们只能作为 candidate Evidence、定位线索或需要核实的 claim，不能先替 judge 定义“完成了什么”。
+3. 最后消费 Executor report / task checklist / test output。它们只能作为 candidate Evidence、定位线索或需要核实的 claim，不能先替 judge 定义“完成了什么”，也不能在核实前改变 Graph。
 
 若 Executor narrative 与 authoritative Taskbook 或 verified reality 冲突，以 Taskbook / current authority / verified reality 为准。不要为了独立而重做完整 Research；只补当前 outcome judgment 真正需要的 Evidence。
 
@@ -54,14 +54,14 @@ Evidence 必须对当前 claim 有足够直接性、authority、provenance、fre
 
 ## 判卷之后
 
-判卷先产生当前 judgment，再决定同一 Goal 的 Graph 是否需要更新；不能跳过 judgment 直接把 Executor report 编成 repair plan：
+判卷先产生当前 judgment，再决定同一 Goal 的 Execution Graph 是否需要更新；不能跳过 judgment 直接把 Executor report 编成 repair plan：
 
 - **Goal 已证明**：接受当前 outcome，并给出支持它的 material Evidence basis。
-- **Taskbook 仍有效，且只是已有 claim 未成立 / 尚未证明**：指出精确 claim、当前 counter-Evidence / missing Evidence，以及它为什么 material；若这些 Evidence 没有改变剩余 material work / dependency，就不要把 gap 改写成 file/helper/test tasklist。
-- **Taskbook 仍有效，但新 Evidence 让原先 contingent 的 material work 成为真实工作，或改变剩余 work / dependency**：只重新进入受影响的 Execution Graph dependency cone，扩展、删除、拆分、合并或重排真正受影响的 work，并按最新 reality 完整重交付 Taskbook；无关 Graph、Goal 和仍有效 Evidence 继续复用。
+- **Taskbook 仍有效，且只是已有 claim 未成立 / 尚未证明**：指出精确 claim、当前 counter-Evidence / missing Evidence，以及它为什么 material；若核实后的 Evidence 没有改变剩余 material work / dependency，就不要把 gap 改写成 file/helper/test tasklist。
+- **Taskbook 仍有效，但 established Evidence / new reality 让原先 contingent 的 material work 成为真实工作，或改变剩余 work / dependency**：只重新进入受影响的 Execution dependency cone，按 Graph 扩展、删除、拆分、合并或重排真正受影响的 work，并按最新 reality 完整重交付 Taskbook；无关 Graph、Goal 和仍有效 Evidence 继续复用。
 - **Taskbook premise / authority / completion contract 被新 reality 推翻**：从更高的受影响 shaping / compile dependency cone 重新进入；不把一个已失效 contract 当 repair specification。
 - **缺少判卷所必需的 authoritative reality**：准确说明 blocker 与恢复条件；不接受 Executor self-report 代替。
 
 普通 implementation failure 不返回 Human。只有出现新的 Human-owned choice / 授权，或 reality 使安全继续本身需要 Human 决定时才回 Human。
 
-输出保持 minimum-sufficient：若只需要 judgment，就给结论、material claim basis 与真实 gap；若 Evidence 已经改变 Execution Graph，则返回按受影响 cone 重编后的完整 Taskbook。不要输出 execution progress、debug narrative 或持续监督协议。
+输出保持 minimum-sufficient：若只需要 judgment，就给结论、material claim basis 与真实 gap；若 established Evidence 已改变 Execution 的 Graph，则返回按受影响 cone 重编后的完整 Taskbook。不要输出 execution progress、debug narrative 或持续监督协议。
