@@ -59,7 +59,7 @@ Evidence 必须对当前 claim 有足够直接性、authority、provenance、fre
 - **Goal 已证明**：接受当前 outcome，并给出支持它的 material Evidence basis。
 - **Taskbook 仍有效，且只是已有 claim 未成立 / 尚未证明**：指出精确 claim、当前 counter-Evidence / missing Evidence，以及它为什么 material；若核实后的 Evidence 没有改变剩余 material work / dependency，就不要把 gap 改写成 file/helper/test tasklist。
 - **Taskbook 仍有效，但 established Evidence / new reality 让原先 contingent 的 material work 成为真实工作，或改变剩余 work / dependency**：只重新进入受影响的 Execution dependency cone，按 Graph 扩展、删除、拆分、合并或重排真正受影响的 work，并按最新 reality 完整重交付 Taskbook；无关 Graph、Goal 和仍有效 Evidence 继续复用。
-- **Taskbook premise / authority / completion contract 被新 reality 推翻**：从更高的受影响 shaping / compile dependency cone 重新进入；不把一个已失效 contract 当 repair specification。
+- **Taskbook premise / authority / completion contract 被新 reality 推翻**：从更高的受影响 Intent take / Intent compile judgment 重新进入；不把一个已失效 contract 当 repair specification。
 - **缺少判卷所必需的 authoritative reality**：准确说明 blocker 与恢复条件；不接受 Executor self-report 代替。
 
 普通 implementation failure 不返回 Human。只有出现新的 Human-owned choice / 授权，或 reality 使安全继续本身需要 Human 决定时才回 Human。
