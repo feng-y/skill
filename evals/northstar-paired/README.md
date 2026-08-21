@@ -6,18 +6,19 @@ Eval-only. This does not change Northstar / Prompt Atlas runtime semantics.
 
 Compare a base skill revision with a candidate revision under isolated, otherwise identical sessions and measure whether Intent take + Intent compile produces a better executable handoff at lower cost without increasing speculative or over-specified behavior.
 
-Use the same target repo/ref, exact user prompt, model/reasoning configuration, tool permissions, and host configuration for both arms. Each arm starts from a fresh session with no conversation carry-over, memory, or artifacts from the other arm.
+Use the same target repo/ref, exact user prompt, Human response policy, model/reasoning configuration, tool permissions, and host configuration for both arms. Each arm starts from a fresh session with no conversation carry-over, memory, or artifacts from the other arm.
 
 ## Pair setup
 
 For every case:
 
-1. Freeze a real engineering task before either arm runs. Record the target repo/ref and exact user prompt; store a SHA-256 of the exact prompt in every run record.
-2. Run `base` and `candidate` in separate clean sessions. Randomize arm order when possible.
-3. Keep model/config, tool permissions, and host configuration identical. Record these as stable IDs/strings so the scorer can reject mismatched pairs. Do not reveal the other arm's output to either session.
-4. Capture the first executable handoff, not merely the first answer. A handoff is executable only when a fresh Executor can start material work without redoing Human intent judgment, redefining material boundaries, or inventing completion proof.
-5. After handoff, give the Taskbook to a fresh Executor session with the same target repo/ref. Record whether the Executor must reinterpret Human intent, material boundaries, or completion proof before safe start.
-6. For a smoke comparison, one pair per case is enough. For a behavioral-uplift claim, use at least three independent clean-session repeats per arm for each case.
+1. Freeze a real engineering task before either arm runs. Pin the target repo to an immutable commit SHA, record the exact user prompt, and store a SHA-256 of that prompt in every run record.
+2. Freeze the Human intent behind the case and a response profile for clarification questions. The same Human/oracle answers both arms from that profile and does not volunteer arm-specific extra context.
+3. Pin base and candidate skill revisions to immutable commit SHAs. Run `base` and `candidate` in separate clean sessions. Randomize arm order when possible.
+4. Keep model/config, tool permissions, and host configuration identical. Record these as stable IDs/strings so the scorer can reject mismatched pairs. Do not reveal the other arm's output to either session.
+5. Capture the first executable handoff, not merely the first answer. A handoff is executable only when a fresh Executor can start material work without redoing Human intent judgment, redefining material boundaries, or inventing completion proof.
+6. After handoff, give the Taskbook to a fresh Executor session with the same target repo/ref. Record whether the Executor must reinterpret Human intent, material boundaries, or completion proof before safe start.
+7. For a smoke comparison, one pair per case is enough. For a behavioral-uplift claim, use at least three independent clean-session repeats per arm for each case.
 
 Use at least five real tasks spanning these shapes: clear small task, ambiguous intent, complex dependency Graph, contingent downstream work, and a task with multiple valid implementation choices. Freeze the case set before running either arm.
 
@@ -30,11 +31,12 @@ Write one JSON object per session to a JSONL file. Required fields:
   "case_id": "real-task-01",
   "repeat": 1,
   "arm": "base",
-  "skill_ref": "main@<sha>",
+  "skill_ref": "main@<immutable-sha>",
   "target_repo": "owner/repo",
-  "target_ref": "<sha-or-branch>",
+  "target_ref": "<immutable-sha>",
   "model": "<model + reasoning config>",
   "prompt_sha256": "<sha256 of exact user prompt>",
+  "human_response_profile": "<stable response-profile id>",
   "tool_profile": "<stable tool-permission profile>",
   "host_config": "<stable host/runtime profile>",
   "first_handoff_latency_ms": 42000,
@@ -56,7 +58,7 @@ Write one JSON object per session to a JSONL file. Required fields:
 }
 ```
 
-The scorer rejects a pair when target repo/ref, model configuration, prompt hash, tool profile, or host configuration differs across arms, and rejects a pair whose base/candidate `skill_ref` is identical.
+The scorer rejects a pair when target repo/ref, model configuration, prompt hash, Human response profile, tool profile, or host configuration differs across arms, and rejects a pair whose base/candidate `skill_ref` is identical.
 
 `clarifications[].contract_changing` is judged against the final executable contract. A clarification is unnecessary when a different answer could not change Goal, Human-owned choice, binding boundary, material-work judgment, or completion obligation.
 
@@ -71,7 +73,7 @@ Do not let either tested arm label its own quality metrics.
 1. Preserve the raw session transcript, Taskbook, timing/token/tool counters, and target-reality Evidence.
 2. Before judging `contract_changing` or `evidence_supported`, hide `arm`, `skill_ref`, and any branch/revision marker that reveals which output is base or candidate.
 3. Use the same independent judge/rubric for both arms. The judge classifies each clarification and each material work cut against the frozen Human intent and target repo/runtime reality; it must not prefer an implementation style absent from the contract.
-4. `executor_reinterpretation` comes from the separate fresh Executor handoff in Pair setup step 5, not from the original Northstar / Prompt Atlas session self-report.
+4. `executor_reinterpretation` comes from the separate fresh Executor handoff in Pair setup step 6, not from the original Northstar / Prompt Atlas session self-report.
 5. If two reviewers are used and disagree on a classification, resolve the disagreement before scoring and keep the adjudication note with the run artifacts.
 
 This keeps the measured quality rates independent from the skill revision being tested.
@@ -92,7 +94,7 @@ Run:
 python3 evals/northstar-paired/score.py <results.jsonl>
 ```
 
-The scorer prints base/candidate aggregates, percentage-point deltas for quality rates, relative deltas for efficiency metrics, and non-regression guardrails.
+The scorer prints base/candidate aggregates, percentage-point deltas for quality rates, relative deltas for efficiency metrics, non-regression guardrails, and whether the sample reaches the default claim-ready size of at least five cases with at least three repeats per case.
 
 ## Decision rule
 
