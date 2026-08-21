@@ -8,7 +8,7 @@
 2. **Intent > means**：点名 architecture/tool/provider/file shape 默认是可替换 means；只有 Human/repo/upstream authority 让 representation 本身 binding 时才进入 Goal/constraint。
 3. **Bounded Research**：只关闭会改变 Goal、Human choice、binding boundary、material-work judgment、completion obligation 或 safe-start frontier 的 reality；Taskbook judgment/binding rule 真正依赖的 reality claim 才必须在 handoff 前取得足够 Evidence；不能为了 Graph completeness 扩大 Research。
 4. **Human authority**：普通 factual / implementation uncertainty 不升级 Human；会改变 Human 接受的 Goal，或 materially 改变是否做、投入、长期维护承诺或风险姿态的选择才进入 Ask。
-5. **Executable Taskbook + Executor freedom**：Intent compile 的产出必须让 fresh Executor 不需要重做 Human intent judgment、重新定义 material boundary 或发明 completion proof就能开始 material work，同时不得把可替换 implementation choice 升级成 contract。Goal 摘要、task list、Research narration、file/symbol/helper/patch plan 都不能替代 executable contract。
+5. **Executable Taskbook + Executor freedom**：Intent compile 的产出必须让 fresh Executor 不需要重做 Human intent judgment、重新定义 material boundary 或发明 completion proof，就能开始 material work，同时不得把可替换 implementation choice 升级成 contract。Goal 摘要、task list、Research narration、file/symbol/helper/patch plan 都不能替代 executable contract。
 6. **Material work + Graph structure**：`Goal → Execution → Verification → Evidence` 的 semantic ownership 不变；Intent compile 先确定 executable contract，Graph 只结构化其中 Execution 的 material work / real dependency。Taskbook prose order 不制造 dependency，没有真实 dependency 的 work 不强制串/并行，也不为并行拆碎 cohesive work。
 7. **Execution / Verification 分离**：Verification 固定 completion claims / Evidence obligations，不与 implementation work 或 Graph node 一一对应；authoritative fallback path 只在省略会明显增加 under-verification 时保留，失准后由 Executor 重推。
 8. **Progressive future**：当前只能安全推进一部分时不缩 Human Goal；future work 只有 established execution Evidence 使其成为真实问题后才加入。
@@ -194,7 +194,7 @@ PASS：先完成 Intent take，恢复 Human 真正接受的 outcome / binding ch
 ### S35 — Intent compile 必须产出 executable contract
 Goal 和 binding constraints 已定，repo reality 也足以安全开始；Northstar 输出只写“完成迁移、保持兼容、做好验证”，没有 material boundary / real dependency / completion claim，使 fresh Executor 必须重新理解任务。
 
-PASS：Intent compile 必须补到 fresh Executor 可以直接开始 material work并知道如何证明 Goal 的最小充分程度；输出 Goal 摘要、泛化建议、task titles 或 patch checklist 都失败。
+PASS：Intent compile 必须补到 fresh Executor 可以直接开始 material work 并知道如何证明 Goal 的最小充分程度；输出 Goal 摘要、泛化建议、task titles 或 patch checklist 都失败。
 
 ### S36 — Graph 不能替代 Intent judgment
 Human 的最新表达仍有一个会改变 accepted outcome / long-lived commitment 的 choice；repo 同时已经能画出很完整的 dependency Graph。
