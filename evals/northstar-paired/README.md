@@ -16,9 +16,10 @@ For every case:
 2. Freeze the Human intent behind the case and a response profile for clarification questions. The same Human/oracle answers both arms from that profile and does not volunteer arm-specific extra context.
 3. Pin base and candidate skill revisions to immutable commit SHAs. Run `base` and `candidate` in separate clean sessions. Randomize arm order when possible.
 4. Keep model/config, tool permissions, and host configuration identical. Record these as stable IDs/strings so the scorer can reject mismatched pairs. Do not reveal the other arm's output to either session.
-5. Capture the first executable handoff, not merely the first answer. A handoff is executable only when a fresh Executor can start material work without redoing Human intent judgment, redefining material boundaries, or inventing completion proof.
-6. After handoff, give the Taskbook to a fresh Executor session with the same target repo/ref. Record whether the Executor must reinterpret Human intent, material boundaries, or completion proof before safe start.
-7. For a smoke comparison, one pair per case is enough. For a behavioral-uplift claim, use at least three independent clean-session repeats per arm for each case.
+5. Preserve every candidate Taskbook handoff with its elapsed time, token counts, and tool-call count. Do not call it executable yet.
+6. Give each candidate Taskbook to a fresh Executor session with the same target repo/ref. Independently judge whether the Executor can safely start material work without redoing Human intent judgment, redefining material boundaries, or inventing completion proof. Set `handoff_validated=true` only for a handoff that passes this gate.
+7. When several handoff candidates exist in one session, the first executable handoff is the earliest candidate that independently validates. Record latency/token/tool fields to that validated handoff. If no candidate validates, set `handoff_validated=false`; the handoff latency/token/tool fields may be `null` and are excluded from efficiency aggregates.
+8. For a smoke comparison, one pair per case is enough. For a behavioral-uplift claim, use at least three independent clean-session repeats per arm for each case.
 
 Use at least five real tasks spanning these shapes: clear small task, ambiguous intent, complex dependency Graph, contingent downstream work, and a task with multiple valid implementation choices. Freeze the case set before running either arm.
 
@@ -39,6 +40,7 @@ Write one JSON object per session to a JSONL file. Required fields:
   "human_response_profile": "<stable response-profile id>",
   "tool_profile": "<stable tool-permission profile>",
   "host_config": "<stable host/runtime profile>",
+  "handoff_validated": true,
   "first_handoff_latency_ms": 42000,
   "input_tokens_to_handoff": 12000,
   "output_tokens_to_handoff": 1800,
@@ -60,33 +62,34 @@ Write one JSON object per session to a JSONL file. Required fields:
 
 The scorer rejects a pair when target repo/ref, model configuration, prompt hash, Human response profile, tool profile, or host configuration differs across arms, and rejects a pair whose base/candidate `skill_ref` is identical.
 
+`handoff_validated` is an independent executable-contract judgment, not the tested arm's self-report. A true value means a fresh Executor can safely start from that Taskbook without recovering missing Human intent, materially redefining the work boundary, or inventing completion proof. Efficiency metrics to first executable handoff are calculated only from records with `handoff_validated=true`. A false value remains visible as a failed handoff and prevents the sample from becoming behavioral-claim ready; it must not disappear as a fast latency observation.
+
 `clarifications[].contract_changing` is judged against the final executable contract. A clarification is unnecessary when a different answer could not change Goal, Human-owned choice, binding boundary, material-work judgment, or completion obligation.
 
-`compiled_work[].evidence_supported` is false when a material work cut or dependency was compiled without current Evidence and before it became real. Implementation detail does not count as a material work cut. `compiled_work` must be non-empty for an executable handoff record; an empty list is invalid rather than a synthetic 0% speculative-task score.
+`compiled_work[].evidence_supported` is false when a material work cut or dependency was compiled without current Evidence and before it became real. Implementation detail does not count as a material work cut. `compiled_work` must be non-empty for a recorded handoff attempt; an empty list is invalid rather than a synthetic 0% speculative-task score.
 
-`executor_reinterpretation` is true when a fresh Executor must recover missing Human intent, materially redefine the work boundary, or invent the completion proof before it can safely start. Ordinary implementation discovery is not reinterpretation.
+`executor_reinterpretation` is true when the fresh Executor must recover missing Human intent, materially redefine the work boundary, or invent the completion proof before it can safely start. Ordinary implementation discovery is not reinterpretation.
 
 ## Blind adjudication
 
 Do not let either tested arm label its own quality metrics.
 
-1. Preserve the raw session transcript, Taskbook, timing/token/tool counters, and target-reality Evidence.
-2. Before judging `contract_changing` or `evidence_supported`, hide `arm`, `skill_ref`, and any branch/revision marker that reveals which output is base or candidate.
-3. Use the same independent judge/rubric for both arms. The judge classifies each clarification and each material work cut against the frozen Human intent and target repo/runtime reality; it must not prefer an implementation style absent from the contract.
-4. `executor_reinterpretation` comes from the separate fresh Executor handoff in Pair setup step 6, not from the original Northstar / Prompt Atlas session self-report.
+1. Preserve the raw session transcript, each candidate Taskbook, timing/token/tool counters, and target-reality Evidence.
+2. Before judging `handoff_validated`, `contract_changing`, or `evidence_supported`, hide `arm`, `skill_ref`, and any branch/revision marker that reveals which output is base or candidate.
+3. Use the same independent judge/rubric for both arms. The judge validates executable handoffs, classifies each clarification, and classifies each material work cut against the frozen Human intent and target repo/runtime reality; it must not prefer an implementation style absent from the contract.
+4. `executor_reinterpretation` comes from the separate fresh Executor probe, not from the original Northstar / Prompt Atlas session self-report.
 5. If two reviewers are used and disagree on a classification, resolve the disagreement before scoring and keep the adjudication note with the run artifacts.
 
-This keeps the measured quality rates independent from the skill revision being tested.
+This keeps the measured quality and handoff-validity signals independent from the skill revision being tested.
 
 ## Metrics
 
-All metrics are lower-is-better.
-
-- **First executable handoff latency**: median `first_handoff_latency_ms`.
+- **Validated executable handoff rate**: validated sessions / all sessions. Higher is better and is reported explicitly so invalid fast handoffs cannot disappear from the result.
+- **First executable handoff latency**: median `first_handoff_latency_ms` over validated handoffs only.
 - **Unnecessary clarification rate**: non-contract-changing clarification questions / all clarification questions. If no clarification was asked, the rate is 0.
 - **Speculative task rate**: Evidence-unsupported compiled material work / all compiled material work.
 - **Executor reinterpretation rate**: sessions with `executor_reinterpretation=true` / all sessions.
-- **Token / tool cost**: median input+output tokens to first executable handoff and median tool calls to first executable handoff. Total-session token/tool fields are reported as secondary context.
+- **Token / tool cost**: median input+output tokens and tool calls to the first validated executable handoff. Total-session token/tool fields are reported as secondary context across all runs.
 
 Run:
 
@@ -94,7 +97,36 @@ Run:
 python3 evals/northstar-paired/score.py <results.jsonl>
 ```
 
-The scorer prints base/candidate aggregates, percentage-point deltas for quality rates, relative deltas for efficiency metrics, non-regression guardrails, and whether the sample reaches the default claim-ready size of at least five cases with at least three repeats per case.
+The scorer prints base/candidate aggregates, percentage-point deltas for quality rates, relative deltas for efficiency metrics, non-regression guardrails, and an explicit behavioral-claim readiness section.
+
+## Behavioral claim readiness
+
+The scorer must print one of:
+
+```text
+Behavioral claim readiness:
+READY
+- cases: 5/5
+- min repeats/case: 3/3
+- validated handoffs: all runs
+```
+
+or:
+
+```text
+Behavioral claim readiness:
+INCONCLUSIVE
+- cases: 1/5
+- min repeats/case: 1/3
+```
+
+The default readiness gate requires:
+
+- at least five real cases;
+- at least three clean-session repeats per arm for every case;
+- every recorded run to produce an independently validated executable handoff.
+
+A sample that misses any gate may still be used as scorer/schema smoke or exploratory measurement, but it cannot support a behavioral-uplift claim.
 
 ## Decision rule
 
@@ -106,11 +138,13 @@ Default guardrails for a behavioral-uplift claim:
 - median first-handoff latency, tokens-to-handoff, and tool-calls-to-handoff must not regress by more than 10%;
 - claim an efficiency improvement only when at least one of those three efficiency metrics improves by at least 10% without violating the quality guardrails.
 
+If a handoff is invalid, its handoff-specific efficiency fields are not used to reward speed or cost; the invalid run instead blocks behavioral claim readiness. If an arm has no validated handoff, its handoff efficiency metrics are `n/a` and the corresponding comparison is `INCONCLUSIVE`.
+
 If sample size is too small or paired results disagree materially across repeats, report the measurements and mark the behavioral conclusion inconclusive rather than converting noise into a PASS.
 
 ## Smoke the scorer
 
-`results.example.jsonl` is schema-only example data, not behavioral Evidence. It can be used to confirm that the scorer accepts a valid pair:
+`results.example.jsonl` is schema-only example data, not behavioral Evidence. It can be used to confirm that the scorer accepts a valid pair and explicitly reports the one-case sample as `INCONCLUSIVE` for behavioral-claim readiness:
 
 ```bash
 python3 evals/northstar-paired/score.py evals/northstar-paired/results.example.jsonl
