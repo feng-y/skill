@@ -151,6 +151,26 @@ Executor Evidence 发现原 Taskbook 的一个 verifier authority / material pre
 
 PASS：前者只重开受影响 shaping/compile dependency cone，不拿失效 Taskbook 编 repair checklist；后者保持同一 Taskbook，只返回精确 failed/unproven claim 和 Evidence gap。两种情况都升级 Human 或都变成 repair plan 均失败。
 
+### S27 — 已知 Graph 不能为了 thin 被压掉
+Current Evidence 已明确 A 是 prerequisite，之后 B/C 独立推进，D 依赖 B/C 的共同 outcome；这些 work 的 material boundary 都已经稳定。
+
+PASS：Taskbook 一次表达 best-known `A → {B,C} → D`；只给 A、把 B/C/D 留给“Executor 自己发现”，或把结构压成一个无法判断的大 Task 都失败。Graph 可以用 prose 表达，不要求 diagram/schema。
+
+### S28 — blocked branch 不冻结独立 Graph
+Graph 中 A 完成后 B/C 独立；B 因外部权限 blocked，C 的 prerequisite 已满足。
+
+PASS：Taskbook 的 dependency 语义必须允许 C 继续；把 prose 顺序当成 `B → C`、因为 B blocked 而冻结 C，或为了显式并行再拆出 scheduler/protocol 都失败。
+
+### S29 — Outcome Evidence 必须驱动下一轮 Graph
+当前 Taskbook 为完整 Goal 只编译 A，因为 B/C 是否存在取决于 A outcome。Executor 返回 authoritative Evidence，证明 B 必须做、C 不存在，Goal 尚未完成。
+
+PASS：先按当前 Taskbook 独立判断 outcome，再基于 Evidence 只扩展受影响 Graph 为后续 B，并完整重交付 Taskbook；继续只回复“Goal 未完成”、提前保留旧猜测 C、全量重做 Research，或把 B 编成 file/helper repair checklist 都失败。
+
+### S30 — Graph / Loop 不是新 runtime ontology
+复杂任务天然存在 dependency、branching 和 Evidence-driven refinement，但 repo/runtime 没有独立 Graph service、持久 scheduler 或新 lifecycle 的真实需求。
+
+PASS：用 Execution Graph + Evidence loop 推理和编译，同时保持 Taskbook 为唯一 contract、宿主负责 transport/runtime progress；新增 GraphNode taxonomy、Graph manager、persistent Graph state、第二本 taskbook 或额外 Judge/Planner lifecycle 都失败。
+
 ## Quality lineage
 
 Leader 只作为 **Taskbook / outcome-judgment quality baseline**：material altitude、real dependency、completion proof、whole-Goal acceptance 可以借鉴；它的 manager structure / execution lifecycle 不是 Northstar 的定位。Wayfinder/Grill/Unknowns/AE 提供的是 conditional resolution idea，不把 Northstar 升级成 orchestrator。
@@ -159,8 +179,8 @@ Leader 只作为 **Taskbook / outcome-judgment quality baseline**：material alt
 
 clean-session 对比至少观察三类指标：
 
-- **compile quality guardrails**：Goal fidelity、Human authority、material-work/dependency correctness、verification sufficiency；
-- **judge quality guardrails**：false accept / false reject、self-report resistance、whole-Goal coverage、false-vs-unproven distinction、contract-invalidation routing；
-- **startup efficiency**：time/tool-calls/tokens/repo-reads to first useful handoff，以及 handoff 后 material replan 比例。
+- **compile quality guardrails**：Goal fidelity、Human authority、best-known Graph completeness、real-dependency / independence correctness、speculative downstream rate、verification sufficiency；
+- **judge / loop quality guardrails**：false accept / false reject、self-report resistance、whole-Goal coverage、false-vs-unproven distinction、Evidence-triggered Graph update correctness、contract-invalidation routing；
+- **startup / evolution efficiency**：time/tool-calls/tokens/repo-reads to first useful handoff，以及 handoff 后 material replan 比例、无关 dependency cone 被重复重算的比例。
 
 没有 paired clean-session Evidence 时，只能声明 static/scenario contract review，不能宣称 behavioral uplift。
