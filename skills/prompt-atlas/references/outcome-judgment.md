@@ -1,6 +1,6 @@
 # Outcome Judgment
 
-Read only when the input is already Executor outcome / completion report / Evidence and a current authoritative Taskbook exists. This reference owns **independent judgment**: determine whether the finished world promised by the Taskbook has actually become current reality. It is not execution replay, repair planning, or a manager loop.
+Read only when the input is already Executor outcome / completion report / Evidence and a current authoritative Taskbook exists. This reference owns **independent judgment**: determine whether the finished world promised by the Taskbook has actually become current reality, while also serving as the Evidence feedback boundary for the Execution Graph. Judge the current outcome first, then decide whether the affected Graph must evolve. It is not execution replay, repair planning, or a manager loop.
 
 ## Judge context: contract first, reality second, report last
 
@@ -54,13 +54,14 @@ When expressing **completion degree**, report material-claim coverage: which cla
 
 ## After judgment
 
-Judgment produces the current decision only; it does not design a repair patch:
+Judgment produces the current decision first and only then decides whether the same Goal's Graph must change. Do not skip judgment and compile the Executor report directly into a repair plan:
 
 - **Goal is proven**: accept the current outcome and state the material Evidence basis.
-- **Taskbook remains valid but a gap exists**: identify the exact claim that is false or still unproven, the current counter-Evidence / missing Evidence, and why it is material. Do not rewrite the gap into a file/helper/test tasklist.
-- **New reality invalidates a Taskbook premise / authority / completion contract**: re-enter only the affected shaping / compile dependency cone. Do not use an invalid contract as a repair specification.
+- **Taskbook remains valid and only an existing claim is false / unproven**: identify the exact claim, current counter-Evidence / missing Evidence, and why it is material. If that Evidence does not change remaining material work / dependencies, do not rewrite the gap into a file/helper/test tasklist.
+- **Taskbook remains valid, but new Evidence makes previously contingent material work real or changes remaining work / dependencies**: re-enter only the affected Execution Graph dependency cone; extend, remove, split, merge, or reorder only work the new reality affects, then fully re-deliver the Taskbook from latest reality. Unrelated Graph, Goal, and still-valid Evidence remain reusable.
+- **New reality invalidates a Taskbook premise / authority / completion contract**: re-enter from the higher affected shaping / compile dependency cone. Do not use an invalid contract as a repair specification.
 - **Authoritative reality required for judgment is unavailable**: state the blocker and resume condition accurately; do not accept Executor self-report as a substitute.
 
 Ordinary implementation failure does not return to the Human. Return only for a new Human-owned choice / authorization, or when reality makes safe continuation itself require Human authority.
 
-Keep output minimum-sufficient: judgment, material claim basis, real gap / missing Evidence, and an invalidated premise only when one exists. Do not emit execution progress, debug narrative, or persistent supervision protocol.
+Keep output minimum-sufficient: when only judgment is needed, return the decision, material claim basis, and real gap. When Evidence has changed the Execution Graph, return the fully recompiled Taskbook for the affected cone. Do not emit execution progress, debug narrative, or persistent supervision protocol.
