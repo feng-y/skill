@@ -64,6 +64,18 @@ The scorer rejects a pair when target repo/ref, model configuration, prompt hash
 
 `executor_reinterpretation` is true when a fresh Executor must recover missing Human intent, materially redefine the work boundary, or invent the completion proof before it can safely start. Ordinary implementation discovery is not reinterpretation.
 
+## Blind adjudication
+
+Do not let either tested arm label its own quality metrics.
+
+1. Preserve the raw session transcript, Taskbook, timing/token/tool counters, and target-reality Evidence.
+2. Before judging `contract_changing` or `evidence_supported`, hide `arm`, `skill_ref`, and any branch/revision marker that reveals which output is base or candidate.
+3. Use the same independent judge/rubric for both arms. The judge classifies each clarification and each material work cut against the frozen Human intent and target repo/runtime reality; it must not prefer an implementation style absent from the contract.
+4. `executor_reinterpretation` comes from the separate fresh Executor handoff in Pair setup step 5, not from the original Northstar / Prompt Atlas session self-report.
+5. If two reviewers are used and disagree on a classification, resolve the disagreement before scoring and keep the adjudication note with the run artifacts.
+
+This keeps the measured quality rates independent from the skill revision being tested.
+
 ## Metrics
 
 All metrics are lower-is-better.
