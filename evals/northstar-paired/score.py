@@ -138,8 +138,11 @@ def validate_record(record, where):
         if not isinstance(item, dict) or not isinstance(item.get("evidence_supported"), bool):
             raise ValueError(f"{where}: every compiled_work item needs boolean evidence_supported")
 
-    if not isinstance(require(record, "executor_reinterpretation", where), bool):
+    executor_reinterpretation = require(record, "executor_reinterpretation", where)
+    if not isinstance(executor_reinterpretation, bool):
         raise ValueError(f"{where}: executor_reinterpretation must be boolean")
+    if not handoff_validated and not compiled_work and not executor_reinterpretation:
+        raise ValueError(f"{where}: no-handoff failure must set executor_reinterpretation=true")
 
 
 def validate_pairs(records):
@@ -224,7 +227,7 @@ def render_metric(name, base, candidate, is_rate=False):
     return f"| {name} | {display(base)} | {display(candidate)} | {delta_text} |"
 
 
-def guardrail_status(base, candidate, tolerance, relative=False):
+def lower_guardrail_status(base, candidate, tolerance, relative=False):
     if base is None or candidate is None:
         return "INCONCLUSIVE"
     if relative:
@@ -234,32 +237,24 @@ def guardrail_status(base, candidate, tolerance, relative=False):
     return "PASS" if candidate <= base + tolerance else "REGRESS"
 
 
-def sample_readiness(pairs, records):
+def higher_guardrail_status(base, candidate, tolerance):
+    if base is None or candidate is None:
+        return "INCONCLUSIVE"
+    return "PASS" if candidate >= base - tolerance else "REGRESS"
+
+
+def sample_readiness(pairs):
     repeats_by_case = defaultdict(set)
     for case_id, repeat in pairs:
         repeats_by_case[case_id].add(repeat)
 
     case_count = len(repeats_by_case)
     min_repeats = min(len(repeats) for repeats in repeats_by_case.values())
-    all_handoffs_validated = all(record["handoff_validated"] for record in records)
-
     reasons = []
     if case_count < 5:
         reasons.append(f"cases: {case_count}/5")
     if min_repeats < 3:
         reasons.append(f"min repeats/case: {min_repeats}/3")
-    if not all_handoffs_validated:
-        counts = {}
-        for arm in ARMS:
-            arm_records = [r for r in records if r["arm"] == arm]
-            valid = sum(1 for r in arm_records if r["handoff_validated"])
-            counts[arm] = (valid, len(arm_records))
-        reasons.append(
-            "validated handoffs: "
-            f"base {counts['base'][0]}/{counts['base'][1]}, "
-            f"candidate {counts['candidate'][0]}/{counts['candidate'][1]}; claim gate requires all"
-        )
-
     return case_count, min_repeats, not reasons, reasons
 
 
@@ -291,21 +286,25 @@ def main():
     stats = {arm: aggregate(by_arm[arm]) for arm in ARMS}
     base = stats["base"]
     candidate = stats["candidate"]
-    case_count, min_repeats, claim_ready, readiness_reasons = sample_readiness(pairs, records)
+    case_count, min_repeats, sample_ready, readiness_reasons = sample_readiness(pairs)
 
     print(f"pairs: {len(pairs)}  cases: {case_count}  min repeats/case: {min_repeats}")
     print(f"base runs: {len(by_arm['base'])}  candidate runs: {len(by_arm['candidate'])}")
     print()
     print("Behavioral claim readiness:")
-    if claim_ready:
-        print("READY")
+    if sample_ready:
+        print("READY FOR SCORING")
         print(f"- cases: {case_count}/5")
         print(f"- min repeats/case: {min_repeats}/3")
-        print("- validated handoffs: all runs")
     else:
         print("INCONCLUSIVE")
         for reason in readiness_reasons:
             print(f"- {reason}")
+    print(
+        "- validated handoffs: "
+        f"base {sum(1 for r in by_arm['base'] if r['handoff_validated'])}/{len(by_arm['base'])}, "
+        f"candidate {sum(1 for r in by_arm['candidate'] if r['handoff_validated'])}/{len(by_arm['candidate'])}"
+    )
 
     print()
     print("| metric | base | candidate | candidate vs base |")
@@ -321,36 +320,41 @@ def main():
     print(render_metric("total tool calls", base["total_tool_calls"], candidate["total_tool_calls"]))
 
     quality = {
-        "unnecessary clarification": guardrail_status(
+        "validated executable handoff": higher_guardrail_status(
+            base["handoff_validation_rate"],
+            candidate["handoff_validation_rate"],
+            args.rate_tolerance,
+        ),
+        "unnecessary clarification": lower_guardrail_status(
             base["unnecessary_clarification_rate"],
             candidate["unnecessary_clarification_rate"],
             args.rate_tolerance,
         ),
-        "speculative task": guardrail_status(
+        "speculative task": lower_guardrail_status(
             base["speculative_task_rate"],
             candidate["speculative_task_rate"],
             args.rate_tolerance,
         ),
-        "Executor reinterpretation": guardrail_status(
+        "Executor reinterpretation": lower_guardrail_status(
             base["executor_reinterpretation_rate"],
             candidate["executor_reinterpretation_rate"],
             args.rate_tolerance,
         ),
     }
     efficiency = {
-        "handoff latency": guardrail_status(
+        "handoff latency": lower_guardrail_status(
             base["handoff_latency_ms"],
             candidate["handoff_latency_ms"],
             args.cost_tolerance,
             relative=True,
         ),
-        "tokens to handoff": guardrail_status(
+        "tokens to handoff": lower_guardrail_status(
             base["tokens_to_handoff"],
             candidate["tokens_to_handoff"],
             args.cost_tolerance,
             relative=True,
         ),
-        "tool calls to handoff": guardrail_status(
+        "tool calls to handoff": lower_guardrail_status(
             base["tool_calls_to_handoff"],
             candidate["tool_calls_to_handoff"],
             args.cost_tolerance,
@@ -376,10 +380,10 @@ def main():
     if inconclusive_metrics:
         print("\nresult: INCONCLUSIVE metrics: " + ", ".join(inconclusive_metrics))
         return 0
-    if not claim_ready:
+    if not sample_ready:
         print("\nresult: NON-REGRESSION within configured tolerances; behavioral claim remains INCONCLUSIVE")
         return 0
-    print("\nresult: NON-REGRESSION within configured tolerances; sample is claim-ready")
+    print("\nresult: NON-REGRESSION within configured tolerances; sample is ready for behavioral interpretation")
     return 0
 
 
