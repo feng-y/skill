@@ -62,6 +62,7 @@ AI-native 优化不是单独追求“模块更小”“层次更多”或 depend
 ## 按需读取
 
 - [strategic-design.md](references/strategic-design.md)：Goal pressure 与 bounded Evidence 仍支持 materially different 的 capability / module boundary、internal variation、dependency 或 Target；
+- [delivery-examples.md](references/delivery-examples.md)：Strategic Design 已成立，但交付形状容易漂移，或候选 Target 疑似只是平台化、加层 / facade 化、complexity relocation；示例只帮助表达和挑战候选，不定义第二套 contract；
 - [legacy-lenses.md](references/legacy-lenses.md)：旧模式、标记、配置、注册名或其他兼容身份能否退出会改变 Target / Program；
 - [brooks-constraints.md](references/brooks-constraints.md)：候选结构已经说得通，但整体复杂度、第二系统或 complexity relocation 仍可疑。
 
