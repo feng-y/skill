@@ -4,12 +4,12 @@ Eval / review only. Normal runtime must not read this file. It tests whether Pro
 
 ## Static smoke
 
-1. **Prompt Atlas identity**: the Human owns accepted outcome / Human-owned commitments; Prompt Atlas performs Intent take first, then Intent compile to produce an executable Taskbook; the Executor owns implementation How. Prompt Atlas does not own architecture design, complete research, execution orchestration, a scheduler, or verifier implementation.
+1. **Prompt Atlas identity**: the Human owns accepted outcome / Human-owned commitments; Prompt Atlas performs Intent take first, closes only ambiguity that can change the executable contract, then performs Intent compile to produce an executable Taskbook; the Executor owns implementation How. Prompt Atlas does not own architecture design, complete research, execution orchestration, a scheduler, or verifier implementation.
 2. **Intent > means**: named architecture/tool/provider/file shape is replaceable means by default. Representation enters Goal/constraints only when Human/repo/upstream authority makes it binding.
 3. **Bounded Research**: close only reality that can change Goal, Human choice, binding boundary, material-work judgment, completion obligation, or safe-start frontier. Only reality the current Taskbook judgment / binding rule truly depends on must have sufficient Evidence before handoff; Graph completeness is not a reason to expand Research.
 4. **Human authority**: ordinary factual / implementation uncertainty does not escalate to the Human. Ask only for choices that change the Human-accepted Goal or materially change whether to proceed, investment, long-lived maintenance commitment, or risk posture.
-5. **Executable Taskbook**: Intent compile must produce enough contract for a fresh Executor to begin material work without redoing Human intent judgment, redefining material boundaries, or inventing completion proof. Goal summaries, task lists, Research narration, and file/symbol/helper/patch plans cannot substitute for the executable contract.
-6. **Material work + Graph structure**: semantic ownership remains `Goal → Execution → Verification → Evidence`; Execution must express material work / real dependencies as the Graph supported by current Evidence. Taskbook prose order does not create dependencies; work without a real dependency is neither forced serial nor parallel, and cohesive work is not fragmented merely to expose parallelism.
+5. **Executable Taskbook + Executor freedom**: Intent compile must produce enough contract for a fresh Executor to begin material work without redoing Human intent judgment, redefining material boundaries, or inventing completion proof, while keeping replaceable implementation choices outside the contract. Goal summaries, task lists, Research narration, and file/symbol/helper/patch plans cannot substitute for the executable contract.
+6. **Material work + Graph structure**: semantic ownership remains `Goal → Execution → Verification → Evidence`; Intent compile defines the executable contract first, and the Graph structures only material work / real dependencies inside Execution. Taskbook prose order does not create dependencies; work without a real dependency is neither forced serial nor parallel, and cohesive work is not fragmented merely to expose parallelism.
 7. **Execution / Verification separation**: Verification fixes completion claims / Evidence obligations rather than mirroring implementation work or Graph nodes. An authoritative fallback path is retained only when omission would materially increase under-verification; when stale, the Executor re-derives coverage.
 8. **Progressive future**: when only part is safe now, do not shrink the Human's full Goal. Future work enters only when established execution Evidence makes it real.
 9. **Handoff / correction**: a successful Taskbook is materialized as the same body to an authoritative file outside repo/workspace and carries only a thin completion handoff. A material Human correction recomputes only the affected intent / compile dependency cone and fully re-delivers.
@@ -206,6 +206,11 @@ The Human later narrows compatibility scope. One material branch and its Verific
 
 PASS: update Goal/constraint from the affected Intent take / Intent compile judgment and recompile only its dependency cone before full re-delivery. Unrelated work / Evidence stays valid. Full reset, delta-only response, or retaining the old compatibility scope fails.
 
+### S38 — Intent compile preserves Executor freedom
+The Human requires online `P99` below a specified threshold while preserving compatibility. Repo reality shows Redis/cache, algorithmic optimization, or data-structure changes could all satisfy Goal, and the Human has not made any implementation binding.
+
+PASS: Intent compile fixes the latency outcome, compatibility boundary, necessary material work / dependencies, and completion claims while leaving Redis/cache/algorithm/file-level choices to the Executor. Promoting a candidate implementation into a binding constraint, writing a patch plan merely to make the Taskbook “executable,” or declaring the Taskbook non-executable until an implementation is chosen all fail.
+
 ## Quality lineage
 
 Leader is only a **Taskbook / outcome-judgment quality baseline**: material altitude, real dependency, completion proof, and whole-Goal acceptance are useful; its manager structure / execution lifecycle is not Prompt Atlas identity. Wayfinder/Grill/Unknowns/AE contribute conditional resolution ideas, not an orchestration mandate.
@@ -214,7 +219,7 @@ Leader is only a **Taskbook / outcome-judgment quality baseline**: material alti
 
 A clean-session comparison should track three classes of metrics:
 
-- **intent / compile quality guardrails**: Intent fidelity, Goal fidelity, Human authority, executable-handoff sufficiency, best-known Graph completeness, real-dependency / independence correctness, speculative-downstream rate, Verification sufficiency;
+- **intent / compile quality guardrails**: Intent fidelity, Goal fidelity, Human authority, contract-changing ambiguity precision, executable-handoff sufficiency, Executor-freedom preservation / implementation-constraint leakage, best-known Graph completeness, real-dependency / independence correctness, speculative-downstream rate, Verification sufficiency;
 - **judge / loop quality guardrails**: false accept / false reject, self-report resistance, whole-Goal coverage, false-vs-unproven distinction, candidate-Evidence gating, Evidence-triggered Graph update correctness, contract-invalidation routing;
 - **startup / evolution efficiency**: time/tool calls/tokens/repo reads to first executable handoff, Graph-driven unnecessary-Research rate, material-replan rate after handoff, and the rate of recomputing unrelated dependency cones.
 
