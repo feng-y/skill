@@ -8,7 +8,7 @@
 
 Goal 是架构变化的驱动力，不是模块设计指令。对于一个 Goal 或几个相关 Goal，先识别它们对系统施加的 **architecture change pressure**：哪些能力需要新增、替换、独立演进或吸收新的 variation；当前同类变化为何需要跨多个 owner / authority / dependency / verification surface；哪些长期 binding constraint 会让某种责任、生命周期、部署或 failure boundary 成为必需。只有这些会长期改变结构的部分进入 Target。
 
-多个 Goal 只有在它们对同一 capability / responsibility / boundary 施加相关 pressure 时才共同塑造 Target。例如“增加第二种 storage backend”和“让 backend 切换不修改 caller”可能共同证明 provider variation；而“降低登录延迟”和“拆分订单生命周期”如果没有共同结构前提，就不为了统一方案塞进一个 module redesign。
+多个 Goal 只有在它们共享 material architecture pressure，或它们涉及的多个 capability / boundary / dependency 必须一起设计才能正确满足 Goal 时才共同塑造 Target。例如“增加第二种 storage backend”和“让 backend 切换不修改 caller”可能共同证明 provider variation；一个跨 pipeline Goal 也可能要求几个独立 owner 的 boundary / dependency 协同演进。反之，“降低登录延迟”和“拆分订单生命周期”如果没有共同结构前提，就不为了统一方案塞进一个 redesign。
 
 从 Goal 到 Target 的关键关系是：
 
