@@ -1,17 +1,17 @@
 # 当简单 Taskbook 不够
 
-只在 Goal 已定准，且复杂度本身会改变 Execution Graph 或 Verification 判断时读取。这里只帮助 Northstar 编译复杂 handoff，不重新定义 Goal，也不替 Executor 设计 patch、调试流程或 scheduler。
+只在 Goal 已定准，且复杂度本身会改变 Execution 的 Graph 结构或 Verification 判断时读取。这里只帮助 Northstar 编译复杂 handoff，不重新定义 Goal，也不替 Executor 设计 patch、调试流程或 scheduler。
 
 ## Execution
 
-复杂 Goal 的 Execution 编译成 fresh Executor 可以直接推进的 **best-known complete Graph**：
+复杂 Goal 的 Execution 按 fresh Executor 可以直接推进的 **best-known complete Graph** 编译：
 
 - 不同 outcome、responsibility、binding boundary 或 real dependency 会改变执行判断时，分开表达对应 material work cut；
 - 一个已由 Evidence 支持、且省略只会迫使 Executor 重新发现的 material cut / relation 应保留；
 - 只有真实 prerequisite、共享 authoritative surface / conflict、或必须共同成立的 outcome 等关系真正改变 Executor 选择时，才表达 dependency；
 - file/function/helper/caller、局部 edit 顺序、patch shape 和 local check 默认仍是 How。
 
-Graph 的完整度跟随当前 knowledge：当前 Evidence 已能确定 `A → {B,C} → D` 时就一次表达，不为了 lazy / thin 故意只给 A；只有 B/C/D 的存在、scope 或 dependency 仍取决于 A 的未来 execution Evidence 时，才停在当前 frontier，等 Evidence 让后续 work 成为 reality 后再扩展。不要为未形成的未来工作创造占位 node、phase 或 taxonomy。
+Graph 的完整度跟随当前 **decision-relevant knowledge**：当前 Evidence 已能确定 `A → {B,C} → D` 时就一次表达，不为了 lazy / thin 故意只给 A；只有 B/C/D 的存在、scope 或 dependency 仍取决于 A 的未来 execution Evidence 时，才停在当前 frontier，等 Evidence 让后续 work 成为 reality 后再扩展。**best-known complete 不等于 research-complete**：不能为了补齐 Graph 扩大 inventory、验证候选 implementation、扫描只会改变 How 的 territory，或为未形成的未来工作创造占位 node、phase、taxonomy。
 
 Taskbook prose order 不形成 dependency。没有真实 dependency 的 work 保持独立，不被强制串行或并行；一个 branch blocked 不冻结与它无关的 work；也不为了暴露并行度拆碎 cohesive work。简单/线性任务只是 Graph 的退化形式，不要求 diagram、Graph schema 或显式 node object。
 
@@ -40,8 +40,8 @@ Verification 不与 implementation work 或 Graph node 一一对应。先固定 
 
 ## Loop
 
-Northstar 不拥有跨 session progress、retry、debugging 或 runtime scheduler，但 Taskbook 必须能在宿主执行 loop 中稳定演进：`Graph → outcome / Evidence → reality → affected Graph`。
+Northstar 不拥有跨 session progress、retry、debugging 或 runtime scheduler，但 Taskbook 必须能在宿主执行 loop 中稳定演进：`Graph → Executor outcome / candidate Evidence → Taskbook + current reality judgment → established Evidence / new reality → affected Graph`。
 
-新的 Evidence 只重算真正受影响的 dependency cone：它让 contingent work 成为真实工作时扩展 Graph；证明某个 branch / dependency 不存在时删除；改变 scope、binding 或 material relation 时拆分、合并或重排剩余 work；影响 completion claim / coverage 时同步重算对应 Verification。无关 branch、仍有效 work 和 Evidence 保持有效，已完成 work 也不因 Graph 改写机械重开，除非它的 Evidence 前提或所证明行为已被影响。
+Executor report、task checklist、test output 在核实前只提供 candidate Evidence / navigation，不能直接改变 reality 或 Graph。只有独立 judgment 建立的新 Evidence / reality 才重算真正受影响的 dependency cone：它让 contingent work 成为真实工作时扩展 Graph；证明某个 branch / dependency 不存在时删除；改变 scope、binding 或 material relation 时拆分、合并或重排剩余 work；影响 completion claim / coverage 时同步重算对应 Verification。无关 branch、仍有效 work 和 Evidence 保持有效，已完成 work 也不因 Graph 改写机械重开，除非它的 Evidence 前提或所证明行为已被影响。
 
 Graph 是 Taskbook 中 Execution 的结构，不是额外 runtime object。不要新增 persistent Graph state、node taxonomy、scheduler、manager protocol 或第二本 taskbook；宿主已有 progress/state 就复用，没有也不要求 Northstar 发明一套。
