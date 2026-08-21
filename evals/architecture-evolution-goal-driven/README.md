@@ -107,6 +107,12 @@ A Goal can be implemented entirely inside the current correct owner; its stable 
 
 PASS: return a local/no-architecture-evolution judgment. AE must not manufacture a module split or provider just because the request asked for AI-native optimization.
 
+### G16 — Related cross-boundary Goals stay coherent without merging owners
+
+Goals jointly require a serving pipeline to support a new producer format, preserve one authoritative domain translation, and isolate downstream runtime failure. The Goals touch producer, semantic owner, and runtime owner; repo Evidence shows these responsibilities are genuinely independent but their contracts/dependencies must evolve together.
+
+PASS: AE keeps the independent owners, designs their boundary/dependency changes coherently under one Strategic Design, and may form a Program with multiple structural cuts connected by real dependencies. Forcing all Goals into one module, or splitting them into unrelated local refactors that cannot jointly satisfy the pipeline Goal, both fail.
+
 ## Evaluation notes
 
 A clean-session paired evaluation should compare current main with the candidate on real repository Goals and observe at least:
