@@ -54,7 +54,7 @@ When expressing **completion degree**, report material-claim coverage: which cla
 
 ## After judgment
 
-Judgment produces the current decision first and only then decides whether the same Goal's Execution Graph must change. Do not skip judgment and compile the Executor report directly into a repair plan:
+Judgment produces the current decision first and only then decides whether the Graph inside the same Goal's Execution must change. Do not skip judgment and compile the Executor report directly into a repair plan:
 
 - **Goal is proven**: accept the current outcome and state the material Evidence basis.
 - **Taskbook remains valid and only an existing claim is false / unproven**: identify the exact claim, current counter-Evidence / missing Evidence, and why it is material. If verified Evidence does not change remaining material work / dependencies, do not rewrite the gap into a file/helper/test tasklist.
@@ -64,4 +64,4 @@ Judgment produces the current decision first and only then decides whether the s
 
 Ordinary implementation failure does not return to the Human. Return only for a new Human-owned choice / authorization, or when reality makes safe continuation itself require Human authority.
 
-Keep output minimum-sufficient: when only judgment is needed, return the decision, material claim basis, and real gap. When established Evidence has changed Execution's Graph, return the fully recompiled Taskbook for the affected cone. Do not emit execution progress, debug narrative, or persistent supervision protocol.
+Keep output minimum-sufficient: when only judgment is needed, return the decision, material claim basis, and real gap. When established Evidence has changed the Graph inside Execution, return the fully recompiled Taskbook for the affected cone. Do not emit execution progress, debug narrative, or persistent supervision protocol.
