@@ -62,11 +62,13 @@ Write one JSON object per session to a JSONL file. Required fields:
 
 The scorer rejects a pair when target repo/ref, model configuration, prompt hash, Human response profile, tool profile, or host configuration differs across arms, and rejects a pair whose base/candidate `skill_ref` is identical.
 
-`handoff_validated` is an independent executable-contract judgment, not the tested arm's self-report. A true value means a fresh Executor can safely start from that Taskbook without recovering missing Human intent, materially redefining the work boundary, or inventing completion proof. Efficiency metrics to first executable handoff are calculated only from records with `handoff_validated=true`. A false value remains visible as a failed handoff and prevents the sample from becoming behavioral-claim ready; it must not disappear as a fast latency observation.
+`handoff_validated` is an independent executable-contract judgment, not the tested arm's self-report. A true value means a fresh Executor can safely start from that Taskbook without recovering missing Human intent, materially redefining the work boundary, or inventing completion proof. Handoff-specific latency/token/tool metrics are calculated only from records with `handoff_validated=true`.
+
+A failed session remains in the sample. If no handoff candidate exists, use `handoff_validated=false`, allow the handoff-specific latency/token/tool fields to be `null`, set `compiled_work=[]`, and set `executor_reinterpretation=true` because a fresh Executor cannot safely start from the missing contract. If an invalid handoff attempt exists, keep its compiled work for quality adjudication even though its speed/cost is excluded from executable-handoff efficiency metrics.
 
 `clarifications[].contract_changing` is judged against the final executable contract. A clarification is unnecessary when a different answer could not change Goal, Human-owned choice, binding boundary, material-work judgment, or completion obligation.
 
-`compiled_work[].evidence_supported` is false when a material work cut or dependency was compiled without current Evidence and before it became real. Implementation detail does not count as a material work cut. `compiled_work` must be non-empty for a recorded handoff attempt; an empty list is invalid rather than a synthetic 0% speculative-task score.
+`compiled_work[].evidence_supported` is false when a material work cut or dependency was compiled without current Evidence and before it became real. Implementation detail does not count as a material work cut. A validated handoff must have non-empty `compiled_work`; empty work is allowed only for a failed no-handoff session and contributes no speculative-work denominator.
 
 `executor_reinterpretation` is true when the fresh Executor must recover missing Human intent, materially redefine the work boundary, or invent the completion proof before it can safely start. Ordinary implementation discovery is not reinterpretation.
 
@@ -84,7 +86,7 @@ This keeps the measured quality and handoff-validity signals independent from th
 
 ## Metrics
 
-- **Validated executable handoff rate**: validated sessions / all sessions. Higher is better and is reported explicitly so invalid fast handoffs cannot disappear from the result.
+- **Validated executable handoff rate**: validated sessions / all sessions. Higher is better. Failed handoffs stay visible here instead of disappearing as fast observations.
 - **First executable handoff latency**: median `first_handoff_latency_ms` over validated handoffs only.
 - **Unnecessary clarification rate**: non-contract-changing clarification questions / all clarification questions. If no clarification was asked, the rate is 0.
 - **Speculative task rate**: Evidence-unsupported compiled material work / all compiled material work.
@@ -101,14 +103,14 @@ The scorer prints base/candidate aggregates, percentage-point deltas for quality
 
 ## Behavioral claim readiness
 
-The scorer must print one of:
+The sample-size readiness gate is explicit:
 
 ```text
 Behavioral claim readiness:
-READY
+READY FOR SCORING
 - cases: 5/5
 - min repeats/case: 3/3
-- validated handoffs: all runs
+- validated handoffs: base 14/15, candidate 15/15
 ```
 
 or:
@@ -120,13 +122,9 @@ INCONCLUSIVE
 - min repeats/case: 1/3
 ```
 
-The default readiness gate requires:
+The default sample gate requires at least five real cases and at least three clean-session repeats per arm for every case. Handoff validity is not a sample-size gate: it is measured as a first-class quality signal so a candidate can legitimately improve a weak base rather than making the whole comparison unevaluable.
 
-- at least five real cases;
-- at least three clean-session repeats per arm for every case;
-- every recorded run to produce an independently validated executable handoff.
-
-A sample that misses any gate may still be used as scorer/schema smoke or exploratory measurement, but it cannot support a behavioral-uplift claim.
+A sample that misses the cases/repeats gate may still be used as scorer/schema smoke or exploratory measurement, but it cannot support a behavioral-uplift claim.
 
 ## Decision rule
 
@@ -134,11 +132,12 @@ Do not collapse the result into one opaque score.
 
 Default guardrails for a behavioral-uplift claim:
 
+- validated executable handoff rate must not regress by more than 2 percentage points;
 - unnecessary clarification rate, speculative task rate, and Executor reinterpretation rate must not regress by more than 2 percentage points;
 - median first-handoff latency, tokens-to-handoff, and tool-calls-to-handoff must not regress by more than 10%;
 - claim an efficiency improvement only when at least one of those three efficiency metrics improves by at least 10% without violating the quality guardrails.
 
-If a handoff is invalid, its handoff-specific efficiency fields are not used to reward speed or cost; the invalid run instead blocks behavioral claim readiness. If an arm has no validated handoff, its handoff efficiency metrics are `n/a` and the corresponding comparison is `INCONCLUSIVE`.
+Invalid handoffs are never used to reward speed or handoff token/tool cost. If an arm has no validated handoff, its handoff-efficiency metrics are `n/a` and the corresponding comparison is `INCONCLUSIVE`; the validation-rate metric still records the failure.
 
 If sample size is too small or paired results disagree materially across repeats, report the measurements and mark the behavioral conclusion inconclusive rather than converting noise into a PASS.
 
