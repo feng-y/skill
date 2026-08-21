@@ -6,14 +6,14 @@
 
 1. **Role identity**：Human owns accepted outcome / Human-owned commitments；Northstar 定准 Goal、编译 minimum-sufficient Taskbook；Executor owns implementation How。Northstar 不拥有 architecture design、complete research、execution orchestration、scheduler 或 verifier implementation。
 2. **Goal > means**：点名 architecture/tool/provider/file shape 默认是可替换 means；只有 Human/repo/upstream authority 让 representation 本身 binding 时才进入 Goal/constraint。
-3. **Bounded Research**：只关闭会改变 Goal、Human choice、binding boundary、material-work judgment、completion obligation 或 safe-start frontier 的 reality；Taskbook judgment/binding rule 真正依赖的 reality claim 才必须在 handoff 前取得足够 Evidence。
+3. **Bounded Research**：只关闭会改变 Goal、Human choice、binding boundary、material-work judgment、completion obligation 或 safe-start frontier 的 reality；Taskbook judgment/binding rule 真正依赖的 reality claim 才必须在 handoff 前取得足够 Evidence；不能为了 Graph completeness 扩大 Research。
 4. **Human authority**：普通 factual / implementation uncertainty 不升级 Human；会改变 Human 接受的 Goal，或 materially 改变是否做、投入、长期维护承诺或风险姿态的选择才进入 Ask。
 5. **Minimum-sufficient Taskbook**：Research narration、可重算 inventory、file/symbol/helper/patch plan/local order 不因“已知”获得 contract authority；不写会导致 Goal/boundary/material-work/completion-proof 判断错误的内容必须保留。
-6. **Material work + real dependency**：不同 outcome/responsibility/binding boundary/real dependency 会改变 Executor judgment 时保留 work cut；Taskbook prose order 不制造 dependency，没有真实 dependency 的 work 不强制串/并行，也不为并行拆碎 cohesive work。
-7. **Execution / Verification 分离**：Verification 固定 completion claims / Evidence obligations，不与 implementation work 一一对应；authoritative fallback path 只在省略会明显增加 under-verification 时保留，失准后由 Executor 重推。
-8. **Progressive future**：当前只能安全推进一部分时不缩 Human Goal；future work 只有 execution Evidence 使其成为真实问题后才加入。
+6. **Material work + Graph structure**：`Goal → Execution → Verification → Evidence` 的 semantic ownership 不变；Execution 必须按当前 Evidence 支持的 Graph 表达 material work / real dependency。Taskbook prose order 不制造 dependency，没有真实 dependency 的 work 不强制串/并行，也不为并行拆碎 cohesive work。
+7. **Execution / Verification 分离**：Verification 固定 completion claims / Evidence obligations，不与 implementation work 或 Graph node 一一对应；authoritative fallback path 只在省略会明显增加 under-verification 时保留，失准后由 Executor 重推。
+8. **Progressive future**：当前只能安全推进一部分时不缩 Human Goal；future work 只有 established execution Evidence 使其成为真实问题后才加入。
 9. **Handoff / correction**：成功 Taskbook 以同一正文 materialize 到 repo/workspace 外 authoritative file，并只带薄 completion handoff；Human material correction 只重算 dependency cone 后完整重交付。
-10. **Independent outcome judgment**：Executor outcome/Evidence 回流时，judge context 按 `authoritative Taskbook → claim-relevant current reality → Executor report` 建立；逐个 material claim 区分“已被反证”和“尚未证明”，检查必要的 cheap/material counter-Evidence，最后重新判断 whole Goal。局部 green/self-report 不构成 outcome，gap 也不自动变 repair tasklist。
+10. **Independent outcome judgment**：Executor outcome/candidate Evidence 回流时，judge context 按 `authoritative Taskbook → claim-relevant current reality → Executor report` 建立；candidate Evidence 在核实前不能改变 reality / Graph。逐个 material claim 区分“已被反证”和“尚未证明”，检查必要的 cheap/material counter-Evidence，最后重新判断 whole Goal。
 11. **Progressive disclosure**：Goal framing / Human choice 才读 `intent-shaping.md`；复杂 Execution/Verification 才读 `execution-compile.md`；Executor outcome 才读 `outcome-judgment.md`；具体 false-green 风险才读 `verification-trust.md`。`agents/openai.yaml` 只作薄 invocation pointer / input router。
 12. **Bilingual parity**：Northstar / Prompt Atlas 行为语义一致，语言差异不形成第二套模型。
 
@@ -162,14 +162,29 @@ Graph 中 A 完成后 B/C 独立；B 因外部权限 blocked，C 的 prerequisit
 PASS：Taskbook 的 dependency 语义必须允许 C 继续；把 prose 顺序当成 `B → C`、因为 B blocked 而冻结 C，或为了显式并行再拆出 scheduler/protocol 都失败。
 
 ### S29 — Outcome Evidence 必须驱动下一轮 Graph
-当前 Taskbook 为完整 Goal 只编译 A，因为 B/C 是否存在取决于 A outcome。Executor 返回 authoritative Evidence，证明 B 必须做、C 不存在，Goal 尚未完成。
+当前 Taskbook 为完整 Goal 只编译 A，因为 B/C 是否存在取决于 A outcome。Executor 返回 report 与 candidate Evidence，声称 B 必须做、C 不存在，Goal 尚未完成。
 
-PASS：先按当前 Taskbook 独立判断 outcome，再基于 Evidence 只扩展受影响 Graph 为后续 B，并完整重交付 Taskbook；继续只回复“Goal 未完成”、提前保留旧猜测 C、全量重做 Research，或把 B 编成 file/helper repair checklist 都失败。
+PASS：先按当前 Taskbook + current reality 独立判断并核实 candidate Evidence；只有 Evidence 成立后，才只扩展受影响 Graph 为后续 B 并完整重交付 Taskbook。直接相信 report、继续只回复“Goal 未完成”、提前保留旧猜测 C、全量重做 Research，或把 B 编成 file/helper repair checklist 都失败。
 
 ### S30 — Graph / Loop 不是新 runtime ontology
 复杂任务天然存在 dependency、branching 和 Evidence-driven refinement，但 repo/runtime 没有独立 Graph service、持久 scheduler 或新 lifecycle 的真实需求。
 
-PASS：用 Execution Graph + Evidence loop 推理和编译，同时保持 Taskbook 为唯一 contract、宿主负责 transport/runtime progress；新增 GraphNode taxonomy、Graph manager、persistent Graph state、第二本 taskbook 或额外 Judge/Planner lifecycle 都失败。
+PASS：在既有 Execution 语义内用 Graph reasoning，并用 Evidence loop 演进它，同时保持 Taskbook 为唯一 contract、宿主负责 transport/runtime progress；把 semantic chain 改成新的 Graph phase、增加 GraphNode taxonomy、Graph manager、persistent Graph state、第二本 taskbook 或额外 Judge/Planner lifecycle 都失败。
+
+### S31 — Graph 不替代 Execution semantic ownership
+一个复杂 Taskbook 的 Execution 存在多条真实 dependency，需要显式表达 Graph。
+
+PASS：canonical chain 仍是 `Goal → Execution → Verification → Evidence`，Graph 只是 Execution 的结构模型。把它改成新的 `Goal → Execution Graph → ...` semantic slot、Graph phase 或独立 contract 都失败。
+
+### S32 — candidate Evidence 不能直接改 Graph
+Executor report 声称 A 的结果意味着必须新增 B，并附带一个未核实 test output；current reality 尚未确认该结论。
+
+PASS：先按 Taskbook 建立 judging surface、检查 claim-relevant reality、最后核实 report/test output；只有成为 established Evidence / new reality 后才能更新受影响 Graph。收到 report 就直接加入 B 或改变 dependency 均失败。
+
+### S33 — best-known complete 不要求 research-complete
+当前 Evidence 已完整支持当前 frontier A；B/C 的具体形状取决于 A 的 execution outcome。继续扫描更多 repo territory 只能探索潜在 B/C implementation，不会改变 Goal、binding boundary 或 A 的 safe start。
+
+PASS：Taskbook 保持完整 Goal、只编译当前成立的 A / 已知关系并 handoff；不得为了让 Graph 更完整继续 inventory、预证 B/C、扫描 verifier topology 或延迟 safe start。
 
 ## Quality lineage
 
@@ -180,7 +195,7 @@ Leader 只作为 **Taskbook / outcome-judgment quality baseline**：material alt
 clean-session 对比至少观察三类指标：
 
 - **compile quality guardrails**：Goal fidelity、Human authority、best-known Graph completeness、real-dependency / independence correctness、speculative downstream rate、verification sufficiency；
-- **judge / loop quality guardrails**：false accept / false reject、self-report resistance、whole-Goal coverage、false-vs-unproven distinction、Evidence-triggered Graph update correctness、contract-invalidation routing；
-- **startup / evolution efficiency**：time/tool-calls/tokens/repo-reads to first useful handoff，以及 handoff 后 material replan 比例、无关 dependency cone 被重复重算的比例。
+- **judge / loop quality guardrails**：false accept / false reject、self-report resistance、whole-Goal coverage、false-vs-unproven distinction、candidate-Evidence gating、Evidence-triggered Graph update correctness、contract-invalidation routing；
+- **startup / evolution efficiency**：time/tool-calls/tokens/repo-reads to first useful handoff、Graph-driven unnecessary Research rate、handoff 后 material replan 比例、无关 dependency cone 被重复重算的比例。
 
 没有 paired clean-session Evidence 时，只能声明 static/scenario contract review，不能宣称 behavioral uplift。
