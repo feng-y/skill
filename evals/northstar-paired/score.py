@@ -130,8 +130,10 @@ def validate_record(record, where):
             raise ValueError(f"{where}: every clarification needs boolean contract_changing")
 
     compiled_work = require(record, "compiled_work", where)
-    if not isinstance(compiled_work, list) or not compiled_work:
-        raise ValueError(f"{where}: compiled_work must be a non-empty list")
+    if not isinstance(compiled_work, list):
+        raise ValueError(f"{where}: compiled_work must be a list")
+    if handoff_validated and not compiled_work:
+        raise ValueError(f"{where}: a validated handoff must contain compiled_work")
     for item in compiled_work:
         if not isinstance(item, dict) or not isinstance(item.get("evidence_supported"), bool):
             raise ValueError(f"{where}: every compiled_work item needs boolean evidence_supported")
@@ -210,19 +212,14 @@ def aggregate(records):
     }
 
 
-def render_metric(name, base, candidate, is_rate=False, higher_is_better=False):
+def render_metric(name, base, candidate, is_rate=False):
     display = pct if is_rate else num
     if base is None or candidate is None:
         delta_text = "n/a"
     elif is_rate:
-        delta_pp = (candidate - base) * 100
-        if higher_is_better:
-            delta_pp = -delta_pp
-        delta_text = f"{delta_pp:+.2f} pp"
+        delta_text = f"{(candidate - base) * 100:+.2f} pp"
     else:
         delta = relative_delta(base, candidate)
-        if delta is not None and higher_is_better:
-            delta = -delta
         delta_text = "n/a" if delta is None else f"{delta * 100:+.2f}%"
     return f"| {name} | {display(base)} | {display(candidate)} | {delta_text} |"
 
@@ -313,33 +310,11 @@ def main():
     print()
     print("| metric | base | candidate | candidate vs base |")
     print("| --- | ---: | ---: | ---: |")
-    print(
-        render_metric(
-            "validated executable handoff rate",
-            base["handoff_validation_rate"],
-            candidate["handoff_validation_rate"],
-            True,
-            higher_is_better=True,
-        )
-    )
+    print(render_metric("validated executable handoff rate", base["handoff_validation_rate"], candidate["handoff_validation_rate"], True))
     print(render_metric("first executable handoff latency (ms)", base["handoff_latency_ms"], candidate["handoff_latency_ms"]))
-    print(
-        render_metric(
-            "unnecessary clarification rate",
-            base["unnecessary_clarification_rate"],
-            candidate["unnecessary_clarification_rate"],
-            True,
-        )
-    )
+    print(render_metric("unnecessary clarification rate", base["unnecessary_clarification_rate"], candidate["unnecessary_clarification_rate"], True))
     print(render_metric("speculative task rate", base["speculative_task_rate"], candidate["speculative_task_rate"], True))
-    print(
-        render_metric(
-            "Executor reinterpretation rate",
-            base["executor_reinterpretation_rate"],
-            candidate["executor_reinterpretation_rate"],
-            True,
-        )
-    )
+    print(render_metric("Executor reinterpretation rate", base["executor_reinterpretation_rate"], candidate["executor_reinterpretation_rate"], True))
     print(render_metric("tokens to first executable handoff", base["tokens_to_handoff"], candidate["tokens_to_handoff"]))
     print(render_metric("tool calls to first executable handoff", base["tool_calls_to_handoff"], candidate["tool_calls_to_handoff"]))
     print(render_metric("total tokens", base["total_tokens"], candidate["total_tokens"]))
