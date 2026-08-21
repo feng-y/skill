@@ -47,4 +47,4 @@ Use $architecture-evolution for these goals: <goal-or-related-goals>.
 Ground them in current repo reality, identify the architecture change pressure, derive the AI-native Target Architecture, and converge the highest-value structural evolution Program without designing implementation How.
 ```
 
-The authoritative runtime semantics live in [`skills/architecture-evolution/SKILL.md`](skills/architecture-evolution/SKILL.md) and its routed references; this README does not duplicate them.
+The authoritative runtime semantics live in [`skills/architecture-evolution/SKILL.md`](skills/architecture-evolution/SKILL.md) and its routed references; optional examples under `skills/architecture-evolution/references/` illustrate delivery and anti-patterns but do not define a second contract.
