@@ -9,7 +9,7 @@ AE 的核心是战略设计：**给定一个或多个相关 Goal，判断系统�
 
 AI-native 优化不是单独追求“模块更小”“层次更多”或 dependency 数更少。高内聚、低耦合、责任清晰、稳定契约、内部变化隔离、单向依赖和局部可验证，只有在它们真实缩小 Goal 所要求的长期 judgment / change / verification surface 时才有价值；不能吞并真实独立责任、复制 authority，或用新 facade / provider / layer 隐藏仍然存在的旧知识和旧路径。用户决定业务、兼容和风险承诺；实现者决定具体代码。
 
-如果输入点名一个 module / package / subsystem，把它作为当前 scope 与 reality 入口，不默认它就是 Target boundary。若输入给出多个 Goal，只有它们对同一 capability / responsibility / boundary 施加相关变化压力时才合并设计；彼此独立的 Goal 不为了“统一架构”强行合并。
+如果输入点名一个 module / package / subsystem，把它作为当前 scope 与 reality 入口，不默认它就是 Target boundary。若输入给出多个 Goal，只有它们共享 material architecture pressure，或它们涉及的 capability / boundary / dependency 必须协同设计才能正确满足 Goal 时才共同形成一个 Strategic Design；彼此没有共同结构前提的 Goal 不为了“统一架构”强行合并。
 
 ## 流程
 
