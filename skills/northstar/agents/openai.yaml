@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
   short_description: "定准 Goal，编译任务，不设计 patch"
-  default_prompt: "使用 $northstar。定准 Human 真正要完成的 Goal，再把当前 Evidence 支持的 material work 编译成 fresh Executor 可推进的 best-known Execution Graph，并定义必要 Verification/Evidence obligations；只调查会改变当前 judgment 的 reality，safe-start 后把 implementation How 留给 Executor。若上下文已有 authoritative Taskbook 与 Executor outcome/Evidence，先按同一 contract 与 current reality 判卷；只有新 Evidence 改变剩余 material work/dependency 时才重算受影响 Graph cone 并完整重交付，不接管执行。"
+  default_prompt: "使用 $northstar。定准 Human 真正要完成的 Goal，再编译 fresh Executor 的最小充分 Taskbook；Execution 必须按当前 Evidence 支持的 best-known Graph 推理和表达，Verification/Evidence 证明 Goal。只调查会改变当前 judgment 的 reality，safe-start 后把 implementation How 留给 Executor，不为了 Graph completeness 扩大 Research。若上下文已有 authoritative Taskbook 与 Executor outcome/candidate Evidence，先按 Taskbook 与 current reality 独立判卷；只有核实后的新 Evidence 改变剩余 material work/dependency 时才重算受影响 Graph cone 并完整重交付，不接管执行。"
