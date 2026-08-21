@@ -13,6 +13,7 @@ PAIR_EQUAL_FIELDS = (
     "target_ref",
     "model",
     "prompt_sha256",
+    "human_response_profile",
     "tool_profile",
     "host_config",
 )
@@ -74,6 +75,7 @@ def validate_record(record, where):
         "target_ref",
         "model",
         "prompt_sha256",
+        "human_response_profile",
         "tool_profile",
         "host_config",
     ):
@@ -196,6 +198,15 @@ def guardrail_status(base, candidate, tolerance, relative=False):
     return "PASS" if candidate <= base + tolerance else "REGRESS"
 
 
+def sample_readiness(pairs):
+    repeats_by_case = defaultdict(set)
+    for case_id, repeat in pairs:
+        repeats_by_case[case_id].add(repeat)
+    case_count = len(repeats_by_case)
+    min_repeats = min(len(repeats) for repeats in repeats_by_case.values())
+    return case_count, min_repeats, case_count >= 5 and min_repeats >= 3
+
+
 def main():
     parser = argparse.ArgumentParser(description="Score paired Northstar clean-session behavioral eval records")
     parser.add_argument("results", help="JSONL run records")
@@ -214,8 +225,11 @@ def main():
     stats = {arm: aggregate(by_arm[arm]) for arm in ARMS}
     base = stats["base"]
     candidate = stats["candidate"]
+    case_count, min_repeats, claim_ready = sample_readiness(pairs)
 
-    print(f"pairs: {len(pairs)}  base runs: {len(by_arm['base'])}  candidate runs: {len(by_arm['candidate'])}")
+    print(f"pairs: {len(pairs)}  cases: {case_count}  min repeats/case: {min_repeats}")
+    print(f"base runs: {len(by_arm['base'])}  candidate runs: {len(by_arm['candidate'])}")
+    print(f"behavioral-claim sample readiness: {'PASS' if claim_ready else 'SMOKE ONLY'}")
     print()
     print("| metric | base | candidate | candidate vs base |")
     print("| --- | ---: | ---: | ---: |")
@@ -251,7 +265,10 @@ def main():
     if regressed:
         print("\nresult: REGRESSION in " + ", ".join(regressed))
         return 1
-    print("\nresult: NON-REGRESSION within configured tolerances")
+    if not claim_ready:
+        print("\nresult: NON-REGRESSION within configured tolerances; sample is smoke-only")
+        return 0
+    print("\nresult: NON-REGRESSION within configured tolerances; sample is claim-ready")
     return 0
 
 
