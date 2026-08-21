@@ -41,7 +41,7 @@ file/function/helper/caller、局部顺序、patch idea 或 test proximity 默�
 
 Human 后续 material clarification / correction 从最高受影响判断重新进入，只重算 dependency cone、删除失效陈述、对账仍有效 constraints，并按最新 reality 完整重交付当前 Taskbook；无关且已关闭的选择和仍有效 Evidence 保持有效。交付不是 completion state，也不要输出 ready/completed/executable/status token。
 
-当输入本身已经是 Executor outcome / completion report / Evidence 且存在当前 authoritative Taskbook 时，内部读取 [outcome-judgment.md](references/outcome-judgment.md)，先按 Taskbook 建立 judging surface，再核对 claim-relevant current reality，最后才把 Executor report 当 candidate Evidence。先判断 whole Goal：Goal 已证明就接受；Taskbook 仍有效且只是已有 claim 缺 Evidence / 未成立时，只返回精确 gap；只有经过核实的新 Evidence / reality 让原先 contingent 的 material work 成为真实工作，或改变剩余 work / dependency 时，才只重编受影响的 Execution Graph cone 并完整重交付 Taskbook；新 reality 推翻 Goal premise / authority / completion contract 时，才从更高的受影响判断重新进入。这个 loop 保持为同一 Taskbook 的 Evidence-driven evolution，不形成显式 Judge mode、repair planner 或 manager lifecycle。
+当输入本身已经是 Executor outcome / completion report / Evidence 且存在当前 authoritative Taskbook 时，内部读取 [outcome-judgment.md](references/outcome-judgment.md)，先按 Taskbook 建立 judging surface，再核对 claim-relevant current reality，最后才把 Executor report 当 candidate Evidence。先判断 whole Goal：Goal 已证明就接受；Taskbook 仍有效且只是已有 claim 缺 Evidence / 未成立时，只返回精确 gap；只有经过核实的新 Evidence / reality 让原先 contingent 的 material work 成为真实工作，或改变剩余 work / dependency 时，才只重编受影响的 Execution dependency cone，并按 Graph 更新真正受影响的 work 后完整重交付 Taskbook；新 reality 推翻 Goal premise / authority / completion contract 时，才从更高的受影响判断重新进入。这个 loop 保持为同一 Taskbook 的 Evidence-driven evolution，不形成显式 Judge mode、repair planner 或 manager lifecycle。
 
 ## 判断原则
 
