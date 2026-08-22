@@ -7,6 +7,7 @@ Read only after Intent take has settled Goal, Human-owned choices, and binding b
 The Graph structures only established Execution inside the executable contract; it cannot determine Intent, Goal, or binding constraints in reverse. Compile a complex Goal's Execution as the **best-known complete Graph** a fresh Executor can directly advance:
 
 - separate material work cuts when distinct outcomes, responsibilities, binding boundaries, or real dependencies change execution judgment;
+- give every material work cut an independently judgeable material outcome / responsibility / binding boundary: when it fails, the judge can identify which material outcome is false rather than turning one Verification claim into an Execution cut;
 - preserve an Evidence-backed material cut / relation when omitting it would only force the Executor to rediscover it;
 - express dependency only when a real prerequisite, shared authoritative surface / conflict, jointly required outcome, or equivalent relation truly changes Executor choice;
 - keep file/function/helper/caller detail, local edit order, patch shape, implementation choice, and local checks as How by default.
@@ -14,6 +15,18 @@ The Graph structures only established Execution inside the executable contract; 
 Graph completeness follows current **decision-relevant knowledge**. When current Evidence establishes `A → {B,C} → D`, express that structure now instead of hiding B/C/D merely to stay lazy or thin. Stop at the current frontier only when B/C/D existence, scope, or dependency still depends on future execution Evidence from A; extend the Graph after Evidence makes the downstream work real. **Best-known complete is not research-complete**: do not expand inventory, prove candidate implementations, scan territory that can only change How, or invent placeholder nodes/phases/taxonomy merely to complete the Graph.
 
 Taskbook prose order does not create dependency. Work without a real dependency remains independent rather than being forced serial or parallel; one blocked branch does not freeze unrelated work; cohesive work is not fragmented merely to expose parallelism. A simple or linear task is only a degenerate Graph and does not require a diagram, Graph schema, or explicit node object.
+
+## Independently judgeable slices
+
+Slicing is not translating Goal into more tasks. It finds boundaries at which a **material outcome can be established or falsified independently**. Judge a slice by its judgment surface rather than file count, team ownership, or apparent parallelism:
+
+- when two proposed slices can only be judged after both are complete and they have no independent responsibility / binding / outcome, merge them into one cohesive cut;
+- when one slice hides several material outcomes, responsibilities, or binding boundaries that can succeed or fail independently, and those differences change Executor choice or later dependency judgment, split it;
+- when several independently failing compatibility / behavior / real-exit claims only prove one cohesive responsibility outcome, keep one Execution cut and preserve separate judgment surfaces in Verification. An independently falsifiable claim does not automatically create an independent Execution cut;
+- independent judgment does not require `one cut → one test`. A completion claim may span multiple cuts, and one cut may require several Evidence sources; Verification remains organized by Goal-level claims;
+- preserve only enough relationship for a fresh Executor / judge to know why the cut is material to Goal, what it depends on, and what Evidence can establish or falsify the relevant claim. This may be written directly in prose; it does not create an Evidence Graph schema, ledger, or second contract.
+
+This keeps a local error closer to its responsibility / outcome boundary instead of letting an unreviewed decision silently contaminate later Graph work. It does not require the implementation to become an opaque black box, and it does not prevent the judge from reading code when code is needed as current-reality Evidence.
 
 ## Unknowns and baselines
 

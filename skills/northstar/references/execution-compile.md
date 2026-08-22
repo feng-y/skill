@@ -7,6 +7,7 @@
 Graph 只负责结构化 executable contract 中已经成立的 Execution；不能从 Graph 反推 Intent、Goal 或 binding constraint。复杂 Goal 的 Execution 按 fresh Executor 可以直接推进的 **best-known complete Graph** 编译：
 
 - 不同 outcome、responsibility、binding boundary 或 real dependency 会改变执行判断时，分开表达对应 material work cut；
+- 每个 material work cut 应对应一个可独立判断的 material outcome / responsibility / binding boundary：它失败时，能指出哪个 material outcome 未成立，而不是只把一个 Verification claim 变成 Execution cut；
 - 一个已由 Evidence 支持、且省略只会迫使 Executor 重新发现的 material cut / relation 应保留；
 - 只有真实 prerequisite、共享 authoritative surface / conflict、或必须共同成立的 outcome 等关系真正改变 Executor 选择时，才表达 dependency；
 - file/function/helper/caller、局部 edit 顺序、patch shape、implementation choice 和 local check 默认仍是 How。
@@ -14,6 +15,18 @@ Graph 只负责结构化 executable contract 中已经成立的 Execution；不�
 Graph 的完整度跟随当前 **decision-relevant knowledge**：当前 Evidence 已能确定 `A → {B,C} → D` 时就一次表达，不为了 lazy / thin 故意只给 A；只有 B/C/D 的存在、scope 或 dependency 仍取决于 A 的未来 execution Evidence 时，才停在当前 frontier，等 Evidence 让后续 work 成为 reality 后再扩展。**best-known complete 不等于 research-complete**：不能为了补齐 Graph 扩大 inventory、验证候选 implementation、扫描只会改变 How 的 territory，或为未形成的未来工作创造占位 node、phase、taxonomy。
 
 Taskbook prose order 不形成 dependency。没有真实 dependency 的 work 保持独立，不被强制串行或并行；一个 branch blocked 不冻结与它无关的 work；也不为了暴露并行度拆碎 cohesive work。简单/线性任务只是 Graph 的退化形式，不要求 diagram、Graph schema 或显式 node object。
+
+## 可独立判断的切面
+
+切分不是把 Goal 翻译成更多 task，而是找到能够**独立建立或推翻 material outcome** 的边界。一个切面是否成立，按 judgment surface 判断，不按文件数、团队分工或可并行程度判断：
+
+- 两个所谓切面必须共同完成后才能知道任意一个是否正确，且没有独立 responsibility / binding / outcome 时，应合并为一个 cohesive cut；
+- 一个切面同时隐藏多个可分别成立或失败的 material outcomes、responsibilities 或 binding boundaries，且这些差异会改变 Executor 的执行选择或后续 dependency 判断时，应拆开；
+- 如果多个可分别失败的 compatibility / behavior / real-exit claims 只是共同证明同一个 cohesive responsibility outcome，应保持一个 Execution cut，并在 Verification 中保留独立 judgment surfaces；independently falsifiable claim 不自动等于 independent Execution cut；
+- 独立判断不要求 `one cut → one test`。一个 completion claim 可以跨多个 cut，一个 cut 也可以需要多个 Evidence source；Verification 仍按 Goal-level claim 组织；
+- Taskbook 只保留足够的关系，让 fresh Executor / judge 知道这个 cut 为什么对 Goal material、它依赖什么，以及什么 Evidence 可以证实或反证相关 claim。这些关系可以直接写在 prose 中，不形成 Evidence Graph schema、ledger 或第二套 contract。
+
+这种切面让一个局部错误尽量停在自己的 responsibility / outcome boundary，避免一个未审查决定通过模糊的大任务静默污染后续 Graph；它不要求实现完全黑盒，也不禁止 judge 在需要时读取代码作为 current reality Evidence。
 
 ## Unknown 与 baseline
 
