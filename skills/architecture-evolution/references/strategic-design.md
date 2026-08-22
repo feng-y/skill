@@ -57,6 +57,23 @@ boundary 成立后，再判断 owner 内部哪些变化需要隔离。只有 sta
 
 高内聚低耦合是这些判断成立后的结构结果，不是独立评分。若模块表面集中，但 caller 仍理解本应由 owner 隐藏的设计决定；或一个典型 Goal 仍需要跨多个 owner 重组同一份私有知识 / authority / verification，则 boundary 还没有成立。
 
+## Material architecture decisions
+
+AE 的主要 review surface 是 materially different 的 architecture choice，而不是实现代码量；但“review decisions”不表示不看代码。代码、config、test 与 runtime 仍是建立 current reality、验证 decision 后果和发现 hidden coupling 的 Evidence。
+
+只有一个选择会长期改变 capability owner、authority、boundary、dependency、lifecycle、failure / isolation semantics、兼容承诺或后续同类变化的允许方向时，才保留为 **material architecture decision**。目录移动、class 命名、helper 抽取、当前 patch 顺序或可替换 implementation 不进入 decision record。
+
+当多个 materially plausible Target 曾经成立，或未来维护者不记录就会重新逆向同一个关键判断时，交付 / architecture source 可以 minimum-sufficient 地保留：
+
+- 实际选择的 Target / boundary；
+- 被拒绝或暂不选择的 material alternative；
+- 真正决定选择的 authority / Evidence / binding constraint；
+- 哪个前提变化会重新打开这个 decision。
+
+这不是强制 Decision Ledger、ADR 流程或每次运行的必填 section。没有真实 alternative 或未来复用价值时，不为了“可解释”制造 decision prose。模型自报 confidence、理由写得完整或 implementer 的 decision list 都不能替代 deciding Evidence；若 Evidence 不足，保留 fork / Unknown 或做最小 structural probe，而不是用置信度把 choice 固化。
+
+Material decision 也不能替代 outcome proof：选择 provider boundary 的理由成立，不等于旧 authority 已退出；选择单向 dependency 的理由成立，也不等于实际 import / runtime path 已符合 Target。Architecture / behavior Evidence 仍必须直接验证 structural claim。
+
 ## Evidence 怎么用
 
 不默认文件名，也没有单一 oracle。按材料实际 authority 和当前前提使用：
@@ -84,6 +101,6 @@ Research 只为会改变 Target 的 unresolved fork / Unknown 扩展；probe 必
 
 ## 持久化
 
-只有跨变化仍会复用、未来会继续改变判断的稳定结论，才更新 repo 已有的 authoritative architecture source。记录责任、边界、依赖、通用 / 特化、重要约束和仍未决的结构问题；不要记录目录清单、实现步骤、一次性 migration、probe artifact 或当前代码说明。
+只有跨变化仍会复用、未来会继续改变判断的稳定结论，才更新 repo 已有的 authoritative architecture source。记录责任、边界、依赖、通用 / 特化、重要约束和仍未决的结构问题；当一个 material architecture decision 的理由与 reopen condition 会继续约束未来演进时，才一并记录它。不要记录目录清单、实现步骤、一次性 migration、probe artifact、当前代码说明、普通 implementation choice 或完整 reasoning transcript。
 
-已有权威来源优先原位更新，不建平行 SOT。repo 没有架构来源时，也不要因为一次 AE run 自动创建全量 `ARCHITECTURE.md`；只有结论已经稳定、未来确实会复用且用户授权时，才建立最小来源。
+已有权威来源优先原位更新，不建平行 SOT。repo 没有架构来源时，也不要因为一次 AE run 自动创建全量 `ARCHITECTURE.md` 或 `DECISIONS.md`；只有结论已经稳定、未来确实会复用且用户授权时，才建立最小来源。
