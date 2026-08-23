@@ -113,6 +113,14 @@ Goals jointly require a serving pipeline to support a new producer format, prese
 
 PASS: AE keeps the independent owners, designs their boundary/dependency changes coherently under one Strategic Design, and may form a Program with multiple structural cuts connected by real dependencies. Forcing all Goals into one module, or splitting them into unrelated local refactors that cannot jointly satisfy the pipeline Goal, both fail.
 
+### G17 — Clean source is not a behavior oracle
+
+A refactor branch fails replay. The named clean base ref fails the same cases, while a separately identified release/golden runtime passes the same inputs and configuration. A discriminator traces the behavioral gap to an upstream request-data boundary, not to the slot/projection structure the refactor was changing.
+
+PASS: AE corrects the causal attribution before changing Target. If the Goal requires a green behavior baseline, it keeps semantic restoration and architecture evolution as distinct Program outcomes with separate behavior and structural Evidence, connected only by the real dependency that evolution must start from a trustworthy baseline. It does not treat a branch name, clean worktree, passing golden artifact, or failing candidate replay as interchangeable reality, and it does not widen slot/projection architecture to absorb an upstream data-owner defect.
+
+FAIL: blame the refactor because its branch is red, declare base behavior authoritative because the ref is clean, merge restoration into the architecture claim so one PASS proves both, or redesign the named module before discriminating the failure owner.
+
 ## Evaluation notes
 
 A clean-session paired evaluation should compare current main with the candidate on real repository Goals and observe at least:

@@ -21,7 +21,20 @@ For every case:
 7. When several handoff candidates exist in one session, the first executable handoff is the earliest candidate that independently validates. Record latency/token/tool fields to that validated handoff. If no candidate validates, set `handoff_validated=false`; the handoff latency/token/tool fields may be `null` and are excluded from efficiency aggregates.
 8. For a smoke comparison, one pair per case is enough. For a behavioral-uplift claim, use at least three independent clean-session repeats per arm for each case.
 
-Use at least five real tasks spanning these shapes: clear small task, ambiguous intent, complex dependency Graph, contingent downstream work, and a task with multiple valid implementation choices. Freeze the case set before running either arm.
+Use at least five real tasks spanning these shapes: clear small task, ambiguous intent, complex dependency Graph, contingent downstream work, and a task with multiple valid implementation choices. The frozen set must also include at least one behavior-preserving migration/refactor with a reality conflict: the named clean/base ref, a replay or comparison oracle, and current runtime behavior are not assumed to agree. Shapes may overlap in one case. Freeze the case set before running either arm.
+
+### Reality-conflict case
+
+For the required reality-conflict case, freeze enough artifacts to distinguish causal attribution at the claim-relevant source, configuration, input, and runtime identities. A branch/ref called `main`, `master`, `clean`, `golden`, or `release` is a location, not evidence that its behavior is correct. A passing or failing replay is evidence only for the exact runner/config/input combination that produced it.
+
+The independently judged handoff should:
+
+- establish whether the claimed baseline is actually green before attributing a regression to the candidate change;
+- when the baseline is already red but an independently supported behavior oracle exists, keep semantic restoration and structural evolution as distinct material outcomes and order them only by their real dependency;
+- preserve separate completion claims so behavior recovery cannot masquerade as architecture improvement, and architecture checks cannot substitute for behavior parity;
+- avoid widening the proposed architecture merely to explain a failure whose causal owner has not been discriminated.
+
+Use the existing adjudication fields rather than adding incident-specific score fields. An unsupported baseline/candidate attribution makes the affected `compiled_work[].evidence_supported` false. A handoff that forces the Executor to rediscover the semantic baseline, materially separate restoration from evolution, or invent their completion proof is not validated and sets `executor_reinterpretation=true`.
 
 ## Run record
 
