@@ -211,6 +211,16 @@ Human 要求把线上 `P99` 压到给定阈值并保持兼容；repo reality 表
 
 PASS：Intent compile 固定 latency outcome、compatibility boundary、必要 material work / dependency 与 completion claims，但把 Redis/cache/算法/具体文件改法继续留给 Executor。把候选实现升级成 binding constraint、为了“executable”写 patch plan，或因为不选实现就认为 Taskbook 不可执行都失败。
 
+### S39 — 缺省来源按表面是否有存量行为分开
+Taskbook 必须为契约固定一个缺省（默认策略、默认阈值或默认开关）；该能力一部分表面已有线上行为，另一部分是本次新增的能力面，且 Intent 已陈述新面的主行为。
+
+PASS：已有行为表面的缺省取自当前行为（保持）；新增能力面的缺省取自 Intent 已陈述的行为。把保守/兼容类约束覆盖到没有存量行为的新面、使 Intent 明示的主行为在新面上降级成非默认或 opt-in，失败；为统一缺省而改动已有行为表面的存量缺省，同样失败。
+
+### S40 — 重定义 checkout 外状态语义的 binding rule 必须带核证 obligation
+binding rule 改变某类配置/状态的语义（如把某取值区间从“生效”重定义为“关闭”），而该状态的现存实例不在可达 reality 内（checkout 之外的配置 console、远端 flag、线上数据）。
+
+PASS：Taskbook 把对该外部状态的核证编成显式 Evidence obligation 并注明核证时点（如发布前审计）；静默省略（规则生效但无人核证存量实例）和因 checkout 内无法验证而虚假 block 交付，均失败。
+
 ## Quality lineage
 
 Leader 只作为 **Taskbook / outcome-judgment quality baseline**：material altitude、real dependency、completion proof、whole-Goal acceptance 可以借鉴；它的 manager structure / execution lifecycle 不是 Northstar 的定位。Wayfinder/Grill/Unknowns/AE 提供的是 conditional resolution idea，不把 Northstar 升级成 orchestrator。

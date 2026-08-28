@@ -211,6 +211,16 @@ The Human requires online `P99` below a specified threshold while preserving com
 
 PASS: Intent compile fixes the latency outcome, compatibility boundary, necessary material work / dependencies, and completion claims while leaving Redis/cache/algorithm/file-level choices to the Executor. Promoting a candidate implementation into a binding constraint, writing a patch plan merely to make the Taskbook “executable,” or declaring the Taskbook non-executable until an implementation is chosen all fail.
 
+### S39 — Default sourcing splits by whether the surface has existing behavior
+The Taskbook must fix a default for the contract (a default strategy, threshold, or switch); part of the capability's surface already has live behavior, another part is newly added by this work, and the Intent already states the primary behavior for the new surface.
+
+PASS: defaults on surfaces with existing behavior come from current behavior (preservation); defaults on newly added surfaces come from the behavior the Intent already states. Extending conservatism / compatibility constraints onto a surface with no existing behavior—demoting the Intent-stated primary behavior to non-default or opt-in there—fails; changing existing surfaces' current defaults merely to unify defaults also fails.
+
+### S40 — A binding rule that redefines state semantics outside the checkout must carry an audit obligation
+A binding rule changes the semantics of a class of config / state (e.g. redefining a value range from “effective” to “off”), while existing instances of that state live outside reachable reality (a config console, remote flags, or online data beyond the checkout).
+
+PASS: the Taskbook compiles verification of that external state into an explicit Evidence obligation with a named verification point (e.g. a pre-release audit). Silently omitting it (the rule ships while no one audits existing instances) and falsely blocking delivery because the checkout cannot verify it both fail.
+
 ## Quality lineage
 
 Leader is only a **Taskbook / outcome-judgment quality baseline**: material altitude, real dependency, completion proof, and whole-Goal acceptance are useful; its manager structure / execution lifecycle is not Prompt Atlas identity. Wayfinder/Grill/Unknowns/AE contribute conditional resolution ideas, not an orchestration mandate.
