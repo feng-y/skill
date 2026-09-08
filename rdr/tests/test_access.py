@@ -68,6 +68,13 @@ class AccessWatcherTest(unittest.TestCase):
         policy = watcher.read_policy()
         self.assertEqual(policy.tokens, ("rotated",))
 
+    def test_missing_local_file_without_token_starts_enabled(self) -> None:
+        self.local.unlink()
+        watcher = AccessConfigWatcher(self.local, self.global_path)
+        policy = watcher.load_initial()
+        self.assertTrue(policy.enabled)
+        self.assertEqual(policy.tokens, ())
+
     def test_missing_local_file_falls_back_to_static_tokens(self) -> None:
         self.local.unlink()
         watcher = AccessConfigWatcher(
@@ -80,6 +87,12 @@ class AccessWatcherTest(unittest.TestCase):
         self._write(self.local, enabled=True, tokens=["local"])
         policy = watcher.read_policy()
         self.assertEqual(policy.tokens, ("local", "env"))
+
+    def test_invalid_local_file_fails_startup_without_static_token(self) -> None:
+        self.local.write_text("{}", encoding="utf-8")
+        watcher = AccessConfigWatcher(self.local, self.global_path)
+        with self.assertRaises(ConfigError):
+            watcher.load_initial()
 
     def test_invalid_local_file_fails_startup_even_with_static_tokens(self) -> None:
         self.local.write_text("{}", encoding="utf-8")
