@@ -85,3 +85,11 @@ rdr connect 127.0.0.1:19090
 ```
 
 Production and shared/global access semantics are authoritative in [`DEPLOYMENT.md`](DEPLOYMENT.md); do not copy them into another runtime document.
+
+## Build
+
+```bash
+bash rdr/build.sh
+```
+
+The script cleans stale artifacts, builds the sdist and wheel, then installs the wheel into a throwaway venv and runs the test suite plus CLI smoke checks against the installed wheel (not the source tree). Artifacts land in `rdr/dist/`. Set `RDR_BUILD_PYTHON` to pick the interpreter.

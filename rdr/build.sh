@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+# Build and verify the rdr package.
+#
+# Produces dist/*.tar.gz and dist/*.whl, then verifies the wheel in a
+# throwaway venv: the test suite runs against the installed wheel (not the
+# source tree), and both console entry points are smoke-checked.
+#
+# Usage:
+#   bash build.sh
+#   RDR_BUILD_PYTHON=python3.12 bash build.sh   # pick interpreter
+set -euo pipefail
+
+package_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$package_root"
+
+PYTHON="${RDR_BUILD_PYTHON:-python3}"
+
+if ! "$PYTHON" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)'; then
+    echo "error: Python >= 3.10 required, found $("$PYTHON" -V 2>&1)" >&2
+    exit 1
+fi
+
+echo "== clean =="
+rm -rf build dist src/*.egg-info
+find src tests -name '__pycache__' -type d -exec rm -rf {} +
+
+workdir="$(mktemp -d)"
+trap 'rm -rf "$workdir"' EXIT
+
+echo "== build sdist + wheel =="
+"$PYTHON" -m venv "$workdir/build-venv"
+"$workdir/build-venv/bin/pip" install --quiet build
+"$workdir/build-venv/bin/python" -m build --outdir dist
+
+wheel="$(ls dist/*.whl)"
+sdist="$(ls dist/*.tar.gz)"
+
+echo "== verify wheel in fresh venv =="
+"$PYTHON" -m venv "$workdir/verify-venv"
+"$workdir/verify-venv/bin/pip" install --quiet pytest "$wheel"
+verify_python="$workdir/verify-venv/bin/python"
+
+# cwd is the package root (src layout), so "import rdr" resolves to the
+# installed wheel; a broken wheel fails here instead of at deployment time.
+"$verify_python" -m pytest tests -q
+
+"$verify_python" - <<'EOF'
+import glob
+import zipfile
+
+wheel = glob.glob("dist/*.whl")[0]
+names = zipfile.ZipFile(wheel).namelist()
+assert any(name == "rdr/server.py" for name in names), "runtime modules missing"
+assert not any(name.startswith("tests/") for name in names), "tests leaked into wheel"
+print("wheel contents ok")
+EOF
+
+"$verify_python" -c "import rdr; print('version:', rdr.__version__)"
+"$workdir/verify-venv/bin/rdr" --help > /dev/null
+"$workdir/verify-venv/bin/rdr-server" --help > /dev/null
+echo "entry points ok"
+
+echo "== artifacts =="
+ls -lh "$wheel" "$sdist"
