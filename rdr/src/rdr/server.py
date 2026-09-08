@@ -20,6 +20,17 @@ def env_access_tokens() -> tuple[str, ...]:
     return (raw,) if raw else ()
 
 
+def env_terminal_max_attachments() -> int:
+    raw = os.environ.get("RDR_TERMINAL_MAX_ATTACHMENTS", "2").strip()
+    try:
+        value = int(raw)
+    except ValueError as exc:
+        raise SystemExit("RDR_TERMINAL_MAX_ATTACHMENTS must be an integer >= 1") from exc
+    if value < 1:
+        raise SystemExit("RDR_TERMINAL_MAX_ATTACHMENTS must be >= 1")
+    return value
+
+
 async def run_server(args: argparse.Namespace) -> None:
     watcher = AccessConfigWatcher(
         args.access_config,
@@ -95,9 +106,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--terminal-max-attachments",
         type=int,
-        default=2,
+        default=env_terminal_max_attachments(),
         metavar="N",
-        help="maximum simultaneous attachments per stateful terminal (default: 2)",
+        help=(
+            "maximum simultaneous attachments per stateful terminal "
+            "(default: RDR_TERMINAL_MAX_ATTACHMENTS or 2)"
+        ),
     )
     parser.add_argument(
         "--access-config",
