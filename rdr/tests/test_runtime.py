@@ -57,10 +57,19 @@ class RuntimeTest(unittest.IsolatedAsyncioTestCase):
             "printf hello; printf error >&2; exit 7",
             on_stdout=streamed.extend,
         )
+        # exec runs a login shell (-lc) for Local Parity, so the host profile
+        # may legitimately emit its own output before the command runs.
+        # Assert on the command's own output, not on the full stream.
         self.assertEqual(result["exit_code"], 7)
-        self.assertEqual(result["stdout"], b"hello")
-        self.assertEqual(result["stderr"], b"error")
-        self.assertEqual(streamed, b"hello")
+        self.assertTrue(
+            result["stdout"].endswith(b"hello"),
+            f"stdout should end with command output, got {result['stdout']!r}",
+        )
+        self.assertTrue(
+            result["stderr"].endswith(b"error"),
+            f"stderr should end with command output, got {result['stderr']!r}",
+        )
+        self.assertIn(b"hello", streamed)
 
     async def test_exec_timeout(self) -> None:
         client = await self.connect()
