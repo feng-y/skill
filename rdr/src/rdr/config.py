@@ -49,11 +49,13 @@ class AccessConfig:
     """Token list from an access config file.
 
     The current schema is tokens-only. Legacy files may still carry an
-    ``enabled`` key. ``enabled: true`` is ignored, while ``enabled: false``
-    is conservatively treated as an empty token set so upgrading cannot turn
-    an explicitly disabled host into an authenticated one. New configuration
-    must use ``tokens: []`` for the deny-all state and ``rdr server stop`` to
-    stop the runtime process.
+    ``enabled`` key. ``enabled: true`` keeps the token list, while
+    ``enabled: false`` is conservatively treated as an empty token set so an
+    upgrade cannot turn an explicitly disabled host into an authenticated
+    one. A malformed legacy ``enabled`` value remains an error, matching the
+    old schema's fail-closed behavior. New configuration must use
+    ``tokens: []`` for the deny-all state and ``rdr server stop`` to stop the
+    runtime process.
     """
 
     tokens: tuple[str, ...]
@@ -62,9 +64,12 @@ class AccessConfig:
     def load(cls, path: str | Path) -> "AccessConfig":
         value = _load_object(path)
         tokens = _tokens(value, path=path)
-        legacy_enabled = value.get("enabled")
-        if legacy_enabled is False:
-            return cls(tokens=())
+        if "enabled" in value:
+            legacy_enabled = value["enabled"]
+            if not isinstance(legacy_enabled, bool):
+                raise ConfigError(f"config {path} requires boolean 'enabled'")
+            if not legacy_enabled:
+                return cls(tokens=())
         return cls(tokens=tokens)
 
 
