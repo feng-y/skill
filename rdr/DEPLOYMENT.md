@@ -275,6 +275,18 @@ WantedBy=multi-user.target
 
 实际用户、权限、cgroup 和 namespace 按目标服务环境配置。不要为了形式上的隔离导致 RDR 看不到真实 PID、cgroup、日志或 core。
 
+### 5.2 托管启动（无 supervisor 的环境）
+
+`rdr server start` 提供托管后台启动：detached 进程、pid file、日志文件、listener 就绪自检。安装与启动因此分离 —— pip 装完后，启动/状态/停止都是独立命令：
+
+```bash
+rdr server start    # token 来源优先级：--token > RDR_TOKEN > /etc/rdr/access.json
+rdr server status   # 进程存活 / 端口监听 / identity 认证往返，全 ok 时 exit 0
+rdr server stop
+```
+
+默认 pid file `/run/rdr/server.pid`（不可写时回退 `~/.rdr/`），日志 `/var/log/rdr/server.log`（同样回退），可用 `--pid-file` / `--log-file` 覆盖。`rdr-server` 前台进程语义不变；生产长期运行仍建议 supervisor / systemd，托管启动适合无 init 体系的容器或临时环境。
+
 ## 6. 开发侧 Client
 
 开发环境安装同一个 package：

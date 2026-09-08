@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
@@ -78,3 +79,18 @@ def merge_access_configs(
                 merged_tokens.append(token)
                 seen.add(token)
     return AccessConfig(enabled=enabled, tokens=tuple(merged_tokens))
+
+
+def resolve_access_token(access_config_path: str | Path) -> str:
+    """Token used by client-side connections: RDR_TOKEN env wins, then the
+    first token of the access config file."""
+    env_token = os.environ.get("RDR_TOKEN", "").strip()
+    if env_token:
+        return env_token
+    path = Path(access_config_path)
+    config = AccessConfig.load(path)
+    if not config.enabled:
+        raise ConfigError(f"access config {path} is disabled")
+    if not config.tokens:
+        raise ConfigError(f"access config {path} contains no token")
+    return config.tokens[0]

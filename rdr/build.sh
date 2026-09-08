@@ -60,5 +60,29 @@ EOF
 "$workdir/verify-venv/bin/rdr-server" --help > /dev/null
 echo "entry points ok"
 
+echo "== managed server e2e =="
+e2e_port=$((20000 + RANDOM % 10000))
+export RDR_TOKEN="build-e2e-token"
+export RDR_ACCESS_CONFIG="$workdir/missing-access.json"
+export RDR_GLOBAL_ACCESS_CONFIG="$workdir/missing-global.json"
+"$workdir/verify-venv/bin/rdr" server start \
+    --host 127.0.0.1 --port "$e2e_port" \
+    --pid-file "$workdir/server.pid" --log-file "$workdir/server.log"
+"$workdir/verify-venv/bin/rdr" server status \
+    --port "$e2e_port" --pid-file "$workdir/server.pid"
+"$workdir/verify-venv/bin/rdr" server stop --pid-file "$workdir/server.pid"
+"$verify_python" - "$e2e_port" <<'EOF'
+import socket
+import sys
+
+port = int(sys.argv[1])
+try:
+    socket.create_connection(("127.0.0.1", port), timeout=0.5)
+except OSError:
+    print("listener closed after stop")
+    sys.exit(0)
+sys.exit("listener still open after stop")
+EOF
+
 echo "== artifacts =="
 ls -lh "$wheel" "$sdist"

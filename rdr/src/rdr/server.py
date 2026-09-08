@@ -46,6 +46,22 @@ async def run_server(args: argparse.Namespace) -> None:
         await server.set_access(next_policy.enabled, next_policy.tokens)
 
     await apply(policy)
+    if server.listener is not None:
+        bound = ", ".join(
+            str(sock.getsockname()) for sock in server.listener.sockets or []
+        )
+        print(
+            f"RDR server ready on {bound} (pid={os.getpid()}, "
+            f"uid={os.getuid()}, tokens={len(policy.tokens)}); "
+            f"verify with: rdr identity <host>:<port>",
+            flush=True,
+        )
+    else:
+        print(
+            "RDR server disabled by access policy (enabled=false); "
+            "no listener started",
+            flush=True,
+        )
     access_task = asyncio.create_task(
         watcher.watch(apply, stop_event=stop_event),
         name="rdr-access-watcher",

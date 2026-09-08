@@ -4,7 +4,7 @@ RDR is a small Python remote runtime for system diagnosis when SSH is unavailabl
 
 The AI agent stays in the development environment. The remote side contains no LLM or diagnostic reasoning. RDR exposes the target runtime with local-like primitives so existing Linux diagnostic workflows remain usable remotely.
 
-For deployment, access policy, token rotation, smoke tests, failure isolation, and log/perf/core/OOM usage, read [`DEPLOYMENT.md`](DEPLOYMENT.md).
+For deployment, access policy, token rotation, smoke tests, failure isolation, and log/perf/core/OOM usage, read [`DEPLOYMENT.md`](DEPLOYMENT.md). For the shortest install-and-verify path (server, token, client), read [`GUIDE.md`](GUIDE.md).
 
 ## Scope
 
@@ -74,6 +74,11 @@ rdr-server \
   --access-config /tmp/rdr-access.json \
   --global-access-config /tmp/nonexistent-rdr-global.json
 ```
+
+On hosts without a supervisor, `rdr server start` / `status` / `stop` wraps the
+same server in a managed background process (pid file, log file, readiness
+check). Token sources, in priority order: `--token`, `RDR_TOKEN`, then the
+server access config file.
 
 From another terminal:
 
