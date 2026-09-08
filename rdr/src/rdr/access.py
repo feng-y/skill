@@ -13,13 +13,12 @@ logger = logging.getLogger(__name__)
 class AccessConfigWatcher:
     """Watches host-local and optional global access configuration files.
 
-    The local file is required at startup unless ``static_tokens`` is
-    non-empty (tokens supplied out of band, e.g. from the environment), in
-    which case a missing local file only means "no file policy yet". A local
-    file that exists but is invalid is always a startup failure. The global
-    file is optional until it has been read successfully once. After that, a
-    transient read or mount failure keeps the last-known global policy
-    instead of silently reopening access.
+    A missing local file is allowed at startup: the server starts with no
+    local policy and may therefore have no configured token yet. A local file
+    that exists but is invalid is always a startup failure. After a local file
+    has been read successfully once, transient read or mount failures keep the
+    last-known local policy. The global file follows the same last-known-state
+    rule after its first successful read.
     """
 
     def __init__(
@@ -44,19 +43,17 @@ class AccessConfigWatcher:
         try:
             self._local = AccessConfig.load(self.local_path)
         except ConfigError:
-            if not self.static_tokens or self.local_path.exists():
+            if self.local_path.exists():
                 raise
             logger.warning(
-                "local RDR access config %s is missing; starting with "
-                "static env tokens only",
+                "local RDR access config %s is missing; starting without "
+                "local access policy",
                 self.local_path,
             )
         self._refresh_global(initial=True)
         return self._merged()
 
     def _merged(self) -> AccessConfig:
-        if self._local is None and not self.static_tokens:
-            raise RuntimeError("access config watcher has not been initialized")
         return merge_access_configs(
             self._local,
             self._global,
@@ -67,7 +64,7 @@ class AccessConfigWatcher:
         try:
             self._local = AccessConfig.load(self.local_path)
         except ConfigError:
-            if not self.local_path.exists() and self.static_tokens:
+            if not self.local_path.exists() and self._local is None:
                 return
             logger.exception(
                 "failed to reload local RDR access config; keeping last-known state"
