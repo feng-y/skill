@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import asyncio
+import io
 import json
 import os
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
 
@@ -94,6 +96,30 @@ class CLITest(unittest.TestCase):
                 resolve_access_config_path("/cli/access.json"),
                 "/cli/access.json",
             )
+
+    def test_root_help_exposes_stateless_vs_stateful_choice(self) -> None:
+        output = io.StringIO()
+        with redirect_stdout(output):
+            with self.assertRaises(SystemExit) as raised:
+                build_parser().parse_args(["--help"])
+        self.assertEqual(raised.exception.code, 0)
+        help_text = output.getvalue()
+        self.assertIn("stateless one-shot remote work", help_text)
+        self.assertIn("stateful remote terminal", help_text)
+        self.assertIn("rdr connect --help", help_text)
+
+    def test_connect_help_exposes_stateful_discovery(self) -> None:
+        output = io.StringIO()
+        with redirect_stdout(output):
+            with self.assertRaises(SystemExit) as raised:
+                build_parser().parse_args(["connect", "--help"])
+        self.assertEqual(raised.exception.code, 0)
+        help_text = output.getvalue()
+        self.assertIn("stateful remote terminal", help_text)
+        self.assertIn("multiple interactions or transport reconnects", help_text)
+        self.assertIn("--terminal-id", help_text)
+        self.assertIn("--attach", help_text)
+        self.assertIn("prefer `rdr exec`", help_text)
 
 
 class EnvTokenTest(unittest.TestCase):
