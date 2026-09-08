@@ -68,6 +68,45 @@ class AccessWatcherTest(unittest.TestCase):
         policy = watcher.read_policy()
         self.assertEqual(policy.tokens, ("rotated",))
 
+    def test_missing_local_file_falls_back_to_static_tokens(self) -> None:
+        self.local.unlink()
+        watcher = AccessConfigWatcher(
+            self.local, self.global_path, static_tokens=("env",)
+        )
+        policy = watcher.load_initial()
+        self.assertTrue(policy.enabled)
+        self.assertEqual(policy.tokens, ("env",))
+
+        self._write(self.local, enabled=True, tokens=["local"])
+        policy = watcher.read_policy()
+        self.assertEqual(policy.tokens, ("local", "env"))
+
+    def test_invalid_local_file_fails_startup_even_with_static_tokens(self) -> None:
+        self.local.write_text("{}", encoding="utf-8")
+        watcher = AccessConfigWatcher(
+            self.local, self.global_path, static_tokens=("env",)
+        )
+        with self.assertRaises(ConfigError):
+            watcher.load_initial()
+
+    def test_static_tokens_join_file_tokens_and_survive_rotation(self) -> None:
+        watcher = AccessConfigWatcher(
+            self.local, self.global_path, static_tokens=("env",)
+        )
+        self.assertEqual(watcher.load_initial().tokens, ("local", "env"))
+
+        self._write(self.local, enabled=True, tokens=["rotated"])
+        self.assertEqual(watcher.read_policy().tokens, ("rotated", "env"))
+
+    def test_file_disable_overrides_static_tokens(self) -> None:
+        self._write(self.local, enabled=False, tokens=[])
+        watcher = AccessConfigWatcher(
+            self.local, self.global_path, static_tokens=("env",)
+        )
+        policy = watcher.load_initial()
+        self.assertFalse(policy.enabled)
+        self.assertEqual(policy.tokens, ("env",))
+
 
 class AccessWatcherAsyncTest(unittest.IsolatedAsyncioTestCase):
     async def test_failed_policy_apply_is_retried(self) -> None:

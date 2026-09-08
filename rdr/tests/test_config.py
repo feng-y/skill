@@ -37,6 +37,24 @@ class ConfigTest(unittest.TestCase):
         self.assertFalse(merged.enabled)
         self.assertEqual(merged.tokens, ("local",))
 
+    def test_extra_tokens_are_unioned_without_duplicates(self) -> None:
+        local = AccessConfig(enabled=True, tokens=("local", "shared"))
+        merged = merge_access_configs(
+            local, extra_tokens=("env", "local")
+        )
+        self.assertTrue(merged.enabled)
+        self.assertEqual(merged.tokens, ("local", "shared", "env"))
+
+    def test_merge_without_file_configs_uses_extra_tokens_only(self) -> None:
+        merged = merge_access_configs(None, extra_tokens=("env",))
+        self.assertTrue(merged.enabled)
+        self.assertEqual(merged.tokens, ("env",))
+
+    def test_merge_without_any_token_source_is_empty(self) -> None:
+        merged = merge_access_configs(None)
+        self.assertTrue(merged.enabled)
+        self.assertEqual(merged.tokens, ())
+
     def test_rejects_missing_required_values(self) -> None:
         with self.assertRaises(ConfigError):
             AccessConfig.load(self._write({"enabled": True}))

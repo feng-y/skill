@@ -15,11 +15,17 @@ __all__ = ["RDRServer"]
 logger = logging.getLogger(__name__)
 
 
+def env_access_tokens() -> tuple[str, ...]:
+    raw = os.environ.get("RDR_TOKEN", "").strip()
+    return (raw,) if raw else ()
+
+
 async def run_server(args: argparse.Namespace) -> None:
     watcher = AccessConfigWatcher(
         args.access_config,
         args.global_access_config,
         poll_seconds=args.access_poll_seconds,
+        static_tokens=env_access_tokens(),
     )
     try:
         policy = watcher.load_initial()

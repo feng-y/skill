@@ -58,18 +58,22 @@ class AccessConfig:
 
 
 def merge_access_configs(
-    local: AccessConfig,
-    global_config: AccessConfig | None,
+    local: AccessConfig | None,
+    global_config: AccessConfig | None = None,
+    *,
+    extra_tokens: Iterable[str] = (),
 ) -> AccessConfig:
-    configs: Iterable[AccessConfig] = (
-        (local,) if global_config is None else (local, global_config)
-    )
+    configs = [
+        config for config in (local, global_config) if config is not None
+    ]
     merged_tokens: list[str] = []
     seen: set[str] = set()
-    enabled = True
-    for config in configs:
-        enabled = enabled and config.enabled
-        for token in config.tokens:
+    enabled = all(config.enabled for config in configs) if configs else True
+    token_sources: list[Iterable[str]] = [
+        config.tokens for config in configs
+    ] + [extra_tokens]
+    for tokens in token_sources:
+        for token in tokens:
             if token not in seen:
                 merged_tokens.append(token)
                 seen.add(token)

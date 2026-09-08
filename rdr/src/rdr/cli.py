@@ -56,7 +56,7 @@ def _add_access_config(parser: argparse.ArgumentParser) -> None:
         "--access-config",
         help=(
             "client access config JSON; defaults to RDR_ACCESS_CONFIG or "
-            "~/.config/rdr/access.json"
+            "~/.config/rdr/access.json. RDR_TOKEN overrides the file token"
         ),
     )
 
@@ -104,17 +104,23 @@ async def _connect(
     access_config: str | None,
 ) -> RDRClient:
     host, port = endpoint
-    access_path = resolve_access_config_path(access_config)
-    try:
-        access = AccessConfig.load(access_path)
-    except ConfigError as exc:
-        raise SystemExit(str(exc)) from exc
-    if not access.enabled:
-        raise SystemExit(f"access config {access_path} is disabled")
-    if not access.tokens:
-        raise SystemExit(f"access config {access_path} contains no token")
 
-    client = RDRClient(host, port, access.tokens[0])
+    env_token = os.environ.get("RDR_TOKEN", "").strip()
+    if env_token:
+        token = env_token
+    else:
+        access_path = resolve_access_config_path(access_config)
+        try:
+            access = AccessConfig.load(access_path)
+        except ConfigError as exc:
+            raise SystemExit(str(exc)) from exc
+        if not access.enabled:
+            raise SystemExit(f"access config {access_path} is disabled")
+        if not access.tokens:
+            raise SystemExit(f"access config {access_path} contains no token")
+        token = access.tokens[0]
+
+    client = RDRClient(host, port, token)
     await client.connect()
     return client
 

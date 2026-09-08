@@ -13,10 +13,13 @@ logger = logging.getLogger(__name__)
 class AccessConfigWatcher:
     """Watches host-local and optional global access configuration files.
 
-    The local file is required at startup. The global file is optional until it
-    has been read successfully once. After that, a transient read or mount
-    failure keeps the last-known global policy instead of silently reopening
-    access.
+    The local file is required at startup unless ``static_tokens`` is
+    non-empty (tokens supplied out of band, e.g. from the environment), in
+    which case a missing local file only means "no file policy yet". A local
+    file that exists but is invalid is always a startup failure. The global
+    file is optional until it has been read successfully once. After that, a
+    transient read or mount failure keeps the last-known global policy
+    instead of silently reopening access.
     """
 
     def __init__(
@@ -25,25 +28,47 @@ class AccessConfigWatcher:
         global_path: str | Path | None = None,
         *,
         poll_seconds: float = 30.0,
+        static_tokens: tuple[str, ...] = (),
     ) -> None:
         if poll_seconds <= 0:
             raise ValueError("access poll interval must be positive")
         self.local_path = Path(local_path)
         self.global_path = Path(global_path) if global_path else None
         self.poll_seconds = poll_seconds
+        self.static_tokens = tuple(static_tokens)
         self._local: AccessConfig | None = None
         self._global: AccessConfig | None = None
         self._global_seen = False
 
     def load_initial(self) -> AccessConfig:
-        self._local = AccessConfig.load(self.local_path)
+        try:
+            self._local = AccessConfig.load(self.local_path)
+        except ConfigError:
+            if not self.static_tokens or self.local_path.exists():
+                raise
+            logger.warning(
+                "local RDR access config %s is missing; starting with "
+                "static env tokens only",
+                self.local_path,
+            )
         self._refresh_global(initial=True)
-        return merge_access_configs(self._local, self._global)
+        return self._merged()
+
+    def _merged(self) -> AccessConfig:
+        if self._local is None and not self.static_tokens:
+            raise RuntimeError("access config watcher has not been initialized")
+        return merge_access_configs(
+            self._local,
+            self._global,
+            extra_tokens=self.static_tokens,
+        )
 
     def _refresh_local(self) -> None:
         try:
             self._local = AccessConfig.load(self.local_path)
         except ConfigError:
+            if not self.local_path.exists() and self.static_tokens:
+                return
             logger.exception(
                 "failed to reload local RDR access config; keeping last-known state"
             )
@@ -68,11 +93,9 @@ class AccessConfigWatcher:
             )
 
     def read_policy(self) -> AccessConfig:
-        if self._local is None:
-            raise RuntimeError("access config watcher has not been initialized")
         self._refresh_local()
         self._refresh_global()
-        return merge_access_configs(self._local, self._global)
+        return self._merged()
 
     async def watch(
         self,
@@ -80,7 +103,7 @@ class AccessConfigWatcher:
         *,
         stop_event: asyncio.Event,
     ) -> None:
-        current = merge_access_configs(self._local, self._global) if self._local else None
+        current = self._merged()
         while not stop_event.is_set():
             policy = await asyncio.to_thread(self.read_policy)
             if policy != current:

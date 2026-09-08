@@ -235,6 +235,12 @@ export RDR_GLOBAL_ACCESS_CONFIG=/data/bucket/rdr/access.json
 /opt/rdr/venv/bin/rdr-server --port 19090
 ```
 
+没有 access.json 时，可以仅凭 `RDR_TOKEN` 启动（见 4.4）：
+
+```bash
+RDR_TOKEN=<token> /opt/rdr/venv/bin/rdr-server --port 19090
+```
+
 ### 5.1 使用 supervisor 常驻
 
 RDR 自己不 daemonize。生产/线下长期运行应交给现有 supervisor、容器 runtime 或 systemd。
@@ -319,7 +325,11 @@ export RDR_ACCESS_CONFIG=/path/to/access.json
 rdr connect HOST:19090 --access-config /path/to/access.json
 ```
 
-客户端使用 token list 中的第一个 token 发起认证。
+客户端使用 token list 中的第一个 token 发起认证。设置了 `RDR_TOKEN` 时优先使用它，可以完全不需要 access.json：
+
+```bash
+RDR_TOKEN=<token> rdr identity HOST:19090
+```
 
 ### 6.1 CLI 形态
 
@@ -625,11 +635,35 @@ rdr identity HOST:19090
 
 注意 effective `enabled` 是 local 与 global 的 AND；另一层仍为 `false` 时，RDR 不会重新监听。
 
+### 4.4 环境变量 token
+
+`RDR_TOKEN` 是第三种 token 来源，服务于 pip 安装后的零配置启动：
+
+```bash
+pip install rdr-runtime
+RDR_TOKEN=<token> rdr-server --port 19090
+```
+
+语义：
+
+- server：`RDR_TOKEN` 作为额外 token 加入并集；local config 不存在时，仅凭 `RDR_TOKEN` 即可启动（`enabled` 视为 `true`）。
+- client：`RDR_TOKEN` 优先于 access config 的第一个 token，适合临时验证：
+
+  ```bash
+  RDR_TOKEN=<token> rdr exec HOST:19090 'uname -a'
+  ```
+
+- `enabled` 仍由文件决定，`RDR_TOKEN` 不能越过文件 kill switch：local/global 任一层 `enabled: false`，RDR 依旧关闭。
+- local config 文件存在但非法时，即使设置了 `RDR_TOKEN`，启动仍然失败；只有"文件不存在"才回退到 env token。
+- token 轮换（10.1）仍以文件为准；env token 不参与 poll 热更新，改动需重启进程。
+
 ## 11. 配置失败语义
 
 | 场景 | 行为 |
 |---|---|
 | local config 启动时不存在/非法 | RDR 启动失败 |
+| local config 启动时不存在，但设置了 `RDR_TOKEN` | 以 `RDR_TOKEN` 启动，`enabled` 视为 `true` |
+| local config 存在但非法（即使设置了 `RDR_TOKEN`） | RDR 启动失败 |
 | global config 启动时不存在 | 按 local policy 启动 |
 | global config 启动时存在但非法 | RDR 启动失败 |
 | local config 运行中暂时不可读/非法 | 保持 last-known local policy |

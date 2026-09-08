@@ -1,15 +1,36 @@
 from __future__ import annotations
 
+import asyncio
+import json
 import os
+import tempfile
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from rdr.cli import (
+    _connect,
     build_parser,
     parse_endpoint,
     parse_remote_spec,
     resolve_access_config_path,
 )
+from rdr.server import env_access_tokens
+
+
+class _StubClient:
+    instances: list["_StubClient"] = []
+
+    def __init__(self, host: str, port: int, token: str) -> None:
+        self.host = host
+        self.port = port
+        self.token = token
+        self.connected = False
+        _StubClient.instances.append(self)
+
+    async def connect(self) -> dict[str, object]:
+        self.connected = True
+        return {}
 
 
 class CLITest(unittest.TestCase):
@@ -73,6 +94,60 @@ class CLITest(unittest.TestCase):
                 resolve_access_config_path("/cli/access.json"),
                 "/cli/access.json",
             )
+
+
+class EnvTokenTest(unittest.TestCase):
+    def test_env_access_tokens_parses_rdr_token(self) -> None:
+        with patch.dict(os.environ, {"RDR_TOKEN": "env-token"}, clear=False):
+            self.assertEqual(env_access_tokens(), ("env-token",))
+        with patch.dict(os.environ, {"RDR_TOKEN": "   "}, clear=False):
+            self.assertEqual(env_access_tokens(), ())
+        env = dict(os.environ)
+        env.pop("RDR_TOKEN", None)
+        with patch.dict(os.environ, env, clear=True):
+            self.assertEqual(env_access_tokens(), ())
+
+
+class ConnectTokenSourceTest(unittest.IsolatedAsyncioTestCase):
+    def setUp(self) -> None:
+        _StubClient.instances = []
+        self.root = tempfile.TemporaryDirectory()
+        self.addCleanup(self.root.cleanup)
+        self.access = Path(self.root.name) / "access.json"
+        self.access.write_text(
+            json.dumps({"enabled": True, "tokens": ["file-token", "second"]}),
+            encoding="utf-8",
+        )
+
+    async def test_rdr_token_overrides_access_config(self) -> None:
+        with patch.dict(
+            os.environ,
+            {"RDR_TOKEN": "env-token", "RDR_ACCESS_CONFIG": str(self.access)},
+            clear=False,
+        ), patch("rdr.cli.RDRClient", _StubClient):
+            client = await _connect(("host.example", 19090), None)
+        self.assertEqual(client.token, "env-token")
+        self.assertTrue(client.connected)
+
+    async def test_access_config_first_token_is_used_without_env(self) -> None:
+        env = dict(os.environ)
+        env.pop("RDR_TOKEN", None)
+        env["RDR_ACCESS_CONFIG"] = str(self.access)
+        with patch.dict(os.environ, env, clear=True), patch(
+            "rdr.cli.RDRClient", _StubClient
+        ):
+            client = await _connect(("host.example", 19090), None)
+        self.assertEqual(client.token, "file-token")
+
+    async def test_missing_config_and_no_env_token_fails(self) -> None:
+        env = dict(os.environ)
+        env.pop("RDR_TOKEN", None)
+        env["RDR_ACCESS_CONFIG"] = str(self.access.with_suffix(".missing"))
+        with patch.dict(os.environ, env, clear=True), patch(
+            "rdr.cli.RDRClient", _StubClient
+        ):
+            with self.assertRaises(SystemExit):
+                await _connect(("host.example", 19090), None)
 
 
 if __name__ == "__main__":

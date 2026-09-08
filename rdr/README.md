@@ -52,7 +52,12 @@ rdr get HOST:PORT:/tmp/perf.data ./perf.data
 rdr put ./inspect.py HOST:PORT:/tmp/inspect.py
 ```
 
-The client reads `~/.config/rdr/access.json` by default. `RDR_ACCESS_CONFIG` or command-local `--access-config` can override it.
+The client reads `~/.config/rdr/access.json` by default. `RDR_ACCESS_CONFIG` or command-local `--access-config` can override it. The `RDR_TOKEN` environment variable overrides the file token entirely, so both sides can run with zero config files:
+
+```bash
+RDR_TOKEN=<token> rdr-server --port 19090
+RDR_TOKEN=<token> rdr exec HOST:19090 'uname -a'
+```
 
 ## Quick local smoke test
 
