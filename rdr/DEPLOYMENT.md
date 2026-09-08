@@ -36,12 +36,12 @@ RDR 可以和主服务一起构建、发布和升级，但必须是独立进程�
 
 ## 2. 运行要求
 
-RDR Server 和开发侧 Client 都需要 Python 3.11+。
+RDR Server 和开发侧 Client 都需要 Python 3.10+。
 
 推荐 Server 使用独立 venv：
 
 ```bash
-python3.11 -m venv /opt/rdr/venv
+python3 -m venv /opt/rdr/venv
 /opt/rdr/venv/bin/python -m pip install /path/to/skill/rdr
 ```
 
@@ -274,7 +274,7 @@ WantedBy=multi-user.target
 开发环境安装同一个 package：
 
 ```bash
-python3.11 -m venv ~/.local/share/rdr/venv
+python3 -m venv ~/.local/share/rdr/venv
 ~/.local/share/rdr/venv/bin/python -m pip install /path/to/skill/rdr
 ```
 

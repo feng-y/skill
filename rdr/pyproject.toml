@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "rdr-runtime"
 version = "0.1.0"
 description = "Remote Diagnostic Runtime for local-parity system investigation"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = []
 
 [project.scripts]
