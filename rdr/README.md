@@ -2,9 +2,9 @@
 
 RDR is a small remote runtime for system diagnosis when SSH is unavailable or should not be part of the diagnostic path.
 
-The AI agent, source code, and diagnostic reasoning stay in the development environment. The remote side only exposes local-like runtime primitives: shell execution, PTY, file transfer, and runtime identity. Existing Linux tools such as `perf`, `gdb`, `pidstat`, `rg`, `/proc`, cgroup files, and service logs remain the diagnostic interface.
+The AI agent, source code, and diagnostic reasoning stay in the development environment. The remote side only exposes local-like runtime primitives: shell execution, stateful PTY sessions, file transfer, and runtime identity. Existing Linux tools such as `perf`, `gdb`, `pidstat`, `rg`, `/proc`, cgroup files, and service logs remain the diagnostic interface.
 
-Current baseline: **RDR 0.5.x**, Python **3.10+**.
+Current baseline: **RDR 0.6.x**, Python **3.10+**.
 
 For the executable install/use path, start with [`GUIDE.md`](GUIDE.md). For longer-running deployment, failure isolation, token rotation, and log/perf/core/OOM workflows, see [`DEPLOYMENT.md`](DEPLOYMENT.md).
 
@@ -23,11 +23,50 @@ The current protocol provides:
 - token-authenticated persistent TCP connections
 - one-shot shell execution with stdout/stderr streaming, timeout, and cancellation
 - interactive PTY with input/output, resize, and signals
+- runtime-owned stateful terminals that survive transport disconnect and can be reattached
+- bounded replay of output produced while a terminal is detached
 - file upload/download with integrity verification and atomic commit
 - safe resumable download using range requests and prefix verification
 - runtime identity
 
 The protocol uses framed messages: a JSON header plus an optional binary payload.
+
+## Stateless vs stateful work
+
+RDR has two execution shapes.
+
+Stateless operations finish inside one request/connection lifecycle:
+
+```text
+identity
+exec
+get
+put
+```
+
+Stateful operations keep remote process state across many interactions:
+
+```text
+shell
+gdb / lldb
+python REPL
+top / perf report
+other interactive tools
+```
+
+For stateful work, the terminal process belongs to the **RDR runtime**, not to the TCP connection. A connection only attaches to that terminal.
+
+```text
+Agent connection A
+      |
+      v
+RDR terminal: debug-1 ----> gdb / shell / REPL
+      ^
+      |
+Agent connection B       (after reconnect)
+```
+
+A transport disconnect detaches the terminal but does not terminate its process. `terminal.close`, remote process exit, token revocation, or RDR server shutdown terminates/cleans the runtime state.
 
 ## Build
 
@@ -99,6 +138,45 @@ rdr put ./inspect.py HOST:19090:/tmp/inspect.py
 rdr connect HOST:19090
 ```
 
+## Stateful terminal / reconnect
+
+Create a terminal with a stable id when the work is expected to be stateful:
+
+```bash
+rdr connect HOST:19090 --terminal-id core-debug
+```
+
+The CLI prints the terminal id before entering raw terminal mode. If the transport/client disappears while the remote process is still alive, reconnect with:
+
+```bash
+rdr connect HOST:19090 --attach core-debug
+```
+
+The same PTY/process continues; GDB thread/frame state, shell variables, REPL state, and similar process-local state remain intact.
+
+While detached, RDR keeps a bounded **4 MiB** output replay buffer per terminal. Reattach replays the retained output before continuing with live output. If more output was produced than fits in the buffer, the client exposes `replay_truncated=True` and the CLI prints a warning.
+
+Only one connection may actively attach a terminal at a time. V1 uses the server token set as the trust boundary; there is no per-terminal ACL.
+
+Programmatic use:
+
+```python
+terminal = await client.open_terminal(
+    command="gdb /path/server /path/core",
+    terminal_id="core-debug",
+)
+await terminal.write(b"info threads\n")
+
+# Preserve the remote process while ending this attachment.
+await terminal.detach()
+
+# Later, through a new RDRClient connection:
+terminal = await client.attach_terminal("core-debug")
+await terminal.write(b"thread 17\n")
+```
+
+`terminal.close()` is different from detach: close terminates the remote PTY/process.
+
 ## Token model
 
 Access config contains only tokens:
@@ -126,6 +204,7 @@ Important consequences:
 - clearing one token source does not remove tokens supplied by another source
 - file token changes are watched and applied without restarting the server
 - startup `RDR_TOKEN` is static for that process and requires restart to change
+- token revocation terminates active and detached stateful terminals to preserve the access boundary
 
 Client token resolution is:
 
@@ -176,10 +255,26 @@ rdr exec HOST:19090 "pidstat -tid -p PID 1 5"
 rdr exec HOST:19090 "perf stat -p PID -- sleep 10"
 rdr exec HOST:19090 "perf record -F 99 -g -p PID -o /tmp/perf.data -- sleep 20"
 rdr get HOST:19090:/tmp/perf.data ./perf.data
-rdr connect HOST:19090
+rdr connect HOST:19090 --terminal-id core-debug
 ```
 
-Inside `rdr connect`, normal terminal workflows such as `top`, `gdb`, `python3`, `/proc` inspection, and cgroup investigation remain unchanged.
+Inside a stateful terminal, normal terminal workflows such as `gdb`, `top`, `python3`, `/proc` inspection, and cgroup investigation remain unchanged.
+
+For a complex core dump, for example:
+
+```text
+rdr connect --terminal-id core-debug
+  -> gdb binary core
+  -> info threads
+  -> thread 17
+  -> frame 8
+  -> info locals
+
+transport disconnect
+
+rdr connect --attach core-debug
+  -> same GDB process and state
+```
 
 ## Deployment requirement
 
@@ -199,9 +294,10 @@ RDR should also remain in a failure domain that survives the failures it is expe
 
 Current baseline does not provide:
 
-- session reconnect after a transport connection is lost
+- terminal/session persistence across an RDR server process restart
+- terminal discovery/listing or per-terminal ACLs
 - MCP adapter
-- server-side large-output spool/cursor
+- server-side large-output spool/cursor beyond the bounded detached-terminal replay buffer
 - fleet management or central gateway
 - parallel multi-connection file download
 - resumable upload
