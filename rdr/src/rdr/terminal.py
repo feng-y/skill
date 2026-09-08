@@ -4,12 +4,21 @@ import asyncio
 import os
 import signal
 import struct
+from collections import deque
 from dataclasses import dataclass, field
 
 from .process import parse_signal, terminate_process_group
 from .protocol import LockedFrameWriter
 
 _CHUNK = 256 * 1024
+_REPLAY_LIMIT = 4 * 1024 * 1024
+_CONNECTION_ERRORS = (
+    BrokenPipeError,
+    ConnectionResetError,
+    ConnectionAbortedError,
+    OSError,
+    RuntimeError,
+)
 
 
 @dataclass
@@ -17,19 +26,22 @@ class TerminalHandle:
     terminal_id: str
     pid: int
     master_fd: int
-    sender: LockedFrameWriter
     loop: asyncio.AbstractEventLoop
     queue: asyncio.Queue[bytes | None] = field(default_factory=asyncio.Queue)
     pump_task: asyncio.Task[None] | None = None
     wait_task: asyncio.Task[None] | None = None
     closed: bool = False
+    sender: LockedFrameWriter | None = None
+    output_buffer: deque[bytes] = field(default_factory=deque)
+    buffered_bytes: int = 0
+    buffer_truncated: bool = False
+    attachment_lock: asyncio.Lock = field(default_factory=asyncio.Lock)
 
     @classmethod
     async def open(
         cls,
         *,
         terminal_id: str,
-        sender: LockedFrameWriter,
         command: str | None,
         cwd: str | None,
         env: dict[str, str] | None,
@@ -107,7 +119,6 @@ class TerminalHandle:
             terminal_id=terminal_id,
             pid=pid,
             master_fd=master_fd,
-            sender=sender,
             loop=asyncio.get_running_loop(),
         )
         handle._start()
@@ -139,15 +150,56 @@ class TerminalHandle:
         except Exception:
             pass
 
+    def _buffer_output(self, data: bytes) -> None:
+        if not data:
+            return
+        self.output_buffer.append(data)
+        self.buffered_bytes += len(data)
+        while self.buffered_bytes > _REPLAY_LIMIT and self.output_buffer:
+            dropped = self.output_buffer.popleft()
+            self.buffered_bytes -= len(dropped)
+            self.buffer_truncated = True
+
+    async def _deliver_output(self, data: bytes) -> None:
+        async with self.attachment_lock:
+            sender = self.sender
+            if sender is None:
+                self._buffer_output(data)
+                return
+            try:
+                await sender.send(
+                    {"type": "terminal.output", "terminal_id": self.terminal_id},
+                    data,
+                )
+            except _CONNECTION_ERRORS:
+                if self.sender is sender:
+                    self.sender = None
+                self._buffer_output(data)
+
     async def _pump_output(self) -> None:
         while True:
             data = await self.queue.get()
             if data is None:
                 return
-            await self.sender.send(
-                {"type": "terminal.output", "terminal_id": self.terminal_id},
-                data,
-            )
+            await self._deliver_output(data)
+
+    async def _send_exit(self, *, exit_code: int | None, exit_signal: int | None) -> None:
+        async with self.attachment_lock:
+            sender = self.sender
+            if sender is None:
+                return
+            try:
+                await sender.send(
+                    {
+                        "type": "terminal.exit",
+                        "terminal_id": self.terminal_id,
+                        "exit_code": exit_code,
+                        "signal": exit_signal,
+                    }
+                )
+            except _CONNECTION_ERRORS:
+                if self.sender is sender:
+                    self.sender = None
 
     async def _wait_for_exit(self) -> None:
         _, status = await asyncio.to_thread(os.waitpid, self.pid, 0)
@@ -183,14 +235,52 @@ class TerminalHandle:
             exit_signal = None
 
         self.closed = True
-        await self.sender.send(
-            {
-                "type": "terminal.exit",
-                "terminal_id": self.terminal_id,
-                "exit_code": exit_code,
-                "signal": exit_signal,
-            }
-        )
+        await self._send_exit(exit_code=exit_code, exit_signal=exit_signal)
+
+    async def attach(self, sender: LockedFrameWriter) -> tuple[int, bool]:
+        """Attach a transport and replay output produced while detached."""
+        async with self.attachment_lock:
+            if self.closed:
+                raise RuntimeError("terminal is closed")
+            if self.sender is not None and self.sender is not sender:
+                raise RuntimeError("terminal is already attached")
+            if self.sender is sender:
+                return 0, False
+
+            replay = list(self.output_buffer)
+            replayed_bytes = self.buffered_bytes
+            replay_truncated = self.buffer_truncated
+            self.output_buffer.clear()
+            self.buffered_bytes = 0
+            self.buffer_truncated = False
+            self.sender = sender
+
+            for index, data in enumerate(replay):
+                try:
+                    await sender.send(
+                        {"type": "terminal.output", "terminal_id": self.terminal_id},
+                        data,
+                    )
+                except _CONNECTION_ERRORS as exc:
+                    if self.sender is sender:
+                        self.sender = None
+                    if replay_truncated:
+                        self.buffer_truncated = True
+                    for remaining in replay[index:]:
+                        self._buffer_output(remaining)
+                    raise RuntimeError("terminal attach connection closed") from exc
+
+            return replayed_bytes, replay_truncated
+
+    async def detach(self, sender: LockedFrameWriter) -> bool:
+        async with self.attachment_lock:
+            if self.sender is not sender:
+                return False
+            self.sender = None
+            return True
+
+    def is_attached_to(self, sender: LockedFrameWriter) -> bool:
+        return self.sender is sender
 
     async def write(self, data: bytes) -> None:
         if self.closed:
