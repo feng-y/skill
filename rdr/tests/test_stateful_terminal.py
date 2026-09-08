@@ -55,7 +55,7 @@ class StatefulTerminalTest(unittest.IsolatedAsyncioTestCase):
     async def wait_detached(self, terminal_id: str) -> None:
         for _ in range(100):
             handle = self.server.get_terminal(terminal_id)
-            if handle is not None and handle.sender is None:
+            if handle is not None and handle.attachment_count == 0:
                 return
             await asyncio.sleep(0.01)
         self.fail(f"terminal did not detach: {terminal_id}")
@@ -124,20 +124,64 @@ class StatefulTerminalTest(unittest.IsolatedAsyncioTestCase):
         handle = self.server.get_terminal("explicit-detach")
         self.assertIsNotNone(handle)
         assert handle is not None
-        self.assertIsNone(handle.sender)
+        self.assertEqual(handle.attachment_count, 0)
 
         attached = await client.attach_terminal("explicit-detach")
         await attached.close()
 
-    async def test_attached_terminal_rejects_second_connection(self) -> None:
+    async def test_default_allows_two_simultaneous_attachments(self) -> None:
+        first = await self.connect()
+        primary = await first.open_terminal(
+            command="while IFS= read -r line; do printf 'seen:%s\\n' \"$line\"; done",
+            terminal_id="shared-terminal",
+        )
+        second = await self.connect()
+        observer = await second.attach_terminal("shared-terminal")
+
+        handle = self.server.get_terminal("shared-terminal")
+        self.assertIsNotNone(handle)
+        assert handle is not None
+        self.assertEqual(handle.max_attachments, 2)
+        self.assertEqual(handle.attachment_count, 2)
+
+        await primary.write(b"hello\n")
+        primary_output, observer_output = await asyncio.gather(
+            self.read_until(primary, b"seen:hello"),
+            self.read_until(observer, b"seen:hello"),
+        )
+        self.assertIn(b"seen:hello", primary_output)
+        self.assertIn(b"seen:hello", observer_output)
+
+        third = await self.connect()
+        with self.assertRaisesRegex(RDRClientError, "attachment limit reached \\(2\\)"):
+            await third.attach_terminal("shared-terminal")
+
+        await observer.detach()
+        replacement = await third.attach_terminal("shared-terminal")
+        self.assertEqual(handle.attachment_count, 2)
+        await replacement.detach()
+        await primary.close()
+
+    async def test_attachment_limit_is_configurable(self) -> None:
+        await self.server.close()
+        self.server = RDRServer(
+            "127.0.0.1",
+            0,
+            ("secret",),
+            terminal_max_attachments=1,
+        )
+        await self.server.set_enabled(True)
+        sock = self.server.listener.sockets[0]
+        self.port = sock.getsockname()[1]
+
         first = await self.connect()
         terminal = await first.open_terminal(
             command="sleep 30",
-            terminal_id="single-owner",
+            terminal_id="single-attachment",
         )
         second = await self.connect()
-        with self.assertRaisesRegex(RDRClientError, "already attached"):
-            await second.attach_terminal("single-owner")
+        with self.assertRaisesRegex(RDRClientError, "attachment limit reached \\(1\\)"):
+            await second.attach_terminal("single-attachment")
         await terminal.close()
 
     async def test_token_revocation_terminates_detached_terminal(self) -> None:
