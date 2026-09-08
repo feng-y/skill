@@ -26,10 +26,18 @@ class RuntimeTest(unittest.IsolatedAsyncioTestCase):
         self.addAsyncCleanup(client.close)
         return client
 
-    async def test_invalid_token_rejected(self) -> None:
+    async def test_invalid_token_rejected_distinctly(self) -> None:
         client = RDRClient("127.0.0.1", self.port, "wrong")
-        with self.assertRaises(RDRClientError):
+        with self.assertRaises(RDRClientError) as raised:
             await client.connect()
+        self.assertEqual(str(raised.exception), "invalid token")
+
+    async def test_server_without_token_is_reported_distinctly(self) -> None:
+        await self.server.set_access(True, ())
+        client = RDRClient("127.0.0.1", self.port, "anything")
+        with self.assertRaises(RDRClientError) as raised:
+            await client.connect()
+        self.assertEqual(str(raised.exception), "server token not configured")
 
     async def test_any_configured_token_is_accepted(self) -> None:
         client = await self.connect("rotated")
