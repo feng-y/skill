@@ -85,38 +85,41 @@ def _port_open(host: str, port: int, timeout: float = 1.0) -> bool:
         return False
 
 
+def _server_access_config_path(access_config: str | None) -> str:
+    return (
+        access_config
+        or os.environ.get("RDR_ACCESS_CONFIG")
+        or DEFAULT_ACCESS_CONFIG
+    )
+
+
 def _resolve_server_token(
     explicit_token: str | None, access_config: str | None
 ) -> tuple[str | None, str]:
     """Return (token_for_child_env, source description).
 
-    The child only needs RDR_TOKEN when the token does not come from an
-    access config file it can read itself.
+    Token configuration is optional at startup. An existing config file must
+    still be valid; a missing file simply means the server starts with no
+    configured token and will reject authentication until one is supplied.
     """
     if explicit_token:
         return explicit_token, "--token"
     env_token = os.environ.get("RDR_TOKEN", "").strip()
     if env_token:
         return env_token, "RDR_TOKEN env"
-    path = Path(
-        access_config
-        or os.environ.get("RDR_ACCESS_CONFIG")
-        or DEFAULT_ACCESS_CONFIG
-    )
+    path = Path(_server_access_config_path(access_config))
     if path.exists():
         try:
             AccessConfig.load(path)
         except ConfigError as exc:
             raise SystemExit(f"rdr server start: {exc}") from exc
         return None, f"config {path}"
-    raise SystemExit(
-        "rdr server start: no token available; set RDR_TOKEN, pass --token, "
-        f"or create {path}"
-    )
+    return None, "not configured"
 
 
 def _spawn_server(args) -> int:
     token, source = _resolve_server_token(args.token, args.access_config)
+    server_access_config = _server_access_config_path(args.access_config)
 
     pid_file = Path(args.pid_file)
     log_file = Path(args.log_file)
@@ -168,6 +171,7 @@ def _spawn_server(args) -> int:
                 "host": args.host,
                 "port": args.port,
                 "token_source": source,
+                "access_config": server_access_config,
                 "log": str(log_file),
             }
         ),
@@ -212,15 +216,28 @@ async def _auth_check(port: int, access_config: str | None) -> str:
     from .cli import resolve_access_config_path
     from .config import resolve_access_token
 
+    client_token_configured = True
     try:
         token = resolve_access_token(resolve_access_config_path(access_config))
     except (ConfigError, SystemExit):
-        return "skipped (no token)"
+        # An empty token cannot be configured, so it is safe as a probe. The
+        # server can then distinguish "no server token" from "client has no
+        # usable token for an otherwise configured server".
+        token = ""
+        client_token_configured = False
+
     client = RDRClient("127.0.0.1", port, token)
     try:
         await asyncio.wait_for(client.connect(), timeout=3.0)
         return "ok"
-    except (asyncio.TimeoutError, OSError, RDRClientError):
+    except RDRClientError as exc:
+        error = str(exc)
+        if error == "server token not configured":
+            return "server token not configured"
+        if error == "invalid token":
+            return "invalid token" if client_token_configured else "client token not configured"
+        return "failed"
+    except (asyncio.TimeoutError, OSError):
         return "failed"
     finally:
         try:
@@ -255,9 +272,10 @@ async def _server_status(args) -> int:
     if not listening:
         return 1
 
-    auth = await _auth_check(port, args.access_config)
+    status_access_config = args.access_config or record.get("access_config")
+    auth = await _auth_check(port, status_access_config)
     print(f"auth: {auth}")
-    return 0 if auth in {"ok", "skipped (no token)"} else 1
+    return 0 if auth == "ok" else 1
 
 
 def _server_stop(args) -> int:
