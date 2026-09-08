@@ -34,6 +34,12 @@ class ConfigTest(unittest.TestCase):
         )
         self.assertEqual(config.tokens, ())
 
+    def test_malformed_legacy_enabled_remains_invalid(self) -> None:
+        with self.assertRaises(ConfigError):
+            AccessConfig.load(
+                self._write({"enabled": "false", "tokens": ["a"]})
+            )
+
     def test_merge_local_and_global(self) -> None:
         local = AccessConfig(tokens=("local", "shared"))
         global_config = AccessConfig(tokens=("global", "shared"))
