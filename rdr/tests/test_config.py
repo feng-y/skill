@@ -22,11 +22,17 @@ class ConfigTest(unittest.TestCase):
         )
         self.assertEqual(config.tokens, ("a", "b"))
 
-    def test_legacy_enabled_key_is_ignored(self) -> None:
+    def test_legacy_enabled_true_keeps_tokens(self) -> None:
+        config = AccessConfig.load(
+            self._write({"enabled": True, "tokens": ["a"]})
+        )
+        self.assertEqual(config.tokens, ("a",))
+
+    def test_legacy_enabled_false_preserves_deny_intent(self) -> None:
         config = AccessConfig.load(
             self._write({"enabled": False, "tokens": ["a"]})
         )
-        self.assertEqual(config.tokens, ("a",))
+        self.assertEqual(config.tokens, ())
 
     def test_merge_local_and_global(self) -> None:
         local = AccessConfig(tokens=("local", "shared"))
