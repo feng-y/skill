@@ -4,7 +4,7 @@ RDR is a small Python remote runtime for system diagnosis when SSH is unavailabl
 
 The AI agent stays in the development environment. The remote side contains no LLM or diagnostic reasoning. RDR exposes the target runtime with local-like primitives so existing Linux diagnostic workflows remain usable remotely.
 
-For deployment, access policy, token rotation, smoke tests, failure isolation, and log/perf/core/OOM usage, read [`DEPLOYMENT.md`](DEPLOYMENT.md). For the shortest install-and-verify path (server, token, client), read [`GUIDE.md`](GUIDE.md).
+For the current install-and-verify path, client/server setup, authentication behavior, and file-transfer semantics, read [`GUIDE.md`](GUIDE.md). For longer deployment, failure-isolation, token-rotation, log/perf/core/OOM workflows, read [`DEPLOYMENT.md`](DEPLOYMENT.md).
 
 ## Scope
 
@@ -31,7 +31,7 @@ The current protocol provides:
 - token-authenticated persistent TCP connection
 - one-shot shell execution with stdout/stderr streaming, timeout, and cancellation
 - PTY terminal with input/output, resize, and signals
-- file upload/download
+- file upload/download with integrity checks and atomic commit; download supports safe resume
 - runtime identity
 
 The data plane uses framed messages:
@@ -52,7 +52,7 @@ rdr get HOST:PORT:/tmp/perf.data ./perf.data
 rdr put ./inspect.py HOST:PORT:/tmp/inspect.py
 ```
 
-The client reads `~/.config/rdr/access.json` by default. `RDR_ACCESS_CONFIG` or command-local `--access-config` can override it. The `RDR_TOKEN` environment variable overrides the file token entirely, so both sides can run with zero config files:
+The client reads `~/.config/rdr/access.json` by default. `RDR_ACCESS_CONFIG` or command-local `--access-config` can override it. `RDR_TOKEN` overrides the client file token. Server effective tokens are the union of its local config, global config, and startup/static token source. Historical `enabled` fields have no runtime meaning.
 
 ```bash
 RDR_TOKEN=<token> rdr-server --port 19090
@@ -75,10 +75,7 @@ rdr-server \
   --global-access-config /tmp/nonexistent-rdr-global.json
 ```
 
-On hosts without a supervisor, `rdr server start` / `status` / `stop` wraps the
-same server in a managed background process (pid file, log file, readiness
-check). Token sources, in priority order: `--token`, `RDR_TOKEN`, then the
-server access config file.
+On hosts without a supervisor, `rdr server start` / `status` / `stop` wraps the same server in a managed background process with a pid file, log file, and readiness check. A server may start without a token; `status` then reports `server token not configured` until an effective token exists.
 
 From another terminal:
 
@@ -89,12 +86,10 @@ rdr exec 127.0.0.1:19090 'uname -a'
 rdr connect 127.0.0.1:19090
 ```
 
-Production and shared/global access semantics are authoritative in [`DEPLOYMENT.md`](DEPLOYMENT.md); do not copy them into another runtime document.
-
 ## Build
 
 ```bash
 bash rdr/build.sh
 ```
 
-The script cleans stale artifacts, builds the sdist and wheel, then installs the wheel into a throwaway venv and runs the test suite plus CLI smoke checks against the installed wheel (not the source tree). Artifacts land in `rdr/dist/`. Set `RDR_BUILD_PYTHON` to pick the interpreter.
+The script cleans stale artifacts, builds the sdist and wheel, then installs the wheel into a throwaway venv and runs the test suite plus CLI and managed-server checks against the installed wheel. Artifacts land in `rdr/dist/`. Set `RDR_BUILD_PYTHON` to pick the interpreter.
