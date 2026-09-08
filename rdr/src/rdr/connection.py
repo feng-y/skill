@@ -47,6 +47,11 @@ class ClientConnection:
                 return
 
             token = header.get("token")
+            if not self.server.tokens:
+                await self.sender.send(
+                    {"type": "auth.error", "error": "server token not configured"}
+                )
+                return
             if not isinstance(token, str) or not self.server.authenticate(token):
                 await self.sender.send({"type": "auth.error", "error": "invalid token"})
                 return
@@ -280,7 +285,7 @@ class ClientConnection:
     async def _terminal_signal(self, header: dict[str, Any]) -> None:
         terminal_id = str(header.get("terminal_id") or "")
         try:
-            self._terminal(terminal_id).send_signal(header.get("signal", "INT"))
+            await self._terminal(terminal_id).send_signal(header.get("signal", "INT"))
         except Exception as exc:
             await self.sender.send(
                 {"type": "terminal.error", "terminal_id": terminal_id, "error": str(exc)}
