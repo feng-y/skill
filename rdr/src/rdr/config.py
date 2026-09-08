@@ -48,14 +48,10 @@ def _tokens(value: dict[str, Any], *, path: str | Path) -> tuple[str, ...]:
 class AccessConfig:
     """Token list from an access config file.
 
-    The current schema is tokens-only. Legacy files may still carry an
-    ``enabled`` key. ``enabled: true`` keeps the token list, while
-    ``enabled: false`` is conservatively treated as an empty token set so an
-    upgrade cannot turn an explicitly disabled host into an authenticated
-    one. A malformed legacy ``enabled`` value remains an error, matching the
-    old schema's fail-closed behavior. New configuration must use
-    ``tokens: []`` for the deny-all state and ``rdr server stop`` to stop the
-    runtime process.
+    The schema is tokens-only. Historical files may still contain an
+    ``enabled`` key, but it has no runtime meaning and is ignored regardless
+    of value. Use ``tokens: []`` for an empty credential set and
+    ``rdr server stop`` to stop the runtime process.
     """
 
     tokens: tuple[str, ...]
@@ -63,14 +59,7 @@ class AccessConfig:
     @classmethod
     def load(cls, path: str | Path) -> "AccessConfig":
         value = _load_object(path)
-        tokens = _tokens(value, path=path)
-        if "enabled" in value:
-            legacy_enabled = value["enabled"]
-            if not isinstance(legacy_enabled, bool):
-                raise ConfigError(f"config {path} requires boolean 'enabled'")
-            if not legacy_enabled:
-                return cls(tokens=())
-        return cls(tokens=tokens)
+        return cls(tokens=_tokens(value, path=path))
 
 
 def merge_access_configs(
