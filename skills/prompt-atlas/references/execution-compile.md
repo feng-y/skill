@@ -16,6 +16,14 @@ Graph completeness follows current **decision-relevant knowledge**. When current
 
 Taskbook prose order does not create dependency. Work without a real dependency remains independent rather than being forced serial or parallel; one blocked branch does not freeze unrelated work; cohesive work is not fragmented merely to expose parallelism. A simple or linear task is only a degenerate Graph and does not require a diagram, Graph schema, or explicit node object.
 
+## Scope, dependencies, and replacement completion
+
+Define scope through a discriminator / authority / territory / exclusions that a fresh Executor can recompute from current reality rather than freezing the file/caller/line inventory captured during Research. Retain a concrete inventory only when authority binds the set itself, or reality cannot reproduce it reliably and omission would be material; then preserve the source identity needed to judge authority, provenance, and freshness. Inventories and session-local artifacts remain navigation / candidate Evidence and do not prove completion.
+
+An Evidence condition becomes a dependency only when its absence makes downstream material work invalid, crosses a binding boundary, prevents safe start, or makes the outcome unjudgeable. Ordinary ordering or “check first to be safe” does not create a gate.
+
+When Goal replaces a live path, authority, data flow, or workload, retain only the contract-required real transition/adoption and exit of legacy authority/residue that are material to the whole Goal. Code landing, local green, or a new path being available does not prove those outcomes. Replaceable migration How stays with the Executor; long-lived boundary/dependency forks route to `$architecture-evolution`; investment, compatibility, or risk commitments return to the Human.
+
 ## Independently judgeable slices
 
 Slicing is not translating Goal into more tasks. It finds boundaries at which a **material outcome can be established or falsified independently**. Judge a slice by its judgment surface rather than file count, team ownership, or apparent parallelism:

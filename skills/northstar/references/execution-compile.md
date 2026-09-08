@@ -16,6 +16,14 @@ Graph 的完整度跟随当前 **decision-relevant knowledge**：当前 Evidence
 
 Taskbook prose order 不形成 dependency。没有真实 dependency 的 work 保持独立，不被强制串行或并行；一个 branch blocked 不冻结与它无关的 work；也不为了暴露并行度拆碎 cohesive work。简单/线性任务只是 Graph 的退化形式，不要求 diagram、Graph schema 或显式 node object。
 
+## Scope、dependency 与替换完成
+
+Scope 默认用 fresh Executor 能从 current reality 重算的 discriminator / authority / territory / exclusions 表达，不冻结 Research 时的 file/caller/line inventory。仅当集合本身被 authority 绑定，或无法可靠重算且省略会造成 material omission 时保留 inventory，并带上决定 authority / provenance / freshness 的 source identity；inventory 与 session-local artifact 仍只提供 navigation / candidate Evidence，不能证明 completion。
+
+Evidence condition 只有在未成立会让下游 material work 无效、越过 binding boundary、无法安全开始或无法判卷时才形成 dependency；普通顺序或“先检查更稳妥”不产生 gate。
+
+Goal 涉及 live path、authority、data flow 或 workload 替换时，Taskbook 只保留对 whole Goal material 的真实 transition/adoption 与 legacy authority/residue 退出 obligations；code landed、local green 或新路径可用不证明这些 outcomes。迁移实现仍由 Executor 决定，长期 boundary/dependency fork 交 `$architecture-evolution`，投入、兼容或风险承诺回 Human。
+
 ## 可独立判断的切面
 
 切分不是把 Goal 翻译成更多 task，而是找到能够**独立建立或推翻 material outcome** 的边界。一个切面是否成立，按 judgment surface 判断，不按文件数、团队分工或可并行程度判断：

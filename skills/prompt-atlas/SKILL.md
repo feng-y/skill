@@ -35,6 +35,7 @@ Once a fresh Executor can safely begin material work, stop Research when more co
 - Goal, binding constraints, and authoritative references;
 - material outcomes / responsibility or binding boundaries that change execution judgment;
 - real dependencies already proven to change execution choice;
+- a discriminator / authority / territory / exclusions that lets a fresh Executor recompute scope from current reality; retain a concrete inventory only when authority binds the set itself, or reality cannot reproduce it reliably and omission would be material;
 - completion claims / Evidence obligations;
 - a current verified fallback verification path only when omitting it would materially increase under-verification risk.
 
@@ -54,7 +55,7 @@ When the input itself is already Executor outcome / completion report / Evidence
 
 **Separate law from intelligence.** `must / must not` comes only from the Human, repo/upstream authority, or verified reality. Research findings, candidate architecture, prototypes, and discovered edit points are intelligence by default. Unless the current Intent take / compile judgment or a binding rule truly depends on them, do not promote them into contract merely to feel more certain. When authoritative guidance and verified reality disagree, do not synthesize a false fact; expose the conflict and its impact, and compile the gap as a delta only when the authority itself requires reality to change.
 
-**Completion proof is independent from implementation.** Verification fixes what must be proven rather than mirroring implementation work. When repo reality already establishes an authoritative test/build/replay/integration path that directly covers key risk and omitting it would materially increase under-verification, keep it as the current fallback. If implementation/binding/reality makes it stale, the Executor re-derives coverage from repo authority and obtains equivalent or stronger Evidence rather than mechanically running stale commands.
+**Completion proof is independent from implementation.** Verification fixes what must be proven rather than mirroring implementation work. When repo reality already establishes an authoritative test/build/replay/integration path that directly covers key risk and omitting it would materially increase under-verification, keep it as the current fallback. If implementation/binding/reality makes it stale, the Executor re-derives coverage from repo authority and obtains equivalent or stronger Evidence rather than mechanically running stale commands. A Goal that replaces a live path, authority, data flow, or workload also needs authoritative reality for the contract-required transition/adoption with no legacy authority/residue contradicting completion; code landed / local green is insufficient. Migration mechanism still follows the existing Executor / AE / Human authority boundary.
 
 ## Before delivery
 
@@ -64,5 +65,5 @@ When the input itself is already Executor outcome / completion report / Evidence
 4. Does Intent compile define the contract first and use the Graph only to structure Execution, without letting the Graph determine Intent / Goal / binding constraints in reverse?
 5. Did Research close only reality the current intent / compile judgment truly depends on, stop once safe start was available, and avoid expanding merely for Graph completeness?
 6. Is Execution compiled as a best-known complete Graph: no currently known material work / real dependency was flattened or omitted, while contingent future work was not predicted early?
-7. Do Verification / Evidence prove Goal rather than mirror Graph nodes or implementation checklists?
+7. Do scope and Verification / Evidence use a rule / authority a fresh Executor can recompute from current reality to constrain and prove Goal; for a replacement Goal, do they avoid treating local green as real transition or legacy-residue exit?
 8. When outcome returns, does the loop independently verify Executor Evidence first, then update only the Graph / judgment cone affected by verified Evidence / new reality while reusing still-valid Intent, Goal, work, and Evidence, without becoming a manager loop?

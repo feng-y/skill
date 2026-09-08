@@ -35,6 +35,7 @@ Human-owned choice 只在 reality 无法决定、且答案会改变 Human 最终
 - Goal、binding constraints 与 authoritative references；
 - 会改变执行判断的 material outcomes / responsibility or binding boundaries；
 - 已证明且会改变执行选择的 real dependencies；
+- 能从 current reality 稳定重算 scope 的 discriminator / authority / territory / exclusions；只有集合本身被 authority 绑定，或无法可靠重算且省略会造成 material omission 时，才保留具体 inventory；
 - completion claims / Evidence obligations；
 - 只有省略会明显提高 under-verification 风险时，才保留当前已核实的 fallback verification path。
 
@@ -54,7 +55,7 @@ Human 后续 material clarification / correction 从最高受影响 intent / com
 
 **法与情报分开。** `must / must not` 只来自 Human、repo/upstream authority 或 verified reality。Research finding、候选 architecture、prototype 和已发现的 edit point 默认只是 intelligence；除非当前 Intent take / compile judgment 或 binding rule 真正依赖它，不为了“更确定”把它升级成 contract。authoritative guidance 与 verified reality 冲突时不合成虚假事实；暴露冲突及影响，只有 authority 本身要求 reality 改变时才把差异编译成 delta。
 
-**完成证明独立于实现。** Verification 固定必须证明什么，不与 implementation work 一一对应。若 repo reality 已确认一条 authoritative test/build/replay/integration path 直接覆盖关键风险，且删掉会明显增加 under-verification，可以把它作为当前 fallback；implementation/binding/reality 变化后由 Executor 从 repo authority 重推并取得等价或更强 Evidence，不能机械执行 stale command。
+**完成证明独立于实现。** Verification 固定必须证明什么，不与 implementation work 一一对应。若 repo reality 已确认一条 authoritative test/build/replay/integration path 直接覆盖关键风险，且删掉会明显增加 under-verification，可以把它作为当前 fallback；implementation/binding/reality 变化后由 Executor 从 repo authority 重推并取得等价或更强 Evidence，不能机械执行 stale command。替换 live path、authority、data flow 或 workload 的 Goal 还必须以 authoritative reality 证明 contract 要求的 transition/adoption，且没有 legacy authority/residue 反证；code landed / local green 不足。迁移方式仍按既有 Executor / AE / Human authority boundary 判断。
 
 ## 发出前自检
 
@@ -64,5 +65,5 @@ Human 后续 material clarification / correction 从最高受影响 intent / com
 4. Intent compile 是否先确定 contract，再只用 Graph 结构化 Execution，而没有让 Graph 反向决定 Intent / Goal / binding constraint？
 5. Research 是否只关闭当前 intent / compile judgment 真正依赖的 reality，并在 safe-start 后停止，而没有为了 Graph completeness 扩大 Research？
 6. Execution 是否按 best-known complete Graph 编译：当前已知 material work / real dependency 没有被压平或漏掉，同时 contingent future 没有被提前猜？
-7. Verification / Evidence 是否证明 Goal，而不是镜像 Graph node 或 implementation checklist？
+7. Scope 与 Verification / Evidence 是否基于 fresh Executor 可从 current reality 重算的 rule / authority 约束并证明 Goal；替换类 Goal 是否没有用 local green 代替真实 transition 或 legacy residue 退出？
 8. outcome 回流后是否先独立核实 Executor Evidence，再只更新被 verified Evidence / new reality 影响的 Graph / judgment cone，同时复用仍有效 Intent、Goal、work 和 Evidence，而没有升级成 manager loop？
