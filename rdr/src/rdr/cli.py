@@ -63,27 +63,55 @@ def _add_access_config(parser: argparse.ArgumentParser) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="RDR client")
+    parser = argparse.ArgumentParser(
+        description="RDR remote runtime client",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "execution shapes:\n"
+            "  rdr exec ...      stateless one-shot remote work\n"
+            "  rdr connect ...   stateful remote terminal for work whose process "
+            "state must survive multiple interactions or transport reconnects\n\n"
+            "Use `rdr connect --help` to discover stateful terminal controls."
+        ),
+    )
     sub = parser.add_subparsers(dest="command", required=True)
 
     connect_parser = sub.add_parser(
-        "connect", help="open or reattach an interactive remote PTY session"
+        "connect",
+        help="open or attach a stateful remote terminal",
+        description=(
+            "Open or attach a stateful remote terminal.\n\n"
+            "Use this when the remote process must keep state across multiple "
+            "interactions or transport reconnects. For one-shot remote work, "
+            "prefer `rdr exec`."
+        ),
+        epilog=(
+            "examples:\n"
+            "  rdr connect HOST:PORT --terminal-id debug\n"
+            "  rdr connect HOST:PORT --attach debug\n\n"
+            "A transport disconnect detaches only that client. The remote terminal "
+            "continues until its process exits, it is explicitly closed, access is "
+            "revoked, or the RDR server stops."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     connect_parser.add_argument("endpoint", type=parse_endpoint, metavar="HOST:PORT")
     connect_parser.add_argument("--cwd")
     terminal_group = connect_parser.add_mutually_exclusive_group()
     terminal_group.add_argument(
         "--terminal-id",
-        help="stable id for a newly opened terminal; generated when omitted",
+        help="stable id for a newly opened stateful terminal; generated when omitted",
     )
     terminal_group.add_argument(
         "--attach",
         metavar="TERMINAL_ID",
-        help="reattach an existing stateful terminal owned by the remote runtime",
+        help="attach to an existing stateful terminal owned by the remote runtime",
     )
     _add_access_config(connect_parser)
 
-    exec_parser = sub.add_parser("exec", help="run one remote shell command")
+    exec_parser = sub.add_parser(
+        "exec", help="run one stateless remote shell command"
+    )
     exec_parser.add_argument("endpoint", type=parse_endpoint, metavar="HOST:PORT")
     exec_parser.add_argument("remote_command")
     exec_parser.add_argument("--cwd")
