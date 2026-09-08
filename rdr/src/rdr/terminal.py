@@ -12,13 +12,6 @@ from .protocol import LockedFrameWriter
 
 _CHUNK = 256 * 1024
 _REPLAY_LIMIT = 4 * 1024 * 1024
-_CONNECTION_ERRORS = (
-    BrokenPipeError,
-    ConnectionResetError,
-    ConnectionAbortedError,
-    OSError,
-    RuntimeError,
-)
 
 
 @dataclass
@@ -27,15 +20,17 @@ class TerminalHandle:
     pid: int
     master_fd: int
     loop: asyncio.AbstractEventLoop
+    max_attachments: int = 2
     queue: asyncio.Queue[bytes | None] = field(default_factory=asyncio.Queue)
     pump_task: asyncio.Task[None] | None = None
     wait_task: asyncio.Task[None] | None = None
     closed: bool = False
-    sender: LockedFrameWriter | None = None
+    senders: set[LockedFrameWriter] = field(default_factory=set)
     output_buffer: deque[bytes] = field(default_factory=deque)
     buffered_bytes: int = 0
     buffer_truncated: bool = False
     attachment_lock: asyncio.Lock = field(default_factory=asyncio.Lock)
+    input_lock: asyncio.Lock = field(default_factory=asyncio.Lock)
 
     @classmethod
     async def open(
@@ -47,9 +42,12 @@ class TerminalHandle:
         env: dict[str, str] | None,
         rows: int,
         cols: int,
+        max_attachments: int = 2,
     ) -> "TerminalHandle":
         if os.name != "posix" or not hasattr(os, "posix_spawn"):
             raise RuntimeError("PTY terminals require POSIX posix_spawn support")
+        if max_attachments < 1:
+            raise ValueError("max_attachments must be >= 1")
 
         import fcntl
         import termios
@@ -120,6 +118,7 @@ class TerminalHandle:
             pid=pid,
             master_fd=master_fd,
             loop=asyncio.get_running_loop(),
+            max_attachments=max_attachments,
         )
         handle._start()
         return handle
@@ -150,6 +149,10 @@ class TerminalHandle:
         except Exception:
             pass
 
+    @property
+    def attachment_count(self) -> int:
+        return len(self.senders)
+
     def _buffer_output(self, data: bytes) -> None:
         if not data:
             return
@@ -162,18 +165,34 @@ class TerminalHandle:
 
     async def _deliver_output(self, data: bytes) -> None:
         async with self.attachment_lock:
-            sender = self.sender
-            if sender is None:
+            senders = tuple(self.senders)
+            if not senders:
                 self._buffer_output(data)
                 return
-            try:
-                await sender.send(
+
+        results = await asyncio.gather(
+            *(
+                sender.send(
                     {"type": "terminal.output", "terminal_id": self.terminal_id},
                     data,
                 )
-            except _CONNECTION_ERRORS:
-                if self.sender is sender:
-                    self.sender = None
+                for sender in senders
+            ),
+            return_exceptions=True,
+        )
+        failed = {
+            sender
+            for sender, result in zip(senders, results)
+            if isinstance(result, BaseException)
+        }
+        if not failed:
+            return
+
+        async with self.attachment_lock:
+            for sender in failed:
+                self.senders.discard(sender)
+            # If nobody received this frame, retain it for the next attach.
+            if len(failed) == len(senders) and not self.senders:
                 self._buffer_output(data)
 
     async def _pump_output(self) -> None:
@@ -185,11 +204,12 @@ class TerminalHandle:
 
     async def _send_exit(self, *, exit_code: int | None, exit_signal: int | None) -> None:
         async with self.attachment_lock:
-            sender = self.sender
-            if sender is None:
-                return
-            try:
-                await sender.send(
+            senders = tuple(self.senders)
+        if not senders:
+            return
+        await asyncio.gather(
+            *(
+                sender.send(
                     {
                         "type": "terminal.exit",
                         "terminal_id": self.terminal_id,
@@ -197,9 +217,10 @@ class TerminalHandle:
                         "signal": exit_signal,
                     }
                 )
-            except _CONNECTION_ERRORS:
-                if self.sender is sender:
-                    self.sender = None
+                for sender in senders
+            ),
+            return_exceptions=True,
+        )
 
     async def _wait_for_exit(self) -> None:
         _, status = await asyncio.to_thread(os.waitpid, self.pid, 0)
@@ -238,22 +259,27 @@ class TerminalHandle:
         await self._send_exit(exit_code=exit_code, exit_signal=exit_signal)
 
     async def attach(self, sender: LockedFrameWriter) -> tuple[int, bool]:
-        """Attach a transport and replay output produced while detached."""
+        """Attach one transport and replay output produced with zero attachments."""
         async with self.attachment_lock:
             if self.closed:
                 raise RuntimeError("terminal is closed")
-            if self.sender is not None and self.sender is not sender:
-                raise RuntimeError("terminal is already attached")
-            if self.sender is sender:
+            if sender in self.senders:
                 return 0, False
+            if len(self.senders) >= self.max_attachments:
+                raise RuntimeError(
+                    f"terminal attachment limit reached ({self.max_attachments})"
+                )
 
+            # Replay exists only for periods where no client was attached. The
+            # first returning attachment consumes it; later simultaneous viewers
+            # receive live output from the point they attach.
             replay = list(self.output_buffer)
             replayed_bytes = self.buffered_bytes
             replay_truncated = self.buffer_truncated
             self.output_buffer.clear()
             self.buffered_bytes = 0
             self.buffer_truncated = False
-            self.sender = sender
+            self.senders.add(sender)
 
             for index, data in enumerate(replay):
                 try:
@@ -261,9 +287,8 @@ class TerminalHandle:
                         {"type": "terminal.output", "terminal_id": self.terminal_id},
                         data,
                     )
-                except _CONNECTION_ERRORS as exc:
-                    if self.sender is sender:
-                        self.sender = None
+                except Exception as exc:
+                    self.senders.discard(sender)
                     if replay_truncated:
                         self.buffer_truncated = True
                     for remaining in replay[index:]:
@@ -274,24 +299,25 @@ class TerminalHandle:
 
     async def detach(self, sender: LockedFrameWriter) -> bool:
         async with self.attachment_lock:
-            if self.sender is not sender:
+            if sender not in self.senders:
                 return False
-            self.sender = None
+            self.senders.discard(sender)
             return True
 
     def is_attached_to(self, sender: LockedFrameWriter) -> bool:
-        return self.sender is sender
+        return sender in self.senders
 
     async def write(self, data: bytes) -> None:
         if self.closed:
             raise RuntimeError("terminal is closed")
-        view = memoryview(data)
-        while view:
-            try:
-                written = os.write(self.master_fd, view)
-                view = view[written:]
-            except BlockingIOError:
-                await asyncio.sleep(0)
+        async with self.input_lock:
+            view = memoryview(data)
+            while view:
+                try:
+                    written = os.write(self.master_fd, view)
+                    view = view[written:]
+                except BlockingIOError:
+                    await asyncio.sleep(0)
 
     def resize(self, rows: int, cols: int) -> None:
         import fcntl
