@@ -99,8 +99,20 @@ def build_parser() -> argparse.ArgumentParser:
     _add_access_config(put_parser)
 
     server_parser = sub.add_parser(
-        "server", help="manage the local rdr-server (start/status/stop)"
+        "server",
+        help="manage the local rdr-server (start/status/stop)",
+        description=(
+            "Install and startup are separate: the package is installed with "
+            "pip once, then started/stopped with these commands.\n\n"
+            "token sources, in priority order: --token > RDR_TOKEN env > "
+            "server access config file (/etc/rdr/access.json by default).\n"
+            "A server without any token still starts and listens, but rejects "
+            "auth with 'server token not configured' until one is configured.\n\n"
+            "quick start: rdr server start --token <token> ; rdr server status\n"
+            "full flow: rdr/GUIDE.md"
+        ),
     )
+    server_parser.formatter_class = argparse.RawDescriptionHelpFormatter
     server_sub = server_parser.add_subparsers(dest="server_command", required=True)
 
     start_parser = server_sub.add_parser(

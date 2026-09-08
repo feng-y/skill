@@ -105,3 +105,20 @@ grep -q "auth: server token not configured" "$workdir/no-token-status.txt"
 
 echo "== artifacts =="
 ls -lh "$wheel" "$sdist"
+
+cat <<EOF
+
+== next steps ==
+# server host: install into a dedicated venv, then start and verify
+python3 -m venv /opt/rdr/venv
+/opt/rdr/venv/bin/pip install "$package_root/$wheel"
+/opt/rdr/venv/bin/rdr server start --token <token>   # or: RDR_TOKEN=<token>, or /etc/rdr/access.json
+/opt/rdr/venv/bin/rdr server status
+
+# dev host: separate client venv
+python3 -m venv ~/.local/share/rdr/venv
+~/.local/share/rdr/venv/bin/pip install "$package_root/$wheel"
+RDR_TOKEN=<token> rdr identity <server-host>:19090
+
+full flow: rdr/GUIDE.md
+EOF
