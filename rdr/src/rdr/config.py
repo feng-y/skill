@@ -46,16 +46,20 @@ def _tokens(value: dict[str, Any], *, path: str | Path) -> tuple[str, ...]:
 
 @dataclass(frozen=True)
 class AccessConfig:
-    enabled: bool
+    """Token list from an access config file.
+
+    Historically the schema also had an "enabled" flag; it is gone. Turning
+    the runtime off is `rdr server stop`; locking everyone out temporarily is
+    an empty token list. Old files that still carry "enabled" load fine —
+    the key is ignored.
+    """
+
     tokens: tuple[str, ...]
 
     @classmethod
     def load(cls, path: str | Path) -> "AccessConfig":
         value = _load_object(path)
-        enabled = value.get("enabled")
-        if not isinstance(enabled, bool):
-            raise ConfigError(f"config {path} requires boolean 'enabled'")
-        return cls(enabled=enabled, tokens=_tokens(value, path=path))
+        return cls(tokens=_tokens(value, path=path))
 
 
 def merge_access_configs(
@@ -69,7 +73,6 @@ def merge_access_configs(
     ]
     merged_tokens: list[str] = []
     seen: set[str] = set()
-    enabled = all(config.enabled for config in configs) if configs else True
     token_sources: list[Iterable[str]] = [
         config.tokens for config in configs
     ] + [extra_tokens]
@@ -78,7 +81,7 @@ def merge_access_configs(
             if token not in seen:
                 merged_tokens.append(token)
                 seen.add(token)
-    return AccessConfig(enabled=enabled, tokens=tuple(merged_tokens))
+    return AccessConfig(tokens=tuple(merged_tokens))
 
 
 def resolve_access_token(access_config_path: str | Path) -> str:
@@ -89,8 +92,6 @@ def resolve_access_token(access_config_path: str | Path) -> str:
         return env_token
     path = Path(access_config_path)
     config = AccessConfig.load(path)
-    if not config.enabled:
-        raise ConfigError(f"access config {path} is disabled")
     if not config.tokens:
         raise ConfigError(f"access config {path} contains no token")
     return config.tokens[0]

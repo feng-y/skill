@@ -88,22 +88,22 @@ RDR 默认监听：
 
 ## 4. Access Config
 
-RDR 使用同一个 access-config schema 表达两件事：
+RDR 使用同一个 access-config schema 表达一件事：
 
-- RDR 是否启用
 - 哪些 token 可以访问
 
 Schema：
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "token-a",
     "token-b"
   ]
 }
 ```
+
+关闭 RDR 用 `rdr server stop`；临时拒绝所有认证用空的 `tokens: []`。历史文件里可能还有 `"enabled"` 键，读取时会被忽略，不再有任何效果。
 
 仓库模板：
 
@@ -125,7 +125,6 @@ rdr/config/access.example.json
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "host-token"
   ]
@@ -140,9 +139,14 @@ chmod 600 /etc/rdr/access.json
 
 单机关闭 RDR：
 
+```bash
+rdr server stop
+```
+
+临时拒绝所有认证（进程保留，listener 保留）：
+
 ```json
 {
-  "enabled": false,
   "tokens": []
 }
 ```
@@ -161,37 +165,25 @@ chmod 600 /etc/rdr/access.json
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "global-token"
   ]
 }
 ```
 
-全域关闭：
-
-```json
-{
-  "enabled": false,
-  "tokens": []
-}
-```
+全域关闭：把共享文件的 `tokens` 置空，所有读取它的 RDR 实例会断开 active sessions 并拒绝认证（进程仍存活，彻底关闭需逐机 `rdr server stop`）。
 
 ### 4.3 单机 + 全域组合语义
 
 两份配置使用同一 schema。
 
 ```text
-effective enabled
-= AND of every file policy that currently exists / has last-known state
-
 effective tokens
 = local.tokens UNION global.tokens UNION static env token
 ```
 
 因此：
 
-- 任意已生效文件层 `enabled: false` 都会关闭当前机器的 RDR。
 - 全域 token 可以访问所有读取该全域文件的机器。
 - 单机 token 可以补充某台机器独有的访问能力。
 - 单机文件启动时可以不存在；此时 server 仍可启动和监听，只是没有 local policy/token。
@@ -250,7 +242,7 @@ RDR_TOKEN=<token> /opt/rdr/venv/bin/rdr-server --port 19090
 # client auth -> server token not configured
 ```
 
-已有配置文件如果非法仍然是启动错误；“允许无 token 启动”只针对配置文件不存在或有效配置的 effective token 为空，不会绕过非法配置或 `enabled: false` kill switch。
+已有配置文件如果非法仍然是启动错误；“允许无 token 启动”只针对配置文件不存在或有效配置的 effective token 为空，不会绕过非法配置。
 
 ### 5.1 使用 supervisor 常驻
 
@@ -333,7 +325,6 @@ python3 -m venv ~/.local/share/rdr/venv
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "global-token"
   ]
@@ -595,7 +586,6 @@ dmesg | tail -200
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "old-token",
     "new-token"
@@ -627,20 +617,11 @@ rdr identity HOST:19090
 
 ### 10.3 单机关闭
 
-```json
-{
-  "enabled": false,
-  "tokens": []
-}
+```bash
+rdr server stop
 ```
 
-写入：
-
-```text
-/etc/rdr/access.json
-```
-
-一个 poll 周期内 listener 会关闭，active sessions 会结束。
+只临时拒绝认证（保留进程与 listener）时，把 `/etc/rdr/access.json` 的 `tokens` 置空即可，一个 poll 周期内 active sessions 会结束。
 
 ### 10.4 全域关闭
 
@@ -648,7 +629,6 @@ rdr identity HOST:19090
 
 ```json
 {
-  "enabled": false,
   "tokens": []
 }
 ```
@@ -659,7 +639,7 @@ rdr identity HOST:19090
 /data/bucket/rdr/access.json
 ```
 
-所有读取到这份配置的 RDR 实例都会关闭 listener 和 active sessions。
+所有读取到这份配置的 RDR 实例会断开 active sessions 并拒绝认证。彻底关闭进程需逐机执行 `rdr server stop`。
 
 ### 10.5 恢复
 
@@ -667,14 +647,13 @@ rdr identity HOST:19090
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "valid-token"
   ]
 }
 ```
 
-注意 effective `enabled` 是所有已有/last-known 文件 policy 的 AND；另一层仍为 `false` 时，RDR 不会重新监听。
+一个 poll 周期内恢复认证；client 重建连接即可。
 
 ### 4.4 环境变量 token
 
@@ -695,7 +674,7 @@ RDR_TOKEN=<token> rdr-server --port 19090
   RDR_TOKEN=<token> rdr exec HOST:19090 'uname -a'
   ```
 
-- `enabled` 仍由已有文件 policy 决定，`RDR_TOKEN` 不能越过文件 kill switch：local/global 任一已生效层 `enabled: false`，RDR 依旧关闭。
+- `RDR_TOKEN` 与文件 token 一样只影响"谁能认证"；关闭 RDR 用 `rdr server stop`，临时拒绝所有认证把文件 `tokens` 置空。
 - local config 文件存在但非法时，即使设置了 `RDR_TOKEN`，启动仍然失败；“文件不存在”与“文件非法”是两种不同状态。
 - token 轮换（10.1）仍以文件为准；env token 不参与 poll 热更新，改动需重启进程。
 
@@ -704,7 +683,7 @@ RDR_TOKEN=<token> rdr-server --port 19090
 | 场景 | 行为 |
 |---|---|
 | local config 启动时不存在，且无其他 token | RDR 启动并监听；认证返回 `server token not configured`；managed `status` non-zero |
-| local config 启动时不存在，但设置了 `RDR_TOKEN` | 以 `RDR_TOKEN` 启动，`enabled` 视为 `true`（除非其他已有 policy 禁用） |
+| local config 启动时不存在，但设置了 `RDR_TOKEN` | 以 `RDR_TOKEN` 启动 |
 | local config 启动时存在但非法（即使设置了 `RDR_TOKEN`） | RDR 启动失败 |
 | global config 启动时不存在 | 按当前 local/static policy 启动；没有 token 也允许启动 |
 | global config 启动时存在但非法 | RDR 启动失败 |
@@ -739,9 +718,8 @@ export RDR_ACCESS_CONFIG=/path/to/access.json
 
 依次检查：
 
-1. `rdr-server` process 是否存在。
-2. local / global `enabled` 是否都为 `true`。
-3. RDR 是否在 `19090` listen。
+1. `rdr-server` process 是否存在（`rdr server status`）。
+2. RDR 是否在 `19090` listen。
 4. 开发环境到目标端口的网络是否允许。
 5. access watcher 是否异常退出并被 supervisor 重启。
 

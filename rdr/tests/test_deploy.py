@@ -102,7 +102,7 @@ class AuthCheckTest(unittest.IsolatedAsyncioTestCase):
         with patch.dict(os.environ, {"RDR_TOKEN": "secret"}, clear=False):
             self.assertEqual(await _auth_check(self.port, self.missing_config), "ok")
 
-        await self.server.set_access(True, ())
+        await self.server.set_tokens(())
         with patch.dict(os.environ, self._without_token(), clear=True):
             self.assertEqual(
                 await _auth_check(self.port, self.missing_config),

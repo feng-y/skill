@@ -41,7 +41,6 @@ Server 可以先在没有 token 的状态启动；listener 正常存在，但任
    ```bash
    mkdir -p /etc/rdr && cat > /etc/rdr/access.json <<'EOF'
    {
-     "enabled": true,
      "tokens": ["<token>"]
    }
    EOF
@@ -71,7 +70,7 @@ rdr-server --host 0.0.0.0 --port 19090
 - 前台方式：stdout 出现一行 `RDR server ready on ...`
 - 从开发环境最终确认：`rdr identity HOST:19090` 有响应
 
-token 语义细节（热更新、轮换、kill switch、global config 组合）以 DEPLOYMENT.md §4/§10/§11 为准：env token 不参与热更新；`enabled: false` 的 kill switch 永远由文件决定；文件存在但非法时启动失败。
+token 语义细节（热更新、轮换、global config 组合）以 DEPLOYMENT.md §4/§10/§11 为准：env token 不参与热更新；文件存在但非法时启动失败；关闭 RDR 用 `rdr server stop`，临时拒绝所有认证把 `tokens` 置空。
 
 ## 3. 安装 Client（开发环境）
 
@@ -115,7 +114,7 @@ rdr exec HOST:19090 "perf report -i /tmp/perf.data --stdio --percent-limit 0.5"
 
 | 现象 | 先查 |
 |---|---|
-| connection refused | server 进程在吗 → 端口在听吗（`ss -tlnp \| grep 19090`）→ 两层 `enabled` 都是 true 吗 → 网络可达吗 |
+| connection refused | server 进程在吗（`rdr server status`）→ 端口在听吗（`ss -tlnp \| grep 19090`）→ 网络可达吗 |
 | server token not configured | server 已启动，但还没有任何有效 token；配置 `/etc/rdr/access.json` 或带 token 重启 |
 | invalid token | server 已有 token；检查 client 实际使用的 `RDR_TOKEN`（否则文件第一个）是否在 server 的有效集合里 |
 | 能连上但看不到业务进程 | runtime visibility 问题：PID namespace / cgroup / mount，与 RDR 协议无关（DEPLOYMENT.md §12） |

@@ -33,7 +33,7 @@ class RuntimeTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(str(raised.exception), "invalid token")
 
     async def test_server_without_token_is_reported_distinctly(self) -> None:
-        await self.server.set_access(True, ())
+        await self.server.set_tokens(())
         client = RDRClient("127.0.0.1", self.port, "anything")
         with self.assertRaises(RDRClientError) as raised:
             await client.connect()
@@ -47,7 +47,7 @@ class RuntimeTest(unittest.IsolatedAsyncioTestCase):
     async def test_removing_token_closes_active_sessions(self) -> None:
         await self.connect("secret")
         self.assertTrue(self.server.connections)
-        await self.server.set_access(True, ("rotated",))
+        await self.server.set_tokens(("rotated",))
         self.assertFalse(self.server.connections)
 
     async def test_exec_streams_and_returns_exit(self) -> None:

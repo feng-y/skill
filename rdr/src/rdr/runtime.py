@@ -23,7 +23,7 @@ class RDRServer:
     def authenticate(self, token: str) -> bool:
         return any(hmac.compare_digest(token, candidate) for candidate in self.tokens)
 
-    async def set_access(self, enabled: bool, tokens: Iterable[str]) -> None:
+    async def set_tokens(self, tokens: Iterable[str]) -> None:
         next_tokens = tuple(tokens)
         revoked = set(self.tokens) - set(next_tokens)
         self.tokens = next_tokens
@@ -33,7 +33,6 @@ class RDRServer:
                 *(connection.close() for connection in list(self.connections)),
                 return_exceptions=True,
             )
-        await self.set_enabled(enabled)
 
     async def set_enabled(self, enabled: bool) -> None:
         async with self._state_lock:
