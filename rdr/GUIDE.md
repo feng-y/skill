@@ -61,6 +61,24 @@ chmod 600 /etc/rdr/access.json
 
 0.6.x 起，terminal/process 可以在 transport 断开后继续存在。为了保持 access boundary，**token revoke 会终止当前 active/detached terminal**；server shutdown 也会清理全部 terminal。
 
+### Stateful terminal attachment 数
+
+同一个 terminal 默认允许 **2 个 active attachment**，适合 Agent + human 同时观察/操作。需要独占控制时设成 `1`，需要更多协同连接时可以调大。
+
+托管启动通过环境变量配置：
+
+```bash
+RDR_TERMINAL_MAX_ATTACHMENTS=1 rdr server start --token <token>
+```
+
+前台 server 也可以显式传参：
+
+```bash
+rdr-server --host 0.0.0.0 --port 19090 --terminal-max-attachments 4
+```
+
+这是 server-wide runtime 配置，不属于 access/token schema。
+
 ### 启动
 
 **托管方式**（无 supervisor 的环境推荐）：
@@ -140,13 +158,12 @@ rdr connect HOST:19090                           # 交互 PTY
 RDR 0.6.x 的 terminal 生命周期属于 **RDR runtime**，不是某条 TCP connection：
 
 ```text
-connection A --attach--> terminal core-debug --> gdb
-
-connection A 断开
-                         terminal core-debug --> gdb 继续运行
-
-connection B --attach--> terminal core-debug --> 同一个 gdb
+Agent connection A ----\
+                       > terminal core-debug --> gdb
+Human connection B ----/
 ```
+
+任意一个 transport 断开，只 detach 该 connection；只要 terminal 进程还活着，其他 attachment 与远端 state 都继续存在。
 
 ### 创建稳定 terminal
 
@@ -168,25 +185,38 @@ rdr connect HOST:19090 --attach core-debug
 
 GDB 的当前 thread/frame、shell 变量、REPL state 等仍在原进程中，不需要重新启动工具。
 
+### 多 attachment 语义
+
+默认最多 2 个 connection 同时 attach 同一个 terminal：
+
+- terminal output 广播给所有 active attachment
+- 每个 attachment 都可以输入；输入按 frame 串行写入同一个 PTY
+- `terminal.close()` 是全局结束，会 terminate 该 terminal/process，而不是只关闭当前 viewer
+- 如果要避免 Agent 与 human 同时输入，server 把 attachment limit 配成 `1`
+
 ### detached output
 
-terminal detached 时，RDR 在 server 内保留最多 **4 MiB** 的输出。重新 attach 时会 replay 这部分 output，再继续实时输出。
+只有当 terminal 的 active attachment 数变成 **0** 时，RDR 才进入 detached replay 模式，并在 server 内保留最多 **4 MiB** 输出。
 
-如果 detached 期间输出超过 buffer，最旧部分会被丢弃；CLI 会明确警告 replay 被截断。这个 buffer 用于短期 reconnect，不是 large-output spool。
+重新 attach 时，第一个返回的 connection 会先收到这段 retained output，再继续实时输出。如果 detached 期间输出超过 buffer，最旧部分会被丢弃；CLI 会明确警告 replay 被截断。
+
+如果另一个 attachment 一直在线，那么 terminal 没有进入 detached 状态；返回的 viewer 不会获得自己离线期间的 catch-up replay。V1 暂不实现 per-attachment cursor。
 
 ### 生命周期语义
 
-- transport/client disconnect → **detach，不 kill process**
-- `terminal.detach()` → 主动 detach，process 继续
-- `terminal.close()` → terminate remote terminal/process
+- transport/client disconnect → **只 detach 当前 connection，不 kill process**
+- `terminal.detach()` → 主动 detach 当前 connection，process 继续
+- `terminal.close()` → terminate remote terminal/process，对所有 attachment 生效
 - remote process 自己退出 → terminal 结束
 - token revoke → 清理 active + detached terminal
 - `rdr server stop` / server shutdown → 清理全部 terminal
 - RDR server process restart → 当前 V1 **不能恢复**之前的 terminal
 
-同一个 terminal 同时只允许一个 active connection attach。当前 V1 以 server token 集合作为信任边界，没有 per-terminal ACL，也还没有 terminal list/discovery。
+当前 V1 以 server token 集合作为信任边界，没有 per-terminal ACL，也还没有 terminal list/discovery。
 
 ### Core dump 示例
+
+Agent 创建 GDB terminal：
 
 ```bash
 rdr connect HOST:19090 --terminal-id core-debug
@@ -203,13 +233,13 @@ frame 8
 info locals
 ```
 
-如果中间连接断开：
+human 或第二个 Agent 可以同时 attach：
 
 ```bash
 rdr connect HOST:19090 --attach core-debug
 ```
 
-继续原来的 GDB state：
+如果两个 connection 都断开，GDB 继续运行；任意 client 后续重新 attach 后继续原来的 state：
 
 ```gdb
 p variable
@@ -276,9 +306,9 @@ rdr exec HOST:19090 "perf report -i /tmp/perf.data --stdio --percent-limit 0.5"
 | connection refused | `rdr server status` → `ss -tlnp \| grep 19090` → 网络可达性 |
 | server token not configured | server 已启动但 effective token 为空；检查 local/global/env 三个来源 |
 | invalid token | server 已有 token；检查 client 实际使用的 `RDR_TOKEN`（否则文件第一个）是否在 server effective token 集合里 |
-| `terminal is already attached` | 同一个 stateful terminal 当前被另一 connection attach；先结束/断开原 attachment |
+| `terminal attachment limit reached (N)` | terminal 已达到 server 的 attachment 上限；等待一个 attachment detach，或调整 `RDR_TERMINAL_MAX_ATTACHMENTS` 后重启 server |
 | `unknown terminal` | terminal 已退出、被 close、token revoke/server shutdown 清理，或 RDR server 已重启 |
-| reconnect 后提示 replay truncated | detached 期间输出超过 4 MiB；state 仍在，但最旧输出已被丢弃 |
+| reconnect 后提示 replay truncated | terminal 曾处于 0 attachment 且 detached output 超过 4 MiB；state 仍在，但最旧 output 已丢弃 |
 | `get` 反复从 0 开始 | part 与远端 prefix 不一致，或 server 不支持安全 range；删除 `.rdr-part` 可强制完整下载 |
 | `get` checksum / size mismatch | 不会提交目标文件；保留 Evidence 后重试，必要时删除 `.rdr-part` 做完整下载 |
 | `put` checksum / size mismatch | server 不会提交临时文件；重新执行 `rdr put` |
