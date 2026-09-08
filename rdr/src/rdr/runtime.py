@@ -55,6 +55,7 @@ class RDRServer:
         terminal_id = handle.terminal_id
         if terminal_id in self.terminals:
             raise RuntimeError(f"duplicate terminal_id: {terminal_id}")
+        handle.max_attachments = self.terminal_max_attachments
         self.terminals[terminal_id] = handle
 
         async def forget_when_done() -> None:
