@@ -1,7 +1,7 @@
 # RDR 快速上手 Guide
 
-最短可执行路径：构建 package → 安装并启动 server → 配 token → 安装 client → 验证。
-Access 组合语义、轮换流程、故障语义、supervisor 常驻的**权威版本**在 [`DEPLOYMENT.md`](DEPLOYMENT.md)，本文只保留可直接执行的最短路径。
+当前基线：RDR `0.5.x`。最短可执行路径：构建 package → 安装并启动 server → 配 token → 安装 client → 验证。
+本文是可直接执行的上手路径；更完整的部署背景、长期运维和诊断场景见 [`DEPLOYMENT.md`](DEPLOYMENT.md)。
 
 ## 0. 前置
 
@@ -57,7 +57,7 @@ EOF
 chmod 600 /etc/rdr/access.json
 ```
 
-有效 token 是 local config、global config 与启动时 `RDR_TOKEN` 的**并集**。因此把某一个配置文件改成 `tokens: []` 只会撤销该来源；如果要临时拒绝所有认证，需要确保所有 token 来源都为空。启动时注入的 `RDR_TOKEN` 不会被 watcher 热更新，移除它需要重启 server。
+有效 token 是 local config、global config 与启动时 `RDR_TOKEN` 的**并集**。`enabled` 没有任何 runtime 语义；历史配置里即使存在也会被忽略。把某一个配置文件改成 `tokens: []` 只会撤销该来源；如果要临时拒绝所有认证，需要确保所有 token 来源都为空。启动时注入的 `RDR_TOKEN` 不会被 watcher 热更新，移除它需要重启 server。
 
 ### 启动
 
