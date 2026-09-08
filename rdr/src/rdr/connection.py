@@ -285,7 +285,7 @@ class ClientConnection:
     async def _terminal_signal(self, header: dict[str, Any]) -> None:
         terminal_id = str(header.get("terminal_id") or "")
         try:
-            await self._terminal(terminal_id).send_signal(header.get("signal", "INT"))
+            self._terminal(terminal_id).send_signal(header.get("signal", "INT"))
         except Exception as exc:
             await self.sender.send(
                 {"type": "terminal.error", "terminal_id": terminal_id, "error": str(exc)}
