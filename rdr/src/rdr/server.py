@@ -32,7 +32,12 @@ async def run_server(args: argparse.Namespace) -> None:
     except ConfigError as exc:
         raise SystemExit(str(exc)) from exc
 
-    server = RDRServer(args.host, args.port, policy.tokens)
+    server = RDRServer(
+        args.host,
+        args.port,
+        policy.tokens,
+        terminal_max_attachments=args.terminal_max_attachments,
+    )
     stop_event = asyncio.Event()
 
     loop = asyncio.get_running_loop()
@@ -53,7 +58,8 @@ async def run_server(args: argparse.Namespace) -> None:
     )
     print(
         f"RDR server ready on {bound} (pid={os.getpid()}, "
-        f"uid={os.getuid()}, tokens={len(policy.tokens)}); "
+        f"uid={os.getuid()}, tokens={len(policy.tokens)}, "
+        f"terminal-max-attachments={args.terminal_max_attachments}); "
         f"verify with: rdr identity <host>:<port>",
         flush=True,
     )
@@ -87,6 +93,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--host", default="0.0.0.0")
     parser.add_argument("--port", type=int, default=19090)
     parser.add_argument(
+        "--terminal-max-attachments",
+        type=int,
+        default=2,
+        metavar="N",
+        help="maximum simultaneous attachments per stateful terminal (default: 2)",
+    )
+    parser.add_argument(
         "--access-config",
         default=os.environ.get("RDR_ACCESS_CONFIG", "/etc/rdr/access.json"),
         help="host-local access config JSON",
@@ -105,6 +118,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
     args = build_parser().parse_args()
+    if args.terminal_max_attachments < 1:
+        raise SystemExit("--terminal-max-attachments must be >= 1")
     level = logging.WARNING
     if args.verbose == 1:
         level = logging.INFO
