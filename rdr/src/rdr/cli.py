@@ -9,7 +9,8 @@ import signal
 import sys
 
 from .client import RDRClient, RDRClientError
-from .config import AccessConfig, ConfigError
+from .config import ConfigError, resolve_access_token
+from .deploy import default_log_file, default_state_dir, run_server_command
 
 DEFAULT_ACCESS_CONFIG = "~/.config/rdr/access.json"
 _REMOTE_SPEC = re.compile(r"^(?P<host>\[[^\]]+\]|[^:]+):(?P<port>\d+):(?P<path>.+)$")
@@ -56,7 +57,7 @@ def _add_access_config(parser: argparse.ArgumentParser) -> None:
         "--access-config",
         help=(
             "client access config JSON; defaults to RDR_ACCESS_CONFIG or "
-            "~/.config/rdr/access.json"
+            "~/.config/rdr/access.json. RDR_TOKEN overrides the file token"
         ),
     )
 
@@ -96,6 +97,53 @@ def build_parser() -> argparse.ArgumentParser:
         "remote", type=parse_remote_spec, metavar="HOST:PORT:REMOTE_PATH"
     )
     _add_access_config(put_parser)
+
+    server_parser = sub.add_parser(
+        "server",
+        help="manage the local rdr-server (start/status/stop)",
+        description=(
+            "Install and startup are separate: the package is installed with "
+            "pip once, then started/stopped with these commands.\n\n"
+            "token sources, in priority order: --token > RDR_TOKEN env > "
+            "server access config file (/etc/rdr/access.json by default).\n"
+            "A server without any token still starts and listens, but rejects "
+            "auth with 'server token not configured' until one is configured.\n\n"
+            "quick start: rdr server start --token <token> ; rdr server status\n"
+            "full flow: rdr/GUIDE.md"
+        ),
+    )
+    server_parser.formatter_class = argparse.RawDescriptionHelpFormatter
+    server_sub = server_parser.add_subparsers(dest="server_command", required=True)
+
+    start_parser = server_sub.add_parser(
+        "start", help="start rdr-server in the background and wait until ready"
+    )
+    start_parser.add_argument("--host", default="0.0.0.0")
+    start_parser.add_argument("--port", type=int, default=19090)
+    start_parser.add_argument(
+        "--token",
+        help=(
+            "server access token; defaults to RDR_TOKEN env, then the server "
+            "access config file. Passed to the child via environment"
+        ),
+    )
+    start_parser.add_argument(
+        "--access-config",
+        help="server access config JSON; defaults to RDR_ACCESS_CONFIG or /etc/rdr/access.json",
+    )
+    start_parser.add_argument("--pid-file", default=str(default_state_dir() / "server.pid"))
+    start_parser.add_argument("--log-file", default=str(default_log_file()))
+    start_parser.add_argument("--wait-seconds", type=float, default=10.0)
+
+    status_parser = server_sub.add_parser(
+        "status", help="report local rdr-server process, listener and auth state"
+    )
+    status_parser.add_argument("--port", type=int, default=19090)
+    status_parser.add_argument("--pid-file", default=str(default_state_dir() / "server.pid"))
+    _add_access_config(status_parser)
+
+    stop_parser = server_sub.add_parser("stop", help="stop the managed rdr-server")
+    stop_parser.add_argument("--pid-file", default=str(default_state_dir() / "server.pid"))
     return parser
 
 
@@ -106,15 +154,11 @@ async def _connect(
     host, port = endpoint
     access_path = resolve_access_config_path(access_config)
     try:
-        access = AccessConfig.load(access_path)
+        token = resolve_access_token(access_path)
     except ConfigError as exc:
         raise SystemExit(str(exc)) from exc
-    if not access.enabled:
-        raise SystemExit(f"access config {access_path} is disabled")
-    if not access.tokens:
-        raise SystemExit(f"access config {access_path} contains no token")
 
-    client = RDRClient(host, port, access.tokens[0])
+    client = RDRClient(host, port, token)
     await client.connect()
     return client
 
@@ -218,6 +262,9 @@ async def _run_connect(client: RDRClient, args: argparse.Namespace) -> int:
 
 
 async def run(args: argparse.Namespace) -> int:
+    if args.command == "server":
+        return await run_server_command(args)
+
     if args.command == "get":
         endpoint, remote_path = args.remote
     elif args.command == "put":

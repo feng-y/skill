@@ -29,12 +29,10 @@ class AccessWatcherTest(unittest.TestCase):
     def test_global_file_is_optional_until_first_seen(self) -> None:
         watcher = AccessConfigWatcher(self.local, self.global_path)
         policy = watcher.load_initial()
-        self.assertTrue(policy.enabled)
         self.assertEqual(policy.tokens, ("local",))
 
         self._write(self.global_path, enabled=True, tokens=["global"])
         policy = watcher.read_policy()
-        self.assertTrue(policy.enabled)
         self.assertEqual(policy.tokens, ("local", "global"))
 
     def test_invalid_existing_global_file_fails_startup(self) -> None:
@@ -43,22 +41,20 @@ class AccessWatcherTest(unittest.TestCase):
         with self.assertRaises(ConfigError):
             watcher.load_initial()
 
-    def test_global_disable_overrides_local_enable(self) -> None:
-        self._write(self.global_path, enabled=False, tokens=["global"])
+    def test_global_tokens_are_unioned_with_local(self) -> None:
+        self._write(self.global_path, enabled=True, tokens=["global"])
         watcher = AccessConfigWatcher(self.local, self.global_path)
         policy = watcher.load_initial()
-        self.assertFalse(policy.enabled)
         self.assertEqual(policy.tokens, ("local", "global"))
 
     def test_missing_global_after_success_keeps_last_known_state(self) -> None:
-        self._write(self.global_path, enabled=False, tokens=["global"])
+        self._write(self.global_path, enabled=True, tokens=["global"])
         watcher = AccessConfigWatcher(self.local, self.global_path)
         policy = watcher.load_initial()
-        self.assertFalse(policy.enabled)
+        self.assertEqual(policy.tokens, ("local", "global"))
 
         self.global_path.unlink()
         policy = watcher.read_policy()
-        self.assertFalse(policy.enabled)
         self.assertEqual(policy.tokens, ("local", "global"))
 
     def test_local_token_rotation_is_observed(self) -> None:
@@ -67,6 +63,55 @@ class AccessWatcherTest(unittest.TestCase):
         self._write(self.local, enabled=True, tokens=["rotated"])
         policy = watcher.read_policy()
         self.assertEqual(policy.tokens, ("rotated",))
+
+    def test_missing_local_file_without_token_starts_without_policy(self) -> None:
+        self.local.unlink()
+        watcher = AccessConfigWatcher(self.local, self.global_path)
+        policy = watcher.load_initial()
+        self.assertEqual(policy.tokens, ())
+
+    def test_missing_local_file_falls_back_to_static_tokens(self) -> None:
+        self.local.unlink()
+        watcher = AccessConfigWatcher(
+            self.local, self.global_path, static_tokens=("env",)
+        )
+        policy = watcher.load_initial()
+        self.assertEqual(policy.tokens, ("env",))
+
+        self._write(self.local, enabled=True, tokens=["local"])
+        policy = watcher.read_policy()
+        self.assertEqual(policy.tokens, ("local", "env"))
+
+    def test_invalid_local_file_fails_startup_without_static_token(self) -> None:
+        self.local.write_text("{}", encoding="utf-8")
+        watcher = AccessConfigWatcher(self.local, self.global_path)
+        with self.assertRaises(ConfigError):
+            watcher.load_initial()
+
+    def test_invalid_local_file_fails_startup_even_with_static_tokens(self) -> None:
+        self.local.write_text("{}", encoding="utf-8")
+        watcher = AccessConfigWatcher(
+            self.local, self.global_path, static_tokens=("env",)
+        )
+        with self.assertRaises(ConfigError):
+            watcher.load_initial()
+
+    def test_static_tokens_join_file_tokens_and_survive_rotation(self) -> None:
+        watcher = AccessConfigWatcher(
+            self.local, self.global_path, static_tokens=("env",)
+        )
+        self.assertEqual(watcher.load_initial().tokens, ("local", "env"))
+
+        self._write(self.local, enabled=True, tokens=["rotated"])
+        self.assertEqual(watcher.read_policy().tokens, ("rotated", "env"))
+
+    def test_empty_local_file_tokens_contribute_nothing(self) -> None:
+        self._write(self.local, enabled=True, tokens=[])
+        watcher = AccessConfigWatcher(
+            self.local, self.global_path, static_tokens=("env",)
+        )
+        policy = watcher.load_initial()
+        self.assertEqual(policy.tokens, ("env",))
 
 
 class AccessWatcherAsyncTest(unittest.IsolatedAsyncioTestCase):

@@ -36,12 +36,12 @@ RDR 可以和主服务一起构建、发布和升级，但必须是独立进程�
 
 ## 2. 运行要求
 
-RDR Server 和开发侧 Client 都需要 Python 3.11+。
+RDR Server 和开发侧 Client 都需要 Python 3.10+。
 
 推荐 Server 使用独立 venv：
 
 ```bash
-python3.11 -m venv /opt/rdr/venv
+python3 -m venv /opt/rdr/venv
 /opt/rdr/venv/bin/python -m pip install /path/to/skill/rdr
 ```
 
@@ -88,22 +88,22 @@ RDR 默认监听：
 
 ## 4. Access Config
 
-RDR 使用同一个 access-config schema 表达两件事：
+RDR 使用同一个 access-config schema 表达一件事：
 
-- RDR 是否启用
 - 哪些 token 可以访问
 
 Schema：
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "token-a",
     "token-b"
   ]
 }
 ```
+
+关闭 RDR 用 `rdr server stop`；临时拒绝所有认证用空的 `tokens: []`。历史文件里可能还有 `"enabled"` 键，读取时会被忽略，不再有任何效果。
 
 仓库模板：
 
@@ -125,7 +125,6 @@ rdr/config/access.example.json
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "host-token"
   ]
@@ -140,9 +139,14 @@ chmod 600 /etc/rdr/access.json
 
 单机关闭 RDR：
 
+```bash
+rdr server stop
+```
+
+临时拒绝所有认证（进程保留，listener 保留）：
+
 ```json
 {
-  "enabled": false,
   "tokens": []
 }
 ```
@@ -161,43 +165,33 @@ chmod 600 /etc/rdr/access.json
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "global-token"
   ]
 }
 ```
 
-全域关闭：
-
-```json
-{
-  "enabled": false,
-  "tokens": []
-}
-```
+全域关闭：把共享文件的 `tokens` 置空，所有读取它的 RDR 实例会断开 active sessions 并拒绝认证（进程仍存活，彻底关闭需逐机 `rdr server stop`）。
 
 ### 4.3 单机 + 全域组合语义
 
 两份配置使用同一 schema。
 
 ```text
-effective enabled
-= local.enabled AND global.enabled
-
 effective tokens
-= local.tokens UNION global.tokens
+= local.tokens UNION global.tokens UNION static env token
 ```
 
 因此：
 
-- 任意一层 `enabled: false` 都会关闭当前机器的 RDR。
 - 全域 token 可以访问所有读取该全域文件的机器。
 - 单机 token 可以补充某台机器独有的访问能力。
-- 单机文件启动时必须存在并合法。
+- 单机文件启动时可以不存在；此时 server 仍可启动和监听，只是没有 local policy/token。
+- 单机文件如果存在但配置非法，RDR 启动失败，不静默忽略。
 - 全域文件启动时可以不存在。
 - 如果全域文件存在但配置非法，RDR 启动失败，不静默绕过全域配置。
-- 全域文件一旦成功读取过，后续 bucket/mount/读取临时失败时保持 last-known global policy。
+- 单机或全域文件一旦成功读取过，后续文件/mount/读取临时失败时保持对应 last-known policy。
+- effective token 为空不等于无认证：listener 可以存在，但所有认证都失败，并明确返回 `server token not configured`。
 
 默认每 30 秒检查一次：
 
@@ -235,6 +229,21 @@ export RDR_GLOBAL_ACCESS_CONFIG=/data/bucket/rdr/access.json
 /opt/rdr/venv/bin/rdr-server --port 19090
 ```
 
+没有 access.json 时，可以用 `RDR_TOKEN` 直接提供 token（见 4.4）：
+
+```bash
+RDR_TOKEN=<token> /opt/rdr/venv/bin/rdr-server --port 19090
+```
+
+也可以完全不提供 token：server 进程和 listener 正常启动，但认证不可用，直到 watcher 读取到有效 token 或进程带 token 重启：
+
+```bash
+/opt/rdr/venv/bin/rdr-server --port 19090
+# client auth -> server token not configured
+```
+
+已有配置文件如果非法仍然是启动错误；“允许无 token 启动”只针对配置文件不存在或有效配置的 effective token 为空，不会绕过非法配置。
+
 ### 5.1 使用 supervisor 常驻
 
 RDR 自己不 daemonize。生产/线下长期运行应交给现有 supervisor、容器 runtime 或 systemd。
@@ -269,12 +278,34 @@ WantedBy=multi-user.target
 
 实际用户、权限、cgroup 和 namespace 按目标服务环境配置。不要为了形式上的隔离导致 RDR 看不到真实 PID、cgroup、日志或 core。
 
+### 5.2 托管启动（无 supervisor 的环境）
+
+`rdr server start` 提供托管后台启动：detached 进程、pid file、日志文件、listener 就绪自检。安装与启动因此分离 —— pip 装完后，启动/状态/停止都是独立命令：
+
+```bash
+rdr server start    # token 可选；优先级 --token > RDR_TOKEN > access config
+rdr server status   # 进程 / listener / auth；只有 auth=ok 时 exit 0
+rdr server stop
+```
+
+没有 token 时 `start` 仍成功，`status` 会报告：
+
+```text
+process: ... alive
+listener 127.0.0.1:19090: open
+auth: server token not configured
+```
+
+并返回 non-zero。这样区分“server 已经启动”与“server 已可认证使用”。
+
+默认 pid file `/run/rdr/server.pid`（不可写时回退 `~/.rdr/`），日志 `/var/log/rdr/server.log`（同样回退），可用 `--pid-file` / `--log-file` 覆盖。`rdr-server` 前台进程语义不变；生产长期运行仍建议 supervisor / systemd，托管启动适合无 init 体系的容器或临时环境。
+
 ## 6. 开发侧 Client
 
 开发环境安装同一个 package：
 
 ```bash
-python3.11 -m venv ~/.local/share/rdr/venv
+python3 -m venv ~/.local/share/rdr/venv
 ~/.local/share/rdr/venv/bin/python -m pip install /path/to/skill/rdr
 ```
 
@@ -294,7 +325,6 @@ python3.11 -m venv ~/.local/share/rdr/venv
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "global-token"
   ]
@@ -319,7 +349,17 @@ export RDR_ACCESS_CONFIG=/path/to/access.json
 rdr connect HOST:19090 --access-config /path/to/access.json
 ```
 
-客户端使用 token list 中的第一个 token 发起认证。
+客户端使用 token list 中的第一个 token 发起认证。设置了 `RDR_TOKEN` 时优先使用它，可以完全不需要 access.json：
+
+```bash
+RDR_TOKEN=<token> rdr identity HOST:19090
+```
+
+认证失败有三种明确语义：
+
+- client 本地没有可用 token：CLI 在连接前直接报告本地 token/config 错误。
+- server effective token 为空：握手返回 `server token not configured`。
+- server 已有 token，但 client token 不匹配：握手返回 `invalid token`。
 
 ### 6.1 CLI 形态
 
@@ -358,6 +398,8 @@ ready
     ↓
 exec / PTY / file / ...
 ```
+
+如果 server 尚未配置 token，`auth(token)` 会得到 `server token not configured`；如果 server 已配置 token 但值不匹配，则得到 `invalid token`。两者不会合并成同一个错误。
 
 因此一个稳定的长 `connect` 会话只认证一次：
 
@@ -544,7 +586,6 @@ dmesg | tail -200
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "old-token",
     "new-token"
@@ -576,20 +617,11 @@ rdr identity HOST:19090
 
 ### 10.3 单机关闭
 
-```json
-{
-  "enabled": false,
-  "tokens": []
-}
+```bash
+rdr server stop
 ```
 
-写入：
-
-```text
-/etc/rdr/access.json
-```
-
-一个 poll 周期内 listener 会关闭，active sessions 会结束。
+只临时拒绝认证（保留进程与 listener）时，把 `/etc/rdr/access.json` 的 `tokens` 置空即可，一个 poll 周期内 active sessions 会结束。
 
 ### 10.4 全域关闭
 
@@ -597,7 +629,6 @@ rdr identity HOST:19090
 
 ```json
 {
-  "enabled": false,
   "tokens": []
 }
 ```
@@ -608,7 +639,7 @@ rdr identity HOST:19090
 /data/bucket/rdr/access.json
 ```
 
-所有读取到这份配置的 RDR 实例都会关闭 listener 和 active sessions。
+所有读取到这份配置的 RDR 实例会断开 active sessions 并拒绝认证。彻底关闭进程需逐机执行 `rdr server stop`。
 
 ### 10.5 恢复
 
@@ -616,35 +647,60 @@ rdr identity HOST:19090
 
 ```json
 {
-  "enabled": true,
   "tokens": [
     "valid-token"
   ]
 }
 ```
 
-注意 effective `enabled` 是 local 与 global 的 AND；另一层仍为 `false` 时，RDR 不会重新监听。
+一个 poll 周期内恢复认证；client 重建连接即可。
+
+### 4.4 环境变量 token
+
+`RDR_TOKEN` 是第三种 token 来源，适合 pip 安装后的直接启动：
+
+```bash
+pip install rdr-runtime
+RDR_TOKEN=<token> rdr-server --port 19090
+```
+
+语义：
+
+- server：`RDR_TOKEN` 作为额外 token 加入并集；local config 不存在也不阻止启动。
+- server：local/global/static token 全部为空时仍启动 listener，但认证返回 `server token not configured`。
+- client：`RDR_TOKEN` 优先于 access config 的第一个 token，适合临时验证：
+
+  ```bash
+  RDR_TOKEN=<token> rdr exec HOST:19090 'uname -a'
+  ```
+
+- `RDR_TOKEN` 与文件 token 一样只影响"谁能认证"；关闭 RDR 用 `rdr server stop`，临时拒绝所有认证把文件 `tokens` 置空。
+- local config 文件存在但非法时，即使设置了 `RDR_TOKEN`，启动仍然失败；“文件不存在”与“文件非法”是两种不同状态。
+- token 轮换（10.1）仍以文件为准；env token 不参与 poll 热更新，改动需重启进程。
 
 ## 11. 配置失败语义
 
 | 场景 | 行为 |
 |---|---|
-| local config 启动时不存在/非法 | RDR 启动失败 |
-| global config 启动时不存在 | 按 local policy 启动 |
+| local config 启动时不存在，且无其他 token | RDR 启动并监听；认证返回 `server token not configured`；managed `status` non-zero |
+| local config 启动时不存在，但设置了 `RDR_TOKEN` | 以 `RDR_TOKEN` 启动 |
+| local config 启动时存在但非法（即使设置了 `RDR_TOKEN`） | RDR 启动失败 |
+| global config 启动时不存在 | 按当前 local/static policy 启动；没有 token 也允许启动 |
 | global config 启动时存在但非法 | RDR 启动失败 |
-| local config 运行中暂时不可读/非法 | 保持 last-known local policy |
-| global config 从未成功读过且不存在 | 继续使用 local policy |
+| local config 从未成功读过且不存在，后续创建有效文件 | watcher 读取并应用新 local policy/token |
+| local config 已成功读过，随后暂时不可读/非法 | 保持 last-known local policy |
+| global config 从未成功读过且不存在 | 继续使用当前 local/static policy |
 | global config 已成功读过，随后 bucket/mount 暂时不可读 | 保持 last-known global policy |
 | access policy apply 临时失败 | 保持旧 effective policy，下一个 poll 继续重试 |
 | access watcher 非预期退出 | RDR Server 退出，由 supervisor 重启 |
 
-这个语义的目标是避免配置面临时异常导致 RDR 意外重新开放。
+这个语义同时保证两点：部署可以先启动 RDR 再配置 credential；配置文件一旦存在或曾生效，非法/临时失败不会被静默当成“开放访问”。effective token 为空始终意味着“认证不可用”，不是“无需认证”。
 
 ## 12. 常见问题
 
 ### `rdr: cannot read config ~/.config/rdr/access.json`
 
-客户端默认读取：
+这是 client 本地没有可用 token/config。客户端默认读取：
 
 ```text
 ~/.config/rdr/access.json
@@ -662,19 +718,24 @@ export RDR_ACCESS_CONFIG=/path/to/access.json
 
 依次检查：
 
-1. `rdr-server` process 是否存在。
-2. local / global `enabled` 是否都为 `true`。
-3. RDR 是否在 `19090` listen。
+1. `rdr-server` process 是否存在（`rdr server status`）。
+2. RDR 是否在 `19090` listen。
 4. 开发环境到目标端口的网络是否允许。
 5. access watcher 是否异常退出并被 supervisor 重启。
 
+### server token not configured
+
+Server 已启动并监听，但当前 effective token 集为空。配置 `/etc/rdr/access.json`（watcher 会自动发现），或者带 `RDR_TOKEN` / `--token` 重启 server。
+
 ### invalid token
 
-检查当前客户端使用的第一个 token 是否出现在：
+Server 已经配置至少一个 token，但当前 client token 不在：
 
 ```text
-local.tokens UNION global.tokens
+local.tokens UNION global.tokens UNION static env token
 ```
+
+这与 `server token not configured` 是不同错误。
 
 ### 能执行 shell，但看不到主服务 PID / cgroup / core
 
@@ -692,7 +753,19 @@ local.tokens UNION global.tokens
 
 说明两者 failure domain 没有隔离。优先调整 process/cgroup/container 部署，使 RDR 保留最小独立生存空间。
 
-## 13. 当前已知限制
+## 13. 文件传输层保证
+
+传输是核心基础组件，以下保证内建在协议里：
+
+- **双向**：`get`（server → client）与 `put`（client → server）
+- **完整性**：双向流式计算 md5，`file.done` / `file.put.done` 携带 checksum，接收端**校验通过才原子落盘**（临时文件 + fsync + rename）；不一致即报错并丢弃临时文件
+- **长度核对**：`put.start` 声明 size，server 校验写入字节数；download 校验收到的总长与 server 报告的 file size 一致
+- **分片与续传**：`file.get` 支持 `offset`（range 原语）；client 下载自动断点续传 —— 中断后重试从已有的 `. <name>.rdr-part` 续传，每个分片独立 md5 校验；陈旧/超长的 part 文件自动重新开始
+- **错误清理**：连接断开、取消、校验失败都会清理临时文件，目标路径要么是完整旧文件、要么是完整新文件，不会出现半截文件
+
+已知取舍：续传的分片校验不重算整个文件的 md5（避免服务端全文件重读）；需要整文件强校验时删除 part 文件重新完整下载。
+
+## 14. 当前已知限制
 
 当前基线尚未实现：
 

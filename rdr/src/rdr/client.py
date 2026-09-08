@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import inspect
 import os
 import uuid
@@ -16,6 +17,21 @@ OutputCallback = Callable[[bytes], None | Awaitable[None]]
 
 class RDRClientError(RuntimeError):
     pass
+
+
+def _md5_prefix(path: Path, length: int) -> str:
+    digest = hashlib.md5()
+    remaining = length
+    with open(path, "rb") as f:
+        while remaining:
+            chunk = f.read(min(_CHUNK, remaining))
+            if not chunk:
+                raise RDRClientError(
+                    f"part file ended before expected resume offset {length}: {path}"
+                )
+            digest.update(chunk)
+            remaining -= len(chunk)
+    return digest.hexdigest()
 
 
 class RemoteTerminal:
@@ -299,47 +315,143 @@ class RDRClient:
             self._request_queues.pop(request_id, None)
 
     async def download(self, remote_path: str, local_path: str | os.PathLike[str]) -> int:
-        request_id = uuid.uuid4().hex
-        queue = self._request_queue(request_id)
+        """Download a remote file with integrity-safe automatic resume.
+
+        Transfers land in a stable ``.<name>.rdr-part`` temp file. Before a
+        non-zero offset is trusted, the server hashes the remote prefix and
+        the client compares it with the local part. The newly transferred
+        range has its own md5 and the final assembled length is checked before
+        atomic rename. A legacy server without range metadata still works by
+        restarting the transfer from offset zero.
+        """
         local = Path(local_path)
-        temp = local.with_name(f".{local.name}.rdr-part-{uuid.uuid4().hex}")
+        temp = local.with_name(f".{local.name}.rdr-part")
         total = 0
-        try:
-            await self._send(
-                {"type": "file.get", "request_id": request_id, "path": remote_path}
+        for attempt in (0, 1):
+            request_id = uuid.uuid4().hex
+            queue = self._request_queue(request_id)
+            offset = temp.stat().st_size if temp.exists() else 0
+            part_checksum = (
+                await asyncio.to_thread(_md5_prefix, temp, offset) if offset else None
             )
-            with open(temp, "wb") as f:
-                while True:
-                    header, payload = await queue.get()
-                    frame_type = header.get("type")
-                    if frame_type == "file.data":
-                        f.write(payload)
-                        total += len(payload)
-                    elif frame_type == "file.error":
-                        raise RDRClientError(header.get("error", "download failed"))
-                    elif frame_type == "connection.closed":
-                        raise RDRClientError(header.get("error", "connection closed"))
-                    elif frame_type == "file.done":
-                        break
-                f.flush()
-                os.fsync(f.fileno())
-            os.replace(temp, local)
-            return total
-        finally:
-            self._request_queues.pop(request_id, None)
-            if temp.exists():
-                temp.unlink(missing_ok=True)
+            digest = hashlib.md5()
+            total = 0
+            restart = False
+            try:
+                await self._send(
+                    {
+                        "type": "file.get",
+                        "request_id": request_id,
+                        "path": remote_path,
+                        "offset": offset,
+                    }
+                )
+                with open(temp, "ab") as f:
+                    while True:
+                        header, payload = await queue.get()
+                        frame_type = header.get("type")
+                        if frame_type == "file.started":
+                            file_size = header.get("size")
+                            server_offset = header.get("offset")
+
+                            # Servers predating range support omit `offset`.
+                            # A fresh transfer is compatible; an existing part
+                            # must be discarded because the server cannot prove
+                            # that it is the prefix of the current remote file.
+                            if server_offset is None:
+                                if offset:
+                                    if attempt == 0:
+                                        restart = True
+                                        break
+                                    raise RDRClientError(
+                                        f"cannot resume {remote_path}: server "
+                                        "does not support safe ranged download"
+                                    )
+                            elif server_offset != offset or (
+                                isinstance(file_size, int) and offset > file_size
+                            ):
+                                if attempt == 0:
+                                    restart = True
+                                    break
+                                raise RDRClientError(
+                                    f"cannot resume {remote_path}: part file "
+                                    f"does not match remote state"
+                                )
+                            elif offset:
+                                prefix_checksum = header.get("prefix_checksum")
+                                if (
+                                    not isinstance(prefix_checksum, str)
+                                    or prefix_checksum != part_checksum
+                                ):
+                                    if attempt == 0:
+                                        restart = True
+                                        break
+                                    raise RDRClientError(
+                                        f"cannot resume {remote_path}: local part "
+                                        "does not match remote prefix"
+                                    )
+                        elif frame_type == "file.data":
+                            f.write(payload)
+                            digest.update(payload)
+                            total += len(payload)
+                        elif frame_type == "file.error":
+                            raise RDRClientError(
+                                header.get("error", "download failed")
+                            )
+                        elif frame_type == "connection.closed":
+                            raise RDRClientError(
+                                header.get("error", "connection closed")
+                            )
+                        elif frame_type == "file.done":
+                            expected = header.get("checksum")
+                            if expected and expected != digest.hexdigest():
+                                raise RDRClientError(
+                                    f"checksum mismatch: expected {expected}, "
+                                    f"got {digest.hexdigest()}"
+                                )
+                            file_size = header.get("file_size")
+                            if isinstance(file_size, int):
+                                if offset + total != file_size:
+                                    raise RDRClientError(
+                                        f"size mismatch: expected {file_size} "
+                                        f"bytes, got {offset + total}"
+                                    )
+                            else:
+                                # Legacy server: a compatible fresh request
+                                # covers the whole file and `size` is total.
+                                done_size = header.get("size")
+                                if (
+                                    isinstance(done_size, int)
+                                    and done_size != total
+                                ):
+                                    raise RDRClientError(
+                                        f"size mismatch: expected {done_size} "
+                                        f"bytes, got {total}"
+                                    )
+                            f.flush()
+                            os.fsync(f.fileno())
+                            break
+                if restart:
+                    temp.write_bytes(b"")
+                    continue
+                os.replace(temp, local)
+                return total
+            finally:
+                self._request_queues.pop(request_id, None)
+        raise RDRClientError(f"download failed after retry: {remote_path}")
 
     async def upload(self, local_path: str | os.PathLike[str], remote_path: str) -> int:
         request_id = uuid.uuid4().hex
         queue = self._request_queue(request_id)
         total = 0
+        digest = hashlib.md5()
         try:
             await self._send(
                 {
                     "type": "file.put.start",
                     "request_id": request_id,
                     "path": remote_path,
+                    "size": os.path.getsize(local_path),
                 }
             )
             frame, _ = await queue.get()
@@ -351,16 +463,31 @@ class RDRClient:
                     chunk = f.read(_CHUNK)
                     if not chunk:
                         break
+                    digest.update(chunk)
                     await self._send(
                         {"type": "file.put.data", "request_id": request_id},
                         chunk,
                     )
                     total += len(chunk)
 
-            await self._send({"type": "file.put.end", "request_id": request_id})
+            await self._send(
+                {
+                    "type": "file.put.end",
+                    "request_id": request_id,
+                    "checksum": digest.hexdigest(),
+                }
+            )
             frame, _ = await queue.get()
             if frame.get("type") != "file.put.done":
                 raise RDRClientError(frame.get("error", "upload failed"))
+            ack_checksum = frame.get("checksum")
+            if ack_checksum and ack_checksum != digest.hexdigest():
+                raise RDRClientError(
+                    f"checksum mismatch: expected {digest.hexdigest()}, got {ack_checksum}"
+                )
+            ack_size = frame.get("size")
+            if isinstance(ack_size, int) and ack_size != total:
+                raise RDRClientError(f"size mismatch: expected {total} bytes, got {ack_size}")
             return total
         except Exception:
             try:

@@ -26,10 +26,18 @@ class RuntimeTest(unittest.IsolatedAsyncioTestCase):
         self.addAsyncCleanup(client.close)
         return client
 
-    async def test_invalid_token_rejected(self) -> None:
+    async def test_invalid_token_rejected_distinctly(self) -> None:
         client = RDRClient("127.0.0.1", self.port, "wrong")
-        with self.assertRaises(RDRClientError):
+        with self.assertRaises(RDRClientError) as raised:
             await client.connect()
+        self.assertEqual(str(raised.exception), "invalid token")
+
+    async def test_server_without_token_is_reported_distinctly(self) -> None:
+        await self.server.set_tokens(())
+        client = RDRClient("127.0.0.1", self.port, "anything")
+        with self.assertRaises(RDRClientError) as raised:
+            await client.connect()
+        self.assertEqual(str(raised.exception), "server token not configured")
 
     async def test_any_configured_token_is_accepted(self) -> None:
         client = await self.connect("rotated")
@@ -39,7 +47,7 @@ class RuntimeTest(unittest.IsolatedAsyncioTestCase):
     async def test_removing_token_closes_active_sessions(self) -> None:
         await self.connect("secret")
         self.assertTrue(self.server.connections)
-        await self.server.set_access(True, ("rotated",))
+        await self.server.set_tokens(("rotated",))
         self.assertFalse(self.server.connections)
 
     async def test_exec_streams_and_returns_exit(self) -> None:
@@ -49,10 +57,19 @@ class RuntimeTest(unittest.IsolatedAsyncioTestCase):
             "printf hello; printf error >&2; exit 7",
             on_stdout=streamed.extend,
         )
+        # exec runs a login shell (-lc) for Local Parity, so the host profile
+        # may legitimately emit its own output before the command runs.
+        # Assert on the command's own output, not on the full stream.
         self.assertEqual(result["exit_code"], 7)
-        self.assertEqual(result["stdout"], b"hello")
-        self.assertEqual(result["stderr"], b"error")
-        self.assertEqual(streamed, b"hello")
+        self.assertTrue(
+            result["stdout"].endswith(b"hello"),
+            f"stdout should end with command output, got {result['stdout']!r}",
+        )
+        self.assertTrue(
+            result["stderr"].endswith(b"error"),
+            f"stderr should end with command output, got {result['stderr']!r}",
+        )
+        self.assertIn(b"hello", streamed)
 
     async def test_exec_timeout(self) -> None:
         client = await self.connect()
@@ -126,6 +143,53 @@ class RuntimeTest(unittest.IsolatedAsyncioTestCase):
             downloaded = await client.download(str(remote), copy)
             self.assertEqual(downloaded, len(payload))
             self.assertEqual(copy.read_bytes(), payload)
+
+    async def test_download_resumes_from_existing_part(self) -> None:
+        client = await self.connect()
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            remote = root / "remote.bin"
+            copy = root / "copy.bin"
+            payload = os.urandom(600_000)
+            remote.write_bytes(payload)
+
+            part = copy.with_name(f".{copy.name}.rdr-part")
+            part.write_bytes(payload[:250_000])
+
+            downloaded = await client.download(str(remote), copy)
+            self.assertEqual(downloaded, len(payload) - 250_000)
+            self.assertEqual(copy.read_bytes(), payload)
+            self.assertFalse(part.exists())
+
+    async def test_download_restarts_from_oversized_part(self) -> None:
+        client = await self.connect()
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            remote = root / "remote.bin"
+            copy = root / "copy.bin"
+            payload = os.urandom(400_000)
+            remote.write_bytes(payload)
+
+            part = copy.with_name(f".{copy.name}.rdr-part")
+            part.write_bytes(os.urandom(500_000))
+
+            downloaded = await client.download(str(remote), copy)
+            self.assertEqual(downloaded, len(payload))
+            self.assertEqual(copy.read_bytes(), payload)
+            self.assertFalse(part.exists())
+
+    async def test_download_keeps_part_on_failure_for_resume(self) -> None:
+        client = await self.connect()
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            remote = root / "remote.bin"
+            copy = root / "copy.bin"
+            payload = os.urandom(100_000)
+            remote.write_bytes(payload)
+
+            with self.assertRaises(RDRClientError):
+                await client.download(str(root / "missing.bin"), copy)
+            self.assertFalse(copy.exists())
 
     async def test_disable_closes_listener(self) -> None:
         await self.server.set_enabled(False)
