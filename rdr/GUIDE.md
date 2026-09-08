@@ -30,11 +30,13 @@ export PATH="/opt/rdr/venv/bin:$PATH"
 python3 -c "import secrets; print(secrets.token_urlsafe(24))"
 ```
 
-### 配置 token（三选一，优先级：`--token` > `RDR_TOKEN` > 文件）
+### 配置 token（可选；优先级：`--token` > `RDR_TOKEN` > 文件）
 
-1. `RDR_TOKEN` 环境变量 —— 固定变量，零配置
-2. `rdr server start --token <token>` —— 一次性指定
-3. `/etc/rdr/access.json` 文件 —— 生产推荐，支持 30s 热更新与轮换：
+Server 可以先在没有 token 的状态启动；listener 正常存在，但任何认证都会返回 `server token not configured`，`rdr server status` 也会以 non-zero 报告这一状态。需要建立可用连接时，再通过以下任一方式配置 token：
+
+1. `RDR_TOKEN` 环境变量 —— 固定变量，启动进程时读取
+2. `rdr server start --token <token>` —— 启动时一次性指定
+3. `/etc/rdr/access.json` 文件 —— 生产推荐，支持 30s 热更新与轮换；server 已启动时创建该文件也会被 watcher 发现：
 
    ```bash
    mkdir -p /etc/rdr && cat > /etc/rdr/access.json <<'EOF'
@@ -51,8 +53,8 @@ python3 -c "import secrets; print(secrets.token_urlsafe(24))"
 **托管方式**（推荐；安装与启动分离，自带状态与停止）：
 
 ```bash
-rdr server start          # 自动取 token；后台启动，等 listener 就绪后打印 ready 行
-rdr server status         # 进程 / 监听 / 认证 三层状态，全 ok 则 exit 0
+rdr server start          # token 可选；无 token 也启动并监听
+rdr server status         # 进程 / 监听 / 认证状态；只有认证可用时 exit 0
 rdr server stop           # 优雅终止
 ```
 
@@ -64,7 +66,8 @@ rdr-server --host 0.0.0.0 --port 19090
 
 ### 判断 server 启动成功
 
-- 托管方式：`rdr server start` 就绪后打印 `rdr server ready: pid=... listen=...`；`rdr server status` 三层全 ok
+- 托管方式：`rdr server start` 就绪后打印 `rdr server ready: pid=... listen=...`
+- `rdr server status` 会分别报告 process / listener / auth；无 server token 时显示 `auth: server token not configured` 并返回 non-zero
 - 前台方式：stdout 出现一行 `RDR server ready on ...`
 - 从开发环境最终确认：`rdr identity HOST:19090` 有响应
 
@@ -95,6 +98,8 @@ rdr put ./inspect.py HOST:19090:/tmp/inspect.py # 上传
 rdr connect HOST:19090                          # 交互 PTY（top / gdb / python3）
 ```
 
+认证失败明确区分：client 自己没有可用 token 时在本地直接报配置错误；server 尚未配置任何 token 时返回 `server token not configured`；server 已配置 token 但 client token 不匹配时返回 `invalid token`。
+
 ## 5. 日常使用姿势
 
 ```bash
@@ -111,6 +116,7 @@ rdr exec HOST:19090 "perf report -i /tmp/perf.data --stdio --percent-limit 0.5"
 | 现象 | 先查 |
 |---|---|
 | connection refused | server 进程在吗 → 端口在听吗（`ss -tlnp \| grep 19090`）→ 两层 `enabled` 都是 true 吗 → 网络可达吗 |
-| invalid token | client 实际用的 token（`RDR_TOKEN`，否则文件第一个）是否在 server 的有效集合里 |
+| server token not configured | server 已启动，但还没有任何有效 token；配置 `/etc/rdr/access.json` 或带 token 重启 |
+| invalid token | server 已有 token；检查 client 实际使用的 `RDR_TOKEN`（否则文件第一个）是否在 server 的有效集合里 |
 | 能连上但看不到业务进程 | runtime visibility 问题：PID namespace / cgroup / mount，与 RDR 协议无关（DEPLOYMENT.md §12） |
 | server 与主服务一起被 OOM | 部署 failure domain 未隔离，先修部署而不是加 API |
