@@ -19,6 +19,21 @@ class RDRClientError(RuntimeError):
     pass
 
 
+def _md5_prefix(path: Path, length: int) -> str:
+    digest = hashlib.md5()
+    remaining = length
+    with open(path, "rb") as f:
+        while remaining:
+            chunk = f.read(min(_CHUNK, remaining))
+            if not chunk:
+                raise RDRClientError(
+                    f"part file ended before expected resume offset {length}: {path}"
+                )
+            digest.update(chunk)
+            remaining -= len(chunk)
+    return digest.hexdigest()
+
+
 class RemoteTerminal:
     def __init__(
         self,
@@ -300,13 +315,14 @@ class RDRClient:
             self._request_queues.pop(request_id, None)
 
     async def download(self, remote_path: str, local_path: str | os.PathLike[str]) -> int:
-        """Download a remote file with automatic resume.
+        """Download a remote file with integrity-safe automatic resume.
 
-        Transfers land in a stable ``.<name>.rdr-part`` temp file; a retry
-        (new invocation or fresh call after a failure) continues from the
-        bytes already on disk via a range request. Each range is verified
-        with its own md5 and the assembled length is checked against the
-        server-reported file size before the atomic rename.
+        Transfers land in a stable ``.<name>.rdr-part`` temp file. Before a
+        non-zero offset is trusted, the server hashes the remote prefix and
+        the client compares it with the local part. The newly transferred
+        range has its own md5 and the final assembled length is checked before
+        atomic rename. A legacy server without range metadata still works by
+        restarting the transfer from offset zero.
         """
         local = Path(local_path)
         temp = local.with_name(f".{local.name}.rdr-part")
@@ -315,6 +331,9 @@ class RDRClient:
             request_id = uuid.uuid4().hex
             queue = self._request_queue(request_id)
             offset = temp.stat().st_size if temp.exists() else 0
+            part_checksum = (
+                await asyncio.to_thread(_md5_prefix, temp, offset) if offset else None
+            )
             digest = hashlib.md5()
             total = 0
             restart = False
@@ -334,11 +353,23 @@ class RDRClient:
                         if frame_type == "file.started":
                             file_size = header.get("size")
                             server_offset = header.get("offset")
-                            if server_offset != offset or (
+
+                            # Servers predating range support omit `offset`.
+                            # A fresh transfer is compatible; an existing part
+                            # must be discarded because the server cannot prove
+                            # that it is the prefix of the current remote file.
+                            if server_offset is None:
+                                if offset:
+                                    if attempt == 0:
+                                        restart = True
+                                        break
+                                    raise RDRClientError(
+                                        f"cannot resume {remote_path}: server "
+                                        "does not support safe ranged download"
+                                    )
+                            elif server_offset != offset or (
                                 isinstance(file_size, int) and offset > file_size
                             ):
-                                # stale part (remote shrank) or a server that
-                                # ignored the range: restart from scratch
                                 if attempt == 0:
                                     restart = True
                                     break
@@ -346,6 +377,19 @@ class RDRClient:
                                     f"cannot resume {remote_path}: part file "
                                     f"does not match remote state"
                                 )
+                            elif offset:
+                                prefix_checksum = header.get("prefix_checksum")
+                                if (
+                                    not isinstance(prefix_checksum, str)
+                                    or prefix_checksum != part_checksum
+                                ):
+                                    if attempt == 0:
+                                        restart = True
+                                        break
+                                    raise RDRClientError(
+                                        f"cannot resume {remote_path}: local part "
+                                        "does not match remote prefix"
+                                    )
                         elif frame_type == "file.data":
                             f.write(payload)
                             digest.update(payload)
@@ -373,8 +417,8 @@ class RDRClient:
                                         f"bytes, got {offset + total}"
                                     )
                             else:
-                                # legacy server without range support: the
-                                # "done" size covers the whole file
+                                # Legacy server: a compatible fresh request
+                                # covers the whole file and `size` is total.
                                 done_size = header.get("size")
                                 if (
                                     isinstance(done_size, int)
