@@ -34,6 +34,7 @@ class ClientConnection:
         self.writer = writer
         self.sender = LockedFrameWriter(writer)
         self.execs: dict[str, ExecHandle] = {}
+        # Connection-local membership only. The runtime owns terminal lifetime.
         self.terminals: dict[str, TerminalHandle] = {}
         self.uploads: dict[str, UploadHandle] = {}
         self.tasks: set[asyncio.Task[Any]] = set()
@@ -97,6 +98,12 @@ class ClientConnection:
 
         if msg_type == "terminal.open":
             await self._open_terminal(header)
+            return
+        if msg_type == "terminal.attach":
+            await self._attach_terminal(header)
+            return
+        if msg_type == "terminal.detach":
+            await self._detach_terminal(header)
             return
         if msg_type == "terminal.write":
             await self._terminal_write(header, payload)
@@ -207,39 +214,42 @@ class ClientConnection:
             }
         )
 
+    async def _terminal_error(
+        self, request_id: str, terminal_id: str, error: str
+    ) -> None:
+        await self.sender.send(
+            {
+                "type": "terminal.error",
+                "request_id": request_id,
+                "terminal_id": terminal_id,
+                "error": error,
+            }
+        )
+
     async def _open_terminal(self, header: dict[str, Any]) -> None:
         request_id = str(header.get("request_id") or "")
         terminal_id = str(header.get("terminal_id") or uuid.uuid4().hex)
-        if terminal_id in self.terminals:
-            await self.sender.send(
-                {
-                    "type": "terminal.error",
-                    "request_id": request_id,
-                    "terminal_id": terminal_id,
-                    "error": "duplicate terminal_id",
-                }
-            )
+        if self.server.get_terminal(terminal_id) is not None:
+            await self._terminal_error(request_id, terminal_id, "duplicate terminal_id")
             return
 
         try:
             handle = await TerminalHandle.open(
                 terminal_id=terminal_id,
-                sender=self.sender,
                 command=header.get("command") if isinstance(header.get("command"), str) else None,
                 cwd=header.get("cwd") if isinstance(header.get("cwd"), str) else None,
                 env=header.get("env") if isinstance(header.get("env"), dict) else None,
                 rows=max(1, int(header.get("rows") or 24)),
                 cols=max(1, int(header.get("cols") or 80)),
             )
+            self.server.register_terminal(handle)
+            replayed_bytes, replay_truncated = await handle.attach(self.sender)
         except Exception as exc:
-            await self.sender.send(
-                {
-                    "type": "terminal.error",
-                    "request_id": request_id,
-                    "terminal_id": terminal_id,
-                    "error": str(exc),
-                }
-            )
+            existing = self.server.get_terminal(terminal_id)
+            if existing is not None:
+                self.server.terminals.pop(terminal_id, None)
+                await existing.close()
+            await self._terminal_error(request_id, terminal_id, str(exc))
             return
 
         self.terminals[terminal_id] = handle
@@ -249,23 +259,65 @@ class ClientConnection:
                 "request_id": request_id,
                 "terminal_id": terminal_id,
                 "pid": handle.pid,
+                "replayed_bytes": replayed_bytes,
+                "replay_truncated": replay_truncated,
             }
         )
 
-        async def forget_when_done() -> None:
-            if handle.wait_task is not None:
-                await asyncio.gather(handle.wait_task, return_exceptions=True)
-            if self.terminals.get(terminal_id) is handle:
-                self.terminals.pop(terminal_id, None)
+    async def _attach_terminal(self, header: dict[str, Any]) -> None:
+        request_id = str(header.get("request_id") or "")
+        terminal_id = str(header.get("terminal_id") or "")
+        if not terminal_id:
+            await self._terminal_error(request_id, terminal_id, "terminal_id required")
+            return
+        handle = self.server.get_terminal(terminal_id)
+        if handle is None:
+            await self._terminal_error(request_id, terminal_id, "unknown terminal")
+            return
 
-        watcher = asyncio.create_task(forget_when_done())
-        self._track(watcher)
+        try:
+            replayed_bytes, replay_truncated = await handle.attach(self.sender)
+        except Exception as exc:
+            await self._terminal_error(request_id, terminal_id, str(exc))
+            return
+
+        self.terminals[terminal_id] = handle
+        await self.sender.send(
+            {
+                "type": "terminal.attached",
+                "request_id": request_id,
+                "terminal_id": terminal_id,
+                "pid": handle.pid,
+                "replayed_bytes": replayed_bytes,
+                "replay_truncated": replay_truncated,
+            }
+        )
+
+    async def _detach_terminal(self, header: dict[str, Any]) -> None:
+        request_id = str(header.get("request_id") or "")
+        terminal_id = str(header.get("terminal_id") or "")
+        handle = self.terminals.pop(terminal_id, None)
+        if handle is None:
+            await self._terminal_error(request_id, terminal_id, "terminal not attached")
+            return
+        await handle.detach(self.sender)
+        await self.sender.send(
+            {
+                "type": "terminal.detached",
+                "request_id": request_id,
+                "terminal_id": terminal_id,
+            }
+        )
 
     def _terminal(self, terminal_id: str) -> TerminalHandle:
         try:
-            return self.terminals[terminal_id]
+            handle = self.terminals[terminal_id]
         except KeyError as exc:
-            raise RuntimeError(f"unknown terminal: {terminal_id}") from exc
+            raise RuntimeError(f"terminal not attached: {terminal_id}") from exc
+        if not handle.is_attached_to(self.sender):
+            self.terminals.pop(terminal_id, None)
+            raise RuntimeError(f"terminal not attached: {terminal_id}")
+        return handle
 
     async def _terminal_write(self, header: dict[str, Any], payload: bytes) -> None:
         terminal_id = str(header.get("terminal_id") or "")
@@ -300,8 +352,12 @@ class ClientConnection:
     async def _terminal_close(self, header: dict[str, Any]) -> None:
         terminal_id = str(header.get("terminal_id") or "")
         handle = self.terminals.pop(terminal_id, None)
-        if handle is not None:
-            await handle.close()
+        if handle is None:
+            return
+        await handle.detach(self.sender)
+        if self.server.get_terminal(terminal_id) is handle:
+            self.server.terminals.pop(terminal_id, None)
+        await handle.close()
 
     async def _file_put_start(self, header: dict[str, Any]) -> None:
         request_id = str(header.get("request_id") or uuid.uuid4().hex)
@@ -364,8 +420,10 @@ class ClientConnection:
             handle.task.cancel()
         self.execs.clear()
 
+        # Transport disconnect only detaches stateful terminals. Their process
+        # lifetime belongs to RDRServer and survives reconnect.
         for handle in list(self.terminals.values()):
-            await handle.close()
+            await handle.detach(self.sender)
         self.terminals.clear()
 
         for handle in list(self.uploads.values()):

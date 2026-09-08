@@ -40,19 +40,33 @@ class RemoteTerminal:
         client: "RDRClient",
         terminal_id: str,
         queue: asyncio.Queue[tuple[dict[str, Any], bytes]],
+        *,
+        replayed_bytes: int = 0,
+        replay_truncated: bool = False,
     ) -> None:
         self.client = client
         self.terminal_id = terminal_id
         self.queue = queue
+        self.replayed_bytes = replayed_bytes
+        self.replay_truncated = replay_truncated
         self.closed = False
+        self.detached = False
+
+    def _require_attached(self) -> None:
+        if self.closed:
+            raise RDRClientError("terminal is closed")
+        if self.detached:
+            raise RDRClientError("terminal is detached")
 
     async def write(self, data: bytes) -> None:
+        self._require_attached()
         await self.client._send(
             {"type": "terminal.write", "terminal_id": self.terminal_id},
             data,
         )
 
     async def resize(self, rows: int, cols: int) -> None:
+        self._require_attached()
         await self.client._send(
             {
                 "type": "terminal.resize",
@@ -63,6 +77,7 @@ class RemoteTerminal:
         )
 
     async def signal(self, value: str | int) -> None:
+        self._require_attached()
         await self.client._send(
             {
                 "type": "terminal.signal",
@@ -75,11 +90,20 @@ class RemoteTerminal:
         header, payload = await self.queue.get()
         if header.get("type") == "terminal.exit":
             self.closed = True
+            self.client._terminal_queues.pop(self.terminal_id, None)
         return header, payload
+
+    async def detach(self) -> None:
+        if self.closed or self.detached:
+            return
+        await self.client.detach_terminal(self.terminal_id)
+        self.detached = True
+        self.client._terminal_queues.pop(self.terminal_id, None)
 
     async def close(self) -> None:
         if self.closed:
             return
+        self._require_attached()
         await self.client._send(
             {"type": "terminal.close", "terminal_id": self.terminal_id}
         )
@@ -121,6 +145,16 @@ class RDRClient:
         try:
             while True:
                 header, payload = await read_frame(self.reader)
+
+                # Request-scoped terminal errors must reach open/attach/detach
+                # callers instead of being swallowed by the terminal stream.
+                request_id = header.get("request_id")
+                if request_id is not None:
+                    queue = self._request_queues.get(str(request_id))
+                    if queue is not None:
+                        await queue.put((header, payload))
+                        continue
+
                 terminal_id = header.get("terminal_id")
                 if terminal_id and header.get("type") in {
                     "terminal.output",
@@ -131,12 +165,6 @@ class RDRClient:
                     if queue is not None:
                         await queue.put((header, payload))
                     continue
-
-                request_id = header.get("request_id")
-                if request_id is not None:
-                    queue = self._request_queues.get(str(request_id))
-                    if queue is not None:
-                        await queue.put((header, payload))
         except (asyncio.IncompleteReadError, ConnectionResetError, BrokenPipeError):
             pass
         finally:
@@ -283,9 +311,12 @@ class RDRClient:
         env: dict[str, str] | None = None,
         rows: int = 24,
         cols: int = 80,
+        terminal_id: str | None = None,
     ) -> RemoteTerminal:
         request_id = uuid.uuid4().hex
-        terminal_id = uuid.uuid4().hex
+        terminal_id = terminal_id or uuid.uuid4().hex
+        if terminal_id in self._terminal_queues:
+            raise RDRClientError(f"terminal already attached locally: {terminal_id}")
         request_queue = self._request_queue(request_id)
         terminal_queue: asyncio.Queue[tuple[dict[str, Any], bytes]] = asyncio.Queue()
         self._terminal_queues[terminal_id] = terminal_queue
@@ -307,10 +338,67 @@ class RDRClient:
             frame, _ = await request_queue.get()
             if frame.get("type") != "terminal.ready":
                 raise RDRClientError(frame.get("error", "failed to open terminal"))
-            return RemoteTerminal(self, terminal_id, terminal_queue)
+            return RemoteTerminal(
+                self,
+                terminal_id,
+                terminal_queue,
+                replayed_bytes=int(frame.get("replayed_bytes") or 0),
+                replay_truncated=bool(frame.get("replay_truncated", False)),
+            )
         except Exception:
             self._terminal_queues.pop(terminal_id, None)
             raise
+        finally:
+            self._request_queues.pop(request_id, None)
+
+    async def attach_terminal(self, terminal_id: str) -> RemoteTerminal:
+        if not terminal_id:
+            raise RDRClientError("terminal_id required")
+        if terminal_id in self._terminal_queues:
+            raise RDRClientError(f"terminal already attached locally: {terminal_id}")
+
+        request_id = uuid.uuid4().hex
+        request_queue = self._request_queue(request_id)
+        terminal_queue: asyncio.Queue[tuple[dict[str, Any], bytes]] = asyncio.Queue()
+        self._terminal_queues[terminal_id] = terminal_queue
+        try:
+            await self._send(
+                {
+                    "type": "terminal.attach",
+                    "request_id": request_id,
+                    "terminal_id": terminal_id,
+                }
+            )
+            frame, _ = await request_queue.get()
+            if frame.get("type") != "terminal.attached":
+                raise RDRClientError(frame.get("error", "failed to attach terminal"))
+            return RemoteTerminal(
+                self,
+                terminal_id,
+                terminal_queue,
+                replayed_bytes=int(frame.get("replayed_bytes") or 0),
+                replay_truncated=bool(frame.get("replay_truncated", False)),
+            )
+        except Exception:
+            self._terminal_queues.pop(terminal_id, None)
+            raise
+        finally:
+            self._request_queues.pop(request_id, None)
+
+    async def detach_terminal(self, terminal_id: str) -> None:
+        request_id = uuid.uuid4().hex
+        queue = self._request_queue(request_id)
+        try:
+            await self._send(
+                {
+                    "type": "terminal.detach",
+                    "request_id": request_id,
+                    "terminal_id": terminal_id,
+                }
+            )
+            frame, _ = await queue.get()
+            if frame.get("type") != "terminal.detached":
+                raise RDRClientError(frame.get("error", "failed to detach terminal"))
         finally:
             self._request_queues.pop(request_id, None)
 

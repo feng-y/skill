@@ -1,6 +1,6 @@
 # RDR 快速上手 Guide
 
-当前基线：RDR `0.5.x`。最短可执行路径：构建 package → 安装并启动 server → 配 token → 安装 client → 验证。
+当前基线：RDR `0.6.x`。最短可执行路径：构建 package → 安装并启动 server → 配 token → 安装 client → 验证。
 本文是可直接执行的上手路径；更完整的部署背景、长期运维和诊断场景见 [`DEPLOYMENT.md`](DEPLOYMENT.md)。
 
 ## 0. 前置
@@ -58,6 +58,26 @@ chmod 600 /etc/rdr/access.json
 ```
 
 有效 token 是 local config、global config 与启动时 `RDR_TOKEN` 的**并集**。`enabled` 没有任何 runtime 语义；历史配置里即使存在也会被忽略。把某一个配置文件改成 `tokens: []` 只会撤销该来源；如果要临时拒绝所有认证，需要确保所有 token 来源都为空。启动时注入的 `RDR_TOKEN` 不会被 watcher 热更新，移除它需要重启 server。
+
+0.6.x 起，terminal/process 可以在 transport 断开后继续存在。为了保持 access boundary，**token revoke 会终止当前 active/detached terminal**；server shutdown 也会清理全部 terminal。
+
+### Stateful terminal attachment 数
+
+同一个 terminal 默认允许 **2 个 active attachment**，适合 Agent + human 同时观察/操作。需要独占控制时设成 `1`，需要更多协同连接时可以调大。
+
+托管启动通过环境变量配置：
+
+```bash
+RDR_TERMINAL_MAX_ATTACHMENTS=1 rdr server start --token <token>
+```
+
+前台 server 也可以显式传参：
+
+```bash
+rdr-server --host 0.0.0.0 --port 19090 --terminal-max-attachments 4
+```
+
+这是 server-wide runtime 配置，不属于 access/token schema。
 
 ### 启动
 
@@ -126,12 +146,122 @@ rdr identity HOST:19090                         # hostname/pid/uid：认证 + �
 rdr exec HOST:19090 'uname -a; uptime'          # one-shot 命令
 rdr get HOST:19090:/etc/hostname ./hostname     # 下载
 rdr put ./inspect.py HOST:19090:/tmp/inspect.py # 上传
-rdr connect HOST:19090                           # 交互 PTY（top / gdb / python3）
+rdr connect HOST:19090                           # 交互 PTY
 ```
 
 建议首次部署至少验证 `identity / exec / get / put / connect` 五条路径。
 
-## 5. 文件传输
+## 5. 有状态任务：GDB / Shell / REPL
+
+`identity / exec / get / put` 是一次请求即可完成的无状态操作。GDB、shell、Python REPL、`top`、`perf report` 等交互程序不同：状态保存在远端进程和 PTY 中，需要跨多轮 Agent 交互继续存在。
+
+RDR 0.6.x 的 terminal 生命周期属于 **RDR runtime**，不是某条 TCP connection：
+
+```text
+Agent connection A ----\
+                       > terminal core-debug --> gdb
+Human connection B ----/
+```
+
+任意一个 transport 断开，只 detach 该 connection；只要 terminal 进程还活着，其他 attachment 与远端 state 都继续存在。
+
+### 创建稳定 terminal
+
+复杂任务建议显式指定 terminal id：
+
+```bash
+rdr connect HOST:19090 --terminal-id core-debug
+```
+
+CLI 会在进入 raw terminal 前打印 terminal id。正常在远端 shell/GDB 中执行 `exit` 会结束该 terminal。
+
+### transport 断开后恢复
+
+如果 client/transport 意外断开，而远端进程仍在：
+
+```bash
+rdr connect HOST:19090 --attach core-debug
+```
+
+GDB 的当前 thread/frame、shell 变量、REPL state 等仍在原进程中，不需要重新启动工具。
+
+### 多 attachment 语义
+
+默认最多 2 个 connection 同时 attach 同一个 terminal：
+
+- terminal output 广播给所有 active attachment
+- 每个 attachment 都可以输入；输入按 frame 串行写入同一个 PTY
+- `terminal.close()` 是全局结束，会 terminate 该 terminal/process，而不是只关闭当前 viewer
+- 如果要避免 Agent 与 human 同时输入，server 把 attachment limit 配成 `1`
+
+### detached output
+
+只有当 terminal 的 active attachment 数变成 **0** 时，RDR 才进入 detached replay 模式，并在 server 内保留最多 **4 MiB** 输出。
+
+重新 attach 时，第一个返回的 connection 会先收到这段 retained output，再继续实时输出。如果 detached 期间输出超过 buffer，最旧部分会被丢弃；CLI 会明确警告 replay 被截断。
+
+如果另一个 attachment 一直在线，那么 terminal 没有进入 detached 状态；返回的 viewer 不会获得自己离线期间的 catch-up replay。V1 暂不实现 per-attachment cursor。
+
+### 生命周期语义
+
+- transport/client disconnect → **只 detach 当前 connection，不 kill process**
+- `terminal.detach()` → 主动 detach 当前 connection，process 继续
+- `terminal.close()` → terminate remote terminal/process，对所有 attachment 生效
+- remote process 自己退出 → terminal 结束
+- token revoke → 清理 active + detached terminal
+- `rdr server stop` / server shutdown → 清理全部 terminal
+- RDR server process restart → 当前 V1 **不能恢复**之前的 terminal
+
+当前 V1 以 server token 集合作为信任边界，没有 per-terminal ACL，也还没有 terminal list/discovery。
+
+### Core dump 示例
+
+Agent 创建 GDB terminal：
+
+```bash
+rdr connect HOST:19090 --terminal-id core-debug
+```
+
+远端：
+
+```gdb
+gdb /path/server /path/core
+info threads
+thread 17
+bt full
+frame 8
+info locals
+```
+
+human 或第二个 Agent 可以同时 attach：
+
+```bash
+rdr connect HOST:19090 --attach core-debug
+```
+
+如果两个 connection 都断开，GDB 继续运行；任意 client 后续重新 attach 后继续原来的 state：
+
+```gdb
+p variable
+x/32gx ptr
+```
+
+程序接口同样支持：
+
+```python
+terminal = await client.open_terminal(
+    command="gdb /path/server /path/core",
+    terminal_id="core-debug",
+)
+await terminal.write(b"info threads\n")
+await terminal.detach()
+
+# new RDRClient connection
+terminal = await client.attach_terminal("core-debug")
+await terminal.write(b"thread 17\n")
+```
+
+## 6. 文件传输
 
 ### 下载：`rdr get`
 
@@ -158,7 +288,7 @@ rdr put ./local-file HOST:19090:/remote/file
 
 上传会把本地文件 size 与完整 MD5 发送给 server；server 在临时文件中写入、核对 size + checksum、`fsync`，校验成功后才原子替换目标路径。上传当前**不支持断点续传**；失败后重新执行 `rdr put`。
 
-## 6. 日常诊断
+## 7. 日常诊断
 
 ```bash
 rdr exec HOST:19090 "rg 'ERROR|timeout' /path/server.log | tail -200"
@@ -169,13 +299,16 @@ rdr exec HOST:19090 "perf report -i /tmp/perf.data --stdio --percent-limit 0.5"
 
 大日志、core、OOM / cgroup 的完整工作流见 `DEPLOYMENT.md` §9。原则：采样和大文件尽量留在远端，只把需要的 Evidence 拉回开发环境。
 
-## 7. 故障速查
+## 8. 故障速查
 
 | 现象 | 先查 |
 |---|---|
 | connection refused | `rdr server status` → `ss -tlnp \| grep 19090` → 网络可达性 |
 | server token not configured | server 已启动但 effective token 为空；检查 local/global/env 三个来源 |
 | invalid token | server 已有 token；检查 client 实际使用的 `RDR_TOKEN`（否则文件第一个）是否在 server effective token 集合里 |
+| `terminal attachment limit reached (N)` | terminal 已达到 server 的 attachment 上限；等待一个 attachment detach，或调整 `RDR_TERMINAL_MAX_ATTACHMENTS` 后重启 server |
+| `unknown terminal` | terminal 已退出、被 close、token revoke/server shutdown 清理，或 RDR server 已重启 |
+| reconnect 后提示 replay truncated | terminal 曾处于 0 attachment 且 detached output 超过 4 MiB；state 仍在，但最旧 output 已丢弃 |
 | `get` 反复从 0 开始 | part 与远端 prefix 不一致，或 server 不支持安全 range；删除 `.rdr-part` 可强制完整下载 |
 | `get` checksum / size mismatch | 不会提交目标文件；保留 Evidence 后重试，必要时删除 `.rdr-part` 做完整下载 |
 | `put` checksum / size mismatch | server 不会提交临时文件；重新执行 `rdr put` |
