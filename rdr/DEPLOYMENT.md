@@ -183,21 +183,23 @@ chmod 600 /etc/rdr/access.json
 
 ```text
 effective enabled
-= local.enabled AND global.enabled
+= AND of every file policy that currently exists / has last-known state
 
 effective tokens
-= local.tokens UNION global.tokens
+= local.tokens UNION global.tokens UNION static env token
 ```
 
 因此：
 
-- 任意一层 `enabled: false` 都会关闭当前机器的 RDR。
+- 任意已生效文件层 `enabled: false` 都会关闭当前机器的 RDR。
 - 全域 token 可以访问所有读取该全域文件的机器。
 - 单机 token 可以补充某台机器独有的访问能力。
-- 单机文件启动时必须存在并合法。
+- 单机文件启动时可以不存在；此时 server 仍可启动和监听，只是没有 local policy/token。
+- 单机文件如果存在但配置非法，RDR 启动失败，不静默忽略。
 - 全域文件启动时可以不存在。
 - 如果全域文件存在但配置非法，RDR 启动失败，不静默绕过全域配置。
-- 全域文件一旦成功读取过，后续 bucket/mount/读取临时失败时保持 last-known global policy。
+- 单机或全域文件一旦成功读取过，后续文件/mount/读取临时失败时保持对应 last-known policy。
+- effective token 为空不等于无认证：listener 可以存在，但所有认证都失败，并明确返回 `server token not configured`。
 
 默认每 30 秒检查一次：
 
@@ -235,11 +237,20 @@ export RDR_GLOBAL_ACCESS_CONFIG=/data/bucket/rdr/access.json
 /opt/rdr/venv/bin/rdr-server --port 19090
 ```
 
-没有 access.json 时，可以仅凭 `RDR_TOKEN` 启动（见 4.4）：
+没有 access.json 时，可以用 `RDR_TOKEN` 直接提供 token（见 4.4）：
 
 ```bash
 RDR_TOKEN=<token> /opt/rdr/venv/bin/rdr-server --port 19090
 ```
+
+也可以完全不提供 token：server 进程和 listener 正常启动，但认证不可用，直到 watcher 读取到有效 token 或进程带 token 重启：
+
+```bash
+/opt/rdr/venv/bin/rdr-server --port 19090
+# client auth -> server token not configured
+```
+
+已有配置文件如果非法仍然是启动错误；“允许无 token 启动”只针对配置文件不存在或有效配置的 effective token 为空，不会绕过非法配置或 `enabled: false` kill switch。
 
 ### 5.1 使用 supervisor 常驻
 
@@ -280,10 +291,20 @@ WantedBy=multi-user.target
 `rdr server start` 提供托管后台启动：detached 进程、pid file、日志文件、listener 就绪自检。安装与启动因此分离 —— pip 装完后，启动/状态/停止都是独立命令：
 
 ```bash
-rdr server start    # token 来源优先级：--token > RDR_TOKEN > /etc/rdr/access.json
-rdr server status   # 进程存活 / 端口监听 / identity 认证往返，全 ok 时 exit 0
+rdr server start    # token 可选；优先级 --token > RDR_TOKEN > access config
+rdr server status   # 进程 / listener / auth；只有 auth=ok 时 exit 0
 rdr server stop
 ```
+
+没有 token 时 `start` 仍成功，`status` 会报告：
+
+```text
+process: ... alive
+listener 127.0.0.1:19090: open
+auth: server token not configured
+```
+
+并返回 non-zero。这样区分“server 已经启动”与“server 已可认证使用”。
 
 默认 pid file `/run/rdr/server.pid`（不可写时回退 `~/.rdr/`），日志 `/var/log/rdr/server.log`（同样回退），可用 `--pid-file` / `--log-file` 覆盖。`rdr-server` 前台进程语义不变；生产长期运行仍建议 supervisor / systemd，托管启动适合无 init 体系的容器或临时环境。
 
@@ -343,6 +364,12 @@ rdr connect HOST:19090 --access-config /path/to/access.json
 RDR_TOKEN=<token> rdr identity HOST:19090
 ```
 
+认证失败有三种明确语义：
+
+- client 本地没有可用 token：CLI 在连接前直接报告本地 token/config 错误。
+- server effective token 为空：握手返回 `server token not configured`。
+- server 已有 token，但 client token 不匹配：握手返回 `invalid token`。
+
 ### 6.1 CLI 形态
 
 主入口接近 SSH：
@@ -380,6 +407,8 @@ ready
     ↓
 exec / PTY / file / ...
 ```
+
+如果 server 尚未配置 token，`auth(token)` 会得到 `server token not configured`；如果 server 已配置 token 但值不匹配，则得到 `invalid token`。两者不会合并成同一个错误。
 
 因此一个稳定的长 `connect` 会话只认证一次：
 
@@ -645,11 +674,11 @@ rdr identity HOST:19090
 }
 ```
 
-注意 effective `enabled` 是 local 与 global 的 AND；另一层仍为 `false` 时，RDR 不会重新监听。
+注意 effective `enabled` 是所有已有/last-known 文件 policy 的 AND；另一层仍为 `false` 时，RDR 不会重新监听。
 
 ### 4.4 环境变量 token
 
-`RDR_TOKEN` 是第三种 token 来源，服务于 pip 安装后的零配置启动：
+`RDR_TOKEN` 是第三种 token 来源，适合 pip 安装后的直接启动：
 
 ```bash
 pip install rdr-runtime
@@ -658,39 +687,41 @@ RDR_TOKEN=<token> rdr-server --port 19090
 
 语义：
 
-- server：`RDR_TOKEN` 作为额外 token 加入并集；local config 不存在时，仅凭 `RDR_TOKEN` 即可启动（`enabled` 视为 `true`）。
+- server：`RDR_TOKEN` 作为额外 token 加入并集；local config 不存在也不阻止启动。
+- server：local/global/static token 全部为空时仍启动 listener，但认证返回 `server token not configured`。
 - client：`RDR_TOKEN` 优先于 access config 的第一个 token，适合临时验证：
 
   ```bash
   RDR_TOKEN=<token> rdr exec HOST:19090 'uname -a'
   ```
 
-- `enabled` 仍由文件决定，`RDR_TOKEN` 不能越过文件 kill switch：local/global 任一层 `enabled: false`，RDR 依旧关闭。
-- local config 文件存在但非法时，即使设置了 `RDR_TOKEN`，启动仍然失败；只有"文件不存在"才回退到 env token。
+- `enabled` 仍由已有文件 policy 决定，`RDR_TOKEN` 不能越过文件 kill switch：local/global 任一已生效层 `enabled: false`，RDR 依旧关闭。
+- local config 文件存在但非法时，即使设置了 `RDR_TOKEN`，启动仍然失败；“文件不存在”与“文件非法”是两种不同状态。
 - token 轮换（10.1）仍以文件为准；env token 不参与 poll 热更新，改动需重启进程。
 
 ## 11. 配置失败语义
 
 | 场景 | 行为 |
 |---|---|
-| local config 启动时不存在/非法 | RDR 启动失败 |
-| local config 启动时不存在，但设置了 `RDR_TOKEN` | 以 `RDR_TOKEN` 启动，`enabled` 视为 `true` |
-| local config 存在但非法（即使设置了 `RDR_TOKEN`） | RDR 启动失败 |
-| global config 启动时不存在 | 按 local policy 启动 |
+| local config 启动时不存在，且无其他 token | RDR 启动并监听；认证返回 `server token not configured`；managed `status` non-zero |
+| local config 启动时不存在，但设置了 `RDR_TOKEN` | 以 `RDR_TOKEN` 启动，`enabled` 视为 `true`（除非其他已有 policy 禁用） |
+| local config 启动时存在但非法（即使设置了 `RDR_TOKEN`） | RDR 启动失败 |
+| global config 启动时不存在 | 按当前 local/static policy 启动；没有 token 也允许启动 |
 | global config 启动时存在但非法 | RDR 启动失败 |
-| local config 运行中暂时不可读/非法 | 保持 last-known local policy |
-| global config 从未成功读过且不存在 | 继续使用 local policy |
+| local config 从未成功读过且不存在，后续创建有效文件 | watcher 读取并应用新 local policy/token |
+| local config 已成功读过，随后暂时不可读/非法 | 保持 last-known local policy |
+| global config 从未成功读过且不存在 | 继续使用当前 local/static policy |
 | global config 已成功读过，随后 bucket/mount 暂时不可读 | 保持 last-known global policy |
 | access policy apply 临时失败 | 保持旧 effective policy，下一个 poll 继续重试 |
 | access watcher 非预期退出 | RDR Server 退出，由 supervisor 重启 |
 
-这个语义的目标是避免配置面临时异常导致 RDR 意外重新开放。
+这个语义同时保证两点：部署可以先启动 RDR 再配置 credential；配置文件一旦存在或曾生效，非法/临时失败不会被静默当成“开放访问”。effective token 为空始终意味着“认证不可用”，不是“无需认证”。
 
 ## 12. 常见问题
 
 ### `rdr: cannot read config ~/.config/rdr/access.json`
 
-客户端默认读取：
+这是 client 本地没有可用 token/config。客户端默认读取：
 
 ```text
 ~/.config/rdr/access.json
@@ -714,13 +745,19 @@ export RDR_ACCESS_CONFIG=/path/to/access.json
 4. 开发环境到目标端口的网络是否允许。
 5. access watcher 是否异常退出并被 supervisor 重启。
 
+### server token not configured
+
+Server 已启动并监听，但当前 effective token 集为空。配置 `/etc/rdr/access.json`（watcher 会自动发现），或者带 `RDR_TOKEN` / `--token` 重启 server。
+
 ### invalid token
 
-检查当前客户端使用的第一个 token 是否出现在：
+Server 已经配置至少一个 token，但当前 client token 不在：
 
 ```text
-local.tokens UNION global.tokens
+local.tokens UNION global.tokens UNION static env token
 ```
+
+这与 `server token not configured` 是不同错误。
 
 ### 能执行 shell，但看不到主服务 PID / cgroup / core
 
