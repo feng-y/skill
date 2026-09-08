@@ -24,7 +24,8 @@ The current protocol provides:
 - one-shot shell execution with stdout/stderr streaming, timeout, and cancellation
 - interactive PTY with input/output, resize, and signals
 - runtime-owned stateful terminals that survive transport disconnect and can be reattached
-- bounded replay of output produced while a terminal is detached
+- configurable simultaneous attachments per stateful terminal, default `2`
+- bounded replay of output produced while a terminal has no active attachments
 - file upload/download with integrity verification and atomic commit
 - safe resumable download using range requests and prefix verification
 - runtime identity
@@ -54,19 +55,15 @@ top / perf report
 other interactive tools
 ```
 
-For stateful work, the terminal process belongs to the **RDR runtime**, not to the TCP connection. A connection only attaches to that terminal.
+For stateful work, the terminal process belongs to the **RDR runtime**, not to the TCP connection. Connections attach to that terminal.
 
 ```text
-Agent connection A
-      |
-      v
-RDR terminal: debug-1 ----> gdb / shell / REPL
-      ^
-      |
-Agent connection B       (after reconnect)
+Agent connection A ----\
+                       > RDR terminal: debug-1 ----> gdb / shell / REPL
+Human connection B ----/
 ```
 
-A transport disconnect detaches the terminal but does not terminate its process. `terminal.close`, remote process exit, token revocation, or RDR server shutdown terminates/cleans the runtime state.
+A transport disconnect detaches only that connection and does not terminate the terminal process. `terminal.close`, remote process exit, token revocation, or RDR server shutdown terminates/cleans the runtime state.
 
 ## Build
 
@@ -112,6 +109,20 @@ server token not configured
 
 until an effective token is configured.
 
+Stateful terminals allow **2 simultaneous attachments by default**. Configure the server-wide limit with:
+
+```bash
+RDR_TERMINAL_MAX_ATTACHMENTS=1 rdr server start --token <token>
+```
+
+or, for a foreground server:
+
+```bash
+rdr-server --host 0.0.0.0 --port 19090 --terminal-max-attachments 4
+```
+
+Use `1` when exclusive terminal control is required. The limit is server-wide and applies to every newly created terminal.
+
 For hosts already managed by `systemd`, `supervisor`, or a container runtime, run the foreground server directly:
 
 ```bash
@@ -154,9 +165,11 @@ rdr connect HOST:19090 --attach core-debug
 
 The same PTY/process continues; GDB thread/frame state, shell variables, REPL state, and similar process-local state remain intact.
 
-While detached, RDR keeps a bounded **4 MiB** output replay buffer per terminal. Reattach replays the retained output before continuing with live output. If more output was produced than fits in the buffer, the client exposes `replay_truncated=True` and the CLI prints a warning.
+By default, up to **2** connections may be attached to the same terminal. Live terminal output is broadcast to all attached connections. Input from every attachment is serialized into the same PTY, so Agent + human collaboration works naturally; configure the limit to `1` when concurrent control is undesirable.
 
-Only one connection may actively attach a terminal at a time. V1 uses the server token set as the trust boundary; there is no per-terminal ACL.
+When the terminal has **zero active attachments**, RDR keeps a bounded **4 MiB** output replay buffer. The first returning attachment receives that retained output before live output continues. If more output was produced than fits in the buffer, the client exposes `replay_truncated=True` and the CLI prints a warning. If another attachment remained active throughout the disconnect, the terminal was never detached and no catch-up replay is retained for the returning viewer.
+
+V1 uses the server token set as the trust boundary; there is no per-terminal ACL.
 
 Programmatic use:
 
@@ -175,7 +188,7 @@ terminal = await client.attach_terminal("core-debug")
 await terminal.write(b"thread 17\n")
 ```
 
-`terminal.close()` is different from detach: close terminates the remote PTY/process.
+`terminal.close()` is different from detach: close terminates the remote PTY/process for every attachment.
 
 ## Token model
 
@@ -276,6 +289,8 @@ rdr connect --attach core-debug
   -> same GDB process and state
 ```
 
+A second client may attach to `core-debug` at the same time under the default limit, for example to let a human observe or intervene while an Agent drives GDB.
+
 ## Deployment requirement
 
 RDR must see the runtime it is expected to diagnose. Depending on the workload, this can require visibility into:
@@ -295,6 +310,7 @@ RDR should also remain in a failure domain that survives the failures it is expe
 Current baseline does not provide:
 
 - terminal/session persistence across an RDR server process restart
+- per-attachment replay/cursors while another attachment remains active
 - terminal discovery/listing or per-terminal ACLs
 - MCP adapter
 - server-side large-output spool/cursor beyond the bounded detached-terminal replay buffer
