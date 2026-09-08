@@ -753,7 +753,19 @@ local.tokens UNION global.tokens UNION static env token
 
 说明两者 failure domain 没有隔离。优先调整 process/cgroup/container 部署，使 RDR 保留最小独立生存空间。
 
-## 13. 当前已知限制
+## 13. 文件传输层保证
+
+传输是核心基础组件，以下保证内建在协议里：
+
+- **双向**：`get`（server → client）与 `put`（client → server）
+- **完整性**：双向流式计算 md5，`file.done` / `file.put.done` 携带 checksum，接收端**校验通过才原子落盘**（临时文件 + fsync + rename）；不一致即报错并丢弃临时文件
+- **长度核对**：`put.start` 声明 size，server 校验写入字节数；download 校验收到的总长与 server 报告的 file size 一致
+- **分片与续传**：`file.get` 支持 `offset`（range 原语）；client 下载自动断点续传 —— 中断后重试从已有的 `. <name>.rdr-part` 续传，每个分片独立 md5 校验；陈旧/超长的 part 文件自动重新开始
+- **错误清理**：连接断开、取消、校验失败都会清理临时文件，目标路径要么是完整旧文件、要么是完整新文件，不会出现半截文件
+
+已知取舍：续传的分片校验不重算整个文件的 md5（避免服务端全文件重读）；需要整文件强校验时删除 part 文件重新完整下载。
+
+## 14. 当前已知限制
 
 当前基线尚未实现：
 

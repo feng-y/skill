@@ -118,8 +118,14 @@ class ClientConnection:
                     {"type": "file.error", "request_id": request_id, "error": "path required"}
                 )
                 return
+            offset = header.get("offset", 0)
             task = asyncio.create_task(
-                send_file(self.sender, request_id=request_id or uuid.uuid4().hex, path=path)
+                send_file(
+                    self.sender,
+                    request_id=request_id or uuid.uuid4().hex,
+                    path=path,
+                    offset=offset if isinstance(offset, int) and offset > 0 else 0,
+                )
             )
             self._track(task)
             return
@@ -310,7 +316,12 @@ class ClientConnection:
                 {"type": "file.error", "request_id": request_id, "error": "duplicate upload"}
             )
             return
-        handle = await start_upload(self.sender, request_id=request_id, path=path)
+        handle = await start_upload(
+            self.sender,
+            request_id=request_id,
+            path=path,
+            expected_size=header.get("size"),
+        )
         if handle is not None:
             self.uploads[request_id] = handle
 
@@ -332,7 +343,9 @@ class ClientConnection:
                 {"type": "file.error", "request_id": request_id, "error": "unknown upload"}
             )
             return
-        await finish_upload(self.sender, handle)
+        await finish_upload(
+            self.sender, handle, expected_checksum=header.get("checksum")
+        )
 
     def _file_put_cancel(self, header: dict[str, Any]) -> None:
         request_id = str(header.get("request_id") or "")
