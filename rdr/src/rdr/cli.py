@@ -67,10 +67,20 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command", required=True)
 
     connect_parser = sub.add_parser(
-        "connect", help="open an interactive remote PTY session"
+        "connect", help="open or reattach an interactive remote PTY session"
     )
     connect_parser.add_argument("endpoint", type=parse_endpoint, metavar="HOST:PORT")
     connect_parser.add_argument("--cwd")
+    terminal_group = connect_parser.add_mutually_exclusive_group()
+    terminal_group.add_argument(
+        "--terminal-id",
+        help="stable id for a newly opened terminal; generated when omitted",
+    )
+    terminal_group.add_argument(
+        "--attach",
+        metavar="TERMINAL_ID",
+        help="reattach an existing stateful terminal owned by the remote runtime",
+    )
     _add_access_config(connect_parser)
 
     exec_parser = sub.add_parser("exec", help="run one remote shell command")
@@ -193,11 +203,24 @@ async def _run_connect(client: RDRClient, args: argparse.Namespace) -> int:
     fd = sys.stdin.fileno()
     old_attrs = termios.tcgetattr(fd)
     size = shutil.get_terminal_size((80, 24))
-    terminal = await client.open_terminal(
-        cwd=args.cwd,
-        rows=size.lines,
-        cols=size.columns,
-    )
+    if args.attach:
+        terminal = await client.attach_terminal(args.attach)
+        await terminal.resize(size.lines, size.columns)
+    else:
+        terminal = await client.open_terminal(
+            cwd=args.cwd,
+            rows=size.lines,
+            cols=size.columns,
+            terminal_id=args.terminal_id,
+        )
+
+    print(f"rdr terminal id: {terminal.terminal_id}", file=sys.stderr, flush=True)
+    if terminal.replay_truncated:
+        print(
+            "rdr: detached terminal output exceeded replay buffer; oldest output was dropped",
+            file=sys.stderr,
+            flush=True,
+        )
 
     loop = asyncio.get_running_loop()
     input_queue: asyncio.Queue[bytes | None] = asyncio.Queue()
@@ -249,7 +272,9 @@ async def _run_connect(client: RDRClient, args: argparse.Namespace) -> int:
         await asyncio.gather(*pending, return_exceptions=True)
         if output_task in done:
             return output_task.result()
-        await terminal.close()
+        # Local TTY disappeared while the remote process is still alive.
+        # Preserve the stateful session instead of terminating it.
+        await terminal.detach()
         return 0
     finally:
         loop.remove_reader(fd)
