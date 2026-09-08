@@ -1,12 +1,14 @@
 # RDR 部署与使用手册
 
-本文描述 RDR（Remote Diagnostic Runtime）的当前部署和使用方式。RDR 远端不运行 AI；Claude Code、Codex 或工程师在开发环境做分析，RDR 只提供接近本地 Terminal 的远端运行环境。
+本文描述 RDR（Remote Diagnostic Runtime）`0.6.x` 的部署、访问与运行边界。
 
-当前版本以 `rdr-server` + `rdr` CLI 为基线。MCP adapter 尚未实现。
+RDR 的定位是远端运行环境：Claude Code、Codex 或工程师留在开发环境做 reasoning、代码阅读和决策，RDR Server 只把真实 Runtime Host 以接近本地 Terminal 的方式暴露出来。RDR 不运行 AI，也不提供 `perf` / `gdb` / OOM 等专用诊断 API。
 
-## 1. 部署目标
+最短安装与验证路径见 [`GUIDE.md`](GUIDE.md)；能力总览见 [`README.md`](README.md)。
 
-推荐部署形态：
+## 1. 部署模型
+
+推荐形态：
 
 ```text
 Development Environment
@@ -24,186 +26,112 @@ independent process         independent process
      |                           |
      +---- same runtime visibility ----+
      |
-     +-- shell / PTY / file
+     +-- exec / stateful PTY / file
      +-- logs / proc / cgroup
      +-- perf / gdb / core
      +-- localhost metrics when network namespace is shared
 ```
 
-RDR 可以和主服务一起构建、发布和升级，但必须是独立进程。主服务 crash、deadlock、SIGKILL 或 HTTP 不可用时，RDR 应继续工作。
+RDR 可以和主服务一起构建、发布和升级，但应保持独立进程与可诊断的 failure domain。主服务 crash、deadlock、SIGKILL 或 HTTP 不可用时，RDR 应继续工作。
 
-如果 OOM 是主要诊断场景，不要让 RDR 和主服务共享一个会整体被 OOM kill 的 failure domain。实际部署需要验证主服务内存失控后 RDR 是否仍然存活。
+如果 OOM 是主要诊断场景，不要让 RDR 和主服务共享一个会整体被 OOM kill 的 failure domain。部署验收应包含“主服务异常后 RDR 仍可连接”。
 
-## 2. 运行要求
+## 2. Runtime 要求
 
-RDR Server 和开发侧 Client 都需要 Python 3.10+。
-
-推荐 Server 使用独立 venv：
+Server 与 Client 都需要 Python 3.10+。推荐安装同一个 wheel：
 
 ```bash
 python3 -m venv /opt/rdr/venv
-/opt/rdr/venv/bin/python -m pip install /path/to/skill/rdr
+/opt/rdr/venv/bin/python -m pip install /path/to/rdr_runtime-0.6.0-py3-none-any.whl
 ```
 
-安装后：
+RDR 核心 runtime 无第三方依赖，但目标环境需要自行提供实际使用的系统工具，例如：
 
 ```text
-/opt/rdr/venv/bin/rdr-server
-/opt/rdr/venv/bin/rdr
+perf
+gdb
+pidstat
+rg
+journalctl
 ```
 
-核心 runtime 无第三方依赖。
-
-RDR 自己不会安装 `perf`、`gdb`、`pidstat` 等诊断工具。需要使用什么工具，目标运行环境就必须已经具备什么工具。
-
-为了达到 Local Parity，RDR 进程必须拥有实际诊断所需的 runtime visibility：
+为了达到 Local Parity，RDR 进程必须拥有真实诊断所需的 visibility 与权限：
 
 - 目标服务 PID / thread 可见
 - `/proc` 可见
 - cgroup 可见
 - 日志目录可见
-- core dump、binary 和 symbols 可见
+- core dump、binary、symbols 可见
 - `perf` / ptrace / kernel log 所需权限
-- 查询 `localhost` metrics 时，与目标服务处于可访问的 network namespace
+- 查询 localhost metrics 时能访问对应 network namespace
 
-MVP 内部环境可以先给 RDR 与人工登录调试相同的权限，再根据真实使用收紧。
+RDR 不绕过 Linux permission、namespace、ptrace 或 perf policy。
 
 ## 3. 网络
 
-RDR 默认监听：
+默认监听：
 
 ```text
 0.0.0.0:19090
 ```
 
-开发环境必须能访问这个 TCP 端口。SSH 可以保持关闭。
+开发环境需要能访问该 TCP 端口，SSH 可以不开。
 
-当前 RDR Protocol 不自带 TLS。第一版只应运行在已有可信内部网络边界内，不要直接暴露到公网或不可信网络。
+当前 RDR Protocol 不自带 TLS。应运行在已有可信内部网络边界内，不要直接暴露到公网或不可信网络。
 
-端口可以修改：
+## 4. Access / Token
 
-```bash
-/opt/rdr/venv/bin/rdr-server --host 0.0.0.0 --port 19090
-```
-
-## 4. Access Config
-
-RDR 使用同一个 access-config schema 表达一件事：
-
-- 哪些 token 可以访问
-
-Schema：
+Access config 只表达允许访问的 token：
 
 ```json
 {
-  "tokens": [
-    "token-a",
-    "token-b"
-  ]
+  "tokens": ["token-a", "token-b"]
 }
 ```
 
-关闭 RDR 用 `rdr server stop`；临时拒绝所有认证用空的 `tokens: []`。历史文件里可能还有 `"enabled"` 键，读取时会被忽略，不再有任何效果。
+历史配置中的 `enabled` 没有任何 runtime 语义，会被忽略。
 
-仓库模板：
+默认配置来源：
 
 ```text
-rdr/config/access.example.json
+local:  /etc/rdr/access.json
+global: /data/bucket/rdr/access.json
+static: RDR_TOKEN at process startup
 ```
 
-真实 token 不进入 repo。
-
-### 4.1 单机配置
-
-默认路径：
-
-```text
-/etc/rdr/access.json
-```
-
-示例：
-
-```json
-{
-  "tokens": [
-    "host-token"
-  ]
-}
-```
-
-建议：
-
-```bash
-chmod 600 /etc/rdr/access.json
-```
-
-单机关闭 RDR：
-
-```bash
-rdr server stop
-```
-
-临时拒绝所有认证（进程保留，listener 保留）：
-
-```json
-{
-  "tokens": []
-}
-```
-
-### 4.2 全域配置
-
-默认路径：
-
-```text
-/data/bucket/rdr/access.json
-```
-
-这是共享 bucket 已经挂载到本机文件系统后的普通文件。RDR 不访问 S3 API，也没有 S3 access key / secret key / boto3 依赖。
-
-示例：
-
-```json
-{
-  "tokens": [
-    "global-token"
-  ]
-}
-```
-
-全域关闭：把共享文件的 `tokens` 置空，所有读取它的 RDR 实例会断开 active sessions 并拒绝认证（进程仍存活，彻底关闭需逐机 `rdr server stop`）。
-
-### 4.3 单机 + 全域组合语义
-
-两份配置使用同一 schema。
+Server effective tokens 是三个来源的并集：
 
 ```text
 effective tokens
-= local.tokens UNION global.tokens UNION static env token
+= local.tokens UNION global.tokens UNION static RDR_TOKEN
 ```
 
 因此：
 
-- 全域 token 可以访问所有读取该全域文件的机器。
-- 单机 token 可以补充某台机器独有的访问能力。
-- 单机文件启动时可以不存在；此时 server 仍可启动和监听，只是没有 local policy/token。
-- 单机文件如果存在但配置非法，RDR 启动失败，不静默忽略。
-- 全域文件启动时可以不存在。
-- 如果全域文件存在但配置非法，RDR 启动失败，不静默绕过全域配置。
-- 单机或全域文件一旦成功读取过，后续文件/mount/读取临时失败时保持对应 last-known policy。
-- effective token 为空不等于无认证：listener 可以存在，但所有认证都失败，并明确返回 `server token not configured`。
+- 清空某一个文件只撤销该来源，不会覆盖其他来源。
+- 要拒绝所有认证，必须保证所有 token 来源都为空。
+- local/global 文件支持 watcher 更新；默认每 30 秒检查一次。
+- 启动时注入的 `RDR_TOKEN` 是静态来源，修改需要重启进程。
+- 文件不存在可以启动；文件存在但非法则启动失败，不静默绕过。
+- effective token 为空时 Server 仍可启动并监听，但认证返回 `server token not configured`。
 
-默认每 30 秒检查一次：
+Client token 解析：
 
-```bash
---access-poll-seconds 30
+```text
+RDR_TOKEN > client access config 的第一个 token
 ```
 
-需要更快生效可以缩短，但它不是实时配置协议。
+认证失败区分：
 
-## 5. 启动 RDR Server
+- client 本地无可用 token/config：本地配置错误，连接前失败
+- server effective token 为空：`server token not configured`
+- server 已有 token 但不匹配：`invalid token`
 
-推荐命令：
+Token revoke 会关闭当前 authenticated connections，并终止 runtime-owned stateful terminals，避免已撤销 credential 留下长期后台 session。
+
+## 5. 启动 Server
+
+### 5.1 前台 / supervisor
 
 ```bash
 /opt/rdr/venv/bin/rdr-server \
@@ -211,84 +139,29 @@ effective tokens
   --port 19090 \
   --access-config /etc/rdr/access.json \
   --global-access-config /data/bucket/rdr/access.json \
-  --access-poll-seconds 30 \
-  -v
+  --access-poll-seconds 30
 ```
 
-两个配置路径已有默认值，因此也可以：
+生产长期运行建议交给 systemd、supervisor 或容器 runtime。
 
-```bash
-/opt/rdr/venv/bin/rdr-server --host 0.0.0.0 --port 19090 -v
-```
-
-也可以通过环境变量覆盖路径：
-
-```bash
-export RDR_ACCESS_CONFIG=/etc/rdr/access.json
-export RDR_GLOBAL_ACCESS_CONFIG=/data/bucket/rdr/access.json
-/opt/rdr/venv/bin/rdr-server --port 19090
-```
-
-没有 access.json 时，可以用 `RDR_TOKEN` 直接提供 token（见 4.4）：
-
-```bash
-RDR_TOKEN=<token> /opt/rdr/venv/bin/rdr-server --port 19090
-```
-
-也可以完全不提供 token：server 进程和 listener 正常启动，但认证不可用，直到 watcher 读取到有效 token 或进程带 token 重启：
-
-```bash
-/opt/rdr/venv/bin/rdr-server --port 19090
-# client auth -> server token not configured
-```
-
-已有配置文件如果非法仍然是启动错误；“允许无 token 启动”只针对配置文件不存在或有效配置的 effective token 为空，不会绕过非法配置。
-
-### 5.1 使用 supervisor 常驻
-
-RDR 自己不 daemonize。生产/线下长期运行应交给现有 supervisor、容器 runtime 或 systemd。
-
-关键要求只有三个：
+关键要求：
 
 1. RDR 与主服务是独立进程。
-2. RDR 异常退出后由 supervisor 重启。
-3. 主服务退出或重启时，不要顺带杀掉 RDR。
+2. RDR 异常退出后可由 supervisor 重启。
+3. 主服务退出或重启时不要顺带杀掉 RDR。
+4. 隔离不能破坏 RDR 对目标 PID、cgroup、日志、binary/core 的 visibility。
 
-如果使用 systemd，可以参考：
+### 5.2 Managed Server
 
-```ini
-[Unit]
-Description=RDR Remote Diagnostic Runtime
-After=network.target
-
-[Service]
-Type=simple
-ExecStart=/opt/rdr/venv/bin/rdr-server \
-  --host 0.0.0.0 \
-  --port 19090 \
-  --access-config /etc/rdr/access.json \
-  --global-access-config /data/bucket/rdr/access.json \
-  --access-poll-seconds 30
-Restart=always
-RestartSec=2
-
-[Install]
-WantedBy=multi-user.target
-```
-
-实际用户、权限、cgroup 和 namespace 按目标服务环境配置。不要为了形式上的隔离导致 RDR 看不到真实 PID、cgroup、日志或 core。
-
-### 5.2 托管启动（无 supervisor 的环境）
-
-`rdr server start` 提供托管后台启动：detached 进程、pid file、日志文件、listener 就绪自检。安装与启动因此分离 —— pip 装完后，启动/状态/停止都是独立命令：
+无 supervisor 的环境可使用：
 
 ```bash
-rdr server start    # token 可选；优先级 --token > RDR_TOKEN > access config
-rdr server status   # 进程 / listener / auth；只有 auth=ok 时 exit 0
+rdr server start
+rdr server status
 rdr server stop
 ```
 
-没有 token 时 `start` 仍成功，`status` 会报告：
+`start` 负责后台进程、pid file、log file 和 listener readiness。无 token 时仍会启动；`status` 会报告：
 
 ```text
 process: ... alive
@@ -296,247 +169,172 @@ listener 127.0.0.1:19090: open
 auth: server token not configured
 ```
 
-并返回 non-zero。这样区分“server 已经启动”与“server 已可认证使用”。
+并返回 non-zero，以区分“进程已启动”和“已可认证使用”。
 
-默认 pid file `/run/rdr/server.pid`（不可写时回退 `~/.rdr/`），日志 `/var/log/rdr/server.log`（同样回退），可用 `--pid-file` / `--log-file` 覆盖。`rdr-server` 前台进程语义不变；生产长期运行仍建议 supervisor / systemd，托管启动适合无 init 体系的容器或临时环境。
+### 5.3 Stateful Terminal attachment 数
 
-## 6. 开发侧 Client
+同一个 stateful terminal 默认允许 **2** 个 active attachment，适合 Agent + human 同时观察或操作。
 
-开发环境安装同一个 package：
+Server-wide 配置：
 
 ```bash
-python3 -m venv ~/.local/share/rdr/venv
-~/.local/share/rdr/venv/bin/python -m pip install /path/to/skill/rdr
+RDR_TERMINAL_MAX_ATTACHMENTS=1 rdr server start --token <token>
 ```
 
-可以把下面路径加入 `PATH`：
+前台 server 可显式指定：
+
+```bash
+rdr-server --port 19090 --terminal-max-attachments 4
+```
+
+需要严格独占 terminal 时设为 `1`。
+
+## 6. Client 与 Agent 发现路径
+
+开发环境安装同一个 wheel，并把 `rdr` 放入 PATH。
+
+CLI 的 Agent-facing discovery 由 help 自己承担：
+
+```bash
+rdr --help
+rdr connect --help
+```
+
+顶层区分两种 execution shape：
 
 ```text
-~/.local/share/rdr/venv/bin
+stateless: rdr exec / identity / get / put
+stateful:  rdr connect
 ```
 
-客户端默认读取：
+一次性远端命令优先：
+
+```bash
+rdr exec HOST:19090 'command'
+```
+
+需要远端进程跨多轮 interaction 或 transport reconnect 保留 state 时，使用 stateful terminal：
+
+```bash
+rdr connect HOST:19090 --terminal-id debug
+```
+
+后续可通过：
+
+```bash
+rdr connect HOST:19090 --attach debug
+```
+
+重新 attach 同一个远端 PTY/process。
+
+无需为 GDB、perf 或其他具体程序建立 RDR 专用 Skill/API；Agent 可以在需要时从 CLI help 发现 terminal 能力，再直接使用原生 Linux 工具。
+
+## 7. Stateful Terminal
+
+RDR `0.6.x` 的核心语义是：
+
+> terminal/process lifetime belongs to the RDR runtime; TCP connections attach to it.
+
+也就是：
 
 ```text
-~/.config/rdr/access.json
+Agent connection A ----\
+                       > terminal debug --> gdb / shell / REPL
+Human connection B ----/
 ```
 
-例如：
+连接断开只 detach 当前 attachment，不 terminate 远端 process。
 
-```json
-{
-  "tokens": [
-    "global-token"
-  ]
-}
-```
-
-建议：
+### 7.1 创建 / attach
 
 ```bash
-chmod 600 ~/.config/rdr/access.json
+rdr connect HOST:19090 --terminal-id core-debug
+rdr connect HOST:19090 --attach core-debug
 ```
 
-也可以通过环境变量覆盖：
+远端 process state 由原进程保存，例如 GDB 当前 thread/frame、shell variable、Python REPL state。
 
-```bash
-export RDR_ACCESS_CONFIG=/path/to/access.json
-```
+### 7.2 多 attachment
 
-或者在某一次命令上覆盖：
+默认最多 2 个 connection 同时 attach：
 
-```bash
-rdr connect HOST:19090 --access-config /path/to/access.json
-```
+- output 广播给所有 active attachment
+- 每个 attachment 都可输入
+- 输入按 frame 串行写入同一个 PTY
+- `terminal.close()` 是全局结束，terminate terminal/process，对所有 attachment 生效
+- 需要独占控制时把 server attachment limit 配成 1
 
-客户端使用 token list 中的第一个 token 发起认证。设置了 `RDR_TOKEN` 时优先使用它，可以完全不需要 access.json：
+V1 没有 per-terminal ACL；server token 集合是当前信任边界。
 
-```bash
-RDR_TOKEN=<token> rdr identity HOST:19090
-```
+### 7.3 Detach / reconnect / replay
 
-认证失败有三种明确语义：
+当 attachment 数变成 0，terminal 进入 detached 状态，但 process 继续运行。
 
-- client 本地没有可用 token：CLI 在连接前直接报告本地 token/config 错误。
-- server effective token 为空：握手返回 `server token not configured`。
-- server 已有 token，但 client token 不匹配：握手返回 `invalid token`。
+此时 RDR 为该 terminal 保留最多 **4 MiB** output。第一个重新 attach 的 connection 会先收到 retained output，再接收 live output。
 
-### 6.1 CLI 形态
+如果 detached output 超过 4 MiB，最旧内容被丢弃，client 会暴露 replay truncated 状态。
 
-主入口接近 SSH：
+如果始终还有另一个 attachment 在线，则 terminal 从未进入 0-attachment 状态；V1 不为离线 viewer 保存 per-attachment catch-up cursor。
 
-```bash
-rdr connect HOST:PORT
-```
-
-其他命令：
-
-```bash
-rdr exec HOST:PORT 'command'
-rdr identity HOST:PORT
-rdr get HOST:PORT:/remote/path LOCAL_PATH
-rdr put LOCAL_PATH HOST:PORT:/remote/path
-```
-
-IPv6 用 bracket 形式：
-
-```bash
-rdr connect '[::1]:19090'
-rdr get '[::1]:19090:/tmp/file' ./file
-```
-
-## 7. 认证与长会话
-
-RDR 的认证单位是 **transport connection**，不是每条命令。
+### 7.4 生命周期
 
 ```text
-TCP connect
-    ↓
-auth(token)       # 一次
-    ↓
-ready
-    ↓
-exec / PTY / file / ...
+transport/client disconnect  -> detach current attachment, process survives
+terminal.detach()             -> detach current attachment, process survives
+terminal.close()              -> terminate terminal/process
+remote process exits          -> terminal ends
+token revoke                  -> terminate active/detached terminal
+rdr server stop/shutdown      -> terminate all terminals
+RDR server process restart    -> V1 cannot restore prior terminals
 ```
 
-如果 server 尚未配置 token，`auth(token)` 会得到 `server token not configured`；如果 server 已配置 token 但值不匹配，则得到 `invalid token`。两者不会合并成同一个错误。
+因此当前支持 **transport reconnect**，但不支持 **跨 RDR server process restart 的 session persistence**。
 
-因此一个稳定的长 `connect` 会话只认证一次：
+## 8. Stateless Operations
 
-```bash
-rdr connect HOST:19090
-```
-
-只要这个 TCP connection 不断，PTY 中运行 `top`、`gdb`、`perf`、shell command 都不会重复认证。
-
-如果连接断开并重建，新 connection 必须重新认证一次。CLI 会再次读取本地 access config，不需要人工重新输入 token。
-
-当前版本还没有 session reconnect，所以：
-
-```text
-TCP connection 断开
-→ PTY/GDB 现场不保证继续存在
-```
-
-后续即使实现 session reconnect，也必须先认证新的 transport connection，再 attach 原 session。
-
-`rdr exec`、`identity`、`get`、`put` 都是独立 CLI invocation，因此每个 invocation 建立一次 connection、认证一次、完成后关闭。
-
-## 8. 启动后 Smoke Test
-
-### 8.1 Identity
+以下调用仍是 connection-scoped、一次性语义：
 
 ```bash
 rdr identity HOST:19090
+rdr exec HOST:19090 'uname -a'
+rdr get HOST:19090:/remote/path ./local
+rdr put ./local HOST:19090:/remote/path
 ```
 
-### 8.2 One-shot exec
+`exec` 的 transport 断开会结束该 connection 所拥有的 command。需要长生命周期、需要跨 reconnect 保持 process state 的工作，应放入 stateful terminal，而不是为具体工具增加专用 API。
 
-```bash
-rdr exec HOST:19090 'uname -a; id; pwd; ps -ef | head'
-```
+## 9. Perf
 
-### 8.3 Interactive PTY
+Perf 是 RDR 的通用 Linux-tool 场景。
 
-```bash
-rdr connect HOST:19090
-```
-
-进入以后至少验证：
-
-```bash
-tty
-ps -ef
-top
-python3
-```
-
-如果目标环境有 `gdb` / `perf`，继续验证：
-
-```bash
-gdb --version
-perf --version
-```
-
-### 8.4 File transfer
-
-```bash
-rdr get HOST:19090:/etc/hostname ./remote-hostname
-```
-
-上传临时诊断脚本：
-
-```bash
-rdr put ./inspect.py HOST:19090:/tmp/inspect.py
-```
-
-## 9. 日常使用
-
-### 9.1 大日志
-
-不要下载整份日志。让命令靠近数据，只把 Evidence 返回开发环境。
-
-```bash
-rdr exec HOST:19090 "rg 'ERROR|timeout' /path/server.log | tail -200"
-```
-
-找到 request / line 后再取上下文：
-
-```bash
-rdr exec HOST:19090 "sed -n '182900,183050p' /path/server.log"
-```
-
-### 9.2 Metrics
-
-如果 metrics 在目标运行环境 localhost：
-
-```bash
-rdr exec HOST:19090 "curl -s localhost:8080/metrics | grep request_latency"
-```
-
-如果这里访问不到而主服务本身可以访问，优先检查 RDR 与主服务是否处于不同 network namespace。
-
-### 9.3 Perf
-
-先做低成本观察：
+一次性采样优先使用 stateless exec：
 
 ```bash
 rdr exec HOST:19090 "pidstat -tid -p PID 1 5"
-```
-
-然后：
-
-```bash
 rdr exec HOST:19090 "perf stat -p PID -- sleep 10"
-```
-
-采样数据尽量留在远端：
-
-```bash
 rdr exec HOST:19090 \
   "perf record -F 99 -g -p PID -o /tmp/rdr-perf.data -- sleep 20"
-
 rdr exec HOST:19090 \
   "perf report -i /tmp/rdr-perf.data --stdio --percent-limit 0.5"
 ```
 
-只有本地确实需要 `perf.data` 时再下载：
+需要持续交互的 `perf top` / interactive `perf report` 可以直接运行在 stateful terminal 中。
+
+大文件尽量留在远端，只在确有需要时下载：
 
 ```bash
 rdr get HOST:19090:/tmp/rdr-perf.data ./rdr-perf.data
 ```
 
-### 9.4 Core Dump / GDB
+## 10. Core Dump / GDB
 
-Core 很大时优先留在远端。
-
-打开长期交互连接：
+Core 很大时优先留在远端。复杂交互可使用稳定 terminal：
 
 ```bash
-rdr connect HOST:19090
+rdr connect HOST:19090 --terminal-id core-debug
 ```
 
-然后直接使用正常 GDB 工作流：
+然后正常运行：
 
 ```bash
 gdb /path/server /path/core
@@ -547,232 +345,140 @@ gdb /path/server /path/core
 ```text
 (gdb) info threads
 (gdb) thread 17
-(gdb) bt
+(gdb) bt full
 (gdb) frame 8
 (gdb) info locals
 (gdb) p variable
 ```
 
-Claude Code / Codex 可以同时读取开发机 repo 源码，再根据远端 GDB Evidence 继续交互。
-
-当前版本尚未实现 session reconnect。RDR connection 中断时，交互 GDB session 不保证保留；长时间 core 分析需要注意这一限制。
-
-### 9.5 OOM / cgroup
-
-主服务异常后，RDR 应仍然可连接。
+如果 transport 中断，新 connection 重新认证后：
 
 ```bash
-rdr connect HOST:19090
+rdr connect HOST:19090 --attach core-debug
 ```
 
-常见调查：
+会回到同一个 GDB process/PTY，继续之前的 state。
+
+Live `gdb -p PID` 会 ptrace-stop 目标进程。这是 GDB/Linux 行为，不是 RDR 可以消除的副作用；生产进程 attach 应按实际冻结窗口和变更流程执行。
+
+## 11. OOM / cgroup / logs
+
+这些也保持通用 Linux workflow：
 
 ```bash
-cat /sys/fs/cgroup/.../memory.events
-cat /sys/fs/cgroup/.../memory.stat
-cat /proc/PID/status
-cat /proc/PID/smaps_rollup
-journalctl -k
-dmesg | tail -200
+rdr exec HOST:19090 "rg 'ERROR|timeout' /path/server.log | tail -200"
+rdr exec HOST:19090 "cat /proc/PID/smaps_rollup"
+rdr exec HOST:19090 "cat /sys/fs/cgroup/.../memory.events"
+rdr exec HOST:19090 "journalctl -k | tail -200"
 ```
 
-如果主服务 OOM 后 RDR 也消失，优先修部署 failure domain，而不是增加 RDR API。
+如果主服务 OOM 后 RDR 也消失，应修复部署 failure domain，而不是增加 RDR API。
 
-## 10. Access 运维
+## 12. File Transfer
 
-### 10.1 全域新增 token
+### 12.1 Download
 
-先保留旧 token，同时加入新 token：
+```bash
+rdr get HOST:19090:/remote/file ./file
+```
+
+下载使用稳定 `.<name>.rdr-part`：
+
+- 中断后重试会尝试从现有 part 继续
+- resume 前 server hash 远端 `[0:offset]` prefix，client 与本地 part prefix 比较
+- prefix 不一致、part 过长或旧 server 缺少安全 range metadata 时自动从 0 重下
+- 新传输 range 独立计算 MD5
+- 最终核对 assembled size
+- 成功后 `fsync + atomic rename`
+- 失败/中断时保留 `.rdr-part`，目标文件不会被半截内容覆盖
+
+Resume 节省的是网络传输量；为了确认已有 part 与当前远端文件一致，server 仍需要读取/hash remote prefix。
+
+### 12.2 Upload
+
+```bash
+rdr put ./local-file HOST:19090:/remote/file
+```
+
+Client 发送 size + full MD5；Server 写临时文件、校验 size/checksum、`fsync`，成功后才 atomic replace 目标路径。
+
+Upload 当前不支持 resume，失败后重新执行完整 `rdr put`。
+
+## 13. Access 运维
+
+Token 轮换推荐先增加新 token，再切 client，最后删除旧 token：
 
 ```json
 {
-  "tokens": [
-    "old-token",
-    "new-token"
-  ]
+  "tokens": ["old-token", "new-token"]
 }
 ```
 
-等待一个 poll 周期后，将开发侧 `~/.config/rdr/access.json` 的第一个 token 切换为新 token。
+删除一个实际生效的 token 会关闭 authenticated connections，并清理 active/detached stateful terminals。这是访问边界的一部分。
 
-验证：
+如果要拒绝所有认证，请确认：
+
+```text
+local.tokens = []
+global.tokens = []
+no startup RDR_TOKEN
+```
+
+单独把某一个来源改成 `tokens: []` 不足以覆盖其他来源。
+
+## 14. Smoke Test
+
+首次部署至少验证：
 
 ```bash
 rdr identity HOST:19090
+rdr exec HOST:19090 'uname -a; id; pwd'
+rdr get HOST:19090:/etc/hostname ./remote-hostname
+rdr put ./inspect.py HOST:19090:/tmp/inspect.py
+rdr connect HOST:19090
 ```
 
-最后从 server access config 删除旧 token。
-
-删除 token 会关闭当前 active sessions，客户端需要重新连接并认证。这是有意行为，避免被撤销的 credential 保持长期 session。
-
-### 10.2 单机临时 token
-
-只修改：
-
-```text
-/etc/rdr/access.json
-```
-
-加入一个仅该机器认可的 token，不修改全域文件。
-
-### 10.3 单机关闭
+Stateful 能力需要验证时：
 
 ```bash
-rdr server stop
+rdr connect HOST:19090 --terminal-id smoke-session
+# 在远端设置可观察 state，然后断开 transport
+rdr connect HOST:19090 --attach smoke-session
 ```
 
-只临时拒绝认证（保留进程与 listener）时，把 `/etc/rdr/access.json` 的 `tokens` 置空即可，一个 poll 周期内 active sessions 会结束。
-
-### 10.4 全域关闭
-
-向共享文件写入：
-
-```json
-{
-  "tokens": []
-}
-```
-
-路径：
-
-```text
-/data/bucket/rdr/access.json
-```
-
-所有读取到这份配置的 RDR 实例会断开 active sessions 并拒绝认证。彻底关闭进程需逐机执行 `rdr server stop`。
-
-### 10.5 恢复
-
-将对应 scope 恢复为：
-
-```json
-{
-  "tokens": [
-    "valid-token"
-  ]
-}
-```
-
-一个 poll 周期内恢复认证；client 重建连接即可。
-
-### 4.4 环境变量 token
-
-`RDR_TOKEN` 是第三种 token 来源，适合 pip 安装后的直接启动：
+完整 package/test gate：
 
 ```bash
-pip install rdr-runtime
-RDR_TOKEN=<token> rdr-server --port 19090
+bash rdr/build.sh
 ```
 
-语义：
+## 15. 故障速查
 
-- server：`RDR_TOKEN` 作为额外 token 加入并集；local config 不存在也不阻止启动。
-- server：local/global/static token 全部为空时仍启动 listener，但认证返回 `server token not configured`。
-- client：`RDR_TOKEN` 优先于 access config 的第一个 token，适合临时验证：
-
-  ```bash
-  RDR_TOKEN=<token> rdr exec HOST:19090 'uname -a'
-  ```
-
-- `RDR_TOKEN` 与文件 token 一样只影响"谁能认证"；关闭 RDR 用 `rdr server stop`，临时拒绝所有认证把文件 `tokens` 置空。
-- local config 文件存在但非法时，即使设置了 `RDR_TOKEN`，启动仍然失败；“文件不存在”与“文件非法”是两种不同状态。
-- token 轮换（10.1）仍以文件为准；env token 不参与 poll 热更新，改动需重启进程。
-
-## 11. 配置失败语义
-
-| 场景 | 行为 |
+| 现象 | 先查 |
 |---|---|
-| local config 启动时不存在，且无其他 token | RDR 启动并监听；认证返回 `server token not configured`；managed `status` non-zero |
-| local config 启动时不存在，但设置了 `RDR_TOKEN` | 以 `RDR_TOKEN` 启动 |
-| local config 启动时存在但非法（即使设置了 `RDR_TOKEN`） | RDR 启动失败 |
-| global config 启动时不存在 | 按当前 local/static policy 启动；没有 token 也允许启动 |
-| global config 启动时存在但非法 | RDR 启动失败 |
-| local config 从未成功读过且不存在，后续创建有效文件 | watcher 读取并应用新 local policy/token |
-| local config 已成功读过，随后暂时不可读/非法 | 保持 last-known local policy |
-| global config 从未成功读过且不存在 | 继续使用当前 local/static policy |
-| global config 已成功读过，随后 bucket/mount 暂时不可读 | 保持 last-known global policy |
-| access policy apply 临时失败 | 保持旧 effective policy，下一个 poll 继续重试 |
-| access watcher 非预期退出 | RDR Server 退出，由 supervisor 重启 |
+| connection refused | server process / listener / 网络可达性 |
+| server token not configured | effective token 三个来源是否全部为空 |
+| invalid token | client 实际 token 是否在 server effective token 集合中 |
+| terminal attachment limit reached | 当前 attachment 数；必要时调 `RDR_TERMINAL_MAX_ATTACHMENTS` 后重启 |
+| unknown terminal | process 已退出、被 close、token revoke/server shutdown 清理，或 server 已重启 |
+| replay truncated | 0 attachment 期间 output 超过 4 MiB |
+| 看不到目标 PID/core/cgroup | namespace / mount / runtime visibility |
+| perf/gdb Permission denied | uid / capability / ptrace / perf policy |
+| 主服务 OOM 后 RDR 也消失 | failure domain 未隔离 |
+| get 从 0 开始 | prefix 不匹配、part 过长或 server 不支持安全 range |
+| put checksum/size mismatch | 临时文件不会 commit；修复后重试完整 upload |
 
-这个语义同时保证两点：部署可以先启动 RDR 再配置 credential；配置文件一旦存在或曾生效，非法/临时失败不会被静默当成“开放访问”。effective token 为空始终意味着“认证不可用”，不是“无需认证”。
+## 16. 当前边界
 
-## 12. 常见问题
+RDR `0.6.x` 当前不提供：
 
-### `rdr: cannot read config ~/.config/rdr/access.json`
-
-这是 client 本地没有可用 token/config。客户端默认读取：
-
-```text
-~/.config/rdr/access.json
-```
-
-创建这个文件，或者通过：
-
-```bash
-export RDR_ACCESS_CONFIG=/path/to/access.json
-```
-
-覆盖。
-
-### Connection refused
-
-依次检查：
-
-1. `rdr-server` process 是否存在（`rdr server status`）。
-2. RDR 是否在 `19090` listen。
-4. 开发环境到目标端口的网络是否允许。
-5. access watcher 是否异常退出并被 supervisor 重启。
-
-### server token not configured
-
-Server 已启动并监听，但当前 effective token 集为空。配置 `/etc/rdr/access.json`（watcher 会自动发现），或者带 `RDR_TOKEN` / `--token` 重启 server。
-
-### invalid token
-
-Server 已经配置至少一个 token，但当前 client token 不在：
-
-```text
-local.tokens UNION global.tokens UNION static env token
-```
-
-这与 `server token not configured` 是不同错误。
-
-### 能执行 shell，但看不到主服务 PID / cgroup / core
-
-这是 runtime visibility 问题，不是 RDR Protocol 问题。检查 PID namespace、mount、cgroup 和文件系统可见性。
-
-### `perf` / `gdb` Permission denied
-
-检查 RDR process 的 uid、capability、ptrace/perf policy。RDR 不会绕过操作系统权限。
-
-### `curl localhost:<metrics-port>` 失败
-
-检查 RDR 和主服务是否处于同一 network namespace，或者改用主服务实际可达地址。
-
-### 主服务 OOM 后 RDR 也被杀
-
-说明两者 failure domain 没有隔离。优先调整 process/cgroup/container 部署，使 RDR 保留最小独立生存空间。
-
-## 13. 文件传输层保证
-
-传输是核心基础组件，以下保证内建在协议里：
-
-- **双向**：`get`（server → client）与 `put`（client → server）
-- **完整性**：双向流式计算 md5，`file.done` / `file.put.done` 携带 checksum，接收端**校验通过才原子落盘**（临时文件 + fsync + rename）；不一致即报错并丢弃临时文件
-- **长度核对**：`put.start` 声明 size，server 校验写入字节数；download 校验收到的总长与 server 报告的 file size 一致
-- **分片与续传**：`file.get` 支持 `offset`（range 原语）；client 下载自动断点续传 —— 中断后重试从已有的 `. <name>.rdr-part` 续传，每个分片独立 md5 校验；陈旧/超长的 part 文件自动重新开始
-- **错误清理**：连接断开、取消、校验失败都会清理临时文件，目标路径要么是完整旧文件、要么是完整新文件，不会出现半截文件
-
-已知取舍：续传的分片校验不重算整个文件的 md5（避免服务端全文件重读）；需要整文件强校验时删除 part 文件重新完整下载。
-
-## 14. 当前已知限制
-
-当前基线尚未实现：
-
+- 跨 RDR server process restart 的 terminal/session persistence
+- per-attachment output cursor / large-output spool
+- terminal discovery/listing 与 per-terminal ACL
 - MCP adapter
-- connection 断开后的 session reconnect
-- server-side 大输出 spool / cursor
 - fleet management / central gateway
-- perf/log/core/OOM 专用 API（这是明确的 non-goal，除非真实使用 Evidence 证明需要）
+- parallel multi-connection download
+- resumable upload
+- perf/log/core/OOM 专用 API
 
-第一阶段验收标准仍然是 Local Parity：与真正登录服务器相比，开发环境的调查能力不应有明显损失。
+这些能力只有在真实使用 Evidence 证明存在稳定需求时再增加。当前验收标准仍是 Local Parity：与直接进入目标运行环境相比，Agent/工程师不应因为远程边界失去主要调查能力。
