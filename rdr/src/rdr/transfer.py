@@ -33,31 +33,45 @@ async def send_file(
 ) -> None:
     """Stream a file (or the tail starting at ``offset``) as framed chunks.
 
-    The ``file.done`` checksum always covers the transferred range, so a
-    resumed transfer verifies each shard independently while ``file.started``
-    carries the full file size for end-to-end length checks.
+    A ranged transfer validates the already-downloaded prefix before the
+    client trusts it: ``file.started.prefix_checksum`` is the md5 of
+    ``[0:offset]``. ``file.done.checksum`` covers only the newly transferred
+    range, while ``file_size`` provides the final length check.
     """
     try:
         size = os.path.getsize(path)
         start = min(max(offset, 0), size)
         digest = hashlib.md5()
-        await sender.send(
-            {
-                "type": "file.started",
-                "request_id": request_id,
-                "size": size,
-                "offset": start,
-            }
-        )
+        started = {
+            "type": "file.started",
+            "request_id": request_id,
+            "size": size,
+            "offset": start,
+        }
         with open(path, "rb") as f:
             if start:
-                f.seek(start)
+                prefix_digest = hashlib.md5()
+                remaining = start
+                while remaining:
+                    chunk = await asyncio.to_thread(f.read, min(_CHUNK, remaining))
+                    if not chunk:
+                        raise OSError(
+                            f"file changed while validating resume prefix: {path}"
+                        )
+                    prefix_digest.update(chunk)
+                    remaining -= len(chunk)
+                started["prefix_checksum"] = prefix_digest.hexdigest()
+
+            await sender.send(started)
+
             while True:
                 chunk = await asyncio.to_thread(f.read, _CHUNK)
                 if not chunk:
                     break
                 digest.update(chunk)
-                await sender.send({"type": "file.data", "request_id": request_id}, chunk)
+                await sender.send(
+                    {"type": "file.data", "request_id": request_id}, chunk
+                )
         await sender.send(
             {
                 "type": "file.done",
@@ -69,7 +83,9 @@ async def send_file(
             }
         )
     except Exception as exc:
-        await sender.send({"type": "file.error", "request_id": request_id, "error": str(exc)})
+        await sender.send(
+            {"type": "file.error", "request_id": request_id, "error": str(exc)}
+        )
 
 
 async def start_upload(
@@ -97,7 +113,9 @@ async def start_upload(
         await sender.send({"type": "file.put.ready", "request_id": request_id})
         return handle
     except Exception as exc:
-        await sender.send({"type": "file.error", "request_id": request_id, "error": str(exc)})
+        await sender.send(
+            {"type": "file.error", "request_id": request_id, "error": str(exc)}
+        )
         return None
 
 
