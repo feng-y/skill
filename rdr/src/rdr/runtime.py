@@ -12,10 +12,20 @@ logger = logging.getLogger(__name__)
 
 
 class RDRServer:
-    def __init__(self, host: str, port: int, tokens: Iterable[str]) -> None:
+    def __init__(
+        self,
+        host: str,
+        port: int,
+        tokens: Iterable[str],
+        *,
+        terminal_max_attachments: int = 2,
+    ) -> None:
+        if terminal_max_attachments < 1:
+            raise ValueError("terminal_max_attachments must be >= 1")
         self.host = host
         self.port = port
         self.tokens = tuple(tokens)
+        self.terminal_max_attachments = terminal_max_attachments
         self.listener: asyncio.AbstractServer | None = None
         self.connections: set[ClientConnection] = set()
         self.terminals: dict[str, TerminalHandle] = {}
