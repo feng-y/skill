@@ -39,6 +39,7 @@ echo "== verify wheel in fresh venv =="
 "$PYTHON" -m venv "$workdir/verify-venv"
 "$workdir/verify-venv/bin/pip" install --quiet pytest "$wheel"
 verify_python="$workdir/verify-venv/bin/python"
+rdr_bin="$workdir/verify-venv/bin/rdr"
 
 # cwd is the package root (src layout), so "import rdr" resolves to the
 # installed wheel; a broken wheel fails here instead of at deployment time.
@@ -56,21 +57,21 @@ print("wheel contents ok")
 EOF
 
 "$verify_python" -c "import rdr; print('version:', rdr.__version__)"
-"$workdir/verify-venv/bin/rdr" --help > /dev/null
+"$rdr_bin" --help > /dev/null
 "$workdir/verify-venv/bin/rdr-server" --help > /dev/null
 echo "entry points ok"
 
-echo "== managed server e2e =="
+echo "== managed server e2e: configured token =="
 e2e_port=$((20000 + RANDOM % 10000))
 export RDR_TOKEN="build-e2e-token"
 export RDR_ACCESS_CONFIG="$workdir/missing-access.json"
 export RDR_GLOBAL_ACCESS_CONFIG="$workdir/missing-global.json"
-"$workdir/verify-venv/bin/rdr" server start \
+"$rdr_bin" server start \
     --host 127.0.0.1 --port "$e2e_port" \
     --pid-file "$workdir/server.pid" --log-file "$workdir/server.log"
-"$workdir/verify-venv/bin/rdr" server status \
+"$rdr_bin" server status \
     --port "$e2e_port" --pid-file "$workdir/server.pid"
-"$workdir/verify-venv/bin/rdr" server stop --pid-file "$workdir/server.pid"
+"$rdr_bin" server stop --pid-file "$workdir/server.pid"
 "$verify_python" - "$e2e_port" <<'EOF'
 import socket
 import sys
@@ -83,6 +84,24 @@ except OSError:
     sys.exit(0)
 sys.exit("listener still open after stop")
 EOF
+
+echo "== managed server e2e: token not configured =="
+unset RDR_TOKEN
+no_token_port=$((20000 + RANDOM % 10000))
+"$rdr_bin" server start \
+    --host 127.0.0.1 --port "$no_token_port" \
+    --pid-file "$workdir/no-token.pid" --log-file "$workdir/no-token.log"
+if "$rdr_bin" server status \
+    --port "$no_token_port" --pid-file "$workdir/no-token.pid" \
+    >"$workdir/no-token-status.txt" 2>&1; then
+    cat "$workdir/no-token-status.txt"
+    "$rdr_bin" server stop --pid-file "$workdir/no-token.pid" || true
+    echo "error: token-less server status unexpectedly succeeded" >&2
+    exit 1
+fi
+cat "$workdir/no-token-status.txt"
+grep -q "auth: server token not configured" "$workdir/no-token-status.txt"
+"$rdr_bin" server stop --pid-file "$workdir/no-token.pid"
 
 echo "== artifacts =="
 ls -lh "$wheel" "$sdist"
