@@ -9,12 +9,14 @@ from pathlib import Path
 from unittest.mock import patch
 
 from rdr.deploy import (
+    _auth_check,
     _is_rdr_server,
     _pid_alive,
     _port_open,
     _read_pid_file,
     _resolve_server_token,
 )
+from rdr.runtime import RDRServer
 
 
 class ServerTokenTest(unittest.TestCase):
@@ -51,16 +53,61 @@ class ServerTokenTest(unittest.TestCase):
         self.assertIsNone(token)
         self.assertIn("config", source)
 
-    def test_missing_everything_fails(self) -> None:
+    def test_missing_everything_starts_without_token(self) -> None:
         with patch.dict(os.environ, self._env(None), clear=True):
-            with self.assertRaises(SystemExit):
-                _resolve_server_token(None, str(self.config / "missing.json"))
+            token, source = _resolve_server_token(
+                None, str(self.config.with_suffix(".missing"))
+            )
+        self.assertIsNone(token)
+        self.assertEqual(source, "not configured")
 
     def test_invalid_config_file_fails(self) -> None:
         self.config.write_text("{}", encoding="utf-8")
         with patch.dict(os.environ, self._env(None), clear=True):
             with self.assertRaises(SystemExit):
                 _resolve_server_token(None, str(self.config))
+
+
+class AuthCheckTest(unittest.IsolatedAsyncioTestCase):
+    async def asyncSetUp(self) -> None:
+        self.server = RDRServer("127.0.0.1", 0, ("secret",))
+        await self.server.set_enabled(True)
+        self.port = self.server.listener.sockets[0].getsockname()[1]
+        self.root = tempfile.TemporaryDirectory()
+        self.addCleanup(self.root.cleanup)
+        self.missing_config = str(Path(self.root.name) / "missing.json")
+
+    async def asyncTearDown(self) -> None:
+        await self.server.close()
+
+    @staticmethod
+    def _without_token() -> dict[str, str]:
+        env = dict(os.environ)
+        env.pop("RDR_TOKEN", None)
+        return env
+
+    async def test_auth_states_are_distinct(self) -> None:
+        with patch.dict(os.environ, self._without_token(), clear=True):
+            self.assertEqual(
+                await _auth_check(self.port, self.missing_config),
+                "client token not configured",
+            )
+
+        with patch.dict(os.environ, {"RDR_TOKEN": "wrong"}, clear=False):
+            self.assertEqual(
+                await _auth_check(self.port, self.missing_config),
+                "invalid token",
+            )
+
+        with patch.dict(os.environ, {"RDR_TOKEN": "secret"}, clear=False):
+            self.assertEqual(await _auth_check(self.port, self.missing_config), "ok")
+
+        await self.server.set_access(True, ())
+        with patch.dict(os.environ, self._without_token(), clear=True):
+            self.assertEqual(
+                await _auth_check(self.port, self.missing_config),
+                "server token not configured",
+            )
 
 
 class PidFileTest(unittest.TestCase):
