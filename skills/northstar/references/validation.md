@@ -15,7 +15,7 @@
 9. **Handoff / correction**：成功 Taskbook 以同一正文 materialize 到 repo/workspace 外 authoritative file，并只带薄 completion handoff；Human material correction 只重算受影响的 intent / compile dependency cone 后完整重交付。
 10. **Independent outcome judgment**：Executor outcome/candidate Evidence 回流时，judge context 按 `authoritative Taskbook → claim-relevant current reality → Executor report` 建立；candidate Evidence 在核实前不能改变 reality / Graph。逐个 material claim 区分“已被反证”和“尚未证明”，检查必要的 cheap/material counter-Evidence，最后重新判断 whole Goal。
 11. **Progressive disclosure**：Intent/Goal framing / Human choice 才读 `intent-shaping.md`；复杂 Execution/Verification 才读 `execution-compile.md`；Executor outcome 才读 `outcome-judgment.md`；具体 false-green 风险才读 `verification-trust.md`。`agents/openai.yaml` 只作薄 invocation pointer / input router。
-12. **Bilingual parity**：Northstar / Prompt Atlas 行为语义一致，语言差异不形成第二套模型。
+12. **Canonical surface**：Northstar 是 intent take / intent compile / Taskbook / outcome judgment 的唯一 Skill surface；语言表达不通过复制第二套 Skill runtime 来实现。
 
 Static smoke 必须 12/12 PASS。
 
