@@ -26,9 +26,9 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 
 ## Skills
 
-- `northstar` — 接住 Human intent，只关闭会改变 executable contract 的歧义，再编译成 fresh Executor 可直接推进并证明完成的 executable Taskbook；Graph 只组织 Execution，implementation How 仍由 Executor 决定。
+- `northstar` — 接住与整形工程 Intent，澄清问题、预期结果、边界与取舍；需要执行交接时编译 Taskbook，执行结果回流时独立判卷。Goal 是被接受的结果，不是必交的独立文件；Graph 只组织 Execution，implementation How 留给 Executor。
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `architecture-evolution` — take one goal, several related goals, or a named scope; recover their real architecture change pressure from repo reality, then design an AI-native Target with cohesive responsibility, justified internal variation/layering, stable one-way dependencies, smaller cross-boundary change/verification surfaces, and a focused structural evolution Program with real exits.
+- `architecture-evolution` — consume engineering intent or a named scope to judge long-lived responsibilities, boundaries, variation, and dependencies; derive an AI-native Target and, when warranted, a focused Program with structural gain and real exits. No separate Goal document or mandatory Northstar pass is required.
 
 ## Runtime tools
 
@@ -36,10 +36,10 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 
 ## Architecture Evolution usage
 
-Use `architecture-evolution` when one or more goals create structural pressure, or when a named module/subsystem needs to evolve toward a clearer long-term responsibility. The named module is an investigation scope, not automatically the Target boundary. The Skill grounds the goals in repo reality, derives the capability/module boundary and justified layering/dependency direction, then returns either a local/no-evolution judgment, the decisive missing evidence/choice, or a focused Architecture Program.
+Use `architecture-evolution` when engineering intent creates structural pressure, or when a named module/subsystem needs to evolve toward a clearer long-term responsibility. Supply the intended outcome, constraints, and scope in their existing form; a separate Goal artifact is not required. The named module is an investigation scope, not automatically the Target boundary. The Skill grounds the intent in repo reality, derives the capability/module boundary and justified layering/dependency direction, then returns either a local/no-evolution judgment, the decisive missing evidence/choice, or a focused Architecture Program.
 
 ```text
-Use $architecture-evolution for these goals: <goal-or-related-goals>.
+Use $architecture-evolution for this intent or related goals: <intent-or-goals>.
 Ground them in current repo reality, identify the architecture change pressure, derive the AI-native Target Architecture, and converge the highest-value structural evolution Program without designing implementation How.
 ```
 
