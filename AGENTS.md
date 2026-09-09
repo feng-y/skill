@@ -1,6 +1,6 @@
 # Skill Repo Evolution Discipline
 
-本文件约束**如何修改这个 skill repo 本身**，不是任何单个 Skill 的 runtime 语义。修改 Northstar、Architecture Evolution、Prompt Atlas 或其他 Skill 前先遵守这里。
+本文件约束**如何修改这个 skill repo 本身**，不是任何单个 Skill 的 runtime 语义。修改 Northstar、Architecture Evolution 或其他 Skill 前先遵守这里。
 
 总原则：**优先语义压缩，不做规则堆积。先增强、归位或简化既有模型；只有 evidence 证明存在独立且稳定的责任，才新增持久结构。**
 
@@ -12,7 +12,7 @@
 - **Protocol complexity needs reality.** 复杂协议必须由真实跨边界不确定性、独立生命周期、失败语义或稳定多实现需求证明；普通单 owner / 同进程 / 同步协作不因“解耦”自动升级成协议。
 - **Incidents stay in eval by default.** Concrete incidents / failures can enter validation / regression directly. Runtime guidance requires independent authority or cross-case Evidence for a transferable invariant / discriminator; a single example becoming green is not improvement Evidence. If existing semantics already cover the failure, keep runtime unchanged.
 - **Runtime and eval stay separate.** runtime 只保留正常运行需要的 stable invariant / authority / boundary；具体 incident/counterexample 留在 eval；behavioral claim 必须由真实 eval 支撑。不要因 regression 增加而同步扩大 runtime context。
-- **Northstar / Prompt Atlas stay bilingual, not divergent.** 两者是同一 Skill semantics 的中文/英文 surface。对 Intent take / Intent compile、Goal / Execution / Verification / Evidence、Unknown、Taskbook、Completion Hook、trust 或 eval case 的行为性修改必须双边同步；只允许语言、名称和纯表达层差异。若要改变其中一边的 semantics，先把它当作 shared semantic change review，而不是独立 Skill 演化。
+- **One semantic owner per skill.** Northstar 是 intent take / intent compile / Taskbook / outcome judgment 的唯一 canonical Skill surface。不要再维护按语言复制的平行 Skill；需要英文表达时由模型翻译同一 canonical semantics，而不是复制 runtime files。
 
 ## Graph and loop
 
