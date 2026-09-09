@@ -10,7 +10,7 @@ Discover and select skills interactively:
 npx skills@latest add feng-y/skill
 ```
 
-Install all skills (currently installs Northstar, Unknowns First, and Architecture Evolution):
+Install all skills (currently installs Northstar, Unknowns First, Architecture Evolution, and Skill Doctor):
 
 ```bash
 npx skills@latest add feng-y/skill --all
@@ -22,6 +22,7 @@ Install one skill:
 npx skills@latest add feng-y/skill --skill northstar
 npx skills@latest add feng-y/skill --skill unknowns-first
 npx skills@latest add feng-y/skill --skill architecture-evolution
+npx skills@latest add feng-y/skill --skill skill-doctor
 ```
 
 ## Skills
@@ -29,6 +30,7 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 - `northstar` — 接住 Human intent，只关闭会改变 executable contract 的歧义，再编译成 fresh Executor 可直接推进并证明完成的 executable Taskbook；Graph 只组织 Execution，implementation How 仍由 Executor 决定。
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
 - `architecture-evolution` — take one goal, several related goals, or a named scope; recover their real architecture change pressure from repo reality, then design an AI-native Target with cohesive responsibility, justified internal variation/layering, stable one-way dependencies, smaller cross-boundary change/verification surfaces, and a focused structural evolution Program with real exits.
+- `skill-doctor` — adapted from Warp Skill Doctor; grade recent local Codex/Claude Code conversations for efficiency, code quality, and skill coverage, then propose only failure-evidence-backed minimal Skill edits.
 
 ## Runtime tools
 
