@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
-  short_description: "从 Intent 压力推导目标架构与演进主线"
-  default_prompt: "使用 $architecture-evolution，结合当前意图与仓库现实判断目标架构及值得推进的结构演进；保留真正的 Human-owned choices，不预定实现细节。"
+  short_description: "从意图推导目标架构与演进主线"
+  default_prompt: "使用 $architecture-evolution，依据当前意图与仓库现实给出有证据的架构判断，并仅在值得演进时收敛 Program。"

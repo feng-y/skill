@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
   short_description: "接住与整形 Intent，形成可执行约定"
-  default_prompt: "使用 $northstar，先接住当前意图，按需澄清问题、结果与取舍；需要执行交接时形成 Taskbook，已有 Taskbook 与执行结果时独立判卷。"
+  default_prompt: "使用 $northstar，完成当前意图所需的澄清、取舍判断或执行约定；已有 Taskbook 与执行结果时独立判卷。"
