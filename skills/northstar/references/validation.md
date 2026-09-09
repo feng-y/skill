@@ -1,10 +1,10 @@
 # Northstar Validation
 
-仅用于显式 review / smoke / eval；正常 runtime 禁止读取。这里测试 Northstar 是否仍是 **Intent take + Intent compile → executable Taskbook + independent outcome judgment**，不是 planner、manager 或第二份 runtime specification。具体 case 只暴露 failure property；名词、模块和领域应可替换。
+仅用于显式 review / smoke / eval；正常 runtime 禁止读取。验证 **Intent take（含 shaping）、按当前委托需要的 Intent compile 与独立 outcome judgment**，不是 planner、manager 或第二份 runtime specification。Taskbook / Execution / Graph / handoff 检查适用于需要执行约定的请求；shaping-only 按意图与取舍判断质量验收，不要求生成 Taskbook，也不降低执行请求的交接门槛。具体 case 只暴露 failure property；名词、模块和领域应可替换。
 
 ## Static smoke
 
-1. **Northstar identity**：Human owns accepted outcome / Human-owned commitments；Northstar 先完成 Intent take，只关闭会改变 executable contract 的 ambiguity，再做 Intent compile 产出 executable Taskbook；Executor owns implementation How。Northstar 不拥有 architecture design、complete research、execution orchestration、scheduler 或 verifier implementation。
+1. **Northstar identity**：Human owns accepted outcome / Human-owned commitments；Northstar 完成当前委托所需的 Intent take / shaping，需要执行约定时再做 Intent compile 产出 executable Taskbook；Executor owns implementation How。Northstar 不拥有 architecture design、complete research、execution orchestration、scheduler 或 verifier implementation。
 2. **Intent > means**：点名 architecture/tool/provider/file shape 默认是可替换 means；只有 Human/repo/upstream authority 让 representation 本身 binding 时才进入 Goal/constraint。
 3. **Bounded Research**：只关闭会改变 Goal、Human choice、binding boundary、material-work judgment、completion obligation 或 safe-start frontier 的 reality；Taskbook judgment/binding rule 真正依赖的 reality claim 才必须在 handoff 前取得足够 Evidence；不能为了 Graph completeness 扩大 Research。
 4. **Human authority**：普通 factual / implementation uncertainty 不升级 Human；会改变 Human 接受的 Goal，或 materially 改变是否做、投入、长期维护承诺或风险姿态的选择才进入 Ask。
