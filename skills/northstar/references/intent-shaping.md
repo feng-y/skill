@@ -1,6 +1,12 @@
-# 当 Goal 还没有定准
+# 当 Intent 还不足以支持当前判断
 
-只在普通理解与 bounded reality 检查后，Human 最终会接受哪个 Goal 仍不清楚，或真正需要 Human authority 的选择仍未关闭时读取。这里负责 Goal shaping，不建立第二套 Northstar workflow。
+只在问题理解、当前委托、被接受的结果或 Human-owned choice 仍会改变下一步判断时读取。Intent shaping 属于 Intent take，不是每次必走的访谈或独立 Goal 产出阶段。
+
+## 保留决定性意图
+
+从当前有效的请求和来源区分：原来要解决什么、为什么需要处理、当前要求推进到哪里，以及哪些范围 / 约束 / 承诺已经成立。只保留会改变选择的信息，不要求填满字段，不把自己的解释当成事实或 Human 已接受的要求。
+
+如果严格完成所提方案仍可能未解决原问题，比较最可信的解释，用可区分它们的最小事实或样例收敛；改变 accepted outcome 或投入承诺时交回 Human，不按实现便利偷偷换目标。相同结果不能抹去不同的 binding 投入与 obligation；已有义务不由模型按收益自行取消。
 
 ## Goal 还是 How
 
@@ -32,12 +38,12 @@ reality 无法关闭，且不同答案会改变 Human 最终接受的 Goal，或
 - 长期 module responsibility、boundary、dependency direction 或 Target Architecture 未定时，可交 `$architecture-evolution`；
 - 文字讨论仍不能可靠决定，而一个廉价、可丢弃、可回退的 concrete artifact 能明显提高判断质量时，可以做最小 prototype / sample。
 
-specialist / prototype 只回答当前 decision question，返回 decision / Evidence / option surface；不成为第二份 Taskbook，也不替 Human 关闭 Human-owned choice。不要为了减少 Executor 的 implementation uncertainty 调 specialist。
+specialist / prototype 只回答当前 decision question，返回 decision / Evidence / option surface；不成为第二份 Taskbook，也不替 Human 关闭 Human-owned choice。AE 可以在显式假设下回答未决承诺的结构后果，不需要先伪造已批准 Goal；技术结论不自动成为 binding commitment。prototype 只产生 Evidence，不自动进入 production 或增加已批准 scope。不要为了减少 Executor 的 implementation uncertainty 调 specialist。
 
 ## reality、冲突与停止
 
-只检查会改变当前 Goal / Human choice 的 reality。发现新事实后问：**它换一个值，会不会让 Human 接受另一个 Goal 或 materially different commitment？** 不会就停止展开。
+只检查会改变当前问题理解、委托范围、Goal / Human choice 的 reality。发现新事实后问：**它换一个值，会不会改变当前请求的答案、被接受的结果或 materially different commitment？** 不会就停止展开。
 
 Human requirements 冲突时，priority 只能来自 Human、已有 authority 或不可替代 reality；不能按实现便利性偷偷排序。Human correction 替换被纠正 premise，只重新打开依赖它的 Goal/choice；无关且已关闭的选择保持关闭。
 
-当剩余问题只改变 Executor How，而不再改变 Human 会接受的 Goal、Human-owned commitment 或 binding boundary 时，停止 Intent Research。执行期继续出现 Unknown 是正常的。
+当前请求所需意图已清楚就交付；只做意图澄清 / 取舍判断时，不以能否开始实现作为停止条件。需要执行约定时，剩余问题只改变 Executor How、不再改变 Goal、Human commitment、binding boundary 或 safe start，就停止 Intent Research。执行期继续出现 Unknown 是正常的。

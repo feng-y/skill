@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "接住 Intent，编译可执行产出"
-  default_prompt: "使用 $northstar，基于当前意图与必要 reality Evidence 交付 Executor 可直接推进并证明完成的 Taskbook；若输入是已有 Taskbook 的执行结果，则独立判卷。"
+  short_description: "接住与整形 Intent，形成可执行约定"
+  default_prompt: "使用 $northstar，完成当前意图所需的澄清、取舍判断或执行约定；已有 Taskbook 与执行结果时独立判卷。"

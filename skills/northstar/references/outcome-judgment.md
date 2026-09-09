@@ -6,7 +6,7 @@
 
 判卷顺序本身是 independence boundary：
 
-1. 先读取当前 authoritative Taskbook，以及之后仍有效的 Human correction / repo / upstream authority；从中恢复 Goal、binding constraints、completion claims 和真正需要证明的 material boundaries。
+1. 先读取当前 authoritative Taskbook 与其依赖的当前有效 Human / repo / upstream authority，包括 material correction；从中恢复原问题、决定性意图、Goal、binding constraints、completion claims 和真正需要证明的 material boundaries。若有具体 signal 表明交接遗漏 binding intent 或增加未授权承诺，回查对应来源，核实确认后才按 contract 失效处理；authority 不明则保留具体缺口，不自行补成批准，也不默认重开全部历史。
 2. 再针对这些 claims 检查 current repo/runtime reality，只读取足以判断 outcome 的 territory；不要因为 Executor 改过哪些文件就把 judging scope 缩成 diff。
 3. 最后消费 Executor report / task checklist / test output / decision note。它们只能作为 candidate Evidence、定位线索或需要核实的 claim，不能先替 judge 定义“完成了什么”或“为什么这样做”，也不能在核实前改变 Graph。
 
@@ -23,7 +23,7 @@
 - current workspace 就是 reality，已提交 commit、已修改文件或 tests green 都不能替代 outcome；
 - 一个 material work cut 自己通过，不代表跨 cut 的 Goal-level outcome 自动成立。
 
-Taskbook 没有要求的 architecture、style、test form 或 implementation preference 不得在判卷时新增成 success criterion。
+当前有效 contract / authority 没有要求的 architecture、style、test form 或 implementation preference 不得在判卷时新增成 success criterion。Human 后来真正改变意图，不证明此前有效 contract 下的实现错误；新约束只影响重编后的约定及其依赖内容。
 
 ## Contract 空白中的 material choice trigger
 
