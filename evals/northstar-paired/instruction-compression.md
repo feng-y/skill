@@ -1,6 +1,6 @@
 # Instruction compression and bounded follow-through
 
-Eval-only; shared by Northstar / Prompt Atlas. Normal runtime must not load this file.
+Eval-only for Northstar. Normal runtime must not load this file.
 
 Base: `a8ee2fe856aab8eed126c3d3758fd540d2b74e73` (main, 2026-09-09 inspection). This work does not include the unmerged scope/transition changes in PR #82.
 
@@ -16,7 +16,7 @@ No new role, phase, state, protocol, model profile, or runtime reference. Existi
 
 ## Retention review
 
-Review the candidate against all 12 static checks and S1-S40 in the existing [Northstar validation](../../skills/northstar/references/validation.md); the English surface has the same contract. In particular:
+Review the candidate against all 12 static checks and S1-S40 in the existing [Northstar validation](../../skills/northstar/references/validation.md). In particular:
 
 | Existing cases | Must survive compression |
 | --- | --- |
@@ -52,6 +52,6 @@ A/B concern compilation and can use the existing scorer fields. C/D concern outc
 
 ## Validation record and claim boundary
 
-2026-09-09: YAML/frontmatter parsing, invocation targets, unchanged interface keys, UTF-8/newlines/whitespace, and all eight root reference paths checked locally against the retrieved repository inventory. Manual review covered the 12 static gates, S1-S40 contract expectations, and bilingual ownership/routing parity. Review corrected an overbroad “do not restart Intent take” phrase so genuine evidence-driven re-entry remains allowed.
+2026-09-09: YAML/frontmatter parsing, invocation targets, unchanged interface keys, UTF-8/newlines/whitespace, and all eight root reference paths checked locally against the retrieved repository inventory. Manual review covered the 12 static gates and S1-S40 contract expectations. Review corrected an overbroad “do not restart Intent take” phrase so genuine evidence-driven re-entry remains allowed.
 
 No clean-session model runs or fresh-Executor probes were executed: this editing environment has no Codex/Claude executable. No latency, token, clarification-rate, or task-success uplift is claimed. The paired harness's existing sample and blind-adjudication requirements remain unchanged; synthetic/schema data must not be submitted as behavioral results.

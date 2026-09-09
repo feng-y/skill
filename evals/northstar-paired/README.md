@@ -1,6 +1,6 @@
 # Northstar paired clean-session behavioral eval
 
-Eval-only. This does not change Northstar / Prompt Atlas runtime semantics.
+Eval-only. This does not change Northstar runtime semantics.
 
 ## Goal
 
@@ -92,7 +92,7 @@ Do not let either tested arm label its own quality metrics.
 1. Preserve the raw session transcript, each candidate Taskbook, timing/token/tool counters, and target-reality Evidence.
 2. Before judging `handoff_validated`, `contract_changing`, or `evidence_supported`, hide `arm`, `skill_ref`, and any branch/revision marker that reveals which output is base or candidate.
 3. Use the same independent judge/rubric for both arms. The judge validates executable handoffs, classifies each clarification, and classifies each material work cut against the frozen Human intent and target repo/runtime reality; it must not prefer an implementation style absent from the contract.
-4. `executor_reinterpretation` comes from the separate fresh Executor probe, not from the original Northstar / Prompt Atlas session self-report.
+4. `executor_reinterpretation` comes from the separate fresh Executor probe, not from the original Northstar session self-report.
 5. If two reviewers are used and disagree on a classification, resolve the disagreement before scoring and keep the adjudication note with the run artifacts.
 
 This keeps the measured quality and handoff-validity signals independent from the skill revision being tested.
@@ -164,4 +164,4 @@ python3 evals/northstar-paired/score.py evals/northstar-paired/results.example.j
 
 ## What this eval does not prove
 
-It does not prove implementation quality after Executor execution, and it does not replace Taskbook contract/scenario regression. It measures the behavioral effect of Northstar / Prompt Atlas shaping and compilation under controlled clean sessions.
+It does not prove implementation quality after Executor execution, and it does not replace Taskbook contract/scenario regression. It measures the behavioral effect of Northstar shaping and compilation under controlled clean sessions.
