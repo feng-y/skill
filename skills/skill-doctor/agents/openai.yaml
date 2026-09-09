@@ -1,4 +1,0 @@
-interface:
-  display_name: "Skill Doctor"
-  short_description: "Grade real agent runs and improve skills"
-  default_prompt: "Use $skill-doctor to grade recent local Codex/Claude Code conversations, attribute failures to the correct owner, and propose only evidence-backed minimal Skill edits. Keep transcripts local."
