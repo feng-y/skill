@@ -1,4 +1,0 @@
-interface:
-  display_name: "Prompt Atlas"
-  short_description: "Take intent, compile executable output"
-  default_prompt: "Use $prompt-atlas to turn current intent and necessary reality Evidence into a Taskbook a fresh Executor can advance and prove complete; if input is an existing Taskbook's execution outcome, judge it independently."
