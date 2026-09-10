@@ -42,13 +42,12 @@ conversation / request / incident
           northstar
       canonical Intent
               │
-      ┌───────┼────────────┐
-      │       │            │
-      ▼       ▼            ▼
- prototype  architecture  unknowns-first
-            -evolution
-      │       │            │
-      └───────┴────────────┘
+   ┌──────────┼──────────────────┐
+   │          │                  │
+   ▼          ▼                  ▼
+prototype  architecture-evolution  unknowns-first
+   │          │                  │
+   └──────────┴──────────────────┘
               ↓
          Drafted Issue
               ↓
@@ -57,11 +56,11 @@ conversation / request / incident
               PR
               ↓
             replay
-      ┌───────┼──────────────┐
-      │       │              │
-      ▼       ▼              ▼
- Executor  northstar  architecture-evolution
-  fix      intent fix   structural fork
+       ┌──────┼────────────────┐
+       │      │                │
+       ▼      ▼                ▼
+   Executor  northstar  architecture-evolution
+     fix     intent fix   structural fork
 ```
 
 Northstar owns **meaning**; Replay owns **verification**. Prototype makes understood Intent inspectable; Architecture Evolution resolves long-term structure and current structural evolution; Unknowns First resolves territory uncertainty.
