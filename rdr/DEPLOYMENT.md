@@ -115,6 +115,8 @@ effective tokens
 - 文件不存在可以启动；文件存在但非法则启动失败，不静默绕过。
 - effective token 为空时 Server 仍可启动并监听，但认证返回 `server token not configured`。
 
+Managed CLI 的 `--token` 仅保留兼容；推荐使用 access config 或 `RDR_TOKEN`，避免 token 出现在 shell history 或启动记录中。
+
 Client token 解析：
 
 ```text
@@ -178,7 +180,7 @@ auth: server token not configured
 Server-wide 配置：
 
 ```bash
-RDR_TERMINAL_MAX_ATTACHMENTS=1 rdr server start --token <token>
+RDR_TERMINAL_MAX_ATTACHMENTS=1 rdr server start
 ```
 
 前台 server 可显式指定：
@@ -400,7 +402,7 @@ Resume 节省的是网络传输量；为了确认已有 part 与当前远端文�
 rdr put ./local-file HOST:19090:/remote/file
 ```
 
-Client 发送 size + full MD5；Server 写临时文件、校验 size/checksum、`fsync`，成功后才 atomic replace 目标路径。
+Client 发送 size + full MD5；Server 写临时文件，任一 chunk 使接收字节数超过声明 size 时立即拒绝并清理该 upload；完整接收后继续校验 size/checksum、`fsync`，成功后才 atomic replace 目标路径。
 
 Upload 当前不支持 resume，失败后重新执行完整 `rdr put`。
 
