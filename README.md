@@ -10,7 +10,7 @@ Discover and select skills interactively:
 npx skills@latest add feng-y/skill
 ```
 
-Install all skills (currently installs Issue Shape, Northstar, Unknowns First, Intent Shape, Architecture Evolution, and Architecture Shape):
+Install all skills:
 
 ```bash
 npx skills@latest add feng-y/skill --all
@@ -19,39 +19,61 @@ npx skills@latest add feng-y/skill --all
 Install one skill:
 
 ```bash
-npx skills@latest add feng-y/skill --skill issue-shape
 npx skills@latest add feng-y/skill --skill northstar
-npx skills@latest add feng-y/skill --skill unknowns-first
-npx skills@latest add feng-y/skill --skill intent-shape
+npx skills@latest add feng-y/skill --skill prototype
 npx skills@latest add feng-y/skill --skill architecture-evolution
-npx skills@latest add feng-y/skill --skill architecture-shape
+npx skills@latest add feng-y/skill --skill replay
+npx skills@latest add feng-y/skill --skill unknowns-first
 ```
 
 ## Skills
 
-- `issue-shape` — 把 current conversation / external request 编译成可独立流转的 Drafted Issue。Issue body 保存当前 canonical intended change；按需调用 specialist，并把 durable correction / Evidence / Decision fold back 到同一个 Issue。
-- `northstar` — optional difficult-intent compiler / outcome judge；只在 Drafted Issue 仍存在 binding interpretation、Human-owned trade-off、复杂 material delta / dependency 等无法局部关闭的问题时介入，clear Issue 可以直接执行。
-- `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `intent-shape` — caller-neutral concrete-shaping specialist that makes an already-understood but still materially ambiguous Target inspectable through the cheapest Core Path / Usage / Prototype, then returns correction and Evidence without owning the canonical Issue.
-- `architecture-evolution` — use an existing Target Architecture, or model-invoke `architecture-shape` when it is missing/stale, then compare current reality with Target and converge the highest-leverage structural Evolution Program with real exits.
-- `architecture-shape` — Architecture Evolution model-invoked specialist that derives the long-term Target Architecture from Goal pressure, verified reality, responsibility/knowledge ownership, justified variation and stable dependency direction; it does not choose the current evolution Program.
+- `northstar` — canonical engineering-intent skill. 把 conversation / request / incident 收敛成 durable Intent；需要跨 session / agent / MultiCA 流转时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
+- `prototype` — concrete-shaping specialist. Intent 已理解但具体 Target 仍可能 materially different 时，用最便宜的 Core Path / Usage / disposable Prototype 暴露差异并返回 correction / Evidence。
+- `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
+- `replay` — verification / outcome owner. 从 authoritative Acceptance / Constraints 出发，选择并核实 test/replay/runtime Evidence，判断 proven / false / unproven，并把问题路由给正确 owner。
+- `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification-relevant Evidence step.
 
-## Drafted Issue flow
-
-`issue-shape` is the normal artifact entry when engineering intent needs to leave the current conversation:
+## Capability flow
 
 ```text
-conversation / external intent
-        ↓
-    issue-shape
-        ↓
-   Drafted Issue
-   ├─ direct agent
-   ├─ MultiCA / coordinator
-   └─ northstar only when difficult intent earns it
+conversation / request / incident
+              ↓
+          northstar
+      canonical Intent
+              │
+      ┌───────┼────────────┐
+      │       │            │
+      ▼       ▼            ▼
+ prototype  architecture  unknowns-first
+            -evolution
+      │       │            │
+      └───────┴────────────┘
+              ↓
+         Drafted Issue
+              ↓
+       Human / Agent / MultiCA
+              ↓
+              PR
+              ↓
+            replay
+      ┌───────┼──────────────┐
+      │       │              │
+      ▼       ▼              ▼
+ Executor  northstar  architecture-evolution
+  fix      intent fix   structural fork
 ```
 
-A Drafted Issue should stay useful without the original conversation, Northstar, or a specific execution platform. `intent-shape`, `unknowns-first`, and architecture skills are specialists; their durable results fold back into the same Issue instead of creating parallel intent/spec/plan SOTs. PR remains the realized Change / Delivery surface for implementation, validation, and review.
+Northstar owns **meaning**; Replay owns **verification**. Prototype makes understood Intent inspectable; Architecture Evolution resolves long-term structure and current structural evolution; Unknowns First resolves territory uncertainty.
+
+There is no independent `Goal` layer. Durable intent is expressed directly as Problem / Draft / Constraints / Acceptance / Decisions / Evidence when needed.
+
+## Artifacts
+
+- **Drafted Issue** — durable carrier for Northstar Intent / intended change.
+- **PR** — realized Change / Delivery; implementation How, diff and review stay here by default.
+- **Prototype artifact** — reaction surface, normally disposable; durable correction returns to the caller.
+- **Replay result** — claim judgment + Evidence basis + owner routing, not a repair planner or execution manager.
 
 ## Runtime tools
 
@@ -59,11 +81,6 @@ A Drafted Issue should stay useful without the original conversation, Northstar,
 
 ## Architecture Evolution usage
 
-Use `architecture-evolution` when existing intent or related goals create structural pressure, or when a named module/subsystem needs to evolve toward a clearer long-term responsibility. A separate Goal document or prior Northstar invocation is not required. If a still-valid Target Architecture already exists, AE reuses it; if Target is missing or a material premise has changed, AE model-invokes `architecture-shape` to re-establish the Target before choosing the current Program. The named module remains an investigation scope, not automatically the Target boundary.
+Use `architecture-evolution` when current Intent creates structural pressure or when a named subsystem must evolve toward clearer long-term responsibility. The named module is an investigation scope, not automatically the Target boundary.
 
-```text
-Use $architecture-evolution for these goals: <goal-or-related-goals>.
-Ground current reality, reuse or re-establish the Target Architecture, then converge the highest-value structural Evolution Program and real exits without designing implementation How.
-```
-
-The authoritative runtime semantics live in [`skills/architecture-evolution/SKILL.md`](skills/architecture-evolution/SKILL.md). Long-term Target judgment is owned by [`skills/architecture-shape/SKILL.md`](skills/architecture-shape/SKILL.md); Architecture Evolution consumes that result rather than maintaining a second Target-design contract.
+Architecture Evolution first reuses or re-establishes the Target Architecture from Intent + authority + verified reality, then compares Current → Target and converges a focused Program with real exits. Program convenience cannot redefine Target, and Replay green cannot by itself prove architecture improvement.

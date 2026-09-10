@@ -1,4 +1,0 @@
-interface:
-  display_name: "Intent Shape"
-  short_description: "把已理解但仍有 material ambiguity 的 Target 具体化"
-  default_prompt: "使用 $intent-shape，把当前已理解但仍可能产生 materially different Target 的关键意图，用最低成本的 Core Path / Usage / Prototype 具体化；返回 correction / Evidence 给调用方，不拥有 canonical Issue / Intent，也不拆执行任务。"

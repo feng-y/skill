@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
-  short_description: "从 Target 收敛当前结构演进 Program"
-  default_prompt: "使用 $architecture-evolution，依据当前 Goal、仓库现实与仍有效的 Target Architecture 判断是否值得结构演进，并收敛高杠杆 Program 与 real exits；Target 缺失或前提失效时 model-invoke $architecture-shape，不设计实现 How。"
+  short_description: "判断长期 Target 并收敛当前结构演进"
+  default_prompt: "使用 $architecture-evolution，从当前 Northstar Intent、仓库现实与仍有效的 architecture authority 中先建立或复用 Target Architecture，再判断 Current → Target 的 structural gap、focused Evolution Program 与 real exits；不要从当前 module/patch 反推 Target，不设计 implementation How，behavior verification 交 $replay。"

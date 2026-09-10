@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "处理 Drafted Issue 仍无法局部关闭的困难 Intent"
-  default_prompt: "使用 $northstar，仅处理当前 Drafted Issue / engineering request 中会改变 accepted outcome、binding boundary、Human commitment 或 material dependency 的困难 Intent；能直接执行的 Issue 不重编译，Goal / Taskbook / Graph 只在增加决策或交接价值时生成；已有 execution contract 与结果时独立判卷。"
+  short_description: "把工程请求收敛为稳定 Intent / Drafted Issue"
+  default_prompt: "使用 $northstar，把当前 discussion / request / incident 收敛为 fresh consumer 可独立理解的工程 Intent；保留 Problem、concrete Draft、binding Constraints、Acceptance 与必要 Decision/Evidence，需要跨 session 或执行平台流转时 materialize 为 canonical Drafted Issue。不要制造独立 Goal；按需调用 $prototype、$architecture-evolution、$unknowns-first，verification 交 $replay。"

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Architecture Shape"
-  short_description: "收敛长期 Target Architecture"
-  default_prompt: "使用 $architecture-shape，作为 Architecture Evolution 的 model-invoked Target specialist，从当前 Goal pressure 与 verified reality 收敛长期责任、边界、必要 variation/layering 和 dependency direction；返回 Target 与 Evidence，不生成 Evolution Program 或实现计划。"
