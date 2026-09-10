@@ -10,7 +10,7 @@ Discover and select skills interactively:
 npx skills@latest add feng-y/skill
 ```
 
-Install all skills (currently installs Northstar, Unknowns First, Intent Shape, Architecture Evolution, and Architecture Shape):
+Install all skills (currently installs Issue Shape, Northstar, Unknowns First, Intent Shape, Architecture Evolution, and Architecture Shape):
 
 ```bash
 npx skills@latest add feng-y/skill --all
@@ -19,6 +19,7 @@ npx skills@latest add feng-y/skill --all
 Install one skill:
 
 ```bash
+npx skills@latest add feng-y/skill --skill issue-shape
 npx skills@latest add feng-y/skill --skill northstar
 npx skills@latest add feng-y/skill --skill unknowns-first
 npx skills@latest add feng-y/skill --skill intent-shape
@@ -28,11 +29,29 @@ npx skills@latest add feng-y/skill --skill architecture-shape
 
 ## Skills
 
-- `northstar` — 接住当前工程意图；必要时调用 shaping / architecture specialist，并从已成立的 Goal / Target 与 current reality 编译 material delta、Execution Graph 和 Taskbook，结果回流时独立判卷。
+- `issue-shape` — 把 current conversation / external request 编译成可独立流转的 Drafted Issue。Issue body 保存当前 canonical intended change；按需调用 specialist，并把 durable correction / Evidence / Decision fold back 到同一个 Issue。
+- `northstar` — optional difficult-intent compiler / outcome judge；只在 Drafted Issue 仍存在 binding interpretation、Human-owned trade-off、复杂 material delta / dependency 等无法局部关闭的问题时介入，clear Issue 可以直接执行。
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
-- `intent-shape` — Northstar model-invoked specialist that makes an already-understood but still materially ambiguous Target inspectable through the cheapest Core Path / Usage / Prototype, then returns correction and Evidence before intent compilation.
+- `intent-shape` — caller-neutral concrete-shaping specialist that makes an already-understood but still materially ambiguous Target inspectable through the cheapest Core Path / Usage / Prototype, then returns correction and Evidence without owning the canonical Issue.
 - `architecture-evolution` — use an existing Target Architecture, or model-invoke `architecture-shape` when it is missing/stale, then compare current reality with Target and converge the highest-leverage structural Evolution Program with real exits.
 - `architecture-shape` — Architecture Evolution model-invoked specialist that derives the long-term Target Architecture from Goal pressure, verified reality, responsibility/knowledge ownership, justified variation and stable dependency direction; it does not choose the current evolution Program.
+
+## Drafted Issue flow
+
+`issue-shape` is the normal artifact entry when engineering intent needs to leave the current conversation:
+
+```text
+conversation / external intent
+        ↓
+    issue-shape
+        ↓
+   Drafted Issue
+   ├─ direct agent
+   ├─ MultiCA / coordinator
+   └─ northstar only when difficult intent earns it
+```
+
+A Drafted Issue should stay useful without the original conversation, Northstar, or a specific execution platform. `intent-shape`, `unknowns-first`, and architecture skills are specialists; their durable results fold back into the same Issue instead of creating parallel intent/spec/plan SOTs. PR remains the realized Change / Delivery surface for implementation, validation, and review.
 
 ## Runtime tools
 

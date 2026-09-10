@@ -12,7 +12,7 @@
 - **Protocol complexity needs reality.** 复杂协议必须由真实跨边界不确定性、独立生命周期、失败语义或稳定多实现需求证明；普通单 owner / 同进程 / 同步协作不因“解耦”自动升级成协议。
 - **Incidents stay in eval by default.** Concrete incidents / failures can enter validation / regression directly. Runtime guidance requires independent authority or cross-case Evidence for a transferable invariant / discriminator; a single example becoming green is not improvement Evidence. If existing semantics already cover the failure, keep runtime unchanged.
 - **Runtime and eval stay separate.** runtime 只保留正常运行需要的 stable invariant / authority / boundary；具体 incident/counterexample 留在 eval；behavioral claim 必须由真实 eval 支撑。不要因 regression 增加而同步扩大 runtime context。
-- **One semantic owner per skill.** Northstar 是 intent take / intent compile / Taskbook / outcome judgment 的唯一 canonical Skill surface。不要再维护按语言复制的平行 Skill；需要英文表达时由模型翻译同一 canonical semantics，而不是复制 runtime files。
+- **One semantic owner per skill.** `issue-shape` 是 conversation / external intent → canonical Drafted Issue shaping 的唯一 owner；`intent-shape` 只拥有 concrete Target shaping；`northstar` 只处理 Drafted Issue 仍无法局部关闭的 difficult intent / material compile 与 outcome judgment。不要在这些 Skill 之间复制同一套 Goal、Issue、Taskbook 或 shaping contract；需要英文表达时由模型翻译同一 canonical semantics，而不是复制 runtime files。
 
 ## Graph and loop
 
