@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shape Intent"
+  short_description: "把关键工程意图变成可审查 Draft / Prototype"
+  default_prompt: "使用 $shape-intent，把当前已理解但仍可能产生 materially different 目标的关键意图，用最低成本的 Core Path / Usage / Prototype 具体化并收敛；不要拆执行任务。"
