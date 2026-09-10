@@ -32,7 +32,7 @@ reality 无法关闭，且不同答案会改变 Human 最终接受的 Goal，或
 
 ## Specialist 与 concrete shaping
 
-只有当前 Goal / Human choice 无法由 bounded local judgment 关闭时才扩大：
+只有当前 Goal / Human choice、其关键结构后果，或可接受 Target 的具体形态无法由 bounded local judgment 可靠关闭时才扩大：
 
 - 多个耦合 Unknown / source alignment 需要完整判断时，可交 `$unknowns-first`；
 - 长期 module responsibility、boundary、dependency direction 或 Target Architecture 未定时，可交 `$architecture-evolution`；
