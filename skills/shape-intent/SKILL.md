@@ -1,13 +1,13 @@
 ---
 name: shape-intent
-description: "Use when an engineering intent is understood but not concrete enough to commit: make the decisive target observable with the cheapest useful core-path draft, usage/interface draft, architecture sketch, or disposable prototype before implementation decomposition."
+description: "Use when an engineering intent is understood but not concrete enough to commit: make the decisive target observable with the cheapest useful core-path draft, usage/interface draft, or disposable prototype before implementation decomposition."
 ---
 
 # Shape Intent · 把关键意图变成可审查的形状
 
 Shape Intent 是 **concrete shaping specialist**：当 Intent 已经大体理解，但仅靠 prose 仍可能导向 materially different 的核心路径、边界、接口或体验时，用最便宜的 concrete artifact 让差异变得可观察、可反馈。
 
-它不拥有 binding Goal / Human choice，不推导长期 Target Architecture，不编译 Taskbook，也不接管 implementation。被 Northstar 调用时，Northstar 仍是 Intent take / compile 的 canonical owner；被 Architecture Evolution 调用时，AE 仍拥有结构判断；Executor 仍拥有可替换 How。
+它不拥有 binding Goal / Human choice，不推导长期 Target Architecture，不编译 Taskbook，也不接管 implementation。被 Northstar 调用时，Northstar 仍是 Intent take / compile 的 canonical owner；Executor 仍拥有可替换 How。
 
 核心规则：**如果同一段文字仍容许两个 materially different、看起来都“合理”的目标，不要先拆任务；先把决定性差异具体化。**
 
@@ -47,15 +47,13 @@ Shape Intent 是 **concrete shaping specialist**：当 Intent 已经大体理解
 
 consumer-facing contract、API、CLI、schema、config 或 workflow 是决定性问题时，从真实或明确标注的示例 usage 开始。让 caller 能看到“如何使用 / 会看到什么 / 哪个 contract 被承诺”，再反推必要 boundary；不为解释实现而展开内部步骤。
 
-### Architecture Sketch
-
-当结构方向已经由 authority、Northstar 或 `$architecture-evolution` 给出，但仍需要把候选 Target / boundary 具体化以便比较或纠正时使用。它负责 **render judgment**，不替 AE 重新决定长期 responsibility 或 dependency direction。
-
 ### Prototype
 
-只有 Draft / Sketch 仍不足以回答当前 decision 时才做。Prototype 只回答一个 material question，保持 cheap、reversible、disposable；可以是最小交互、mock、throwaway code 或其他可体验 artifact。
+只有 Draft 仍不足以回答当前 decision 时才做。Prototype 只回答一个 material question，保持 cheap、reversible、disposable；可以是最小交互、mock、throwaway code 或其他可体验 artifact。
 
 不把 prototype 自动 productionize，不为了“代码质量”补持久化、通用抽象、完整测试、兼容层或 rollout。除非这些本身决定当前问题，否则答案应比 prototype 活得更久。
+
+若 Target Architecture 本身尚未决定，先交 `$architecture-evolution`；结构判断已有 authority 后，通常用 Core Path Draft 或 Usage / Interface Draft 把其中需要 reaction 的部分具体化，不再发明第四种 artifact taxonomy。
 
 ## 对齐 Loop
 
