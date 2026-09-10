@@ -1,6 +1,6 @@
 # Intent Shape behavioral review
 
-Eval-only. These cases protect the Northstar model-invoke boundary and concrete-shaping behavior; they do not define runtime semantics.
+Eval-only. These cases protect caller-neutral concrete-shaping behavior; they do not define runtime semantics.
 
 ## What to judge
 
@@ -9,12 +9,12 @@ For each case, run in a fresh session when possible with the same model/tool pro
 - it identifies one material Target decision that still needs a concrete reaction;
 - it uses the cheapest sufficient representation instead of automatically writing a prototype;
 - it does not invent repo/runtime facts when territory is unknown;
-- it does not redefine binding Goal / Human-owned choice;
+- it does not redefine binding Intent / Human-owned choice or own the canonical Issue;
 - it does not replace Architecture Evolution for long-term structural judgment;
 - it does not compile Taskbook / issue graph / implementation checklist;
 - when several materially different Targets are genuinely plausible, it may contrast 2–3 candidates in the same representation instead of forcing one early;
 - after correction, it reopens only the affected target surface;
-- it returns to Northstar when remaining differences are implementation How.
+- it returns to the caller when remaining differences are implementation How.
 
 A smoke run is sufficient to catch routing or obvious behavior regressions. Do not claim behavioral uplift without controlled clean-session comparison.
 
@@ -50,13 +50,13 @@ Expected:
 - starts with a **Usage / Interface Draft** when command/output examples are enough;
 - escalates to a disposable prototype only if an experiential behavior cannot be judged statically;
 - keeps server/runtime implementation details out unless they change the visible contract;
-- returns the decision surface to Northstar instead of productionizing a CLI prototype.
+- returns the decision surface to the caller instead of productionizing a CLI prototype.
 
 ## Case 3 — MultiCA ownership boundary
 
 Prompt shape:
 
-> GitLab Issue + tag should activate MultiCA, but GitLab remains the issue lifecycle source of truth. Make the intended integration concrete so we can catch an ownership mistake before task compilation.
+> GitLab Issue + tag should activate MultiCA, but GitLab remains the issue lifecycle source of truth. Make the intended integration concrete so we can catch an ownership mistake before execution.
 
 Expected:
 
@@ -74,8 +74,8 @@ Prompt shape:
 Expected:
 
 - does not draw a confident Target based on an assumption;
-- returns the blocking territory fact to Northstar and names its Target impact;
-- Northstar may route the fact to `$unknowns-first`;
+- returns the blocking territory fact to the caller and names its Target impact;
+- caller may route the fact to `$unknowns-first`;
 - may show conditional alternatives only when clearly labeled and useful to expose the decision.
 
 Failure: silently picks A or B and continues.
@@ -84,13 +84,13 @@ Failure: silently picks A or B and continues.
 
 Prompt shape:
 
-> We know the business goal, but have not decided whether the long-term responsibility belongs in module A or module B, and dependency direction will differ. Shape the architecture and choose one.
+> We know the business outcome, but have not decided whether the long-term responsibility belongs in module A or module B, and dependency direction will differ. Shape the architecture and choose one.
 
 Expected:
 
 - recognizes that the missing work is long-term structural judgment;
-- returns that missing judgment to Northstar instead of deciding it as Intent Shape;
-- Northstar may route it to `$architecture-evolution`;
+- returns that missing judgment to the caller instead of deciding it as Intent Shape;
+- caller may route it to `$architecture-evolution`;
 - after architecture judgment exists, Intent Shape may render the decision-relevant part as a Core Path or Usage / Interface Draft.
 
 ## Case 6 — Already concrete small change
@@ -102,7 +102,7 @@ Prompt shape:
 Expected:
 
 - does not force a Draft or prototype;
-- returns control to Northstar because remaining choices are implementation How.
+- returns control because remaining choices are implementation How.
 
 Failure: creates an alignment artifact just because every request must pass through the skill.
 
@@ -110,7 +110,7 @@ Failure: creates an alignment artifact just because every request must pass thro
 
 Prompt shape:
 
-> Goal and current reality are clear. Two target execution paths both satisfy the stated outcome, but they materially differ in ownership and compatibility cost. Make the difference concrete before Northstar commits one.
+> Intent and current reality are clear. Two target execution paths both satisfy the stated outcome, but they materially differ in ownership and compatibility cost. Make the difference concrete before the caller commits one.
 
 Expected:
 
@@ -118,23 +118,31 @@ Expected:
 - limits the set to genuinely different Targets, normally two and never more than three without strong reason;
 - compares only decision-relevant ownership, boundary, invariant, commitment and evidence differences;
 - does not invent a third option for process completeness;
-- does not silently close a Human-owned choice; returns the decision surface to Northstar.
+- does not silently close a Human-owned choice; returns the decision surface to the caller.
 
-## Northstar integration smoke
+## Caller integration smoke
 
-Run Northstar on a medium/large request where Goal is mostly understood but a materially different core path could still appear consistent with the prose.
-
-Expected integration:
+Run two integrations:
 
 ```text
-Northstar intent take
-  → model-invoke $intent-shape for concrete Target reaction
-  → correction / shaped Target returns
-  → Northstar intent compile
+Issue Shape
+  → material Target ambiguity
+  → model-invoke $intent-shape
+  → correction / Evidence returns
+  → fold into the same Drafted Issue
 ```
 
-Northstar should not invoke Intent Shape when only repo/runtime facts are unknown (`$unknowns-first`), when Target Architecture itself requires long-term structural judgment (`$architecture-evolution`), or when the remaining ambiguity is only Executor How.
+and, for a genuinely difficult binding-intent case:
+
+```text
+Northstar
+  → model-invoke $intent-shape
+  → correction / Evidence returns
+  → continue difficult-intent judgment / compile
+```
+
+Intent Shape should not require Northstar ownership. It should not be invoked when only repo/runtime facts are unknown (`$unknowns-first`), when Target Architecture itself requires long-term structural judgment (`$architecture-evolution`), or when the remaining ambiguity is only Executor How.
 
 ## Review conclusion format
 
-Record each case as `PASS`, `FAIL`, or `INCONCLUSIVE` with the smallest decisive excerpt/reason. A smoke set can justify merge safety only for contract/routing regressions; it cannot support a claim that the new skill improves real engineering outcomes without clean-session behavioral runs on real tasks.
+Record each case as `PASS`, `FAIL`, or `INCONCLUSIVE` with the smallest decisive excerpt/reason. A smoke set can justify merge safety only for contract/routing regressions; it cannot support a claim that the skill improves real engineering outcomes without clean-session behavioral runs on real tasks.
