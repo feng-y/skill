@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import unittest
 
-from rdr.protocol import read_frame, write_frame
+from rdr.protocol import ProtocolError, read_frame, write_frame
 
 
 class ProtocolTest(unittest.IsolatedAsyncioTestCase):
@@ -27,6 +27,32 @@ class ProtocolTest(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(header["type"], "x")
             self.assertEqual(header["value"], 7)
             self.assertEqual(payload, b"\x00abc\xff")
+        finally:
+            writer.close()
+            await writer.wait_closed()
+            server.close()
+            await server.wait_closed()
+
+    async def test_payload_limit_rejects_before_payload_read(self) -> None:
+        result = asyncio.Future()
+
+        async def handler(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
+            try:
+                with self.assertRaises(ProtocolError) as raised:
+                    await read_frame(reader, max_payload_bytes=0)
+                result.set_result(str(raised.exception))
+            finally:
+                writer.close()
+                await writer.wait_closed()
+
+        server = await asyncio.start_server(handler, "127.0.0.1", 0)
+        host, port = server.sockets[0].getsockname()[:2]
+        reader, writer = await asyncio.open_connection(host, port)
+        del reader
+        try:
+            await write_frame(writer, {"type": "auth"}, b"x")
+            error = await asyncio.wait_for(result, timeout=2)
+            self.assertIn("invalid payload size", error)
         finally:
             writer.close()
             await writer.wait_closed()
