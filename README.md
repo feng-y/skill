@@ -10,7 +10,7 @@ Discover and select skills interactively:
 npx skills@latest add feng-y/skill
 ```
 
-Install all skills (currently installs Northstar, Unknowns First, and Architecture Evolution):
+Install all skills (currently installs Northstar, Unknowns First, Architecture Evolution, and Intent Shape):
 
 ```bash
 npx skills@latest add feng-y/skill --all
@@ -22,6 +22,7 @@ Install one skill:
 npx skills@latest add feng-y/skill --skill northstar
 npx skills@latest add feng-y/skill --skill unknowns-first
 npx skills@latest add feng-y/skill --skill architecture-evolution
+npx skills@latest add feng-y/skill --skill intent-shape
 ```
 
 ## Skills
@@ -29,6 +30,7 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 - `northstar` — 接住与整形当前工程意图；意图澄清和取舍评估可独立交付，需要执行约定时保留决定性意图并编译 Taskbook，执行结果回流时独立判卷。Goal 是结果语义，不是必交的独立文件；实现仍由 Executor 决定。
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
 - `architecture-evolution` — take one goal, several related goals, or a named scope; recover their real architecture change pressure from repo reality, then design an AI-native Target with cohesive responsibility, justified internal variation/layering, stable one-way dependencies, smaller cross-boundary change/verification surfaces, and a focused structural evolution Program with real exits.
+- `intent-shape` — Northstar model-invoked specialist that makes an already-understood but still materially ambiguous Target inspectable through the cheapest Core Path / Usage / Prototype, then returns correction and Evidence before intent compilation.
 
 ## Runtime tools
 

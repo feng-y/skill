@@ -17,7 +17,7 @@ Human 有权给出的要求可直接 binding；owner、readiness、runtime behav
 
 调查只为改变当前意图判断、material work、binding boundary、completion obligation 或 safe start。支撑 Taskbook 判断与约束的事实，交付前须有足够 Evidence；决定工作是否合法或能否开始的 Unknown，应关闭或保留为显式 dependency / blocker。只影响可替换 How 的未知留给 Executor，不为补齐 inventory、预选 verifier 或未来实现扩大调查。
 
-只有事实不能决定、且答案会改变被接受的结果或 Human 承诺时才 Ask。意图、framing 或取舍未定时读 [intent-shaping.md](references/intent-shaping.md)；其中的 Grill、specialist 和 prototype 按问题需要使用，不是固定访谈。必要的耦合 Unknown 交 `$unknowns-first`，长期结构问题交 `$architecture-evolution`；只消费当前需要的 decision / Evidence，不替 Human 关闭选择。当前判断已有足够依据就停止调查；执行交接还须使 fresh Executor 无需重猜意图即可在边界内安全开始。
+只有事实不能决定、且答案会改变被接受的结果或 Human 承诺时才 Ask。意图、framing 或取舍未定时读 [intent-shaping.md](references/intent-shaping.md)；其中的 Grill 和 specialist 按问题需要使用，不是固定访谈。必要的耦合 Unknown 交 `$unknowns-first`，长期结构问题交 `$architecture-evolution`；当 Goal / choice 已大体理解，但核心路径、ownership、boundary、interface 或 usage 仅靠 prose 仍可能导向 materially different 的 Target 时，model-invoke `$intent-shape` 做最小 concrete shaping。只消费当前需要的 decision / Evidence / correction，不替 Human 关闭选择。当前判断已有足够依据就停止调查；执行交接还须使 fresh Executor 无需重猜意图即可在边界内安全开始。
 
 ## Intent compile：同一份执行与验收约定
 
