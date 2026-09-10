@@ -8,6 +8,7 @@ For each case, prefer a fresh session with the same model/tool profile. Judge th
 
 - the output remains useful without the original conversation, Northstar, or MultiCA;
 - it preserves one canonical Drafted Issue instead of creating parallel intent/spec/plan artifacts;
+- when the user explicitly asks to create / update an Issue and an authorized tracker action exists, it performs that action instead of stopping at a Markdown draft;
 - `Draft` makes the intended change concrete when prose alone would drift, but does not become an implementation checklist;
 - `Goal` is emitted only when it adds decision information;
 - territory unknowns route to `$unknowns-first`, material Target ambiguity routes to `$intent-shape`, and long-term structure routes to `$architecture-evolution` only when earned;
@@ -27,11 +28,12 @@ Prompt shape:
 Expected:
 
 - produces a small Drafted Issue that can go directly to an executor;
+- if an authorized tracker action is available, creates the real Issue and returns its reference rather than asking for another publish confirmation;
 - does not call Northstar, Intent Shape, AE, or Unknowns First merely for process completeness;
 - does not invent an abstract Goal when Problem + Draft + Acceptance are already sufficient;
 - does not decompose files, patches, or tests into a Taskbook.
 
-Failure: `Goal → Target → Taskbook → Issue` ceremony is introduced before the issue can exist.
+Failure: `Goal → Target → Taskbook → Issue` ceremony is introduced before the issue can exist, or an available authorized create action is replaced by a draft-only response.
 
 ## Case 2 — Concrete core-path Draft
 
