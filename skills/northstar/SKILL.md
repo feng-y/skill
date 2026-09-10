@@ -7,7 +7,7 @@ description: 用于处理 Drafted Issue 或工程请求中仍无法局部关闭�
 
 Northstar 是 **difficult-intent compiler / outcome judge**，不是所有工程需求的默认入口。一个已经足以让 fresh Executor 正确理解 intended change、binding boundary 与 Acceptance 的 Drafted Issue，可以直接进入 Human、普通 agent 或 MultiCA；不因为“流程完整”强制经过 Northstar。
 
-当存在多个 binding interpretation、Human-owned material trade-off、复杂 `Current → Target` delta / dependency Graph，或现有 Issue 仍不足以安全开始时，Northstar 才接管这部分困难 judgment。Human 拥有预期结果与投入、兼容、长期维护、风险等承诺；AE 负责战略架构判断；Executor 决定实现 How；已有 Drafted Issue 时，Issue body 继续是 canonical work-intent surface，Northstar enrich 它而不是重建第二份 intent/spec。
+当存在多个 binding interpretation、Human-owned material trade-off、复杂 `Current → Target` delta / dependency Graph，或现有 Issue 仍不足以安全开始时，Northstar 才接管这部分困难 judgment。Human 拥有预期结果与投入、兼容、长期维护、风险等承诺；AE 负责战略架构判断；Executor 决定实现 How。已有 Drafted Issue 时，Northstar 只 enrich 这个 canonical intent，不重建第二份 intent/spec。
 
 已有 authoritative execution contract / Taskbook 与执行结果时，直接读 [outcome-judgment.md](references/outcome-judgment.md) 独立判卷，不重做仍有效的 shaping。
 
@@ -51,21 +51,11 @@ Task decomposition 不能负责发现、补完或偷偷改变 Target。若 compi
 
 **Verification 按结果 claim，而非步骤或 Graph 节点评判。** repo 已确认的 authoritative test/build/replay/integration path，只有省略会明显增加 under-verification 时才进入当前 contract；失准后由 Executor 从 repo authority 重推等价或更强 Evidence。存在具体“实现错而检查仍可 PASS”的风险时，才读 [verification-trust.md](references/verification-trust.md)。
 
-## Issue / comments / PR 的 re-entry
-
-已有 Drafted Issue 时：
-
-- Issue body 保存当前 canonical intended change；
-- Issue comments 可以保存 Northstar 的阶段性 Evidence、候选解释与 Human correction；
-- 一旦 correction / choice 成为 durable Decision、Constraint、Draft change 或 Acceptance，fold back 到 Issue body；
-- 普通 implementation How、diff、validation、review 留在 PR；
-- 若 PR finding 证明 Issue 的 intended change 本身错误，只重开受影响的 Intent judgment，更新 Issue，再让 PR 跟随新的 intent。
-
-Northstar 不维护 progress/status/retry 协议，不持续监督 MultiCA / Executor，也不因为 execution session 变化而把一个 cohesive Issue 拆成 context-window-sized tickets。
-
 ## 交付与停止
 
-完成当前可交付的困难 judgment 或 material contract。信息不足时只返回真正需要 Human 的 decision surface，或 blocker 与恢复条件。下游无法访问 canonical Issue / source 时，在交付中复制最小必要 context 与出处；不要复制完整聊天或另建第二份 intent SOT。
+完成当前可交付的困难 judgment 或 material contract。已有 Drafted Issue 时，只把后续 consumer 必须知道的 durable Decision、Constraint、Draft correction、material relation 或 Acceptance fold back 到 canonical Issue；阶段性 reasoning、progress 与普通 implementation How 不进入 Northstar 自己的第二份 SOT。
+
+下游无法访问 canonical Issue / source 时，在交付中复制最小必要 context 与出处；不要复制完整聊天。Northstar 不维护 progress/status/retry 协议，不持续监督 MultiCA / Executor，也不因为 execution session 变化而把一个 cohesive Issue 拆成 context-window-sized tickets。
 
 Human correction 或核实后的 Evidence 只重开最高受影响判断及其 dependency cone，保留无关选择与仍有效 Evidence，删除失效陈述。普通实现失败不交回 Human；宿主维持 execution / feedback loop。
 
