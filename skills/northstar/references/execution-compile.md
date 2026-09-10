@@ -2,9 +2,25 @@
 
 只在 Intent take 已经把 Goal、Human-owned choice 与 binding boundary 收敛到 fresh Executor 不需要重做 intent judgment、且能安全开始 material work，且复杂度本身会改变 Execution 的 Graph 结构或 Verification 判断时读取。这里不定义 Intent compile 本身，也不重新定义 Intent / Goal；Intent compile 的 executable contract 必须先成立，这里只帮助 Northstar 组织其中复杂的 Execution / Verification，不替 Executor 设计 patch、调试流程或 scheduler。
 
+## Delta before Graph
+
+复杂 Execution 先确认 **material Current → Target delta**，再决定 cut 和 dependency。Target 来自已经成立的 Intent / Human correction / authority；如果 `$intent-shape` 提供了 Draft / Prototype，它只帮助 Target 变得可观察，artifact 本身不是另一份 SOT。
+
+只把为了使 Target 成立而真实需要兑现的差异编成 material work，例如 responsibility / ownership 归位、核心路径改变、binding boundary 建立、contract outcome 改变、明确要求退出的旧 authority / path，以及必须保持的 invariant 所对应的 material completion obligation。
+
+不要：
+
+- 从 task list、文件结构或当前 module 反推 Target；
+- 把 shaped artifact 的每个 node / arrow 机械翻译成 task；
+- 因为 current path 存在就默认保留，或为了迁移“完整”重新引入 Human 已明确排除的 scope；
+- 在 Current 已满足 Target 时制造结构性工作；
+- 把仍会改变 Target 的 unresolved alternative 编成 speculative branch 交给 Executor选择。
+
+若 decomposition 暴露一个 materially different Target interpretation，停止受影响部分并回到 Intent shaping / Human decision；只有 Target 成立后，Graph 才能组织它要求的 material delta。
+
 ## Execution
 
-Graph 只负责结构化 executable contract 中已经成立的 Execution；不能从 Graph 反推 Intent、Goal 或 binding constraint。复杂 Goal 的 Execution 按 fresh Executor 可以直接推进的 **best-known complete Graph** 编译：
+Graph 只负责结构化 executable contract 中已经成立的 Execution；不能从 Graph 反推 Intent、Goal、Target 或 binding constraint。复杂 Goal 的 Execution 按 fresh Executor 可以直接推进的 **best-known complete Graph** 编译：
 
 - 不同 outcome、responsibility、binding boundary 或 real dependency 会改变执行判断时，分开表达对应 material work cut；
 - 每个 material work cut 应对应一个可独立判断的 material outcome / responsibility / binding boundary：它失败时，能指出哪个 material outcome 未成立，而不是只把一个 Verification claim 变成 Execution cut；
