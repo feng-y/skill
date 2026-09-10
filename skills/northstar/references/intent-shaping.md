@@ -36,7 +36,7 @@ reality 无法关闭，且不同答案会改变 Human 最终接受的 Goal，或
 
 - 多个耦合 Unknown / source alignment 需要完整判断时，可交 `$unknowns-first`；
 - 长期 module responsibility、boundary、dependency direction 或 Target Architecture 未定时，可交 `$architecture-evolution`；
-- Goal / choice 已经大体理解，但核心路径、ownership、boundary、interface 或 usage 仅靠 prose 仍可能被 materially different 的 Target 合理解释时，交 `$shape-intent` 用最小 Core Path / Usage / Sketch / Prototype 暴露 decision surface。
+- Goal / choice 已经大体理解，但核心路径、ownership、boundary、interface 或 usage 仅靠 prose 仍可能被 materially different 的 Target 合理解释时，交 `$shape-intent` 用最小 Core Path / Usage / Prototype 暴露 decision surface。
 
 specialist / concrete shaping 只回答当前 decision question，返回 decision / Evidence / option surface / correction；不成为第二份 Taskbook，也不替 Human 关闭 Human-owned choice。AE 可以在显式假设下回答未决承诺的结构后果，不需要先伪造已批准 Goal；技术结论不自动成为 binding commitment。`$shape-intent` 只把 Target 变得可观察，不拥有 binding Intent，不自动 productionize artifact，也不增加已批准 scope。不要为了减少 Executor 的 implementation uncertainty 调 specialist。
 
