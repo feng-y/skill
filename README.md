@@ -30,7 +30,7 @@ npx skills@latest add feng-y/skill --skill shape-intent
 - `northstar` — 接住与整形当前工程意图；意图澄清和取舍评估可独立交付，需要执行约定时保留决定性意图并编译 Taskbook，执行结果回流时独立判卷。Goal 是结果语义，不是必交的独立文件；实现仍由 Executor 决定。
 - `unknowns-first` — expose the first map-versus-territory gap and close it with the smallest useful probe, question, or verification step.
 - `architecture-evolution` — take one goal, several related goals, or a named scope; recover their real architecture change pressure from repo reality, then design an AI-native Target with cohesive responsibility, justified internal variation/layering, stable one-way dependencies, smaller cross-boundary change/verification surfaces, and a focused structural evolution Program with real exits.
-- `shape-intent` — turn an already-understood but still ambiguous engineering intent into the cheapest inspectable Core Path / Usage / Sketch / Prototype so a material target can be corrected before task decomposition; it does not own binding intent or implementation.
+- `shape-intent` — turn an already-understood but still ambiguous engineering intent into the cheapest inspectable Core Path / Usage / Prototype so a material target can be corrected before task decomposition; it does not own binding intent or implementation.
 
 ## Runtime tools
 
