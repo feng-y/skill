@@ -28,17 +28,17 @@ reality 无法关闭，且不同答案会改变 Human 最终接受的 Goal，或
 
 只有 Human 自己还在探索“真正的问题是什么”或“哪种取舍更重要”时才 Grill，不把清楚的 choice 再复杂化。
 
-有当前倾向时分别给出支持/反对它的最强理由；framing 本身未定时比较最可信的解释，找出真正分歧、矛盾和隐含假设。若一个可查事实能裁决分歧，先 Research；事实已经足够而剩下的是价值判断时，一次只问当前最能区分立场的一个问题。Human 回答后重新判断 owner：仍是 Human judgment 才继续 Grill；变成事实、prototype 或 specialist judgment 就交回对应 owner。一旦 trade-off 清楚，回正常 Ask batching。
+有当前倾向时分别给出支持/反对它的最强理由；framing 本身未定时比较最可信的解释，找出真正分歧、矛盾和隐含假设。若一个可查事实能裁决分歧，先 Research；事实已经足够而剩下的是价值判断时，一次只问当前最能区分立场的一个问题。Human 回答后重新判断 owner：仍是 Human judgment 才继续 Grill；变成事实、concrete shaping 或 specialist judgment 就交回对应 owner。一旦 trade-off 清楚，回正常 Ask batching。
 
-## Specialist 与 prototype
+## Specialist 与 concrete shaping
 
 只有当前 Goal / Human choice 无法由 bounded local judgment 关闭时才扩大：
 
 - 多个耦合 Unknown / source alignment 需要完整判断时，可交 `$unknowns-first`；
 - 长期 module responsibility、boundary、dependency direction 或 Target Architecture 未定时，可交 `$architecture-evolution`；
-- 文字讨论仍不能可靠决定，而一个廉价、可丢弃、可回退的 concrete artifact 能明显提高判断质量时，可以做最小 prototype / sample。
+- Goal / choice 已经大体理解，但核心路径、ownership、boundary、interface 或 usage 仅靠 prose 仍可能被 materially different 的 Target 合理解释时，交 `$shape-intent` 用最小 Core Path / Usage / Sketch / Prototype 暴露 decision surface。
 
-specialist / prototype 只回答当前 decision question，返回 decision / Evidence / option surface；不成为第二份 Taskbook，也不替 Human 关闭 Human-owned choice。AE 可以在显式假设下回答未决承诺的结构后果，不需要先伪造已批准 Goal；技术结论不自动成为 binding commitment。prototype 只产生 Evidence，不自动进入 production 或增加已批准 scope。不要为了减少 Executor 的 implementation uncertainty 调 specialist。
+specialist / concrete shaping 只回答当前 decision question，返回 decision / Evidence / option surface / correction；不成为第二份 Taskbook，也不替 Human 关闭 Human-owned choice。AE 可以在显式假设下回答未决承诺的结构后果，不需要先伪造已批准 Goal；技术结论不自动成为 binding commitment。`$shape-intent` 只把 Target 变得可观察，不拥有 binding Intent，不自动 productionize artifact，也不增加已批准 scope。不要为了减少 Executor 的 implementation uncertainty 调 specialist。
 
 ## reality、冲突与停止
 
