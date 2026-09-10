@@ -1,13 +1,13 @@
 ---
 name: intent-shape
-description: "Northstar model-invoked specialist for engineering intent that is understood but not concrete enough to commit: expose the decisive Target with the cheapest inspectable Core Path, Usage / Interface Draft, or disposable Prototype before intent compilation."
+description: "Concrete-shaping specialist for engineering intent that is understood but not concrete enough to commit: expose the decisive Target with the cheapest inspectable Core Path, Usage / Interface Draft, or disposable Prototype before the caller freezes intent or execution."
 ---
 
 # Intent Shape · 把已理解的 Intent 具体化到可提交
 
-Intent Shape 是 **Northstar model-invoked concrete shaping specialist**。当 Northstar 已经大体恢复 Goal / Human choice，但仅靠 prose 仍可能被解释成 materially different 的核心路径、ownership、boundary、interface 或 usage 时，用最低成本的 concrete representation 把差异变得可观察、可反馈，然后把结果交回 Northstar。
+Intent Shape 是 **concrete Target shaping specialist**。当 caller 已经大体恢复 Intent / Human choice，但仅靠 prose 仍可能被解释成 materially different 的核心路径、ownership、boundary、interface 或 usage 时，用最低成本的 concrete representation 把差异变得可观察、可反馈，然后把 correction / Evidence 返回 caller。
 
-Northstar 仍是 binding Intent、Human-owned choice、Intent compile 与 Taskbook 的 canonical owner。Intent Shape 不接管完整 Intent research，不决定长期 Target Architecture，不编译执行 Graph，不拆实现任务，也不进入 production implementation。
+调用方继续拥有 binding Intent、canonical Issue / artifact、Human-owned choice 与后续 compile。Intent Shape 不接管完整 Intent research，不决定长期 Target Architecture，不编译执行 Graph，不拆实现任务，也不进入 production implementation。
 
 核心规则：**如果同一份已理解 Intent 仍容许两个 materially different、看起来都合理的 Target，不要先拆任务；先把会改变承诺的差异具体化。**
 
@@ -17,23 +17,23 @@ Northstar 仍是 binding Intent、Human-owned choice、Intent compile 与 Taskbo
 
 - migration / refactor / execution optimization 的目标核心路径、ownership、boundary、dataflow 需要先对齐；
 - API、CLI、schema、config、workflow 或 interaction 只有看到具体 usage 才能可靠判断；
-- Goal 已大体明确，但 Human / caller 仍需要看到目标形态才能给出有效 correction；
+- Intent / choice 已大体明确，但 Human / caller 仍需要看到目标形态才能给出有效 correction；
 - 静态 Draft 不能回答一个 material experiential / empirical decision，需要最小 prototype 直接观察。
 
-不应调用或应立即返回 Northstar：
+不应调用或应立即返回 caller：
 
-- 当前 producer / consumer / runtime path / baseline 等 territory fact 尚未核实时，返回缺失 Evidence；由 Northstar 决定是否调用 `$unknowns-first`；
-- 长期 responsibility、module boundary、dependency direction 或 Target Architecture 本身未定时，返回缺失的结构判断；由 Northstar 决定是否调用 `$architecture-evolution`；
-- Intent 已经足以让 fresh Executor 在 binding boundary 内开始，剩余差异只是 implementation How；
+- 当前 producer / consumer / runtime path / baseline 等 territory fact 尚未核实时，返回缺失 Evidence；caller 可按需调用 `$unknowns-first`；
+- 长期 responsibility、module boundary、dependency direction 或 Target Architecture 本身未定时，返回缺失的结构判断；caller 可按需调用 `$architecture-evolution`；
+- Intent 已经足以让 fresh consumer / Executor 在 binding boundary 内开始，剩余差异只是 implementation How；
 - trivial / local change 不为“流程完整”额外生成 Draft。
 
 ## 输入只保留当前 Decision 所需内容
 
-使用 Northstar 已经形成的 Goal / choice、binding constraints 与相关 Evidence，不重新做完整 Intent take。先锁定一个 material decision：
+使用 caller 已经形成的 Intent / choice、binding constraints 与相关 Evidence，不重新做完整 Intent take。先锁定一个 material decision：
 
-> **哪一个仍隐含的 Target 差异，如果理解错了，会改变 Goal、核心路径、ownership、binding boundary、interface / usage 或 accepted outcome？**
+> **哪一个仍隐含的 Target 差异，如果理解错了，会改变 intended outcome、核心路径、ownership、binding boundary、interface / usage 或 accepted result？**
 
-没有这样的差异就停止并返回 Northstar。
+没有这样的差异就停止并返回 caller。
 
 若 representation 依赖未核实的 repo/runtime fact，不用假设补全 Target。返回具体缺口及其影响，不把 artifact presence 当成 Evidence。
 
@@ -69,9 +69,9 @@ consumer-facing contract、API、CLI、schema、config、workflow 或 interactio
 
 只要仍有一个 material ambiguity 会改变 Target，就继续最小 shaping；当剩余差异都属于 Executor How 时停止。Intent Shape 不顺势进入 implementation，也不因为 artifact 看起来可实现就把它升级成 production design。
 
-## 返回 Northstar
+## 返回 caller
 
-返回足以让 Northstar继续 Intent judgment / compile 的最小结果：
+返回足以让调用方继续更新 canonical Issue / Intent judgment / compile 的最小结果：
 
 - 当前 material decision；
 - concrete artifact 或候选对比；
@@ -79,7 +79,7 @@ consumer-facing contract、API、CLI、schema、config、workflow 或 interactio
 - artifact 新产生的 decision-relevant Evidence；
 - 仍会改变 Target 的 unresolved point。
 
-不要生成 Taskbook、issue graph、PR split、实现 checklist 或第二份 Intent SOT。Northstar 消费 correction / Evidence 后决定继续 shaping、调用其他 specialist，或进入 Intent compile。
+不要生成 Taskbook、issue graph、PR split、实现 checklist 或第二份 Intent SOT。调用方消费 correction / Evidence 后决定更新 Drafted Issue、继续 shaping、调用其他 specialist，或进入 execution / compile。
 
 ## 常见错误
 
@@ -89,4 +89,4 @@ consumer-facing contract、API、CLI、schema、config、workflow 或 interactio
 - Target Architecture 尚未判断时在这里替 AE 做长期结构选择。
 - Core Path 尚未对齐就开始 task decomposition，再靠实现结果反推真正目标。
 - Human 已 correction 后继续扩大探索，而不是只修改受影响 surface。
-- 把 prototype 或 draft 当成 binding approval；最终承诺仍由 Northstar / Human authority 决定。
+- 把 prototype 或 draft 当成 binding approval；最终承诺仍由 Human authority / caller 的 canonical intent owner 决定。
