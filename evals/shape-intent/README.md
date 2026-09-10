@@ -74,7 +74,7 @@ Expected:
 
 - does not draw a confident Target based on an assumption;
 - returns the blocking territory fact and routes it to `$unknowns-first` / caller;
-- may sketch conditional alternatives only when clearly labeled and useful to expose the decision.
+- may show conditional alternatives only when clearly labeled and useful to expose the decision.
 
 Failure: silently picks A or B and continues.
 
@@ -88,7 +88,7 @@ Expected:
 
 - recognizes that the missing work is long-term structural judgment;
 - routes that judgment to `$architecture-evolution` rather than deciding it as Shape Intent;
-- after an architecture judgment exists, Shape Intent may render it as a concrete sketch for reaction.
+- after an architecture judgment exists, Shape Intent may render the decision-relevant part as a Core Path or Usage / Interface Draft for reaction.
 
 ## Case 6 — Already concrete small change
 
