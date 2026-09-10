@@ -75,7 +75,7 @@ Draft 也是 reaction surface，不因被写出来就自动成为 binding commit
 Issue Shape 只拥有 Issue shaping，不复制 specialist 的判断：
 
 - **territory fact 未知**，且事实不同会改变 Issue：调用 `$unknowns-first`，消费最小 Evidence；
-- **Goal / choice 已大体理解，但同一 prose 仍容许 materially different Target**：调用 `$intent-shape`，消费 Core Path / Usage / Prototype 带来的 correction / Evidence；
+- **Intent / choice 已大体理解，但同一 prose 仍容许 materially different Target**：调用 `$intent-shape`，消费 Core Path / Usage / Prototype 带来的 correction / Evidence；
 - **长期 responsibility、module boundary、dependency direction 或 Target Architecture 本身需要判断**：调用 `$architecture-evolution`（由其按需调用 Architecture Shape），消费结构 decision；
 - **多个 binding interpretation、Human-owned trade-off 或复杂 material delta 仍无法局部关闭**：可以把现有 Drafted Issue 交 `$northstar` 做 difficult-intent judgment / compile，而不是把 Northstar 作为默认前置阶段。
 
@@ -91,6 +91,14 @@ specialist 结果不创建第二份 SOT。只把后续执行真正需要的 dura
 comment 中的信息只有在后续 fresh consumer 必须知道时才 fold back。典型需要 fold back 的内容包括：新的 binding constraint、accepted Draft correction、durable decision、改变完成定义的 Acceptance。
 
 不要把所有 comments 重写进 body，也不要让 body 因历史累积越来越长。更新时替换失效 premise，保留无关且仍有效的内容。
+
+## 交付到 tracker
+
+用户明确要求创建或更新 Issue，且当前环境有已授权 tracker action 时，**直接创建 / 更新真实 Issue**，不要只展示一份 Markdown 草稿等待再次确认。已有 canonical Issue 时优先更新它，不因为一次 correction 新建平行 Issue。
+
+如果当前环境没有可用 tracker action，返回完整可发布的 Issue body，并明确它尚未被写入 tracker；不要声称已经创建或更新。
+
+Issue 的 routing / activation label 属于项目或 execution coordinator policy。只有已有 policy、用户要求或当前 authority 明确规定时才设置；不要因为 Issue Shape 自己需要一个状态而发明 `ready` lifecycle。
 
 ## Issue 粒度与执行交接
 
@@ -124,4 +132,5 @@ Drafted Issue 可以直接交给：
 - 让 `$intent-shape`、AE 或 Northstar 生成平行 artifact，而不是 fold back 到 Issue。
 - 把 Issue 切成适配单次 agent context 的细粒度 tickets；session continuity 属于 Harness / coordinator。
 - 把 comments 全量复制进 body，导致 canonical surface 被历史淹没。
+- 用户要求创建 / 更新 tracker Issue 时，只返回草稿而不执行已有授权 action。
 - 在 PR 发现 intent 错误后只修实现，不更新 Issue 的 intended change。
