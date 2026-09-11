@@ -12,6 +12,18 @@
 - **Protocol complexity needs reality.** 复杂协议必须由真实跨边界不确定性、独立生命周期、失败语义或稳定多实现需求证明；普通单 owner / 同步协作不因“解耦”自动升级成协议。
 - **Runtime and eval stay separate.** runtime 只保留正常运行需要的 stable invariant / authority / boundary；具体 incident/counterexample 留在 eval；behavioral claim 必须由真实 eval 支撑。不要因 regression 增加而同步扩大 runtime context。
 
+## Semantic migration history
+
+删除、重命名或合并顶层 Skill，迁移稳定 responsibility，或有意退役稳定 concept / artifact / flow，属于 **breaking semantic migration**。这类变更必须在同一个 change 中更新 `CHANGELOG.md`，至少记录：
+
+- old surface / responsibility；
+- new owner，或明确标记 `retired`；
+- 仍需保留的 invariant / behavior；
+- 有意不再保留的 semantics；
+- 对应 PR / change identity。
+
+`CHANGELOG.md` 是历史 migration ledger，不是 runtime contract；当前真值仍以本文件、各 `SKILL.md` 和 focused eval 为准。不要因为历史文件里曾存在某个 concept 就恢复它；retired semantics 重新进入 runtime 仍必须满足当前 Evidence + independent invocation reason。
+
 ## One semantic owner per skill
 
 当前 canonical capability map：
@@ -73,6 +85,7 @@ Evidence 不只来自 Replay。任何 research / execution / review / verificati
 4. 它有 independent authority / cross-case Evidence，还是一次 case 的答案？
 5. 它加入后什么旧规则、知识、结构或复杂度会退出？
 6. 它能否下沉到按需 reference 或 eval，而不是进入 always-on runtime？
+7. 如果这是 breaking semantic migration，`CHANGELOG.md` 是否明确记录 old surface → new owner / retired reason？
 
 答不出基于 Evidence 的理由，默认不新增。
 
@@ -80,5 +93,6 @@ Evidence 不只来自 Replay。任何 research / execution / review / verificati
 
 - Repo-wide evolution / context rules：只放这里。
 - Skill runtime invariant：放对应 `SKILL.md` 或按需 runtime reference。
+- Breaking semantic migration history：放 `CHANGELOG.md`，不复制到 runtime Skill。
 - Case / incident / counterexample：放 `evals/`，正常 runtime 禁止读取。
 - `CLAUDE.md` 只作为薄入口指向本文件，不复制规则。
