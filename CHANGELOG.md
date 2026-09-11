@@ -39,6 +39,8 @@ pstack exposes verification as an action/skill surface: `prove-it-works` establi
 
 PR #93 briefly used `evidence` as the Skill name while correcting Replay ownership. The final surface is renamed to `verify` without changing the underlying proof contract.
 
+Verify is a **capability, not a mandatory lifecycle stage**. It may be called before implementation to establish a material proof route, during implementation when proof premises change, or after implementation to judge realized results. Existing project-local verifier lifecycle contracts (for example Launch / Doctor / Drive / Capture / Cleanup) remain owned by those backends; Verify follows them instead of creating a second harness workflow.
+
 ### Northstar responsibility migration
 
 | Previous responsibility/reference | Current owner / status | Notes |
@@ -113,7 +115,7 @@ The following were **not moved to another owner**. They were intentionally remov
 - **PR** — realized change, implementation How, implementation-local validation and review.
 - **Prototype artifact** — disposable reaction surface; durable correction/Evidence returns to the caller.
 - **Architecture handoff** — persisted only when independently useful; otherwise durable structural decisions fold back to the caller / Issue.
-- **Verify result** — Claim + proof obligation + source/backend identity + material Evidence + proven/false/unproven verdict + owner routing.
+- **Verify result** — Claim + proof obligation + source/backend identity + material Evidence + proven/false/unproven verdict + owner routing. It stays with PR/review/verification by default; only durable contract/architecture corrections fold back to their semantic owner.
 - **Replay/test/build/runtime artifacts** — backend outputs consumed as Evidence; they are not a second semantic SOT.
 
 ### Eval migration
