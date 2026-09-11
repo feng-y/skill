@@ -6,7 +6,7 @@ Eval-only. This does not change Northstar runtime semantics.
 
 Compare a base Northstar revision with a candidate revision under isolated, otherwise identical sessions. Measure whether the candidate produces a better **canonical Intent / Drafted Issue handoff** at lower cost without increasing missing intent, speculative work, or unnecessary clarification.
 
-Northstar does not own proof sufficiency judgment; `$evidence` is evaluated separately. This harness stops at the first independently validated executable Intent handoff.
+Northstar does not own proof sufficiency judgment; `$verify` is evaluated separately. This harness stops at the first independently validated executable Intent handoff.
 
 ## Valid handoff
 
@@ -18,7 +18,7 @@ A valid handoff may be:
 - the same Issue enriched by `$prototype`, `$architecture-evolution`, or `$unknowns-first` results;
 - an earned material execution contract when complex dependency genuinely requires compile.
 
-It is not required to contain Goal, Taskbook, explicit Graph, proof commands, or verifier configuration.
+It is not required to contain Goal, Taskbook, explicit Graph, proof commands, or backend configuration.
 
 ## Pair setup
 
@@ -31,7 +31,7 @@ For every case:
 5. give each handoff to a separate fresh Executor probe; only the independent probe may set `handoff_validated=true`;
 6. one pair per case is smoke; behavioral claims require at least 5 real cases and 3 clean-session repeats per arm per case.
 
-The frozen set should cover at least: clear direct Intent, concrete-shape ambiguity, territory unknown, architecture pressure, complex material dependency, and a case where Acceptance is clear but proof route should be delegated to Evidence rather than embedded in Intent. A durable cross-session Issue handoff case is strongly preferred.
+The frozen set should cover at least: clear direct Intent, concrete-shape ambiguity, territory unknown, architecture pressure, complex material dependency, and a case where Acceptance is clear but verification should be delegated to Verify rather than embedded in Intent. A durable cross-session Issue handoff case is strongly preferred.
 
 Execution orchestration / control-plane behavior is outside this eval. Verification backend choice, including DaVinci Replay, is also outside Northstar handoff quality unless Northstar incorrectly hardcodes it into Intent.
 
@@ -72,4 +72,4 @@ If sample size is insufficient or repeated runs disagree materially, report meas
 
 ## What this eval does not prove
 
-It does not prove implementation quality after execution, Evidence proof quality, Architecture Evolution quality, or orchestration/control-plane quality. It measures Northstar Intent handoff behavior only.
+It does not prove implementation quality after execution, Verify quality, Architecture Evolution quality, or orchestration/control-plane quality. It measures Northstar Intent handoff behavior only.
