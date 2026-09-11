@@ -13,10 +13,11 @@ Architecture Evolution passes only when it:
 5. treats current modules / patches as reality Evidence, not Target authority;
 6. reuses a still-valid Target; migration cost or patch churn alone does not redesign Target;
 7. compares verified Current → Target gaps and selects only high-leverage structural moves with real exits;
-8. leaves implementation How to Executor; AE defines structural semantics while `$verify` may check already-adopted structural completion claims;
-9. does not treat behavior parity from Replay/test/build as proof of architecture improvement by itself;
-10. uses canonical Northstar Intent / Human commitments as accepted boundary when present, without maintaining an independent Goal layer;
-11. reopens only affected Target / Program when research, execution, review or verified Evidence changes a structural premise.
+8. may model-invoke `$prototype` when the structural question is understood but concrete caller path / usage / interface / boundary surface remains materially ambiguous; Prototype returns reaction Evidence and AE retains Target ownership;
+9. leaves implementation How to Executor; AE defines structural semantics while `$verify` may check already-adopted structural completion claims;
+10. does not treat behavior parity from Replay/test/build as proof of architecture improvement by itself;
+11. uses canonical Northstar Intent / Human commitments as accepted boundary when present, without maintaining an independent Goal layer;
+12. reopens only affected Target / Program when research, execution, Prototype correction, review or verified Evidence changes a structural premise.
 
 ## Scenario smoke
 
@@ -46,25 +47,30 @@ PASS when a valid Target survives current implementation churn and only Program 
 ### A8 — Structural gain requires exit
 PASS when facade/provider additions without old authority/knowledge exit are rejected as complexity relocation.
 
-### A9 — Behavior parity is not architecture proof
+### A9 — Prototype makes structural consequence inspectable
+AE has narrowed the structural question, but two candidate boundaries produce materially different caller paths that are hard to compare in prose.
+
+PASS: AE invokes Prototype for same-form Core Path / usage contrast, consumes the result as reaction Evidence, and still makes the Target decision itself. Prototype does not select long-term owner.
+
+### A10 — Behavior parity is not architecture proof
 A DaVinci Replay or equivalence backend reports behavior parity, but old owner remains authoritative.
 
 PASS: parity is useful Evidence for behavior/compatibility only. Architecture improvement remains unproven until direct structural claims are checked.
 
-### A10 — Verify adopted structural claim
+### A11 — Verify adopted structural claim
 Target already requires old authority exit and callers to depend only on the stable owner boundary.
 
 PASS: `$verify` may inspect realized owner/dependency/residue and judge those already-adopted claims without redesigning Target. The chosen backend may be repo inspection, runtime observation, or other direct source; Replay is not assumed to own this judgment.
 
-### A11 — New architecture fork
+### A12 — New architecture fork
 Verification reveals a previously undecided long-term ownership choice.
 
 PASS: return to AE and reopen only the affected Target/Program. A local implementation defect does not trigger redesign.
 
-### A12 — Evidence-driven re-entry
+### A13 — Evidence-driven re-entry
 Execution/review discovers a new runtime fact that changes migration cost but not Target premise.
 
 PASS: only Program is recomputed. A new long-term authority fork reopens Target; a local implementation defect does not.
 
-### A13 — No architecture change earned
+### A14 — No architecture change earned
 PASS when a local change fully fits the current correct owner and AE returns local/no-evolution.
