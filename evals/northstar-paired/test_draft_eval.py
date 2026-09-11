@@ -193,7 +193,7 @@ class DraftEvalTests(unittest.TestCase):
     def test_export_excludes_private_rubric(self):
         out = self.root / 'actor-input'
         ev.export_prompts(self.cases, out)
-        self.assertEqual(len(list(out.iterdir())), 8)
+        self.assertEqual(len(list(out.iterdir())), len(self.cases))
         for file, case in zip(sorted(out.iterdir()), self.cases.values()):
             self.assertEqual(file.read_bytes(), ev.prompt_bytes(case))
             self.assertNotIn(case['judge'], file.read_text())

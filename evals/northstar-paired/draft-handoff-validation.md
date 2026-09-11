@@ -1,74 +1,64 @@
-# Primary-Draft change validation — 2026-09-11
+# Primary-Draft change validation
 
 Development/eval evidence only. Not a runtime instruction or a behavioral-uplift claim.
 
-## Verdict
+## Current verdict — follow-up to the real-machine retrospective
 
-- Runtime/contract review: no remaining blocking issue found in the reviewed patch.
-- Local executable checks: **26/26 scorer/integrity tests passed**, CLI export/empty-input checks passed, existing paired-scorer example smoke passed, changed frontmatter/whitespace checks passed.
-- Actual clean-session candidate runs: **0**. Actual blinded consumer probes: **0**. Measured routing/Draft/owner/over-trigger uplift: **INCONCLUSIVE**.
-- Merge recommendation for the requested behavior-validated completion: **HOLD / keep PR draft until real paired evidence is available**. The implemented semantic correction is reviewable; synthetic scorer fixtures do not discharge the behavioral gate.
+- The supplied Codex retrospective is real-machine failure evidence **reported by the user**, not a raw independently audited transcript and not an identified run against PR #95.
+- The first #95 candidate (`c7e5987`) still had an untested selection/empirical-closure gap. Its D1 already supplied the adopted sharing design; it did not test whether the model completed experiments before selecting the main Draft.
+- Targeted runtime corrections and the v2 eval additions have been implemented and self-reviewed. No new Skill, state machine, mandatory prototype stage, or semantic owner was added.
+- **26/26 scorer/integrity tests passed** on the updated 11-case inventory; prompt-only export and empty-input `INCONCLUSIVE` checks passed within that suite.
+- D10's self-contained experiment fixture was actually smoke-run locally: **24 equality comparisons passed**, with repeated matched CPU timing at **1 / 4 / 16 models**. Source and raw output are retained in the companion review bundle. This is a constructed Python fixture, NOT Hermes code, a model session or production performance evidence.
+- Actual clean-session agent runs / independent consumer probes / blinded behavioral judgments executed here: **0 / 0 / 0**. Behavioral uplift remains **INCONCLUSIVE**.
+- Merge posture: **HOLD / keep PR draft**. Do not call this incident fixed until real runs show selected-Draft closure, adequate actual experiments and correct ownership. Do not keep expanding runtime rules merely to compensate for the absent runner.
 
-## Scope and provenance
+## Scope and evidence attribution
 
-Base: `acc09e5040b808b46cc8f9aea17bbac988d639ab`.
+Original base: `acc09e5040b808b46cc8f9aea17bbac988d639ab`.
+First candidate: `c7e5987b582ec4e51facdd81ff3352396ff4f3d5`.
 
-Changed runtime: Northstar and Prototype only. AE, Verify, Unknowns First, material-compile, RDR and orchestration remain unchanged. No new Skill/semantic owner. Existing `score.py` and `results.example.jsonl` are byte-identical to base.
+Runtime changes remain confined to Northstar and Prototype. AE, Verify, Unknowns First, material-compile, RDR and orchestration are unchanged. The original `score.py`, `results.example.jsonl`, and the new `draft_eval.py` scoring implementation were not changed by this follow-up. Only a hard-coded test inventory count was generalized for appended cases.
 
-The local workspace is a connector-sourced partial snapshot, not a successful git clone. Original blobs used for modifications and the existing scorer were verified against GitHub Git-blob SHA values before editing/running. No original Hermes execution trace or production source was obtained. User-reported failure plus the user's explicit one-primary-Draft authority justified the targeted contract correction; transcript-level causal attribution remains unverified.
+The local snapshot comes from the prior published review bundle; both runtime base blobs were verified against the current PR's immutable GitHub content hashes before editing. It is a partial snapshot, not a checkout of the user's development machine. No original Hermes code, raw trace, candidate J implementation or production profile was obtained.
+
+The retrospective reports three distinct conditions: a candidate ledger passed off as the intended change; uncompleted delegated code/performance experiments; and an HTML-only/no-tests Prototype contract. The last differs from the repository's engineering Prototype, which already allowed throwaway code and timing probes. Actual loaded version/overrides are unverified: wrong installation or resolution is plausible, not established. Identity must be checked in real eval traces rather than presumed from a desired revision.
 
 ## Review trail
 
-All rounds below are self-review by the implementing assistant. No independent model/reviewer session is claimed.
+All rounds are implementer self-review, not independent reviewer/model sessions.
 
-### Plan round 1 — owner boundary
+### Initial candidate (c7e5987)
 
-Rejected the overly broad formulation that all specialists must refine an Intent Draft. Independent AE/Verify callers keep their own authority and need no Northstar artifact. Distinguished one semantic authority per Intent from one physical file or one global Draft. Did not adopt prior illustrative Hermes request-scope/immutability choices as production facts.
+Two plan rounds narrowed ownership and granularity: one primary Draft per Intent, not per file/session; direct AE/Verify callers need no synthetic Northstar artifact; facts must not be invented to complete a Draft. Two implementation rounds aligned activation/stopping and corrected scorer false-green risks (over-trigger, blocked readiness, repeat settings and unclean records). Historical result: 26 scorer tests passed, no agent runs. The original report is preserved at c7e5987.
 
-### Plan round 2 — depth without ceremony
+### Follow-up plan review — what the retrospective changes
 
-Checked coupled sharing, already-concrete local work, missing facts, adopted correction, direct architecture/verification and independent-Intent counterexamples. Kept completeness relative to material intended change, not exhaustive implementation design. Approved the narrowed two-runtime-file plan before implementation.
+The earlier statement that only measurement remained is superseded. D1 was a preselected-design integration control. The revised plan adds selection from Evidence, an actual disposable experiment and an unavailable-backend counterexample. Existing D1–D8 are preserved rather than rewritten to look like an original failure reproduction.
 
-### Implementation round 1 — consistent activation and stopping
+### Follow-up counterreview — reject excessive fixes
 
-Found that replacing the atomic-decision heading alone left the description/activation phrased only as competing interpretations. Updated the description and entry discriminator to a material concrete-shape gap, without requiring manufactured alternatives. Replaced residual atomic wording in the disposable-prototype paragraph. Preserved fact/architecture/proof owner boundaries.
+Rejected three new prototype Skills, a mandatory Reaction → Feasibility → Performance chain, and a new readiness state schema. The discriminator is what observation the current decision requires. Prototype provides a disposable artifact/observation; Verify retains proof strength; Northstar adopts/rejects/revises into the same primary Draft. Explicit current experiments cannot be silently deferred, but genuine blockers and research-only scope still permit an honestly partial handoff.
 
-Split an executable implementation handoff from a truthful blocked Draft: exposing a blocker is not proof that the blocked implementation can proceed. Updated the owner-focused eval contracts to match the cohesive-surface rule.
+### Follow-up implementation review
 
-### Implementation round 2 — scorer false-positive review
-
-Initial 22-test suite passed. Additional review identified measurement risks and corrected them:
-
-- a forbidden Prototype call could hide behind a green human-entered grade;
-- a blocked handoff could be labelled executable;
-- paired settings could change between repeats;
-- unclean/mixed real records should remain inconclusive, not be mislabeled as synthetic success;
-- case-specific handoff expectations belong in the private case manifest, not in the scorer logic.
-
-Added focused tests for these changes. Final suite: 26 tests passed. No later scoring/runtime edits were made before packaging.
+Distinguished prioritizing a candidate from adopting it, and Draft implementability from completing the user's current assignment. Kept one primary Draft compatible with multiple connected changes. Revised Prototype's "no complete tests" language so necessary equality/behavior checks and matched measurements are not excluded. Removed the residual stopping loophole that could classify selection-changing empirical work as later verification mechanics. No concrete Hermes lifecycle or optimization answer was put into runtime instructions.
 
 ## Executed checks
 
 ```bash
-cd evals/northstar-paired
-python3 -m unittest -v test_draft_eval.py
-python3 score.py results.example.jsonl
+python3 -m unittest discover -s evals/northstar-paired -p 'test_draft_eval.py' -v
 ```
 
-The tests include prompt-only export, stale-output-directory rejection, empty-run inconclusive exit, fake/missing artifact and forged-line rejection, pair/configuration/session-isolation checks, unknown-grade handling, and negative grading fixtures for missing Draft, fragments, competing authority, caller takeover, over-trigger and premature executable handoff.
+The 26 tests exercise the scorer, identity/line-span validation, paired settings, prompt export, missing/unknown evidence and recorded negative conditions. They are synthetic observations, not model behavior tests. Test output is retained in `followup-tests.log` in the companion bundle.
 
-These tests feed **synthetic graded observations** to the scorer. They prove that the scorer rejects those recorded conditions; they do not prove that an actual model follows the Skills or that the original Hermes failure is reproduced/fixed.
-
-The existing scorer's example remains schema smoke only. It returns sample-insufficient `INCONCLUSIVE` for behavioral interpretation. Its illustrative latency/token changes are not measurements from this work.
-
-Additional packaging checks: modified Skill YAML frontmatter parsed; Skill names retained; runtime contains no new eval/rubric references; UTF-8 text, whitespace and Markdown fences checked. Four modified-file `git diff --no-index --check` checks produced no diagnostics. The initial shell wrapper treated the expected no-index difference exit code 1 as a command failure; rerun with a noninteractive Git environment confirmed no whitespace errors.
+Additional checks: D1–D8 manifest entries identical to v1; D9–D11 append-only in v2; runtime YAML frontmatter/name checks; no runtime-to-eval reference; unchanged scorer/example bytes; UTF-8 and whitespace checks. The fixture smoke preserves source/hash, input hash/size, equality outcomes, and raw timing samples; no timing number is interpreted as a Skill improvement.
 
 ## Unexecuted behavioral work
 
-The frozen focused set contains 8 reconstructed/constructed cases, requiring 48 actual base/candidate sessions for three repeats plus fresh consumer probes for Intent cases. These runs were **not launched**. No agent runtime is callable in this environment: Codex/Claude executables and model API credentials are absent; the connector-directory check found no connected execution service. This is an execution-access limitation, not a measured model failure.
+The new targeted smoke is D9–D11 × 2 arms = 6 actual actor sessions, plus consumer probes for D9/D11. The full repeated v2 set is 11 × 2 × 3 = 66 actual actor sessions plus applicable consumer probes. Neither has been launched here. The current environment lacks a callable independent agent runner. The original real-task/repeat requirements still apply to broad uplift claims; repeating constructed cases does not make them real corpus.
 
-Do not infer improved routing, owner retention, primary-Draft completion, Prototype precision, token use, latency or Hermes CPU behavior from this report. The next actual evaluation must use the frozen inputs, current base and pinned candidate with a blinded judge. Broader uplift still requires real task cases under the existing paired-eval contract.
+Before a behavioral conclusion, verify actual loaded Skill identity and inspect real trace/result/probe evidence. A finished HTML or a self-reported benchmark is not a substitute. No fixed speedup or mandatory positive optimization result is required: a correctly supported rejection can be the right outcome.
 
-## Skill Doctor correction
+## Skill Doctor correction retained
 
-Repository history records `c13842d53c718ad0a3b068b0e1ed96ed7f147a10`, 2026-09-09, `cleanup: remove unused skill-doctor files`. The earlier conversational attribution to accidental removal by #93 was wrong. This patch does not restore the removed Skill or fabricate a Skill Doctor score.
+Commit `c13842d53c718ad0a3b068b0e1ed96ed7f147a10` on 2026-09-09 explicitly removed Skill Doctor (`cleanup: remove unused skill-doctor files`), before #93. It is not restored by this change, and no Skill Doctor score is fabricated.

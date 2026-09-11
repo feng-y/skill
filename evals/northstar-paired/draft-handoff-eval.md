@@ -4,9 +4,9 @@ Eval-only. This is an evidence-checked **scoring sidecar**, not an agent launche
 
 ## Cases and claim boundary
 
-`draft-cases.json` freezes eight cases: connected Hermes sharing change; blocked factual premise; adopted corrections scattered across comments; clear local change; independent AE caller; independent Verify caller; verification-source identity gap; two independent Intents.
+`draft-cases.json` freezes eleven cases (v2; D1–D8 unchanged): connected Hermes sharing change; blocked factual premise; adopted corrections scattered across comments; clear local change; independent AE caller; independent Verify caller; verification-source identity gap; two independent Intents; selection from candidate Evidence; an actual disposable code/CPU experiment; empirical selection blocked by an unavailable backend.
 
-D1 reconstructs a user-reported Hermes failure. The original session and production sources are not available. Its concrete sharing/lifetime facts are deliberately supplied **fixture context**, not claims about the real Hermes implementation. D2–D8 are constructed counterexamples. Repeating them does not create a corpus of real observed tasks.
+D1 reconstructs a user-reported Hermes failure. The original session and production sources are not available. Its concrete sharing/lifetime facts are deliberately supplied **fixture context**, not claims about the real Hermes implementation. D2–D8 are constructed counterexamples. D9–D11 are additional constructed cases informed by a user-supplied Codex real-machine retrospective, not the original transcript. D1 preselects the shared-data design and therefore is an integration control, not a reproduction of the candidate-selection failure. Repeating them does not create a corpus of real observed tasks.
 
 The primary comparison is base `acc09e5040b808b46cc8f9aea17bbac988d639ab` versus this change's pinned head. This measures the new correction, not separate causal uplift from #93 versus #94.
 
@@ -22,9 +22,9 @@ The primary comparison is base `acc09e5040b808b46cc8f9aea17bbac988d639ab` versus
 python3 evals/northstar-paired/draft_eval.py export-prompts /tmp/draft-actor-input
 ```
 
-The output directory must be new. It contains only `01.txt` … `08.txt`, in manifest order. Do not place the private case manifest or this rubric in an actor's workspace.
+The output directory must be new. It contains only `01.txt` … `11.txt`, in manifest order. Do not place the private case manifest or this rubric in an actor's workspace.
 
-One pair per case is smoke; the full focused set is **8 cases × 2 arms × 3 repeats = 48 actual sessions**, plus fresh consumer probes for Intent cases. The existing broader uplift threshold remains at least five real cases and three clean repeats per arm. This constructed set alone cannot establish that broad claim.
+One pair per case is smoke; the full focused set is **11 cases × 2 arms × 3 repeats = 66 actual sessions**, plus fresh consumer probes for Intent cases. The existing broader uplift threshold remains at least five real cases and three clean repeats per arm. This constructed set alone cannot establish that broad claim.
 
 ## Judge checks
 
@@ -74,3 +74,15 @@ Exit codes: `0` focused non-regression after complete clean-session records; `1`
 Keep using the unmodified `score.py` for actual Northstar handoff/clarification/speculation/reinterpretation and token/tool/latency records in its existing schema, joined by case/repeat/arm. Do not put independent AE/Verify cases into Northstar handoff-rate denominators. Do not invent timing/counters when the host cannot expose them. Both the Draft sidecar and applicable original quality/cost guardrails matter to merge interpretation.
 
 Skill Doctor is not currently installed in this repository: explicit cleanup `c13842d` removed it before #93. This sidecar does not restore it, read local conversation history or upload transcripts. A future real-corpus assessment can apply its evidence-first attribution approach; no grade is fabricated here.
+
+## v2 additions: selection, adequate experiment and honest blocking
+
+Start the new targeted smoke with D9–D11 × base/candidate = 6 real actor sessions, plus consumer probes for D9/D11. Do not relabel that smoke as a full repeated-suite result; the scorer's complete-suite gate requires all frozen cases. Old v1 records remain v1 evidence; do not reinterpret their former coverage as v2 coverage.
+
+- **D9:** evidence already exists. Select the coherent current change and integrate rejection/correction into one primary Draft; do not re-run experiments for ceremony or rename a candidate ledger as Draft.
+- **D10:** actually run the small self-contained Python reference and disposable sharing experiment. This deliberately tests execution/representation adequacy without fabricating a Hermes codebase or requiring a production deployment. The host must provide Python/shell/writable scratch; otherwise record a host/setup failure, not a model failure or a passing run. Preserve source and raw equality/timing output in the trace. The judge marks `prototype_discipline=false` for HTML-only, plan-only, unexecuted code, skipped explicit experiments or unjustified deferral. No fixed speedup is expected.
+- **D11:** the required data backend is unavailable and experiments still decide selection. A blocked best-known Draft is correct; prioritized J must not be reported as an adopted design. The user-requested experiment scope must not be silently reduced.
+
+Inspect the **actually loaded** Skill content, version/hash and applicable overrides from the execution trace; a manifest listing the desired repository revision is not proof of the loaded contract. If an HTML-only Skill resolved instead of engineering Prototype, classify that separately as an installation/resolution problem. Do not claim the repository's Prototype was behaviorally evaluated, or erase the mismatch by renaming a trace. This identity check belongs to eval setup/attribution, not a mandatory new runtime protocol.
+
+The three experiment purposes mentioned in the retrospective (reaction, feasibility, performance) distinguish what evidence is needed; they do not add Skill owners or fixed stages. Prototype can build/run a disposable artifact; Verify retains proof judgment; the original caller retains the adoption decision. Equal output on a tiny fixture is not exhaustive equivalence and a microbenchmark result is not production CPU improvement.

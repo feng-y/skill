@@ -68,3 +68,15 @@ Use equal pinned target/model/tools/response policy, fresh candidate sessions, p
 Skill Doctor is absent on current main. History identifies explicit commit `c13842d53c718ad0a3b068b0e1ed96ed7f147a10` on 2026-09-09 (`cleanup: remove unused skill-doctor files`), before #93. The earlier claim that #93 accidentally deleted it was incorrect. Do not restore a deliberately removed surface as part of this change.
 
 The current execution environment has Python but no Codex/Claude executable, model API credentials, or connected agent-runtime service. GitHub reading/writing is available through the connector. Local smoke can run; independent agent sessions cannot be claimed as executed. Do not manufacture transcripts, Skill Doctor scores, token/latency values, or clean-session results.
+
+## Real-machine retrospective follow-up (PR #95, after c7e5987)
+
+The user supplied a Codex retrospective from the actual machine: a candidate ledger and a downgraded lifecycle HTML were delivered instead of the selected core path and explicitly requested runnable experiments. This strengthens failure evidence, but is not the raw original trace or an independently verified artifact corpus, and does not establish which Skill revision the run used. Ignore incidental path names; do not infer what candidate J implemented.
+
+Review of the revised plan (implementer self-review):
+
+1. **Selection and execution closure:** D1 already supplied the adopted sharing decision, so it tested integration rather than selection. Retain D1 as a positive control; add selection-from-Evidence, actual disposable experiment, and empirically blocked-selection cases. Candidate priority is not adoption, and a ledger is not one adopted primary Draft.
+2. **Owner and scope counterreview:** Do not add Reaction/Feasibility/Performance Skills or a mandatory three-stage protocol. Representation must match the decision: Prototype supplies the smallest adequate artifact/observation; Verify owns proof strength; Northstar owns adoption into the same primary Draft. Preserve already-concrete bypass and direct AE/Verify callers. Draft readiness and completion of the user's currently delegated experiments are separate judgments. A genuine runtime blocker or a research-only request may end with an explicitly partial result.
+3. **Runtime identity:** The reported HTML-only/no-tests contract is not the engineering Prototype contract at c7e5987. Wrong version or name resolution is plausible but unverified. Record the actually loaded Skill identity in real runs; do not "fix" this by blindly renaming Skills or imposing a production-wide loader check.
+
+Disposition: apply the targeted Northstar/Prototype corrections and eval additions. AE, Verify, Unknowns First, runtime ownership and the scorer schema remain unchanged. This supersedes the earlier conclusion that the only remaining work was measurement: the retrospective exposed an untested selection/empirical-closure gap in the first PR #95 candidate.

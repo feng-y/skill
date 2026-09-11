@@ -28,11 +28,11 @@ Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof 
 
 ## 一个 Intent，一个主 Draft
 
-从已有 context 建立并持续修正同一个主 Draft。它是 canonical intended change，不是多个 specialist 输出的集合，也不等于只能有一个物理文件；多个视图和候选对比可以支撑它，但必须能区分当前采用的形态、未决选择与已被替代的解释。独立 Intent 各自拥有主 Draft，不强行合并。
+从已有 context 建立并持续修正同一个主 Draft。它表达**本轮当前采用的 intended change**，不是候选台账、研究目录或优化 backlog；多个视图和候选对比可以支撑它，但不构成并行权威。一个主 Draft 可以包含共同兑现同一 Intent 的多处变化，不等于只能选一个候选或只能有一个物理文件。尚未采用的选择留作明确的未决项，不能把优先调查某个候选写成已经采用它。独立 Intent 各自拥有主 Draft，不强行合并。
 
 Draft 的充分性看**连贯的 material change 是否已经可交接**，不看字数或调用次数。把共同决定核心路径、dataflow、ownership / lifecycle 或 binding boundary 的部分连起来；只展开会改变 intended outcome 或让 fresh Executor 被迫重新做高层判断的关系。局部变更可以只有几句话，不要求穷尽 implementation How。
 
-specialist 返回后，Northstar 必须把采用的 correction / Decision 整合进这个主 Draft，并检查受影响部分与其余部分是否仍一致。不能只转贴局部答案，让 fresh Executor 自行拼出 intended change。仍有 material shape gap 才继续按需 shaping；已有 Draft 已充分时直接交接，不为流程完整调用 Prototype。
+specialist 工作围绕主 Draft 的当前缺口展开。若采用、淘汰或修正某个形态仍依赖必要试验，且该试验属于当前授权范围、现有环境能够执行，就继续驱动相应 specialist / backend 取得结果；不能以“已委派”或“留给下个 session”替代完成。由相应 owner 判读结果后，Northstar 把采用的 correction / Decision 整合进同一个主 Draft，检查与其余部分是否仍一致；不能只转贴局部答案让 Executor 拼接。当前 Draft 已充分、约定的前置委托已完成时直接交接，不为流程完整调用 Prototype，也不接管之后的生产实现或持续调度。
 
 ## Acceptance 定义预期，Verify 负责验证
 
@@ -97,10 +97,10 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 - fresh consumer 不依赖原 conversation 或自行拼接 specialist 输出，就能理解 Problem 与唯一主 Draft 的连贯 material change；
 - binding Constraint / Decision 足以防止 materially wrong interpretation；
 - Acceptance 足以区分真实 outcome 与只完成手段；
-- 剩余未知只影响 Executor How，不再隐藏会改变 intended shape / binding commitment 的选择；
+- 剩余未知只影响 Executor How；会改变当前 Draft 采用、淘汰或修正的必要试验已有相应 owner 判读的结果，不把尚未验证的关键假设标成已收敛；
 - 若需要 tracker handoff，canonical Issue 已创建或更新。
 
-若事实或 Human-owned choice 仍阻断 material shape，保留 best-known 主 Draft、具体 blocker 与下一步 owner；可以交接调查或未受影响的工作，但不能把被阻断部分标为可执行实现 handoff。不能为了 Draft 看起来完整而猜测 territory 或代替 Human 承诺。
+若事实、必要试验或 Human-owned choice 仍阻断 material shape，保留 best-known 主 Draft、具体 blocker 与下一步 owner；可以交接调查或未受影响的工作，但不能把被阻断部分标为可执行实现 handoff。Draft 足够可实现与本轮委托已完成是两个判断：用户明确要求在本轮完成的原型 / 比较尚未完成时，不能因有了 Draft 就宣布任务完成，或未经授权改成未来工作。缺执行能力时如实报告，用户明确限定为调研 / 中间交接时遵循该范围；不为形成 Draft 强制运行未来产品的全部验收，也不猜测 territory 或代替 Human 承诺。
 
 ## 常见错误
 

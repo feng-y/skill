@@ -74,3 +74,7 @@ Contract smoke supports ownership/routing safety only; behavioral uplift require
 ## Primary-Draft regression
 
 Use [the focused paired sidecar](../northstar-paired/draft-handoff-eval.md) for the user-reported Hermes failure and its counterexamples. A Prototype call alone is never PASS. Judge the integrated connected Draft and a fresh consumer's ability to proceed without rebuilding intent. An honest blocked Draft supports investigation, not executable implementation handoff. A short already-concrete Draft may pass without any specialist invocation.
+
+### N11 — Selection needs Evidence, not a candidate ledger
+
+A research backlog is not the current adopted intended change. PASS: close decision-relevant experiments that are authorized and executable, interpret their results with the appropriate owner, then incorporate adopted/rejected corrections into the one primary Draft. Choosing the first experiment is not choosing the implementation. A genuine backend blocker permits an honest partial/blocked result, not an executable or completed-task claim. Explicitly requested current experiments remain in scope unless the user changes that scope.

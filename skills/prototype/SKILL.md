@@ -7,7 +7,7 @@ description: "Caller-neutral model-invoked concrete-shaping specialist: when an 
 
 Prototype 是 **caller-neutral、主要由 model 按需调用的 concrete-shaping specialist**。当 caller 已经理解自己负责的语义，但核心路径、ownership surface、boundary、interface、usage 或 interaction 仍隐含、断裂或存在 material ambiguity，妨碍当前判断时，用最低成本的可观察 representation 把差异暴露出来，再把 correction / Evidence 返回**原 caller**。
 
-`Prototype` 不等于一定写代码。Core Path、Usage / Interface Draft、state transition、mock 或 throwaway code 都可以是 prototype surface；选择能关闭当前 material decision 的最便宜形态。
+`Prototype` 不等于一定写代码，也不等于交互 HTML。Core Path、Usage / Interface Draft、state transition、mock 或 throwaway code 都可以是 prototype surface；选择的是**能够回答当前 material decision 的最低成本表示 / 试验**，不是最便宜或最容易展示的 artifact。
 
 Prototype 不拥有 canonical Intent / Issue，不决定长期 Target Architecture，不定义 verification claim，不编译 execution Graph，也不进入 production implementation。**谁调用 Prototype，谁继续拥有原来的 semantic judgment。**
 
@@ -63,9 +63,9 @@ consumer-facing API、CLI、schema、config、workflow 或 interaction 是决定
 
 ### Disposable Prototype
 
-只有 static representation 仍不足以判断当前 surface 的关键差异时才写。只检验这个 decisive uncertainty，保持 cheap、reversible、disposable；可以是最小交互、mock、throwaway code、timing probe 或其他可体验 artifact。
+当选择取决于实际运行的可行性、行为差异或成本时，static representation 不足以关闭问题；用户明确委托本轮实做时，也不能用图或计划代替。围绕当前 decisive uncertainty 生成并运行最小、可丢弃的目标语言 code spike / timing probe，或复用已有可执行实验。若待决问题只是形态、用法或交互理解，静态或交互表示可能已经充分。
 
-不要为了 production quality 补持久化、通用抽象、完整测试、兼容层或 rollout，除非这些本身就是当前 decision。
+不要为了 production quality 补持久化、通用抽象、完整测试、兼容层或 rollout；但回答当前问题所必需的行为 / 等价性检查与 baseline/treatment 测量不能省略。Prototype 提供试验 artifact 与实际 observation，proof obligation 与 Evidence 是否足以支持可行性、等价性或性能 claim 由 `$verify` 判断；试验收益不等于生产收益。代码存在、HTML 可点击或展示完整不构成这类证明，不能把仍会影响形态选择的实测降格为以后再做的 verification mechanics。
 
 ## 候选对比
 
@@ -78,7 +78,7 @@ consumer-facing API、CLI、schema、config、workflow 或 interaction 是决定
 - 被委托的 cohesive surface 与当前 shape gap；
 - 连贯的 concrete representation / candidate contrast，保留会改变 caller judgment 的耦合关系；
 - 已观察到的 path、ownership surface、boundary、usage、interface 或 invariant 差异；
-- 新产生的 decision-relevant Evidence；
+- 新产生的 decision-relevant Evidence；实做试验需区分实际执行与未执行，保留可复现入口、输入 / 配置身份及观察结果的引用；
 - 仍会改变 concrete shape 的 unresolved point。
 
 **不要替 caller 宣布最终 semantic decision。** caller 根据自己的 owner 职责消费 correction / Evidence：Northstar 更新 Intent，AE 更新 Target judgment，Verify 更新 observable / proof surface，Unknowns First 回到原 decision owner。
@@ -89,4 +89,4 @@ Prototype 不生成 Taskbook、issue graph、PR split、implementation checklist
 
 ## 停止条件
 
-当被委托 surface 已连贯到足以支持 caller 判断，且剩余差异只属于 implementation How / verification mechanics 时停止；不能因一个局部问题已回答就留下关键连接缺口。事实或 owner 决策阻断时，返回具体 gap，不强行补全。caller 负责采用结果与最终整合；Human / caller correction 只重开受影响 surface，不重做已经闭合的部分。
+当被委托 surface 已连贯、所需表示或实做已完成到足以交回 caller 判断，且剩余差异不再影响当前形态选择时停止；不能因一个局部演示完成就留下关键路径或实测缺口。事实、执行能力或 owner 决策阻断时，返回具体 gap 和已完成部分，不伪造结果或强行补全。caller 负责采用结果与最终整合，Verify 保留 proof 判断；Human / caller correction 只重开受影响 surface，不重做已经闭合的部分。

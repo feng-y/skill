@@ -67,3 +67,7 @@ The caller understands a sharing change, but shared construction, consumer acces
 PASS: multiple candidate sketches or views remain supporting material; Northstar integrates adopted correction into the existing Intent's primary Draft. Independent AE/Verify callers retain their own judgment without acquiring a synthetic Intent or Northstar stage.
 
 See [the focused paired sidecar](../northstar-paired/draft-handoff-eval.md). These contract scenarios are not recorded behavioral runs.
+
+### P11 — Match representation to the empirical decision
+
+The choice depends on executable feasibility/equivalence/cost, not a user's understanding of a state diagram. PASS: run the smallest adequate code experiment with the decision-relevant checks and actual observations; return to the caller and retain Verify's proof judgment. HTML, unexecuted code and an experiment plan cannot substitute. No mandatory code experiment for an already-understood visual/usage question, no fixed performance-win expectation, and no automatic production-gain claim. See D9–D11 for selection, real execution and unavailable-backend counterexamples.
