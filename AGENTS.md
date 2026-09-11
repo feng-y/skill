@@ -29,12 +29,14 @@
 当前 canonical capability map：
 
 - **`northstar`**：conversation / request / incident → canonical engineering Intent；需要 durable handoff 时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
-- **`prototype`**：只拥有 already-understood Intent 的 concrete reaction surface；Core Path / Usage / disposable Prototype 都是手段，不拥有 Intent SOT。
+- **`prototype`**：只拥有 already-understood semantic question 的 concrete reaction surface；Core Path / Usage / disposable Prototype 都是手段，不拥有 caller 的 Intent / Architecture / Verification judgment。它是 **caller-neutral、主要由 model 按需调用的 specialist**，不绑定 Northstar。
 - **`architecture-evolution`**：拥有长期 Target Architecture judgment + Current → Target Evolution Program。两层 judgment 必须分开，但不拆成两个顶层 Skill。
 - **`verify`**：拥有 engineering verification；从 authoritative claim 推导 proof obligation，选择并驱动 real-artifact verifier/backend，收集 Evidence 并判断 proven / false / unproven。
 - **`unknowns-first`**：只拥有 map-versus-territory 的**事实未知关闭**；它可以做 probe / source alignment，但不替其他 owner 关闭 Intent、concrete shape、Architecture 或 verification judgment。
 
-不要复制 owner：Northstar 不判 proof sufficiency；Verify 不重写 Intent 或设计 Target；Prototype 不决定 Architecture；AE 不用 Program convenience 反推 Intent；Unknowns First 不把 factual probe 扩成 intent interview、prototype、architecture design 或 proof judgment。
+不要复制 owner：Northstar 不判 proof sufficiency；Verify 不重写 Intent 或设计 Target；Prototype 不接管 caller 的 semantic ownership；AE 不用 Program convenience 反推 Intent；Unknowns First 不把 factual probe 扩成 intent interview、prototype、architecture design 或 proof judgment。
+
+**Prototype routing rule:** Northstar、AE、Verify、Unknowns First 或其他 semantic caller 都可以在“当前语义已理解，但 concrete path / usage / interface / interaction 仍存在 material ambiguity”时 model-invoke `$prototype`。Prototype 只返回 concrete contrast / correction / Evidence 给原 caller；原 caller 继续做自己的 judgment。不要把 Prototype 做成 Human 必经入口或固定阶段。
 
 `Goal` 不属于稳定跨 Skill semantic model。若一个抽象 outcome 真的增加 decision information，把它落到 Problem、Draft、Constraint、Decision 或 Acceptance；不要维护独立 Goal artifact / field / lifecycle。
 
@@ -52,7 +54,7 @@
 
 - **Drafted Issue**：Northstar Intent 的 durable carrier / canonical intended change。
 - **PR**：realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在 PR。
-- **Prototype artifact**：reaction surface，可丢弃；durable correction / Evidence 回 caller。
+- **Prototype artifact**：reaction surface，可丢弃；durable correction / Evidence 返回原 caller，由 caller 决定是否需要 fold back。
 - **Architecture handoff**：只有独立调用或真实跨边界需要时持久化；被 Northstar 调用时优先 fold durable structural decision 回 Issue。
 - **Verify result**：Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing；默认留在 PR / review / verification surface，不成为第二份 Intent SOT。
 
@@ -69,7 +71,7 @@
 
 - factual map-versus-territory gap → Unknowns First；
 - Intent premise / Constraint / Acceptance 被推翻 → Northstar；
-- already-understood Intent 仍出现 materially different concrete shape → Prototype；
+- 已理解语义仍出现 materially different concrete shape → Prototype，结果返回当前 caller；
 - 新的长期 responsibility / boundary / dependency fork → Architecture Evolution；
 - 当前 contract 的 material completion / safety claim 需要定义、补足或判断 proof → Verify；
 - 复杂 material graph 的 work/dependency 被 verified Evidence 改变、但 Intent 仍成立 → Northstar material compile 只重算 affected cone。
