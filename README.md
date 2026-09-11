@@ -28,7 +28,7 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `northstar` — canonical engineering-intent skill. 把 conversation / request / incident 收敛成 durable Intent；需要跨 session / agent / MultiCA 流转时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
+- `northstar` — canonical engineering-intent skill. 把 conversation / request / incident 收敛成 durable Intent；需要跨 session / agent / Human 或执行环境流转时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
 - `prototype` — concrete-shaping specialist. Intent 已理解但具体 Target 仍可能 materially different 时，用最便宜的 Core Path / Usage / disposable Prototype 暴露差异并返回 correction / Evidence。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
 - `replay` — verification / outcome owner. 从 authoritative Acceptance / Constraints 出发，选择并核实 test/replay/runtime Evidence，判断 proven / false / unproven，并把问题路由给正确 owner。
@@ -51,7 +51,7 @@ prototype  architecture-evolution  unknowns-first
               ↓
          Drafted Issue
               ↓
-       Human / Agent / MultiCA
+          execution
               ↓
               PR
               ↓
@@ -64,6 +64,8 @@ prototype  architecture-evolution  unknowns-first
 ```
 
 Northstar owns **meaning**; Replay owns **verification**. Prototype makes understood Intent inspectable; Architecture Evolution resolves long-term structure and current structural evolution; Unknowns First resolves territory uncertainty.
+
+Execution orchestration / control plane is orthogonal to this capability flow. It may start, route, pause, resume, or retry work, but it does not own or transform Intent, architecture, verification semantics, or artifact authority.
 
 There is no independent `Goal` layer. Durable intent is expressed directly as Problem / Draft / Constraints / Acceptance / Decisions / Evidence when needed.
 

@@ -31,7 +31,9 @@ For every case:
 5. give each handoff to a separate fresh Executor probe; only the independent probe may set `handoff_validated=true`;
 6. one pair per case is smoke; behavioral claims require at least 5 real cases and 3 clean-session repeats per arm per case.
 
-The frozen set should cover at least: clear direct Intent, concrete-shape ambiguity, territory unknown, architecture pressure, and complex material dependency. A durable Issue / MultiCA handoff case is strongly preferred.
+The frozen set should cover at least: clear direct Intent, concrete-shape ambiguity, territory unknown, architecture pressure, and complex material dependency. A durable cross-session Issue handoff case is strongly preferred.
+
+Execution orchestration / control-plane behavior is outside this eval. The handoff must remain valid regardless of which system starts, routes, pauses, resumes, or retries execution.
 
 ## Existing JSONL schema
 
@@ -70,4 +72,4 @@ If sample size is insufficient or repeated runs disagree materially, report meas
 
 ## What this eval does not prove
 
-It does not prove implementation quality after execution, Replay verification quality, or Architecture Evolution quality. It measures Northstar Intent handoff behavior only.
+It does not prove implementation quality after execution, Replay verification quality, Architecture Evolution quality, or orchestration/control-plane quality. It measures Northstar Intent handoff behavior only.

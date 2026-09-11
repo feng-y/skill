@@ -5,7 +5,7 @@ description: "Canonical engineering-intent skill: turn a conversation, request, 
 
 # Northstar · 工程 Intent 的 canonical owner
 
-Northstar 负责把当前 conversation、外部请求、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。当 Intent 需要跨 session、agent、Human 或执行平台流转时，Northstar 将同一份语义 materialize 为 Drafted Issue；Issue 是 Intent 的 durable carrier，不是另一套语义阶段。
+Northstar 负责把当前 conversation、外部请求、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。当 Intent 需要跨 session、agent、Human 或执行环境流转时，Northstar 将同一份语义 materialize 为 Drafted Issue；Issue 是 Intent 的 durable carrier，不是另一套语义阶段。
 
 Northstar 不再拥有独立 Goal 层，不默认生成 Taskbook，不负责 verification / outcome judgment，也不持续监督 Executor。PR 是 realized Change / Delivery surface；`$replay` 负责依据当前 authoritative contract 验证真实 outcome。
 
@@ -56,7 +56,7 @@ specialist 结果不创建第二份 Intent SOT。只把后续 fresh consumer 必
 
 用户明确要求创建或更新 Issue，且当前环境存在已授权 tracker action 时，直接创建 / 更新真实 Issue，不停在 Markdown 草稿等待再次确认。已有 canonical Issue 时优先更新它，不创建平行 SOT。
 
-Issue 按 cohesive engineering outcome / responsibility boundary 切，不按一次 model context、一个文件或一个 agent session 切。MultiCA / coordinator 是 consumer，不定义 Northstar 的 Issue lifecycle。
+Issue 按 cohesive engineering outcome / responsibility boundary 切，不按一次 model context、一个文件或一个 agent session 切。Execution orchestration / control plane 位于 Northstar 语义之外；它可以依据 tracker / runtime state 控制工作何时以及由谁继续，但不能定义或改写 Intent。
 
 ## Material compile 只在真正需要时出现
 
