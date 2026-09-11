@@ -73,6 +73,8 @@ Execution orchestration / control plane is orthogonal to this capability flow. I
 
 There is no independent `Goal` layer. Durable intent is expressed directly as Problem / Draft / Constraints / Acceptance / Decisions / Evidence when needed.
 
+Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), including removed surfaces, successor owners, and intentionally retired semantics. The changelog is historical context; runtime truth remains in `AGENTS.md`, each `SKILL.md`, and focused evals.
+
 ## Artifacts
 
 - **Drafted Issue** — durable carrier for Northstar Intent / intended change.
