@@ -12,7 +12,7 @@ Architecture Evolution 负责两层连续但不同的判断：
 
 这两层语义必须分开，但不需要拆成两个顶层 Skill。Program convenience 不能反向定义 Target；Current code 只能证明 reality，不能因为已经存在就成为长期 Target。
 
-Architecture Evolution 不拥有 canonical Intent，不替 Human 改变投入、兼容、长期维护或风险 commitment，不进入 file/class/API/patch 等 implementation How。它拥有 structural semantics；proof obligation / sufficiency judgment 交 `$evidence`，具体 verifier/backend 则属于项目执行环境。
+Architecture Evolution 不拥有 canonical Intent，不替 Human 改变投入、兼容、长期维护或风险 commitment，不进入 file/class/API/patch 等 implementation How。它拥有 structural semantics；proof obligation / backend selection / sufficiency judgment 交 `$verify`。
 
 ## 输入：caller-neutral structural pressure
 
@@ -79,11 +79,11 @@ Current 已满足 Target，或 change pressure 完全落在当前正确 owner �
 
 Program 写 material structural outcome、dependency、migration boundary 与 real exit，不写 file、class、API、schema、helper、PR split、patch 顺序或具体测试命令，除非 authority 已绑定 representation。
 
-## Structural semantics 与 Evidence
+## Structural semantics 与 Verify
 
-AE 定义 / 采用 **Target 与 structural completion claim**；`$evidence` 负责回答这些 claims 在 realized change 中是否已被真实 Evidence 证明。
+AE 定义 / 采用 **Target 与 structural completion claim**；`$verify` 负责回答这些 claims 在 realized change 中是否被真实 Evidence 证明。
 
-例如 Target 已明确要求 old authority exit、caller 不再穿透 owner、dependency 归位时，Evidence 可以选择最直接的 structural inspection / runtime source / repo graph 等观察，并判断 `proven / false / unproven`。DaVinci Replay 若能提供某部分 behavior/equivalence observation，可以作为 backend 输入；它本身不定义 architecture claim，也不能仅凭 behavior parity 证明 architecture gain。
+例如 Target 已明确要求 old authority exit、caller 不再穿透 owner、dependency 归位时，Verify 可以选择最直接的 structural inspection / runtime source / repo graph 等观察，并判断 `proven / false / unproven`。DaVinci Replay 若能提供某部分 behavior/equivalence observation，可以作为 backend 输入；它本身不定义 architecture claim，也不能仅凭 behavior parity 证明 architecture gain。
 
 如果 verification 暴露的是**此前未决的新 architecture fork**，才回 AE 重开受影响 Target / Program；不要为了一个 implementation red 重新设计 Target。
 
@@ -91,7 +91,7 @@ AE 定义 / 采用 **Target 与 structural completion claim**；`$evidence` 负�
 
 ## Evidence-driven re-entry
 
-Research、execution、review 或 Evidence verification 都可能触发 AE re-entry，但只重开真正受影响部分：
+Research、execution、review 或 Verify 都可能触发 AE re-entry，但只重开真正受影响部分：
 
 - current reality / cost / migration condition 变化，Target premise 不变 → 只重算 Program；
 - Target deciding premise 失效或出现新的长期 fork → 重做受影响 Target judgment；
