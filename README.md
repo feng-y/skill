@@ -29,10 +29,25 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 ## Skills
 
 - `northstar` — canonical engineering-intent skill. 把 conversation / request / incident 收敛成 durable Intent；需要跨 session / agent / Human 或执行环境流转时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
-- `prototype` — concrete-shaping specialist. Intent 已理解但具体 Target 仍可能 materially different 时，用最便宜的 Core Path / Usage / disposable Prototype 暴露差异并返回 correction / Evidence。
+- `prototype` — caller-neutral、主要由 model 按需调用的 concrete-shaping specialist. 当前 caller 已理解自己的语义，但具体 path / usage / interface / interaction 仍可能 materially different 时，用最便宜的 Core Path / Usage / disposable Prototype 暴露差异，再把 correction / Evidence 返回原 caller。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
 - `verify` — engineering verification skill. 从 authoritative completion/safety claim 出发定义 proof obligation，选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。
 - `unknowns-first` — factual map-versus-territory specialist. 只关闭会改变下一步判断的 repo/runtime/data/source fact，不接管 Intent、Prototype、Architecture 或 proof judgment。
+
+## Invocation model
+
+主要 Human-facing / direct capabilities：
+
+- `northstar` — “我们到底要什么？”
+- `architecture-evolution` — “长期结构应该怎么归位？”
+- `verify` — “结果是否真的符合 claim？”
+
+主要 model-invoked specialists：
+
+- `prototype` — 当前 caller 已理解语义，但需要把 concrete shape 变得可观察；Human 很少需要主动调度。
+- `unknowns-first` — 当前判断依赖未核实事实时自动/按需关闭 factual gap；Human 也可以直接要求先查事实。
+
+`prototype` **不属于 Northstar 私有流程**。Northstar、Architecture Evolution、Verify、Unknowns First 或其他 semantic caller 都可以在遇到 material concrete-shape ambiguity 时调用它；Prototype 返回后，原 caller 继续拥有自己的 judgment。
 
 ## Capability map
 
@@ -46,8 +61,8 @@ conversation / request / incident
    │          │                  │
    ▼          ▼                  ▼
 prototype  architecture-evolution  unknowns-first
-   │          │                  │
-   └──────────┴──────────────────┘
+   ▲          │                  │
+   └──── model-invoked by any semantic caller ────┘
               ↓
          Drafted Issue
               ↓
@@ -58,6 +73,9 @@ prototype  architecture-evolution  unknowns-first
 accepted completion / safety / structural claim
               ↓
             verify        # optional before / during / after execution
+              │
+              ├── concrete observable shape unclear → prototype
+              ↓
       proof obligation
               ↓
    verification backend(s)
@@ -69,7 +87,7 @@ accepted completion / safety / structural claim
   affected semantic owner / Executor
 ```
 
-Northstar owns **meaning**. Prototype owns **concrete reaction surfaces**. Architecture Evolution owns **structural judgment**. Unknowns First owns **factual uncertainty**. Verify owns **verification / proof judgment**; Evidence is its proof artifact and basis.
+Northstar owns **meaning**. Prototype owns **concrete reaction surfaces only** and returns them to its caller. Architecture Evolution owns **structural judgment**. Unknowns First owns **factual uncertainty**. Verify owns **verification / proof judgment**; Evidence is its proof artifact and basis.
 
 Verify is not a mandatory post-PR stage. It may be invoked before implementation to make a material proof route explicit, during implementation when verification premises change, or after implementation to judge realized results. Clear local changes can rely on an already-authoritative focused check without extra ceremony.
 
@@ -85,7 +103,7 @@ Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), inc
 
 - **Drafted Issue** — durable carrier for Northstar Intent / intended change.
 - **PR** — realized Change / Delivery; implementation How、diff、implementation-local validation 与 review 默认留在这里。
-- **Prototype artifact** — reaction surface, normally disposable; durable correction returns to the caller.
+- **Prototype artifact** — reaction surface, normally disposable; correction / Evidence returns to the caller, which decides whether anything durable should be persisted.
 - **Architecture handoff** — only when a durable structural handoff is independently useful; otherwise structural decisions fold back to the caller / Issue.
 - **Verify result** — Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing. It normally stays with the PR/review/verification surface unless it changes durable Intent or Architecture.
 
@@ -97,7 +115,7 @@ For behavior-preserving migration/refactoring, pin an authoritative baseline/ora
 
 ## Loop
 
-Research、execution、review 和 Verify 都可能产生 new verified Evidence。Evidence 只重开真正受影响的 owner：Intent premise 回 Northstar，concrete-shape ambiguity 回 Prototype，长期结构 fork 回 Architecture Evolution，factual uncertainty 回 Unknowns First；复杂 material work/dependency 变化但 Intent 仍成立时，只重算 Northstar material graph 的 affected cone。
+Research、execution、review 和 Verify 都可能产生 new verified Evidence。Evidence 只重开真正受影响的 owner：Intent premise 回 Northstar，长期结构 fork 回 Architecture Evolution，factual uncertainty 回 Unknowns First；当任一 caller 已理解语义但 concrete shape 又变得 materially ambiguous 时，可 model-invoke Prototype 并只重开对应 shape surface；复杂 material work/dependency 变化但 Intent 仍成立时，只重算 Northstar material graph 的 affected cone。
 
 ## Architecture Evolution usage
 
