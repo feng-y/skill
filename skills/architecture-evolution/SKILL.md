@@ -12,23 +12,25 @@ Architecture Evolution 负责两层连续但不同的判断：
 
 这两层语义必须分开，但不需要拆成两个顶层 Skill。Program convenience 不能反向定义 Target；Current code 只能证明 reality，不能因为已经存在就成为长期 Target。
 
-Architecture Evolution 不拥有 canonical Intent，不替 Human 改变投入、兼容、长期维护或风险 commitment，不进入 file/class/API/patch 等 implementation How，也不负责 behavior verification / outcome judgment；这些分别属于 Northstar / Human、Executor 与 `$replay`。
+Architecture Evolution 不拥有 canonical Intent，不替 Human 改变投入、兼容、长期维护或风险 commitment，不进入 file/class/API/patch 等 implementation How。它拥有 structural semantics；普通 implementation checks 属于 Executor，需要独立 completion proof 时可调用 `$replay`。
 
-## 输入：Intent pressure，不建立独立 Goal 层
+## 输入：caller-neutral structural pressure
 
-从当前 Northstar Intent / Drafted Issue、Human correction、稳定 architecture/domain authority 与 verified reality 中提取**会长期改变结构的 change pressure**。只保留会影响 responsibility、authority、knowledge ownership、boundary、variation、dependency、lifecycle、failure/isolation 或兼容承诺的信息。
+AE 可以直接从当前 engineering request / existing Intent / Drafted Issue / Human correction 启动；**不要求先运行 Northstar**。当 canonical Northstar Intent / Issue 已存在时，它定义 accepted outcome / commitment boundary，AE 不另建 Intent SOT。
 
-不要求也不维护独立 `Goal` artifact。若一个抽象 outcome 真正影响结构判断，它已经应当体现在 Intent 的 Problem、Draft、Constraint、Decision 或 Acceptance 中。
+从请求、稳定 architecture/domain authority 与 verified reality 中只提取**会长期改变结构的 change pressure**：responsibility、authority、knowledge ownership、boundary、variation、dependency、lifecycle、failure/isolation 或兼容承诺。
+
+不要求也不维护独立 `Goal` artifact。若一个抽象 outcome 真正影响结构判断，它应体现在 authoritative intent / request 的 Problem、Draft、Constraint、Decision 或 Acceptance 中。
 
 ## Target gate
 
-优先复用仍有效的 authoritative Target。只有 Target 缺失、已有 premise 失效，或新的 Intent / authority / verified reality 产生会 materially 改变长期 owner / boundary / dependency / lifecycle 的 fork 时，才重新做 Target judgment。
+优先复用仍有效的 authoritative Target。只有 Target 缺失、已有 premise 失效，或新的 intent / authority / verified reality 产生会 materially 改变长期 owner / boundary / dependency / lifecycle 的 fork 时，才重新做 Target judgment。
 
 若变化只涉及当前迁移成本、顺序、patch shape 或 implementation difficulty，Target 不重算。
 
 ### Responsibility / knowledge ownership first
 
-先判断哪个长期 capability 应拥有并隐藏完成同一变化原因所需的 knowledge、state、behavior、authority、lifecycle 与主要 structural verification semantics。正确 owner 应让 caller 不再重组这些私有决定。
+先判断哪个长期 capability 应拥有并隐藏完成同一变化原因所需的 knowledge、state、behavior、authority、lifecycle 与主要 structural semantics。正确 owner 应让 caller 不再重组这些私有决定。
 
 当前 module、目录或用户点名范围只是 investigation scope，不自动成为 Target boundary。高内聚低耦合是正确 knowledge ownership 的结果，不是独立评分。
 
@@ -77,13 +79,24 @@ Current 已满足 Target，或 change pressure 完全落在当前正确 owner �
 
 Program 写 material structural outcome、dependency、migration boundary 与 real exit，不写 file、class、API、schema、helper、PR split、patch 顺序或具体测试命令，除非 authority 已绑定 representation。
 
-## Evidence 与 Replay
+## Structural judgment 与 Replay
 
-code/config/runtime/test 证明 current reality；有效 architecture/domain authority 约束 Target；Northstar Intent / Human commitment 约束 accepted boundary。
+AE 定义 / 采用 **Target 与 structural completion semantics**；Replay 不重新决定什么结构“应该是对的”。
 
-`$replay` 负责 behavior / compatibility / completion claims 的验证与 outcome judgment。Replay green 只能证明对应 behavior claim，不自动证明 responsibility / authority / dependency 已改善；architecture gain 还需要 structural Evidence。Replay 若暴露此前未知的 architecture fork，将该 finding 路由回 AE，只重开受影响 Target / Program。
+当已经 adopted 的 structural outcome 需要独立验证时，`$replay` 可以依据 Target / Program 中的明确 claim，检查 realized owner、authority exit、dependency、consumer penetration、legacy residue 等 structural facts，并判断这些 claim 是否 proven / false / unproven。Replay behavior parity 单独 green 不足以证明 architecture improvement，因为 proof 还必须覆盖对应 structural claim。
 
-未关闭事实若会改变 Target、Program scope、dependency 或 real exit，先用最小 Evidence 关闭，必要时调用 `$unknowns-first`；只影响 implementation How 的未知不扩大调查。
+如果 verification 暴露的是**此前未决的新 architecture fork**，才回 AE 重开受影响 Target / Program；不要为了一个 implementation red 重新设计 Target。
+
+未关闭 factual premise 若会改变 Target、Program scope、dependency 或 real exit，先用最小 Evidence 关闭，必要时调用 `$unknowns-first`；只影响 implementation How 的未知不扩大调查。
+
+## Evidence-driven re-entry
+
+Research、execution、review 或 Replay 的 verified Evidence 都可能触发 AE re-entry，但只重开真正受影响部分：
+
+- current reality / cost / migration condition 变化，Target premise 不变 → 只重算 Program；
+- Target deciding premise 失效或出现新的长期 fork → 重做受影响 Target judgment；
+- accepted intent / Human commitment 改变 → 返回 Northstar / Human；
+- 只是 implementation choice / local defect → AE 不介入。
 
 ## 返回与持久化
 
@@ -95,8 +108,6 @@ code/config/runtime/test 证明 current reality；有效 architecture/domain aut
 - 会改变 Target / Program 的 unresolved Evidence 或 Human choice。
 
 被 Northstar 调用时，只把后续执行需要的 durable structural Decision / Constraint / Draft correction fold back 到 canonical Intent / Issue。独立调用且用户需要 architecture handoff 时才形成持久文档；AE 不强制每次生成第二份 Markdown SOT。
-
-current reality、成本或 migration 条件变化只重算受影响 Program；Target premise 失效才重做 Target judgment；accepted Intent / Human commitment 改变则回 Northstar / Human。
 
 ## 按需 references
 

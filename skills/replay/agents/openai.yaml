@@ -1,4 +1,4 @@
 interface:
   display_name: "Replay"
-  short_description: "验证当前 contract 是否成为真实 outcome"
-  default_prompt: "使用 $replay，从当前 authoritative Northstar Intent / Drafted Issue 的 Acceptance 与 binding constraints 出发，选择并核实 claim-relevant test/replay/runtime Evidence，独立判断 proven / false / unproven；implementation gap 回 PR/Executor，Intent 错误回 $northstar，长期结构 fork 回 $architecture-evolution。不要接管 repair 或执行管理。"
+  short_description: "按需独立验证 material completion claim"
+  default_prompt: "使用 $replay，仅在独立 verification 对当前 material claim 有价值时，从 authoritative engineering contract 的 Acceptance / binding constraints 出发，选择并核实 claim-relevant test/replay/runtime/structural Evidence，判断 proven / false / unproven。普通 implementation-local checks 留给 Executor；Intent premise 错误回 $northstar，新 architecture fork 回 $architecture-evolution，factual Evidence gap 可交 $unknowns-first。不要发明 completion criteria、repair plan 或执行管理。"

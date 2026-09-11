@@ -1,6 +1,6 @@
 # Material Compile
 
-只在当前 Northstar Intent / Drafted Issue 已经成立，但复杂 material work / dependency 仍使 fresh Executor 无法安全开始时读取。这里组织 executable handoff，不重新定义 Intent，不设计 implementation How，也不拥有 Verification。
+只在当前 Northstar Intent / Drafted Issue 已经成立，但复杂 material work / dependency 仍使 fresh Executor 无法安全开始时读取。这里组织 executable handoff，不重新定义 Intent，不设计 implementation How，也不拥有 Verification 或 execution progress。
 
 ## Intended delta before work graph
 
@@ -12,19 +12,35 @@
 
 复杂 work 用当前 Evidence 已经支持的 material outcomes 与真实 dependency 组织：
 
-- 一个 cut 对应一个可独立判断的 cohesive outcome / responsibility / binding boundary，而不是一个文件或 helper；
+- 一个 cut 对应一个可独立判断的 cohesive outcome / responsibility / binding boundary，而不是一个文件、helper 或 verifier；
 - prerequisite、共享 authoritative surface / conflict、或必须共同成立的 outcome 才形成 dependency；
 - 文本顺序不形成 dependency，独立 work 保持独立；
 - 当前已知且省略会迫使 Executor 重新发现的 material cut / relation 应保留；
-- contingent future 的存在、scope 或 dependency 仍取决于未来 execution Evidence 时，停在当前 frontier，不提前猜。
+- contingent future 的存在、scope 或 dependency 仍取决于未来 execution Evidence 时，停在当前 frontier，不提前猜；
+- independently falsifiable verification claim 不自动成为独立 execution cut。
 
-简单/线性工作是 Graph 的退化形式，不需要显式 diagram、schema、node taxonomy 或 scheduler。
+简单/线性工作是 Graph 的退化形式，不需要显式 diagram、schema、node taxonomy 或 scheduler。**Best-known complete 不等于 research-complete**：不能为了让 Graph 看起来完整扩大 inventory、预证 implementation How 或制造未来占位 node。
 
 ## Verification boundary
 
 Compile 只携带 Northstar 已定义的 Acceptance / completion claims 与必要 Evidence obligations，不选择具体 test/replay/runtime command，不把 verification step 编成 execution phase。
 
-`$replay` 根据 current reality 选择和核实 claim-relevant Evidence，并独立判断 outcome。一个 implementation cut 通过不代表整体 Acceptance 自动成立。
+Executor 负责 implementation-local checks；当 material completion claim 值得独立证明时，`$replay` 根据 current reality 选择和核实 claim-relevant Evidence。一个 implementation cut 通过不代表整体 Acceptance 自动成立。
+
+## Evidence-driven loop
+
+Material Graph 不是一次性计划，也不是 control-plane state。Research、execution、review 或 Replay 的 **verified Evidence** 如果真正改变 material work / dependency，而 Intent 本身仍成立，只重算受影响 dependency cone：
+
+- contingent work 因新 reality 成为真实工作 → 扩展对应 cone；
+- Evidence 证明 branch / dependency 不存在 → 删除；
+- material boundary / relation 改变 → 拆分、合并或重排受影响 work；
+- 只影响 implementation How → Graph 不变；
+- Evidence 推翻 Intent / Acceptance → 返回 Northstar Intent judgment，而不是在 Graph 内修补；
+- Evidence 暴露长期 architecture fork → 返回 `$architecture-evolution`。
+
+无关 branch、仍有效 work 与 Evidence 保持有效；已完成 work 不因 Graph 改写机械重开，除非它依赖的 premise / Evidence 被影响。
+
+Execution orchestration 可以触发下一次 compile，但不拥有 Graph semantics，也不要求 Northstar维护 retry/debug/progress/scheduler state。
 
 ## 交付
 

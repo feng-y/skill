@@ -1,6 +1,6 @@
 # Skill Repo Evolution Discipline
 
-本文件约束**如何修改这个 skill repo 本身**，不是任何单个 Skill 的 runtime 语义。修改 Northstar、Prototype、Architecture Evolution、Replay 或其他 Skill 前先遵守这里。
+本文件约束**如何修改这个 skill repo 本身**，不是任何单个 Skill 的 runtime 语义。修改 Northstar、Prototype、Architecture Evolution、Replay、Unknowns First 或其他 Skill 前先遵守这里。
 
 总原则：**优先语义压缩，不做规则堆积。先增强、归位或简化既有模型；只有 Evidence 证明存在独立且稳定的责任，并且存在独立 invocation reason，才新增持久 Skill surface。**
 
@@ -19,27 +19,41 @@
 - **`northstar`**：conversation / request / incident → canonical engineering Intent；需要 durable handoff 时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
 - **`prototype`**：只拥有 already-understood Intent 的 concrete reaction surface；Core Path / Usage / disposable Prototype 都是手段，不拥有 Intent SOT。
 - **`architecture-evolution`**：拥有长期 Target Architecture judgment + Current → Target Evolution Program。两层 judgment 必须分开，但不拆成两个顶层 Skill。
-- **`replay`**：拥有 verification / outcome judgment；选择并核实 claim-relevant test/replay/runtime Evidence，按 owner 路由 false / unproven 结果。
-- **`unknowns-first`**：拥有 map-versus-territory unknown closure / Evidence probe。
+- **`replay`**：拥有**按需的独立 verification**；依据 authoritative contract 选择并核实 claim-relevant Evidence，判断 proven / false / unproven。普通 implementation-local checks 仍属于 Executor。
+- **`unknowns-first`**：只拥有 map-versus-territory 的**事实未知关闭**；它可以做 probe / source alignment，但不替其他 owner 关闭 Intent、concrete shape、Architecture 或 completion judgment。
 
-不要复制 owner：Northstar 不持续判卷；Replay 不重写 Intent；Prototype 不决定 Architecture；AE 不用 Program convenience 反推 Intent；Unknowns First 不替其他 owner 关闭 normative decision。
+不要复制 owner：Northstar 不持续判卷；Replay 不重写 Intent 或设计 Target；Prototype 不决定 Architecture；AE 不用 Program convenience 反推 Intent；Unknowns First 不把 factual probe 扩成 intent interview、prototype、architecture design 或 verification workflow。
 
 `Goal` 不属于稳定跨 Skill semantic model。若一个抽象 outcome 真的增加 decision information，把它落到 Problem、Draft、Constraint、Decision 或 Acceptance；不要维护独立 Goal artifact / field / lifecycle。
 
 ## Artifact ownership
 
 - **Drafted Issue**：Northstar Intent 的 durable carrier / canonical intended change。
-- **PR**：realized Change / Delivery；implementation How、diff、validation result、review 默认留在 PR。
+- **PR**：realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在 PR。
 - **Prototype artifact**：reaction surface，可丢弃；durable correction / Evidence 回 caller。
 - **Architecture handoff**：只有独立调用或真实跨边界需要时持久化；被 Northstar 调用时优先 fold durable structural decision 回 Issue。
-- **Replay result**：claim judgment + Evidence basis + owner routing；不是 repair plan、progress manager 或第二份 Intent。
+- **Replay result**：independent claim judgment + Evidence basis + owner routing；不是 repair plan、progress manager 或第二份 Intent。
 
 ## Graph and loop
 
 - **Work is a graph.** Material engineering work 按 cohesive outcome 与真实 dependency 判断，而不是 prose list。简单/线性工作只是 Graph 的退化形式；不为了“使用 Graph”新增 Graph object/schema、node taxonomy、persistent state、scheduler 或 manager protocol。
 - **Compile only when earned.** Clear Drafted Issue 可以直接执行；只有复杂 material dependency 会迫使 fresh Executor 重新做高层判断时，Northstar 才按需 compile coarse material graph / execution contract。
-- **Verification is Replay-owned.** Northstar 定义 Acceptance；Replay 根据 current reality 选择 proof 并判定 proven / false / unproven。Execution node 不与 Verification claim 一一对应。
-- **Feedback reopens only the affected owner.** Replay 发现 implementation gap 留 PR/Executor；Intent premise 错误回 Northstar；长期 structural fork 回 AE；territory Evidence gap 可交 Unknowns First。不要一个 red signal 全量重跑所有 Skill。
+- **Progress through a loop.** Research、execution、review、Replay 都可能产生新 Evidence。只有 verified Evidence / reality 真正改变 material work、dependency、Intent premise 或 architecture premise 时，才重开对应 owner / affected dependency cone；无关 branch、仍有效 work 与 Evidence 保持有效。
+- **Control plane is orthogonal.** 外部 orchestration 可以 start / route / pause / resume / retry，但不能定义 Graph、Intent、Architecture 或 Verification semantics。它只触发对应 owner 继续判断。
+- **Verification scales with risk.** Executor 负责普通 implementation-local build/test/check；当 behavior-preservation、replacement、cross-boundary Acceptance、false-pass risk 或独立判卷本身 material 时，才调用 Replay。Execution node 不与 Verification claim 一一对应。
+
+## Feedback routing
+
+Evidence 不只来自 Replay。任何 research / execution / review / verification finding 都按 semantic owner 回流：
+
+- factual map-versus-territory gap → Unknowns First；
+- Intent premise / Constraint / Acceptance 被推翻 → Northstar；
+- already-understood Intent 仍出现 materially different concrete shape → Prototype；
+- 新的长期 responsibility / boundary / dependency fork → Architecture Evolution；
+- 当前 contract 的 material completion claim 需要独立证明 / 反证 → Replay；
+- 复杂 material graph 的 work/dependency 被 verified Evidence 改变、但 Intent 仍成立 → Northstar material compile 只重算 affected cone。
+
+不要因为一个 red signal 全量重跑所有 Skill，也不要在 owner 之间来回 ping-pong：specialist 回答 bounded question 后返回 caller，只有 premise 真正变化才 re-enter owner。
 
 ## Context engineering and judgment quality
 

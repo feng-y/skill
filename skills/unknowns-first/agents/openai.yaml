@@ -1,7 +1,7 @@
 interface:
   display_name: "Unknowns First"
-  short_description: "Contain unknown-driven engineering failures"
-  default_prompt: "Use $unknowns-first to run the smallest unknown loop: intake map-vs-territory risk, probe, choose L1/L2/L3, keep implementation notes when reality diverges, and verify claims with proof."
+  short_description: "关闭事实型 map-versus-territory unknown"
+  default_prompt: "Use $unknowns-first only for factual map-versus-territory uncertainty. Identify the decision context, territory, first material factual unknown, and smallest closure Evidence; run one focused probe or full factual map only when coupled facts block work. Route intent/commitment to $northstar, concrete-shape reaction to $prototype, long-term structure to $architecture-evolution, and completion judgment to $replay."
 
 policy:
   allow_implicit_invocation: true

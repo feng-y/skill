@@ -7,7 +7,7 @@ description: "Canonical engineering-intent skill: turn a conversation, request, 
 
 Northstar 负责把当前 conversation、外部请求、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。当 Intent 需要跨 session、agent、Human 或执行环境流转时，Northstar 将同一份语义 materialize 为 Drafted Issue；Issue 是 Intent 的 durable carrier，不是另一套语义阶段。
 
-Northstar 不再拥有独立 Goal 层，不默认生成 Taskbook，不负责 verification / outcome judgment，也不持续监督 Executor。PR 是 realized Change / Delivery surface；`$replay` 负责依据当前 authoritative contract 验证真实 outcome。
+Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责持续 verification / outcome judgment，也不持续监督 Executor。PR 是 realized Change / Delivery surface；普通 implementation-local checks 属于 Executor，需要独立判卷时按需调用 `$replay`。
 
 核心规则：
 
@@ -22,12 +22,7 @@ Northstar 不再拥有独立 Goal 层，不默认生成 Taskbook，不负责 ver
 - **Constraints**：真正 binding、违反后会改变 accepted outcome、兼容、投入、风险或长期责任的约束。
 - **Acceptance**：能够区分“问题已解决”和“只是完成了某个手段”的 observable outcome / completion claim。
 
-按需增加：
-
-- **Decisions**：已经关闭、后续不应重新猜的 material choice；
-- **Evidence**：会改变 Draft / Decision / Acceptance 的 repo、runtime、data 或 authoritative source；
-- **Open Questions**：仍会 materially 改变 accepted outcome、boundary 或 commitment 的未决点；
-- **Out of Scope**：只有容易被合理误解成 scope 时才保留。
+按需增加 Decisions、Evidence、Open Questions、Out of Scope。只保留后续 fresh consumer 真正需要的内容。
 
 不维护独立 `Goal` 字段。抽象 outcome 只有在增加实际 decision information 时才保留，并直接落实到 Problem、Constraint、Decision 或 Acceptance，而不是形成第二层 SOT。
 
@@ -41,12 +36,12 @@ Human requirement 与 reality claim 分开：Human 有权给出的要求可以 b
 
 Northstar 拥有 Intent，不复制 specialist 的责任：
 
-- **territory fact 未知**，且事实不同会改变 Intent：调用 `$unknowns-first`，消费最小 Evidence；
-- **Intent 已理解，但同一 prose 仍允许 materially different 的 concrete shape**：调用 `$prototype`，消费 Core Path / Usage / disposable Prototype 带来的 correction / Evidence；
-- **长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断**：调用 `$architecture-evolution`，消费结构 decision；
-- **实现完成后的 claim verification / false-pass / outcome judgment**：交 `$replay`，Northstar 不替 Replay 设计 verifier 或独立判卷。
+- **factual territory unknown**，且事实不同会改变 Intent → `$unknowns-first`；
+- **Intent 已理解，但同一 prose 仍允许 materially different concrete shape** → `$prototype`；
+- **长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断** → `$architecture-evolution`；
+- **material completion claim 需要独立证明 / false-pass judgment** → `$replay`。
 
-specialist 结果不创建第二份 Intent SOT。只把后续 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到当前 Intent / Issue。
+普通 implementation-local build/test/check 不需要为了流程完整调用 Replay。specialist 结果不创建第二份 Intent SOT；只把后续 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到当前 Intent / Issue。
 
 ## Drafted Issue
 
@@ -56,7 +51,7 @@ specialist 结果不创建第二份 Intent SOT。只把后续 fresh consumer 必
 
 用户明确要求创建或更新 Issue，且当前环境存在已授权 tracker action 时，直接创建 / 更新真实 Issue，不停在 Markdown 草稿等待再次确认。已有 canonical Issue 时优先更新它，不创建平行 SOT。
 
-Issue 按 cohesive engineering outcome / responsibility boundary 切，不按一次 model context、一个文件或一个 agent session 切。Execution orchestration / control plane 位于 Northstar 语义之外；它可以依据 tracker / runtime state 控制工作何时以及由谁继续，但不能定义或改写 Intent。
+Issue 按 cohesive engineering outcome / responsibility boundary 切，不按一次 model context、一个文件或一个 agent session 切。Execution orchestration / control plane 位于 Northstar 语义之外；它可以依据 tracker / runtime state 控制工作何时以及由谁继续，但不能定义或改写 Intent、material Graph 或 Acceptance。
 
 ## Material compile 只在真正需要时出现
 
@@ -64,19 +59,18 @@ Issue 按 cohesive engineering outcome / responsibility boundary 切，不按一
 
 只有 material work / dependency 本身复杂到 Issue 仍不足以安全交接时，才读取 [references/material-compile.md](references/material-compile.md)，从已经成立的 Intent / Intended Draft 编译 coarse material work 与真实 dependency。Compile 不能反向发明 Intent，也不能用 task decomposition 发现 Target。
 
-## 与 Replay 的反馈边界
+## Evidence feedback，不以 Replay 为唯一入口
 
-Northstar 定义 Acceptance；Replay 负责证明或反证它。
+Research、execution、review 和 Replay 都可能产生新 Evidence。按真正受影响的 semantic owner 回流：
 
-Replay 返回后按 owner 路由：
-
-- implementation / behavior 未满足当前 Intent → 留在 PR / Executor 修复；
-- Evidence 不足 → Replay 继续补足 claim-relevant proof；
+- factual premise 不清 → `$unknowns-first`；
 - verified reality 证明 Intent Draft / Constraint / Acceptance 本身错误或失效 → 只重开 Northstar 中受影响的部分；
-- 出现此前未决的长期 structure fork → 交 `$architecture-evolution`；
-- 需要改变投入、兼容、长期维护或风险 commitment → 回 Human，经 Northstar 更新 canonical Intent。
+- already-understood Intent 出现新的 material concrete-shape ambiguity → `$prototype`；
+- 出现此前未决的长期 structure fork → `$architecture-evolution`；
+- 当前 authoritative contract 需要独立 completion proof → `$replay`；
+- Intent 仍成立，但 verified Evidence 改变复杂 material work / dependency → 只重进 material compile 的 affected cone。
 
-不要因为 Replay red 就自动重写 Intent，也不要因为 tests green 就宣布 Intent 正确。
+不要因为 Replay red 或 PR finding 就自动重写 Intent，也不要因为 tests green 就宣布 Intent 正确。一个 owner 返回 bounded judgment 后回 caller；只有 premise 真正变化才 re-enter，避免 owner 间 ping-pong。
 
 ## 停止条件
 
@@ -96,4 +90,4 @@ Replay 返回后按 owner 路由：
 - 让 AE 的 Program convenience 反向改写 Intent。
 - 在 Northstar 内选择 replay/test/runtime verifier 并持续判卷。
 - 把 Issue 切成适配单次 agent context 的细粒度 ticket。
-- PR 只暴露 implementation bug 时频繁 churn Intent；只有 intended change 本身被反证才回流。
+- 把任何 red finding 都当成 Intent 错误；只有 intended change / binding premise 本身被反证才回流。

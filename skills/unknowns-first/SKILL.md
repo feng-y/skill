@@ -1,130 +1,100 @@
 ---
 name: unknowns-first
-description: "Use when map and territory may diverge in engineering work: unclear route, scope, proof, user intent, repo reality, runtime behavior, unfamiliar code/config, behavior-preserving change, migration/refactor, reference-first porting, mid-build deviation, or any correctness claim that needs repo/runtime evidence."
+description: "Close factual map-versus-territory unknowns with the smallest useful probe or source alignment. Route intent, concrete-shape, architecture, and completion-judgment questions to their semantic owners instead of solving them here."
 ---
 
-# Unknowns First
+# Unknowns First · 只关闭事实未知
 
-Unknowns First is the lightweight unknown gate for engineering work. It is the repo's single unknown-skill surface: both the default light gate and the heavy full-map branch live here, so full-map / handoff work does not route to a separate skill.
+Unknowns First 是 engineering work 的 **factual uncertainty specialist**。它处理 prompt / plan / docs / memory / assumptions 与 code / config / runtime / data / authoritative source 之间可能不一致的问题。
 
-The map is the prompt, plan, memory, docs, and assumptions. The territory is the codebase, config, runtime behavior, tests, data, users, and constraints.
+核心规则：
 
-Core rule: when map != territory, do not guess. Expose the unknown, run a minimal probe, ask one route-changing question, or record an implementation note.
+> **当下一步判断依赖一个尚未核实的事实时，不猜；用最小 probe 建立 Evidence，或明确这个问题其实属于别的 semantic owner。**
 
-## When To Use
+Unknowns First 不拥有 Intent，不做 concrete-shape design，不决定 Target Architecture，不定义 completion contract，也不做最终 outcome judgment。
 
-Use this for engineering work where a wrong assumption could change route, scope, implementation, verification, rollout, or user-visible behavior.
+## 什么时候使用
 
-Skip it for pure lookup, casual explanation, writing-only work, or trivial shell output unless correctness depends on repo or runtime evidence.
+使用 Unknowns First，当一个**事实答案**不同会改变 route、scope、attribution、boundary、implementation safety 或 verifier choice，例如：
 
-Completion criterion: the task is either out of scope, or one unknown-gate level is selected.
+- 当前 producer / consumer / caller / runtime path 到底是谁；
+- config / feature flag / data / schema / deployed artifact 实际是什么；
+- baseline 是否真的 green、某条路径是否真实 reachable；
+- authoritative source / reference implementation / historical contract 是什么；
+- implementation / review 中发现 map 与 territory 冲突，需要确认实际情况。
 
-## Levels
+不要因为任务复杂就默认进入 Unknowns First。没有事实 unknown 时直接返回 caller。
 
-Pay only the level the task earns:
+## Owner discriminator
 
-- **L1 Light gate**: default. Identify Target / Territory / Unknown / Proof, silently or in one concise note.
-- **L2 Local move**: use one probe, blindspot pass, interview question, reference map, option set, concrete sample, vocabulary ladder, implementation note, verifier check, or post-change move.
-- **L3 Full map**: read [references/full-map-workflow.md](references/full-map-workflow.md) when the user asks for a complete unknowns map, source alignment, full-map handoff, or when coupled unknowns should pause implementation.
+先区分当前未决点属于哪种问题：
 
-Completion criterion: L1 is the default; L2/L3 activates when the gate trips, and the trigger plus unknown are named before expansion.
+- **事实是什么？** → Unknowns First；
+- **我们要什么 / Human commitment 是什么？** → `$northstar`；
+- **Intent 已理解，但具体 path / usage / interface 应长什么样？** → `$prototype`；
+- **长期 responsibility / boundary / dependency 应是什么？** → `$architecture-evolution`；
+- **realized change 是否满足 authoritative completion claim？** → `$replay`。
 
-## L1 Light Gate
+Unknowns First 可以发现这些问题，但不把它们吞进自己的 full-map workflow。
 
-For every in-scope task, identify four facts:
+## L1 · Light gate
 
-- **Target**: intended behavior or decision.
-- **Territory**: code, config, runtime, data, docs, tests, or user constraint that must be true.
-- **Unknown**: the first thing that would make the plan wrong.
-- **Proof**: minimum evidence needed before a correctness or completion claim.
+只建立四件事：
 
-Choose exactly one terminal output:
+- **Decision context**：哪个当前判断依赖这个事实；
+- **Territory**：哪个 code/config/runtime/data/source 能回答；
+- **Unknown**：第一个会让当前 map 错掉的事实；
+- **Closure Evidence**：最小什么证据足以关闭该事实。
 
-- `continue`: target, territory, first unknown, and proof are clear enough for direct work. May stay silent during routine direct work.
-- `probe: <unknown>; next: <territory check>` when one territory check can shrink the unknown.
-- `ask: <question>; changes: <route/scope/gate/behavior>` when one route-changing answer cannot be found in territory evidence.
-- `note: <assumption-or-deviation>; proof impact: <impact>` when work can proceed but a conservative assumption or deviation must be preserved.
-- `full-map: <why L3>; next: full-map workflow` when implementation should pause for L3.
-- `must-verify-in-repo: <missing proof>; next verifier: <command-or-doc>` when the claim depends on missing or unrunnable proof.
+选择一个终点：
 
-Completion criterion: `continue` is the only terminal that may stay silent; every other terminal is visible before acting.
+- `continue`：事实已经足够，不需要 probe；
+- `probe: <fact>; next: <territory check>`：一个小检查可以关闭；
+- `ask-fact: <question>; changes: <route/scope>`：只有 Human 掌握一个事实型上下文，且答案改变 route；
+- `route: <owner>; reason: <why this is not a factual unknown>`：问题属于其他 semantic owner；
+- `full-map: <why coupled factual unknowns block work>`：多个事实 unknown 相互耦合，需要 L3。
 
-## Escalation Triggers
+只有 `continue` 可以保持静默；其他结果应让 caller 知道 next owner / probe。
 
-Escalate from L1 when continuing would guess and at least one trigger is present:
+## L2 · Local moves
 
-- unfamiliar module, domain, tool, API, data, or failure mode;
-- cross-module, shared-boundary, migration, cleanup, refactor, behavior-preserving, or compatibility work;
-- verification-sensitive task where a false claim matters;
-- plan, docs, history, tests, logs, config, or runtime contradicts the current map;
-- tacit taste, UX, API shape, output format, or workflow needs a concrete reaction;
-- implementation reveals a hidden coupling, edge case, missing prior art, or better path.
-
-Completion criterion: every expansion names the trigger and the unknown it is shrinking.
-
-## L2 Local Moves
-
-Use the cheapest move that changes the next action:
+只使用能关闭事实 unknown 的 move：
 
 | Move | Use when | Output |
 | --- | --- | --- |
-| Probe | evidence can answer | one focused `rg`, file read, test discovery, config lookup, log check, or tiny repro |
-| Blindspot pass | unknown unknown risk | landmine cards covering the touched responsibility surface, with evidence, why it bites, changed action |
-| Interview | only the user can answer a route-changing question | one question plus why the answer changes route |
-| Reference first | an existing implementation, trace, design, or config defines behavior | semantics map before port/copy: transfers, non-transfers, edge cases, sign-off point |
-| Options | several interventions could work | options from cheapest safe slice to ambitious bet, with risk and proof |
-| Concrete sample | taste, UX, API, output, or workflow is tacit | mock, sample, prototype, or contrasting directions grounded in real data or clearly labeled fake data |
-| Vocabulary | the task lacks terms to judge quality | vocabulary ladder, quality bar, sharper prompt |
-| Notes | work proceeds after a deviation or conservative assumption | concise implementation note with verification impact |
-| Post-change | reviewers inherit non-obvious assumptions, landmines, or behavior claims | buy-in doc, reviewer checklist, behavior summary, or quiz tied to evidence |
+| Focused probe | code/config/runtime/data 可回答 | 一个最小 read/query/log/repro |
+| Reference first | existing implementation / trace / contract 是 authority | source identity + relevant semantics |
+| Source alignment | docs、branch、runtime、data 相互冲突 | 区分各 source identity / provenance / freshness |
+| Blindspot pass | touched responsibility surface 可能有隐藏 factual coupling | 少量 landmine + Evidence + changed action |
+| Runtime/data check | static repo 不能证明真实行为 | 最小 runtime/data observation |
+| Implementation note | work 可继续但存在保守事实假设 | assumption + evidence gap + impact |
 
-Completion criterion: one move resolves the unknown, surfaces a human decision, or escalates to L3.
+不要在这里生成候选设计、mock/prototype、architecture options、build plan、verification plan、review checklist 或 decision ledger；把相应问题路由给 owner。
 
-## L3 Full Map
+## L3 · Full factual map
 
-Use L3 when the user asks to map unknowns, wants source alignment, or the unknowns are coupled enough that implementation should wait. Read [references/full-map-workflow.md](references/full-map-workflow.md). L3 is the canonical home for the repo's full-map, handoff, and post-map unknown artifacts.
+只有用户明确要求完整 unknown map，或多个**事实未知**耦合到无法继续时，读取 [references/full-map-workflow.md](references/full-map-workflow.md)。L3 的目的只是把 unknown、Evidence、closer 与 owner 映射清楚，不成为第二套 SDLC / handoff / execution workflow。
 
-Full-map mode has its own contract:
+## 与 Replay 的边界
 
-- silently scan the request, prior attempts, touched files/configs/tests, and constraints before opening;
-- walk known knowns, known unknowns, unknown knowns, unknown unknowns, then handoff;
-- name the current section;
-- cite territory evidence;
-- maintain a visible queue for known unknowns with closer (`territory`, `user`, or `OPEN`);
-- use context probes for tacit taste, consumers, environment, vocabulary, and done criteria;
-- sweep the touched responsibility surface for landmines before handoff;
-- close decisions in front of the user;
-- stop at the handoff only when the map itself is the requested deliverable, or when a real human-held blocker / reaction is still the next closer.
+Unknowns First 可以证明一个**事实**，例如“production 仍路由到旧 path”或“baseline 在这组 input/config 下已经 red”。它不据此做 whole-outcome acceptance。
 
-Completion criterion: the user holds the map, open items are visible, and the next implementation prompt does not need to rediscover the same unknowns. If the map has already closed route / readiness and no human-owned blocker remains, return control to the repo's next-capability selection instead of treating full-map completion itself as task completion.
+Replay 消费这些 factual Evidence，对 authoritative completion claim 做 proven / false / unproven judgment。若 Replay 只是缺一个事实，可以调用 Unknowns First；事实关闭后立即返回 Replay。
 
-## Verification
+## 与 Prototype 的边界
 
-Before claiming completion, match proof to risk:
+如果 unknown 不是“真实系统现在是什么”，而是“Human 看到具体 path / usage / interface 后会选择哪一个”，这不是 territory probe，交 `$prototype`。Unknowns First 不再用 mock / sample / prototype 替代 concrete-shape owner。
 
-- direct/small: focused read plus nearest cheap command or test when available;
-- refactor/migration/behavior preservation: regression tests, diff/replay/contract evidence, or explicit not-tested gap;
-- cross-module/high-risk: build/typecheck plus targeted tests and any necessary replay/diff/manual evidence.
+## Feedback / fold back
 
-If proof is missing, use `must-verify-in-repo` or report the gap. Treat missing proof as an unfinished loop, not a completed task.
+返回 caller 的内容保持最小：verified fact、Evidence source / provenance / freshness、对当前判断的影响，以及仍未关闭的 factual unknown。
 
-Completion criterion: final claims cite evidence actually run, or clearly name verification gaps.
+只有能避免重复 rediscovery 的事实才进入 durable docs / notes；一次性的 probe output 不自动成为新的 SOT。
 
-## Fold Back
+## 常见错误
 
-After non-trivial work, keep only lessons that prevent repeated rediscovery:
-
-- wrong map assumption;
-- probe that exposed territory;
-- earlier statement that would have prevented the miss;
-- note, doc, test, or follow-up that should preserve the lesson.
-
-Completion criterion: the retro is shorter than the work it saves next time.
-
-## Common Mistakes
-
-- Expanding every task to L3. Use L1 unless implementation should pause.
-- Asking the user before checking territory evidence. Probe first when repo evidence can answer.
-- Carrying multiple moves at once. Use one local move, then reclassify.
-- Treating missing proof as success. Name the verification gap.
-- Writing durable lessons for one-off noise. Fold back only reusable lessons.
+- 把 unclear Intent 当 factual unknown，在这里重新采访需求。
+- 用 `Concrete sample / Four directions / Mock` 做 Prototype 的工作。
+- 把 test/replay proof 和 whole-outcome judgment留在 Unknowns First，而不是返回 Replay。
+- 为了完整感进入 L3，把 unknown mapping 扩成 implementation plan / verification workflow。
+- 事实已经足够后继续 inventory / research。
