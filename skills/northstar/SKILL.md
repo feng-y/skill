@@ -1,6 +1,6 @@
 ---
 name: northstar
-description: "Canonical engineering-intent skill: turn a conversation, request, incident, or external signal into durable executable meaning; materialize it as a Drafted Issue when it must survive the current session."
+description: "Clarify and confirm engineering intent with the Human as needed; converge one primary Draft and one core Prototype for that Intent, then materialize the accepted meaning as a Drafted Issue when durable handoff is needed."
 ---
 
 # Northstar · 工程 Intent 的 canonical owner
@@ -26,13 +26,15 @@ Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof 
 
 不维护独立 `Goal` 字段。抽象 outcome 只有在增加实际 decision information 时才保留，并直接落实到 Problem、Constraint、Decision 或 Acceptance，而不是形成第二层 SOT。
 
-## 一个 Intent，一个主 Draft
+## 一个 Intent，一个主 Draft、一个主 Prototype
 
-从已有 context 建立并持续修正同一个主 Draft。它表达**本轮当前采用的 intended change**，不是候选台账、研究目录或优化 backlog；多个视图和候选对比可以支撑它，但不构成并行权威。一个主 Draft 可以包含共同兑现同一 Intent 的多处变化，不等于只能选一个候选或只能有一个物理文件。尚未采用的选择留作明确的未决项，不能把优先调查某个候选写成已经采用它。独立 Intent 各自拥有主 Draft，不强行合并。
+每个 Intent 只有一个主的、核心的 Prototype，呈现本轮 intended change 的整体核心形态；主 Draft 记录与它对应的 intended change、binding decision 与 Acceptance。两者表达同一个方案，不各自拥有一套答案，也不要求两个物理文件。简单任务已有的 core path / usage 可以直接承担主 Prototype，不额外制造文档或调用。
 
-Draft 的充分性看**连贯的 material change 是否已经可交接**，不看字数或调用次数。把共同决定核心路径、dataflow、ownership / lifecycle 或 binding boundary 的部分连起来；只展开会改变 intended outcome 或让 fresh Executor 被迫重新做高层判断的关系。局部变更可以只有几句话，不要求穷尽 implementation How。
+多个视图、局部试验、baseline 对照与迭代版本都支撑同一个主 Prototype，不按优化点、specialist 或调用次数生成多个并行 Prototype。候选台账不是主 Draft，局部演示或实验集合也不是主 Prototype；必须能从同一个核心形态看出本轮要改变的路径及相关边界。一个 Intent 可以包含多处相互关联的变化，独立 Intent 则各自拥有主 Draft / 主 Prototype。
 
-specialist 工作围绕主 Draft 的当前缺口展开。若采用、淘汰或修正某个形态仍依赖必要试验，且该试验属于当前授权范围、现有环境能够执行，就继续驱动相应 specialist / backend 取得结果；不能以“已委派”或“留给下个 session”替代完成。由相应 owner 判读结果后，Northstar 把采用的 correction / Decision 整合进同一个主 Draft，检查与其余部分是否仍一致；不能只转贴局部答案让 Executor 拼接。当前 Draft 已充分、约定的前置委托已完成时直接交接，不为流程完整调用 Prototype，也不接管之后的生产实现或持续调度。
+Northstar 持续将 specialist 结果与 Human correction 整合回这同一个方案，区分拟定、待确认与已采用的选择。试验决定采用、淘汰或修正且属于当前授权、环境能够执行时，继续取得结果；涉及 Human 预期或承诺时按下节澄清、确认，不用试验结果替 Human 接受方案。不能以“已委派”或局部答案集合替代核心形态的收敛。
+
+充分性看整体 material change 是否可理解、可反应、可交接，而不是字数或试验数量。只展开会改变 intended outcome 或迫使 fresh Executor 重新做高层判断的关系，不穷尽 implementation How。当前核心形态已充分且约定前置工作完成时直接交接，不为了流程完整再造 Prototype，也不接管之后的生产实现或持续调度。
 
 ## Acceptance 定义预期，Verify 负责验证
 
@@ -44,18 +46,24 @@ Northstar 必须让 material Acceptance **可判断**，但不需要在这里选
 
 如果 Acceptance 只能靠“完成某个实现步骤”表达，继续收敛 outcome；如果 Acceptance 已明确但 proof route 不清、baseline/oracle 复杂或 false-pass risk material，可调用 `$verify`。不要因为项目有 Replay 就把 Replay 命令写进 Intent contract。
 
-## 先综合已有上下文，不重新采访
+## Ask Human：澄清意图、确认核心形态
 
-优先消费当前 conversation 已经形成的 Human requirement、correction、decision 与 Evidence。不要因为进入 Northstar 就重做完整访谈。
+Northstar 不只是自动编译已有信息，还要在需要时主动 ask Human。先吸收 conversation 中已有的要求、回答、correction 与授权，不重新做完整访谈；可以先展示 best-known 主 Draft / 主 Prototype，让 Human 对具体理解作出反应，不必等全部技术问题关闭才交流。
 
-Human requirement 与 reality claim 分开：Human 有权给出的要求可以 binding；关于 producer、consumer、owner、runtime behavior、baseline 等事实必须由 territory Evidence 支持。一个未决答案只有在仍会 materially 改变 Problem、Draft、Constraint、Acceptance 或 Human commitment，且无法从 territory / authority 得到时，才暴露为 Human decision。
+- **澄清**：需求含义、期望、范围或约束存在会改变方案的歧义时，说明当前理解与差异，向 Human 提出针对性问题。
+- **确认**：主 Prototype 把原先隐含的核心路径或取舍显露出来，需要确认“这是不是你要的”，或用户明确要求先看后确认时，呈现具体形态、推荐选择及其影响，再取得 Human 的确认或修正。
+- **保留决策权**：涉及尚未授权的投入、兼容、长期维护或风险承诺，不能凭模型偏好、测试通过或沉默替 Human 决定。
+
+问题必须指出哪个具体理解 / 选择需要回答、不同答案会改变什么。Human 的回答更新同一个主 Draft 与主 Prototype；仍有效的确认不重复询问，也不对每个局部实现加审批。已有明确要求或授权足以确定时直接推进。可独立完成、且不依赖待答选择的工作继续进行。
+
+repo / runtime / producer / baseline 等事实优先用 territory Evidence 关闭，不把可调查事实外包成偏好问卷；只有 Human 掌握的事实可以直接询问。反过来，事实与性能 Evidence 能说明方案怎样运行，不能代替 Human 对期望与取舍的澄清、确认。可向 Human 询问时应实际提出问题，而不是只把待确认项留进 handoff。
 
 ## 按需调用 specialist
 
 Northstar 拥有 Intent，不复制 specialist 的责任：
 
 - **factual territory unknown**，且事实不同会改变 Intent → `$unknowns-first`；
-- **主 Draft 仍需连贯展开、选型依赖试验，或本轮明确委托了可丢弃试验** → `$prototype`；带上现有 Draft、binding context 与所需结果，按耦合核心路径委托，不把“形态已明确”当作取消明确实做的理由；
+- **主 Prototype 需要形成或修正、选型依赖试验，或本轮明确委托了可丢弃试验** → `$prototype`；带上现有主 Draft / 主 Prototype、Human correction 与所需结果，继续同一个核心形态。局部试验是支撑，不拆成多个 Prototype；形态已明确也不取消明确实做；
 - **长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断** → `$architecture-evolution`；
 - **material completion / safety claim 需要 proof obligation、real-artifact verification 或 sufficiency judgment** → `$verify`。
 
@@ -94,7 +102,8 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 
 可执行实现 handoff 必须同时满足：
 
-- fresh consumer 不依赖原 conversation 或自行拼接 specialist 输出，就能理解 Problem 与唯一主 Draft 的连贯 material change；
+- fresh consumer 不依赖原 conversation 或自行拼接局部试验，就能理解 Problem、唯一主 Draft 与主 Prototype 所表达的同一核心形态；
+- 必要的 Human 澄清与确认已完成，或已有明确授权覆盖当前选择；不能把可运行、测量通过当成 Human 已认可核心方案；
 - binding Constraint / Decision 足以防止 materially wrong interpretation；
 - Acceptance 足以区分真实 outcome 与只完成手段；
 - 剩余未知只影响 Executor How；会改变当前 Draft 采用、淘汰或修正的必要试验已有相应 owner 判读的结果，不把尚未验证的关键假设标成已收敛；

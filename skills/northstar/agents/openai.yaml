@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "收敛唯一主 Draft，闭合必要试验与交接"
-  default_prompt: "使用 $northstar，按 SKILL.md 为每个 Intent 收敛同一个主 Draft；候选台账不是本轮采用的 intended change。按需委托 $prototype、$architecture-evolution、$unknowns-first 和 $verify，将采用的 correction 整合回来。形态选择所需且可执行的前置试验不能留给下一 session；分别判断 Draft 可执行性与本轮委托完成度。清晰任务直接交接，不制造 Goal、固定阶段或重复 SOT。"
+  short_description: "围绕唯一核心原型，澄清确认并收敛 Intent"
+  default_prompt: "使用 $northstar，按 SKILL.md 维护每个 Intent 的同一个主 Draft 与主 Prototype。围绕具体核心形态主动 ask Human 处理必要的澄清、取舍与确认，吸收已有回答，不代替 Human 接受，也不重复询问已定事项。按需调用 specialist，将结果与 Human correction 归回同一个方案；局部试验和候选台账不替代主 Prototype。分别判断核心方案可交接与本轮委托完成，不增加固定审批阶段。"

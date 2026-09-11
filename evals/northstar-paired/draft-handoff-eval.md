@@ -2,6 +2,10 @@
 
 Eval-only. This is an evidence-checked **scoring sidecar**, not an agent launcher or an automatic semantic judge. Normal runtime must not read this directory.
 
+## Primary-Prototype / Human correction
+
+See [the staged interaction check](core-prototype-human-eval.md). One primary Draft is not enough when the actor still splits the Intent into local Prototypes or never asks the Human about material interpretation/confirmation. That check is supplementary; the 11 frozen cases and existing scorer remain unchanged and do not yet measure this interaction. Do not reward missing necessary questions just because unnecessary-clarification rate falls.
+
 ## Cases and claim boundary
 
 `draft-cases.json` freezes eleven cases (v2; D1–D8 unchanged): connected Hermes sharing change; blocked factual premise; adopted corrections scattered across comments; clear local change; independent AE caller; independent Verify caller; verification-source identity gap; two independent Intents; selection from candidate Evidence; an actual disposable code/CPU experiment; empirical selection blocked by an unavailable backend.

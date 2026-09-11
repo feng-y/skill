@@ -1,4 +1,4 @@
 interface:
   display_name: "Prototype"
-  short_description: "展开连贯工程形态，实做必要的可丢弃试验"
-  default_prompt: "使用 $prototype，按 SKILL.md 围绕 caller 的当前问题展开一个连贯 concrete surface，或完成明确委托的可丢弃试验。选择足以回答问题的表示或实际运行，不用局部 HTML、未运行代码或计划替代约定实做，也不因形态已明确而提前退出。返回表示与观察给原 caller；Intent、Architecture、proof judgment 与生产实现仍归原 owner。"
+  short_description: "形成并迭代同一个 Intent 的主核心原型"
+  default_prompt: "使用 $prototype，按 SKILL.md 形成或修正同一个 Intent 的唯一主 Prototype，呈现整体核心路径，使 Human / caller 能作出具体反应。局部视图、对照与可丢弃试验只支撑这个主 Prototype，不按优化点或调用拆出多个 Prototype。必要实做按委托完成并返回真实观察；Northstar 负责 Human 澄清确认，原 caller 保留语义判断，不把局部完成宣称为整体收敛。独立 AE/Verify 或实验委托不强制先创建 Intent。"

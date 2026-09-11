@@ -4,6 +4,12 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## PR #95 — One core Prototype per Intent; Human clarification and confirmation
+
+Supersedes the earlier #95 per-call cohesive-surface framing: an Intent has one main, core Prototype, not a collection of local prototypes. Views, comparisons and experiments now support that same core; Northstar keeps its primary Draft aligned and actively asks the Human to clarify expectations and confirm material interpretations or requested choices. Technical feasibility does not imply Human acceptance.
+
+Preserved: one intended-change authority, caller-neutral Prototype, independent AE/Verify callers, proportional representations, factual Evidence, and no repeated confirmation for already answered or delegated choices. Retired: treating a set of locally complete experiments as the main Prototype, or treating Northstar as an automatic compiler with Human interaction only for technical blockers. No new Skill, two-file requirement or universal approval stage is introduced.
+
 ## 2026-09-11 — Recenter capability ownership around Northstar / Prototype / AE / Verify / Unknowns First
 
 PR: #93 (`refactor/northstar-intent-replay`)

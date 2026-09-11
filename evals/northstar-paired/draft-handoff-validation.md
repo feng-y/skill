@@ -1,46 +1,32 @@
-# Primary-Draft change validation
+# Primary core Prototype / Human interaction correction
 
-Development/eval evidence only. This is implementer self-review, not an independent model review.
+Continuation base: `67b1f9dcf07e7cbfd7128c5076c410712313ca17`. Implementer self-review only; no independent model reviewer is claimed.
 
-## Current continuation verdict
+## Decision and scope
 
-Continuation base: `e76021a1c265a3580fbcd30c95e91f231de70eef`; original PR base: `acc09e5040b808b46cc8f9aea17bbac988d639ab`.
+The user corrected the design: an Intent has one main, core Prototype, and Northstar must ask the Human for needed clarification and confirmation. The prior invariant covered a primary Draft but still allowed per-call surfaces/experiments to become the practical output. That framing is superseded, not merely supplemented with more experiments.
 
-**Known contract contradictions corrected; HOLD for behavior-validated merge.** Actual clean-session actor / consumer / blinded-judge runs performed in this continuation: **0 / 0 / 0**. The user's real-machine retrospective remains useful failure evidence, not an identified paired run against this revision.
+One intended change now has a corresponding primary Draft and one inspectable core Prototype. Local views, comparisons and measurements support that same whole, not separate Prototypes per optimization or specialist. Northstar actively presents its best-known interpretation, asks material questions, incorporates Human correction into the same core and records the corresponding meaning. This does not require two files, new approval stages or repeated questions about already confirmed/delegated choices.
 
-## Findings and repairs
-
-1. **Invocation entry contradicted runtime.** `skills/prototype/agents/openai.yaml` still demanded one isolated decision and broadly excluded implementation. Align Prototype frontmatter/body/default prompt and README with cohesive shaping or explicitly delegated disposable execution. Align Northstar's entry with the one-primary-Draft integration responsibility.
-2. **Explicit experiments could hit a premature bypass.** The body still said to stop when no shape gap remained, even though later paragraphs required explicitly commissioned experiments. Known shape now cancels only unnecessary shaping, not the experiment assignment. A Verify caller retains proof ownership without receiving its unfinished artifact assignment back.
-3. **The comparison cap could silently reduce scope.** Remove the fixed two-to-three-candidate rule. Compare only decision-relevant candidates; preserve explicitly delegated work and report genuinely unfinished items instead of dropping them.
-4. **Empirical uncertainty could masquerade as a setup blocker or cause an endless loop.** Distinguish unknown current source/config identity from the quantity the experiment is intended to measure. Return an inconclusive completed experiment to the caller instead of forcing a win or inventing unbounded follow-up work.
-5. **Consumer probes could be given missing semantics.** Clarify that the independent consumer gets the handoff and target/territory snapshot, not the original request or specialist conversation. The judge retains the original request to detect omissions. Supplying it to the consumer would hide an incomplete Draft.
-
-No new Skill, readiness schema, permanent execution manager or prototype category is introduced. AE, Verify and Unknowns First runtime contracts remain unchanged. This does not repair the user's machine installation or establish the cause of the reported HTML-only Skill resolution.
+Runtime edits remain in Northstar, Prototype and their invocation metadata. README, semantic migration history, plan and focused eval guidance are aligned. AE / Verify / Unknowns First runtime contracts and the 11 frozen cases/scorer/test code are unchanged. Independent AE/Verify or experimental requests do not acquire a synthetic Intent.
 
 ## Review rounds
 
-**Round 1 — entry/body consistency:** inspect the Prototype descriptor, default invocation prompt, positive routes, bypasses and stopping conditions together. Replace contradictory clauses rather than append another exception layer. Retain cheap static shaping where sufficient, disposable rather than production implementation, and original-caller ownership.
+1. Authority and main object: checked that one core Prototype means an actual connected intended path, not a renamed index of local artifacts. Multiple files/views/iterations do not become multiple semantic main objects; distinct Intents remain independent. Draft and Prototype must not become competing intended-change authorities.
+2. Human interaction and counterexamples: needed clarification can precede complete technical investigation; confirmation may be based on an inspectable best-known core. Feasibility/performance observations cannot decide Human expectations. Existing responses and delegated decisions avoid repeated approval. The descriptor and return contract were checked and adjusted to preserve standalone callers without creating an Intent first.
 
-**Round 2 — counterexamples and evidence:** challenge explicit runnable work with an already-known shape; How-only local change; Verify-delegated trial; unknown setup facts; inconclusive observations; and a delegated candidate set larger than a display cap. Verify that one primary Draft can still contain multiple related changes. Review the consumer-probe input boundary separately from the candidate prompt.
-
-Disposition: no additional blocking runtime contradiction found in this bounded review. It is not proof of agent improvement.
+No additional unresolved contradiction was identified in this bounded static review. This is not a measured behavioral improvement.
 
 ## Executed checks
 
-```bash
-python3 -m unittest discover -s evals/northstar-paired -p 'test_draft_eval.py' -v
-git diff --check
-```
+`python3 -m unittest discover -s evals/northstar-paired -p 'test_draft_eval.py' -v` ran once: **26/26 passed**. Those are existing synthetic scorer/integrity tests; export still contains 11 prompts and empty observations remain INCONCLUSIVE. No new prose-matching tests or performance benchmark was added.
 
-**26/26 existing scorer/integrity tests passed** in this continuation. The same suite exported all 11 organic prompts and kept empty observations `INCONCLUSIVE`. These synthetic tests validate the scoring/packaging path, not Skill behavior. No new prose-matching unit tests or extra case inventory were added just to increase a test count.
+YAML/frontmatter, invocation metadata, UTF-8/whitespace, new relative links, unchanged frozen cases/scorer/tests, and patch hygiene were checked. The partial local snapshot came from the prior published bundle and connector content; source Git-blob identities were checked before edits. The recovered changelog initially differed by one word and was corrected to match the original blob before adding the migration entry. Logs and the incremental patch are retained in the review bundle.
 
-Packaging checks cover UTF-8/whitespace, YAML frontmatter and invocation metadata, unchanged Skill names, absence of runtime references to private eval files, and unchanged scorer/case/example bytes. Source files were recovered from the earlier published bundle and connector reads; original Git-blob identities were checked before editing. This is a partial local snapshot, not a clone or remote execution environment. Test output and the incremental patch are retained in the companion bundle.
+## Behavioral evidence still missing
 
-## What remains unproven
+Actual clean-session actor / consumer / blinded-judge runs here: **0 / 0 / 0**. The staged H1 interaction and H0 already-confirmed countercheck are specified in `core-prototype-human-eval.md` but were not executed. They require observing the question, withholding the Human answer until its proper turn, and examining the integrated core after the reply. The existing scorer does not directly measure required-question omission or primary-Prototype cardinality; a green scorer result must not certify those behaviors.
 
-The frozen 11-case manifest, `draft_eval.py`, original `score.py`, example and scorer tests are unchanged. Use the existing D10 / D4 / D6 / D11 cases as a focused check of explicit execution, bypass, owner return and honest blocking. Inspect actual loaded instructions, including invocation metadata, and keep the entry mode equal within each pair. No fresh model sessions were available or launched here; no routing, owner-transfer, performance or efficiency uplift is claimed.
+The prior real-machine retrospective is user-reported failure evidence, not a version-identified paired run. Actual installed Skill resolution and Hermes performance remain unverified. No change was made to the user's machine or product code.
 
-Earlier D10 local Python measurements are historical fixture evidence at `e76021a`, not rerun results from this continuation and not Hermes production evidence. Earlier review and experiment records remain in the preceding commits and published bundles. Do not replace clean-session evidence with another synthetic benchmark.
-
-Skill Doctor was explicitly removed by `c13842d` before #93; it is not restored by this PR, and no Skill Doctor grades were fabricated.
+Merge posture: **HOLD / keep PR draft** for behavior-validated acceptance. The current patch implements the corrected semantic authority; it does not prove the agent has followed it in a real session.

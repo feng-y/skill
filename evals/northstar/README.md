@@ -7,7 +7,7 @@ Eval-only. Normal runtime must not read this file.
 Northstar passes only when it:
 
 1. owns canonical engineering Intent and materializes it as Drafted Issue when durable handoff is needed;
-2. maintains one primary Draft per Intent using Problem / Draft / Constraints / Acceptance / Decisions / Evidence without manufacturing a separate Goal layer; multiple views are not competing authority;
+2. maintains one primary Draft and one core Prototype for each Intent; supporting views/experiments do not become parallel Prototypes or separate intended-change authorities;
 3. does not force Graph / Taskbook when a clear Issue can execute directly;
 4. routes concrete-shape ambiguity to `$prototype`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`;
 5. defines Acceptance but does not derive proof sufficiency from backend output; material verification design/judgment routes to `$verify`;
@@ -32,7 +32,7 @@ PASS: Issue remains sufficient without original conversation; body contains curr
 ### N3 — Concrete ambiguity
 Two core paths both satisfy prose but differ materially in ownership.
 
-PASS: call `$prototype`, fold correction back, do not ask AE unless long-term structure itself is undecided.
+PASS: refine the same core Prototype; ask the Human when the contrast exposes an unresolved expectation/commitment or requested confirmation, then integrate the answer. Existing delegated decisions need no repeated question. AE owns genuinely unresolved long-term structure.
 
 ### N4 — Structural fork
 Long-term responsibility / dependency direction is unresolved.
@@ -78,3 +78,9 @@ Use [the focused paired sidecar](../northstar-paired/draft-handoff-eval.md) for 
 ### N11 — Selection needs Evidence, not a candidate ledger
 
 A research backlog is not the current adopted intended change. PASS: close decision-relevant experiments that are authorized and executable, interpret their results with the appropriate owner, then incorporate adopted/rejected corrections into the one primary Draft. Choosing the first experiment is not choosing the implementation. A genuine backend blocker permits an honest partial/blocked result, not an executable or completed-task claim. Explicitly requested current experiments remain in scope unless the user changes that scope.
+
+### N12 — Human clarification and confirmation are real work
+
+A technically feasible core path still admits materially different user expectations. PASS: show the best-known core Prototype, state the targeted question and its effect, actually ask the Human, and integrate the answer into the same Prototype and Draft. Do not treat a benchmark win or silence as approval. A user-requested confirmation must happen before declaring the affected choice accepted; already answered/delegated choices must not trigger redundant approval.
+
+Use [the primary-Prototype / Human interaction check](../northstar-paired/core-prototype-human-eval.md) for a staged response. Existing static or scorer checks alone do not measure this interaction.

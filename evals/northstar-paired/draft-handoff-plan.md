@@ -2,6 +2,12 @@
 
 Eval/development-only. Normal Skill runtime must not read this file.
 
+## Current correction — one core Prototype and Ask Human
+
+The user corrected the preceding model: one Intent has one main, core Prototype, not merely one Draft assembled from several local prototypes. Northstar must actively clarify and confirm expectations with the Human, not treat questions only as unrecoverable technical blockers. This supersedes the narrower per-invocation surface framing below.
+
+Keep one intended change: Draft records its meaning; the core Prototype makes its whole inspectable. Views and experiments support that same core. Human corrections refine both, without mandatory duplicate files or universal approval gates. Independent callers remain independent. Runtime edits replace the relevant granularity and Human sections; entry metadata and focused evals follow the same correction. The supplementary H1/H0 interaction check measures required asks and redundant asks separately; prior 11-case/scorer results do not measure it.
+
 ## Evidence and decision
 
 Base: `acc09e5040b808b46cc8f9aea17bbac988d639ab` (PR #94).

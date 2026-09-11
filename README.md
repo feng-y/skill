@@ -28,8 +28,8 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `northstar` — canonical engineering-intent skill. 把 conversation / request / incident 收敛成包含唯一主 Draft 的 durable Intent；需要跨 session / agent / Human 或执行环境流转时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
-- `prototype` — caller-neutral、主要由 model 按需调用的 concrete-shaping specialist. 围绕已理解的问题展开连贯的具体形态，或完成明确委托的可丢弃代码试验；采用足以回答问题的表示 / 实测，将 correction / observation 返回原 caller，proof judgment 仍归 Verify。
+- `northstar` — canonical engineering-intent skill. 围绕每个 Intent 的唯一主 Prototype 与 Human 澄清、确认，维护对应的主 Draft；需要 durable handoff 时 materialize 为 Drafted Issue。
+- `prototype` — caller-neutral、主要由 model 调用的工程原型能力。形成并迭代同一个 Intent 的唯一主 Prototype；局部视图、对照和可丢弃试验支撑整体核心形态，不成为多个独立 Prototype。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
 - `verify` — engineering verification skill. 从 authoritative completion/safety claim 出发定义 proof obligation，选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。
 - `unknowns-first` — factual map-versus-territory specialist. 只关闭会改变下一步判断的 repo/runtime/data/source fact，不接管 Intent、Prototype、Architecture 或 proof judgment。
@@ -38,7 +38,7 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 主要 Human-facing / direct capabilities：
 
-- `northstar` — “我们到底要什么？”
+- `northstar` — “我们到底要什么？这个核心方案是不是你要的？”
 - `architecture-evolution` — “长期结构应该怎么归位？”
 - `verify` — “结果是否真的符合 claim？”
 
@@ -87,7 +87,7 @@ accepted completion / safety / structural claim
   affected semantic owner / Executor
 ```
 
-Northstar owns **meaning**. Prototype owns **concrete reaction surfaces only** and returns them to its caller. Architecture Evolution owns **structural judgment**. Unknowns First owns **factual uncertainty**. Verify owns **verification / proof judgment**; Evidence is its proof artifact and basis.
+Northstar owns **Intent and Human clarification/confirmation**. Each Intent has **one core Prototype**, whose views and experiments support the same intended change recorded in its primary Draft. Prototype develops that concrete representation without adopting the Intent. Architecture Evolution owns **structural judgment**; Unknowns First owns **factual uncertainty**; Verify owns **proof judgment**.
 
 Verify is not a mandatory post-PR stage. It may be invoked before implementation to make a material proof route explicit, during implementation when verification premises change, or after implementation to judge realized results. Clear local changes can rely on an already-authoritative focused check without extra ceremony.
 
