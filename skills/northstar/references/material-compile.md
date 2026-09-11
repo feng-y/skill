@@ -1,6 +1,6 @@
 # Material Compile
 
-只在当前 Northstar Intent / Drafted Issue 已经成立，但复杂 material work / dependency 仍使 fresh Executor 无法安全开始时读取。这里组织 executable handoff，不重新定义 Intent，不设计 implementation How，也不拥有 proof semantics 或 execution progress。
+只在当前 Northstar Intent / Drafted Issue 已经成立，但复杂 material work / dependency 仍使 fresh Executor 无法安全开始时读取。这里组织 executable handoff，不重新定义 Intent，不设计 implementation How，也不拥有 verification judgment 或 execution progress。
 
 ## Intended delta before work graph
 
@@ -17,21 +17,21 @@
 - 文本顺序不形成 dependency，独立 work 保持独立；
 - 当前已知且省略会迫使 Executor 重新发现的 material cut / relation 应保留；
 - contingent future 的存在、scope 或 dependency 仍取决于未来 execution Evidence 时，停在当前 frontier，不提前猜；
-- independently falsifiable proof claim 不自动成为独立 execution cut。
+- independently falsifiable verification claim 不自动成为独立 execution cut。
 
 简单/线性工作是 Graph 的退化形式，不需要显式 diagram、schema、node taxonomy 或 scheduler。**Best-known complete 不等于 research-complete**：不能为了让 Graph 看起来完整扩大 inventory、预证 implementation How 或制造未来占位 node。
 
-## Evidence boundary
+## Verify boundary
 
 Compile 只携带 Northstar 已定义的 Acceptance / completion claims 与 material work relation，不选择具体 test/Replay/runtime command，也不把 verification step 编成 execution phase。
 
-如果 complex handoff 需要明确某个 claim 必须被证明，可以记录 **claim identity / Evidence obligation pointer**，但 proof obligation、source/backend selection 与 sufficiency judgment 属于 `$evidence`。DaVinci Replay、tests、build、runtime 等只是 Evidence 可选择的 verifier/backend。
+如果 complex handoff 需要明确某个 claim 必须被验证，可以记录 **claim identity / proof obligation pointer**，但 proof obligation、backend selection、Evidence sufficiency 与 verdict 属于 `$verify`。DaVinci Replay、tests、build、runtime 等只是 Verify 可选择的 backend。
 
-一个 implementation cut 通过不代表整体 Acceptance 自动成立；一个 Evidence claim 也不自动变成一个 execution cut。
+一个 implementation cut 通过不代表整体 Acceptance 自动成立；一个 verification claim 也不自动变成一个 execution cut。
 
 ## Evidence-driven loop
 
-Material Graph 不是一次性计划，也不是 control-plane state。Research、execution、review 或 `$evidence` 已核实的 **verified Evidence** 如果真正改变 material work / dependency，而 Intent 本身仍成立，只重算受影响 dependency cone：
+Material Graph 不是一次性计划，也不是 control-plane state。Research、execution、review 或 `$verify` 已核实的 **verified Evidence** 如果真正改变 material work / dependency，而 Intent 本身仍成立，只重算受影响 dependency cone：
 
 - contingent work 因新 reality 成为真实工作 → 扩展对应 cone；
 - Evidence 证明 branch / dependency 不存在 → 删除；
