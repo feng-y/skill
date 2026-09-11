@@ -1,4 +1,4 @@
 interface:
   display_name: "Verify"
   short_description: "验证 engineering claim 是否真实成立"
-  default_prompt: "使用 $verify，从 authoritative engineering claim / Acceptance 出发，先定义 proof obligation，再选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。项目已有 harness 优先复用；在 DaVinci 中 Replay 是执行 backend，不是 semantic owner。factual source gap 交 $unknowns-first，Intent premise 错误回 $northstar，新 architecture fork 回 $architecture-evolution。不要把 build green、agent self-report 或 backend 本身当 proof。"
+  default_prompt: "使用 $verify，从 authoritative engineering claim / Acceptance 出发，先定义 proof obligation，再选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。Verify 可在实现前收敛 proof route，也可在实现后判卷；不是固定 post-PR stage。项目已有 harness 优先复用并遵循其 Launch/Doctor/Drive/Capture/Cleanup contract；在 DaVinci 中 Replay 是执行 backend，不是 semantic owner。factual source gap 交 $unknowns-first，Intent premise 错误回 $northstar，新 architecture fork 回 $architecture-evolution。不要把 build green、agent self-report 或 backend 本身当 proof。"
