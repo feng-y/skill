@@ -46,6 +46,12 @@ trivial/local change 若一个已有 authoritative focused test 已直接覆盖 
 
 不要从 diff、测试名、Replay 配置、Executor report 或现有命令反推“应该证明什么”。若 completion criteria 本身缺失、冲突或需要 Human commitment，返回 `$northstar`；若 structural Target 本身未决定，返回 `$architecture-evolution`。
 
+### Concrete observable shape 不清时调用 Prototype
+
+如果 authoritative claim 已经明确，但同一个 claim 在真实 user path / API usage / interface interaction / core path 上仍允许 materially different concrete interpretations，导致 Verify 无法稳定“应该观察什么”，可以 model-invoke `$prototype` 把这些 concrete shapes 变成可观察对比。
+
+Prototype 只澄清 observable surface；**Verify 仍然拥有 proof obligation 与 verdict**。如果 ambiguity 实际改变 accepted outcome / commitment，返回 Northstar；如果它改变长期 structural Target，返回 AE；如果只是 backend mechanics，不调用 Prototype。
+
 ## 把 claim 变成 proof obligation
 
 对每个 material claim 明确：
@@ -129,6 +135,7 @@ Verify 先给 verdict，再按 premise 路由：
 - factual source / baseline / runtime identity 不清 → `$unknowns-first`；
 - verified reality 推翻 Intent Draft / Constraint / Acceptance → `$northstar`；
 - verification 暴露此前未决的新长期 architecture fork → `$architecture-evolution`；
+- 已理解 claim 的 concrete observable shape 再次出现 material ambiguity → `$prototype`，然后返回 Verify；
 - 需要改变投入、兼容、长期维护或风险 commitment → Northstar / Human；
 - backend 本身坏或不可运行 → 报 backend blocker，不把 product 判成 false。
 
