@@ -1,4 +1,4 @@
 interface:
   display_name: "Prototype"
-  short_description: "把已理解的 Intent 具体化到可观察"
-  default_prompt: "使用 $prototype，只关闭当前 Intent 中仍会导致 materially different concrete shape 的一个决策；优先用最便宜的 Core Path / Usage / Interface Draft，只有 static surface 不足时才做 disposable Prototype。返回 correction / Evidence 给 caller，不拥有 Intent、Architecture 或 implementation。"
+  short_description: "把已理解语义的具体形态变得可观察"
+  default_prompt: "使用 $prototype，作为 caller-neutral、主要由模型按需调用的 concrete-shaping specialist，只关闭当前 caller 已理解语义中仍会导致 materially different concrete shape 的一个决策；优先用最便宜的 Core Path / Usage / Interface Draft，只有 static surface 不足时才做 disposable Prototype。返回 concrete contrast / correction / Evidence 给原 caller；不拥有 Intent、Architecture、verification judgment 或 implementation，也不默认把结果转交 Northstar。"
