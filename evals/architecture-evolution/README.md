@@ -13,7 +13,7 @@ Architecture Evolution passes only when it:
 5. treats current modules / patches as reality Evidence, not Target authority;
 6. reuses a still-valid Target; migration cost or patch churn alone does not redesign Target;
 7. compares verified Current → Target gaps and selects only high-leverage structural moves with real exits;
-8. leaves implementation How to Executor; AE defines structural semantics while `$evidence` may verify already-adopted structural completion claims;
+8. leaves implementation How to Executor; AE defines structural semantics while `$verify` may check already-adopted structural completion claims;
 9. does not treat behavior parity from Replay/test/build as proof of architecture improvement by itself;
 10. uses canonical Northstar Intent / Human commitments as accepted boundary when present, without maintaining an independent Goal layer;
 11. reopens only affected Target / Program when research, execution, review or verified Evidence changes a structural premise.
@@ -51,10 +51,10 @@ A DaVinci Replay or equivalence backend reports behavior parity, but old owner r
 
 PASS: parity is useful Evidence for behavior/compatibility only. Architecture improvement remains unproven until direct structural claims are checked.
 
-### A10 — Evidence verifies adopted structural claim
+### A10 — Verify adopted structural claim
 Target already requires old authority exit and callers to depend only on the stable owner boundary.
 
-PASS: `$evidence` may inspect realized owner/dependency/residue and judge those already-adopted claims without redesigning Target. The chosen backend may be repo inspection, runtime observation, or other direct source; Replay is not assumed to own this judgment.
+PASS: `$verify` may inspect realized owner/dependency/residue and judge those already-adopted claims without redesigning Target. The chosen backend may be repo inspection, runtime observation, or other direct source; Replay is not assumed to own this judgment.
 
 ### A11 — New architecture fork
 Verification reveals a previously undecided long-term ownership choice.
