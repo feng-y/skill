@@ -40,7 +40,9 @@
 
 ## Verifier / control-plane boundary
 
-**Backend 是执行系统，不是 semantic owner。** test/build/integration、project-local verify harness、runtime probe、data query、profile，以及 DaVinci harness 的 Replay 都可以产出 observation / artifact；Verify 决定为什么运行、identity 是否可信、这些结果证明哪个 claim、是否达到 proof 门槛。
+**Verify 是 capability，不是 lifecycle stage。** 可以在实现前收敛 proof obligation、实现中修正 proof premise、实现后判断 realized result；不得强制每个 Issue / PR 都经过 Verify。
+
+**Backend 是执行系统，不是 semantic owner。** test/build/integration、project-local verify harness、runtime probe、data query、profile，以及 DaVinci harness 的 Replay 都可以产出 observation / artifact；Verify 决定为什么运行、identity 是否可信、这些结果证明哪个 claim、是否达到 proof 门槛。已有 backend 的 Launch / Doctor / Drive / Capture / Cleanup contract 由 backend 自己拥有，Verify 只消费，不重建第二套 lifecycle。
 
 **Execution control plane 也正交。** 外部 orchestration 可以 start / route / pause / resume / retry，但不能定义 Intent、material Graph、Architecture、Verify semantics 或 artifact authority。
 
@@ -52,7 +54,7 @@
 - **PR**：realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在 PR。
 - **Prototype artifact**：reaction surface，可丢弃；durable correction / Evidence 回 caller。
 - **Architecture handoff**：只有独立调用或真实跨边界需要时持久化；被 Northstar 调用时优先 fold durable structural decision 回 Issue。
-- **Verify result**：Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing；不是 repair plan、progress manager 或第二份 Intent。
+- **Verify result**：Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing；默认留在 PR / review / verification surface，不成为第二份 Intent SOT。
 
 ## Graph and loop
 
