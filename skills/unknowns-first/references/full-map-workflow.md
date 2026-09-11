@@ -50,7 +50,7 @@ L3 可以发现非事实问题，但必须路由，而不是在 map 内解决：
 - accepted outcome / Human commitment → `$northstar`；
 - concrete path / usage / interface reaction → `$prototype`；
 - long-term responsibility / boundary / dependency → `$architecture-evolution`；
-- completion/safety claim 的 proof obligation、false-pass、sufficiency judgment → `$evidence`。
+- completion/safety claim 的 proof obligation、false-pass、sufficiency judgment → `$verify`。
 
 不要在 full map 里生成 mock、candidate design、architecture program、build plan、proof plan、review checklist、quiz 或 repair plan。
 
