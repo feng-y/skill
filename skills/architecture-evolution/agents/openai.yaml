@@ -1,4 +1,4 @@
 interface:
   display_name: "Architecture Evolution"
   short_description: "判断长期 Target 并收敛当前结构演进"
-  default_prompt: "使用 $architecture-evolution，直接从当前 engineering request / existing Intent、仓库现实与仍有效的 architecture authority 建立或复用 Target Architecture，再判断 Current → Target 的 structural gap、focused Evolution Program 与 real exits；不要求先运行 Northstar，不从当前 module/patch 反推 Target，不设计 implementation How。AE 定义 structural semantics；需要验证 already-adopted structural claims 是否真实成立时交 $verify，具体 Replay/test/build/runtime 只是 backend。"
+  default_prompt: "使用 $architecture-evolution，直接从当前 engineering request / existing Intent、仓库现实与仍有效的 architecture authority 建立或复用 Target Architecture，再判断 Current → Target 的 structural gap、focused Evolution Program 与 real exits；不要求先运行 Northstar，不从当前 module/patch 反推 Target，不设计 implementation How。若 structural question 已明确但 candidate Target 的 caller path / usage / interface / boundary surface 仍存在 material concrete ambiguity，可 model-invoke $prototype，把 concrete contrast 作为 reaction Evidence 返回 AE；Target judgment 仍由 AE 拥有。需要验证 already-adopted structural claims 是否真实成立时交 $verify，具体 Replay/test/build/runtime 只是 backend。"
