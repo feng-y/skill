@@ -1,4 +1,0 @@
-interface:
-  display_name: "Evidence"
-  short_description: "证明 engineering claim 是否真实成立"
-  default_prompt: "使用 $evidence，从 authoritative engineering claim / Acceptance 出发，先定义 proof obligation，再选择最直接的 real-artifact Evidence 与可用 verifier/backend。项目已有 harness 优先复用；在 DaVinci 中 Replay 是执行 backend，不是 semantic owner。消费结果后只判断 proven / false / unproven；factual source gap 交 $unknowns-first，Intent premise 错误回 $northstar，新 architecture fork 回 $architecture-evolution。不要把 build green、agent self-report 或 verifier 本身当 proof。"
