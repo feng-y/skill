@@ -23,7 +23,7 @@ Evolution Program
   - real exits
   - migration boundary
   ↓
-Evidence obligations
+Structural completion claims
 ```
 
 这只是可读性顺序。局部判断可以只给局部结论；no-evolution 可以直接说明 current reality 为什么已经满足 Target；Human-owned fork 可以停在 Evidence + recommendation + decision surface。
@@ -39,7 +39,7 @@ Current reality：`ModelManager` 同时承担 model semantics、runtime selectio
 1. responsibility / knowledge ownership 没归位；
 2. old authority 没 real exit；
 3. 独立 lifecycle 被错误合并；
-4. layer/provider 没减少代表性 change 的 judgment/change/verification propagation；
-5. `$replay` green 只能证明对应 behavior/compatibility claim，不能证明 architecture gain。
+4. layer/provider 没减少代表性 change 的 judgment/change/proof propagation；
+5. behavior parity from Replay/test/backend 只能支持对应 behavior/compatibility claim，不能单独证明 architecture gain。
 
-更可信的方向：Target judgment 先让 model capability 隐藏 model-specific semantics、runtime selection 与 backend config；只有 runtime 确有稳定 variation 才形成内部 provider boundary；resource owner 保持独立。AE 再从 current reality 选择 caller knowledge exit、old manager authority exit 等少量 structural moves，而不是先规定必须存在某组 class / registry / facade。
+更可信的方向：Target judgment 先让 model capability 隐藏 model-specific semantics、runtime selection 与 backend config；只有 runtime 确有稳定 variation 才形成内部 provider boundary；resource owner 保持独立。AE 再从 current reality 选择 caller knowledge exit、old manager authority exit 等少量 structural moves，而不是先规定必须存在某组 class / registry / facade。需要证明这些 structural claims 已落地时交 `$evidence`，由它选择直接 structural source 或合适 verifier/backend。

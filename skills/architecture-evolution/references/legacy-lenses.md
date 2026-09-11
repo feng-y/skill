@@ -8,4 +8,4 @@
 
 若 Evidence 表明旧身份对应新的长期 binding compatibility commitment，并会 materially 改变 Target Architecture，回 Architecture Evolution 的 Target judgment；不要为了当前迁移方便直接改写 Target。
 
-这里只判断当前 Program 的 legacy exit / compatibility boundary，不规定兼容实现、迁移任务、发布方式或验证流程；behavior/compatibility proof 由 `$replay` 负责。
+这里只判断当前 Program 的 legacy exit / compatibility boundary，不规定兼容实现、迁移任务、发布方式或 verifier 命令。behavior/compatibility claim 需要证明时交 `$evidence`；它可以选择 DaVinci Replay、test、runtime probe 或其他项目 verifier/backend 作为 Evidence source。

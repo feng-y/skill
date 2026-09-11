@@ -2,12 +2,12 @@
 
 只在 `$unknowns-first` L3 被触发时读取：用户明确要完整 unknown map，或多个**事实未知**相互耦合到当前 work 无法继续。
 
-这个 reference 只负责 map-versus-territory source alignment。它不是第二套 SDLC，不拥有 Intent、Prototype、Architecture、Execution plan、Verification plan 或 post-change review。
+这个 reference 只负责 map-versus-territory source alignment。它不是第二套 SDLC，不拥有 Intent、Prototype、Architecture、Execution plan、Proof plan 或 post-change review。
 
 ## Source model
 
 - **Map**：prompt、plan、docs、memory、assumptions、historical explanation。
-- **Territory**：current code、config、runtime、data、tests、authoritative external source。
+- **Territory**：current code、config、runtime、data、tests、authoritative external source、verifier artifacts。
 - **Failure mode**：map 已经被 territory 反证，但后续判断仍沿旧 map 前进。
 - **Control rule**：只调查答案会改变当前 route / scope / attribution / owner judgment 的 factual unknown。
 
@@ -37,7 +37,7 @@
 
 ### Unknown knowns
 
-寻找已经存在但 caller 没带入 map 的 authoritative source：repo contract、runtime config、release identity、existing trace、data ownership、reference implementation 等。只找会改变当前判断的 source。
+寻找已经存在但 caller 没带入 map 的 authoritative source：repo contract、runtime config、release identity、existing trace、data ownership、reference implementation、Replay/test artifact identity 等。只找会改变当前判断的 source。
 
 ### Unknown unknowns
 
@@ -50,7 +50,7 @@ L3 可以发现非事实问题，但必须路由，而不是在 map 内解决：
 - accepted outcome / Human commitment → `$northstar`；
 - concrete path / usage / interface reaction → `$prototype`；
 - long-term responsibility / boundary / dependency → `$architecture-evolution`；
-- completion claim 的 independent proof / false-pass judgment → `$replay`。
+- completion/safety claim 的 proof obligation、false-pass、sufficiency judgment → `$evidence`。
 
 不要在 full map 里生成 mock、candidate design、architecture program、build plan、proof plan、review checklist、quiz 或 repair plan。
 

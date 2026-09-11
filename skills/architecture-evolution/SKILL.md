@@ -12,7 +12,7 @@ Architecture Evolution 负责两层连续但不同的判断：
 
 这两层语义必须分开，但不需要拆成两个顶层 Skill。Program convenience 不能反向定义 Target；Current code 只能证明 reality，不能因为已经存在就成为长期 Target。
 
-Architecture Evolution 不拥有 canonical Intent，不替 Human 改变投入、兼容、长期维护或风险 commitment，不进入 file/class/API/patch 等 implementation How。它拥有 structural semantics；普通 implementation checks 属于 Executor，需要独立 completion proof 时可调用 `$replay`。
+Architecture Evolution 不拥有 canonical Intent，不替 Human 改变投入、兼容、长期维护或风险 commitment，不进入 file/class/API/patch 等 implementation How。它拥有 structural semantics；proof obligation / sufficiency judgment 交 `$evidence`，具体 verifier/backend 则属于项目执行环境。
 
 ## 输入：caller-neutral structural pressure
 
@@ -52,7 +52,7 @@ AE 可以直接从当前 engineering request / existing Intent / Drafted Issue /
 - 修改是否主要由应吸收它的 responsibility 承担；
 - structural / behavior Evidence 是否能从责任边界附近建立，而不是绕过 contract 穿透 implementation。
 
-新增 facade / registry / interface 后，如果 judgment/change/verification propagation 基本不变，只是 complexity relocation，不是 architecture gain。
+新增 facade / registry / interface 后，如果 judgment/change/proof propagation 基本不变，只是 complexity relocation，不是 architecture gain。
 
 ## Current → Target gap
 
@@ -79,11 +79,11 @@ Current 已满足 Target，或 change pressure 完全落在当前正确 owner �
 
 Program 写 material structural outcome、dependency、migration boundary 与 real exit，不写 file、class、API、schema、helper、PR split、patch 顺序或具体测试命令，除非 authority 已绑定 representation。
 
-## Structural judgment 与 Replay
+## Structural semantics 与 Evidence
 
-AE 定义 / 采用 **Target 与 structural completion semantics**；Replay 不重新决定什么结构“应该是对的”。
+AE 定义 / 采用 **Target 与 structural completion claim**；`$evidence` 负责回答这些 claims 在 realized change 中是否已被真实 Evidence 证明。
 
-当已经 adopted 的 structural outcome 需要独立验证时，`$replay` 可以依据 Target / Program 中的明确 claim，检查 realized owner、authority exit、dependency、consumer penetration、legacy residue 等 structural facts，并判断这些 claim 是否 proven / false / unproven。Replay behavior parity 单独 green 不足以证明 architecture improvement，因为 proof 还必须覆盖对应 structural claim。
+例如 Target 已明确要求 old authority exit、caller 不再穿透 owner、dependency 归位时，Evidence 可以选择最直接的 structural inspection / runtime source / repo graph 等观察，并判断 `proven / false / unproven`。DaVinci Replay 若能提供某部分 behavior/equivalence observation，可以作为 backend 输入；它本身不定义 architecture claim，也不能仅凭 behavior parity 证明 architecture gain。
 
 如果 verification 暴露的是**此前未决的新 architecture fork**，才回 AE 重开受影响 Target / Program；不要为了一个 implementation red 重新设计 Target。
 
@@ -91,7 +91,7 @@ AE 定义 / 采用 **Target 与 structural completion semantics**；Replay 不�
 
 ## Evidence-driven re-entry
 
-Research、execution、review 或 Replay 的 verified Evidence 都可能触发 AE re-entry，但只重开真正受影响部分：
+Research、execution、review 或 Evidence verification 都可能触发 AE re-entry，但只重开真正受影响部分：
 
 - current reality / cost / migration condition 变化，Target premise 不变 → 只重算 Program；
 - Target deciding premise 失效或出现新的长期 fork → 重做受影响 Target judgment；
@@ -105,6 +105,7 @@ Research、execution、review 或 Replay 的 verified Evidence 都可能触发 A
 - adopted / re-established Target Architecture 与 deciding Evidence；
 - material Current → Target gap；
 - focused Evolution Program、real exits / migration boundary；
+- material structural completion claims；
 - 会改变 Target / Program 的 unresolved Evidence 或 Human choice。
 
 被 Northstar 调用时，只把后续执行需要的 durable structural Decision / Constraint / Draft correction fold back 到 canonical Intent / Issue。独立调用且用户需要 architecture handoff 时才形成持久文档；AE 不强制每次生成第二份 Markdown SOT。

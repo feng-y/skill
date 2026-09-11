@@ -7,7 +7,7 @@ description: "Canonical engineering-intent skill: turn a conversation, request, 
 
 Northstar 负责把当前 conversation、外部请求、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。当 Intent 需要跨 session、agent、Human 或执行环境流转时，Northstar 将同一份语义 materialize 为 Drafted Issue；Issue 是 Intent 的 durable carrier，不是另一套语义阶段。
 
-Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责持续 verification / outcome judgment，也不持续监督 Executor。PR 是 realized Change / Delivery surface；普通 implementation-local checks 属于 Executor，需要独立判卷时按需调用 `$replay`。
+Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof sufficiency judgment，也不持续监督 Executor。PR 是 realized Change / Delivery surface。普通 implementation-local checks 属于 Executor；当 completion / safety claim 的 proof 本身需要独立设计或判断时，交 `$evidence`。
 
 核心规则：
 
@@ -26,6 +26,16 @@ Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责持续 
 
 不维护独立 `Goal` 字段。抽象 outcome 只有在增加实际 decision information 时才保留，并直接落实到 Problem、Constraint、Decision 或 Acceptance，而不是形成第二层 SOT。
 
+## Acceptance 定义预期，Evidence 负责证明
+
+Northstar 必须让 material Acceptance **可判断**，但不需要在这里选择 verifier/backend 或写具体 proof plan。
+
+- Northstar：什么结果才算符合预期；
+- Evidence：什么真实 observation 能证明/反证这个 claim，现有 Evidence 是否足够；
+- verifier/backend：实际运行 test/build/Replay/runtime/data/profile 等并返回 observation。
+
+如果 Acceptance 只能靠“完成某个实现步骤”表达，继续收敛 outcome；如果 Acceptance 已明确但 proof route 不清、baseline/oracle 复杂或 false-pass risk material，可调用 `$evidence` 建立 proof obligation。不要因为项目有 Replay 就把 Replay 命令写进 Intent contract。
+
 ## 先综合已有上下文，不重新采访
 
 优先消费当前 conversation 已经形成的 Human requirement、correction、decision 与 Evidence。不要因为进入 Northstar 就重做完整访谈。
@@ -39,9 +49,9 @@ Northstar 拥有 Intent，不复制 specialist 的责任：
 - **factual territory unknown**，且事实不同会改变 Intent → `$unknowns-first`；
 - **Intent 已理解，但同一 prose 仍允许 materially different concrete shape** → `$prototype`；
 - **长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断** → `$architecture-evolution`；
-- **material completion claim 需要独立证明 / false-pass judgment** → `$replay`。
+- **material completion / safety claim 需要 proof obligation、real-artifact Evidence 或 sufficiency judgment** → `$evidence`。
 
-普通 implementation-local build/test/check 不需要为了流程完整调用 Replay。specialist 结果不创建第二份 Intent SOT；只把后续 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到当前 Intent / Issue。
+specialist 结果不创建第二份 Intent SOT；只把后续 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到当前 Intent / Issue。Proof 命令、临时 output、replay artifact 默认留在 Evidence/PR/runtime surface，不塞进 Issue body。
 
 ## Drafted Issue
 
@@ -59,18 +69,18 @@ Issue 按 cohesive engineering outcome / responsibility boundary 切，不按一
 
 只有 material work / dependency 本身复杂到 Issue 仍不足以安全交接时，才读取 [references/material-compile.md](references/material-compile.md)，从已经成立的 Intent / Intended Draft 编译 coarse material work 与真实 dependency。Compile 不能反向发明 Intent，也不能用 task decomposition 发现 Target。
 
-## Evidence feedback，不以 Replay 为唯一入口
+## Evidence feedback
 
-Research、execution、review 和 Replay 都可能产生新 Evidence。按真正受影响的 semantic owner 回流：
+Research、execution、review 和 verifier/backend 都可能产生 observation；只有经过足够核实的 Evidence 才改变 semantic owner。按真正受影响的 surface 回流：
 
 - factual premise 不清 → `$unknowns-first`；
 - verified reality 证明 Intent Draft / Constraint / Acceptance 本身错误或失效 → 只重开 Northstar 中受影响的部分；
 - already-understood Intent 出现新的 material concrete-shape ambiguity → `$prototype`；
 - 出现此前未决的长期 structure fork → `$architecture-evolution`；
-- 当前 authoritative contract 需要独立 completion proof → `$replay`；
+- 当前 claim 需要定义/补足 proof 或判定 sufficiency → `$evidence`；
 - Intent 仍成立，但 verified Evidence 改变复杂 material work / dependency → 只重进 material compile 的 affected cone。
 
-不要因为 Replay red 或 PR finding 就自动重写 Intent，也不要因为 tests green 就宣布 Intent 正确。一个 owner 返回 bounded judgment 后回 caller；只有 premise 真正变化才 re-enter，避免 owner 间 ping-pong。
+不要因为 Replay/test red 就自动重写 Intent，也不要因为 build/test/replay green 就宣布 Intent 正确。Verifier observation 必须先对应到 authoritative claim。
 
 ## 停止条件
 
@@ -88,6 +98,6 @@ Research、execution、review 和 Replay 都可能产生新 Evidence。按真正
 - clear Issue 仍强制经过 compile / Graph。
 - 把 `$prototype` 的 artifact 当作新的 authority，而不是 reaction surface。
 - 让 AE 的 Program convenience 反向改写 Intent。
-- 在 Northstar 内选择 replay/test/runtime verifier 并持续判卷。
+- 在 Northstar 内选择 test/Replay/runtime verifier 并自行判断 proof sufficiency。
 - 把 Issue 切成适配单次 agent context 的细粒度 ticket。
-- 把任何 red finding 都当成 Intent 错误；只有 intended change / binding premise 本身被反证才回流。
+- 把任何 red finding 都当成 Intent 错误；只有 intended change / binding premise 本身被 authoritative Evidence 反证才回流。
