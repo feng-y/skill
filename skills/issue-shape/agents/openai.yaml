@@ -1,4 +1,0 @@
-interface:
-  display_name: "Issue Shape"
-  short_description: "把当前工程意图编译成可独立流转的 Drafted Issue"
-  default_prompt: "使用 $issue-shape，把当前 discussion / external request 综合成一个 fresh agent 可独立消费的 Drafted Issue；优先保留 Problem、concrete Draft、binding Constraints 与必要 Acceptance，只有确实需要时调用 intent-shape / unknowns-first / architecture-evolution / northstar，并把 durable 结果 fold back 到同一个 Issue。"

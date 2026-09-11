@@ -1,21 +1,58 @@
 ---
 name: architecture-evolution
-description: 用于根据长期 Target Architecture 与当前仓库现实判断是否值得结构演进，并收敛高杠杆 Evolution Program；Target 缺失或前提失效时 model-invoke architecture-shape。
+description: "Resolve long-term structural ownership and evolve current reality toward it: establish or reuse the Target Architecture, compare Current → Target, then converge a focused Evolution Program with real exits."
 ---
 
-# Architecture Evolution · 从 Target 收敛结构演进
+# Architecture Evolution · Target judgment + current structural evolution
 
-Architecture Evolution 只负责 **Current reality → Target Architecture 的结构演进 Program**。长期 capability / responsibility / boundary / variation / dependency 的 Target judgment 由 `$architecture-shape` 拥有；AE 不重新设计 Target，也不进入 file/class/API/patch 等 implementation How。
+Architecture Evolution 负责两层连续但不同的判断：
 
-Human 拥有业务、投入、兼容、长期维护和风险承诺；Northstar 拥有 binding Intent 与 Taskbook；Architecture Shape 拥有 Target；Executor 拥有具体实现。
+1. **Target Architecture judgment**：长期 capability / responsibility / authority / knowledge 应由谁拥有，boundary、variation、dependency、lifecycle / failure semantics 应是什么；
+2. **Evolution Program**：基于 verified current reality，判断当前最值得推进哪些 structural moves 才能兑现 Target，并让旧 authority / duplicated knowledge / reverse dependency / special path 真实退出。
+
+这两层语义必须分开，但不需要拆成两个顶层 Skill。Program convenience 不能反向定义 Target；Current code 只能证明 reality，不能因为已经存在就成为长期 Target。
+
+Architecture Evolution 不拥有 canonical Intent，不替 Human 改变投入、兼容、长期维护或风险 commitment，不进入 file/class/API/patch 等 implementation How。它拥有 structural semantics；proof obligation / backend selection / sufficiency judgment 交 `$verify`。
+
+## 输入：caller-neutral structural pressure
+
+AE 可以直接从当前 engineering request / existing Intent / Drafted Issue / Human correction 启动；**不要求先运行 Northstar**。当 canonical Northstar Intent / Issue 已存在时，它定义 accepted outcome / commitment boundary，AE 不另建 Intent SOT。
+
+从请求、稳定 architecture/domain authority 与 verified reality 中只提取**会长期改变结构的 change pressure**：responsibility、authority、knowledge ownership、boundary、variation、dependency、lifecycle、failure/isolation 或兼容承诺。
+
+不要求也不维护独立 `Goal` artifact。若一个抽象 outcome 真正影响结构判断，它应体现在 authoritative intent / request 的 Problem、Draft、Constraint、Decision 或 Acceptance 中。
 
 ## Target gate
 
-优先复用仍有效的 authoritative Target。Current code 只证明 reality，不能因为已经存在就定义 Target。
+优先复用仍有效的 authoritative Target。只有 Target 缺失、已有 premise 失效，或新的 intent / authority / verified reality 产生会 materially 改变长期 owner / boundary / dependency / lifecycle 的 fork 时，才重新做 Target judgment。
 
-仅在以下情况 model-invoke `$architecture-shape`：Target 缺失；新的 Goal / authority / verified reality 产生会 materially 改变长期 owner / boundary / variation / dependency / lifecycle / failure semantics 的 fork；或已有 Target 的 deciding premise 已失效。只把 Goal pressure、binding constraints、verified reality 与仍有效 Evidence 交给它，并消费返回的 Target / deciding Evidence / reopen condition。
+若变化只涉及当前迁移成本、顺序、patch shape 或 implementation difficulty，Target 不重算。
 
-如果变化只涉及当前迁移成本、顺序、实现难度或 patch shape，Target 不重算。
+### Responsibility / knowledge ownership first
+
+先判断哪个长期 capability 应拥有并隐藏完成同一变化原因所需的 knowledge、state、behavior、authority、lifecycle 与主要 structural semantics。正确 owner 应让 caller 不再重组这些私有决定。
+
+当前 module、目录或用户点名范围只是 investigation scope，不自动成为 Target boundary。高内聚低耦合是正确 knowledge ownership 的结果，不是独立评分。
+
+### Variation / layering second
+
+只有 stable semantics 与可独立变化的 implementation/provider/storage-runtime adapter/lifecycle/deployment/performance architecture 等之间存在长期差异时，才引入 layer / provider。没有 stable variation 不造层次；不要套固定 `interface → domain → provider → infrastructure` 模板。
+
+### Dependency after ownership
+
+能力与 responsibility 先成立，再设计 dependency direction。长期 dependency 必须由真实 semantic / authority / lifecycle / failure relationship 解释，并尽量依赖 owner 的 stable contract，而不是历史 helper 位置。
+
+单向依赖不能挽救错误的 capability decomposition；合法 authoritative dependency 也不能为了减少 edge 数被复制或吞并。
+
+### 用 change locality 挑战 Target
+
+对至少一个代表性当前 change pressure 检查：
+
+- fresh implementer 是否主要在正确 owner 附近恢复关键设计决定；
+- 修改是否主要由应吸收它的 responsibility 承担；
+- structural / behavior Evidence 是否能从责任边界附近建立，而不是绕过 contract 穿透 implementation。
+
+新增 facade / registry / interface 后，如果 judgment/change/proof propagation 基本不变，只是 complexity relocation，不是 architecture gain。
 
 ## Current → Target gap
 
@@ -23,38 +60,58 @@ Target 成立后，只调查会改变是否演进、Program scope、material dep
 
 - responsibility / authority / private knowledge 仍在错误 owner，或 caller 仍重建它；
 - Target boundary / stable dependency 尚未成立，consumer 仍穿透旧 owner；
-- justified variation 仍泄漏给 caller，或没有长期 variation 的旧 layer 仍制造复杂度；
+- justified variation 仍泄漏给 caller；
 - Target 要求退出的 legacy authority / special path 仍 authoritative；
 - lifecycle / failure / isolation boundary 尚未兑现。
 
-Current 已满足 Target，或 Goal 完全落在当前正确 owner 内且长期结构不变时，返回 local / no-evolution，不制造 Program。
+Current 已满足 Target，或 change pressure 完全落在当前正确 owner 内且长期结构不变时，返回 local / no-evolution，不制造 Program。
 
 ## Evolution Program
 
-从真实 gap 中选择当前最有 leverage 的 structural moves，通常不超过 3 个锚点，不凑数量。优先能：归位 responsibility / authority / knowledge；建立 Target boundary / dependency；解除后续演进 blocker；以及让旧 authority、duplicated knowledge、reverse dependency、special path 或被结构替代的 guidance **真实退出** 的变化。
+从真实 gap 中选择当前最有 leverage 的 structural moves，通常不超过 3 个锚点，不凑数量。优先能：
 
-同一 responsibility correction 拆开后若仍留下同一个旧 owner / compensation path，应聚合成 cohesive 主线；真正独立的 responsibility 与收益保持独立。**只新增 facade / registry / interface / provider，而旧 authority/path 仍然 authoritative，不算 structural gain。**
+- 归位 responsibility / authority / knowledge；
+- 建立 Target boundary / stable dependency；
+- 解除后续演进 blocker；
+- 让旧 authority、duplicated knowledge、reverse dependency、special path 或被结构替代的 guidance **真实退出**。
 
-迁移成本、兼容窗口和当前投入只影响 Program 的优先级 / migration boundary，不能反向改写长期 Target。
+同一 responsibility correction 拆开后若仍留下同一个旧 owner / compensation path，应聚合成 cohesive 主线；真正独立的 responsibility 与收益保持独立。只新增 facade / registry / interface / provider，而旧 authority/path 仍 authoritative，不算 structural gain。
 
-Program 写 material structural outcome 与真实 dependency，不写 class、API、文件、schema、helper、MR、patch 顺序或具体测试命令，除非 authority 已绑定 representation。
+Program 写 material structural outcome、dependency、migration boundary 与 real exit，不写 file、class、API、schema、helper、PR split、patch 顺序或具体测试命令，除非 authority 已绑定 representation。
 
-## Evidence 与停止
+## Structural semantics 与 Verify
 
-code/config/test/runtime 证明 current reality；有效 architecture/domain authority 约束 Target；Goal/roadmap/Human commitment 决定当前投入。未关闭事实若会改变 Program scope、dependency 或 real exit，做最小 probe 或保留显式 Unknown；只影响 implementation How 的未知不扩大调查。
+AE 定义 / 采用 **Target 与 structural completion claim**；`$verify` 负责回答这些 claims 在 realized change 中是否被真实 Evidence 证明。
 
-事实足够判断当前 Program 就停止，不为预演完整 migration、枚举 caller 或补齐 backlog 扩大 Research。
+例如 Target 已明确要求 old authority exit、caller 不再穿透 owner、dependency 归位时，Verify 可以选择最直接的 structural inspection / runtime source / repo graph 等观察，并判断 `proven / false / unproven`。DaVinci Replay 若能提供某部分 behavior/equivalence observation，可以作为 backend 输入；它本身不定义 architecture claim，也不能仅凭 behavior parity 证明 architecture gain。
 
-按需读取：
+如果 verification 暴露的是**此前未决的新 architecture fork**，才回 AE 重开受影响 Target / Program；不要为了一个 implementation red 重新设计 Target。
 
-- [delivery-examples.md](references/delivery-examples.md)：Program / delivery 漂移成平台化、facade 或 patch plan 时。
-- [legacy-lenses.md](references/legacy-lenses.md)：兼容身份或旧模式能否真实退出会改变 Program 时。
-- [brooks-constraints.md](references/brooks-constraints.md)：Program 疑似 complexity relocation / second system 时。
+未关闭 factual premise 若会改变 Target、Program scope、dependency 或 real exit，先用最小 Evidence 关闭，必要时调用 `$unknowns-first`；只影响 implementation How 的未知不扩大调查。
 
-## 交付与回流
+## Evidence-driven re-entry
 
-交付当前 Goal / pressure、采用的 Target 与 authority、material Current → Target gap、Evolution Program、real exits / migration boundary，以及 structural claims 所需 Evidence obligation。Behavior parity 只能证明兼容，不证明 responsibility / authority / boundary / dependency 已改善。
+Research、execution、review 或 Verify 都可能触发 AE re-entry，但只重开真正受影响部分：
 
-Program 以同一正文写入 repo/workspace 外 Markdown handoff，显示真实 path。长期稳定 Target 只更新已有 authoritative architecture source；Program handoff 不替代它。
+- current reality / cost / migration condition 变化，Target premise 不变 → 只重算 Program；
+- Target deciding premise 失效或出现新的长期 fork → 重做受影响 Target judgment；
+- accepted intent / Human commitment 改变 → 返回 Northstar / Human；
+- 只是 implementation choice / local defect → AE 不介入。
 
-current reality、成本或 migration 条件变化只重算受影响 Program；Target premise 失效才再次 model-invoke `$architecture-shape`；accepted outcome / Human commitment 改变则回 Northstar。
+## 返回与持久化
+
+返回当前调用方所需的最小充分结果：
+
+- adopted / re-established Target Architecture 与 deciding Evidence；
+- material Current → Target gap；
+- focused Evolution Program、real exits / migration boundary；
+- material structural completion claims；
+- 会改变 Target / Program 的 unresolved Evidence 或 Human choice。
+
+被 Northstar 调用时，只把后续执行需要的 durable structural Decision / Constraint / Draft correction fold back 到 canonical Intent / Issue。独立调用且用户需要 architecture handoff 时才形成持久文档；AE 不强制每次生成第二份 Markdown SOT。
+
+## 按需 references
+
+- [delivery-examples.md](references/delivery-examples.md)：Program 漂移成平台化、facade 或 patch plan 时；
+- [legacy-lenses.md](references/legacy-lenses.md)：旧身份 / compatibility 是否能 real exit 会改变 Program 时；
+- [brooks-constraints.md](references/brooks-constraints.md)：候选 Program 疑似 complexity relocation / second system 时。
