@@ -55,7 +55,7 @@ Human requirement 与 reality claim 分开：Human 有权给出的要求可以 b
 Northstar 拥有 Intent，不复制 specialist 的责任：
 
 - **factual territory unknown**，且事实不同会改变 Intent → `$unknowns-first`；
-- **Intent 已理解，但主 Draft 的 concrete shape 仍有 material gap** → `$prototype`；带上现有 Draft、binding context 与缺口，委托足以连贯呈现受影响核心路径的 surface，不把耦合关系拆成互不相干的局部问题；
+- **主 Draft 仍需连贯展开、选型依赖试验，或本轮明确委托了可丢弃试验** → `$prototype`；带上现有 Draft、binding context 与所需结果，按耦合核心路径委托，不把“形态已明确”当作取消明确实做的理由；
 - **长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断** → `$architecture-evolution`；
 - **material completion / safety claim 需要 proof obligation、real-artifact verification 或 sufficiency judgment** → `$verify`。
 

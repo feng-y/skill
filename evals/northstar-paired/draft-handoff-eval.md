@@ -15,7 +15,7 @@ The primary comparison is base `acc09e5040b808b46cc8f9aea17bbac988d639ab` versus
 1. Freeze both Skill revisions, one target/fixture snapshot per case, exact model including reasoning configuration, tool permissions, host/global instructions and Human-response policy. Keep them equal within pairs and across each case's repeats. Alternate/randomize arm order.
 2. Use an external temporary workspace. Expose the target task and only the arm's installed runtime Skills through the same discovery mechanism. Exclude this repository's evals, plan, validation report, change history and judge rubric. Do not include this conversation or prior run state.
 3. Export only organic prompts with the command below. Start a **fresh actual agent session** for every case/arm/repeat. No prompt names a required Skill chain or supplies a grading instruction. Do not count self-reported invocations: retain actual Skill loads/calls and resulting artifacts in the trace.
-4. For Intent cases, give the resulting handoff to a separate fresh consumer with the frozen task/territory authority, but without the author's conversation, reasoning or evaluation rubric. Record whether it must reconstruct a binding decision, connected intended path or acceptance before work. For D2 it should recognize the explicit blocker, not invent a solution.
+4. For Intent cases, give only the resulting handoff and the frozen target/territory snapshot to a separate fresh consumer, without the original request, author conversation, specialist transcripts or evaluation rubric. The private judge retains the original request to assess omissions; do not supply its missing semantic decisions to the consumer as “task authority”. Record whether it must reconstruct a binding decision, connected intended path or acceptance before work. For D2/D11 it should recognize the explicit blocker, not invent a solution.
 5. A blinded judge receives sanitized trace, result and probe, with arm/revision identity removed. Grade actual behavior and artifact content before the coordinator restores pair metadata. Required evidence must cite real line spans. One judge may score multiple outputs, but cannot be a candidate or consumer session.
 
 ```bash
@@ -31,16 +31,16 @@ One pair per case is smoke; the full focused set is **11 cases × 2 arms × 3 re
 | Check | Observable criterion |
 | --- | --- |
 | `single_primary_draft` | One current intended-change authority **per Intent**, not one file/view/session; candidate sketches are not parallel accepted Drafts. |
-| `draft_sufficiency` | The connected material shape is sufficient for the declared scope. For executable cases, a fresh consumer need not recover intent. D2 instead requires an honest best-known blocked Draft, not an executable handoff. |
+| `draft_sufficiency` | The connected material shape is sufficient for the declared scope. For executable cases, a fresh consumer need not recover intent. D2/D11 instead require an honest best-known blocked Draft, not an executable handoff. |
 | `integration` | Adopted corrections appear coherently in the current primary Draft, preserving unaffected commitments. Merely forwarding fragments fails. |
 | `routing` | The actual next unresolved question reaches the appropriate semantic owner; do not grade literal Skill names alone. |
 | `owner_retention` | Specialist returns to its original decision owner; necessary premise-driven re-entry is not erroneous takeover. Independent AE/Verify do not acquire a synthetic Northstar stage. |
 | `factual_discipline` | No invented territory, lifetime, immutability, performance number, accepted choice or proof. |
-| `prototype_discipline` | A call has a material shape reason and sufficient bounded scope; no call for already-concrete/How-only work, no shaping through decision-changing unknown facts. Inline sufficient shaping is allowed. |
+| `prototype_discipline` | A call addresses a material shape gap or an explicitly delegated disposable experiment within scope. Bypass already-concrete/How-only work only when no such experiment is pending; do not invent setup facts. Inline sufficient shaping is allowed. |
 
 A correct invocation with an incomplete primary Draft is a failure. A correct short Draft with no Prototype call can pass. Neither the number of headings nor the number of calls proves quality.
 
-`executable_handoff` is separately recorded and checked against the case. D2 passing blocked-handoff checks never counts as executable implementation readiness. Independent AE/Verify/factual cases have no Intent-Draft grades and use `executable_handoff=null`.
+`executable_handoff` is separately recorded and checked against the case. D2/D11 passing blocked-handoff checks never counts as executable implementation readiness. Independent AE/Verify/factual cases have no Intent-Draft grades and use `executable_handoff=null`.
 
 ## Observation record
 
@@ -86,3 +86,9 @@ Start the new targeted smoke with D9–D11 × base/candidate = 6 real actor sess
 Inspect the **actually loaded** Skill content, version/hash and applicable overrides from the execution trace; a manifest listing the desired repository revision is not proof of the loaded contract. If an HTML-only Skill resolved instead of engineering Prototype, classify that separately as an installation/resolution problem. Do not claim the repository's Prototype was behaviorally evaluated, or erase the mismatch by renaming a trace. This identity check belongs to eval setup/attribution, not a mandatory new runtime protocol.
 
 The three experiment purposes mentioned in the retrospective (reaction, feasibility, performance) distinguish what evidence is needed; they do not add Skill owners or fixed stages. Prototype can build/run a disposable artifact; Verify retains proof judgment; the original caller retains the adoption decision. Equal output on a tiny fixture is not exhaustive equivalence and a microbenchmark result is not production CPU improvement.
+
+## Continued review: invocation-surface coverage
+
+Compare the installed `agents/openai.yaml` and all runtime instructions actually loaded, not only `SKILL.md`. The pre-fix Prototype invocation prompt still demanded one isolated decision and broadly excluded implementation; the revised entry agrees with cohesive shaping and explicitly delegated disposable work. This is a verified repository inconsistency, not proof of which Skill the user's machine loaded.
+
+Do not enlarge the 11-case frozen suite just to count more tests. Use D10 (explicit execution despite an already-understood shape), D4 (How-only bypass), D6 (proof-owner return) and D11 (genuine blocked experiment) as the targeted continuation. Include both automatic discovery and a direct invocation entry where the harness exposes it, keeping the entry mode identical within each pair and identifying it in `host_config`. Cross-entry scores are separate runs, not interchangeable repeats. An entry audit is not a clean-session behavioral result.

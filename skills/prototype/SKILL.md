@@ -1,6 +1,6 @@
 ---
 name: prototype
-description: "Caller-neutral model-invoked concrete-shaping specialist: when an already-understood engineering intent, structural judgment, or accepted claim still has a material concrete-shape gap, expose the connected path, usage, interface, or interaction with the cheapest inspectable representation and return correction / Evidence to the caller."
+description: "Caller-neutral engineering prototype specialist: expose a cohesive concrete surface for an understood semantic question, or build and run an explicitly requested disposable experiment. Return representations and observations to the caller; do not own Intent, Architecture, proof judgment, or production implementation."
 ---
 
 # Prototype · 让已理解语义的具体形态可观察
@@ -13,15 +13,15 @@ Prototype 不拥有 canonical Intent / Issue，不决定长期 Target Architectu
 
 ## 调用模型：model-invoked，不绑定 Northstar
 
-Prototype 通常不是 Human 需要主动选择的入口。Human 提出需求或 correction 后，由当前 semantic owner 判断是否存在 concrete-shape ambiguity，再按需调用 `$prototype`。
+Prototype 通常不是 Human 需要主动选择的入口。当前 semantic owner 在需要展开连贯形态、通过试验决定形态，或已有明确的可丢弃试验委托时按需调用 `$prototype`；直接委托本身不要求再制造 shape ambiguity。
 
 典型 caller：
 
-- **Northstar**：Intent 已理解，但 core path / usage / interface 仍有 materially different 解释；
+- **Northstar**：Intent 已理解，但主 Draft 的核心路径仍不连贯、选型依赖试验，或本轮明确委托了可丢弃试验；
 - **Architecture Evolution**：structural question 已经明确，但需要把候选 owner / boundary / dependency 对 consumer path 的具体影响变得可观察，才能完成自己的 Target judgment；
 - **Verify**：authoritative claim 已经成立，但真实 usage / path / interaction 的具体形态仍有 materially different 解释，导致无法稳定 observable surface；
 - **Unknowns First**：事实已经关闭后，剩下的问题其实不是“事实是什么”，而是 concrete shape 应如何被看见；可以调用 Prototype，再把结果返回原 decision owner；
-- **其他 caller**：只要它已经拥有当前 semantic question，且剩余问题确实是 concrete shape，而不是事实、长期 architecture、proof sufficiency 或 implementation How。
+- **其他 caller**：已理解问题且需要 concrete surface 或明确委托可丢弃试验；不借此转移事实、长期 Architecture、proof judgment 或生产 implementation 的责任。
 
 Prototype 返回后，不自动转交 Northstar。caller 消费结果并决定是否更新自己的 judgment；只有 durable Intent 改变时才 fold 回 Northstar / Issue，只有长期 structural premise 改变时才回 AE。
 
@@ -31,15 +31,14 @@ Prototype 返回后，不自动转交 Northstar。caller 消费结果并决定�
 
 - outcome / semantic question 已理解，但核心 execution path / ownership surface / boundary 仍有会改变 caller judgment 的缺口；不要求先凑出两种候选；
 - API、CLI、schema、config、workflow 或 interaction 只有看到具体 usage 才能可靠判断；
-- static draft 不能回答一个 material experiential / empirical decision，需要最小可丢弃实现直接观察。
+- 选型依赖运行观察，或 caller / Human 明确要求完成可丢弃代码试验；形态已明确不取消这项委托。
 
 不应调用或应立即返回 caller：
 
 - producer / consumer / runtime path / baseline 等 territory fact 未核实，且事实不同会改变 shape：交 `$unknowns-first`；
 - 长期 responsibility、knowledge ownership、dependency direction 或 Target Architecture 本身未定：交 `$architecture-evolution`；
-- completion/safety claim 已明确，剩余问题只是如何证明与 Evidence 是否充分：交 `$verify`；
-- 当前 semantic judgment 已经足以让 caller / fresh Executor 继续，剩余差异只是 implementation How；
-- trivial / local change 不为流程完整额外生成 artifact。
+- 已有真实 artifact / backend，剩余只需定义证明或判读 Evidence，不需构造试验形态：交 `$verify`；被 Verify 委托构造可丢弃试验时，完成 artifact / observation 后交回 Verify，不因它拥有 proof 判断就退回未做的委托；
+- 没有待完成的明确试验委托，当前形态已足够且余下只是生产 implementation How 时，直接返回；trivial / local change 不为流程完整额外生成 artifact。
 
 ## 一次形成一个连贯的 concrete surface
 
@@ -49,7 +48,7 @@ Prototype 返回后，不自动转交 Northstar。caller 消费结果并决定�
 
 以这个 cohesive surface 为调用粒度，而不是以一个孤立 decision 为粒度。共同决定同一 core path / dataflow / ownership surface 的关系一起展开；必要时覆盖整个 intended change，只影响一部分时保留其余已成立 context。多个 invocation 不能代替连贯结果，也不为“完整展开”穷尽 implementation How。
 
-没有 material shape gap 就停止。若 representation 依赖未核实的 repo/runtime fact，不用假设补全；返回具体 Evidence gap 及其 shape impact。若需要决定长期 owner、accepted outcome 或 proof sufficiency，返回相应 semantic owner；扩大 concrete surface 不扩大 Prototype 的决策权。
+没有 material shape gap 且没有待完成的明确试验委托就停止。试验所需的现状身份或 binding fact 未核实时，先关闭该事实或报告具体 gap；试验本身要回答的可行性 / 成本未知不是拒绝试验的理由。若需要决定长期 owner、accepted outcome 或 proof sufficiency，仍由对应 owner 判断；扩大 concrete surface 不扩大 Prototype 的决策权。
 
 ## 选择最低成本的 representation
 
@@ -69,7 +68,7 @@ consumer-facing API、CLI、schema、config、workflow 或 interaction 是决定
 
 ## 候选对比
 
-当 2–3 个 materially different concrete shapes 都仍合理、且比较本身能帮助 caller 关闭 decision 时，用**同一种 representation**对比它们。只比较 decision-relevant ownership surface、boundary、contract、commitment 与 Evidence；不为了探索充分制造候选，也不替 caller / Human 关闭它们拥有的 choice。
+只比较能改变当前选择的候选，使用可比的 representation / 输入条件，不为探索充分制造候选。已明确委托的候选或试验不得因默认展示数量而静默丢弃；顺序可以按信息价值调整，无法完成时逐项说明未完成原因。只返回 decision-relevant 差异与 Evidence，不替 caller / Human 采用方案。
 
 ## 返回 caller
 
@@ -89,4 +88,4 @@ Prototype 不生成 Taskbook、issue graph、PR split、implementation checklist
 
 ## 停止条件
 
-当被委托 surface 已连贯、所需表示或实做已完成到足以交回 caller 判断，且剩余差异不再影响当前形态选择时停止；不能因一个局部演示完成就留下关键路径或实测缺口。事实、执行能力或 owner 决策阻断时，返回具体 gap 和已完成部分，不伪造结果或强行补全。caller 负责采用结果与最终整合，Verify 保留 proof 判断；Human / caller correction 只重开受影响 surface，不重做已经闭合的部分。
+完成被委托的连贯表示或实做，并返回观察结果后交回 caller；结果可以支持采用、淘汰、修正，也可以不足以判断。一次结果不确定不授权无限追加试验：只有当前范围内仍有会改变判断的必要检查才继续。局部演示或未运行代码不替代约定的实做；事实、执行能力或 owner 决策阻断时返回已完成部分与具体 gap。caller 负责采用与整合，Verify 保留 proof 判断；correction 只重开受影响 surface。

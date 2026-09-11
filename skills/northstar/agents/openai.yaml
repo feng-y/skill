@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "把工程请求收敛为稳定 Intent / Drafted Issue"
-  default_prompt: "使用 $northstar，把当前 discussion / request / incident 收敛为 fresh consumer 可独立理解的工程 Intent；保留 Problem、concrete Draft、binding Constraints、Acceptance 与必要 Decision/Evidence，需要跨 session 或执行环境流转时 materialize 为 canonical Drafted Issue。不要制造独立 Goal；按需调用 $prototype、$architecture-evolution、$unknowns-first；当 material completion/safety claim 需要 proof obligation、backend selection 或 sufficiency judgment 时交 $verify。不要把项目里的 Replay/test/build backend 当成 Intent owner。"
+  short_description: "收敛唯一主 Draft，闭合必要试验与交接"
+  default_prompt: "使用 $northstar，按 SKILL.md 为每个 Intent 收敛同一个主 Draft；候选台账不是本轮采用的 intended change。按需委托 $prototype、$architecture-evolution、$unknowns-first 和 $verify，将采用的 correction 整合回来。形态选择所需且可执行的前置试验不能留给下一 session；分别判断 Draft 可执行性与本轮委托完成度。清晰任务直接交接，不制造 Goal、固定阶段或重复 SOT。"

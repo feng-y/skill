@@ -28,8 +28,8 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `northstar` — canonical engineering-intent skill. 把 conversation / request / incident 收敛成 durable Intent；需要跨 session / agent / Human 或执行环境流转时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
-- `prototype` — caller-neutral、主要由 model 按需调用的 concrete-shaping specialist. 当前 caller 已理解自己的语义，但具体 path / usage / interface / interaction 仍可能 materially different 时，用最便宜的 Core Path / Usage / disposable Prototype 暴露差异，再把 correction / Evidence 返回原 caller。
+- `northstar` — canonical engineering-intent skill. 把 conversation / request / incident 收敛成包含唯一主 Draft 的 durable Intent；需要跨 session / agent / Human 或执行环境流转时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
+- `prototype` — caller-neutral、主要由 model 按需调用的 concrete-shaping specialist. 围绕已理解的问题展开连贯的具体形态，或完成明确委托的可丢弃代码试验；采用足以回答问题的表示 / 实测，将 correction / observation 返回原 caller，proof judgment 仍归 Verify。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
 - `verify` — engineering verification skill. 从 authoritative completion/safety claim 出发定义 proof obligation，选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。
 - `unknowns-first` — factual map-versus-territory specialist. 只关闭会改变下一步判断的 repo/runtime/data/source fact，不接管 Intent、Prototype、Architecture 或 proof judgment。
@@ -44,10 +44,10 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 主要 model-invoked specialists：
 
-- `prototype` — 当前 caller 已理解语义，但需要把 concrete shape 变得可观察；Human 很少需要主动调度。
+- `prototype` — 展开 concrete surface 或完成可丢弃试验，通常由当前 caller 按需调用，也接受明确的直接委托。
 - `unknowns-first` — 当前判断依赖未核实事实时自动/按需关闭 factual gap；Human 也可以直接要求先查事实。
 
-`prototype` **不属于 Northstar 私有流程**。Northstar、Architecture Evolution、Verify、Unknowns First 或其他 semantic caller 都可以在遇到 material concrete-shape ambiguity 时调用它；Prototype 返回后，原 caller 继续拥有自己的 judgment。
+`prototype` **不属于 Northstar 私有流程**。Northstar、Architecture Evolution、Verify、Unknowns First 或其他 semantic caller 都可以在需要 concrete shaping 或明确委托可丢弃试验时调用它；Prototype 返回后，原 caller 继续拥有自己的 judgment。没有这类需要时直接继续，不设置必经阶段。
 
 ## Capability map
 

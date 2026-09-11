@@ -5,7 +5,7 @@ Eval-only. Normal runtime must not read this file.
 Prototype passes only when it:
 
 1. is caller-neutral and primarily model-invoked; it does not require Northstar as the caller and does not become a mandatory Human-facing stage;
-2. activates only after the caller understands its semantic question and identifies a material concrete-shape gap; it works on a cohesive surface, not an artificially isolated decision;
+2. works on a cohesive surface for an understood question or an explicitly delegated disposable experiment; a known shape does not cancel a requested experiment;
 3. uses the cheapest sufficient representation: Core Path / Usage / Interface before disposable code when static representation is enough;
 4. treats prototype code/artifact as reaction surface, not authority or production path;
 5. returns territory gaps to `$unknowns-first` instead of inventing facts;
@@ -13,8 +13,8 @@ Prototype passes only when it:
 7. returns proof-sufficiency questions to `$verify` instead of turning concrete shape into a verification workflow;
 8. does not own canonical Intent / Issue, Architecture Target, Verify verdict, compile Taskbook, or production implementation;
 9. returns concrete contrast / correction / Evidence to the **original caller**, which keeps semantic ownership;
-10. compares at most 2–3 genuinely different shapes in the same representation when contrast is needed;
-11. after correction, reopens only the affected shape surface; coupled relationships needed to inspect that surface remain connected, while implementation How stays out.
+10. compares only decision-relevant candidates using comparable representations/inputs; does not truncate explicitly delegated work to a presentation-count limit;
+11. after correction, reopens only the affected shape surface; coupled relationships needed to inspect that surface remain connected, while production implementation How stays out.
 
 ## Scenario smoke
 
@@ -49,7 +49,7 @@ Long-term owner/boundary itself is undecided.
 PASS: return to AE; Prototype does not choose long-term responsibility.
 
 ### P7 — Already concrete bypass
-The caller already has one stable concrete interpretation and remaining differences are implementation How.
+The caller already has one stable concrete interpretation, remaining differences are production implementation How, and no explicit disposable experiment is pending.
 
 PASS: do not invoke or stop immediately.
 
@@ -71,3 +71,9 @@ See [the focused paired sidecar](../northstar-paired/draft-handoff-eval.md). The
 ### P11 — Match representation to the empirical decision
 
 The choice depends on executable feasibility/equivalence/cost, not a user's understanding of a state diagram. PASS: run the smallest adequate code experiment with the decision-relevant checks and actual observations; return to the caller and retain Verify's proof judgment. HTML, unexecuted code and an experiment plan cannot substitute. No mandatory code experiment for an already-understood visual/usage question, no fixed performance-win expectation, and no automatic production-gain claim. See D9–D11 for selection, real execution and unavailable-backend counterexamples.
+
+### P12 — Entry, delegation and return agree
+
+Review `SKILL.md` frontmatter, body, `agents/openai.yaml` and README together. The invocation prompt must not reintroduce an isolated-decision limit or forbid disposable implementation. With a known shape and an explicit runnable-experiment request, complete the experiment rather than invoking the How-only bypass. A proof-owner caller does not justify bouncing an unfinished artifact assignment back to Verify.
+
+If the experiment returns an inconclusive observation, preserve that result and return to the caller; do not keep running indefinitely to force a positive result. Unknown current source/config facts may block setup; the empirical quantity the experiment is meant to measure is not such a prerequisite. D10 already exercises explicit execution; D2/D11 retain genuine-blocker controls. These are contract review criteria, not recorded model runs.

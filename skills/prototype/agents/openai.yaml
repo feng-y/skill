@@ -1,4 +1,4 @@
 interface:
   display_name: "Prototype"
-  short_description: "把已理解语义的具体形态变得可观察"
-  default_prompt: "使用 $prototype，作为 caller-neutral、主要由模型按需调用的 concrete-shaping specialist，只关闭当前 caller 已理解语义中仍会导致 materially different concrete shape 的一个决策；优先用最便宜的 Core Path / Usage / Interface Draft，只有 static surface 不足时才做 disposable Prototype。返回 concrete contrast / correction / Evidence 给原 caller；不拥有 Intent、Architecture、verification judgment 或 implementation，也不默认把结果转交 Northstar。"
+  short_description: "展开连贯工程形态，实做必要的可丢弃试验"
+  default_prompt: "使用 $prototype，按 SKILL.md 围绕 caller 的当前问题展开一个连贯 concrete surface，或完成明确委托的可丢弃试验。选择足以回答问题的表示或实际运行，不用局部 HTML、未运行代码或计划替代约定实做，也不因形态已明确而提前退出。返回表示与观察给原 caller；Intent、Architecture、proof judgment 与生产实现仍归原 owner。"
