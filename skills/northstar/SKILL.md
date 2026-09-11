@@ -18,13 +18,21 @@ Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof 
 只保留会改变后续判断、实现边界或验收结果的 durable 信息，不为了模板完整制造字段：
 
 - **Problem**：当前什么需要改变，以及为什么现状不满足预期。
-- **Draft**：intended change 的具体形态；按问题选择最低成本的 `Current → Intended`、core path、ownership/boundary、usage、interface、schema、state transition 等 representation。
+- **Draft**：每个 Intent 的唯一主 Draft，表达 intended change 的具体形态；按问题选择最低成本的 `Current → Intended`、core path、ownership/boundary、usage、interface、schema、state transition 等 representation。
 - **Constraints**：真正 binding、违反后会改变 accepted outcome、兼容、投入、风险或长期责任的约束。
 - **Acceptance**：能够区分“问题已解决”和“只是完成了某个手段”的 observable outcome / completion claim。
 
 按需增加 Decisions、Evidence、Open Questions、Out of Scope。只保留后续 fresh consumer 真正需要的内容。
 
 不维护独立 `Goal` 字段。抽象 outcome 只有在增加实际 decision information 时才保留，并直接落实到 Problem、Constraint、Decision 或 Acceptance，而不是形成第二层 SOT。
+
+## 一个 Intent，一个主 Draft
+
+从已有 context 建立并持续修正同一个主 Draft。它是 canonical intended change，不是多个 specialist 输出的集合，也不等于只能有一个物理文件；多个视图和候选对比可以支撑它，但必须能区分当前采用的形态、未决选择与已被替代的解释。独立 Intent 各自拥有主 Draft，不强行合并。
+
+Draft 的充分性看**连贯的 material change 是否已经可交接**，不看字数或调用次数。把共同决定核心路径、dataflow、ownership / lifecycle 或 binding boundary 的部分连起来；只展开会改变 intended outcome 或让 fresh Executor 被迫重新做高层判断的关系。局部变更可以只有几句话，不要求穷尽 implementation How。
+
+specialist 返回后，Northstar 必须把采用的 correction / Decision 整合进这个主 Draft，并检查受影响部分与其余部分是否仍一致。不能只转贴局部答案，让 fresh Executor 自行拼出 intended change。仍有 material shape gap 才继续按需 shaping；已有 Draft 已充分时直接交接，不为流程完整调用 Prototype。
 
 ## Acceptance 定义预期，Verify 负责验证
 
@@ -47,11 +55,11 @@ Human requirement 与 reality claim 分开：Human 有权给出的要求可以 b
 Northstar 拥有 Intent，不复制 specialist 的责任：
 
 - **factual territory unknown**，且事实不同会改变 Intent → `$unknowns-first`；
-- **Intent 已理解，但同一 prose 仍允许 materially different concrete shape** → `$prototype`；
+- **Intent 已理解，但主 Draft 的 concrete shape 仍有 material gap** → `$prototype`；带上现有 Draft、binding context 与缺口，委托足以连贯呈现受影响核心路径的 surface，不把耦合关系拆成互不相干的局部问题；
 - **长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断** → `$architecture-evolution`；
 - **material completion / safety claim 需要 proof obligation、real-artifact verification 或 sufficiency judgment** → `$verify`。
 
-specialist 结果不创建第二份 Intent SOT；只把后续 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到当前 Intent / Issue。Proof 命令、临时 output、replay artifact 默认留在 Verify/PR/runtime surface，不塞进 Issue body。
+specialist 的多个 view / candidate / Evidence 都不是并行主 Draft。Northstar 只将采用且后续 fresh consumer 必须知道的 correction 整合回当前 Intent / Issue；AE 保留 Target judgment，Verify 保留 proof judgment，Unknowns First 只关闭事实。Proof 命令、临时 output、replay artifact 默认留在 Verify/PR/runtime surface，不塞进 Issue body。
 
 ## Drafted Issue
 
@@ -84,13 +92,15 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 
 ## 停止条件
 
-满足以下条件就停止 Intent shaping：
+可执行实现 handoff 必须同时满足：
 
-- fresh consumer 不依赖原 conversation 就能理解 Problem 与 intended Draft；
+- fresh consumer 不依赖原 conversation 或自行拼接 specialist 输出，就能理解 Problem 与唯一主 Draft 的连贯 material change；
 - binding Constraint / Decision 足以防止 materially wrong interpretation；
 - Acceptance 足以区分真实 outcome 与只完成手段；
-- 剩余未知只影响 Executor How，或已作为真实 blocker / Open Question 暴露；
+- 剩余未知只影响 Executor How，不再隐藏会改变 intended shape / binding commitment 的选择；
 - 若需要 tracker handoff，canonical Issue 已创建或更新。
+
+若事实或 Human-owned choice 仍阻断 material shape，保留 best-known 主 Draft、具体 blocker 与下一步 owner；可以交接调查或未受影响的工作，但不能把被阻断部分标为可执行实现 handoff。不能为了 Draft 看起来完整而猜测 territory 或代替 Human 承诺。
 
 ## 常见错误
 

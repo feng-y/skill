@@ -7,12 +7,12 @@ Eval-only. Normal runtime must not read this file.
 Northstar passes only when it:
 
 1. owns canonical engineering Intent and materializes it as Drafted Issue when durable handoff is needed;
-2. uses Problem / Draft / Constraints / Acceptance / Decisions / Evidence as needed, without manufacturing a separate Goal layer;
+2. maintains one primary Draft per Intent using Problem / Draft / Constraints / Acceptance / Decisions / Evidence without manufacturing a separate Goal layer; multiple views are not competing authority;
 3. does not force Graph / Taskbook when a clear Issue can execute directly;
 4. routes concrete-shape ambiguity to `$prototype`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`;
 5. defines Acceptance but does not derive proof sufficiency from backend output; material verification design/judgment routes to `$verify`;
 6. never treats availability of Replay/test/build as a reason to rewrite Intent or embed backend commands in the canonical contract;
-7. updates the same canonical Issue instead of creating parallel intent/spec/plan SOTs;
+7. integrates adopted specialist corrections into the same primary Draft / canonical Issue, rather than handing off fragments or creating parallel intent/spec/plan SOTs;
 8. treats Issue as cohesive engineering outcome, not context-window-sized ticket;
 9. accepts verified Evidence feedback from research / execution / review / verification backends and reopens only the affected semantic owner;
 10. when complex material Graph exists, verified Evidence may recompile only the affected dependency cone without turning Northstar into progress manager.
@@ -70,3 +70,7 @@ Verified reality proves Acceptance or Draft itself is invalid.
 PASS: reopen only affected Intent surface and update canonical Issue.
 
 Contract smoke supports ownership/routing safety only; behavioral uplift requires real clean-session runs.
+
+## Primary-Draft regression
+
+Use [the focused paired sidecar](../northstar-paired/draft-handoff-eval.md) for the user-reported Hermes failure and its counterexamples. A Prototype call alone is never PASS. Judge the integrated connected Draft and a fresh consumer's ability to proceed without rebuilding intent. An honest blocked Draft supports investigation, not executable implementation handoff. A short already-concrete Draft may pass without any specialist invocation.

@@ -1,11 +1,11 @@
 ---
 name: prototype
-description: "Caller-neutral model-invoked concrete-shaping specialist: when an already-understood engineering intent, structural judgment, or accepted claim still permits materially different concrete paths, usage, interfaces, or interactions, expose the difference with the cheapest inspectable representation and return correction / Evidence to the caller."
+description: "Caller-neutral model-invoked concrete-shaping specialist: when an already-understood engineering intent, structural judgment, or accepted claim still has a material concrete-shape gap, expose the connected path, usage, interface, or interaction with the cheapest inspectable representation and return correction / Evidence to the caller."
 ---
 
 # Prototype · 让已理解语义的具体形态可观察
 
-Prototype 是 **caller-neutral、主要由 model 按需调用的 concrete-shaping specialist**。当 caller 已经理解自己负责的语义，但仅靠 prose 仍可能被解释成 materially different 的核心路径、ownership surface、boundary、interface、usage 或 interaction 时，用最低成本的可观察 representation 把差异暴露出来，再把 correction / Evidence 返回**原 caller**。
+Prototype 是 **caller-neutral、主要由 model 按需调用的 concrete-shaping specialist**。当 caller 已经理解自己负责的语义，但核心路径、ownership surface、boundary、interface、usage 或 interaction 仍隐含、断裂或存在 material ambiguity，妨碍当前判断时，用最低成本的可观察 representation 把差异暴露出来，再把 correction / Evidence 返回**原 caller**。
 
 `Prototype` 不等于一定写代码。Core Path、Usage / Interface Draft、state transition、mock 或 throwaway code 都可以是 prototype surface；选择能关闭当前 material decision 的最便宜形态。
 
@@ -29,7 +29,7 @@ Prototype 返回后，不自动转交 Northstar。caller 消费结果并决定�
 
 适合：
 
-- outcome / semantic question 已理解，但核心 execution path / ownership surface / boundary 仍可能有两种 materially different 解释；
+- outcome / semantic question 已理解，但核心 execution path / ownership surface / boundary 仍有会改变 caller judgment 的缺口；不要求先凑出两种候选；
 - API、CLI、schema、config、workflow 或 interaction 只有看到具体 usage 才能可靠判断；
 - static draft 不能回答一个 material experiential / empirical decision，需要最小可丢弃实现直接观察。
 
@@ -41,15 +41,15 @@ Prototype 返回后，不自动转交 Northstar。caller 消费结果并决定�
 - 当前 semantic judgment 已经足以让 caller / fresh Executor 继续，剩余差异只是 implementation How；
 - trivial / local change 不为流程完整额外生成 artifact。
 
-## 一次只关闭一个 material shape decision
+## 一次形成一个连贯的 concrete surface
 
 先问：
 
-> **哪一个仍隐含的 concrete difference，如果理解错了，会改变 caller 当前拥有的 outcome、核心路径、ownership surface、binding boundary、interface / usage 或 accepted result？**
+> **哪些相互依赖的具体形态必须一起看见，caller 才能判断当前 material change，而不用再把局部答案拼成核心路径？**
 
-没有这样的差异就停止。
+以这个 cohesive surface 为调用粒度，而不是以一个孤立 decision 为粒度。共同决定同一 core path / dataflow / ownership surface 的关系一起展开；必要时覆盖整个 intended change，只影响一部分时保留其余已成立 context。多个 invocation 不能代替连贯结果，也不为“完整展开”穷尽 implementation How。
 
-若 representation 依赖未核实的 repo/runtime fact，不用假设补全；返回具体 Evidence gap 及其 shape impact。
+没有 material shape gap 就停止。若 representation 依赖未核实的 repo/runtime fact，不用假设补全；返回具体 Evidence gap 及其 shape impact。若需要决定长期 owner、accepted outcome 或 proof sufficiency，返回相应 semantic owner；扩大 concrete surface 不扩大 Prototype 的决策权。
 
 ## 选择最低成本的 representation
 
@@ -63,7 +63,7 @@ consumer-facing API、CLI、schema、config、workflow 或 interaction 是决定
 
 ### Disposable Prototype
 
-只有 static representation 仍不足以回答当前 decision 时才写。只回答一个问题，保持 cheap、reversible、disposable；可以是最小交互、mock、throwaway code、timing probe 或其他可体验 artifact。
+只有 static representation 仍不足以判断当前 surface 的关键差异时才写。只检验这个 decisive uncertainty，保持 cheap、reversible、disposable；可以是最小交互、mock、throwaway code、timing probe 或其他可体验 artifact。
 
 不要为了 production quality 补持久化、通用抽象、完整测试、兼容层或 rollout，除非这些本身就是当前 decision。
 
@@ -75,16 +75,18 @@ consumer-facing API、CLI、schema、config、workflow 或 interaction 是决定
 
 返回最小充分结果：
 
-- 当前 material shape decision；
-- concrete representation / candidate contrast；
+- 被委托的 cohesive surface 与当前 shape gap；
+- 连贯的 concrete representation / candidate contrast，保留会改变 caller judgment 的耦合关系；
 - 已观察到的 path、ownership surface、boundary、usage、interface 或 invariant 差异；
 - 新产生的 decision-relevant Evidence；
 - 仍会改变 concrete shape 的 unresolved point。
 
 **不要替 caller 宣布最终 semantic decision。** caller 根据自己的 owner 职责消费 correction / Evidence：Northstar 更新 Intent，AE 更新 Target judgment，Verify 更新 observable / proof surface，Unknowns First 回到原 decision owner。
 
+Prototype 可以返回多个 view / candidate sketch，但它们不是并行主 Draft；已有 Intent 时，采用的 correction 由 Northstar 整合进同一个主 Draft。AE / Verify 的独立调用仍返回原 caller，不因此创建 Intent 或强制经过 Northstar。
+
 Prototype 不生成 Taskbook、issue graph、PR split、implementation checklist、verification workflow 或第二份 Intent SOT。
 
 ## 停止条件
 
-只要仍有 material ambiguity 会改变 caller 当前 semantic judgment，就继续最小 shaping；当剩余差异都属于 implementation How、verification mechanics 或已经由 caller 足够判断时停止。Human / caller correction 只重开受影响 surface，不重做已经闭合的部分。
+当被委托 surface 已连贯到足以支持 caller 判断，且剩余差异只属于 implementation How / verification mechanics 时停止；不能因一个局部问题已回答就留下关键连接缺口。事实或 owner 决策阻断时，返回具体 gap，不强行补全。caller 负责采用结果与最终整合；Human / caller correction 只重开受影响 surface，不重做已经闭合的部分。

@@ -5,7 +5,7 @@ Eval-only. Normal runtime must not read this file.
 Prototype passes only when it:
 
 1. is caller-neutral and primarily model-invoked; it does not require Northstar as the caller and does not become a mandatory Human-facing stage;
-2. activates only after the caller understands its semantic question enough to name one material concrete-shape ambiguity;
+2. activates only after the caller understands its semantic question and identifies a material concrete-shape gap; it works on a cohesive surface, not an artificially isolated decision;
 3. uses the cheapest sufficient representation: Core Path / Usage / Interface before disposable code when static representation is enough;
 4. treats prototype code/artifact as reaction surface, not authority or production path;
 5. returns territory gaps to `$unknowns-first` instead of inventing facts;
@@ -14,7 +14,7 @@ Prototype passes only when it:
 8. does not own canonical Intent / Issue, Architecture Target, Verify verdict, compile Taskbook, or production implementation;
 9. returns concrete contrast / correction / Evidence to the **original caller**, which keeps semantic ownership;
 10. compares at most 2–3 genuinely different shapes in the same representation when contrast is needed;
-11. after correction, reopens only the affected shape surface.
+11. after correction, reopens only the affected shape surface; coupled relationships needed to inspect that surface remain connected, while implementation How stays out.
 
 ## Scenario smoke
 
@@ -57,3 +57,13 @@ PASS: do not invoke or stop immediately.
 Human explicitly asks for a concrete mock/usage comparison.
 
 PASS: Prototype can serve the request, but this does not make direct Human invocation the default routing model.
+
+### P9 — Coupled surface, not isolated answers
+
+The caller understands a sharing change, but shared construction, consumer access, lifetime and the model-local boundary must be seen together. PASS: return a connected surface sufficient for caller judgment, not merely a storage choice. Unknown territory and owner decisions still return to their owners; no fixed sharing/lifetime design is assumed.
+
+### P10 — One primary Draft, multiple supporting views
+
+PASS: multiple candidate sketches or views remain supporting material; Northstar integrates adopted correction into the existing Intent's primary Draft. Independent AE/Verify callers retain their own judgment without acquiring a synthetic Intent or Northstar stage.
+
+See [the focused paired sidecar](../northstar-paired/draft-handoff-eval.md). These contract scenarios are not recorded behavioral runs.
