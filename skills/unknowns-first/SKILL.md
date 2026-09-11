@@ -32,11 +32,13 @@ Unknowns First 不拥有 Intent，不做 concrete-shape design，不决定 Targe
 
 - **事实是什么？** → Unknowns First；
 - **我们要什么 / Human commitment 是什么？** → `$northstar`；
-- **Intent 已理解，但具体 path / usage / interface 应长什么样？** → `$prototype`；
+- **已理解语义，但具体 path / usage / interface / interaction 应长什么样？** → `$prototype`；
 - **长期 responsibility / boundary / dependency 应是什么？** → `$architecture-evolution`；
 - **一个 accepted completion/safety claim 应如何验证、现有 Evidence 是否足够？** → `$verify`。
 
 Unknowns First 可以发现这些问题，但不把它们吞进自己的 full-map workflow。
+
+当 factual gap 已经关闭，而剩余问题明确变成 concrete-shape ambiguity 时，Unknowns First **可以 model-invoke `$prototype`**，让 Prototype 产生 concrete contrast / reaction Evidence，再把结果返回原 decision caller。Unknowns First 不因此成为 shape owner，也不替 Northstar / AE / Verify 做最终 judgment。
 
 ## L1 · Light gate
 
@@ -70,7 +72,7 @@ Unknowns First 可以发现这些问题，但不把它们吞进自己的 full-ma
 | Runtime/data check | static repo 不能证明真实行为 | 最小 runtime/data observation |
 | Implementation note | work 可继续但存在保守事实假设 | assumption + evidence gap + impact |
 
-不要在这里生成候选设计、mock/prototype、architecture options、build plan、proof plan、review checklist 或 decision ledger；把相应问题路由给 owner。
+不要在这里生成候选设计、mock/prototype、architecture options、build plan、proof plan、review checklist 或 decision ledger；只有在事实已关闭且剩余问题已明确属于 concrete shape 时，才调用独立 `$prototype`，并把结果交回原 caller。
 
 ## L3 · Full factual map
 
@@ -86,18 +88,19 @@ Unknowns First 不因为“某个事实已成立”就推导 whole-outcome PASS�
 
 ## 与 Prototype 的边界
 
-如果 unknown 不是“真实系统现在是什么”，而是“Human 看到具体 path / usage / interface 后会选择哪一个”，这不是 territory probe，交 `$prototype`。Unknowns First 不再用 mock / sample / prototype 替代 concrete-shape owner。
+如果 unknown 不再是“真实系统现在是什么”，而是“已理解语义在具体 path / usage / interface / interaction 上到底如何呈现”，这不是 territory probe。Unknowns First 可以调用 `$prototype` 建立 reaction surface，但 Prototype 的结果必须返回原 decision owner；Unknowns First 不把 shape judgment 吞进 factual workflow。
 
 ## Feedback / fold back
 
 返回 caller 的内容保持最小：verified fact、Evidence source / provenance / freshness、对当前判断的影响，以及仍未关闭的 factual unknown。
 
-只有能避免重复 rediscovery 的事实才进入 durable docs / notes；一次性的 probe output 不自动成为新的 SOT。
+只有能避免重复 rediscovery 的事实才进入 durable docs / notes；一次性的 probe output 不自动成为新的 SOT。Prototype 产生的 durable correction 是否持久化，由原 semantic owner 决定。
 
 ## 常见错误
 
 - 把 unclear Intent 当 factual unknown，在这里重新采访需求。
-- 用 `Concrete sample / Four directions / Mock` 做 Prototype 的工作。
+- 在事实尚未关闭时用 Prototype 猜 concrete shape。
+- 把 Prototype 的 reaction surface 当成 Unknowns First 自己的 design authority。
 - 把 backend output 当成 whole-outcome verification judgment，而不是返回 Verify。
 - 为了完整感进入 L3，把 unknown mapping 扩成 implementation plan / verification workflow。
 - 事实已经足够后继续 inventory / research。
