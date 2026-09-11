@@ -13,9 +13,15 @@ Verify 负责回答一个独立问题：**当前 engineering claim 是否真的�
 
 核心规则：
 
-> **先固定 claim，再验证 real artifact。Verify 负责证明；Evidence 是证明产物；Replay/test/build/runtime 是可选 backend。**
+> **先固定 claim，再验证 real artifact。Verify 负责验证；Evidence 是证明产物；Replay/test/build/runtime 是可选 backend。**
 
 ## 什么时候调用
+
+Verify 不是固定的 post-PR stage。它可以在实现前、实现中或实现后按需调用：
+
+- **实现前**：Acceptance 已明确，但 proof route / baseline / oracle / blast-radius check 需要先收敛，输出 proof obligation 与 backend requirement；尚无 realized change 时不制造 PASS；
+- **实现中**：新的 material risk / source identity / verifier limitation 会改变“如何证明”时，只更新受影响 proof surface；
+- **实现后**：对 realized change 取得 Evidence 并判断 `proven / false / unproven`。
 
 适合：
 
@@ -77,6 +83,8 @@ Verify 优先复用项目已有 verification system：
 
 backend 的职责是**执行并返回 observation/artifact**。Verify 决定为什么运行它、输入身份是否正确、结果证明哪个 claim，以及 proof 是否充分。
 
+若 backend 已经定义自己的 Launch / Doctor / Drive / Capture / Cleanup contract，Verify 直接遵循它，不复制或重写 backend lifecycle。backend readiness / version / identity 是 proof validity 的一部分；backend 内部实现不是 Verify 的第二套 workflow。
+
 一个 backend 可以证明多个 claim；一个 claim 也可能需要多个 Evidence source。不要把 `one task → one test` 或 `one claim → one replay` 固化成流程。
 
 ## Baseline / oracle discipline
@@ -99,7 +107,7 @@ behavior-preserving、migration、compatibility、perf 等比较型 claim 必须
 - **false**：authoritative current reality 与 claim 冲突；
 - **unproven**：Evidence 不足、backend 不可用、identity 不可信，或关键 fact 仍未关闭。
 
-`unproven` 不是 implementation defect；“没发现反例”也不是 proven。无法执行需要的 backend 时，明确报告 `unproven` 与恢复条件。
+`unproven` 不是 implementation defect；“没发现反例”也不是 proven。无法执行需要的 backend 时，明确报告 `unproven` 与恢复条件。只有 proof obligation 已经有 realized artifact / observation 可判断时才给 `proven` / `false`；纯 pre-execution proof design 默认仍是 `unproven` / not-yet-run。
 
 ## Independence scales with risk
 
@@ -124,7 +132,7 @@ Verify 先给 verdict，再按 premise 路由：
 - 需要改变投入、兼容、长期维护或风险 commitment → Northstar / Human；
 - backend 本身坏或不可运行 → 报 backend blocker，不把 product 判成 false。
 
-## 输出
+## 输出与持久化
 
 保持 minimum-sufficient：
 
@@ -135,7 +143,7 @@ Verify 先给 verdict，再按 premise 路由：
 - **Gap / falsifier**：若未证明，缺什么；
 - **Next owner**：需要谁继续。
 
-不要生成 repair plan、execution backlog、第二份 Intent 或 architecture redesign。
+Verify result 默认留在当前 PR / review / verification surface。只有它证明 canonical Intent / Acceptance 本身失效，或形成后续 fresh consumer 必须知道的 durable correction，才 fold back 到 Northstar Issue；只有它暴露新的长期 structural fork 才回 AE。不要生成 repair plan、execution backlog、第二份 Intent 或第二份 verification SOT。
 
 ## 与 eval 的区别
 
