@@ -55,9 +55,9 @@ prototype  architecture-evolution  unknowns-first
               ↓
               PR
 
-Northstar / AE accepted claims
+accepted completion / safety / structural claim
               ↓
-            verify
+            verify        # optional before / during / after execution
       proof obligation
               ↓
    verification backend(s)
@@ -71,7 +71,9 @@ Northstar / AE accepted claims
 
 Northstar owns **meaning**. Prototype owns **concrete reaction surfaces**. Architecture Evolution owns **structural judgment**. Unknowns First owns **factual uncertainty**. Verify owns **verification / proof judgment**; Evidence is its proof artifact and basis.
 
-Verification backends are orthogonal to this capability map. A project may use tests, build, integration harnesses, runtime probes, data checks, profiles, or project-specific systems. **DaVinci harness Replay is one such executable verification backend; it is not a Skill or semantic owner in this repo.**
+Verify is not a mandatory post-PR stage. It may be invoked before implementation to make a material proof route explicit, during implementation when verification premises change, or after implementation to judge realized results. Clear local changes can rely on an already-authoritative focused check without extra ceremony.
+
+Verification backends are orthogonal to this capability map. A project may use tests, build, integration harnesses, runtime probes, data checks, profiles, or project-specific systems. **DaVinci harness Replay is one such executable verification backend; it is not a Skill or semantic owner in this repo.** If a backend already owns Launch / Doctor / Drive / Capture / Cleanup, Verify follows that contract rather than recreating a second harness lifecycle.
 
 Execution orchestration / control plane is also orthogonal. It may start, route, pause, resume, or retry work, but it does not own or transform Intent, architecture, verification semantics, material Graph, or artifact authority.
 
@@ -85,7 +87,7 @@ Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), inc
 - **PR** — realized Change / Delivery; implementation How、diff、implementation-local validation 与 review 默认留在这里。
 - **Prototype artifact** — reaction surface, normally disposable; durable correction returns to the caller.
 - **Architecture handoff** — only when a durable structural handoff is independently useful; otherwise structural decisions fold back to the caller / Issue.
-- **Verify result** — Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing. It is not a repair planner or execution manager.
+- **Verify result** — Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing. It normally stays with the PR/review/verification surface unless it changes durable Intent or Architecture.
 
 ## Verification model
 
