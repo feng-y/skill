@@ -5,7 +5,7 @@ Eval-only. Normal runtime must not read this file.
 Prototype passes only when it:
 
 1. is caller-neutral and primarily model-invoked; it does not require Northstar as the caller and does not become a mandatory Human-facing stage;
-2. produces a prototype and draft for a cohesive problem, or composes existing parts; multiple local prototypes per Intent are allowed, and a known shape does not cancel an explicit experiment;
+2. uses one construction capability for a commissioned problem, small or complex; composition of problem-level outputs and invocation orchestration remain outside Prototype, with the caller;
 3. uses the cheapest sufficient representation: Core Path / Usage / Interface before disposable code when static representation is enough;
 4. treats prototype code/artifact as reaction surface, not authority or production path;
 5. returns territory gaps to `$unknowns-first` instead of inventing facts;
@@ -62,9 +62,13 @@ PASS: Prototype can serve the request, but this does not make direct Human invoc
 
 The caller understands a sharing change, but shared construction, consumer access, lifetime and the model-local boundary must be seen together. PASS: return a connected surface sufficient for caller judgment, not merely a storage choice. Unknown territory and owner decisions still return to their owners; no fixed sharing/lifetime design is assumed.
 
-### P10 — Local results compose without competing Intent authority
+### P10 — Caller composes; Prototype constructs
 
-PASS: a local prototype / draft states what problem it solves, where it applies and which relationships matter to composition. It need not solve the whole Intent. A delegated assembly shows a connected path and exposes incompatible assumptions; an index of locally green artifacts is insufficient. Northstar integrates the parts against the original Intent and asks Human before changing unapproved scope. Direct AE/Verify callers retain their own judgment.
+PASS: Prototype returns the commissioned problem's artifact/draft, observations, boundaries and gaps. Northstar or another caller selects and actually assembles the returned problem-level artifacts, resolves their connections with the proper owners and checks overall coverage. Forwarding that assembly to Prototype fails even if the caller retains final approval. A missing concrete behavior can be commissioned separately; its result returns to the caller for integration. Direct AE/Verify callers remain independent.
+
+### P10b — Complex construction is not a composition workflow
+
+A caller commissions one prototype with coupled input, processing and lifetime behavior, with scope already set. PASS: construct that coherent artifact without an isolated-decision cap, new size-specific Skill, synthetic Northstar stage or internal scheduler. Multiple necessary internal components are valid. Do not ask Prototype to choose a collection of separate problem solutions and align them to the original Intent.
 
 ### P11 — Match representation to the empirical decision
 

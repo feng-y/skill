@@ -1,26 +1,43 @@
-# Prototype composition / Human scope correction
+# Caller-owned composition — review and validation
 
-Development/eval evidence only. Continuation base: `e978a7f25f10cf0d3748b26a49b31a3ce20c4c59`. This is implementer self-review, not an independent reviewer or model evaluation.
+Development/eval-only. Continuation base: `6b03114e938b69a7cfa46c762118d8d2252b56af`; original PR base: `acc09e5040b808b46cc8f9aea17bbac988d639ab`.
 
-## Decision and implemented scope
+## Current verdict
 
-The latest user clarification corrects the previous singleton interpretation. Prototype is a tool that solves a concrete problem and produces a prototype and draft. Multiple results may compose into a primary Draft and a complete prototype matching the original Intent. Northstar owns integration and necessary Human clarification: an oversized Draft may be narrowed with authorization, or assembled while preserving the original scope.
+The user-directed ownership correction is implemented: Northstar or another authorized caller performs selection, assembly and overall alignment. Prototype is one construction tool for a commissioned problem, small or complex. It does not accept delegated composition or orchestrate further Prototype calls.
 
-Replaced the singleton requirement in both Skills and their invocation metadata, README and focused eval guidance. Recorded the supersession in the semantic changelog rather than deleting its history. Kept Human clarification, original-caller authority, adequate empirical evidence and one overall intended-change authority. No new Skill, tool framework, schema or execution phase.
+No remaining blocking contract contradiction was found in this bounded review. Keep PR #95 unmerged and draft while its outstanding behavioral acceptance is unproven. Actual clean-session actor / consumer / blinded judge executions in this continuation: **0 / 0 / 0**. Text/metadata checks and design walkthroughs are not model behavior measurements.
 
-## Review rounds
+## Plan review before runtime edits
 
-1. **Composition and ownership:** local prototype/draft outputs are permitted without a separate Intent per output. A coherent problem may span coupled decisions; it is neither an atomic field nor automatically the full Intent. Integration must reconcile connected boundaries and original requirement coverage. Independent AE/Verify callers still retain their judgment.
-2. **Scope and counterexamples:** a confirmed smaller slice must name what the original request still lacks. Merely renaming a ledger or concatenating locally valid outputs is insufficient. Already-authorized composition and clear local work need no repeat approval. Material unknown facts, new structural choices and proof gaps keep their existing owners. No rule forces a complete prototype where a simple Draft already suffices.
+Two implementer self-review rounds are recorded in `draft-handoff-plan.md`: ownership placement, then counterexamples. They rejected keeping delegated assembly inside Prototype while moving only final approval outside it. They retained complex internal construction, original-caller return, explicit experiments, and Human scope clarification without recurring approval for already-authorized work.
 
-No additional blocking contradiction found in this bounded self-review. This does not establish behavioral uplift.
+## Implementation review 1 — cross-surface consistency
 
-## Checks and evidence limit
+Inspected both Skill bodies, frontmatter, invocation defaults, README, prototype contract eval and the Human/composition supplement. Removed the old positive permissions to "compose existing parts" and the Northstar route that sent assembly to Prototype. Replaced the repeated Prototype composition workflow with a smaller commissioned-construction contract.
 
-This continuation changes Markdown and invocation metadata only. YAML/frontmatter, UTF-8/whitespace, changed relative links and the incremental diff are checked locally. The published source snapshot is recovered from the prior bundle and checked against immutable Git-blob identities, not treated as a clone of the user's machine.
+Corrected a bypass sentence so it requires BOTH no shape gap and no pending explicit experiment. The tool must not drop a runnable assignment just because the shape is known. Made the assembly exclusion explicit rather than merely forbidding autonomous selection.
 
-The 11-case JSON manifest, `draft_eval.py`, `score.py`, example and test code remain unchanged. The previous 26-test result is historical, not rerun or relabelled as this correction's proof. No prose-matching test was added. The staged Human supplement is revised explicitly to cover narrow/compose/already-authorized policies; it is not fed to the old scorer as though cardinality or scope behavior had been measured.
+## Implementation review 2 — counterexamples and eval quality
 
-Actual clean-session actor / consumer / blinded-judge runs in this continuation: **0 / 0 / 0**. No Hermes implementation, installation or performance measurement was changed. The prior real-machine retrospective remains a reported failure input, not a version-identified paired run against this correction.
+- Existing compatible artifacts: caller actually assembles them, not just reviews a Prototype-produced assembly.
+- Missing concrete behavior at a connection: caller commissions that behavior; Prototype returns it and caller resumes integration. No renamed whole-composition assignment.
+- Complex single artifact: necessary internal components remain legitimate construction; no one-field limit or internal orchestration framework.
+- Unclear scope: Northstar asks Human with concrete tradeoffs; already-confirmed scope does not receive another interview.
+- Independent AE/Verify caller: no synthetic Northstar stage, no transfer of structural/proof authority.
+- Conflicting facts or absent execution: retain the real gap; do not invent evidence, force a positive experiment or claim the overall Intent complete.
 
-**Merge posture: retain Draft pending the requested actual behavior evidence.** Do not substitute format checks, historic scorer tests or artifact counts for observed composition and Human-scope behavior. The prior reports and exact superseded rules remain in Git history.
+The first supplemental C1 prompt gave away the intended tool route; removed that cue before publication. The first C2 prompt claimed an interface was supplied without specifying it; replaced it with a self-contained static request and explicit interface. Existing H1/H0 prompts and response policies are preserved; their private grading now checks who performs assembly, not only who approves it.
+
+These are implementer contract walkthroughs, not independent reviewers or executed agent sessions. The C1/C2 checks are specified for future real base/candidate sessions, not scored here.
+
+## Executed checks
+
+- All 12 files in the source partial snapshot matched immutable GitHub blob identities before edits.
+- Modified Skill YAML frontmatter and invocation metadata parsed; names and default invocation identifiers are valid.
+- UTF-8, final newlines and trailing whitespace checks passed.
+- `git diff --check` and `git apply --reverse --check --whitespace=error-all` passed against the local candidate.
+
+The workspace is a verified partial snapshot recovered from the prior published bundle, not a clone or the user's development machine. Remote tree identity is checked before the branch is updated; the incremental patch and check records are retained in the accompanying bundle.
+
+Only documentation/metadata and eval guidance changed. Frozen D1–D11, Python scorers, example records and test code are untouched. The unchanged 26-test scorer suite was not rerun; no historical pass count or synthetic benchmark is presented as this continuation's result. No Hermes implementation, machine installation, Skill Doctor or control-plane code was changed.

@@ -4,7 +4,13 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
-## PR #95 — Composable problem prototypes; Human scope convergence
+## PR #95 — Composition moves entirely to the caller
+
+Supersedes the unreleased `6b03114` permission for Prototype to perform delegated composition. Prototype remains one caller-neutral tool constructing the commissioned problem’s prototype/draft, small or complex. Northstar or another authorized caller now owns both selecting and assembling problem-level outputs, organizing calls, and aligning the integrated result with its accepted scope. Do not keep assembly inside Prototype while moving only final approval outside it.
+
+Preserved: coherent internal construction, necessary runnable experiments, original-caller return, one overall intended-change authority, Human clarification/authorized scope change, AE/Verify/Unknowns ownership. Retired: delegated assembly, global composition plans or Prototype-call orchestration inside Prototype. No new Skill, size-specific mode, singleton-artifact rule or composition framework. If caller-side assembly reveals a concrete gap, Prototype may construct that missing behavior under a bounded commission; the caller resumes assembly.
+
+## PR #95 — Historical composable-output interpretation (composition delegation superseded)
 
 Supersedes the unreleased `e978a7f` single-core-Prototype constraint below. Prototype is a caller-neutral tool producing a prototype and draft for a concrete problem; multiple such outputs may be composed. Northstar owns integration into the primary Draft and a complete prototype when useful, aligned with the original Intent or a Human-confirmed scope adjustment. Oversized scope prompts a concrete narrowing/composition discussion, not silent reduction or a new mandatory approval stage.
 

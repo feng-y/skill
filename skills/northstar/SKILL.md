@@ -28,9 +28,9 @@ Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof 
 
 ## 围绕原始 Intent 组合主 Draft
 
-`$prototype` 是解决具体问题的工具，可以产出对应的原型与 draft。一个 Intent 可以使用多个这样的产物；Northstar 负责选择、组合和修正，形成与原始 Intent 匹配的主 Draft，必要时搭起可观察的完整原型。唯一的是当前 intended change 的语义权威，不是局部原型、draft、视图、文件或调用的数量。局部 draft 可以保留，但不能各自改写整体 Intent。
+`$prototype` 是单一的原型构建工具，为调用方给定的问题构建或修正原型与 draft；任务可以小，也可以复杂。Northstar 决定如何组织调用，负责选择、组合产物和整体修正，形成与原始 Intent 匹配的主 Draft，必要时搭起完整原型。组合由 Northstar 实际完成，不是交给 Prototype 再批准其结果。其他调用方也在自己的授权范围内承担组合；调度器不因此取得 Intent、Architecture 或 proof 的语义权威。唯一的是整体 intended change 的权威，不是产物、文件或调用数量。
 
-组合不是串接文件或候选台账。把采用的部分沿核心路径连起来，检查相接处的输入输出、责任、生命周期、约束与 Acceptance 是否一致，以及原始需求是否被覆盖；局部结果成立不代表组合后成立。只展开会改变整体判断的关系，不制造统一拼装协议或穷尽 implementation How。出现事实缺口、新结构选择或 proof gap 时仍交对应 owner。
+组合不是串接文件或候选台账。Northstar 把采用的部分沿核心路径接通，处理相接处的输入输出、责任、生命周期和约束，并检查原始需求与 Acceptance 的覆盖。局部结果成立不代表整体成立。组合中若缺少一个具体行为或接口，将该缺口、已确定边界和所需产物交 Prototype 构建，返回后由 Northstar 继续组合；不能把整组产物的选择、拼装和整体对齐转交 Prototype。事实缺口、新结构选择或 proof gap 仍交对应 owner，不制造通用组合框架或穷尽 implementation How。
 
 主 Draft 表达当前采用的整体方案，而不是研究目录或 backlog。候选可以替换、组合；采用的部分与未决项必须区分。Northstar 将 specialist 结果与 Human correction 整合回同一主 Draft；改变范围必须得到 Human 确认或已有明确授权，不能为了凑出可交付结果而悄悄删掉原始需求。
 
@@ -63,7 +63,7 @@ repo / runtime / producer / baseline 等可调查事实优先用 Evidence 关闭
 Northstar 拥有 Intent，不复制 specialist 的责任：
 
 - **factual territory unknown**，且事实不同会改变 Intent → `$unknowns-first`；
-- **一个具体问题需要原型 / draft、已有部分需要组合呈现，或本轮明确委托了可丢弃试验** → `$prototype`；带上相关 Intent、现有 Draft、binding context 与要解决的问题，允许局部产物并说明组合所需关系；形态已明确也不取消明确实做；
+- **受托问题需要构建或修正原型 / draft，或本轮明确委托了可丢弃试验** → `$prototype`；给定要解决的问题、相关 Intent、边界与所需结果，任务可小可复杂。已有产物的组合由 Northstar 或其他调用方完成，不路由到 Prototype；形态已明确也不取消明确实做；
 - **长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断** → `$architecture-evolution`；
 - **material completion / safety claim 需要 proof obligation、real-artifact verification 或 sufficiency judgment** → `$verify`。
 

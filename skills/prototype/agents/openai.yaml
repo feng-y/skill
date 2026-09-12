@@ -1,4 +1,4 @@
 interface:
   display_name: "Prototype"
-  short_description: "解决具体问题，产出可组合的原型与 draft"
-  default_prompt: "使用 $prototype，按 SKILL.md 为一个具体工程问题产出原型与 draft，或将已有部分组合呈现。说明覆盖范围、必要的相接关系和未决点；一个 Intent 可以使用多个局部产物，不强制一次承包整体。明确实做按委托完成并返回真实观察。原 caller 保留采用与整合，Northstar 处理 Intent 对齐及 Human 范围确认，Verify 保留证明判断。"
+  short_description: "构建受托问题的原型与 draft，不负责组合"
+  default_prompt: "使用 $prototype，按 SKILL.md 构建或修正受托问题的原型与 draft；任务可以小，也可以复杂。完成约定实做并返回产物、观察、边界与缺口。不要承接局部产物的选择、拼装、调用调度或整体 Intent 对齐；组合由 Northstar 或其他调用方完成，Verify 保留证明判断。"

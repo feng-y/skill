@@ -1,90 +1,50 @@
-# One Intent, one primary Draft — change plan
+# Caller-owned composition — PR #95 plan
 
-Eval/development-only. Normal Skill runtime must not read this file.
+Development/eval-only; not a runtime instruction. Continuation base: `6b03114e938b69a7cfa46c762118d8d2252b56af`.
 
-## Current correction — composable problem prototypes and Human scope
+## Decision and authority
 
-The latest user clarification supersedes `e978a7f`'s prototype-cardinality rule. Prototype is a tool for one cohesive engineering problem, producing a prototype and draft that can be composed with others. Northstar owns integration into the primary Draft, fidelity to the original Intent, and Human clarification/confirmation when scope is too large or a material choice remains. Completeness belongs to the integrated result for the accepted scope, not every local invocation.
-
-Plan self-review: preserve one authoritative intended change without forbidding local drafts; replace the singleton rules rather than add exceptions. Composition must reconcile boundaries and original requirement coverage, not concatenate artifacts. Narrowing needs Human agreement or prior authority; a confirmed slice is not completion of the original larger request. Clear small work and already-authorized composition need no new approval or prototype ceremony. Independent AE/Verify callers remain independent.
-
-Implementation scope: Northstar/Prototype body and entry metadata, README, migration ledger, focused contract cases and the existing Human interaction supplement. No scorer/code changes, new Skill, graph protocol or production changes. Earlier plan sections below are historical rationale, interpreted under this correction. The H1/H0 supplement is revised explicitly; older versions remain in Git and no run is relabelled.
-
-## Evidence and decision
-
-Base: `acc09e5040b808b46cc8f9aea17bbac988d639ab` (PR #94).
-
-The user reports that a Hermes multi-model shared-user-data performance task invoked Prototype too narrowly, did not produce a sufficiently developed Draft, and failed. The original agent transcript, code, profile and final handoff are unavailable here. This is a user-reported failure, not a replayed or independently attributed failed session.
-
-The user independently establishes the semantic authority: **one Intent has one primary Draft**. Current Northstar already includes Draft and fold-back; do not incorrectly describe Draft as previously optional. The correction makes integration, sufficiency and stopping operational. Prototype's existing atomic-decision wording is replaced rather than surrounded with exceptions.
+The user's current direction is explicit: composition belongs to Northstar or another caller/controller, **not Prototype**. This supersedes the prior PR candidate's permission for Prototype to accept delegated assembly. Prototype remains one reusable construction capability; a small or complex commissioned problem does not create another Skill or grant composition ownership.
 
 ## Intended change
 
-Northstar maintains one current authoritative intended-change description per Intent. Specialist work may supply multiple views, candidate contrasts and Evidence; Northstar incorporates adopted corrections into that primary Draft and checks the connected material shape before executable handoff. A fragment, slogan or list of specialist results is not a completed Draft.
+Northstar retains the original Intent, asks Human about material ambiguity or scope changes, and performs selection, composition and integration of returned prototypes/drafts into the primary Draft. Another authorized caller can perform that work in its own scope; a scheduler does not thereby acquire Intent, Architecture or proof authority.
 
-Prototype works on one cohesive concrete surface, which may contain coupled decisions or span the entire primary Draft when necessary. It returns that surface and remaining gaps to its caller without adopting the caller's Intent, Architecture or proof judgment. Already-concrete work bypasses Prototype.
+Prototype constructs or revises the prototype/draft for the commissioned problem and returns its boundaries, observations and unresolved points. It does not choose how a collection of problem-level artifacts becomes a whole, assemble that collection, orchestrate more Prototype calls, or decide when the original Intent is satisfied. Multiple components inside one commissioned artifact do not turn ordinary construction into cross-artifact composition. Small/complex refers to the task, not to a new mode or fixed size limit.
 
-There is no new Skill, phase, artifact schema, mandatory graph, mandatory code prototype, or independent Goal. A Draft can be short and can reference supporting views; uniqueness is semantic authority, not a one-file restriction. Unresolved factual or Human-owned decisions remain visible blockers rather than invented commitments.
+When caller-side composition exposes a specific missing behavior or interface, the caller can commission that concrete problem, then integrate its result itself. Forwarding the entire composition assignment to Prototype, even with a renamed prompt, is not this boundary. If the composition is already supported, do it directly; do not invoke Prototype ceremonially.
 
-## Scope by owner
+Preserve current Human clarification/confirmation, explicit runnable experiments, factual discipline, original-caller return, AE structural judgment and Verify proof judgment. No new Skill, artifact registry, taskbook schema, runtime controller or singleton-prototype restriction.
 
-| Surface | Decision |
-| --- | --- |
-| Northstar | Change primary-Draft integration and executable-handoff gate. |
-| Prototype | Replace atomic shaping with a bounded cohesive surface; retain caller-neutrality and cheap representation. |
-| Architecture Evolution | No runtime edit: Target/Program ownership and direct invocation already remain correct. Test return to AE. |
-| Verify | No runtime edit: proof/verdict ownership already remains correct. Test no synthetic Northstar stage. |
-| Unknowns First | No runtime edit: close facts and return to the original decision owner. Test no invented territory. |
-| Material compile | No runtime edit: existing Intended-delta-before-graph rule already fits. |
-| AGENTS.md / CHANGELOG.md | No new owner or breaking surface migration; do not duplicate the Northstar invariant across global rules. |
-| Eval | Add a focused sidecar to the existing paired eval; retain the original handoff/cost scorer unchanged. |
+## Placement
 
-## Plan review 1 — authority and ownership
+- Northstar and Prototype `SKILL.md` plus their invocation metadata: remove delegated-composition routing and assign positive composition responsibility to the caller.
+- README and CHANGELOG: publish the current boundary and explicitly retire the unreleased delegated-assembly interpretation.
+- Prototype contract eval and the existing Human/composition supplement: grade caller-side assembly, bounded missing-piece requests and complex direct construction separately.
+- This plan and the current validation record: replace superseded development summaries; older revisions remain in Git. Do not rewrite frozen D1–D11 prompts or scorer code to simulate behavioral progress.
 
-Self-review before implementation, not an independent model review.
+AGENTS.md already separates semantic owners and control-plane authority. AE/Verify/Unknowns First, material-compile, RDR and the original paired scorer require no change for this correction.
 
-- Rejected: “every specialist refines the Intent Draft” as a universal rule. Independent AE/Verify callers need no Northstar artifact.
-- Resolved: uniqueness is per Intent, not per session, file or view. Multiple independent Intents may have separate primary Drafts.
-- Resolved: Prototype can provide a complete concrete surface, not just evidence fragments, but cannot choose accepted Intent or long-term Target.
-- Resolved: named runtime/lifetime/immutability decisions in prior assistant illustrations are not established Hermes facts.
+## Plan review 1 — ownership (before runtime edits)
 
-Disposition: no blocking ownership issue in the revised plan.
+Implementer self-review, not an independent reviewer session.
 
-## Plan review 2 — granularity and stopping
+Reject retaining “delegated composition” as an exception: it directly conflicts with the current direction. Assign both choosing the combination and performing the assembly to the caller. Do not move only final approval while leaving assembly inside Prototype. Keep construction of a multi-component commissioned artifact valid; do not regress to “one tiny decision”.
 
-Self-review before implementation using counterexamples.
+Disposition: approved for the bounded runtime and entrypoint edits.
 
-- Clear local fix: a short Draft is sufficient; no Prototype, graph or mock ceremony.
-- Coupled sharing change: sufficient scope covers the connected material change, not one isolated choice.
-- Missing source/lifetime fact: preserve a blocked best-known Draft; do not certify executable handoff.
-- Existing Draft + correction: update the same authority; do not create competing Drafts.
-- Direct structural/verification request: result returns to that semantic owner.
-- Remaining implementation How: stop shaping; do not require exhaustive design.
+## Plan review 2 — counterexamples (before runtime edits)
 
-Disposition: plan passes these checks; proceed with the two runtime edits and eval-only support.
+- Existing compatible local artifacts: caller composes; no extra Prototype call.
+- Missing concrete interface during composition: caller defines the gap, Prototype solves it, caller resumes assembly.
+- Complex direct prototype request: same construction capability; no synthetic Northstar stage or internal composition scheduler.
+- Oversized/unapproved scope: Northstar presents a concrete narrowing/retention choice and asks Human; no silent reduction and no repetitive approval for already-authorized work.
+- Fact/architecture/proof conflict: corresponding owner resolves it; do not ask Prototype to determine the whole solution.
 
-## Validation contract
+Disposition: approved. These are design counterchecks, not observed model executions.
 
-Separate three evidence levels: contract review; executable scorer/fixture smoke; real clean-session behavior. No level substitutes for the next.
+## Validation and completion
 
-Focused sidecar measures primary-Draft authority, material sufficiency, integration, routing, owner retention, factual discipline, and justified Prototype invocation. The original paired scorer continues to measure independent executable handoff, reinterpretation, speculation, clarification, and cost where applicable.
+Review descriptions, defaults, body, README and eval together. Check YAML, whitespace, relative links and exact published blob identities. Exercise contract walkthroughs for caller composition versus prototype construction and Human scope handling. Do not add unit tests that merely match the new prose.
 
-Use equal pinned target/model/tools/response policy, fresh candidate sessions, private judging rubric and actual trace/handoff/probe evidence. Compare current base to the new candidate; this does not retroactively isolate #93 from #94. At least three repeats per arm for the focused suite; broad uplift still requires the existing minimum of five real cases and three repeats. Constructed cases never become real corpus through repetition.
-
-## Skill Doctor / execution availability
-
-Skill Doctor is absent on current main. History identifies explicit commit `c13842d53c718ad0a3b068b0e1ed96ed7f147a10` on 2026-09-09 (`cleanup: remove unused skill-doctor files`), before #93. The earlier claim that #93 accidentally deleted it was incorrect. Do not restore a deliberately removed surface as part of this change.
-
-The current execution environment has Python but no Codex/Claude executable, model API credentials, or connected agent-runtime service. GitHub reading/writing is available through the connector. Local smoke can run; independent agent sessions cannot be claimed as executed. Do not manufacture transcripts, Skill Doctor scores, token/latency values, or clean-session results.
-
-## Real-machine retrospective follow-up (PR #95, after c7e5987)
-
-The user supplied a Codex retrospective from the actual machine: a candidate ledger and a downgraded lifecycle HTML were delivered instead of the selected core path and explicitly requested runnable experiments. This strengthens failure evidence, but is not the raw original trace or an independently verified artifact corpus, and does not establish which Skill revision the run used. Ignore incidental path names; do not infer what candidate J implemented.
-
-Review of the revised plan (implementer self-review):
-
-1. **Selection and execution closure:** D1 already supplied the adopted sharing decision, so it tested integration rather than selection. Retain D1 as a positive control; add selection-from-Evidence, actual disposable experiment, and empirically blocked-selection cases. Candidate priority is not adoption, and a ledger is not one adopted primary Draft.
-2. **Owner and scope counterreview:** Do not add Reaction/Feasibility/Performance Skills or a mandatory three-stage protocol. Representation must match the decision: Prototype supplies the smallest adequate artifact/observation; Verify owns proof strength; Northstar owns adoption into the same primary Draft. Preserve already-concrete bypass and direct AE/Verify callers. Draft readiness and completion of the user's currently delegated experiments are separate judgments. A genuine runtime blocker or a research-only request may end with an explicitly partial result.
-3. **Runtime identity:** The reported HTML-only/no-tests contract is not the engineering Prototype contract at c7e5987. Wrong version or name resolution is plausible but unverified. Record the actually loaded Skill identity in real runs; do not "fix" this by blindly renaming Skills or imposing a production-wide loader check.
-
-Disposition: apply the targeted Northstar/Prototype corrections and eval additions. AE, Verify, Unknowns First, runtime ownership and the scorer schema remain unchanged. This supersedes the earlier conclusion that the only remaining work was measurement: the retrospective exposed an untested selection/empirical-closure gap in the first PR #95 candidate.
+The Python scorers, test suite and frozen D1–D11 are unchanged; their historical 26-test result is not a result from this continuation. No authenticated agent runner is available in this session, so do not claim clean-session or blinded behavioral uplift. Deliver the implemented change on PR #95 with the review record and a merge opinion; do not merge without authorization.

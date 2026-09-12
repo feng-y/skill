@@ -28,8 +28,8 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `northstar` — canonical engineering-intent skill. 将问题级原型与 draft 组合为符合原始 Intent 的主 Draft；范围过大或取舍未定时与 Human 澄清、确认收窄或组合方案，按需 materialize 为 Drafted Issue。
-- `prototype` — caller-neutral、主要由 model 调用的工程原型工具。针对一个具体问题产出原型与 draft，或组合已有部分；多个局部产物可以共同搭起完整原型，不接管整体 Intent。
+- `northstar` — canonical engineering-intent skill. 组织原型构建，自行选择、组合产物为符合原始 Intent 的主 Draft；范围或取舍未定时 ask Human，按需 materialize 为 Drafted Issue。
+- `prototype` — 单一、caller-neutral 的工程原型构建工具。按委托完成小型或复杂问题的原型与 draft，返回产物和观察；组合、调度与整体 Intent 对齐由 Northstar 或其他调用方完成。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
 - `verify` — engineering verification skill. 从 authoritative completion/safety claim 出发定义 proof obligation，选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。
 - `unknowns-first` — factual map-versus-territory specialist. 只关闭会改变下一步判断的 repo/runtime/data/source fact，不接管 Intent、Prototype、Architecture 或 proof judgment。
@@ -87,7 +87,7 @@ accepted completion / safety / structural claim
   affected semantic owner / Executor
 ```
 
-Northstar owns **Intent, composition and Human scope clarification**. Prototype is a **problem-solving tool** whose prototypes and local drafts can be composed into the primary Draft and, when needed, a complete prototype matching the original Intent or a Human-confirmed scope change. One intended-change authority does not limit the number of local artifacts. AE owns **structural judgment**; Unknowns First owns **factual uncertainty**; Verify owns **proof judgment**.
+Northstar owns **Intent, caller-side composition and Human scope clarification**. Prototype is one **construction tool** for small or complex commissioned problems; it does not select or assemble problem-level artifacts, orchestrate calls, or align the overall Intent. Northstar or another authorized caller performs that composition and integrates the result; a scheduler gains no semantic authority. One intended-change authority does not limit artifact count. AE owns **structural judgment**; Unknowns First owns **factual uncertainty**; Verify owns **proof judgment**.
 
 Verify is not a mandatory post-PR stage. It may be invoked before implementation to make a material proof route explicit, during implementation when verification premises change, or after implementation to judge realized results. Clear local changes can rely on an already-authoritative focused check without extra ceremony.
 
@@ -103,7 +103,7 @@ Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), inc
 
 - **Drafted Issue** — durable carrier for Northstar Intent / intended change.
 - **PR** — realized Change / Delivery; implementation How、diff、implementation-local validation 与 review 默认留在这里。
-- **Prototype / local draft** — a problem-level concrete solution or experiment, composable with other results; the caller decides adoption and persistence. It is not a separate authority for the overall Intent.
+- **Prototype / local draft** — the commissioned problem’s concrete solution or experiment; its boundaries and observations return to the caller. The caller performs adoption, composition and persistence. It is not a separate authority for the overall Intent.
 - **Architecture handoff** — only when a durable structural handoff is independently useful; otherwise structural decisions fold back to the caller / Issue.
 - **Verify result** — Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing. It normally stays with the PR/review/verification surface unless it changes durable Intent or Architecture.
 
