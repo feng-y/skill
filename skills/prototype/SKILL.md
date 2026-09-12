@@ -1,90 +1,48 @@
 ---
 name: prototype
-description: "Caller-neutral model-invoked concrete-shaping specialist: when an already-understood engineering intent, structural judgment, or accepted claim still permits materially different concrete paths, usage, interfaces, or interactions, expose the difference with the cheapest inspectable representation and return correction / Evidence to the caller."
+description: "A single caller-neutral engineering prototype tool: build or revise the prototype and draft for a commissioned problem, small or complex, and run the required disposable experiment. Return the artifact and observations; the caller owns composition, orchestration, and alignment with overall Intent."
 ---
 
-# Prototype · 让已理解语义的具体形态可观察
+# Prototype · 构建受托问题的原型与 draft
 
-Prototype 是 **caller-neutral、主要由 model 按需调用的 concrete-shaping specialist**。当 caller 已经理解自己负责的语义，但仅靠 prose 仍可能被解释成 materially different 的核心路径、ownership surface、boundary、interface、usage 或 interaction 时，用最低成本的可观察 representation 把差异暴露出来，再把 correction / Evidence 返回**原 caller**。
+Prototype 是 **单一、caller-neutral、主要由 model 按需调用的工程原型工具**。调用方给定要解决的问题、相关上下文、边界和所需结果；Prototype 构建或修正该问题的原型与 draft，必要时执行可丢弃试验，再把产物与观察返回原 caller。任务可以小，也可以复杂，不按规模拆成不同 Skill，也不限定为一个字段或孤立 decision。
 
-`Prototype` 不等于一定写代码。Core Path、Usage / Interface Draft、state transition、mock 或 throwaway code 都可以是 prototype surface；选择能关闭当前 material decision 的最便宜形态。
+**组合不在 Prototype 内。** Northstar 或其他调用方选择和拼装不同问题的产物，组织调用顺序，维护整体 Draft，并判断与 Intent 的差距。Prototype 不选择或拼装不同问题的产物，不通过“受托组合”接管这项工作，也不调度新的 Prototype 调用。受托原型内部可以有多个必要部件；完成这一个问题的内部构建，不等于承担跨问题产物的组合。
 
-Prototype 不拥有 canonical Intent / Issue，不决定长期 Target Architecture，不定义 verification claim，不编译 execution Graph，也不进入 production implementation。**谁调用 Prototype，谁继续拥有原来的 semantic judgment。**
+Prototype 不拥有 canonical Intent / Issue，不决定长期 Target Architecture，不定义 proof obligation 或 verdict，不编译 execution Graph，也不进入生产实现。原型及 draft 可以是同一份产物，不强制两份文件；局部 draft 不成为整体 Intent 的另一份权威。
 
-## 调用模型：model-invoked，不绑定 Northstar
+## 输入、调用与返回边界
 
-Prototype 通常不是 Human 需要主动选择的入口。Human 提出需求或 correction 后，由当前 semantic owner 判断是否存在 concrete-shape ambiguity，再按需调用 `$prototype`。
+从当前委托恢复：要解决什么问题、已确定的约束 / 接口、需要交回什么产物。复用已有上下文，不制造固定字段或新协议。普通构建可以使用调用方提供的代码、数据和已确认接口；这不授权 Prototype 选择或组合其他问题的方案。
 
-典型 caller：
+- **Northstar** 可以委托某个具体问题的原型，或复杂原型中的缺失部分；它负责 Human 澄清、范围确认、组合和 Intent 对齐。
+- **AE / Verify / Unknowns First / 其他 caller** 可以在各自问题已明确后调用相同工具。AE 保留结构判断，Verify 保留证明判断，Unknowns First 只关闭事实；返回原 caller，不自动经过 Northstar。
+- **Human 直接委托**原型或实验时可直接执行，不要求先生成 Intent，也不把这项能力变成固定 Human-facing 阶段。
 
-- **Northstar**：Intent 已理解，但 core path / usage / interface 仍有 materially different 解释；
-- **Architecture Evolution**：structural question 已经明确，但需要把候选 owner / boundary / dependency 对 consumer path 的具体影响变得可观察，才能完成自己的 Target judgment；
-- **Verify**：authoritative claim 已经成立，但真实 usage / path / interaction 的具体形态仍有 materially different 解释，导致无法稳定 observable surface；
-- **Unknowns First**：事实已经关闭后，剩下的问题其实不是“事实是什么”，而是 concrete shape 应如何被看见；可以调用 Prototype，再把结果返回原 decision owner；
-- **其他 caller**：只要它已经拥有当前 semantic question，且剩余问题确实是 concrete shape，而不是事实、长期 architecture、proof sufficiency 或 implementation How。
+如果委托实际上是选择、拼装一组局部产物并匹配整体 Intent，说明该组合工作应由调用方完成；其中具体的构建缺口可以返回为下一项委托，不自行接管组合。不要因为原型较复杂就退出或替 caller 拆解全局任务。
 
-Prototype 返回后，不自动转交 Northstar。caller 消费结果并决定是否更新自己的 judgment；只有 durable Intent 改变时才 fold 回 Northstar / Issue，只有长期 structural premise 改变时才回 AE。
+长期 owner / boundary 本身未定时返回相应结构 owner；accepted outcome 或范围需要 Human 决定时返回 caller。现状 source / config / runtime 身份缺失可先作最小事实检查，必要时由 `$unknowns-first` 关闭；试验要测的可行性或成本未知不是拒绝试验的理由。
 
-## 调用边界
+已有真实 artifact / backend、只需定义证明或判读 Evidence 时交 `$verify`。被 Verify 委托构建试验时，完成 artifact / observation 再交回，不能因它拥有 proof 判断就退回未完成的委托。既无形态缺口，也无待完成的明确试验委托，且只剩生产 implementation How 时不额外调用。
 
-适合：
+## 完成一个连贯的受托原型
 
-- outcome / semantic question 已理解，但核心 execution path / ownership surface / boundary 仍可能有两种 materially different 解释；
-- API、CLI、schema、config、workflow 或 interaction 只有看到具体 usage 才能可靠判断；
-- static draft 不能回答一个 material experiential / empirical decision，需要最小可丢弃实现直接观察。
+共同决定当前问题的路径、dataflow、接口、boundary 或 lifecycle 应一起展开，直到产物能回答被委托的问题；不因一个局部演示完成就提前结束，也不为完整感穷尽实现细节。复用已有有效部分，correction 只重开受影响部分。
 
-不应调用或应立即返回 caller：
+向 caller 交代产物解决什么、覆盖到哪里、依赖哪些条件，以及实际发现的接口冲突或缺口。这些是供调用方使用的边界信息，不是 Prototype 的组合方案、全局任务表或整体完成判断。问题超出当前边界时给出具体缺口，由 caller 决定补充委托、组合或 ask Human 收窄；不能自行丢弃原始要求。
 
-- producer / consumer / runtime path / baseline 等 territory fact 未核实，且事实不同会改变 shape：交 `$unknowns-first`；
-- 长期 responsibility、knowledge ownership、dependency direction 或 Target Architecture 本身未定：交 `$architecture-evolution`；
-- completion/safety claim 已明确，剩余问题只是如何证明与 Evidence 是否充分：交 `$verify`；
-- 当前 semantic judgment 已经足以让 caller / fresh Executor 继续，剩余差异只是 implementation How；
-- trivial / local change 不为流程完整额外生成 artifact。
+## 按问题选择足够的表示或试验
 
-## 一次只关闭一个 material shape decision
+**Core Path / Usage / Interface Draft**：形态、调用方式或交互理解是决定性问题时，用最便宜且足够的路径、状态、接口示例或 mock。静态表达已充分就不写可丢弃代码；不默认生成交互 HTML。
 
-先问：
+**Disposable Prototype**：选择依赖实际可行性、行为差异或成本，或当前明确要求实做时，构建并运行最小可丢弃代码 / timing probe，或复用已有可执行实验。图、计划和未运行代码不能替代明确实做。保持与被委托问题相符的语言、输入和环境，不用便于展示但无关的替代物冒充。
 
-> **哪一个仍隐含的 concrete difference，如果理解错了，会改变 caller 当前拥有的 outcome、核心路径、ownership surface、binding boundary、interface / usage 或 accepted result？**
+不为 production quality 补通用抽象、持久化、完整测试体系或 rollout；但回答当前问题必需的行为 / 等价性检查和匹配的 baseline/treatment 测量不能省略。Prototype 返回实际 observation；proof obligation、Evidence sufficiency 和 verdict 属于 Verify。试验观察不自动证明生产收益或整体 Acceptance。
 
-没有这样的差异就停止。
+候选对照只服务于当前受托问题，使用可比条件；明确委托的检查不因展示数量而静默丢弃。返回差异和局限，不替 caller 采用方案，也不把候选的选择 / 组合扩展成全局原型管理。
 
-若 representation 依赖未核实的 repo/runtime fact，不用假设补全；返回具体 Evidence gap 及其 shape impact。
+## 输出与停止
 
-## 选择最低成本的 representation
+返回受托原型与 draft、适用边界、依赖 / 未决点，以及实际完成的观察。实做需保留可复现入口和输入 / 配置身份，区分已运行、未运行及不足以判断。结果不必是正收益；已完成但 inconclusive 的试验可返回，不授权无限追加。
 
-### Core Path
-
-核心 execution path、ownership surface、boundary、dataflow 或旧路径退出是决定性问题时使用。已有系统改造通常用紧凑的 `Current → Intended`，只保留 material nodes、boundary change、removed path 与必须保持的 invariant。
-
-### Usage / Interface Draft
-
-consumer-facing API、CLI、schema、config、workflow 或 interaction 是决定性问题时，从具体 usage / observable behavior 开始。只展开会改变 caller judgment 的内部 boundary。
-
-### Disposable Prototype
-
-只有 static representation 仍不足以回答当前 decision 时才写。只回答一个问题，保持 cheap、reversible、disposable；可以是最小交互、mock、throwaway code、timing probe 或其他可体验 artifact。
-
-不要为了 production quality 补持久化、通用抽象、完整测试、兼容层或 rollout，除非这些本身就是当前 decision。
-
-## 候选对比
-
-当 2–3 个 materially different concrete shapes 都仍合理、且比较本身能帮助 caller 关闭 decision 时，用**同一种 representation**对比它们。只比较 decision-relevant ownership surface、boundary、contract、commitment 与 Evidence；不为了探索充分制造候选，也不替 caller / Human 关闭它们拥有的 choice。
-
-## 返回 caller
-
-返回最小充分结果：
-
-- 当前 material shape decision；
-- concrete representation / candidate contrast；
-- 已观察到的 path、ownership surface、boundary、usage、interface 或 invariant 差异；
-- 新产生的 decision-relevant Evidence；
-- 仍会改变 concrete shape 的 unresolved point。
-
-**不要替 caller 宣布最终 semantic decision。** caller 根据自己的 owner 职责消费 correction / Evidence：Northstar 更新 Intent，AE 更新 Target judgment，Verify 更新 observable / proof surface，Unknowns First 回到原 decision owner。
-
-Prototype 不生成 Taskbook、issue graph、PR split、implementation checklist、verification workflow 或第二份 Intent SOT。
-
-## 停止条件
-
-只要仍有 material ambiguity 会改变 caller 当前 semantic judgment，就继续最小 shaping；当剩余差异都属于 implementation How、verification mechanics 或已经由 caller 足够判断时停止。Human / caller correction 只重开受影响 surface，不重做已经闭合的部分。
+受托工作完成或遇到真实 blocker 后交回原 caller。caller 负责后续组合、Human 交互和整体对齐；局部完成不能宣布 Intent 已完成。Prototype 不输出组合计划、Taskbook、issue graph、PR split、全局进度或第二份 Intent SOT。

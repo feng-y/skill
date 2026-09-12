@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "把工程请求收敛为稳定 Intent / Drafted Issue"
-  default_prompt: "使用 $northstar，把当前 discussion / request / incident 收敛为 fresh consumer 可独立理解的工程 Intent；保留 Problem、concrete Draft、binding Constraints、Acceptance 与必要 Decision/Evidence，需要跨 session 或执行环境流转时 materialize 为 canonical Drafted Issue。不要制造独立 Goal；按需调用 $prototype、$architecture-evolution、$unknowns-first；当 material completion/safety claim 需要 proof obligation、backend selection 或 sufficiency judgment 时交 $verify。不要把项目里的 Replay/test/build backend 当成 Intent owner。"
+  short_description: "围绕原始 Intent 识别 gap、调度 specialist、组合并收敛主 Draft"
+  default_prompt: "使用 $northstar，把原始 request / conversation 与当前主 Draft 持续对照，识别下一项 material gap；Human 预期/范围/承诺未定时 ask Human，事实交 $unknowns-first，具体原型或试验交 $prototype，长期结构交 $architecture-evolution，proof 交 $verify。消费结果后由 Northstar 自己选择、组合并更新同一个主 Draft，再次检查是否 match 原始 Intent 或已确认范围。Prototype 不负责跨问题组合；局部完成不等于整体 Intent 完成。"

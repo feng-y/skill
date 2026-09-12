@@ -28,8 +28,8 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `northstar` — canonical engineering-intent skill. 把 conversation / request / incident 收敛成 durable Intent；需要跨 session / agent / Human 或执行环境流转时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
-- `prototype` — caller-neutral、主要由 model 按需调用的 concrete-shaping specialist. 当前 caller 已理解自己的语义，但具体 path / usage / interface / interaction 仍可能 materially different 时，用最便宜的 Core Path / Usage / disposable Prototype 暴露差异，再把 correction / Evidence 返回原 caller。
+- `northstar` — canonical engineering-intent skill. 组织原型构建，自行选择、组合产物为符合原始 Intent 的主 Draft；范围或取舍未定时 ask Human，按需 materialize 为 Drafted Issue。
+- `prototype` — 单一、caller-neutral 的工程原型构建工具。按委托完成小型或复杂问题的原型与 draft，返回产物和观察；组合、调度与整体 Intent 对齐由 Northstar 或其他调用方完成。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
 - `verify` — engineering verification skill. 从 authoritative completion/safety claim 出发定义 proof obligation，选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。
 - `unknowns-first` — factual map-versus-territory specialist. 只关闭会改变下一步判断的 repo/runtime/data/source fact，不接管 Intent、Prototype、Architecture 或 proof judgment。
@@ -38,16 +38,16 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 主要 Human-facing / direct capabilities：
 
-- `northstar` — “我们到底要什么？”
+- `northstar` — “我们到底要什么？这个核心方案是不是你要的？”
 - `architecture-evolution` — “长期结构应该怎么归位？”
 - `verify` — “结果是否真的符合 claim？”
 
 主要 model-invoked specialists：
 
-- `prototype` — 当前 caller 已理解语义，但需要把 concrete shape 变得可观察；Human 很少需要主动调度。
+- `prototype` — 展开 concrete surface 或完成可丢弃试验，通常由当前 caller 按需调用，也接受明确的直接委托。
 - `unknowns-first` — 当前判断依赖未核实事实时自动/按需关闭 factual gap；Human 也可以直接要求先查事实。
 
-`prototype` **不属于 Northstar 私有流程**。Northstar、Architecture Evolution、Verify、Unknowns First 或其他 semantic caller 都可以在遇到 material concrete-shape ambiguity 时调用它；Prototype 返回后，原 caller 继续拥有自己的 judgment。
+`prototype` **不属于 Northstar 私有流程**。Northstar、Architecture Evolution、Verify、Unknowns First 或其他 semantic caller 都可以在需要 concrete shaping 或明确委托可丢弃试验时调用它；Prototype 返回后，原 caller 继续拥有自己的 judgment。没有这类需要时直接继续，不设置必经阶段。
 
 ## Capability map
 
@@ -87,7 +87,7 @@ accepted completion / safety / structural claim
   affected semantic owner / Executor
 ```
 
-Northstar owns **meaning**. Prototype owns **concrete reaction surfaces only** and returns them to its caller. Architecture Evolution owns **structural judgment**. Unknowns First owns **factual uncertainty**. Verify owns **verification / proof judgment**; Evidence is its proof artifact and basis.
+Northstar owns **Intent, caller-side composition and Human scope clarification**. Prototype is one **construction tool** for small or complex commissioned problems; it does not select or assemble problem-level artifacts, orchestrate calls, or align the overall Intent. Northstar or another authorized caller performs that composition and integrates the result; a scheduler gains no semantic authority. One intended-change authority does not limit artifact count. AE owns **structural judgment**; Unknowns First owns **factual uncertainty**; Verify owns **proof judgment**.
 
 Verify is not a mandatory post-PR stage. It may be invoked before implementation to make a material proof route explicit, during implementation when verification premises change, or after implementation to judge realized results. Clear local changes can rely on an already-authoritative focused check without extra ceremony.
 
@@ -103,7 +103,7 @@ Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), inc
 
 - **Drafted Issue** — durable carrier for Northstar Intent / intended change.
 - **PR** — realized Change / Delivery; implementation How、diff、implementation-local validation 与 review 默认留在这里。
-- **Prototype artifact** — reaction surface, normally disposable; correction / Evidence returns to the caller, which decides whether anything durable should be persisted.
+- **Prototype / local draft** — the commissioned problem’s concrete solution or experiment; its boundaries and observations return to the caller. The caller performs adoption, composition and persistence. It is not a separate authority for the overall Intent.
 - **Architecture handoff** — only when a durable structural handoff is independently useful; otherwise structural decisions fold back to the caller / Issue.
 - **Verify result** — Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing. It normally stays with the PR/review/verification surface unless it changes durable Intent or Architecture.
 

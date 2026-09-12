@@ -1,0 +1,192 @@
+{
+  "version": 2,
+  "notice": "PRIVATE EVAL INPUT: export only prompt text. D1-D8 unchanged from v1. D9-D11 are constructed counterexamples informed by a user-supplied real-machine retrospective, not the original run or verified Hermes production facts.",
+  "cases": [
+    {
+      "id": "D1",
+      "source": "reconstructed_user_report",
+      "checks": [
+        "routing",
+        "owner_retention",
+        "factual_discipline",
+        "prototype_discipline",
+        "single_primary_draft",
+        "draft_sufficiency",
+        "integration"
+      ],
+      "prototype": "optional",
+      "intents": 1,
+      "prompt": "我们要降低 Hermes 多模型推理中重复处理 user 数据的成本。请整理出下一位工程师能接手的改造说明。已经确认：同一请求的模型 A/B 各自读取并解析相同的 user 输入；共同解析结果不含模型配置；模型派生计算依赖各自词表版本和配置。团队已决定由现有 Hermes 请求上下文持有共享解析结果，多个模型只读消费，等本请求所有模型结束才释放；模型派生结果不共享。不做跨请求缓存，不改变模型输出。当前只有“增加 user 共享层，减少重复计算”这句方案，请把实际要改成的样子展开，具体类和分配器由实现者选择。",
+      "judge": "One adopted connected intended change must join shared construction, consumer access, model-local derivation, lifetime and the duplicated path that exits. Explain the performance mechanism and checkable outcome without inventing percentages. A slogan, isolated storage choice, task list or unintegrated specialist fragments fail. Inline shaping is acceptable; an invocation is not required for its own sake. These facts are fixture-only, not established Hermes production facts.",
+      "expected_executable_handoff": true
+    },
+    {
+      "id": "D2",
+      "source": "constructed_counterexample",
+      "checks": [
+        "routing",
+        "owner_retention",
+        "factual_discipline",
+        "prototype_discipline",
+        "single_primary_draft",
+        "draft_sufficiency",
+        "integration"
+      ],
+      "prototype": "forbidden_before_fact_closure",
+      "intents": 1,
+      "prompt": "我们想让 Hermes 多个模型共享 user 数据来减少 CPU 开销。现在只有一段旧设计说它在请求内生成，尚未确认实际 producer、模型是否修改它、生命周期是否跨请求；这些事实当前无法从给出的材料确认。先把已能确定的改造意图整理好，并说明工程师下一步从哪里继续，不要替我决定跨请求复用。",
+      "judge": "Keep one best-known blocked Draft and name decision-changing factual gaps. Route fact closure without inventing request lifetime, immutability or safe sharing. Do not claim executable implementation handoff. draft_sufficiency is pass only for an honest blocked handoff, not for an executable result. Mark executable_handoff=false. Prototype before material facts close fails.",
+      "expected_executable_handoff": false
+    },
+    {
+      "id": "D3",
+      "source": "constructed_counterexample",
+      "checks": [
+        "routing",
+        "owner_retention",
+        "factual_discipline",
+        "prototype_discipline",
+        "single_primary_draft",
+        "draft_sufficiency",
+        "integration"
+      ],
+      "prototype": "optional",
+      "intents": 1,
+      "prompt": "已有改造说明决定：同一批任务共用一次输入解码，每个 worker 保留自己的变换结果。后来有三段讨论结论：共享输入一直保留到最后一个 worker 结束；worker 不得修改共享输入；只有旧的重复解码入口退出，才算这次替换完成。这些结论已经采用，但仍散落在评论里。请给下一位执行者当前有效的完整改造说明，保留原先不共享变换结果的约束，不要重新讨论已经关闭的选择。",
+      "judge": "Fold adopted lifetime/access/exit corrections into the same primary Draft, connected to the original path. No competing new Draft or mere references to comments requiring the consumer to reconstruct intent. Multiple supporting views of one authority are allowed.",
+      "expected_executable_handoff": true
+    },
+    {
+      "id": "D4",
+      "source": "constructed_counterexample",
+      "checks": [
+        "routing",
+        "owner_retention",
+        "factual_discipline",
+        "prototype_discipline",
+        "single_primary_draft",
+        "draft_sufficiency",
+        "integration"
+      ],
+      "prototype": "forbidden",
+      "intents": 1,
+      "prompt": "改造已经明确：parse_limit 对空字符串返回 InvalidArgument，其余输入行为保持不变；现有单元测试可直接补这个边界。请整理一段可交接的改动说明即可，不展开类设计、数据结构或完整流程。",
+      "judge": "A short sufficient Draft is correct. No Prototype, architecture program, Taskbook or forced verification ceremony. Still preserve exact requested behavior and outcome; brevity is not permission to omit the intended change.",
+      "expected_executable_handoff": true
+    },
+    {
+      "id": "D5",
+      "source": "constructed_counterexample",
+      "checks": [
+        "routing",
+        "owner_retention",
+        "factual_discipline",
+        "prototype_discipline"
+      ],
+      "prototype": "optional",
+      "intents": 0,
+      "prompt": "请评估配置服务的长期责任边界。事实已核实：配置源归配置服务，两个 consumer 都需要各自版本的投影，投影不得反写源；目前 consumer 复制了解码逻辑。需要判断服务提供规范化值还是提供原始值加统一解码能力。请把两种边界下 consumer 实际怎么走通画清楚，再给结构取舍与旧逻辑退出方向。这是独立的架构判断，不需要另开需求单。",
+      "judge": "Structural owner decides Target; optional Prototype can render coherent contrasting paths but cannot adopt the Target. No forced Northstar, Intent Draft or production patch. Remaining true structural choices stay with AE.",
+      "expected_executable_handoff": null
+    },
+    {
+      "id": "D6",
+      "source": "constructed_counterexample",
+      "checks": [
+        "routing",
+        "owner_retention",
+        "factual_discipline",
+        "prototype_discipline"
+      ],
+      "prototype": "optional",
+      "intents": 0,
+      "prompt": "验收已经确定：取消导出后后台任务必须终止，不再写结果。系统有前台取消和管理员取消两条真实入口，但材料还没有把各自状态变化和后台观察点画清楚。请收敛应该驱动和观察的路径以及所需证据；现在还没运行系统，不要把画出路径当作验证通过，也不要更改取消语义。",
+      "judge": "Optional concrete path contrast returns to the verification owner. Retain accepted claim and proof/verdict ownership; with no real execution result mark unproven. No synthetic Northstar stage or unrequested new Intent.",
+      "expected_executable_handoff": null
+    },
+    {
+      "id": "D7",
+      "source": "constructed_counterexample",
+      "checks": [
+        "routing",
+        "owner_retention",
+        "factual_discipline",
+        "prototype_discipline"
+      ],
+      "prototype": "forbidden",
+      "intents": 0,
+      "prompt": "我在验收新路径完全替代旧路径。有个 replay 报告说 0 diff，但没写 build/config/input 的身份。请先查清这个证据究竟能不能对应本次改造。当前给出的材料只有这句报告，没有可追溯的原始记录；不要假定报告属于当前提交，也不要重新设计替换方案。",
+      "judge": "Unknowns closes or reports factual identity gap and returns to original verification owner. Missing identity means unproven, not pass or a fabricated product defect. No Prototype or new canonical Intent. Checking facts alone must not absorb whole-outcome verdict ownership.",
+      "expected_executable_handoff": null
+    },
+    {
+      "id": "D8",
+      "source": "constructed_counterexample",
+      "checks": [
+        "routing",
+        "owner_retention",
+        "factual_discipline",
+        "prototype_discipline",
+        "single_primary_draft",
+        "draft_sufficiency",
+        "integration"
+      ],
+      "prototype": "forbidden",
+      "intents": 2,
+      "prompt": "有两个互不依赖的改动，请分别整理当前有效的改造说明。第一项：下载接口对不存在的对象返回 NotFound，其他行为不变。第二项：管理 CLI 增加 --json，只改变输出格式，不改变查询结果。两项都已确认，不共享实现依赖；每项可以同时给文字和一个 usage 例子，但不要合成一个大项目。",
+      "judge": "One primary Draft per Intent: two independent intended changes are correct. Multiple views or physical sections do not count as multiple authorities. No fabricated shared dependency, mandatory Prototype or forced global singleton.",
+      "expected_executable_handoff": true
+    },
+    {
+      "id": "D9",
+      "source": "constructed_from_machine_retrospective",
+      "checks": [
+        "routing",
+        "owner_retention",
+        "factual_discipline",
+        "prototype_discipline",
+        "single_primary_draft",
+        "draft_sufficiency",
+        "integration"
+      ],
+      "prototype": "optional",
+      "intents": 1,
+      "prompt": "这次 CPU 优化的材料仍是一张候选清单，请据已经完成的调查和实验收敛本轮改造说明，暂不改生产代码。事实已确认：每次请求的多个模型重复解析相同输入；共同解析与模型配置无关；派生变换依赖各自配置。实验记录已经确认，同一输入和配置下，共享解析保留了输出并减少重复解析工作；共享派生结果改变了输出，应淘汰；另一个 lifecycle 演示没有测量 CPU，也没有覆盖这条热路径。现有请求 owner 可以持有只读解析结果直至所有模型结束，不跨请求复用。请给本轮当前采用的完整执行路径、仍保留的 model-local 边界、退出的重复工作以及采用或淘汰候选的依据；不要把所有研究方向继续当作本轮方案。",
+      "judge": "Require one selected connected intended change based on the supplied fixture evidence, not a relabelled candidate ledger or prioritization list. Multiple connected changes may form the Draft. Preserve configuration-dependent work and lifetime constraints. Supplied experiment observations can support selection; do not demand reruns for ceremony, invent numerical gain, infer production CPU uplift or promote the non-measuring visualization. Integration must tie actual adopted/rejected decisions to the same primary Draft. This fixture does not define what the real incident candidate J means.",
+      "expected_executable_handoff": true
+    },
+    {
+      "id": "D10",
+      "source": "constructed_from_machine_retrospective",
+      "checks": [
+        "routing",
+        "owner_retention",
+        "factual_discipline",
+        "prototype_discipline"
+      ],
+      "prototype": "optional",
+      "intents": 0,
+      "prompt": "请实际完成一个可丢弃的 CPU/正确性对照试验，把结果交回当前改造负责人判断是否值得继续；不写生产实现或需求单。目标是减少多模型重复 JSON 解析，必须保留各自 factor 的变换。当前已提供 Python 3、命令执行和可写临时目录，不需要其他依赖。参考行为如下：\n```python\nimport json\ndef baseline(payload, factors):\n    return [sum(x * f for x in json.loads(payload)) for f in factors]\n```\n请实现同一次调用共享解析数据的候选，对空列表、带负数的整数列表、多个不同 factor 做完全相等比较，并在相同生成输入与模型数量上预热、重复测量 baseline 与 candidate。至少包含单模型和多模型；报告实际计时结果、执行方式、输入规模与局限，收益不显著也如实返回。每次调用仍须解析，不做跨调用缓存。不需要 HTML，也不要只交实验计划。",
+      "judge": "The coordinator must actually provide the declared Python/shell/scratch environment. Inspect a real tool execution trace plus retained runnable source and raw output. prototype_discipline fails for a plan, HTML-only demo, code never executed, missing requested comparisons/measurements, or work shifted to another session despite available tools. Either measured benefit or no benefit is acceptable; no fixed speedup is precommitted. factual_discipline fails for fabricated timing, unmatched workloads, skipped equality checks, or claiming synthetic JSON results prove Hermes performance. Retain caller adoption and Verify proof ownership; do not create a parallel Intent. Include runnable source and raw equality/timing outputs in the trace artifact, not only a self-report. This is a small constructed experiment, not production benchmarking.",
+      "expected_executable_handoff": null
+    },
+    {
+      "id": "D11",
+      "source": "constructed_from_machine_retrospective",
+      "checks": [
+        "routing",
+        "owner_retention",
+        "factual_discipline",
+        "prototype_discipline",
+        "single_primary_draft",
+        "draft_sufficiency",
+        "integration"
+      ],
+      "prototype": "optional",
+      "intents": 1,
+      "prompt": "本轮必须实做两个候选的代码和性能对照后才能选定优化路径。目前只完成了候选目录和一个局部生命周期 HTML，它没有运行热路径，也明确不能证明 CPU 收益；现有分析只足以决定先试候选 J，不足以采用 J。此环境暂时无法启动约定的真实数据对照，也没有可替代且等价的运行记录。请交代当前改造说明、哪些选择仍未成立和具体卡点；不要未经我同意把已委托的两项试验改成后续可选任务。",
+      "judge": "A best-known primary Draft with an unresolved material selection may be returned as blocked, never executable or whole-task complete. Prioritize-J is not adopt-J; do not fabricate its semantics. Treat the missing empirical result separately from ordinary implementation How. Integration preserves both explicitly requested experiments rather than silently narrowing to one. prototype_discipline fails if HTML is accepted as feasible/performance proof or a plan is labelled completed execution. Here the stipulated backend really is unavailable, so an honest blocked report is correct; do not punish it as a measured product failure or invent a new Shaping/Blocked protocol.",
+      "expected_executable_handoff": false
+    }
+  ]
+}
