@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "围绕唯一核心原型，澄清确认并收敛 Intent"
-  default_prompt: "使用 $northstar，按 SKILL.md 维护每个 Intent 的同一个主 Draft 与主 Prototype。围绕具体核心形态主动 ask Human 处理必要的澄清、取舍与确认，吸收已有回答，不代替 Human 接受，也不重复询问已定事项。按需调用 specialist，将结果与 Human correction 归回同一个方案；局部试验和候选台账不替代主 Prototype。分别判断核心方案可交接与本轮委托完成，不增加固定审批阶段。"
+  short_description: "组合原型与 draft，对齐 Intent 并澄清范围"
+  default_prompt: "使用 $northstar，按 SKILL.md 将问题级原型与 draft 组合为符合原始 Intent 的主 Draft，必要时搭起完整原型；不限制局部产物数量，不以文件集合代替整合。范围过大或取舍未定时，提出收窄或组合的具体建议并 ask Human，沿用已有回答和授权，不静默删减目标。按需调用 specialist，分别判断整体可交接与本轮委托完成。"

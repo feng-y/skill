@@ -5,7 +5,7 @@ Eval-only. Normal runtime must not read this file.
 Prototype passes only when it:
 
 1. is caller-neutral and primarily model-invoked; it does not require Northstar as the caller and does not become a mandatory Human-facing stage;
-2. develops the single core Prototype of the Intent; views, comparisons and experiments support that same core rather than becoming separate Prototypes; a known shape does not cancel an explicit experiment;
+2. produces a prototype and draft for a cohesive problem, or composes existing parts; multiple local prototypes per Intent are allowed, and a known shape does not cancel an explicit experiment;
 3. uses the cheapest sufficient representation: Core Path / Usage / Interface before disposable code when static representation is enough;
 4. treats prototype code/artifact as reaction surface, not authority or production path;
 5. returns territory gaps to `$unknowns-first` instead of inventing facts;
@@ -62,11 +62,9 @@ PASS: Prototype can serve the request, but this does not make direct Human invoc
 
 The caller understands a sharing change, but shared construction, consumer access, lifetime and the model-local boundary must be seen together. PASS: return a connected surface sufficient for caller judgment, not merely a storage choice. Unknown territory and owner decisions still return to their owners; no fixed sharing/lifetime design is assumed.
 
-### P10 — One Intent, one core Prototype
+### P10 — Local results compose without competing Intent authority
 
-PASS: one inspectable whole shows the intended core path; local views, alternatives, baseline comparisons and measurements support that same Prototype. An unrelated collection of locally complete experiments fails even if the Draft points to every file. Human correction revises the same core, not a second parallel Prototype. Northstar handles Human clarification/confirmation and keeps the Draft aligned. Independent AE/Verify callers retain their own judgment without a synthetic Intent or Northstar stage.
-
-See [the focused paired sidecar](../northstar-paired/draft-handoff-eval.md). These contract scenarios are not recorded behavioral runs.
+PASS: a local prototype / draft states what problem it solves, where it applies and which relationships matter to composition. It need not solve the whole Intent. A delegated assembly shows a connected path and exposes incompatible assumptions; an index of locally green artifacts is insufficient. Northstar integrates the parts against the original Intent and asks Human before changing unapproved scope. Direct AE/Verify callers retain their own judgment.
 
 ### P11 — Match representation to the empirical decision
 

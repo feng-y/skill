@@ -2,11 +2,13 @@
 
 Eval/development-only. Normal Skill runtime must not read this file.
 
-## Current correction — one core Prototype and Ask Human
+## Current correction — composable problem prototypes and Human scope
 
-The user corrected the preceding model: one Intent has one main, core Prototype, not merely one Draft assembled from several local prototypes. Northstar must actively clarify and confirm expectations with the Human, not treat questions only as unrecoverable technical blockers. This supersedes the narrower per-invocation surface framing below.
+The latest user clarification supersedes `e978a7f`'s prototype-cardinality rule. Prototype is a tool for one cohesive engineering problem, producing a prototype and draft that can be composed with others. Northstar owns integration into the primary Draft, fidelity to the original Intent, and Human clarification/confirmation when scope is too large or a material choice remains. Completeness belongs to the integrated result for the accepted scope, not every local invocation.
 
-Keep one intended change: Draft records its meaning; the core Prototype makes its whole inspectable. Views and experiments support that same core. Human corrections refine both, without mandatory duplicate files or universal approval gates. Independent callers remain independent. Runtime edits replace the relevant granularity and Human sections; entry metadata and focused evals follow the same correction. The supplementary H1/H0 interaction check measures required asks and redundant asks separately; prior 11-case/scorer results do not measure it.
+Plan self-review: preserve one authoritative intended change without forbidding local drafts; replace the singleton rules rather than add exceptions. Composition must reconcile boundaries and original requirement coverage, not concatenate artifacts. Narrowing needs Human agreement or prior authority; a confirmed slice is not completion of the original larger request. Clear small work and already-authorized composition need no new approval or prototype ceremony. Independent AE/Verify callers remain independent.
+
+Implementation scope: Northstar/Prototype body and entry metadata, README, migration ledger, focused contract cases and the existing Human interaction supplement. No scorer/code changes, new Skill, graph protocol or production changes. Earlier plan sections below are historical rationale, interpreted under this correction. The H1/H0 supplement is revised explicitly; older versions remain in Git and no run is relabelled.
 
 ## Evidence and decision
 

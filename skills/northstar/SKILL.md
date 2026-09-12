@@ -1,6 +1,6 @@
 ---
 name: northstar
-description: "Clarify and confirm engineering intent with the Human as needed; converge one primary Draft and one core Prototype for that Intent, then materialize the accepted meaning as a Drafted Issue when durable handoff is needed."
+description: "Clarify engineering intent with the Human, compose problem-level prototypes and drafts into one coherent intended change, and confirm scope adjustments when needed. Materialize the accepted meaning as a Drafted Issue for durable handoff."
 ---
 
 # Northstar · 工程 Intent 的 canonical owner
@@ -26,15 +26,15 @@ Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof 
 
 不维护独立 `Goal` 字段。抽象 outcome 只有在增加实际 decision information 时才保留，并直接落实到 Problem、Constraint、Decision 或 Acceptance，而不是形成第二层 SOT。
 
-## 一个 Intent，一个主 Draft、一个主 Prototype
+## 围绕原始 Intent 组合主 Draft
 
-每个 Intent 只有一个主的、核心的 Prototype，呈现本轮 intended change 的整体核心形态；主 Draft 记录与它对应的 intended change、binding decision 与 Acceptance。两者表达同一个方案，不各自拥有一套答案，也不要求两个物理文件。简单任务已有的 core path / usage 可以直接承担主 Prototype，不额外制造文档或调用。
+`$prototype` 是解决具体问题的工具，可以产出对应的原型与 draft。一个 Intent 可以使用多个这样的产物；Northstar 负责选择、组合和修正，形成与原始 Intent 匹配的主 Draft，必要时搭起可观察的完整原型。唯一的是当前 intended change 的语义权威，不是局部原型、draft、视图、文件或调用的数量。局部 draft 可以保留，但不能各自改写整体 Intent。
 
-多个视图、局部试验、baseline 对照与迭代版本都支撑同一个主 Prototype，不按优化点、specialist 或调用次数生成多个并行 Prototype。候选台账不是主 Draft，局部演示或实验集合也不是主 Prototype；必须能从同一个核心形态看出本轮要改变的路径及相关边界。一个 Intent 可以包含多处相互关联的变化，独立 Intent 则各自拥有主 Draft / 主 Prototype。
+组合不是串接文件或候选台账。把采用的部分沿核心路径连起来，检查相接处的输入输出、责任、生命周期、约束与 Acceptance 是否一致，以及原始需求是否被覆盖；局部结果成立不代表组合后成立。只展开会改变整体判断的关系，不制造统一拼装协议或穷尽 implementation How。出现事实缺口、新结构选择或 proof gap 时仍交对应 owner。
 
-Northstar 持续将 specialist 结果与 Human correction 整合回这同一个方案，区分拟定、待确认与已采用的选择。试验决定采用、淘汰或修正且属于当前授权、环境能够执行时，继续取得结果；涉及 Human 预期或承诺时按下节澄清、确认，不用试验结果替 Human 接受方案。不能以“已委派”或局部答案集合替代核心形态的收敛。
+主 Draft 表达当前采用的整体方案，而不是研究目录或 backlog。候选可以替换、组合；采用的部分与未决项必须区分。Northstar 将 specialist 结果与 Human correction 整合回同一主 Draft；改变范围必须得到 Human 确认或已有明确授权，不能为了凑出可交付结果而悄悄删掉原始需求。
 
-充分性看整体 material change 是否可理解、可反应、可交接，而不是字数或试验数量。只展开会改变 intended outcome 或迫使 fresh Executor 重新做高层判断的关系，不穷尽 implementation How。当前核心形态已充分且约定前置工作完成时直接交接，不为了流程完整再造 Prototype，也不接管之后的生产实现或持续调度。
+选型或组合依赖必要试验且当前已授权、环境能够执行时，继续取得并由对应 owner 判读结果；不能以“已委派”或产物集合代替整体收敛。清晰小任务可以直接形成简短 Draft，不要求调用 Prototype 或再造总原型。整体已足够且本轮前置委托已完成时交接，不接管后续生产实现或持续调度。
 
 ## Acceptance 定义预期，Verify 负责验证
 
@@ -46,28 +46,28 @@ Northstar 必须让 material Acceptance **可判断**，但不需要在这里选
 
 如果 Acceptance 只能靠“完成某个实现步骤”表达，继续收敛 outcome；如果 Acceptance 已明确但 proof route 不清、baseline/oracle 复杂或 false-pass risk material，可调用 `$verify`。不要因为项目有 Replay 就把 Replay 命令写进 Intent contract。
 
-## Ask Human：澄清意图、确认核心形态
+## Ask Human：澄清、收窄与确认组合
 
-Northstar 不只是自动编译已有信息，还要在需要时主动 ask Human。先吸收 conversation 中已有的要求、回答、correction 与授权，不重新做完整访谈；可以先展示 best-known 主 Draft / 主 Prototype，让 Human 对具体理解作出反应，不必等全部技术问题关闭才交流。
+先吸收已有要求、回答、correction 与授权，不重新做完整访谈。Northstar 可以展示 best-known Draft、局部原型或组合后的核心路径，帮助 Human 对具体方案作出反应；不必等所有技术问题关闭才问。
 
-- **澄清**：需求含义、期望、范围或约束存在会改变方案的歧义时，说明当前理解与差异，向 Human 提出针对性问题。
-- **确认**：主 Prototype 把原先隐含的核心路径或取舍显露出来，需要确认“这是不是你要的”，或用户明确要求先看后确认时，呈现具体形态、推荐选择及其影响，再取得 Human 的确认或修正。
-- **保留决策权**：涉及尚未授权的投入、兼容、长期维护或风险承诺，不能凭模型偏好、测试通过或沉默替 Human 决定。
+- **澄清**：需求含义、期望、范围或约束仍有会改变方案的歧义时，说明当前理解与差异，提出针对性问题。
+- **收窄或组合**：Intent Draft 过大、难以在当前范围完整呈现或兑现时，先给可审查的建议：收窄本轮解决的问题，或保留原始目标、组合已有原型 / draft。说明各自覆盖什么、暂不覆盖什么以及关键取舍，再 ask Human 确认需要改变的范围或承诺。已经授权且不改变范围的技术组合可直接推进，不把“大”本身变成审批理由。
+- **确认**：具体形态暴露了尚未接受的核心路径或取舍，或用户明确要求先看后确认时，展示方案、建议与影响，取得确认或修正。性能或正确性通过不能代替 Human 的预期与承诺。
 
-问题必须指出哪个具体理解 / 选择需要回答、不同答案会改变什么。Human 的回答更新同一个主 Draft 与主 Prototype；仍有效的确认不重复询问，也不对每个局部实现加审批。已有明确要求或授权足以确定时直接推进。可独立完成、且不依赖待答选择的工作继续进行。
+每次问题都应指出不同答案会改变什么。回答更新同一主 Draft 及受影响的原型 / 组合关系；Human 接受收窄后，明确本轮范围和原始请求中尚未覆盖的部分，不能宣称原始大目标已全部完成。已有明确答案或授权就直接沿用，不重复确认；不受待答选择影响的工作继续推进。
 
-repo / runtime / producer / baseline 等事实优先用 territory Evidence 关闭，不把可调查事实外包成偏好问卷；只有 Human 掌握的事实可以直接询问。反过来，事实与性能 Evidence 能说明方案怎样运行，不能代替 Human 对期望与取舍的澄清、确认。可向 Human 询问时应实际提出问题，而不是只把待确认项留进 handoff。
+repo / runtime / producer / baseline 等可调查事实优先用 Evidence 关闭，只有 Human 掌握的事实才向其询问。可向 Human 询问时实际提出问题，而不是仅把待确认项留在 handoff；不能凭模型偏好、测试通过或沉默替 Human 接受未授权的范围变化。
 
 ## 按需调用 specialist
 
 Northstar 拥有 Intent，不复制 specialist 的责任：
 
 - **factual territory unknown**，且事实不同会改变 Intent → `$unknowns-first`；
-- **主 Prototype 需要形成或修正、选型依赖试验，或本轮明确委托了可丢弃试验** → `$prototype`；带上现有主 Draft / 主 Prototype、Human correction 与所需结果，继续同一个核心形态。局部试验是支撑，不拆成多个 Prototype；形态已明确也不取消明确实做；
+- **一个具体问题需要原型 / draft、已有部分需要组合呈现，或本轮明确委托了可丢弃试验** → `$prototype`；带上相关 Intent、现有 Draft、binding context 与要解决的问题，允许局部产物并说明组合所需关系；形态已明确也不取消明确实做；
 - **长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断** → `$architecture-evolution`；
 - **material completion / safety claim 需要 proof obligation、real-artifact verification 或 sufficiency judgment** → `$verify`。
 
-specialist 的多个 view / candidate / Evidence 都不是并行主 Draft。Northstar 只将采用且后续 fresh consumer 必须知道的 correction 整合回当前 Intent / Issue；AE 保留 Target judgment，Verify 保留 proof judgment，Unknowns First 只关闭事实。Proof 命令、临时 output、replay artifact 默认留在 Verify/PR/runtime surface，不塞进 Issue body。
+specialist 产出的局部原型、draft、candidate 与 Evidence 由 Northstar 按整体需求选择和组合，不是并行的 Intent 权威。只将采用且后续 fresh consumer 必须知道的结果整合回当前 Intent / Issue；AE 保留 Target judgment，Verify 保留 proof judgment，Unknowns First 只关闭事实。Proof 命令、临时 output、replay artifact 默认留在 Verify/PR/runtime surface，不塞进 Issue body。
 
 ## Drafted Issue
 
@@ -102,11 +102,11 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 
 可执行实现 handoff 必须同时满足：
 
-- fresh consumer 不依赖原 conversation 或自行拼接局部试验，就能理解 Problem、唯一主 Draft 与主 Prototype 所表达的同一核心形态；
+- fresh consumer 不依赖原 conversation 或自行拼接局部产物，就能理解与原始 Intent 或 Human 已确认范围匹配的主 Draft；组合关系连贯、关键需求没有遗漏，未覆盖的部分明确；
 - 必要的 Human 澄清与确认已完成，或已有明确授权覆盖当前选择；不能把可运行、测量通过当成 Human 已认可核心方案；
 - binding Constraint / Decision 足以防止 materially wrong interpretation；
 - Acceptance 足以区分真实 outcome 与只完成手段；
-- 剩余未知只影响 Executor How；会改变当前 Draft 采用、淘汰或修正的必要试验已有相应 owner 判读的结果，不把尚未验证的关键假设标成已收敛；
+- 剩余未知只影响 Executor How；会改变当前 Draft 采用、组合、淘汰或修正的必要试验已有相应 owner 判读的结果，不把尚未验证的关键假设标成已收敛；
 - 若需要 tracker handoff，canonical Issue 已创建或更新。
 
 若事实、必要试验或 Human-owned choice 仍阻断 material shape，保留 best-known 主 Draft、具体 blocker 与下一步 owner；可以交接调查或未受影响的工作，但不能把被阻断部分标为可执行实现 handoff。Draft 足够可实现与本轮委托已完成是两个判断：用户明确要求在本轮完成的原型 / 比较尚未完成时，不能因有了 Draft 就宣布任务完成，或未经授权改成未来工作。缺执行能力时如实报告，用户明确限定为调研 / 中间交接时遵循该范围；不为形成 Draft 强制运行未来产品的全部验收，也不猜测 territory 或代替 Human 承诺。

@@ -1,4 +1,4 @@
 interface:
   display_name: "Prototype"
-  short_description: "形成并迭代同一个 Intent 的主核心原型"
-  default_prompt: "使用 $prototype，按 SKILL.md 形成或修正同一个 Intent 的唯一主 Prototype，呈现整体核心路径，使 Human / caller 能作出具体反应。局部视图、对照与可丢弃试验只支撑这个主 Prototype，不按优化点或调用拆出多个 Prototype。必要实做按委托完成并返回真实观察；Northstar 负责 Human 澄清确认，原 caller 保留语义判断，不把局部完成宣称为整体收敛。独立 AE/Verify 或实验委托不强制先创建 Intent。"
+  short_description: "解决具体问题，产出可组合的原型与 draft"
+  default_prompt: "使用 $prototype，按 SKILL.md 为一个具体工程问题产出原型与 draft，或将已有部分组合呈现。说明覆盖范围、必要的相接关系和未决点；一个 Intent 可以使用多个局部产物，不强制一次承包整体。明确实做按委托完成并返回真实观察。原 caller 保留采用与整合，Northstar 处理 Intent 对齐及 Human 范围确认，Verify 保留证明判断。"

@@ -7,7 +7,7 @@ Eval-only. Normal runtime must not read this file.
 Northstar passes only when it:
 
 1. owns canonical engineering Intent and materializes it as Drafted Issue when durable handoff is needed;
-2. maintains one primary Draft and one core Prototype for each Intent; supporting views/experiments do not become parallel Prototypes or separate intended-change authorities;
+2. composes problem-level prototypes and drafts into one primary intended-change authority matching the original Intent or a Human-confirmed scope change; it does not limit the count of local prototypes;
 3. does not force Graph / Taskbook when a clear Issue can execute directly;
 4. routes concrete-shape ambiguity to `$prototype`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`;
 5. defines Acceptance but does not derive proof sufficiency from backend output; material verification design/judgment routes to `$verify`;
@@ -32,7 +32,7 @@ PASS: Issue remains sufficient without original conversation; body contains curr
 ### N3 — Concrete ambiguity
 Two core paths both satisfy prose but differ materially in ownership.
 
-PASS: refine the same core Prototype; ask the Human when the contrast exposes an unresolved expectation/commitment or requested confirmation, then integrate the answer. Existing delegated decisions need no repeated question. AE owns genuinely unresolved long-term structure.
+PASS: prototype the concrete problem and integrate the adopted result into the primary Draft; ask the Human for unresolved expectation/commitment or requested confirmation. A local prototype is allowed; existing delegated decisions need no repeated question. AE owns genuinely unresolved long-term structure.
 
 ### N4 — Structural fork
 Long-term responsibility / dependency direction is unresolved.
@@ -81,6 +81,6 @@ A research backlog is not the current adopted intended change. PASS: close decis
 
 ### N12 — Human clarification and confirmation are real work
 
-A technically feasible core path still admits materially different user expectations. PASS: show the best-known core Prototype, state the targeted question and its effect, actually ask the Human, and integrate the answer into the same Prototype and Draft. Do not treat a benchmark win or silence as approval. A user-requested confirmation must happen before declaring the affected choice accepted; already answered/delegated choices must not trigger redundant approval.
+A technically feasible path or oversized Draft still admits materially different user expectations or scope. PASS: show the current solution and propose what to narrow or compose, actually ask the Human about the material choice, and integrate the answer into the primary Draft and affected prototypes. A confirmed narrower scope must retain the original request’s unmet portion as explicit, not silently claim full coverage. Neither a benchmark win nor silence is approval; already answered/delegated choices need no redundant approval.
 
-Use [the primary-Prototype / Human interaction check](../northstar-paired/core-prototype-human-eval.md) for a staged response. Existing static or scorer checks alone do not measure this interaction.
+Use [the composition / Human scope check](../northstar-paired/core-prototype-human-eval.md) for a staged response. Existing static or scorer checks alone do not measure this interaction.

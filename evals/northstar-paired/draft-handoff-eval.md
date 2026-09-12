@@ -2,9 +2,9 @@
 
 Eval-only. This is an evidence-checked **scoring sidecar**, not an agent launcher or an automatic semantic judge. Normal runtime must not read this directory.
 
-## Primary-Prototype / Human correction
+## Composition / Human scope correction
 
-See [the staged interaction check](core-prototype-human-eval.md). One primary Draft is not enough when the actor still splits the Intent into local Prototypes or never asks the Human about material interpretation/confirmation. That check is supplementary; the 11 frozen cases and existing scorer remain unchanged and do not yet measure this interaction. Do not reward missing necessary questions just because unnecessary-clarification rate falls.
+For prototype composition and necessary Human scope questions, use [the staged supplement](core-prototype-human-eval.md). Its current revision supersedes the single-core cardinality check: grade integrated Intent coverage and authorized scope changes, not local prototype count. The existing scorer alone does not measure these behaviors.
 
 ## Cases and claim boundary
 

@@ -1,32 +1,26 @@
-# Primary core Prototype / Human interaction correction
+# Prototype composition / Human scope correction
 
-Continuation base: `67b1f9dcf07e7cbfd7128c5076c410712313ca17`. Implementer self-review only; no independent model reviewer is claimed.
+Development/eval evidence only. Continuation base: `e978a7f25f10cf0d3748b26a49b31a3ce20c4c59`. This is implementer self-review, not an independent reviewer or model evaluation.
 
-## Decision and scope
+## Decision and implemented scope
 
-The user corrected the design: an Intent has one main, core Prototype, and Northstar must ask the Human for needed clarification and confirmation. The prior invariant covered a primary Draft but still allowed per-call surfaces/experiments to become the practical output. That framing is superseded, not merely supplemented with more experiments.
+The latest user clarification corrects the previous singleton interpretation. Prototype is a tool that solves a concrete problem and produces a prototype and draft. Multiple results may compose into a primary Draft and a complete prototype matching the original Intent. Northstar owns integration and necessary Human clarification: an oversized Draft may be narrowed with authorization, or assembled while preserving the original scope.
 
-One intended change now has a corresponding primary Draft and one inspectable core Prototype. Local views, comparisons and measurements support that same whole, not separate Prototypes per optimization or specialist. Northstar actively presents its best-known interpretation, asks material questions, incorporates Human correction into the same core and records the corresponding meaning. This does not require two files, new approval stages or repeated questions about already confirmed/delegated choices.
-
-Runtime edits remain in Northstar, Prototype and their invocation metadata. README, semantic migration history, plan and focused eval guidance are aligned. AE / Verify / Unknowns First runtime contracts and the 11 frozen cases/scorer/test code are unchanged. Independent AE/Verify or experimental requests do not acquire a synthetic Intent.
+Replaced the singleton requirement in both Skills and their invocation metadata, README and focused eval guidance. Recorded the supersession in the semantic changelog rather than deleting its history. Kept Human clarification, original-caller authority, adequate empirical evidence and one overall intended-change authority. No new Skill, tool framework, schema or execution phase.
 
 ## Review rounds
 
-1. Authority and main object: checked that one core Prototype means an actual connected intended path, not a renamed index of local artifacts. Multiple files/views/iterations do not become multiple semantic main objects; distinct Intents remain independent. Draft and Prototype must not become competing intended-change authorities.
-2. Human interaction and counterexamples: needed clarification can precede complete technical investigation; confirmation may be based on an inspectable best-known core. Feasibility/performance observations cannot decide Human expectations. Existing responses and delegated decisions avoid repeated approval. The descriptor and return contract were checked and adjusted to preserve standalone callers without creating an Intent first.
+1. **Composition and ownership:** local prototype/draft outputs are permitted without a separate Intent per output. A coherent problem may span coupled decisions; it is neither an atomic field nor automatically the full Intent. Integration must reconcile connected boundaries and original requirement coverage. Independent AE/Verify callers still retain their judgment.
+2. **Scope and counterexamples:** a confirmed smaller slice must name what the original request still lacks. Merely renaming a ledger or concatenating locally valid outputs is insufficient. Already-authorized composition and clear local work need no repeat approval. Material unknown facts, new structural choices and proof gaps keep their existing owners. No rule forces a complete prototype where a simple Draft already suffices.
 
-No additional unresolved contradiction was identified in this bounded static review. This is not a measured behavioral improvement.
+No additional blocking contradiction found in this bounded self-review. This does not establish behavioral uplift.
 
-## Executed checks
+## Checks and evidence limit
 
-`python3 -m unittest discover -s evals/northstar-paired -p 'test_draft_eval.py' -v` ran once: **26/26 passed**. Those are existing synthetic scorer/integrity tests; export still contains 11 prompts and empty observations remain INCONCLUSIVE. No new prose-matching tests or performance benchmark was added.
+This continuation changes Markdown and invocation metadata only. YAML/frontmatter, UTF-8/whitespace, changed relative links and the incremental diff are checked locally. The published source snapshot is recovered from the prior bundle and checked against immutable Git-blob identities, not treated as a clone of the user's machine.
 
-YAML/frontmatter, invocation metadata, UTF-8/whitespace, new relative links, unchanged frozen cases/scorer/tests, and patch hygiene were checked. The partial local snapshot came from the prior published bundle and connector content; source Git-blob identities were checked before edits. The recovered changelog initially differed by one word and was corrected to match the original blob before adding the migration entry. Logs and the incremental patch are retained in the review bundle.
+The 11-case JSON manifest, `draft_eval.py`, `score.py`, example and test code remain unchanged. The previous 26-test result is historical, not rerun or relabelled as this correction's proof. No prose-matching test was added. The staged Human supplement is revised explicitly to cover narrow/compose/already-authorized policies; it is not fed to the old scorer as though cardinality or scope behavior had been measured.
 
-## Behavioral evidence still missing
+Actual clean-session actor / consumer / blinded-judge runs in this continuation: **0 / 0 / 0**. No Hermes implementation, installation or performance measurement was changed. The prior real-machine retrospective remains a reported failure input, not a version-identified paired run against this correction.
 
-Actual clean-session actor / consumer / blinded-judge runs here: **0 / 0 / 0**. The staged H1 interaction and H0 already-confirmed countercheck are specified in `core-prototype-human-eval.md` but were not executed. They require observing the question, withholding the Human answer until its proper turn, and examining the integrated core after the reply. The existing scorer does not directly measure required-question omission or primary-Prototype cardinality; a green scorer result must not certify those behaviors.
-
-The prior real-machine retrospective is user-reported failure evidence, not a version-identified paired run. Actual installed Skill resolution and Hermes performance remain unverified. No change was made to the user's machine or product code.
-
-Merge posture: **HOLD / keep PR draft** for behavior-validated acceptance. The current patch implements the corrected semantic authority; it does not prove the agent has followed it in a real session.
+**Merge posture: retain Draft pending the requested actual behavior evidence.** Do not substitute format checks, historic scorer tests or artifact counts for observed composition and Human-scope behavior. The prior reports and exact superseded rules remain in Git history.
