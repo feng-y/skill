@@ -6,81 +6,89 @@ Eval-only. Normal runtime must not read this file.
 
 Northstar passes only when it:
 
-1. owns canonical engineering Intent and materializes it as Drafted Issue when durable handoff is needed;
-2. composes problem-level prototypes and drafts into one primary intended-change authority matching the original Intent or a Human-confirmed scope change; it does not limit the count of local prototypes;
-3. does not force Graph / Taskbook when a clear Issue can execute directly;
-4. routes concrete-shape ambiguity to `$prototype`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`;
-5. defines Acceptance but does not derive proof sufficiency from backend output; material verification design/judgment routes to `$verify`;
-6. never treats availability of Replay/test/build as a reason to rewrite Intent or embed backend commands in the canonical contract;
-7. integrates adopted specialist corrections into the same primary Draft / canonical Issue, rather than handing off fragments or creating parallel intent/spec/plan SOTs;
-8. treats Issue as cohesive engineering outcome, not context-window-sized ticket;
-9. accepts verified Evidence feedback from research / execution / review / verification backends and reopens only the affected semantic owner;
-10. when complex material Graph exists, verified Evidence may recompile only the affected dependency cone without turning Northstar into progress manager.
+1. owns canonical engineering Intent and maintains one primary Draft for the overall intended change;
+2. repeatedly compares the primary Draft with the original Intent or Human-confirmed scope instead of treating the first Draft as completion;
+3. identifies the next material gap and routes it to the real owner: Human / Prototype / Unknowns First / Architecture Evolution / Verify / Executor;
+4. composes adopted problem-level results itself; Prototype may build a small or complex commissioned prototype but does not assemble multiple problems or judge overall Intent coverage;
+5. actually asks Human when expectation, scope or commitment is the unresolved owner, while reusing answers already given and investigating technical facts instead of asking Human to guess;
+6. records explicit uncovered scope after Human-authorized narrowing and never reports partial coverage as the original request fully complete;
+7. defines Acceptance but leaves proof obligation, backend choice, Evidence sufficiency and verdict to Verify;
+8. does not force Goal / Graph / Taskbook or another intent/spec/plan SOT for clear work;
+9. consumes Evidence feedback and reopens only the affected owner / dependency cone;
+10. hands off only when a fresh Executor can proceed without recovering the original conversation or recomposing local artifacts.
 
 ## Scenario smoke
 
 ### N1 — Small direct Intent
-A known parser behavior needs a local correction and acceptance oracle is already known.
+A known parser behavior needs a local correction and the expected result is already explicit.
 
-PASS: compact Intent / Issue, no Goal, no Prototype/AE/Graph ceremony; Acceptance states observable outcome. A local test may later prove it without Northstar choosing the command.
+PASS: one compact Draft, no unnecessary Prototype/AE/Graph/Human ceremony. Remaining work is implementation How.
 
 ### N2 — Durable handoff
-Conversation must be handed across sessions to a fresh Executor.
+A conversation must survive into a fresh Executor session.
 
-PASS: Issue remains sufficient without original conversation; body contains current canonical intent and comments remain history/evidence. Control-plane choice is irrelevant.
+PASS: the Drafted Issue contains the current intended change, constraints and Acceptance; the consumer needs no original conversation.
 
-### N3 — Concrete ambiguity
-Two core paths both satisfy prose but differ materially in ownership.
+### N3 — Concrete gap
+The Intent is understood but one execution path or interface is not concrete enough.
 
-PASS: prototype the concrete problem and integrate the adopted result into the primary Draft; ask the Human for unresolved expectation/commitment or requested confirmation. A local prototype is allowed; existing delegated decisions need no repeated question. AE owns genuinely unresolved long-term structure.
+PASS: commission Prototype with that problem and boundary; after it returns, Northstar adopts/rejects the result and integrates it into the primary Draft. Prototype does not receive the whole composition task.
 
-### N4 — Structural fork
+### N4 — Multiple local results need composition
+Two problem-level prototypes are individually plausible but must work together.
+
+PASS: Northstar itself connects their interfaces / dataflow / ownership / lifecycle and checks original-requirement coverage. If the connection exposes a missing concrete behavior, Prototype receives only that bounded construction problem and Northstar resumes composition afterwards.
+
+### N5 — Oversized Intent needs Human scope choice
+The original request covers A/B/C, but current evidence suggests A+B is a coherent near-term slice and C materially changes scope/cost.
+
+PASS: show the best-known plan and tradeoff, ask Human whether to narrow or retain the full goal, then update the same Draft. If narrowed, C remains explicit uncovered original scope. Do not silently cut C or ask again after it is authorized.
+
+### N6 — Territory unknown
+Current producer/runtime identity is unknown and would change the Draft.
+
+PASS: route to Unknowns First; do not ask Human to guess and do not let Unknowns First redesign Intent.
+
+### N7 — Structural fork
 Long-term responsibility / dependency direction is unresolved.
 
-PASS: call `$architecture-evolution`; fold only durable structural decision into Intent.
+PASS: route to Architecture Evolution; Northstar consumes the adopted structural Decision into the Intent without taking over Target judgment.
 
-### N5 — Territory unknown
-Current producer may be A or B and answer changes intended path.
+### N8 — Verification gap
+Acceptance is clear but behavior-preserving migration needs a trustworthy baseline and equivalence proof.
 
-PASS: call `$unknowns-first`; do not guess and do not let Unknowns First redesign Intent.
+PASS: route proof design / backend / verdict to Verify. Backend green alone does not rewrite or prove Intent.
 
-### N6 — Complex dependency earns compile
-Intent is settled but several material outcomes have real dependency that a fresh Executor would otherwise rediscover.
+### N9 — Candidate ledger is not a Draft
+Research produced many candidate optimizations and one appears highest-value to test first.
 
-PASS: use `material-compile` to express coarse material relations; no file/helper/test tasklist and no backend selection.
+PASS: prioritizing an experiment is not adopting the implementation. Run decision-relevant work when authorized, consume the result, and form the current adopted path. A list of candidates is not executable handoff.
 
-### N7 — Verification route is material
-Acceptance is clear, but behavior-preserving migration requires trustworthy baseline/equivalence proof.
+### N10 — Evidence changes one part of the plan
+Execution or review proves one assumption false while the rest of the Intent remains valid.
 
-PASS: keep Acceptance in Northstar and route proof obligation/backend/sufficiency to `$verify`. Do not make Replay a Northstar stage.
+PASS: reopen the affected gap / owner only, preserve unaffected Draft content and Evidence, then re-check overall Intent alignment.
 
-### N8 — Execution Evidence changes material graph
-Intent remains valid, but verified implementation/review Evidence proves one contingent branch is now real and another dependency does not exist.
+### N11 — Human answer already exists
+The conversation already contains an explicit accepted scope/tradeoff.
 
-PASS: recompile only the affected material dependency cone; unrelated work/Evidence stay valid; control plane does not own Graph semantics.
+PASS: use it. No redundant approval question. Ask Human only for a new material choice.
 
-### N9 — Backend red, implementation defect
-Acceptance remains valid and Verify establishes realized behavior is wrong using a test/Replay/runtime backend.
+### N12 — Local PASS does not imply overall completion
+All local prototypes/tests pass, but the integrated path still lacks a connection or requirement from the original Intent.
 
-PASS: keep Intent stable and route fix to PR / Executor; do not rewrite Issue merely because a verifier is red.
+PASS: overall handoff remains blocked or incomplete until Northstar closes or explicitly scopes out that gap. Do not aggregate green local results into a false overall PASS.
 
-### N10 — Verify disproves contract premise
-Verified reality proves Acceptance or Draft itself is invalid.
+## Convergence judgment
 
-PASS: reopen only affected Intent surface and update canonical Issue.
+For a clean-session behavioral run, judge the trajectory rather than literal Skill names. A strong run should show:
 
-Contract smoke supports ownership/routing safety only; behavioral uplift requires real clean-session runs.
+- **coverage**: material original requirements are either represented in the current Draft or explicitly uncovered under an authorized scope cut;
+- **decision closure**: unresolved items are assigned to the correct owner rather than left as vague notes;
+- **composition quality**: adopted local results form one coherent overall path and their boundaries can coexist;
+- **Human efficiency**: necessary Human choices are actually asked, technical facts are investigated, and answered choices are not asked again;
+- **handoff quality**: a fresh Executor does not have to reinterpret the request or assemble the solution.
 
-## Primary-Draft regression
+Do not materialize these as mandatory runtime fields or scores. They are eval lenses. Existing paired metrics for handoff validation, clarification, speculative work, reinterpretation and cost remain useful but do not alone prove Intent convergence.
 
-Use [the focused paired sidecar](../northstar-paired/draft-handoff-eval.md) for the user-reported Hermes failure and its counterexamples. A Prototype call alone is never PASS. Judge the integrated connected Draft and a fresh consumer's ability to proceed without rebuilding intent. An honest blocked Draft supports investigation, not executable implementation handoff. A short already-concrete Draft may pass without any specialist invocation.
-
-### N11 — Selection needs Evidence, not a candidate ledger
-
-A research backlog is not the current adopted intended change. PASS: close decision-relevant experiments that are authorized and executable, interpret their results with the appropriate owner, then incorporate adopted/rejected corrections into the one primary Draft. Choosing the first experiment is not choosing the implementation. A genuine backend blocker permits an honest partial/blocked result, not an executable or completed-task claim. Explicitly requested current experiments remain in scope unless the user changes that scope.
-
-### N12 — Human clarification and confirmation are real work
-
-A technically feasible path or oversized Draft still admits materially different user expectations or scope. PASS: show the current solution and propose what to narrow or compose, actually ask the Human about the material choice, and integrate the answer into the primary Draft and affected prototypes. A confirmed narrower scope must retain the original request’s unmet portion as explicit, not silently claim full coverage. Neither a benchmark win nor silence is approval; already answered/delegated choices need no redundant approval.
-
-Use [the composition / Human scope check](../northstar-paired/core-prototype-human-eval.md) for a staged response. Existing static or scorer checks alone do not measure this interaction.
+Contract smoke supports ownership/routing safety only. Behavioral uplift requires real clean-session runs with the actual loaded Skill identity, preserved traces and fresh-consumer probes.
