@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
-  short_description: "组织原型构建，组合结果并对齐 Intent"
-  default_prompt: "使用 $northstar，按 SKILL.md 与 Human 澄清 Intent，组织小型或复杂原型的构建，并自行选择、组合产物为匹配原始 Intent 的主 Draft。Prototype 只完成受托问题的原型与 draft，不承接组合。范围或取舍未定时给出具体建议并 ask Human，沿用已有回答与授权；不以局部完成替代整体对齐。"
+  short_description: "围绕原始 Intent 识别 gap、调度 specialist、组合并收敛主 Draft"
+  default_prompt: "使用 $northstar，把原始 request / conversation 与当前主 Draft 持续对照，识别下一项 material gap；Human 预期/范围/承诺未定时 ask Human，事实交 $unknowns-first，具体原型或试验交 $prototype，长期结构交 $architecture-evolution，proof 交 $verify。消费结果后由 Northstar 自己选择、组合并更新同一个主 Draft，再次检查是否 match 原始 Intent 或已确认范围。Prototype 不负责跨问题组合；局部完成不等于整体 Intent 完成。"
