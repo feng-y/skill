@@ -1,43 +1,63 @@
-# Caller-owned composition — review and validation
+# Intent convergence implementation review
 
-Development/eval-only. Continuation base: `6b03114e938b69a7cfa46c762118d8d2252b56af`; original PR base: `acc09e5040b808b46cc8f9aea17bbac988d639ab`.
+Development/eval-only. This is implementer self-review, not an independent behavioral evaluation.
 
-## Current verdict
+Continuation base: `f2e2e2bafd9a6596b29c227742337b7100d0e68d`.
 
-The user-directed ownership correction is implemented: Northstar or another authorized caller performs selection, assembly and overall alignment. Prototype is one construction tool for a commissioned problem, small or complex. It does not accept delegated composition or orchestrate further Prototype calls.
+## Verdict
 
-No remaining blocking contract contradiction was found in this bounded review. Keep PR #95 unmerged and draft while its outstanding behavioral acceptance is unproven. Actual clean-session actor / consumer / blinded judge executions in this continuation: **0 / 0 / 0**. Text/metadata checks and design walkthroughs are not model behavior measurements.
+The intended ownership model is implemented in Northstar runtime, invocation metadata and focused eval guidance:
 
-## Plan review before runtime edits
+- Northstar is the canonical Intent owner and convergence control;
+- Prototype remains one caller-neutral construction tool and was not expanded;
+- caller-side composition remains explicit;
+- Human questions close expectation / scope / commitment gaps;
+- factual / structural / proof owners remain unchanged;
+- no new Skill, persistent state machine, ticket map or mandatory lifecycle was introduced.
 
-Two implementer self-review rounds are recorded in `draft-handoff-plan.md`: ownership placement, then counterexamples. They rejected keeping delegated assembly inside Prototype while moving only final approval outside it. They retained complex internal construction, original-caller return, explicit experiments, and Human scope clarification without recurring approval for already-authorized work.
+No blocking contract contradiction was found in the bounded review below. This does **not** prove model behavior improvement. Real clean-session actor / consumer / blinded-judge runs in this continuation: **0 / 0 / 0**.
 
-## Implementation review 1 — cross-surface consistency
+## Implementation review 1 — capability boundaries
 
-Inspected both Skill bodies, frontmatter, invocation defaults, README, prototype contract eval and the Human/composition supplement. Removed the old positive permissions to "compose existing parts" and the Northstar route that sent assembly to Prototype. Replaced the repeated Prototype composition workflow with a smaller commissioned-construction contract.
+Reviewed the Northstar descriptor, core rule, gap routing, Prototype boundary, Human interaction and handoff gate together.
 
-Corrected a bypass sentence so it requires BOTH no shape gap and no pending explicit experiment. The tool must not drop a runnable assignment just because the shape is known. Made the assembly exclusion explicit rather than merely forbidding autonomous selection.
+Checks:
 
-## Implementation review 2 — counterexamples and eval quality
+- Northstar decides *which gap matters* and integrates returned results; it does not decide Target Architecture, factual reality or proof sufficiency for the specialist.
+- Prototype still builds only the commissioned problem artifact / draft / disposable experiment. It does not select and assemble problem-level outputs or declare overall Intent coverage.
+- caller-side composition may expose another concrete construction gap; sending that bounded gap to Prototype does not transfer composition ownership.
+- external orchestration can schedule calls but is not granted semantic ownership.
 
-- Existing compatible artifacts: caller actually assembles them, not just reviews a Prototype-produced assembly.
-- Missing concrete behavior at a connection: caller commissions that behavior; Prototype returns it and caller resumes integration. No renamed whole-composition assignment.
-- Complex single artifact: necessary internal components remain legitimate construction; no one-field limit or internal orchestration framework.
-- Unclear scope: Northstar asks Human with concrete tradeoffs; already-confirmed scope does not receive another interview.
-- Independent AE/Verify caller: no synthetic Northstar stage, no transfer of structural/proof authority.
-- Conflicting facts or absent execution: retain the real gap; do not invent evidence, force a positive experiment or claim the overall Intent complete.
+Result: pass for ownership consistency.
 
-The first supplemental C1 prompt gave away the intended tool route; removed that cue before publication. The first C2 prompt claimed an interface was supplied without specifying it; replaced it with a self-contained static request and explicit interface. Existing H1/H0 prompts and response policies are preserved; their private grading now checks who performs assembly, not only who approves it.
+## Implementation review 2 — over-control / ceremony risks
 
-These are implementer contract walkthroughs, not independent reviewers or executed agent sessions. The C1/C2 checks are specified for future real base/candidate sessions, not scored here.
+Counterchecked failure modes introduced by an explicit convergence loop:
 
-## Executed checks
+- **simple task:** may converge in one pass with no specialist or Human ceremony;
+- **Human already authorized:** reuse the answer, do not ask again;
+- **technical fact:** inspect territory instead of asking Human;
+- **oversized Intent:** Human is asked only when narrowing changes accepted scope or commitment;
+- **local PASS:** does not imply overall completion if integrated coverage is missing;
+- **only implementation How remains:** hand off rather than keep Northstar as a progress manager;
+- **Graph:** remains earned only for material dependencies that a fresh Executor would otherwise rediscover.
 
-- All 12 files in the source partial snapshot matched immutable GitHub blob identities before edits.
-- Modified Skill YAML frontmatter and invocation metadata parsed; names and default invocation identifiers are valid.
-- UTF-8, final newlines and trailing whitespace checks passed.
-- `git diff --check` and `git apply --reverse --check --whitespace=error-all` passed against the local candidate.
+Result: no mandatory stage chain or approval loop introduced.
 
-The workspace is a verified partial snapshot recovered from the prior published bundle, not a clone or the user's development machine. Remote tree identity is checked before the branch is updated; the incremental patch and check records are retained in the accompanying bundle.
+## Eval review
 
-Only documentation/metadata and eval guidance changed. Frozen D1–D11, Python scorers, example records and test code are untouched. The unchanged 26-test scorer suite was not rerun; no historical pass count or synthetic benchmark is presented as this continuation's result. No Hermes implementation, machine installation, Skill Doctor or control-plane code was changed.
+`evals/northstar/README.md` now checks the convergence trajectory rather than only artifact presence:
+
+- requirement coverage;
+- correct decision owner;
+- caller-side composition quality;
+- necessary/non-redundant Human interaction;
+- fresh-consumer handoff quality.
+
+These are explicitly eval lenses, not runtime schema fields. Existing paired scorer metrics remain useful but are insufficient by themselves to certify Intent convergence.
+
+## Evidence boundary
+
+This continuation changes text / invocation metadata / eval guidance only. No Hermes implementation, runtime installation, model session, Skill Doctor, benchmark or product Replay was executed here. Therefore do not infer improved routing, lower clarification rate, better handoff rate, performance gain or successful incident resolution from this review.
+
+Merge posture for behavior-validated completion remains **HOLD / Draft** until clean-session evidence is available. Contract implementation itself has no blocking issue identified in these review rounds.
