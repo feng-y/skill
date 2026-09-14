@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beacon"
+  short_description: "把局部 Intent 变成可检查、可组合的具体落点"
+  default_prompt: "使用 $beacon。只处理当前 caller 已理解语义中一个仍会导致 materially different concrete shape 的 bounded/local intent；选择最便宜的可检查 representation，例如 Core Path、Usage / Interface Draft、behavior example、config/schema shape、UI draft、minimal implementation、experiment 或 disposable prototype。把 concrete contrast / correction / Evidence 返回原 caller；不要接管 Intent、Architecture、verification judgment 或 implementation。"
