@@ -4,6 +4,21 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## 2026-09-14 — Rename Prototype identity to Beacon
+
+PR: #96 (`refactor/beacon-intent-shaping`)
+
+`prototype` as a top-level Skill identity is replaced by `beacon` because the responsibility is broader and more neutral than the prototype technique itself.
+
+- **Canonical owner:** `beacon` — caller-neutral, primarily model-invoked local intent concretization. It takes one bounded part of an already-understood semantic question and makes the material concrete difference inspectable.
+- **Preserved behavior:** cheapest sufficient Core Path / Usage / Interface / concrete artifact; correction / Evidence returns to the original caller; the caller keeps semantic ownership.
+- **Prototype after migration:** prototype/mock/minimal implementation remains one optional implementation technique inside Beacon. It no longer defines the top-level Skill identity.
+- **Northstar boundary:** Northstar still owns complete Intent, composition, and final compilation. Multiple local Beacon artifacts do not compose themselves.
+- **Compatibility:** `prototype` remains temporarily as a delegating alias while remaining callers/docs migrate to `$beacon`; it must not regain an independent owner role.
+- **Invocation:** Beacon is model-invoked. Following the Matt Pocock convention, its `SKILL.md` omits `disable-model-invocation` and its Codex `agents/openai.yaml` omits `policy.allow_implicit_invocation: false`; model-facing trigger semantics live in `description`.
+
+Focused behavioral contract lives in `evals/beacon`. The old `evals/prototype` contract is historical/compatibility input and should not define the new canonical identity.
+
 ## 2026-09-11 — Recenter capability ownership around Northstar / Prototype / AE / Verify / Unknowns First
 
 PR: #93 (`refactor/northstar-intent-replay`)
