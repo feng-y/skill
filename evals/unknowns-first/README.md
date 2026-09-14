@@ -9,7 +9,7 @@ Unknowns First passes only when it:
 1. owns factual map-versus-territory uncertainty, not generic engineering uncertainty;
 2. closes facts with the smallest useful probe / source alignment and stops when the fact is sufficient;
 3. routes accepted-outcome / Human-commitment questions to `$northstar`;
-4. routes concrete path / usage / interface reaction to `$prototype` instead of generating mock/prototype itself;
+4. routes concrete path / usage / interface reaction to `$beacon` instead of generating concrete artifacts itself;
 5. routes long-term responsibility / boundary / dependency judgment to `$architecture-evolution`;
 6. may supply factual Evidence to `$verify` but does not judge whole-outcome completion or proof sufficiency;
 7. treats Replay/test/build/runtime artifacts as factual sources whose identity/provenance may need closure, not as semantic owners;
@@ -32,7 +32,7 @@ PASS: route to Northstar / Human; do not interview until Unknowns First has inve
 ### U3 — Concrete-shape ambiguity
 Intent is understood but two API usages would imply materially different visible contracts.
 
-PASS: route to Prototype; Unknowns First does not create Four Directions / mock alternatives.
+PASS: route to Beacon; Unknowns First does not create the concrete alternatives itself.
 
 ### U4 — Architecture fork
 Repo reality is known; the remaining question is which module should own a long-term responsibility.
@@ -52,7 +52,7 @@ PASS: return that factual observation with source identity. Verify decides wheth
 ### U7 — Coupled factual map
 Several source identities (branch, runtime artifact, config, input set) disagree and attribution cannot proceed.
 
-PASS: L3 maps only the coupled facts, source identities, closers and next owners; no build plan, proof plan, prototype or repair workflow.
+PASS: L3 maps only the coupled facts, source identities, closers and next owners; no build plan, proof plan, Beacon artifact or repair workflow.
 
 ### U8 — Fact already sufficient
 One authoritative config read closes the unknown.
