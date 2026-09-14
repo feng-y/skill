@@ -4,6 +4,22 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## 2026-09-14 — Prototype → Beacon
+
+PR: #96 (`refactor/beacon-intent-shaping`)
+
+`prototype` as a top-level Skill identity is replaced by `beacon` because the responsibility is broader and more neutral than the prototype technique itself.
+
+- **Canonical owner:** `beacon` — caller-neutral, primarily model-invoked local intent concretization. It takes one bounded part of an already-understood semantic question and makes the material concrete difference inspectable.
+- **Preserved behavior:** cheapest sufficient Core Path / Usage / Interface / concrete artifact; correction / Evidence returns to the original caller; the caller keeps semantic ownership.
+- **Prototype after migration:** prototype/mock/minimal implementation remains one optional implementation technique inside Beacon. It no longer defines the top-level Skill identity.
+- **Northstar boundary:** Northstar still owns complete Intent, composition, and final compilation. Multiple local Beacon artifacts do not compose themselves.
+- **Caller migration:** Northstar, Architecture Evolution, Verify, and Unknowns First now invoke `$beacon` directly.
+- **Removed surfaces:** `skills/prototype` and `evals/prototype` are removed after caller migration; there is no `$prototype` runtime route.
+- **Invocation:** Beacon is model-invoked. Its `SKILL.md` does not disable model invocation, and `agents/openai.yaml` does not disable implicit invocation; model-facing trigger semantics live in `description`.
+
+Focused behavioral contract lives in `evals/beacon`.
+
 ## 2026-09-11 — Recenter capability ownership around Northstar / Prototype / AE / Verify / Unknowns First
 
 PR: #93 (`refactor/northstar-intent-replay`)

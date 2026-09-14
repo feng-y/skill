@@ -13,11 +13,11 @@ Architecture Evolution passes only when it:
 5. treats current modules / patches as reality Evidence, not Target authority;
 6. reuses a still-valid Target; migration cost or patch churn alone does not redesign Target;
 7. compares verified Current → Target gaps and selects only high-leverage structural moves with real exits;
-8. may model-invoke `$prototype` when the structural question is understood but concrete caller path / usage / interface / boundary surface remains materially ambiguous; Prototype returns reaction Evidence and AE retains Target ownership;
+8. may model-invoke `$beacon` when the structural question is understood but one bounded caller path / usage / interface / boundary surface remains materially ambiguous; Beacon returns reaction Evidence and AE retains Target ownership;
 9. leaves implementation How to Executor; AE defines structural semantics while `$verify` may check already-adopted structural completion claims;
 10. does not treat behavior parity from Replay/test/build as proof of architecture improvement by itself;
 11. uses canonical Northstar Intent / Human commitments as accepted boundary when present, without maintaining an independent Goal layer;
-12. reopens only affected Target / Program when research, execution, Prototype correction, review or verified Evidence changes a structural premise.
+12. reopens only affected Target / Program when research, execution, Beacon correction, review or verified Evidence changes a structural premise.
 
 ## Scenario smoke
 
@@ -47,10 +47,10 @@ PASS when a valid Target survives current implementation churn and only Program 
 ### A8 — Structural gain requires exit
 PASS when facade/provider additions without old authority/knowledge exit are rejected as complexity relocation.
 
-### A9 — Prototype makes structural consequence inspectable
+### A9 — Beacon makes structural consequence inspectable
 AE has narrowed the structural question, but two candidate boundaries produce materially different caller paths that are hard to compare in prose.
 
-PASS: AE invokes Prototype for same-form Core Path / usage contrast, consumes the result as reaction Evidence, and still makes the Target decision itself. Prototype does not select long-term owner.
+PASS: AE invokes Beacon for same-form Core Path / usage contrast, consumes the result as reaction Evidence, and still makes the Target decision itself. Beacon does not select long-term owner or compose the complete Intent.
 
 ### A10 — Behavior parity is not architecture proof
 A DaVinci Replay or equivalence backend reports behavior parity, but old owner remains authoritative.

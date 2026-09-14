@@ -22,11 +22,11 @@ AE 可以直接从当前 engineering request / existing Intent / Drafted Issue /
 
 不要求也不维护独立 `Goal` artifact。若一个抽象 outcome 真正影响结构判断，它应体现在 authoritative intent / request 的 Problem、Draft、Constraint、Decision 或 Acceptance 中。
 
-### 按需调用 Prototype
+### 按需调用 Beacon
 
-如果 structural question 已经明确，但同一个候选 Target 在 caller path、usage、interface 或 boundary surface 上仍可能呈现为 materially different 的 concrete shapes，AE 可以 model-invoke `$prototype`，用最便宜的 Core Path / Usage / Interface Draft 把差异变得可观察。
+如果 structural question 已经明确，但同一个候选 Target 在 caller path、usage、interface 或 boundary surface 上仍可能呈现为 materially different 的 concrete shapes，AE 可以 model-invoke `$beacon`，用最便宜的 Core Path / Usage / Interface Draft 或其他 inspectable artifact 把这个 bounded difference 变得可观察。
 
-Prototype 只返回 concrete contrast / reaction Evidence；**AE 仍然拥有 Target judgment**。不要让 Prototype 根据 current code convenience 选择长期 owner，也不要因为需要 prototype 就把 structural decision 下放给它。若未知的是事实，先 `$unknowns-first`；若剩余只是 implementation How，不调用 Prototype。
+Beacon 只返回 concrete contrast / reaction Evidence；**AE 仍然拥有 Target judgment**。不要让 Beacon 根据 current code convenience 选择长期 owner，也不要因为需要 concrete artifact 就把 structural decision 下放给它。若未知的是事实，先 `$unknowns-first`；若剩余只是 implementation How，不调用 Beacon。
 
 ## Target gate
 
@@ -97,7 +97,7 @@ AE 定义 / 采用 **Target 与 structural completion claim**；`$verify` 负责
 
 ## Evidence-driven re-entry
 
-Research、execution、review、Prototype correction 或 Verify 都可能触发 AE re-entry，但只重开真正受影响部分：
+Research、execution、review、Beacon correction 或 Verify 都可能触发 AE re-entry，但只重开真正受影响部分：
 
 - concrete representation 只澄清已存在 Target，不改变 structural premise → 吸收 Evidence，不重做 Target；
 - current reality / cost / migration condition 变化，Target premise 不变 → 只重算 Program；

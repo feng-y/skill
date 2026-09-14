@@ -15,7 +15,7 @@ A handoff is valid when a fresh Executor can safely start material work without 
 A valid handoff may be:
 
 - a compact Drafted Issue for a clear small/medium change;
-- the same Issue enriched by `$prototype`, `$architecture-evolution`, or `$unknowns-first` results;
+- the same Issue enriched by `$beacon`, `$architecture-evolution`, or `$unknowns-first` results;
 - an earned material execution contract when complex dependency genuinely requires compile.
 
 It is not required to contain Goal, Taskbook, explicit Graph, proof commands, or backend configuration.
@@ -31,7 +31,7 @@ For every case:
 5. give each handoff to a separate fresh Executor probe; only the independent probe may set `handoff_validated=true`;
 6. one pair per case is smoke; behavioral claims require at least 5 real cases and 3 clean-session repeats per arm per case.
 
-The frozen set should cover at least: clear direct Intent, concrete-shape ambiguity, territory unknown, architecture pressure, complex material dependency, and a case where Acceptance is clear but verification should be delegated to Verify rather than embedded in Intent. A durable cross-session Issue handoff case is strongly preferred.
+The frozen set should cover at least: clear direct Intent, bounded/local concrete-shape ambiguity, territory unknown, architecture pressure, complex material dependency, and a case where Acceptance is clear but verification should be delegated to Verify rather than embedded in Intent. A durable cross-session Issue handoff case is strongly preferred.
 
 Execution orchestration / control-plane behavior is outside this eval. Verification backend choice, including DaVinci Replay, is also outside Northstar handoff quality unless Northstar incorrectly hardcodes it into Intent.
 
