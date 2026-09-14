@@ -47,9 +47,11 @@ Human requirement 与 reality claim 分开：Human 有权给出的要求可以 b
 Northstar 拥有 Intent，不复制 specialist 的责任：
 
 - **factual territory unknown**，且事实不同会改变 Intent → `$unknowns-first`；
-- **Intent 已理解，但同一 prose 仍允许 materially different concrete shape** → `$prototype`；
+- **Intent 已理解，但其中一个 bounded/local part 仍允许 materially different concrete shape** → `$beacon`；
 - **长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断** → `$architecture-evolution`；
 - **material completion / safety claim 需要 proof obligation、real-artifact verification 或 sufficiency judgment** → `$verify`。
+
+Beacon 只把一个局部 Intent 变成足够具体、可检查、可组合的 representation；prototype、minimal implementation、UI/config/API draft 等都只是 Beacon 可选手段。**多个局部 Beacon 的组合仍由 Northstar 完成**，Beacon 不创建第二份 Intent SOT，也不替 Northstar 宣布完整 intent 已经成立。
 
 specialist 结果不创建第二份 Intent SOT；只把后续 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到当前 Intent / Issue。Proof 命令、临时 output、replay artifact 默认留在 Verify/PR/runtime surface，不塞进 Issue body。
 
@@ -75,7 +77,7 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 
 - factual premise 不清 → `$unknowns-first`；
 - verified reality 证明 Intent Draft / Constraint / Acceptance 本身错误或失效 → 只重开 Northstar 中受影响的部分；
-- already-understood Intent 出现新的 material concrete-shape ambiguity → `$prototype`；
+- already-understood Intent 的一个 bounded/local part 出现新的 material concrete-shape ambiguity → `$beacon`；
 - 出现此前未决的长期 structure fork → `$architecture-evolution`；
 - 当前 claim 需要定义/补足 verification 或判定 sufficiency → `$verify`；
 - Intent 仍成立，但 verified Evidence 改变复杂 material work / dependency → 只重进 material compile 的 affected cone。
@@ -96,7 +98,8 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 
 - 把 Goal、spec、plan、Taskbook 都做成并行 SOT。
 - clear Issue 仍强制经过 compile / Graph。
-- 把 `$prototype` 的 artifact 当作新的 authority，而不是 reaction surface。
+- 把 `$beacon` 的 artifact 当作新的 authority，而不是局部 reaction surface。
+- 让 Beacon 组合完整 Intent；组合与最终编译仍属于 Northstar。
 - 让 AE 的 Program convenience 反向改写 Intent。
 - 在 Northstar 内选择 test/Replay/runtime backend 并自行判断 proof sufficiency。
 - 把 Issue 切成适配单次 agent context 的细粒度 ticket。
