@@ -1,4 +1,4 @@
 interface:
-  display_name: "Prototype"
-  short_description: "把已理解语义的具体形态变得可观察"
-  default_prompt: "使用 $prototype，作为 caller-neutral、主要由模型按需调用的 concrete-shaping specialist，只关闭当前 caller 已理解语义中仍会导致 materially different concrete shape 的一个决策；优先用最便宜的 Core Path / Usage / Interface Draft，只有 static surface 不足时才做 disposable Prototype。返回 concrete contrast / correction / Evidence 给原 caller；不拥有 Intent、Architecture、verification judgment 或 implementation，也不默认把结果转交 Northstar。"
+  display_name: "Prototype (deprecated)"
+  short_description: "兼容入口；新的 concrete intent shaping 使用 Beacon"
+  default_prompt: "这是兼容入口。把当前 bounded/local concrete-shape question 原样交给 $beacon，并把 Beacon 的 concrete artifact / correction / Evidence 返回原 caller。不要在 Prototype 中建立新的 semantic ownership。"
