@@ -1,4 +1,0 @@
-interface:
-  display_name: "Prototype (deprecated)"
-  short_description: "兼容入口；新的 concrete intent shaping 使用 Beacon"
-  default_prompt: "这是兼容入口。把当前 bounded/local concrete-shape question 原样交给 $beacon，并把 Beacon 的 concrete artifact / correction / Evidence 返回原 caller。不要在 Prototype 中建立新的 semantic ownership。"
