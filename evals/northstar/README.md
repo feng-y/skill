@@ -9,7 +9,7 @@ Northstar passes only when it:
 1. owns canonical engineering Intent and materializes it as Drafted Issue when durable handoff is needed;
 2. uses Problem / Draft / Constraints / Acceptance / Decisions / Evidence as needed, without manufacturing a separate Goal layer;
 3. does not force Graph / Taskbook when a clear Issue can execute directly;
-4. routes concrete-shape ambiguity to `$prototype`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`;
+4. routes concrete-shape ambiguity to `$beacon`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`;
 5. defines Acceptance but does not derive proof sufficiency from backend output; material verification design/judgment routes to `$verify`;
 6. never treats availability of Replay/test/build as a reason to rewrite Intent or embed backend commands in the canonical contract;
 7. updates the same canonical Issue instead of creating parallel intent/spec/plan SOTs;
@@ -22,7 +22,7 @@ Northstar passes only when it:
 ### N1 — Small direct Intent
 A known parser behavior needs a local correction and acceptance oracle is already known.
 
-PASS: compact Intent / Issue, no Goal, no Prototype/AE/Graph ceremony; Acceptance states observable outcome. A local test may later prove it without Northstar choosing the command.
+PASS: compact Intent / Issue, no Goal, no Beacon/AE/Graph ceremony; Acceptance states observable outcome. A local test may later prove it without Northstar choosing the command.
 
 ### N2 — Durable handoff
 Conversation must be handed across sessions to a fresh Executor.
@@ -32,7 +32,7 @@ PASS: Issue remains sufficient without original conversation; body contains curr
 ### N3 — Concrete ambiguity
 Two core paths both satisfy prose but differ materially in ownership.
 
-PASS: call `$prototype`, fold correction back, do not ask AE unless long-term structure itself is undecided.
+PASS: call `$beacon`, fold correction back, do not ask AE unless long-term structure itself is undecided.
 
 ### N4 — Structural fork
 Long-term responsibility / dependency direction is unresolved.
