@@ -1,106 +1,128 @@
 ---
 name: northstar
-description: "Canonical engineering-intent skill: turn a conversation, request, incident, or external signal into durable executable meaning; materialize it as a Drafted Issue when it must survive the current session."
+description: "Canonical engineering-intent control: keep the original or Human-authorized request aligned with one current Draft, route material gaps to the right owner, compose returned results, and converge to durable executable meaning."
 ---
 
 # Northstar · 工程 Intent 的 canonical owner
 
-Northstar 负责把当前 conversation、外部请求、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。当 Intent 需要跨 session、agent、Human 或执行环境流转时，Northstar 将同一份语义 materialize 为 Drafted Issue；Issue 是 Intent 的 durable carrier，不是另一套语义阶段。
+Northstar 负责把 conversation、request、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。它维护一个 current canonical Draft，并持续检查它是否仍匹配原始 Intent 或 Human 已确认范围。需要跨 session、agent、Human 或执行环境流转时，同一语义 materialize 为 Drafted Issue；Issue 是 durable carrier，不是第二套语义阶段。
 
-Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof sufficiency judgment，也不持续监督 Executor。PR 是 realized Change / Delivery surface。普通 implementation-local checks 属于 Executor；当 completion / safety claim 的 verification 本身需要独立设计或判断时，交 `$verify`。
+Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof sufficiency judgment，也不持续监督 Executor。PR 是 realized Change / Delivery surface。
 
 核心规则：
 
-> **原 conversation 消失后，fresh consumer 仍应知道当前问题、准备改成什么样、哪些约束不能破坏、什么结果算成立，以及哪些关键决定已经关闭。**
+> **局部 artifact、实验或 specialist 完成不等于 Intent 已收敛；fresh consumer 必须能从 current canonical Draft 直接恢复 Human 已授权范围内的完整 intended change，而不是自己重新拼装局部结果。**
 
 ## Intent 的最小语义
 
-只保留会改变后续判断、实现边界或验收结果的 durable 信息，不为了模板完整制造字段：
+只保留会改变后续判断、实现边界或验收结果的 durable 信息：
 
 - **Problem**：当前什么需要改变，以及为什么现状不满足预期。
-- **Draft**：intended change 的具体形态；按问题选择最低成本的 `Current → Intended`、core path、ownership/boundary、usage、interface、schema、state transition 等 representation。
+- **Draft**：当前采用的 intended change；它是整体语义权威，不限制局部 Beacon artifact / view / experiment 的数量。
 - **Constraints**：真正 binding、违反后会改变 accepted outcome、兼容、投入、风险或长期责任的约束。
 - **Acceptance**：能够区分“问题已解决”和“只是完成了某个手段”的 observable outcome / completion claim。
 
-按需增加 Decisions、Evidence、Open Questions、Out of Scope。只保留后续 fresh consumer 真正需要的内容。
+按需增加 Decisions、Evidence、Open Questions、Out of Scope。不要制造独立 Goal、spec、plan 或并行 Intent SOT。
 
-不维护独立 `Goal` 字段。抽象 outcome 只有在增加实际 decision information 时才保留，并直接落实到 Problem、Constraint、Decision 或 Acceptance，而不是形成第二层 SOT。
+## Intent convergence
 
-## Acceptance 定义预期，Verify 负责验证
+Northstar 持续比较 **original / Human-authorized Intent** 与 **current canonical Draft**。这不是固定 lifecycle 或状态机；简单请求可以一次完成，只有真实 material gap 才触发下一轮。
 
-Northstar 必须让 material Acceptance **可判断**，但不需要在这里选择 backend 或写具体 proof plan。
+每次只处理仍会改变结果、范围、核心路径、责任、Acceptance 或 executable handoff 的 gap：
 
-- Northstar：什么结果才算符合预期；
-- Verify：什么真实 observation 能证明/反证这个 claim，选择什么 backend，现有 Evidence 是否足够；
-- backend：实际运行 test/build/Replay/runtime/data/profile 等并返回 observation。
+1. 恢复原始请求、已有 Human correction / authorization、current Draft 与决定性 Evidence；
+2. 判断 current Draft 相对已授权 Intent 还缺什么；
+3. 将 gap 交给真实 owner，或直接吸收已有答案；
+4. 消费返回的 Decision / correction / Evidence；
+5. **由 Northstar 自己把采用的局部结果组合回同一个 canonical Draft**；
+6. 重新检查整体 coverage，直到没有 material semantic gap。
 
-如果 Acceptance 只能靠“完成某个实现步骤”表达，继续收敛 outcome；如果 Acceptance 已明确但 proof route 不清、baseline/oracle 复杂或 false-pass risk material，可调用 `$verify`。不要因为项目有 Replay 就把 Replay 命令写进 Intent contract。
+不要把这六项物化成 persistent state、workflow、gap schema 或 progress manager。
 
-## 先综合已有上下文，不重新采访
+## Human scope 与 clarification
 
-优先消费当前 conversation 已经形成的 Human requirement、correction、decision 与 Evidence。不要因为进入 Northstar 就重做完整访谈。
+先消费 conversation 中已经形成的 Human requirement、correction、decision 与授权，不因为进入 Northstar 就重新采访。
 
-Human requirement 与 reality claim 分开：Human 有权给出的要求可以 binding；关于 producer、consumer、owner、runtime behavior、baseline 等事实必须由 territory Evidence 支持。一个未决答案只有在仍会 materially 改变 Problem、Draft、Constraint、Acceptance 或 Human commitment，且无法从 territory / authority 得到时，才暴露为 Human decision。
+只有仍会 materially 改变 Intent，且答案真正属于 Human commitment 时才 Ask Human，例如 scope cut、产品行为、兼容承诺、投入/风险取舍或多个都合理但含义不同的 interpretation。技术事实从 repo/runtime/data/source 获取，不让 Human 猜。
+
+Intent 过大时可以建议收窄，也可以保留原范围并继续组合局部结果。**改变原始范围必须有 Human 明确确认或已有授权。** 收窄后 current Draft 必须显式保留未覆盖部分，不能把部分范围宣称为原始 Intent 已完成。已有回答或授权不重复确认。
 
 ## 按需调用 specialist
 
 Northstar 拥有 Intent，不复制 specialist 的责任：
 
-- **factual territory unknown**，且事实不同会改变 Intent → `$unknowns-first`；
-- **Intent 已理解，但其中一个 bounded/local part 仍允许 materially different concrete shape** → `$beacon`；
-- **长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断** → `$architecture-evolution`；
-- **material completion / safety claim 需要 proof obligation、real-artifact verification 或 sufficiency judgment** → `$verify`。
+- factual territory unknown，且事实不同会改变 Intent → `$unknowns-first`；
+- 已理解 Intent 的一个 bounded/local part 仍允许 materially different concrete shape → `$beacon`；
+- 长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断 → `$architecture-evolution`；
+- material completion / safety claim 需要 proof obligation、real-artifact verification 或 sufficiency judgment → `$verify`。
 
-Beacon 只把一个局部 Intent 变成足够具体、可检查、可组合的 representation；prototype、minimal implementation、UI/config/API draft 等都只是 Beacon 可选手段。**多个局部 Beacon 的组合仍由 Northstar 完成**，Beacon 不创建第二份 Intent SOT，也不替 Northstar 宣布完整 intent 已经成立。
+Beacon 只处理一个 bounded/local material concrete decision。prototype、minimal implementation、UI/config/API draft、experiment 等都只是 Beacon 可选 technique。**Beacon 不接受“把整个 Intent 做完整”或“组合这些局部结果”的委托。** 多个 Beacon artifact 的选择、相接与整体 coverage 由 Northstar 完成。
 
-specialist 结果不创建第二份 Intent SOT；只把后续 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到当前 Intent / Issue。Proof 命令、临时 output、replay artifact 默认留在 Verify/PR/runtime surface，不塞进 Issue body。
+specialist 结果不创建第二份 Intent SOT；只把 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到 current Draft / Issue。
+
+## Composition
+
+组合不是 artifact aggregation。Northstar 对采用的局部结果至少检查：
+
+- Human-authorized scope 中的 material requirement 是否被覆盖；
+- 局部结果的 path、interface、dataflow、ownership、lifecycle 与 binding constraint 是否能共同成立；
+- 是否存在冲突、缺失连接或仍未关闭的 premise；
+- 哪些候选、旧路径或旧 authority 已被替代，应明确退出；
+- 是否仍有 gap 应回 Human、Beacon、AE、Unknowns First 或 Verify。
+
+若组合暴露新的 bounded concrete ambiguity，可以再次调用 Beacon；返回后仍由 Northstar 继续组合。局部 Beacon/test/benchmark 全部 PASS 也不能推出 overall Intent complete。
+
+## Acceptance 定义预期，Verify 负责验证
+
+Northstar 定义“什么结果才算符合预期”；Verify 定义什么真实 observation 能证明/反证 claim、选择 backend 并判断 Evidence 是否充分。test/build/Replay/runtime/data/profile 是 backend，不是 Intent owner。
+
+如果 Acceptance 已明确但 proof route、baseline/oracle 或 false-pass risk material，调用 `$verify`。不要因为 backend green 就宣布 Intent 正确，也不要把 proof 命令塞进 canonical Intent。
 
 ## Drafted Issue
 
-当 Intent 需要脱离当前 conversation 流转时，Drafted Issue 是 canonical durable surface。Issue body 保存当前 intended change；comments 保存讨论历史、probe 结果、候选方案、阶段性 Evidence 与 correction trail。
+Intent 需要脱离当前 conversation 流转时，Drafted Issue 是 canonical durable surface。Issue body 保存 current intended change；comments 保存讨论历史、probe、候选、阶段 Evidence 与 correction trail。
 
-只有 fresh consumer 后续必须知道的信息才 fold back 到 body。新的 binding constraint、accepted Draft correction、durable decision 或改变完成定义的 Acceptance 应回写；普通 reasoning、进度和 implementation How 不应不断膨胀 Issue body。
+只有 fresh consumer 必须知道的信息才 fold back 到 body。已有 canonical Issue 时更新它，不创建平行 SOT。Issue 按 cohesive engineering outcome / responsibility boundary 切，不按 model context、文件或 agent session 切。
 
-用户明确要求创建或更新 Issue，且当前环境存在已授权 tracker action 时，直接创建 / 更新真实 Issue，不停在 Markdown 草稿等待再次确认。已有 canonical Issue 时优先更新它，不创建平行 SOT。
-
-Issue 按 cohesive engineering outcome / responsibility boundary 切，不按一次 model context、一个文件或一个 agent session 切。Execution orchestration / control plane 位于 Northstar 语义之外；它可以依据 tracker / runtime state 控制工作何时以及由谁继续，但不能定义或改写 Intent、material Graph 或 Acceptance。
+Execution orchestration / control plane 可以 start / route / pause / resume 工作，但不能定义或改写 Intent、material Graph、Architecture 或 Acceptance。
 
 ## Material compile 只在真正需要时出现
 
-一个 Drafted Issue 已足以让 fresh Executor 在 binding boundary 内开始时，直接交执行，不为了流程完整生成 Graph / Taskbook。
-
-只有 material work / dependency 本身复杂到 Issue 仍不足以安全交接时，才读取 [references/material-compile.md](references/material-compile.md)，从已经成立的 Intent / Intended Draft 编译 coarse material work 与真实 dependency。Compile 不能反向发明 Intent，也不能用 task decomposition 发现 Target。
+Clear Drafted Issue 已足以执行时直接 handoff。只有 material work / dependency 复杂到 fresh Executor 会被迫重新做高层判断时，才读取 [references/material-compile.md](references/material-compile.md)，从已成立 Intent 编译 coarse material graph。Compile 不能反向发明 Intent。
 
 ## Evidence feedback
 
-Research、execution、review 和 verifier/backend 都可能产生 observation；只有经过足够核实的 Evidence 才改变 semantic owner。按真正受影响的 surface 回流：
+Research、execution、review 和 verifier/backend 都可能产生 observation；只有足够核实的 Evidence 才改变 semantic owner：
 
 - factual premise 不清 → `$unknowns-first`；
-- verified reality 证明 Intent Draft / Constraint / Acceptance 本身错误或失效 → 只重开 Northstar 中受影响的部分；
-- already-understood Intent 的一个 bounded/local part 出现新的 material concrete-shape ambiguity → `$beacon`；
-- 出现此前未决的长期 structure fork → `$architecture-evolution`；
-- 当前 claim 需要定义/补足 verification 或判定 sufficiency → `$verify`；
-- Intent 仍成立，但 verified Evidence 改变复杂 material work / dependency → 只重进 material compile 的 affected cone。
+- verified reality 推翻 Draft / Constraint / Acceptance → 重开 Northstar 中受影响部分；
+- 已理解语义的 bounded/local concrete shape 再次 ambiguous → `$beacon`；
+- 新的长期 structure fork → `$architecture-evolution`；
+- claim 需要 verification design / sufficiency judgment → `$verify`；
+- Intent 仍成立但复杂 material dependency 改变 → 只重算 material compile affected cone。
 
-不要因为 Replay/test red 就自动重写 Intent，也不要因为 build/test/replay green 就宣布 Intent 正确。Backend observation 必须先对应到 authoritative claim。
+不要因为一个 red signal 全量重跑所有 owner。
 
-## 停止条件
+## Handoff gate
 
-满足以下条件就停止 Intent shaping：
+只有同时满足以下条件，才把当前 Intent 标为 executable handoff：
 
-- fresh consumer 不依赖原 conversation 就能理解 Problem 与 intended Draft；
+- fresh consumer 不依赖原 conversation，也不需要自己重新组合局部 artifact，就能理解 Problem 与完整 current Draft；
+- current Draft 匹配 original Intent 或 Human 已确认范围；若有 authorized scope cut，未覆盖部分明确可见；
+- 必要 Human choice 已关闭，已有授权直接沿用；
 - binding Constraint / Decision 足以防止 materially wrong interpretation；
-- Acceptance 足以区分真实 outcome 与只完成手段；
-- 剩余未知只影响 Executor How，或已作为真实 blocker / Open Question 暴露；
-- 若需要 tracker handoff，canonical Issue 已创建或更新。
+- Acceptance 可判断；
+- 会改变 current Draft 的事实、结构、bounded concrete ambiguity 已关闭，或明确记录为真实 blocker；
+- 剩余未知只影响 Executor How。
+
+若 material gap 未关闭，可以 handoff 调查或未受影响工作，但不能把被阻断的实现标为 executable / done。
 
 ## 常见错误
 
-- 把 Goal、spec、plan、Taskbook 都做成并行 SOT。
-- clear Issue 仍强制经过 compile / Graph。
-- 把 `$beacon` 的 artifact 当作新的 authority，而不是局部 reaction surface。
-- 让 Beacon 组合完整 Intent；组合与最终编译仍属于 Northstar。
-- 让 AE 的 Program convenience 反向改写 Intent。
-- 在 Northstar 内选择 test/Replay/runtime backend 并自行判断 proof sufficiency。
-- 把 Issue 切成适配单次 agent context 的细粒度 ticket。
-- 把任何 red finding 都当成 Intent 错误；只有 intended change / binding premise 本身被 authoritative Evidence 反证才回流。
+- 把候选台账、多个 Beacon artifact、prototype 或实验清单当作整体 Draft。
+- 让 Beacon 组合完整 Intent，或把一个任意大小的 commissioned problem 交给 Beacon。
+- Intent 太大时静默删范围，或已有 Human 授权仍重复确认。
+- 用局部 artifact/test/benchmark PASS 替代 overall Intent coverage。
+- 用 build / Replay green 替代 Verify 的 proof judgment。
+- clear Issue 仍强制生成 Goal、spec、plan、Taskbook 或 Graph。
+- 让 orchestration 获得 semantic ownership。
