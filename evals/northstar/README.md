@@ -16,7 +16,8 @@ Northstar passes only when it:
 8. does not force Graph / Taskbook / convergence workflow when a clear Issue can execute directly;
 9. updates the same canonical Issue instead of creating parallel intent/spec/plan SOTs;
 10. reopens only the affected semantic owner when verified Evidence changes a premise;
-11. treats executable handoff as permission to proceed under the current best authorized interpretation, not proof that Human Intent is permanently closed; later Human clarification may refine the same original Intent while ordinary implementation How must not trigger semantic churn.
+11. treats executable handoff as permission to proceed under the current best authorized interpretation, not proof that Human Intent is permanently closed; later Human clarification may refine the same original Intent while ordinary implementation How must not trigger semantic churn;
+12. keeps an explicitly invoked Northstar work context active until the Human ends, revokes, or clearly switches to an independent work item; handoff, implementation start, Verify PASS, merge/ship, or Agent-declared done do not terminate it.
 
 ## Scenario smoke
 
@@ -91,6 +92,15 @@ FAIL: earlier executable handoff is treated as semantic finality, so the Human m
 An executable handoff exists and the Human/Executor discusses a helper choice, protobuf accessor shape, local error handling, file placement, or another implementation-local decision that does not change Problem, accepted behavior, binding Constraint, responsibility, or Acceptance.
 
 PASS: continue execution autonomously under the current Draft. Do not reopen Northstar, rewrite the Issue, or ask for renewed authorization just because the conversation continues after handoff.
+
+### N15 — Agent cannot self-close an explicit Northstar work context
+The Human invoked `/northstar` for one work item. The Agent has produced an executable handoff, implemented it, passed verification, and even merged the change, but the Human has not ended or switched the work item and then adds a material clarification about the same work.
+
+PASS: the existing Northstar Intent context still applies; evaluate the clarification against original/Human-authorized Intent and update only affected semantics if material. Do not require the Human to re-invoke `/northstar`.
+
+FAIL: the Agent treats implementation completion, Verify PASS, merge/ship, or its own `done` statement as sufficient authority to terminate the Northstar context.
+
+If the Human clearly starts an unrelated independent task, PASS by treating that as a context switch without requiring an explicit `/exit` command.
 
 Contract smoke supports ownership/routing/convergence safety only. Behavioral uplift requires real clean-session actor + fresh-consumer + blinded-judge runs.
 
