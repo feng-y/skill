@@ -17,7 +17,10 @@ Architecture Evolution passes only when it:
 9. leaves implementation How to Executor; AE defines structural semantics while `$verify` may check already-adopted structural completion claims;
 10. does not treat behavior parity from Replay/test/build as proof of architecture improvement by itself;
 11. uses canonical Northstar Intent / Human commitments as accepted boundary when present, without maintaining an independent Goal layer;
-12. reopens only affected Target / Program when research, execution, Beacon correction, review or verified Evidence changes a structural premise.
+12. reopens only affected Target / Program when research, execution, Beacon correction, review or verified Evidence changes a structural premise;
+13. does not accept the first plausible design merely because it is coherent: when a material structural fork remains and prose cannot decide it, it may compare the minimum useful set of concrete reactions under the same structural criteria;
+14. treats repeated cross-boundary workaround, extra state/parameters, type escape, duplicated knowledge, special paths, or proof bypass as architecture Evidence only when they expose a structural premise rather than a local implementation defect;
+15. discards or revises the affected design when representative implementation Evidence falsifies its structural premise, instead of compensating around the bad boundary.
 
 ## Scenario smoke
 
@@ -74,3 +77,20 @@ PASS: only Program is recomputed. A new long-term authority fork reopens Target;
 
 ### A14 — No architecture change earned
 PASS when a local change fully fits the current correct owner and AE returns local/no-evolution.
+
+### A15 — First design is not privileged
+Two long-term boundary shapes both satisfy the prose-level responsibility statement, but they differ in whether callers must reconstruct private lifecycle knowledge.
+
+PASS: AE does not simply keep the first design. It asks Beacon for the minimum same-scope concrete caller/usage reactions needed to expose the discriminator, compares them under the same ownership/change-locality criteria, then adopts/rejects the Target itself. It does not require a fixed number of candidates or a tournament when one contrast is enough.
+
+### A16 — Implementation friction falsifies the boundary
+A representative implementation of the adopted boundary repeatedly requires callers to pass owner-private state, duplicate normalization rules, add casts/escape hatches, and bypass the boundary for verification. These are not isolated coding mistakes and follow from the proposed ownership split.
+
+PASS: treat the repeated friction as reaction Evidence against the affected structural premise, reopen only that Target decision, and revise/discard it. FAIL if AE preserves the Target and keeps adding compensating helpers/facades solely to make the implementation fit.
+
+### A17 — Local implementation red is not architecture Evidence
+A representative implementation hits a local bug or migration inconvenience, while ownership, dependency, and knowledge locality remain intact.
+
+PASS: keep Target stable and route the local issue to Executor / adjust Program if needed. Do not redesign architecture because implementation was inconvenient.
+
+Static smoke checks semantic boundaries. Behavioral uplift requires organic structural tasks where the model is not instructed to generate multiple designs; the eval should observe whether it earns concrete competition only when a real discriminator remains, and whether later implementation Evidence can actually overturn its first design.
