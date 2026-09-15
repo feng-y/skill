@@ -18,7 +18,7 @@ Verify passes only when it:
 10. routes factual source gaps to `$unknowns-first`, invalid Intent premise to `$northstar`, and new structural forks to `$architecture-evolution`;
 11. does not edit product code, generate repair plans, maintain progress state, or become execution/control plane;
 12. may verify already-adopted structural claims while AE remains owner of what the Target means;
-13. keeps product verification separate from blinded skill/prompt behavioral eval.
+13. keeps product verification separate from agent behavioral evaluation and routes behavioral measurement construction/audit to `$eval`.
 
 ## Scenario smoke
 
@@ -87,30 +87,10 @@ Verification produces a useful verdict and raw artifacts, but Intent and Archite
 
 PASS: keep Verify result / raw artifacts on the PR, review, or project verification surface. Do not expand the canonical Issue. Only durable contract correction returns to Northstar; only a new structural fork returns to AE.
 
-## Behavioral eval for this Skill change
+## Behavioral eval for Verify changes
 
-Static contract checks are not enough to claim that introducing `verify` improves agent behavior. Use a pstack-style blinded clean-session eval before making a behavioral uplift claim:
+Static contract smoke above does not prove that a Verify Skill/prompt change improves **agent behavior**. Build and audit that measurement with `$eval`; generic clean-session/task/environment/verifier/blinding/repeat semantics live there rather than being duplicated in this file.
 
-1. **Frame privately.** Judge rubric covers claim fidelity, real-artifact directness, backend/semantic separation, `unproven` honesty, routing correctness, unnecessary verification cost, and correct Beacon invocation when observability—not Intent—is concretely ambiguous.
-2. **Organic prompts only.** Candidates receive normal engineering requests, not prompts mentioning Verify, eval, rubric, candidate, or the expected skill chain.
-3. **Same task / environment.** Compare base `main` with this candidate in sanitized workspaces, same repo commit, tools, model config, and user-response policy.
-4. **Include DaVinci-like backend cases.** At least one case exposes a Replay-style executable harness; another has only focused tests; another has an unavailable/broken verifier; another asks for a pre-execution verification contract.
-5. **Blinded judge.** One judge scores sanitized outputs on one scale without knowing variant/model identity.
-6. **Inspect behavior, not self-report.** Grade which claims were actually checked, which real artifacts/backends were used, whether baseline identity was validated, and whether the final verdict is supported.
-7. **Repeat.** One pass is smoke. Behavioral promotion needs multiple real cases and clean-session repeats.
+Useful Verify-specific behavioral directions include: claim fidelity, real-artifact directness, backend/semantic separation, honest `unproven`, baseline identity, unnecessary verification cost, correct Beacon invocation for observable-shape ambiguity, and routing to the right owner after failure.
 
-Recommended behavioral cases:
-
-- pre-execution proof design without premature PASS;
-- behavior-preserving migration with Replay backend;
-- small local fix where Replay should not be forced;
-- baseline/oracle mismatch;
-- replacement with legacy residue;
-- structural AE claim;
-- concrete observable surface ambiguity → Beacon → Verify resumes;
-- verifier unavailable → `unproven`;
-- factual artifact identity gap → Unknowns First;
-- unclear Acceptance → Northstar;
-- project-local verifier with its own lifecycle contract.
-
-Do not use DaVinci product Replay itself as evidence that the `verify` Skill design is better; Replay can verify a product claim, while this eval measures agent behavior under the Skill contract.
+Do not use DaVinci product Replay itself as evidence that the `verify` Skill design is better. Replay can verify a product claim; `$eval` measures whether the agent's Verify behavior improved.
