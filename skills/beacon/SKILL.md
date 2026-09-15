@@ -49,6 +49,21 @@ Prefer the cheapest inspectable representation:
 
 Artifacts stay cheap, reversible, and disposable unless durability is itself part of the current decision.
 
+## Evidence concretization
+
+Beacon is not a prose-expansion stage. When another round of abstract explanation would not materially distinguish the remaining shapes, switch to the cheapest representation that can produce decision-relevant Evidence.
+
+Use the smallest move that can falsify or separate the live alternatives:
+
+- inspect a concrete caller/core path before inventing code;
+- sketch same-form usage or interface examples when the difference is contractual;
+- build a minimal/disposable implementation only when real type, lifecycle, state, performance, interaction, or integration behavior cannot be judged from a static shape;
+- run a focused experiment or timing probe when measurement, not argument, decides the bounded question.
+
+Do not prototype by default. Do not create several variants when one falsifier or one representative artifact can close the decision. When multiple live shapes remain materially different, compare only enough same-scope concrete representations to expose the deciding difference, then stop and return Evidence to the caller.
+
+A concrete artifact is useful only if it changes or closes the caller's judgment. More code, more screenshots, more variants, or a longer demo are not progress by themselves.
+
 ## Return
 
 Return only what the caller needs:
