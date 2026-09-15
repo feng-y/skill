@@ -1,6 +1,6 @@
 ---
 name: northstar
-description: "Canonical engineering-intent control: keep the original or Human-authorized request aligned with one current Draft, route material gaps to the right owner, compose returned results, and converge to durable executable meaning."
+description: "Canonical engineering-intent control: keep the original or Human-authorized request aligned with one current Draft, route material gaps to the right owner, compose returned results, and maintain durable executable meaning as work evolves."
 ---
 
 # Northstar · 工程 Intent 的 canonical owner
@@ -121,7 +121,7 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 - claim 需要 verification design / sufficiency judgment → `$verify`；
 - Intent 仍成立但复杂 material dependency 改变 → 只重算 material compile affected cone。
 
-Human 在执行期间补充的 material clarification 也属于 semantic Evidence：先判断它是原 Intent 的迟到显化、明确的新授权，还是纯 implementation How，再决定是否更新 Northstar Draft。不要因为已经 handoff 就忽略 Human correction，也不要因为每条后续消息都存在就自动重开 Intent。
+Human 在执行期间补充的 material clarification 是 authoritative Intent input：先判断它是原 Intent 的迟到显化、明确的新授权，还是纯 implementation How，再决定是否更新 Northstar Draft。不要因为已经 handoff 就忽略 Human correction，也不要因为每条后续消息都存在就自动重开 Intent。
 
 不要因为一个 red signal 全量重跑所有 owner。
 
