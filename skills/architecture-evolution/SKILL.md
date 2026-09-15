@@ -66,6 +66,10 @@ Beacon 只返回 concrete contrast / reaction Evidence；**AE 仍然拥有 Targe
 
 此时让 `$beacon` 为足够少的 live candidates 产出同 scope、可直接比较的 Core Path / Usage / Interface / minimal implementation 等 representation，并用同一组 structural criteria 比较：knowledge 是否归位、caller 是否仍重组私有决定、dependency 是否需要补偿、旧 authority 是否能 real exit、代表性 change 是否更 locality。
 
+如果真正的问题是**候选搜索被首个设计锚定**，而不是已有候选缺少 concrete reaction，AE 可以利用当前 harness 真正可用的 Human、model 或 agent source 获取少量独立 proposal，再把值得比较的候选归一到同一 scope / representation 后判断。多模型 / 多 agent 只是 proposal-search technique：proposal source、模型数量、模型家族或“多数票”都不是 structural Evidence，也不产生新的 semantic owner。不要固定要求 3 个候选、固定多模型流程或为了形式上的 diversity 调用额外模型；一个新的独立 proposal 足以暴露 discriminator 时就停止。只有真实执行了对应 delegation / model call 才能声称获得了 independent proposal，不能把单模型自拟的多个选项包装成 multi-model Evidence。
+
+无论候选来自同一模型、不同模型、Human 或已有设计，**AE 仍按同一组 structural criteria 自己做 Target judgment**；必要时再用 Beacon 取得可比较的 concrete reaction。proposal diversity 的价值是降低 search anchoring，不是把架构选择外包给投票、模型 reputation 或 orchestration layer。
+
 实现本身也可以产生 reaction Evidence。若代表性实现反复要求意料外的跨边界参数/状态、caller workaround、type escape、duplicated knowledge、special path 或绕过 owner 的 proof path，先判断这些 friction 是否只是 local implementation defect；若它们稳定暴露 Target premise / boundary 错误，就丢弃或修正受影响 design，而不是继续堆 compensation。若 friction 只影响迁移成本或 implementation How，则保持 Target，只调整 Program / Executor。
 
 Competition 的目标是关闭一个 material structural discriminator，不是选出“最漂亮”的设计。一个 falsifier 已足够时立即停止；没有 material fork 时不生成候选。
