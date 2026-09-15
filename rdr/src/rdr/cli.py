@@ -142,11 +142,14 @@ def build_parser() -> argparse.ArgumentParser:
         description=(
             "Install and startup are separate: the package is installed with "
             "pip once, then started/stopped with these commands.\n\n"
-            "token sources, in priority order: --token > RDR_TOKEN env > "
-            "server access config file (/etc/rdr/access.json by default).\n"
+            "recommended token sources: server access config file "
+            "(/etc/rdr/access.json by default) or RDR_TOKEN env. "
+            "--token remains available for compatibility but can expose secrets "
+            "through shell history or process launch records.\n"
             "A server without any token still starts and listens, but rejects "
             "auth with 'server token not configured' until one is configured.\n\n"
-            "quick start: rdr server start --token <token> ; rdr server status\n"
+            "quick start: configure /etc/rdr/access.json, then run "
+            "rdr server start ; rdr server status\n"
             "full flow: rdr/GUIDE.md"
         ),
     )
@@ -161,8 +164,8 @@ def build_parser() -> argparse.ArgumentParser:
     start_parser.add_argument(
         "--token",
         help=(
-            "server access token; defaults to RDR_TOKEN env, then the server "
-            "access config file. Passed to the child via environment"
+            "compatibility option for a server access token; prefer RDR_TOKEN "
+            "or an access config file to avoid exposing secrets in shell history"
         ),
     )
     start_parser.add_argument(
