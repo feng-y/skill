@@ -35,9 +35,23 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 3. 将 gap 交给真实 owner，或直接吸收已有答案；
 4. 消费返回的 Decision / correction / Evidence；
 5. **由 Northstar 自己把采用的局部结果组合回同一个 canonical Draft**；
-6. 重新检查整体 coverage，直到没有 material semantic gap。
+6. 重新检查整体 coverage，直到当前没有 material semantic gap。
 
 不要把这六项物化成 persistent state、workflow、gap schema 或 progress manager。
+
+### Executable 不等于 Intent 已最终关闭
+
+`executable handoff` 只表示：基于**当前可见的 Human 语义与 Evidence**，Executor 可以继续工作而不必自己发明 material Intent。它不证明 Human Intent 已被永久、完整地捕获，也不终止当前工作的 Northstar Intent context。
+
+在同一个 Human request / work context 里，current Draft 始终是 **current best authorized interpretation**，不是不可再修正的 final spec。后续 Human clarification、对 concrete artifact 的反馈、research / execution / review / Verify Evidence 可能暴露之前未被看见的 material meaning；此时重新比较 original / Human-authorized Intent 与 current Draft，只重开受影响部分。
+
+尤其不要因为 earlier Draft 已经 executable，就把后续 Human 话语默认降级为 implementation preference、scope change 或新需求。先判断它是在：
+
+- **显化原 Intent 中此前未充分表达的 material meaning** → 修正 current Draft；
+- **明确改变已授权 scope / commitment / accepted outcome** → 作为新的 Human authorization 更新 Draft；
+- **只讨论已经成立 Intent 下的 implementation How** → Executor 自治推进，Northstar 不介入。
+
+Northstar 保持 Intent continuity，不保持 execution control。没有新的 material semantic gap 时，不重复 convergence、不要求 Executor 逐步审批，也不为了“仍在 Northstar context”而制造 ceremony。
 
 ## Human scope 与 clarification
 
@@ -107,6 +121,8 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 - claim 需要 verification design / sufficiency judgment → `$verify`；
 - Intent 仍成立但复杂 material dependency 改变 → 只重算 material compile affected cone。
 
+Human 在执行期间补充的 material clarification 也属于 semantic Evidence：先判断它是原 Intent 的迟到显化、明确的新授权，还是纯 implementation How，再决定是否更新 Northstar Draft。不要因为已经 handoff 就忽略 Human correction，也不要因为每条后续消息都存在就自动重开 Intent。
+
 不要因为一个 red signal 全量重跑所有 owner。
 
 ## Handoff gate
@@ -121,6 +137,8 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 - 会改变 current Draft 的事实、结构、bounded concrete ambiguity 已关闭，或明确记录为真实 blocker；
 - 剩余未知只影响 Executor How。
 
+`executable handoff` 是 execution permission，不是 semantic finality。它允许 Executor 在 current Draft 下自治推进；同一 work context 后续出现 material Human clarification 或 Evidence 时，仍按 Intent convergence / Evidence feedback 规则更新受影响 Draft，而不是把 earlier handoff 当作关闭 Northstar 的证明。
+
 若 material gap 未关闭，可以 handoff 调查或未受影响工作，但不能把被阻断的实现标为 executable / done。
 
 ## 常见错误
@@ -128,6 +146,8 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 - 把候选台账、多个 Beacon artifact、prototype 或实验清单当作整体 Draft。
 - 让 Beacon 组合完整 Intent，或把一个任意大小的 commissioned problem 交给 Beacon。
 - Intent 太大时静默删范围，或已有 Human 授权仍重复确认。
+- 把“已经 executable”误当作“Human Intent 已最终关闭”，从而把后续 material clarification 错降级为 implementation detail / scope change。
+- 反过来，因为 Northstar context 仍持续就逐步审批 Executor、重复 convergence 或把普通 implementation How 升级为 Intent gap。
 - 用局部 artifact/test/benchmark PASS 替代 overall Intent coverage。
 - 用 build / Replay green 替代 Verify 的 proof judgment。
 - clear Issue 仍强制生成 Goal、spec、plan、Taskbook 或 Graph。
