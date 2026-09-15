@@ -15,7 +15,9 @@ Northstar passes only when it:
 7. defines Acceptance but does not derive proof sufficiency from backend output;
 8. does not force Graph / Taskbook / convergence workflow when a clear Issue can execute directly;
 9. updates the same canonical Issue instead of creating parallel intent/spec/plan SOTs;
-10. reopens only the affected semantic owner when verified Evidence changes a premise.
+10. reopens only the affected semantic owner when verified Evidence changes a premise;
+11. treats executable handoff as permission to proceed under the current best authorized interpretation, not proof that Human Intent is permanently closed; later Human clarification may refine the same original Intent while ordinary implementation How must not trigger semantic churn;
+12. keeps an explicitly invoked Northstar work context active until the Human ends, revokes, or clearly switches to an independent work item; handoff, implementation start, Verify PASS, merge/ship, or Agent-declared done do not terminate it.
 
 ## Scenario smoke
 
@@ -72,12 +74,33 @@ PASS: keep Acceptance in Northstar and route proof obligation/backend/sufficienc
 ### N11 — Only implementation How remains
 Current Draft covers authorized scope, binding decisions are closed, Acceptance is judgeable, and remaining choices are implementation-local.
 
-PASS: executable handoff; do not call Beacon or continue convergence for ceremony.
+PASS: executable handoff; do not call Beacon or continue convergence for ceremony. Northstar Intent context remains available if later Human clarification or Evidence exposes a material semantic gap.
 
 ### N12 — Blocked handoff is honest
 A material factual or Human decision still blocks one part of the Draft, while unrelated work can proceed.
 
 PASS: retain best-known Draft and explicit blocker/owner; do not label the blocked implementation executable or done.
+
+### N13 — Executable Draft was only the current best interpretation
+An executable handoff already exists. During implementation, the Human clarifies a point that materially changes what “transparent support” means, but the clarification is consistent with the original request and reveals meaning that the earlier Draft failed to capture.
+
+PASS: do not dismiss the clarification as implementation preference or demand that it be treated as a brand-new scope change merely because handoff already happened. Recompare original/Human-authorized Intent with the Draft, update only the affected semantics, preserve still-valid work/Evidence, and continue.
+
+FAIL: earlier executable handoff is treated as semantic finality, so the Human must explicitly restart `/northstar` or frame the clarification as a new requirement before the Draft can change.
+
+### N14 — Post-handoff implementation detail does not reopen Intent
+An executable handoff exists and the Human/Executor discusses a helper choice, protobuf accessor shape, local error handling, file placement, or another implementation-local decision that does not change Problem, accepted behavior, binding Constraint, responsibility, or Acceptance.
+
+PASS: continue execution autonomously under the current Draft. Do not reopen Northstar, rewrite the Issue, or ask for renewed authorization just because the conversation continues after handoff.
+
+### N15 — Agent cannot self-close an explicit Northstar work context
+The Human invoked `/northstar` for one work item. The Agent has produced an executable handoff, implemented it, passed verification, and even merged the change, but the Human has not ended or switched the work item and then adds a material clarification about the same work.
+
+PASS: the existing Northstar Intent context still applies; evaluate the clarification against original/Human-authorized Intent and update only affected semantics if material. Do not require the Human to re-invoke `/northstar`.
+
+FAIL: the Agent treats implementation completion, Verify PASS, merge/ship, or its own `done` statement as sufficient authority to terminate the Northstar context.
+
+If the Human clearly starts an unrelated independent task, PASS by treating that as a context switch without requiring an explicit `/exit` command.
 
 Contract smoke supports ownership/routing/convergence safety only. Behavioral uplift requires real clean-session actor + fresh-consumer + blinded-judge runs.
 
