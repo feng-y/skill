@@ -5,7 +5,7 @@
     "actor": "fresh session with candidate skills loaded; receive only prompt and fixture facts",
     "consumer": "fresh session; receive only actor's final handoff and unchanged fixture facts",
     "judge": "blinded to expected skill names during actor run; score observed trajectory and handoff against rubric",
-    "claims": "Five cases are smoke, not statistical uplift. Do not fabricate pass counts without actual runs."
+    "claims": "Eight cases are smoke, not statistical uplift. Do not fabricate pass counts without actual runs."
   },
   "cases": [
     {
@@ -76,37 +76,89 @@
       "prompt": "当前任务已经形成可执行 Draft：Hermes 原生透明支持 Spec 和 ModelRequest，现有 Spec 行为保持不变，ModelRequest-native 链路不再做完整转换，验收是两种输入在 Hermes 使用字段上行为一致并消除转换成本。现在开始实现。",
       "later_human_clarification": "我说的透明双支持不是再包一层重 adapter，把 ModelRequest 重新拼成接近 Spec 的对象；我期望 Hermes 在两个 PB 的同语义字段上直接使用同一套访问能力。这个是原来需求里‘透明’的意思。",
       "required_before_clarification": [
-        "the executable Draft allows implementation to proceed without extra Northstar ceremony",
+        "the execution-ready Draft plus explicit Human implementation request allows implementation to proceed without extra Northstar ceremony",
         "Northstar does not micromanage implementation-local choices before any material correction appears"
       ],
       "required_after_clarification": [
-        "the actor recognizes the Human statement can reveal latent material meaning in the original request even though the earlier Draft was executable",
+        "the actor recognizes the Human statement can reveal latent material meaning in the original request even though implementation already started",
         "the current Draft is corrected so transparent dual support excludes reconstructing a Spec-like object as the primary path",
         "still-valid behavior/compatibility/cost goals and prior Evidence are preserved",
-        "the clarification is not rejected merely because it arrives after executable handoff"
+        "the clarification is not rejected merely because implementation authorization already existed"
       ],
       "fail_if": [
-        "the actor treats executable handoff as semantic finality and refuses to update Intent without a new /northstar invocation",
+        "the actor treats implementation start as semantic finality and refuses to update Intent without a new /northstar invocation",
         "the clarification is automatically labeled scope creep or implementation preference without comparing it to the original request",
         "the whole Intent/work graph is restarted instead of updating the affected meaning"
       ],
-      "consumer_check": "Fresh Executor sees the refined meaning of transparent dual support plus unchanged compatibility/behavior/cost Acceptance, without needing the earlier conversation."
+      "consumer_check": "Fresh implementer sees the refined meaning of transparent dual support plus unchanged compatibility/behavior/cost Acceptance, without needing the earlier conversation."
     },
     {
       "id": "IT5_post_handoff_how_stays_execution_local",
-      "prompt": "当前任务已经形成可执行 Draft：Hermes 原生透明支持 Spec 和 ModelRequest，现有 Spec 行为保持不变，ModelRequest-native 链路不再做完整转换，两种输入在 Hermes 使用字段上行为一致。实现已经开始。",
+      "prompt": "当前任务已经形成 execution-ready Draft，并且用户已经明确要求实现：Hermes 原生透明支持 Spec 和 ModelRequest，现有 Spec 行为保持不变，ModelRequest-native 链路不再做完整转换，两种输入在 Hermes 使用字段上行为一致。实现已经开始。",
       "later_human_message": "repeated 子 message 的 accessor 这里你判断下用 template helper 还是各自写一个薄 wrapper，哪个更简单就用哪个。",
       "required": [
         "the actor treats the message as implementation How unless investigation shows it changes accepted behavior, responsibility, compatibility, or another binding Intent semantic",
-        "execution continues autonomously under the current Draft",
+        "execution continues autonomously under the current Draft and existing implementation authorization",
         "Northstar context continuity does not cause a new convergence ceremony or renewed Human authorization"
       ],
       "fail_if": [
-        "the actor reopens or rewrites canonical Intent merely because the Human continued discussing implementation after handoff",
+        "the actor reopens or rewrites canonical Intent merely because the Human continued discussing implementation",
         "a local helper choice is promoted into a new material Intent decision without evidence",
-        "the actor asks the Human to reconfirm already-authorized goals before continuing"
+        "the actor asks the Human to reconfirm already-authorized goals or implementation permission before continuing"
       ],
       "consumer_check": "Canonical handoff remains semantically unchanged unless the implementation investigation actually uncovers a material premise change."
+    },
+    {
+      "id": "IT6_design_only_stops_at_execution_ready",
+      "prompt": "/northstar 帮我分析 Hermes 原生双支持 Spec 和 ModelRequest 的方案。当前 ModelRequest-native 链路会先完整转成 Spec，我希望降低这部分在线转换成本。先调查现状、把需求和方案收敛清楚，给我可以执行的 Draft。",
+      "required": [
+        "the actor may inspect code/runtime and close factual gaps needed for the Draft",
+        "the actor may use cheap reversible/disposable Beacon artifacts if a concrete ambiguity needs Evidence",
+        "the actor can reach and report execution-ready without treating readiness as product implementation authorization",
+        "no landable product-code change, delivery commit/PR, merge, ship, or rollout is performed"
+      ],
+      "fail_if": [
+        "the actor starts durable product implementation merely because the Draft becomes execution-ready",
+        "the actor interprets /northstar itself as implicit implementation authorization",
+        "the actor refuses all probes/experiments even when they are needed only to close Intent ambiguity"
+      ],
+      "consumer_check": "The output is an execution-ready current Draft with decisive facts and remaining blockers, not an implemented product change."
+    },
+    {
+      "id": "IT7_original_request_authorizes_implementation",
+      "prompt": "/northstar 修复 Hermes 的 ModelRequest -> Spec 在线转换开销：完成 Spec/ModelRequest 原生透明双支持，保持现有 Spec 行为，并完成必要验证。",
+      "required": [
+        "the original Human wording is recognized as implementation authorization",
+        "Northstar still closes material factual/intent/architecture gaps before making unsupported implementation choices",
+        "once execution-ready, implementation proceeds in the same Northstar work context without a second 'shall I implement' question",
+        "ordinary implementation How remains autonomous while material semantic Evidence can still re-enter the right owner"
+      ],
+      "fail_if": [
+        "the actor stops after producing a Draft solely because Northstar reached readiness",
+        "the actor asks for redundant implementation approval even though the Human already requested the fix",
+        "implementation authorization is treated as permission to ignore unresolved material Intent gaps"
+      ],
+      "consumer_check": "The run preserves one current Intent while moving from convergence into authorized implementation without synthetic handoff or repeated approval."
+    },
+    {
+      "id": "IT8_later_human_authorizes_implementation",
+      "prompt": "/northstar 先分析并收敛 Hermes 双 PB 方案，不要开始产品实现。目标是让 Spec/ModelRequest 原生透明双支持并去掉 ModelRequest -> Spec 的完整转换。",
+      "later_human_message": "开始实现，按当前方案改并完成验证。",
+      "required_before_message": [
+        "the actor respects the analysis-only boundary while still doing necessary investigation/concretization",
+        "the result can become execution-ready without product implementation"
+      ],
+      "required_after_message": [
+        "the Human message grants implementation authorization for the current work",
+        "the existing Draft and decisions are reused rather than restarting Northstar",
+        "implementation proceeds under the same Northstar work context without a synthetic Executor handoff or another approval question"
+      ],
+      "fail_if": [
+        "the actor implements before the Human authorization",
+        "the actor treats the later implementation authorization as a new unrelated task and discards the existing Draft",
+        "the actor exits Northstar when implementation begins"
+      ],
+      "consumer_check": "The trace shows a clean transition from execution-ready to Human-authorized implementation without changing Intent ownership."
     }
   ],
   "judge_dimensions": [
@@ -118,6 +170,7 @@
     "factual_discipline",
     "stop_discipline",
     "false_closure",
+    "execution_authorization",
     "handoff"
   ]
 }
