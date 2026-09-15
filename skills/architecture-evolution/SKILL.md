@@ -60,6 +60,16 @@ Beacon 只返回 concrete contrast / reaction Evidence；**AE 仍然拥有 Targe
 
 新增 facade / registry / interface 后，如果 judgment/change/proof propagation 基本不变，只是 complexity relocation，不是 architecture gain。
 
+### Design competition / reaction Evidence
+
+不要把第一个看起来合理的 Target shape 当成已证明设计，也不要为了“多方案”固定制造架构竞技场。只有当同一个 material structural question 仍存在多个会改变 ownership、boundary、dependency、lifecycle 或 change locality 的 live shapes，且继续 prose 无法可靠区分时，才比较多个 concrete reactions。
+
+此时让 `$beacon` 为足够少的 live candidates 产出同 scope、可直接比较的 Core Path / Usage / Interface / minimal implementation 等 representation，并用同一组 structural criteria 比较：knowledge 是否归位、caller 是否仍重组私有决定、dependency 是否需要补偿、旧 authority 是否能 real exit、代表性 change 是否更 locality。
+
+实现本身也可以产生 reaction Evidence。若代表性实现反复要求意料外的跨边界参数/状态、caller workaround、type escape、duplicated knowledge、special path 或绕过 owner 的 proof path，先判断这些 friction 是否只是 local implementation defect；若它们稳定暴露 Target premise / boundary 错误，就丢弃或修正受影响 design，而不是继续堆 compensation。若 friction 只影响迁移成本或 implementation How，则保持 Target，只调整 Program / Executor。
+
+Competition 的目标是关闭一个 material structural discriminator，不是选出“最漂亮”的设计。一个 falsifier 已足够时立即停止；没有 material fork 时不生成候选。
+
 ## Current → Target gap
 
 Target 成立后，只调查会改变是否演进、Program scope、material dependency 或 real exit 的 current reality。Gap 只保留 Target 尚未兑现的 material structural outcome，例如：
