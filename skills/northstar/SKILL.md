@@ -59,11 +59,11 @@ Northstar 保持 Intent continuity，不保持 execution control。没有新的 
 
 Northstar 负责把 work 收敛到足够执行，但**不能因为已经知道怎么做就自动开始持久产品实现**。是否实现属于 Human 对当前 work 的执行授权，和 Intent readiness 是两件事。
 
-先从 Human 已经表达的请求恢复授权，不制造二次确认：
+先从 Human 已经表达的**整体语义**恢复授权，不按关键词机械匹配，也不制造二次确认：
 
-- 原始或后续请求已经明确要求 `实现 / 修复 / 修改 / 迁移 / 删除 / 执行 / 提交 / 合入` 等实际改动 → execution authorization 已存在；Intent 足够稳定后直接继续实现，不再问一次“要不要开始”；
-- 请求只要求 `分析 / 调研 / 评估 / 设计 / 收敛 / review / 给方案 / 产出 Draft/Issue` → 可以把 Intent 收敛到 execution-ready，但不开始持久产品实现；向 Human 交付 current Draft / 判断后停在当前授权边界；
-- Human 后续明确说“开始实现 / 按这个改 / 执行” → 在**同一个 Northstar work context** 中获得 execution authorization 并继续推进；这不是退出 Northstar、另起 Executor lifecycle，也不需要重新确认已经成立的 Intent。
+- Human 的请求语义明确要求实际改变系统，例如要求完成修复、实现功能、执行迁移、删除旧路径、提交/合入已经确定的改动 → execution authorization 已存在；Intent 足够稳定后直接继续实现，不再问一次“要不要开始”；
+- Human 只是要求分析、调研、评估、review、设计、收敛、给方案、产出 Draft/Issue，或询问“是否应该/是否可以实现、提交、合入” → 可以把 Intent 收敛到 execution-ready，但不开始持久产品实现，也不能因为句子里出现“实现/提交/合入”等词就推断已经授权；
+- Human 后续明确要求把当前方案实际落地，例如“开始实现 / 按这个改 / 执行这个方案” → 在**同一个 Northstar work context** 中获得 execution authorization 并继续推进；这不是退出 Northstar、另起 Executor lifecycle，也不需要重新确认已经成立的 Intent。
 
 为关闭 Intent gap 所需的 repo/source/runtime 调查、只读 probe，以及 Beacon 的 cheap/reversible/disposable sketch、experiment 或 minimal artifact，不等同于持久产品实现；它们仍应遵循各自 owner 的边界。没有 execution authorization 时，不应修改准备合入的产品代码、创建以落地为目的的 commit/PR、merge/ship 或 rollout。
 
@@ -166,6 +166,7 @@ Durable handoff 只在 work 真的需要离开当前 conversation/agent/执行�
 - Intent 太大时静默删范围，或已有 Human 授权仍重复确认。
 - 把“已经 execution-ready”误当作“Human Intent 已最终关闭”，从而把后续 material clarification 错降级为 implementation detail / scope change。
 - 把“已经 execution-ready”误当作 Human 已授权实现，在只要求分析/设计/收敛时擅自修改产品代码、提交 PR 或 merge/ship。
+- 只根据“实现/提交/合入”等词出现就推断 execution authorization，例如把“评估是否可以合入”错误当成 merge 授权。
 - 原始请求已经明确要求实现/修复，却在 readiness 后再次要求 Human 确认“是否开始实现”。
 - Human 已授权实现后，把 Northstar 当成前置阶段退出并另起固定 Executor lifecycle，而不是在同一个 work context 中继续。
 - Agent 因 implementation start、Verify/merge/ship 完成或自报 done 而自行结束当前 Northstar work context。
