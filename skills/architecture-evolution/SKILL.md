@@ -117,6 +117,10 @@ Research、execution、review、Beacon correction 或 Verify 都可能触发 AE 
 
 被 Northstar 调用时，只把后续执行需要的 durable structural Decision / Constraint / Draft correction fold back 到 canonical Intent / Issue。独立调用且用户需要 architecture handoff 时才形成持久文档；AE 不强制每次生成第二份 Markdown SOT。
 
+当 caller 是 Northstar 时，AE 先以独立 return 交回 scoped structural result；它在 Northstar 随后恢复 caller judgment、完成取舍并 fold back 前不是 canonical Intent。不要把 AE return 与 Northstar final handoff 混成同一段未分界的回答。Northstar 继续拥有整体 composition，AE 不宣称 canonical Intent 已收敛。独立 AE 调用仍可以按用户需要产出 architecture handoff，不强制经过 Northstar；这个 caller boundary 也不新增 persistent phase 或 artifact。
+
+若 Target-deciding premise 仍未关闭，返回 conditional Target / discriminator / blocker，并指出能关闭它的 authority source / next semantic owner；source / contract / territory 不清交 Unknowns First，commitment 未决才回 Northstar / Human。不要把其中一个候选同时写成 adopted Decision 或 executable handoff。只有独立 AE 调用本来就只要求 architecture handoff 时，AE output 才可以作为该次调用的最终 surface。
+
 ## 按需 references
 
 - [delivery-examples.md](references/delivery-examples.md)：Program 漂移成平台化、facade 或 patch plan 时；

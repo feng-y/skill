@@ -60,3 +60,5 @@ Return only what the caller needs:
 - unresolved points that still change the concrete shape.
 
 Do not announce the final semantic decision for the caller. Do not generate a second Intent SOT, Taskbook, issue graph, PR split, implementation checklist, or verification workflow.
+
+The Beacon result remains a bounded, non-authoritative input until the caller adopts it. In a wider model invocation, deliver the scoped result as a distinct return to the caller before caller judgment continues; do not collapse the Beacon return and the caller's final handoff into one undifferentiated answer. The caller still owns selection, composition, and the final semantic judgment. This transient return boundary is not a new persistent artifact or workflow stage.

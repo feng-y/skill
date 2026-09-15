@@ -80,3 +80,5 @@ A material factual or Human decision still blocks one part of the Draft, while u
 PASS: retain best-known Draft and explicit blocker/owner; do not label the blocked implementation executable or done.
 
 Contract smoke supports ownership/routing/convergence safety only. Behavioral uplift requires real clean-session actor + fresh-consumer + blinded-judge runs.
+
+Focused ownership regressions live in `owner-transfer-cases.json`. They cover Northstar caller composition, honest blocked handoff, and direct Architecture Evolution invocation; Skill loading or a statement that another owner should merge later is not sufficient behavioral evidence.

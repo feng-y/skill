@@ -56,9 +56,13 @@ Northstar 拥有 Intent，不复制 specialist 的责任：
 - 长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断 → `$architecture-evolution`；
 - material completion / safety claim 需要 proof obligation、real-artifact verification 或 sufficiency judgment → `$verify`。
 
+这里的 model-invoke 表示在当前工作中应用 specialist 语义并接收它的 scoped return，不自动表示创建了外部 agent / thread。只有真实 delegation tool 已调用并返回对应结果时，才能声称外部委派成功或失败；否则直接在当前交互中完成 return，不虚构不存在的代理事件。
+
 Beacon 只处理一个 bounded/local material concrete decision。prototype、minimal implementation、UI/config/API draft、experiment 等都只是 Beacon 可选 technique。**Beacon 不接受“把整个 Intent 做完整”或“组合这些局部结果”的委托。** 多个 Beacon artifact 的选择、相接与整体 coverage 由 Northstar 完成。
 
 specialist 结果不创建第二份 Intent SOT；只把 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到 current Draft / Issue。
+
+specialist 的 scoped result 在 Northstar 完成取舍前只是 local input，不是 canonical Draft。调用 specialist 时，先让它单独返回 bounded result；该 return 成立后，Northstar 才恢复 caller judgment，明确采用、拒绝或继续路由，并把采用部分组合进 current Draft。不要让一段未分界的回答同时冒充 specialist return 和 Northstar final judgment，也不能把未经 caller judgment 的 specialist draft 直接当作 canonical handoff。这个短暂的 caller boundary 不物化成 persistent phase、workflow 或额外 artifact。
 
 ## Composition
 
@@ -71,6 +75,8 @@ specialist 结果不创建第二份 Intent SOT；只把 fresh consumer 必须知
 - 是否仍有 gap 应回 Human、Beacon、AE、Unknowns First 或 Verify。
 
 若组合暴露新的 bounded concrete ambiguity，可以再次调用 Beacon；返回后仍由 Northstar 继续组合。局部 Beacon/test/benchmark 全部 PASS 也不能推出 overall Intent complete。
+
+若 specialist 返回的 deciding premise 仍未关闭，Northstar 只能把它保留为明确 blocker / conditional branch，并记录真实 closure owner / authority source：source / contract / territory fact 交 Unknowns First，Human commitment 才 Ask Human；不能留下 anonymous blocker，也不能一边把 conditional recommendation 写成 adopted Decision，一边把 handoff 标为 executable。
 
 ## Acceptance 定义预期，Verify 负责验证
 

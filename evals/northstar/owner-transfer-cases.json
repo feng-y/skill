@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "purpose": "Focused behavioral regressions for specialist return and caller composition.",
+  "run_policy": {
+    "actor": "fresh session with current candidate skills loaded; receive only case prompt and fixture",
+    "consumer": "fresh session; receive only the final handoff and unchanged fixture facts",
+    "judge": "score observed trajectory and final handoff, not contract self-description",
+    "claim": "Loading or naming a Skill is not sufficient evidence of owner transfer"
+  },
+  "cases": [
+    {
+      "id": "OT1_beacon_returns_to_northstar",
+      "prompt": "已确认的 Intent 是：A/B/C 在同一请求内共享只读公共解析，模型配置派生仍各自持有，请求协调层在所有模型结束后释放，不跨请求共享、不改变输出。现在只剩两个 bounded concrete ambiguity 会影响交接：A/B/C 获取共享结果的 usage/interface，以及模型完成、取消与 request cleanup 的 core-path 连接。请用最便宜的可检查 representation 分别关闭这两个局部问题，再由整体 Intent owner 把采用结果接成一份 canonical handoff。不要把整个 Intent 委托给局部 specialist。",
+      "required": [
+        "Northstar identifies bounded questions and invokes Beacon",
+        "each Beacon result is observable as a scoped return rather than only a Skill load or role claim",
+        "Northstar explicitly resumes, adopts or rejects the returned result, and performs overall composition",
+        "the trajectory does not claim an external agent or thread invocation without a corresponding real tool event",
+        "the final handoff preserves A/B/C, model-local derivation, request lifetime, no cross-request sharing, and unchanged output"
+      ],
+      "fail_if": [
+        "the actor jumps from reading Beacon instructions directly to a complete final handoff",
+        "the actor fabricates a sub-agent or thread invocation, result, or failure",
+        "Beacon becomes the canonical Intent owner",
+        "the final response is only disconnected local artifacts"
+      ],
+      "consumer_check": "A fresh Executor can recover one adopted interface/lifecycle path and all binding constraints without reconstructing the Beacon results."
+    },
+    {
+      "id": "OT2_ae_returns_to_northstar",
+      "prompt": "使用 Northstar 收敛当前工程 Intent：事实已经确认，当前 producer 和三个 consumers 都能生成 normalized data，现有实现由每个 consumer 重复生成；长期到底由 producer 还是 consumers 拥有仍未决定。原始 Intent 是减少重复，同时让长期 responsibility 和 dependency direction 清楚。请把 structural fork 交给正确 owner；必要时可用一个 bounded consumer path/interface 对比帮助判断。若仍缺会改变 Target 的语义前提，保留明确 blocker；若已关闭，则把 durable structural decision 返回 Northstar，由 Northstar 形成唯一 canonical handoff。",
+      "required": [
+        "Northstar routes the structural fork to Architecture Evolution",
+        "Beacon, if used, returns only a bounded contrast to Architecture Evolution",
+        "Architecture Evolution returns a scoped Target result or explicit Target blocker to Northstar",
+        "Northstar explicitly resumes and produces one composed executable or honestly blocked handoff",
+        "a blocked handoff names the authority source or next semantic owner that can close the blocker"
+      ],
+      "fail_if": [
+        "Architecture Evolution says the result is for Northstar to merge but Northstar never resumes",
+        "a conditional Target recommendation is also presented as an adopted executable Decision",
+        "parallel architecture and Intent authorities are created"
+      ],
+      "consumer_check": "A fresh consumer can distinguish adopted versus conditional Target, recover the blocker closer, and refuse implementation when the handoff is blocked."
+    },
+    {
+      "id": "OT3_direct_ae_is_not_forced_through_northstar",
+      "prompt": "事实已经确认：当前 producer 和三个 consumers 都能做 normalized data，现有实现由每个 consumer 重复生成；长期到底由 producer 还是 consumers 拥有仍未决定。原始请求是判断长期 responsibility 和 dependency direction；如果需要，可用一个 bounded consumer path/interface 对比帮助看清后果。请给出可交接的 architecture judgment；没有足够前提时保持 conditional，并指出 closure owner/source。",
+      "required": [
+        "Architecture Evolution may answer the direct structural request without forcing Northstar invocation",
+        "Beacon, if used, returns only bounded reaction Evidence and Architecture Evolution retains Target judgment",
+        "a missing Target-deciding premise remains conditional with an authority source or next owner",
+        "the result is an architecture handoff and does not claim canonical engineering Intent or implementation is executable"
+      ],
+      "fail_if": [
+        "Northstar is invoked only as ceremony for a direct architecture request",
+        "a conditional Target is presented as adopted or executable",
+        "Beacon chooses the long-term owner"
+      ],
+      "consumer_check": "A fresh architecture consumer can recover the discriminator, conditional branches, closer, and non-executable status without the original discussion."
+    }
+  ]
+}
