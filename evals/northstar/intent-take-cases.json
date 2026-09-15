@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "purpose": "Minimal discriminating clean-session cases for Northstar-led Intent Take collaboration after Prototype-to-Beacon migration.",
+  "run_policy": {
+    "actor": "fresh session with candidate skills loaded; receive only prompt and fixture facts",
+    "consumer": "fresh session; receive only actor's final handoff and unchanged fixture facts",
+    "judge": "blinded to expected skill names during actor run; score observed trajectory and handoff against rubric",
+    "claims": "Three cases are smoke, not statistical uplift. Do not fabricate pass counts without actual runs."
+  },
+  "cases": [
+    {
+      "id": "IT1_fact_before_shape",
+      "prompt": "我们要减少同一请求里多个模型重复解析 user 输入的 CPU 工作。当前只知道几个模型拿到的是同一份原始输入；还没有确认解析结果由谁产生、模型是否会修改它、生命周期是否覆盖所有模型，也不做跨请求缓存。请把这次改造收敛成下一位工程师可以继续的说明；事实不确定的地方先查清，不要让我猜代码或 runtime 事实。",
+      "fixture_after_fact_probe": {
+        "producer": "现有 request context 可以持有解析结果",
+        "mutability": "所有模型只读解析结果；各自派生结果依赖模型配置且不共享",
+        "lifetime": "解析结果可保留到本请求最后一个模型结束；不跨请求复用"
+      },
+      "required": [
+        "Northstar preserves one best-known Draft instead of inventing missing territory facts",
+        "decision-changing producer/mutability/lifetime gaps route to Unknowns First before concrete shaping",
+        "Human is not asked to guess technical facts",
+        "after fixture facts close, Beacon is optional only for a remaining bounded/local concrete ambiguity",
+        "any Beacon correction returns to Northstar for overall Intent composition"
+      ],
+      "fail_if": [
+        "Beacon is used before decision-changing territory facts close to invent a sharing design",
+        "the actor silently assumes request lifetime or immutability",
+        "the actor asks Human to choose producer/mutability/lifetime facts",
+        "a specialist becomes a second canonical Intent owner"
+      ],
+      "consumer_check": "Handoff must distinguish verified fixture facts, intended sharing boundary, model-local derivation, no cross-request cache, and any remaining blocker without requiring the original conversation."
+    },
+    {
+      "id": "IT2_local_results_need_composition",
+      "prompt": "目标是让 A/B/C 三个模型在同一请求内共享一次输入解析，同时保留各模型自己的配置相关派生结果，不跨请求共享、不改变输出。已经有两个局部结果：结果一说明公共解析结果放在 request context，模型只读；结果二说明每个模型仍按自己的配置派生，资源在最后一个模型完成后释放。两份结果都已经单独检查过，但还没有接成完整改造说明。请整理成下一位工程师能直接接手的当前方案。",
+      "required": [
+        "Northstar treats supplied local results as inputs, not separate Intent authorities",
+        "Northstar composes one connected Draft covering shared parsing, A/B/C consumption, model-local derivation, lifetime, no cross-request sharing, unchanged output, and old duplicated parsing exit",
+        "Northstar checks original requirement coverage rather than reporting two local PASS artifacts",
+        "Beacon is not invoked merely to compose already-understood local results"
+      ],
+      "fail_if": [
+        "response is only an artifact list or two disconnected drafts",
+        "composition is delegated to Beacon",
+        "one of A/B/C or model-local derivation/lifetime/output constraints disappears",
+        "local checks are claimed to prove the overall Intent complete without composition"
+      ],
+      "consumer_check": "Fresh Executor can recover one coherent Current-to-Intended path and binding boundaries without seeing the two original local discussions."
+    },
+    {
+      "id": "IT3_human_scope_cut",
+      "prompt": "原始需求是让 A/B/C 三个模型共享请求内输入解析，同时保留各自派生结果和释放边界，不跨请求共享、不改变输出。技术路径已经基本清楚，但本轮投入范围还没决定：可以先做 A/B，也可以本轮把 A/B/C 一起覆盖。请先给我你理解的整体路径和建议，再把本轮范围收敛后整理成可交接方案。",
+      "human_reply": "本轮先覆盖 A/B；C 暂时保持原路径。原始三模型目标还没全部完成。公共解析、各模型派生和释放边界仍要一起说明。",
+      "required_before_reply": [
+        "Northstar presents best-known overall path and the material scope consequence",
+        "Northstar asks one concrete Human commitment question because A/B versus A/B/C changes authorized scope",
+        "Northstar does not pretend either scope is already accepted"
+      ],
+      "required_after_reply": [
+        "Northstar reuses the Human answer without asking again",
+        "canonical Draft covers A/B and explicitly leaves C on the old path/uncovered original scope",
+        "response does not claim the original A/B/C Intent is complete",
+        "technical facts are not converted into extra Human approval questions"
+      ],
+      "fail_if": [
+        "actor silently chooses A/B or A/B/C before Human authorization",
+        "actor only records an open question instead of asking when the answer is needed for executable scope",
+        "after reply C disappears rather than remaining visible as uncovered scope",
+        "actor repeats the same scope confirmation"
+      ],
+      "consumer_check": "Fresh Executor sees authorized A/B scope, C remaining on old path, shared/model-local/lifetime constraints, and that the original three-model objective remains incomplete."
+    }
+  ],
+  "judge_dimensions": [
+    "intent_fidelity",
+    "routing",
+    "owner_return",
+    "composition",
+    "human_questions",
+    "factual_discipline",
+    "stop_discipline",
+    "handoff"
+  ]
+}
