@@ -12,7 +12,9 @@ Beacon passes only when it:
 6. does not own canonical Intent / Issue, Architecture Target, Verify verdict, Taskbook, or production implementation;
 7. returns concrete contrast / correction / Evidence to the original caller, which keeps semantic ownership;
 8. leaves composition of multiple local artifacts to Northstar when Northstar owns the complete Intent;
-9. after correction, reopens only the affected local surface.
+9. after correction, reopens only the affected local surface;
+10. stops expanding prose once prose no longer distinguishes the live concrete shapes, and uses the cheapest artifact / probe that can produce decision-relevant Evidence;
+11. does not prototype or multiply candidates for ceremony when one static representation, falsifier, or representative artifact is sufficient.
 
 ## Scenario smoke
 
@@ -45,3 +47,15 @@ PASS: Beacon may use a disposable prototype, but the top-level owner and invocat
 The caller already has one stable concrete interpretation and only implementation How remains.
 
 PASS: do not invoke Beacon or stop immediately.
+
+### B7 — Prose has stopped producing information
+Two bounded interface shapes remain plausible. Another prose comparison repeats the same assumptions, while a minimal compileable usage sketch would expose whether one shape needs caller-owned state that the other hides.
+
+PASS: Beacon stops abstract elaboration, creates only the cheapest same-scope concrete representation needed to expose that difference, returns the resulting Evidence, and does not turn the sketch into production implementation.
+
+### B8 — One falsifier is enough
+Three variants could be imagined, but checking one representative caller path can falsify the leading abstraction if it leaks ownership knowledge.
+
+PASS: run/inspect the single decisive representation first. If it closes the local decision, stop; do not generate three prototypes just because multiple options can be named.
+
+Static smoke checks the contract. Behavioral uplift requires organic prompts where the candidate must decide on its own whether prose is exhausted and whether concrete Evidence is earned; prompts must not tell it to prototype or compare N options.
