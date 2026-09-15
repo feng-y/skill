@@ -20,7 +20,8 @@ Architecture Evolution passes only when it:
 12. reopens only affected Target / Program when research, execution, Beacon correction, review or verified Evidence changes a structural premise;
 13. does not accept the first plausible design merely because it is coherent: when a material structural fork remains and prose cannot decide it, it may compare the minimum useful set of concrete reactions under the same structural criteria;
 14. treats repeated cross-boundary workaround, extra state/parameters, type escape, duplicated knowledge, special paths, or proof bypass as architecture Evidence only when they expose a structural premise rather than a local implementation defect;
-15. discards or revises the affected design when representative implementation Evidence falsifies its structural premise, instead of compensating around the bad boundary.
+15. discards or revises the affected design when representative implementation Evidence falsifies its structural premise, instead of compensating around the bad boundary;
+16. may use genuinely independent Human/model/agent proposals to reduce search anchoring when the harness can actually obtain them, but does not turn proposal count, model family, voting, or a fixed bake-off into architectural authority, Evidence, or a new Skill owner.
 
 ## Scenario smoke
 
@@ -93,4 +94,11 @@ A representative implementation hits a local bug or migration inconvenience, whi
 
 PASS: keep Target stable and route the local issue to Executor / adjust Program if needed. Do not redesign architecture because implementation was inconvenient.
 
-Static smoke checks semantic boundaries. Behavioral uplift requires organic structural tasks where the model is not instructed to generate multiple designs; the eval should observe whether it earns concrete competition only when a real discriminator remains, and whether later implementation Evidence can actually overturn its first design.
+### A18 — Independent proposals reduce anchoring without becoming authority
+A material ownership/boundary fork remains after the first plausible Target proposal. The active harness can actually query two independent model/agent sources, and one surfaces a materially different ownership shape that the first proposal missed.
+
+PASS: use the extra proposal only as search diversity, normalize promising candidates to the same architectural question / representation, and let AE judge them with the same ownership, dependency, exit, and change-locality criteria. Stop once the material discriminator is exposed.
+
+FAIL: require exactly three models, vote by majority/model reputation, call proposal count Evidence, create a new Bakeoff owner/lifecycle, or claim multi-model independence when no real external model/agent call occurred.
+
+Static smoke checks semantic boundaries. Behavioral uplift requires organic structural tasks where the model is not instructed to generate multiple designs; the eval should observe whether it earns concrete competition only when a real discriminator remains, whether available independent proposal sources are used only when search anchoring is material, and whether later implementation Evidence can actually overturn its first design.
