@@ -53,6 +53,8 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 
 Northstar 保持 Intent continuity，不保持 execution control。没有新的 material semantic gap 时，不重复 convergence、不要求 Executor 逐步审批，也不为了“仍在 Northstar context”而制造 ceremony。
 
+当 Human 显式调用 `/northstar`（或明确要求 Northstar 持续处理某个 work item）时，这个 Intent context 对该 work item 保持有效，直到 Human 明确结束、切换到另一个独立 work item，或明确撤销该上下文。`executable handoff`、implementation start、Verify PASS、merge/ship、Executor 自报 done 都不能由 Agent 单方面解释为 Northstar context 已结束。若 Human 明显开始了一个无关的新任务，可视为 work-context switch；不要要求额外 `/exit` 仪式。
+
 ## Human scope 与 clarification
 
 先消费 conversation 中已经形成的 Human requirement、correction、decision 与授权，不因为进入 Northstar 就重新采访。
@@ -147,6 +149,7 @@ Human 在执行期间补充的 material clarification 是 authoritative Intent i
 - 让 Beacon 组合完整 Intent，或把一个任意大小的 commissioned problem 交给 Beacon。
 - Intent 太大时静默删范围，或已有 Human 授权仍重复确认。
 - 把“已经 executable”误当作“Human Intent 已最终关闭”，从而把后续 material clarification 错降级为 implementation detail / scope change。
+- Agent 因 implementation start、Verify/merge/ship 完成或自报 done 而自行结束当前 Northstar work context。
 - 反过来，因为 Northstar context 仍持续就逐步审批 Executor、重复 convergence 或把普通 implementation How 升级为 Intent gap。
 - 用局部 artifact/test/benchmark PASS 替代 overall Intent coverage。
 - 用 build / Replay green 替代 Verify 的 proof judgment。
