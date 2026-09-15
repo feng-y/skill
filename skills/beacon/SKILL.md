@@ -64,6 +64,21 @@ Do not prototype by default. Do not create several variants when one falsifier o
 
 A concrete artifact is useful only if it changes or closes the caller's judgment. More code, more screenshots, more variants, or a longer demo are not progress by themselves.
 
+## Artifact feedback loop
+
+A concrete artifact can be a high-bandwidth feedback surface, not only a one-shot illustration. When the Human or caller gives feedback anchored to a specific path, interaction, field, boundary, visual element, or behavior in the artifact, use that locality to refine the same bounded decision instead of restarting the whole shaping process.
+
+If the feedback stays inside the caller's already-understood semantic question:
+
+- revise only the affected artifact surface and preserve still-valid parts / Evidence;
+- keep comments or annotations attached to the concrete element they qualify when that context carries decision information;
+- return the material delta, updated representation, and any newly exposed concrete ambiguity to the caller;
+- iterate again only while another concrete reaction can still change the caller's judgment.
+
+Do not turn this into a persistent annotation protocol, review workflow, or mandatory Human stage. Inline comments, visual annotations, example corrections, CLI/API usage edits, or ordinary prose feedback are equivalent only insofar as they make the bounded concrete meaning clearer.
+
+Human feedback about desired behavior, scope, interaction, or accepted meaning is authoritative input for Human-owned intent / choice; it is not factual Evidence that runtime reality already behaves that way. Conversely, a runtime probe or experiment can establish territory facts but cannot silently rewrite Human commitment. If artifact feedback changes canonical Intent / Acceptance, long-term Architecture, or proof semantics rather than only the bounded concrete shape, stop and return that change to the corresponding semantic owner instead of absorbing it inside Beacon.
+
 ## Return
 
 Return only what the caller needs:
