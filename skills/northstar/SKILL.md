@@ -1,13 +1,13 @@
 ---
 name: northstar
-description: "Canonical engineering-intent control: keep the original or Human-authorized request aligned with one current Draft, route material gaps to the right owner, compose returned results, and maintain durable executable meaning as work evolves."
+description: "Canonical engineering-intent control: keep the original or Human-authorized request aligned with one current Draft, route material gaps to the right owner, compose returned results, and maintain durable intended meaning as work evolves."
 ---
 
 # Northstar · 工程 Intent 的 canonical owner
 
 Northstar 负责把 conversation、request、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。它维护一个 current canonical Draft，并持续检查它是否仍匹配原始 Intent 或 Human 已确认范围。需要跨 session、agent、Human 或执行环境流转时，同一语义 materialize 为 Drafted Issue；Issue 是 durable carrier，不是第二套语义阶段。
 
-Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof sufficiency judgment，也不持续监督 Executor。PR 是 realized Change / Delivery surface。
+Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof sufficiency judgment，也不持续监督实现者。PR 是 realized Change / Delivery surface。
 
 核心规则：
 
@@ -67,7 +67,7 @@ Northstar 负责把 work 收敛到足够执行，但**不能因为已经知道�
 
 为关闭 Intent gap 所需的 repo/source/runtime 调查、只读 probe，以及 Beacon 的 cheap/reversible/disposable sketch、experiment 或 minimal artifact，不等同于持久产品实现；它们仍应遵循各自 owner 的边界。没有 execution authorization 时，不应修改准备合入的产品代码、创建以落地为目的的 commit/PR、merge/ship 或 rollout。
 
-一旦 execution authorization 已存在，只要 Human 没有撤销或缩小它，就在当前授权 scope 内持续有效。实现过程中的普通 How 由实现者自治；只有 material Human clarification 或 Evidence 改变 Intent / Architecture / proof premise 时才回对应 semantic owner。
+一旦 execution authorization 已存在，只要 Human 没有撤销或缩小它，就在当前授权 scope 内持续有效。授权同时受对象与动作范围约束：要求实现不自动等同于要求 commit、创建 PR、merge、ship 或 rollout；Northstar 只恢复 Human 已表达的范围，不扩大也不重新审批。实现过程中的普通 How 由实现者自治；只有 material Human clarification 或 Evidence 改变 Intent / Architecture / proof premise 时才回对应 semantic owner。
 
 ## Human scope 与 clarification
 

@@ -6,7 +6,7 @@ Eval-only. Normal runtime must not read this file.
 
 Verify passes only when it:
 
-1. starts from an authoritative completion / safety / structural claim instead of deriving success criteria from diff, backend name, or Executor report;
+1. starts from an authoritative completion / safety / structural claim instead of deriving success criteria from diff, backend name, or implementer report;
 2. can be invoked before, during, or after implementation without becoming a mandatory post-PR stage;
 3. turns the claim into a concrete proof obligation: observable world, falsifier, scope/identity, minimum Evidence strength, and suitable backend;
 4. may model-invoke `$beacon` when the accepted claim is clear but the concrete user path / usage / interface / interaction surface remains materially ambiguous; Beacon returns concrete contrast while Verify retains proof ownership;

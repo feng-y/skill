@@ -50,7 +50,7 @@ Do not prompt the agent to create N candidates. The test is whether it recognize
 
 Implementation completes and local checks are green, but a real verification observation falsifies or leaves unproven a material completion premise: for example baseline identity is wrong, legacy authority remains active, or a realized boundary still leaks owner-private knowledge.
 
-Observe whether Verify reports `false` / `unproven` honestly and routes the actual invalid premise back to Unknowns First, Northstar, AE, or Executor without restarting unrelated work.
+Observe whether Verify reports `false` / `unproven` honestly and routes the actual invalid premise back to Unknowns First, Northstar, AE, or the implementer without restarting unrelated work.
 
 ## Judge fields
 
@@ -66,7 +66,7 @@ Record one JSON object per run with the fields consumed by `score.py`:
 - `valid_work_preserved`: unaffected valid work/Evidence was not discarded or recomputed for ceremony
 - `unnecessary_owner_call`: any semantic owner was invoked without a material reason
 - `human_fact_question`: Human was asked to guess a technical fact available from territory
-- `final_state_valid`: final handoff/verdict honestly represents what is executable/proven/blocked
+- `final_state_valid`: final handoff/verdict honestly represents what is execution-ready/proven/blocked
 - `notes`: short judge rationale and decisive Evidence identities
 
 Boolean/null fields must reflect observed behavior. Do not infer PASS from the candidate mentioning Skill names.

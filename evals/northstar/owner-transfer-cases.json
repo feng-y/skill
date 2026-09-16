@@ -24,7 +24,7 @@
         "Beacon becomes the canonical Intent owner",
         "the final response is only disconnected local artifacts"
       ],
-      "consumer_check": "A fresh Executor can recover one adopted interface/lifecycle path and all binding constraints without reconstructing the Beacon results."
+      "consumer_check": "A fresh implementer can recover one adopted interface/lifecycle path and all binding constraints without reconstructing the Beacon results. The handoff does not itself grant execution authorization."
     },
     {
       "id": "OT2_ae_returns_to_northstar",
@@ -33,12 +33,12 @@
         "Northstar routes the structural fork to Architecture Evolution",
         "Beacon, if used, returns only a bounded contrast to Architecture Evolution",
         "Architecture Evolution returns a scoped Target result or explicit Target blocker to Northstar",
-        "Northstar explicitly resumes and produces one composed executable or honestly blocked handoff",
+        "Northstar explicitly resumes and produces one composed execution-ready or honestly blocked durable handoff",
         "a blocked handoff names the authority source or next semantic owner that can close the blocker"
       ],
       "fail_if": [
         "Architecture Evolution says the result is for Northstar to merge but Northstar never resumes",
-        "a conditional Target recommendation is also presented as an adopted executable Decision",
+        "a conditional Target recommendation is also presented as an adopted Decision and the work is marked execution-ready",
         "parallel architecture and Intent authorities are created"
       ],
       "consumer_check": "A fresh consumer can distinguish adopted versus conditional Target, recover the blocker closer, and refuse implementation when the handoff is blocked."
@@ -50,14 +50,14 @@
         "Architecture Evolution may answer the direct structural request without forcing Northstar invocation",
         "Beacon, if used, returns only bounded reaction Evidence and Architecture Evolution retains Target judgment",
         "a missing Target-deciding premise remains conditional with an authority source or next owner",
-        "the result is an architecture handoff and does not claim canonical engineering Intent or implementation is executable"
+        "the result is an architecture handoff and does not claim canonical engineering Intent, implementation readiness, or execution authorization"
       ],
       "fail_if": [
         "Northstar is invoked only as ceremony for a direct architecture request",
-        "a conditional Target is presented as adopted or executable",
+        "a conditional Target is presented as adopted or the work is presented as execution-ready",
         "Beacon chooses the long-term owner"
       ],
-      "consumer_check": "A fresh architecture consumer can recover the discriminator, conditional branches, closer, and non-executable status without the original discussion."
+      "consumer_check": "A fresh architecture consumer can recover the discriminator, conditional branches, closer, and conditional/non-ready status without the original discussion."
     }
   ]
 }

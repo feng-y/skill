@@ -1,12 +1,12 @@
 # Material Compile
 
-只在当前 Northstar Intent / Drafted Issue 已经成立，但复杂 material work / dependency 仍使 fresh Executor 无法安全开始时读取。这里组织 executable handoff，不重新定义 Intent，不设计 implementation How，也不拥有 verification judgment 或 execution progress。
+只在当前 Northstar Intent / Drafted Issue 已经成立，但复杂 material work / dependency 仍会迫使当前实现者或真实 transfer consumer 重新做高层判断时读取。这里把已成立 Intent 编译成 execution-ready material graph；只有确需跨 session、agent 或执行环境 transfer 时才形成 durable handoff。Compile 不重新定义 Intent，不产生或扩大 Human execution authorization，不设计 implementation How，也不拥有 verification judgment 或 execution progress。
 
 ## Intended delta before work graph
 
 先从 canonical Intent 恢复已经成立的 `Current → Intended` material delta。只保留为了让 Draft / Constraint / Acceptance 成立而真正需要兑现的差异，例如 responsibility / authority 归位、核心路径改变、binding boundary 建立、明确要求退出的 legacy path，以及必须保持的 invariant。
 
-不要从 task list、文件结构、当前 module 或候选 patch 反推 Intended state；不要把仍会改变 Intent 的 unresolved alternative 编成 Executor branch。
+不要从 task list、文件结构、当前 module 或候选 patch 反推 Intended state；不要把仍会改变 Intent 的 unresolved alternative 编成 implementation branch。
 
 ## Best-known complete material graph
 
@@ -15,7 +15,7 @@
 - 一个 cut 对应一个可独立判断的 cohesive outcome / responsibility / binding boundary，而不是一个文件、helper 或 verifier；
 - prerequisite、共享 authoritative surface / conflict、或必须共同成立的 outcome 才形成 dependency；
 - 文本顺序不形成 dependency，独立 work 保持独立；
-- 当前已知且省略会迫使 Executor 重新发现的 material cut / relation 应保留；
+- 当前已知且省略会迫使实现者重新发现的 material cut / relation 应保留；
 - contingent future 的存在、scope 或 dependency 仍取决于未来 execution Evidence 时，停在当前 frontier，不提前猜；
 - independently falsifiable verification claim 不自动成为独立 execution cut。
 
@@ -25,7 +25,7 @@
 
 Compile 只携带 Northstar 已定义的 Acceptance / completion claims 与 material work relation，不选择具体 test/Replay/runtime command，也不把 verification step 编成 execution phase。
 
-如果 complex handoff 需要明确某个 claim 必须被验证，可以记录 **claim identity / proof obligation pointer**，但 proof obligation、backend selection、Evidence sufficiency 与 verdict 属于 `$verify`。DaVinci Replay、tests、build、runtime 等只是 Verify 可选择的 backend。
+如果 complex material graph 或真实 durable handoff 需要明确某个 claim 必须被验证，可以记录 **claim identity / proof obligation pointer**，但 proof obligation、backend selection、Evidence sufficiency 与 verdict 属于 `$verify`。DaVinci Replay、tests、build、runtime 等只是 Verify 可选择的 backend。
 
 一个 implementation cut 通过不代表整体 Acceptance 自动成立；一个 verification claim 也不自动变成一个 execution cut。
 
@@ -46,6 +46,6 @@ Execution orchestration 可以触发下一次 compile，但不拥有 Graph seman
 
 ## 交付
 
-默认把必要 material relation fold 回 Drafted Issue。只有复杂度、下游访问边界或明确委托确实需要独立 execution contract 时，才生成额外 Taskbook；它不能复制第二份长期 Intent SOT。
+默认把必要 material relation fold 回 current Draft / Drafted Issue。只有复杂度、真实 transfer boundary 或明确委托确实需要独立 execution contract 时，才生成额外 Taskbook；它不能复制第二份长期 Intent SOT。
 
-当 fresh Executor 已能在 binding boundary 内开始、剩余未知只影响 implementation How 时停止 compile。
+当实现者已能在 binding boundary 内继续、剩余未知只影响 implementation How 时停止 compile。这个 stop 只表示 material graph 已 execution-ready：已有 Human execution authorization 时当前 Agent 可以继续实现；没有时停在 current Draft；没有真实 transfer 就不制造 handoff。

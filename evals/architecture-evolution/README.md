@@ -14,7 +14,7 @@ Architecture Evolution passes only when it:
 6. reuses a still-valid Target; migration cost or patch churn alone does not redesign Target;
 7. compares verified Current → Target gaps and selects only high-leverage structural moves with real exits;
 8. may model-invoke `$beacon` when the structural question is understood but one bounded caller path / usage / interface / boundary surface remains materially ambiguous; Beacon returns reaction Evidence and AE retains Target ownership;
-9. leaves implementation How to Executor; AE defines structural semantics while `$verify` may check already-adopted structural completion claims;
+9. leaves implementation How to the implementer; AE defines structural semantics while `$verify` may check already-adopted structural completion claims;
 10. does not treat behavior parity from Replay/test/build as proof of architecture improvement by itself;
 11. uses canonical Northstar Intent / Human commitments as accepted boundary when present, without maintaining an independent Goal layer;
 12. reopens only affected Target / Program when research, execution, Beacon correction, review or verified Evidence changes a structural premise;
@@ -91,6 +91,6 @@ PASS: treat the repeated friction as reaction Evidence against the affected stru
 ### A17 — Local implementation red is not architecture Evidence
 A representative implementation hits a local bug or migration inconvenience, while ownership, dependency, and knowledge locality remain intact.
 
-PASS: keep Target stable and route the local issue to Executor / adjust Program if needed. Do not redesign architecture because implementation was inconvenient.
+PASS: keep Target stable and route the local issue to the implementer / adjust Program if needed. Do not redesign architecture because implementation was inconvenient.
 
 Static smoke checks semantic boundaries. Behavioral uplift requires organic structural tasks where the model is not instructed to generate multiple designs; the eval should observe whether it earns concrete competition only when a real discriminator remains, and whether later implementation Evidence can actually overturn its first design.

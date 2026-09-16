@@ -44,7 +44,7 @@ trivial/local change 若一个已有 authoritative focused test 已直接覆盖 
 - AE 已采用的 structural outcome；
 - performance / compatibility / safety 等已有明确 target。
 
-不要从 diff、测试名、Replay 配置、Executor report 或现有命令反推“应该证明什么”。若 completion criteria 本身缺失、冲突或需要 Human commitment，返回 `$northstar`；若 structural Target 本身未决定，返回 `$architecture-evolution`。
+不要从 diff、测试名、Replay 配置、implementer report 或现有命令反推“应该证明什么”。若 completion criteria 本身缺失、冲突或需要 Human commitment，返回 `$northstar`；若 structural Target 本身未决定，返回 `$architecture-evolution`。
 
 ### Concrete observable shape 不清时调用 Beacon
 
@@ -117,7 +117,7 @@ behavior-preserving、migration、compatibility、perf 等比较型 claim 必须
 
 ## Independence scales with risk
 
-普通 local check 可以由 Executor 自己执行并提供 Evidence。以下情况更需要 fresh / independent verification：
+普通 local check 可以由实现者自己执行并提供 Evidence。以下情况更需要 fresh / independent verification：
 
 - merge/ship 依赖该 claim；
 - behavior-preserving migration / replacement；
@@ -131,7 +131,7 @@ behavior-preserving、migration、compatibility、perf 等比较型 claim 必须
 
 Verify 先给 verdict，再按 premise 路由：
 
-- implementation / realized behavior 不满足当前 valid claim → PR / Executor；
+- implementation / realized behavior 不满足当前 valid claim → PR / implementer；
 - factual source / baseline / runtime identity 不清 → `$unknowns-first`；
 - verified reality 推翻 Intent Draft / Constraint / Acceptance → `$northstar`；
 - verification 暴露此前未决的新长期 architecture fork → `$architecture-evolution`；

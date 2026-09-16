@@ -309,18 +309,18 @@ def main():
     print()
     print("| metric | base | candidate | candidate vs base |")
     print("| --- | ---: | ---: | ---: |")
-    print(render_metric("validated executable handoff rate", base["handoff_validation_rate"], candidate["handoff_validation_rate"], True))
-    print(render_metric("first executable handoff latency (ms)", base["handoff_latency_ms"], candidate["handoff_latency_ms"]))
+    print(render_metric("validated execution-ready handoff rate", base["handoff_validation_rate"], candidate["handoff_validation_rate"], True))
+    print(render_metric("first execution-ready handoff latency (ms)", base["handoff_latency_ms"], candidate["handoff_latency_ms"]))
     print(render_metric("unnecessary clarification rate", base["unnecessary_clarification_rate"], candidate["unnecessary_clarification_rate"], True))
     print(render_metric("speculative task rate", base["speculative_task_rate"], candidate["speculative_task_rate"], True))
-    print(render_metric("Executor reinterpretation rate", base["executor_reinterpretation_rate"], candidate["executor_reinterpretation_rate"], True))
-    print(render_metric("tokens to first executable handoff", base["tokens_to_handoff"], candidate["tokens_to_handoff"]))
-    print(render_metric("tool calls to first executable handoff", base["tool_calls_to_handoff"], candidate["tool_calls_to_handoff"]))
+    print(render_metric("implementer reinterpretation rate", base["executor_reinterpretation_rate"], candidate["executor_reinterpretation_rate"], True))
+    print(render_metric("tokens to first execution-ready handoff", base["tokens_to_handoff"], candidate["tokens_to_handoff"]))
+    print(render_metric("tool calls to first execution-ready handoff", base["tool_calls_to_handoff"], candidate["tool_calls_to_handoff"]))
     print(render_metric("total tokens", base["total_tokens"], candidate["total_tokens"]))
     print(render_metric("total tool calls", base["total_tool_calls"], candidate["total_tool_calls"]))
 
     quality = {
-        "validated executable handoff": higher_guardrail_status(
+        "validated execution-ready handoff": higher_guardrail_status(
             base["handoff_validation_rate"],
             candidate["handoff_validation_rate"],
             args.rate_tolerance,
@@ -335,7 +335,7 @@ def main():
             candidate["speculative_task_rate"],
             args.rate_tolerance,
         ),
-        "Executor reinterpretation": lower_guardrail_status(
+        "implementer reinterpretation": lower_guardrail_status(
             base["executor_reinterpretation_rate"],
             candidate["executor_reinterpretation_rate"],
             args.rate_tolerance,

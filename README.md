@@ -64,8 +64,10 @@ conversation / request / incident
    ▲          │                  │
    └──── model-invoked by any semantic caller ────┘
               ↓
-         Drafted Issue
+ current Draft / Drafted Issue
               ↓
+       execution-ready
+              ↓ existing/later Human authorization
           execution
               ↓
               PR
@@ -84,10 +86,12 @@ accepted completion / safety / structural claim
             verify
    Evidence + proven / false / unproven
               ↓
-  affected semantic owner / Executor
+  affected semantic owner / implementer
 ```
 
 Northstar owns **meaning and composition**. Beacon owns **bounded concrete reaction surfaces only** and returns them to its caller. Architecture Evolution owns **structural judgment**. Unknowns First owns **factual uncertainty**. Verify owns **verification / proof judgment**; Evidence is its proof artifact and basis.
+
+`execution-ready` means the current Intent is specific enough for implementation; it does not itself authorize durable product changes. If the Human request already asks to implement/fix/change, that scoped authorization is reused without another confirmation and work continues in the same Northstar context. Authorization is limited to the requested object and action: implementation does not automatically authorize commit/PR/merge/ship/rollout. Analysis/design/review-only requests stop at the Draft. Durable handoff appears only for a real transfer and does not invent execution authorization.
 
 Verify is not a mandatory post-PR stage. It may be invoked before implementation to make a material proof route explicit, during implementation when verification premises change, or after implementation to judge realized results. Clear local changes can rely on an already-authoritative focused check without extra ceremony.
 

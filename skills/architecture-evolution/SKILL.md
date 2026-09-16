@@ -66,7 +66,7 @@ Beacon 只返回 concrete contrast / reaction Evidence；**AE 仍然拥有 Targe
 
 此时让 `$beacon` 为足够少的 live candidates 产出同 scope、可直接比较的 Core Path / Usage / Interface / minimal implementation 等 representation，并用同一组 structural criteria 比较：knowledge 是否归位、caller 是否仍重组私有决定、dependency 是否需要补偿、旧 authority 是否能 real exit、代表性 change 是否更 locality。
 
-实现本身也可以产生 reaction Evidence。若代表性实现反复要求意料外的跨边界参数/状态、caller workaround、type escape、duplicated knowledge、special path 或绕过 owner 的 proof path，先判断这些 friction 是否只是 local implementation defect；若它们稳定暴露 Target premise / boundary 错误，就丢弃或修正受影响 design，而不是继续堆 compensation。若 friction 只影响迁移成本或 implementation How，则保持 Target，只调整 Program / Executor。
+实现本身也可以产生 reaction Evidence。若代表性实现反复要求意料外的跨边界参数/状态、caller workaround、type escape、duplicated knowledge、special path 或绕过 owner 的 proof path，先判断这些 friction 是否只是 local implementation defect；若它们稳定暴露 Target premise / boundary 错误，就丢弃或修正受影响 design，而不是继续堆 compensation。若 friction 只影响迁移成本或 implementation How，则保持 Target，只调整 Program / implementer path。
 
 Competition 的目标是关闭一个 material structural discriminator，不是选出“最漂亮”的设计。一个 falsifier 已足够时立即停止；没有 material fork 时不生成候选。
 
@@ -129,7 +129,7 @@ Research、execution、review、Beacon correction 或 Verify 都可能触发 AE 
 
 当 caller 是 Northstar 时，AE 先以独立 return 交回 scoped structural result；它在 Northstar 随后恢复 caller judgment、完成取舍并 fold back 前不是 canonical Intent。不要把 AE return 与 Northstar final handoff 混成同一段未分界的回答。Northstar 继续拥有整体 composition，AE 不宣称 canonical Intent 已收敛。独立 AE 调用仍可以按用户需要产出 architecture handoff，不强制经过 Northstar；这个 caller boundary 也不新增 persistent phase 或 artifact。
 
-若 Target-deciding premise 仍未关闭，返回 conditional Target / discriminator / blocker，并指出能关闭它的 authority source / next semantic owner；source / contract / territory 不清交 Unknowns First，commitment 未决才回 Northstar / Human。不要把其中一个候选同时写成 adopted Decision 或 executable handoff。只有独立 AE 调用本来就只要求 architecture handoff 时，AE output 才可以作为该次调用的最终 surface。
+若 Target-deciding premise 仍未关闭，返回 conditional Target / discriminator / blocker，并指出能关闭它的 authority source / next semantic owner；source / contract / territory 不清交 Unknowns First，commitment 未决才回 Northstar / Human。不要把其中一个候选同时写成 adopted Decision，也不要把 work 标成 execution-ready。只有独立 AE 调用本来就只要求 architecture handoff 时，AE output 才可以作为该次调用的最终 surface；该 handoff 不产生 execution authorization。
 
 ## 按需 references
 
