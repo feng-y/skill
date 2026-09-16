@@ -28,7 +28,7 @@
 
 当前 canonical capability map：
 
-- **`northstar`**：conversation / request / incident → canonical engineering Intent；需要 durable handoff 时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
+- **`northstar`**：conversation / request / incident → canonical engineering Intent；把 Intent 收敛到 `execution-ready` 不会制造 Human execution authorization，已有明确授权也不重复确认；需要 durable handoff 时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
 - **`beacon`**：只拥有 already-understood semantic question 中一个 bounded/local part 的 concrete reaction / inspection surface；Core Path / Usage / Interface Draft / behavior example / config-schema shape / UI draft / minimal implementation / experiment / disposable prototype 都是手段，不拥有 caller 的 Intent / Architecture / Verification judgment。它是 **caller-neutral、主要由 model 按需调用的 specialist**，不绑定 Northstar。
 - **`architecture-evolution`**：拥有长期 Target Architecture judgment + Current → Target Evolution Program。两层 judgment 必须分开，但不拆成两个顶层 Skill。
 - **`verify`**：拥有 engineering verification；从 authoritative claim 推导 proof obligation，选择并驱动 real-artifact verifier/backend，收集 Evidence 并判断 proven / false / unproven。
@@ -53,7 +53,7 @@
 
 **Eval backend 也是执行系统，不是 semantic owner。** Harbor、clean-session runner、trajectory recorder、project-local evaluator 或 containerized task runner 可以执行 Eval artifact；Eval 决定要测什么、Environment 是否 representative、Verifier 是否 hard-to-game、结果是否足够可信。不要因为某个 eval framework 可用就新增同名 Skill 或把 framework format 变成跨项目 semantic contract。
 
-**Execution control plane 也正交。** 外部 orchestration 可以 start / route / pause / resume / retry，但不能定义 Intent、material Graph、Architecture、Verify/Eval semantics 或 artifact authority。
+**Execution authorization 与 control plane 都正交。** `execution-ready` 只表示实现者无需发明 material Intent；是否实施、commit、建 PR、merge、ship 或 rollout 取决于 Human 已表达的对应对象与动作范围。已有授权直接沿用，缺失授权不能由 readiness、compile、handoff 或外部 orchestration 制造。外部 orchestration 可以 start / route / pause / resume / retry，但不能定义 Intent、material Graph、Architecture、Verify/Eval semantics 或 artifact authority。
 
 不要为了某个现有 backend 新增同名 Skill。执行能力和 semantic responsibility 分开演进。
 
@@ -69,7 +69,7 @@
 ## Graph and loop
 
 - **Work is a graph.** Material engineering work 按 cohesive outcome 与真实 dependency 判断，而不是 prose list。简单/线性工作只是 Graph 的退化形式；不为了“使用 Graph”新增 Graph object/schema、node taxonomy、persistent state、scheduler 或 manager protocol。
-- **Compile only when earned.** Clear Drafted Issue 可以直接执行；只有复杂 material dependency 会迫使 fresh Executor 重新做高层判断时，Northstar 才按需 compile coarse material graph / execution contract。
+- **Compile only when earned.** Clear Drafted Issue 可以直接达到 execution-ready；已有 scoped Human execution authorization 时当前实现者可继续，没有时停在 Draft。只有复杂 material dependency 会迫使 fresh implementer 重新做高层判断时，Northstar 才按需 compile coarse material graph / execution contract；compile 不制造授权或 handoff。
 - **Progress through a loop.** Research、execution、review、Verify 都可能产生 new verified Evidence。只有它真正改变 material work、dependency、Intent premise 或 architecture premise 时，才重开对应 owner / affected dependency cone；无关 branch、仍有效 work 与 Evidence 保持有效。
 - **Proof scales with claim.** 普通 implementation-local focused test 可以直接成为 Evidence；behavior-preservation、replacement、cross-boundary Acceptance、false-pass risk、perf 或 merge/ship gate 需要更强、更直接或更独立的 proof。Execution node 不与 verification claim 一一对应。
 - **Agent learning uses Eval, not product proof.** Skill/prompt/tool/harness change 若声称改善 agent behavior，必须通过可重复 behavioral eval；Replay/test green 只能证明对应产品/工程 claim，不能证明 agent 行为变好。Eval 发现稳定 behavior gap 后才驱动 runtime semantics / harness 改进，并使用同一 measurement 重跑。

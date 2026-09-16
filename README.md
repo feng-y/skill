@@ -71,6 +71,11 @@ conversation / request / incident
               ↓
          Drafted Issue
               ↓
+       execution-ready
+              ↓
+ scoped Human authorization
+    (existing or later)
+              ↓
           execution
               ↓
               PR
@@ -108,6 +113,8 @@ agent / Skill / prompt / tool / harness behavior
 ```
 
 Northstar owns **meaning and composition**. Beacon owns **bounded concrete reaction surfaces only** and returns them to its caller. Architecture Evolution owns **structural judgment**. Unknowns First owns **factual uncertainty**. Verify owns **product/engineering verification and proof judgment**. Eval owns **agent behavioral measurement design and judgment**. Verify Evidence 和 Eval Run Evidence 都不是新的 semantic owner。
+
+`execution-ready` 只说明实现者不需要发明 material Intent，不会自动授权持久实现。Northstar 从 Human request 的整体语义恢复对具体对象与动作的授权：已有授权直接沿用，不重复确认；只有分析、review、设计或“是否可以合入”等评估语义时停在 Draft；实现授权也不会自动扩大为 commit、PR、merge、ship 或 rollout 授权。readiness、material compile、durable handoff 和 execution control plane 都不能制造这类授权。
 
 Verify is not a mandatory post-PR stage. It may be invoked before implementation to make a material proof route explicit, during implementation when verification premises change, or after implementation to judge realized results. Clear local changes can rely on an already-authoritative focused check without extra ceremony.
 
