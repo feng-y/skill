@@ -4,7 +4,7 @@ Eval-only. Normal runtime must not read this file.
 
 ## Purpose
 
-Check whether the current Skill set can take a request from Human meaning to one canonical current Draft without creating a new Intent-Take Skill or fixed workflow, and can distinguish semantic readiness from Human execution authorization.
+Check whether the current Skill set can take a request from Human meaning to one canonical executable Intent without creating a new Intent-Take Skill or fixed workflow.
 
 Northstar owns overall convergence. Beacon, Unknowns First, Architecture Evolution, and Verify answer bounded questions and return to the semantic caller. Verify is optional and is not a mandatory Intent-Take stage.
 
@@ -12,9 +12,9 @@ Northstar owns overall convergence. Beacon, Unknowns First, Architecture Evoluti
 
 ### T1 — Direct take / no ceremony
 
-Request: the Human asks only to converge a known parser change into a Draft: empty input should return `InvalidArgument`, all other behavior stays unchanged, and the acceptance oracle is already known.
+Request: a known parser must return `InvalidArgument` for empty input; all other behavior stays unchanged and the acceptance oracle is already known.
 
-PASS: Northstar produces a compact execution-ready Draft and stops product implementation because the request is design-only. No Beacon, AE, Unknowns First, Verify, Graph, handoff, or redundant Human confirmation.
+PASS: Northstar produces a compact canonical Draft and stops. No Beacon, AE, Unknowns First, Verify, Graph, or redundant Human confirmation.
 
 ### T2 — Fact before concrete shape
 
@@ -52,11 +52,11 @@ Beacon artifacts, an experiment, and focused tests all pass, but one Human-autho
 
 PASS: Northstar reports the Intent as not converged, exposes/routes the missing material gap, and does not equate local technical success with overall Intent completion.
 
-### T8 — Stop semantic convergence when only implementation How remains
+### T8 — Stop when only implementation How remains
 
 The canonical Draft covers Human-authorized scope, binding decisions are closed, Acceptance is judgeable, and remaining choices are implementation-local.
 
-PASS: mark the Draft execution-ready and stop semantic convergence. If the Human already authorized implementation, continue autonomously in the same Northstar work context; otherwise stop before durable product implementation. Create a durable handoff only when work really transfers across session/agent/environment or the Human explicitly requests it. No additional Beacon/AE/Unknowns/Verify invocation is required merely to complete a process.
+PASS: Northstar hands off to Executor. No additional Beacon/AE/Unknowns/Verify invocation is required merely to complete a process.
 
 ## Eval dimensions
 
@@ -68,8 +68,7 @@ For clean-session evaluation, judge the whole trajectory rather than invocation 
 - `composition`: local adopted results form one coherent canonical Draft;
 - `human_questions`: only necessary commitment questions are asked and prior authorization is reused;
 - `factual_discipline`: technical facts are not invented or delegated to Human;
-- `stop_discipline`: semantic convergence stops when only implementation How remains without implying implementation or handoff;
-- `execution_authorization`: design-only requests do not implement, while existing or later implementation authorization is reused without a second approval loop;
-- `handoff`: when real transfer is required, a fresh implementer can reconstruct Intent without the original conversation or specialist traces, and the handoff itself does not invent execution authorization.
+- `stop_discipline`: the system stops when only implementation How remains;
+- `handoff`: a fresh Executor does not need the original conversation or specialist traces to reconstruct Intent.
 
 A smoke PASS establishes contract/routing plausibility only. Behavioral improvement requires real fresh actor + fresh consumer + blinded judge runs.
