@@ -44,7 +44,7 @@ trivial/local change 若一个已有 authoritative focused test 已直接覆盖 
 - AE 已采用的 structural outcome；
 - performance / compatibility / safety 等已有明确 target。
 
-不要从 diff、测试名、Replay 配置、implementer report 或现有命令反推“应该证明什么”。若 completion criteria 本身缺失、冲突或需要 Human commitment，返回 `$northstar`；若 structural Target 本身未决定，返回 `$architecture-evolution`。
+不要从 diff、测试名、Replay 配置、Executor report 或现有命令反推“应该证明什么”。若 completion criteria 本身缺失、冲突或需要 Human commitment，返回 `$northstar`；若 structural Target 本身未决定，返回 `$architecture-evolution`。
 
 ### Concrete observable shape 不清时调用 Beacon
 
@@ -117,7 +117,7 @@ behavior-preserving、migration、compatibility、perf 等比较型 claim 必须
 
 ## Independence scales with risk
 
-普通 local check 可以由实现者自己执行并提供 Evidence。以下情况更需要 fresh / independent verification：
+普通 local check 可以由 Executor 自己执行并提供 Evidence。以下情况更需要 fresh / independent verification：
 
 - merge/ship 依赖该 claim；
 - behavior-preserving migration / replacement；
@@ -131,7 +131,7 @@ behavior-preserving、migration、compatibility、perf 等比较型 claim 必须
 
 Verify 先给 verdict，再按 premise 路由：
 
-- implementation / realized behavior 不满足当前 valid claim → PR / implementer；
+- implementation / realized behavior 不满足当前 valid claim → PR / Executor；
 - factual source / baseline / runtime identity 不清 → `$unknowns-first`；
 - verified reality 推翻 Intent Draft / Constraint / Acceptance → `$northstar`；
 - verification 暴露此前未决的新长期 architecture fork → `$architecture-evolution`；
@@ -152,6 +152,8 @@ Verify 先给 verdict，再按 premise 路由：
 
 Verify result 默认留在当前 PR / review / verification surface。只有它证明 canonical Intent / Acceptance 本身失效，或形成后续 fresh consumer 必须知道的 durable correction，才 fold back 到 Northstar Issue；只有它暴露新的长期 structural fork 才回 AE。不要生成 repair plan、execution backlog、第二份 Intent 或第二份 verification SOT。
 
-## 与 eval 的区别
+## 与 Eval 的边界
 
-Verify 验证**产品/工程 claim**。Skill/prompt/harness 语义变更本身是否改善 agent behavior，应该使用 blinded behavioral eval，而不是拿产品 Replay 代替。候选必须在 clean / sanitized session 中运行，judge 看真实产物与行为，而不是候选自报“我遵守了规则”。
+Verify 验证**产品/工程 claim**。Skill / prompt / tool / harness 变更是否改善 **agent behavior**，交 `$eval` 构建或审计可重复 behavioral measurement：从真实 agent surface / traces 形成 Task + Environment + Verifier，在 clean / representative environment 中运行，检查 agent trajectory 与 verifier Evidence，而不是拿产品 Replay 代替，也不是相信 candidate 自报“我遵守了规则”。
+
+同一个 change 可以同时需要两者：产品 behavior/equivalence 由 Verify 判断；agent routing、authorization、multi-turn intent fidelity、tool-use 等行为变化由 Eval 测量。两种 Evidence 不能互相替代。

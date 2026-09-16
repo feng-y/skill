@@ -33,7 +33,7 @@ Route elsewhere when:
 - territory facts are unresolved and could change the shape: `$unknowns-first`;
 - long-term responsibility, ownership, dependency, or Target Architecture is undecided: `$architecture-evolution`;
 - the remaining problem is proof sufficiency: `$verify`;
-- only implementation How remains: return to the caller / implementer.
+- only implementation How remains: return to the caller / Executor.
 
 ## One bounded decision
 
