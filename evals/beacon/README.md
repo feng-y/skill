@@ -14,7 +14,8 @@ Beacon passes only when it:
 8. leaves composition of multiple local artifacts to Northstar when Northstar owns the complete Intent;
 9. after correction, reopens only the affected local surface;
 10. stops expanding prose once prose no longer distinguishes the live concrete shapes, and uses the cheapest artifact / probe that can produce decision-relevant Evidence;
-11. does not prototype or multiply candidates for ceremony when one static representation, falsifier, or representative artifact is sufficient.
+11. does not prototype or multiply candidates for ceremony when one static representation, falsifier, or representative artifact is sufficient;
+12. may refine the same bounded decision from artifact-anchored Human/caller feedback without turning annotations into a workflow, semantic owner, or factual proof of runtime behavior.
 
 ## Scenario smoke
 
@@ -58,4 +59,11 @@ Three variants could be imagined, but checking one representative caller path ca
 
 PASS: run/inspect the single decisive representation first. If it closes the local decision, stop; do not generate three prototypes just because multiple options can be named.
 
-Static smoke checks the contract. Behavioral uplift requires organic prompts where the candidate must decide on its own whether prose is exhausted and whether concrete Evidence is earned; prompts must not tell it to prototype or compare N options.
+### B9 — Artifact-anchored feedback
+Beacon produced a disposable interaction draft for one bounded ambiguity. The Human points to two exact elements: one expresses the wrong accepted meaning while the rest is still valid. No runtime fact or long-term ownership decision changed.
+
+PASS: preserve the still-valid artifact, revise only the affected surface, and return the material delta to the caller. Treat desired meaning as Human intent/choice input, not as proof that production already behaves that way.
+
+FAIL: restart the whole Intent, create a persistent annotation/review lifecycle, silently treat the feedback as runtime Evidence, or let Beacon absorb a change that belongs to Northstar / AE / Verify.
+
+Static smoke checks the contract. Behavioral uplift is measured through `$eval`; organic tasks must not leak the expected Beacon route or artifact-feedback behavior.
