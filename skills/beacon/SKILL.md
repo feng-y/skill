@@ -64,6 +64,12 @@ Do not prototype by default. Do not create several variants when one falsifier o
 
 A concrete artifact is useful only if it changes or closes the caller's judgment. More code, more screenshots, more variants, or a longer demo are not progress by themselves.
 
+## Artifact feedback
+
+When Human/caller feedback is anchored to a specific path, interaction, field, boundary, visual element, or behavior in the artifact, refine that same bounded decision instead of restarting shaping: preserve still-valid parts, revise only the affected surface, and return the material delta to the caller.
+
+Human feedback about desired meaning is authoritative intent/choice input, not factual Evidence that runtime already behaves that way. Do not create a persistent annotation/review workflow or mandatory Human stage. If the feedback changes canonical Intent / Acceptance, long-term Architecture, or proof semantics rather than only the local concrete shape, return it to the corresponding semantic owner.
+
 ## Return
 
 Return only what the caller needs:
