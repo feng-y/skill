@@ -4,6 +4,19 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## 2026-09-16 — Northstar execution-ready ≠ execution authorization
+
+PR: #99 (`fix-northstar-execution-authorization`)
+
+Northstar previously used `executable handoff` for both semantic readiness and permission/transition to execution. That overloaded one term and could either start durable implementation after a design-only request or force a second approval after the Human had already requested implementation.
+
+- **Current semantic:** `execution-ready` means the current canonical Draft is specific enough that an implementer need not invent material Intent. It is not semantic finality and does not grant execution authorization.
+- **Authorization source:** recover scoped execution authorization from the Human request's meaning. Existing or later requests to implement/fix/change are reused without a redundant confirmation; analysis/design/review/evaluation wording does not authorize the named action merely because it contains an action word. Authorization stays bound to the requested object and action rather than expanding implementation into commit/merge/rollout.
+- **Preserved behavior:** Northstar keeps Intent continuity through implementation and Evidence feedback; ordinary implementation How remains autonomous; material clarification reopens only the affected semantic owner.
+- **Durable handoff:** retained only for real transfer across session/agent/environment or explicit requested handoff. A handoff carries the current Intent but does not invent authorization.
+- **Retired semantics:** readiness as implicit execution permission, readiness as an automatic handoff to a synthetic Executor lifecycle, and repeated approval after authorization already exists.
+- **Control-plane boundary:** Northstar does not start/pause/resume/retry execution or own progress. Compile can make material work execution-ready but cannot create authorization.
+
 ## 2026-09-14 — Prototype → Beacon
 
 PR: #96 (`refactor/beacon-intent-shaping`)
