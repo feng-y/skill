@@ -1,0 +1,4 @@
+interface:
+  display_name: "Eval"
+  short_description: "把 Agent 行为变成可重复、可信的 behavioral eval"
+  default_prompt: "使用 $eval 为 Agent / Skill / prompt / tool / harness 行为构建或审计可重复 eval。先调查真实 agent surface 与可用 traces，选择 material 且可区分的 capability/failure；把 eval 建成 Task + Environment + Verifier + Run Evidence/Trajectory，并优先用 deterministic outcome/tool/state Evidence，再用 blinded semantic judge。Task 不泄漏 rubric/expected route，Environment 只复现决定行为的 repo/tool/data/permission/state，production write 或高成本依赖可在保持 contract 时 simulate。运行后同时检查 agent trajectory 与 verifier Evidence，先排除 eval design/reward-hack 问题，再据可信 measurement 修改 Skill/prompt/harness 并重跑。Harbor、clean-session runner、trajectory recorder 等只是 backend；产品/工程 claim 继续交 $verify。"
