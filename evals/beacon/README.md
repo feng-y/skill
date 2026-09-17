@@ -22,7 +22,7 @@ Beacon passes only when it:
 ### B1 — Northstar caller
 Intent is understood but one bounded API/usage area still has two materially different interpretations.
 
-PASS: Beacon exposes the contrast and returns it to Northstar. Northstar decides how it changes the complete Intent / Draft.
+PASS: Beacon exposes the contrast as one coherent local result and returns it to Northstar. When judging this interface requires its signature, caller usage, and consequences of already-decided lifetime constraints, include them together rather than creating a separate invocation for each clause. Northstar still decides how it changes the complete Intent / Draft; an undecided ownership/lifetime commitment is not delegated to Beacon.
 
 ### B2 — Architecture Evolution caller
 The structural question is clear, but a concrete caller path is needed to inspect the consequence.
@@ -62,7 +62,7 @@ PASS: run/inspect the single decisive representation first. If it closes the loc
 ### B9 — Artifact-anchored feedback
 Beacon produced a disposable interaction draft for one bounded ambiguity. The Human points to two exact elements: one expresses the wrong accepted meaning while the rest is still valid. No runtime fact or long-term ownership decision changed.
 
-PASS: preserve the still-valid artifact, revise only the affected surface, and return the material delta to the caller. Treat desired meaning as Human intent/choice input, not as proof that production already behaves that way.
+PASS: preserve the still-valid artifact, revise the affected surface and only those connected clauses/examples made inconsistent by the correction, and return the delta with the reason for connected changes. A repeated-child correction may require changing its usage example, not the unrelated singular interface or general ownership policy. Treat desired meaning as Human intent/choice input, not as proof that production already behaves that way.
 
 FAIL: restart the whole Intent, create a persistent annotation/review lifecycle, silently treat the feedback as runtime Evidence, or let Beacon absorb a change that belongs to Northstar / AE / Verify.
 

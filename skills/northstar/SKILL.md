@@ -18,7 +18,7 @@ Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof 
 只保留会改变后续判断、实现边界或验收结果的 durable 信息：
 
 - **Problem**：当前什么需要改变，以及为什么现状不满足预期。
-- **Draft**：当前采用的 intended change；它是整体语义权威，不限制局部 Beacon artifact / view / experiment 的数量。
+- **Draft**：当前采用的完整 intended change；把采用的局部结果及其必要连接写成连贯方案，而不是 artifact 索引。它是整体语义权威，不限制局部 Beacon artifact / view / experiment 的数量。
 - **Constraints**：真正 binding、违反后会改变 accepted outcome、兼容、投入、风险或长期责任的约束。
 - **Acceptance**：能够区分“问题已解决”和“只是完成了某个手段”的 observable outcome / completion claim。
 
@@ -88,7 +88,7 @@ Northstar 拥有 Intent，不复制 specialist 的责任：
 
 这里的 model-invoke 表示在当前工作中应用 specialist 语义并接收它的 scoped return，不自动表示创建了外部 agent / thread。只有真实 delegation tool 已调用并返回对应结果时，才能声称外部委派成功或失败；否则直接在当前交互中完成 return，不虚构不存在的代理事件。
 
-Beacon 只处理一个 bounded/local material concrete decision。prototype、minimal implementation、UI/config/API draft、experiment 等都只是 Beacon 可选 technique。**Beacon 不接受“把整个 Intent 做完整”或“组合这些局部结果”的委托。** 多个 Beacon artifact 的选择、相接与整体 coverage 由 Northstar 完成。
+Beacon 只处理一个 bounded/local material concrete decision，返回足以判断该局部问题的连贯表示，不按字段或文件机械拆分。prototype、minimal implementation、UI/config/API draft、experiment 等都只是 Beacon 可选 technique。**Beacon 不接受“把整个 Intent 做完整”或“组合这些局部结果”的委托。** 多个 Beacon artifact 的选择、相接与整体 coverage 由 Northstar 完成。
 
 specialist 结果不创建第二份 Intent SOT；只把 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到 current Draft / Issue。
 
@@ -96,7 +96,7 @@ specialist 的 scoped result 在 Northstar 完成取舍前只是 local input，�
 
 ## Composition
 
-组合不是 artifact aggregation。Northstar 对采用的局部结果至少检查：
+组合后的结果直接体现在同一个 current Draft：采用什么、局部结果如何相接，以及哪些旧解释已被替代。后续 material correction 修订受影响的语义与必要连接，保留仍有效的决定、工作与 Evidence；不要把拼接或重新理解的责任交给 Human / fresh implementer，也不要求每轮全量重印 Draft。检查：
 
 - Human-authorized scope 中的 material requirement 是否被覆盖；
 - 局部结果的 path、interface、dataflow、ownership、lifecycle 与 binding constraint 是否能共同成立；
@@ -137,41 +137,24 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 - claim 需要 verification design / sufficiency judgment → `$verify`；
 - Intent 仍成立但复杂 material dependency 改变 → 只重算 material compile affected cone。
 
-Human 在执行期间补充的 material clarification 是 authoritative Intent input：先判断它是原 Intent 的迟到显化、明确的新授权，还是纯 implementation How，再决定是否更新 Northstar Draft。不要因为已经 execution-ready / 开始实现就忽略 Human correction，也不要因为每条后续消息都存在就自动重开 Intent。
+Human clarification 按前述 Intent continuity 规则处理，不要求它先成为 runtime Evidence。
 
 不要因为一个 red signal 全量重跑所有 owner。
 
 ## Execution-ready / durable handoff gate
 
-只有同时满足以下条件，才把当前 Intent 标为 **execution-ready**：
+只有以下条件在明确声明的范围内同时满足，才能标为 **execution-ready**；整体声明必须覆盖完整 current Draft：
 
 - fresh implementer 不依赖原 conversation，也不需要自己重新组合局部 artifact，就能理解 Problem 与完整 current Draft；
 - current Draft 匹配 original Intent 或 Human 已确认范围；若有 authorized scope cut，未覆盖部分明确可见；
 - 必要 Human choice 已关闭，已有授权直接沿用；
 - binding Constraint / Decision 足以防止 materially wrong interpretation；
 - Acceptance 可判断；
-- 会改变 current Draft 的事实、结构、bounded concrete ambiguity 已关闭，或明确记录为真实 blocker；
+- 该范围内会改变 intended outcome 的事实、结构、bounded concrete ambiguity 均已关闭，不能用“已记录 blocker”替代 closure；
 - 剩余未知只影响 implementation How。
 
-`execution-ready` 是 semantic readiness，不是 execution authorization，也不是 semantic finality。只有 Human 当前/既有请求已经授权实际改动时，才能进入持久产品实现；没有授权时停在 current Draft / execution-ready surface。已有授权不得因为进入 Northstar 或完成 convergence 而重复确认。
+达到 readiness 后按已有 scoped authorization 决定是否实施；readiness 不产生授权，也不结束 Intent context。
 
 Durable handoff 只在 work 真的需要离开当前 conversation/agent/执行环境，或 Human 明确要求形成 Issue/任务交接时出现；同一个已获授权的 Northstar work 不因为 readiness 自动“handoff 给 Executor”，而是可以直接继续实现。后续 material Human clarification 或 Evidence 仍按 Intent convergence / Evidence feedback 规则更新受影响 Draft。
 
-若 material gap 未关闭，可以 handoff 调查或推进未受影响的已授权工作，但不能把被阻断部分标为 execution-ready / done。
-
-## 常见错误
-
-- 把候选台账、多个 Beacon artifact、prototype 或实验清单当作整体 Draft。
-- 让 Beacon 组合完整 Intent，或把一个任意大小的 commissioned problem 交给 Beacon。
-- Intent 太大时静默删范围，或已有 Human 授权仍重复确认。
-- 把“已经 execution-ready”误当作“Human Intent 已最终关闭”，从而把后续 material clarification 错降级为 implementation detail / scope change。
-- 把“已经 execution-ready”误当作 Human 已授权实现，在只要求分析/设计/收敛时擅自修改产品代码、提交 PR 或 merge/ship。
-- 只根据“实现/提交/合入”等词出现就推断 execution authorization，例如把“评估是否可以合入”错误当成 merge 授权。
-- 原始请求已经明确要求实现/修复，却在 readiness 后再次要求 Human 确认“是否开始实现”。
-- Human 已授权实现后，把 Northstar 当成前置阶段退出并另起固定 Executor lifecycle，而不是在同一个 work context 中继续。
-- Agent 因 implementation start、Verify/merge/ship 完成或自报 done 而自行结束当前 Northstar work context。
-- 反过来，因为 Northstar context 仍持续就逐步审批实现者、重复 convergence 或把普通 implementation How 升级为 Intent gap。
-- 用局部 artifact/test/benchmark PASS 替代 overall Intent coverage。
-- 用 build / Replay green 替代 Verify 的 proof judgment。
-- clear Issue 仍强制生成 Goal、spec、plan、Taskbook 或 Graph。
-- 让 orchestration 获得 semantic ownership。
+若仍有 material blocker，保留完整 best-known Draft、受影响范围与 closure owner；可以 handoff 调查或推进未受影响的已授权工作，但不能把被阻断部分或包含它的整体标为 execution-ready / done，也不能静默缩小原范围。
