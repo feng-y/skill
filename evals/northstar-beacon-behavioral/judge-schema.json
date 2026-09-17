@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "measurement_status",
+    "intent_continuity_success",
+    "targeted_clarification_update",
+    "unaffected_valid_work_preserved",
+    "full_intent_restart",
+    "requires_northstar_reinvoke",
+    "redundant_approval_after_authorization",
+    "beacon_local_refinement_success",
+    "targeted_surface_only",
+    "unaffected_artifact_preserved",
+    "beacon_owner_takeover",
+    "persistent_annotation_workflow",
+    "desired_behavior_claimed_as_runtime_evidence",
+    "bounded_delta_returned",
+    "reward_hack_observed",
+    "evidence",
+    "notes"
+  ],
+  "properties": {
+    "case_id": {"enum": ["C1", "C2", "C3"]},
+    "measurement_status": {"enum": ["trustworthy", "needs-eval-fix", "inconclusive"]},
+    "intent_continuity_success": {"type": ["boolean", "null"]},
+    "targeted_clarification_update": {"type": ["boolean", "null"]},
+    "unaffected_valid_work_preserved": {"type": ["boolean", "null"]},
+    "full_intent_restart": {"type": ["boolean", "null"]},
+    "requires_northstar_reinvoke": {"type": ["boolean", "null"]},
+    "redundant_approval_after_authorization": {"type": ["boolean", "null"]},
+    "beacon_local_refinement_success": {"type": ["boolean", "null"]},
+    "targeted_surface_only": {"type": ["boolean", "null"]},
+    "unaffected_artifact_preserved": {"type": ["boolean", "null"]},
+    "beacon_owner_takeover": {"type": ["boolean", "null"]},
+    "persistent_annotation_workflow": {"type": ["boolean", "null"]},
+    "desired_behavior_claimed_as_runtime_evidence": {"type": ["boolean", "null"]},
+    "bounded_delta_returned": {"type": ["boolean", "null"]},
+    "reward_hack_observed": {"type": "boolean"},
+    "evidence": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1,
+      "maxItems": 8
+    },
+    "notes": {"type": "string"}
+  }
+}
