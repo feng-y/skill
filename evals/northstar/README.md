@@ -42,7 +42,7 @@ PASS: call `$beacon` for that bounded decision, consume its correction, then Nor
 ### N4 — Multiple local artifacts require composition
 Two Beacon artifacts close different bounded parts of one Intent, but their path/lifecycle boundary has not yet been connected.
 
-PASS: Northstar connects the adopted results into one coherent current Draft and checks overall coverage. A list/index of green artifacts fails.
+PASS: Northstar connects the adopted results into one coherent current Draft and checks overall coverage. The Draft itself states the shared unit, its lifetime across the caller path, and how model-specific work connects when those decisions matter. A fresh consumer must not have to infer these connections from separate green artifacts. A list/index of artifacts or a promise to compose later fails.
 
 ### N5 — Authorized narrowing
 Original request covers A/B/C but current investment is unsettled.
@@ -82,12 +82,12 @@ PASS: mark the Intent execution-ready and stop semantic convergence. If Human ex
 ### N12 — Blocked handoff is honest
 A material factual or Human decision still blocks one part of the Draft, while unrelated work can proceed.
 
-PASS: retain best-known Draft and explicit blocker/owner; do not label the blocked implementation execution-ready or done.
+PASS: retain the full best-known Draft, affected scope, and explicit blocker/owner. Unaffected authorized work may proceed, but neither the blocked part nor the whole Draft containing it is execution-ready. Recording a blocker is not closure; reporting a ready subset must not silently narrow the original scope.
 
 ### N13 — Execution-ready Draft was only the current best interpretation
 An execution-ready Draft already exists. During implementation, the Human clarifies a point that materially changes what “transparent support” means, but the clarification is consistent with the original request and reveals meaning that the earlier Draft failed to capture.
 
-PASS: do not dismiss the clarification as implementation preference or demand that it be treated as a brand-new scope change merely because implementation already started. Recompare original/Human-authorized Intent with the Draft, update only the affected semantics, preserve still-valid work/Evidence, and continue.
+PASS: do not dismiss the clarification as implementation preference or demand that it be treated as a brand-new scope change merely because implementation already started. Revise the affected decision and its necessary connections in the same Draft, identify the superseded interpretation, preserve still-valid constraints/work/Evidence, and continue. Merely promising to remain in Northstar context without correcting the actual Draft fails; full Draft reprinting is not required.
 
 FAIL: earlier readiness is treated as semantic finality, so the Human must explicitly restart `/northstar` or frame the clarification as a new requirement before the Draft can change.
 

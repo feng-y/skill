@@ -37,7 +37,7 @@ Route elsewhere when:
 
 ## One bounded decision
 
-Close one material local decision at a time. If no concrete difference would change outcome, core path, ownership surface, binding boundary, interface, usage, or accepted result, stop.
+Close one material local decision at a time: one cohesive concrete question that can be returned to the caller. Include the connected interface, usage, and consequences of already-decided ownership/lifetime constraints needed to judge it; do not split mechanically by field, file, or individual clause. Independent questions and whole-Intent composition remain with the caller. If no material concrete difference remains, stop.
 
 ## Representation
 
@@ -66,7 +66,7 @@ A concrete artifact is useful only if it changes or closes the caller's judgment
 
 ## Artifact feedback
 
-When Human/caller feedback is anchored to a specific path, interaction, field, boundary, visual element, or behavior in the artifact, refine that same bounded decision instead of restarting shaping: preserve still-valid parts, revise only the affected surface, and return the material delta to the caller.
+When Human/caller feedback is anchored to a specific path, interaction, field, boundary, visual element, or behavior in the artifact, refine that same bounded decision instead of restarting shaping. Follow the semantic impact, not just the pointed-to text: update connected clauses or examples only where the correction makes them inconsistent, preserve still-valid parts, and return the material delta with the reason for any connected changes. Do not widen a local correction into a new general rule.
 
 Human feedback about desired meaning is authoritative intent/choice input, not factual Evidence that runtime already behaves that way. Do not create a persistent annotation/review workflow or mandatory Human stage. If the feedback changes canonical Intent / Acceptance, long-term Architecture, or proof semantics rather than only the local concrete shape, return it to the corresponding semantic owner.
 
