@@ -40,13 +40,13 @@ export PATH="/opt/rdr/venv/bin:$PATH"
 python3 -c "import secrets; print(secrets.token_urlsafe(24))"
 ```
 
-### 配置 token（可选；优先级：`--token` > `RDR_TOKEN` > 文件）
+### 配置 token（可选；推荐 access config 或 `RDR_TOKEN`）
 
 Server 可以先在没有 token 的状态启动；listener 正常存在，但任何认证都会返回 `server token not configured`，`rdr server status` 也会以 non-zero 报告这一状态。需要建立可用连接时，通过以下任一方式配置 token：
 
-1. `RDR_TOKEN` 环境变量 —— 启动进程时读取，修改后需要重启
-2. `rdr server start --token <token>` —— 启动时一次性指定
-3. `/etc/rdr/access.json` 文件 —— 生产推荐，支持 30s 热更新与轮换；server 已启动时创建该文件也会被 watcher 发现
+1. `/etc/rdr/access.json` 文件 —— 生产推荐，支持 30s 热更新与轮换；server 已启动时创建该文件也会被 watcher 发现
+2. `RDR_TOKEN` 环境变量 —— 启动进程时读取，修改后需要重启
+3. `rdr server start --token <token>` —— 仅保留兼容；token 可能进入 shell history 或启动记录，不作为推荐路径
 
 ```bash
 mkdir -p /etc/rdr && cat > /etc/rdr/access.json <<'EOF'
@@ -68,7 +68,7 @@ chmod 600 /etc/rdr/access.json
 托管启动通过环境变量配置：
 
 ```bash
-RDR_TERMINAL_MAX_ATTACHMENTS=1 rdr server start --token <token>
+RDR_TERMINAL_MAX_ATTACHMENTS=1 rdr server start
 ```
 
 前台 server 也可以显式传参：
@@ -286,7 +286,7 @@ rdr get HOST:19090:/remote/large-file ./large-file
 rdr put ./local-file HOST:19090:/remote/file
 ```
 
-上传会把本地文件 size 与完整 MD5 发送给 server；server 在临时文件中写入、核对 size + checksum、`fsync`，校验成功后才原子替换目标路径。上传当前**不支持断点续传**；失败后重新执行 `rdr put`。
+上传会把本地文件 size 与完整 MD5 发送给 server；server 在临时文件中写入，并在任一 chunk 使接收字节数超过声明 size 时立即拒绝并清理临时文件。完整接收后继续核对 size + checksum、`fsync`，校验成功后才原子替换目标路径。上传当前**不支持断点续传**；失败后重新执行 `rdr put`。
 
 ## 7. 日常诊断
 
