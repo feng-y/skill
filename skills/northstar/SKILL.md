@@ -81,7 +81,7 @@ Northstar 负责把 work 收敛到足够执行，但**不能因为已经知道�
 
 只有仍会 materially 改变 Intent，且答案真正属于 Human commitment 时才 Ask Human，例如 scope cut、产品行为、兼容承诺、投入/风险取舍或多个都合理但含义不同的 interpretation。技术事实从 repo/runtime/data/source 获取，不让 Human 猜。
 
-当一个模糊请求背后同时存在多个**相互关联的 Human-owned 决策**，被动一次补一个洞会让 Draft 来回漂移时，Northstar 可以主动做一个短的 **decision interview**：先给出 current best interpretation / default，再暴露真正仍 live 的 forks、每个 fork 会改变什么，只问答案不同会改变 Draft / Constraint / Acceptance 的问题。相关选择可以一起问；若依赖关系不清，先问最高 leverage 的一个。Human 明确要求“grill me / challenge my assumptions”时可以更主动地寻找遗漏取舍，但仍不询问 repo 可查的技术事实、implementation trivia 或“为了完整”的问题清单。
+当一个模糊请求背后同时存在多个**相互关联的 Human-owned 决策**，被动一次补一个洞会让 Draft 来回漂移时，Northstar 可以主动做一个短的 **decision interview**：先给出 current best interpretation 与真正仍 live 的 alternatives、每个 fork 会改变什么；只有已有 Intent / Evidence 足以支持时才给 recommendation，不凭空设置 default。只问答案不同会改变 Draft / Constraint / Acceptance 的问题。相关选择可以一起问；若依赖关系不清，先问最高 leverage 的一个。Human 明确要求“grill me / challenge my assumptions”时可以更主动地寻找遗漏取舍，但仍不询问 repo 可查的技术事实、implementation trivia 或“为了完整”的问题清单。
 
 Decision interview 的产物是更新后的 Decision / Constraint / Draft / Acceptance，不是问答 transcript。能够区分 live paths 后立即停止；不要把 Northstar 变成默认采访流程，也不要用泛化的“还有什么要求？”替代具体 material fork。
 
@@ -130,7 +130,7 @@ Intent 需要脱离当前 conversation 流转时，Drafted Issue 是 canonical d
 
 只有 fresh consumer 必须知道的信息才 fold back 到 body。已有 canonical Issue 时更新它，不创建平行 SOT。Issue 按 cohesive engineering outcome / responsibility boundary 切，不按 model context、文件或 agent session 切。
 
-当大 Intent 必须跨多个 session 才能继续收敛时，不需要额外 Wayfinder / decision-DAG artifact；直接用现有 `Open Questions` 保存**当前 material decision frontier**：尚未关闭的决定、为什么不同答案会改变 current Draft、真实 closure owner，以及已知的必要依赖。已关闭的 frontier fold 回 Draft / Decision 后从 Open Questions 移除，历史过程留在 comments。只记录当前能看见且会改变下一步判断的 frontier，不提前枚举远处 tickets 或把未知未来伪装成完整 Graph。
+当大 Intent 必须跨多个 session 才能继续收敛时，不需要额外 exploration / decision-DAG SOT；直接用现有 `Open Questions` 保存**当前 material decision frontier**：尚未关闭的决定、为什么不同答案会改变 current Draft、真实 closure owner，以及已知的必要依赖。已关闭的 frontier fold 回 Draft / Decision 后从 Open Questions 移除，历史过程留在 comments。只记录当前能看见且会改变下一步判断的 frontier，不提前枚举远处 tickets 或把未知未来伪装成完整 Graph。
 
 Execution orchestration / control plane 可以 start / route / pause / resume 工作，但不能定义或改写 Intent、material Graph、Architecture 或 Acceptance。
 
