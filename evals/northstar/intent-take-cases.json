@@ -29,7 +29,7 @@
         "the actor asks Human to choose producer/mutability/lifetime facts",
         "a specialist becomes a second canonical Intent owner"
       ],
-      "consumer_check": "Handoff must distinguish verified fixture facts, intended sharing boundary, model-local derivation, no cross-request cache, and any remaining blocker without requiring the original conversation."
+      "consumer_check": "Taskbook must preserve verified fixture facts, intended sharing boundary, model-local derivation, no cross-request cache, and any remaining blocker; the session handoff only points to that state and adds resume delta."
     },
     {
       "id": "IT2_local_results_need_composition",
