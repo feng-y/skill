@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
   short_description: "收敛并保持完整工程 Intent"
-  default_prompt: "使用 $northstar，遵循其 SKILL.md，维护与原始请求或 Human 已确认范围一致的完整 current Draft。material / cross-session work 落盘为唯一 canonical Taskbook；session handoff 只记录 Taskbook pointer、resume delta 与 next owner，不复制方案。Northstar 负责 specialist 取舍、task dispatch 与结果 acceptance，但不执行 implementation，也不替 Verify 判断 proof sufficiency。已有 scoped authorization 不重复确认；worker 结果返回 Northstar 判卷后再更新 Taskbook / next task。"
+  default_prompt: "使用 $northstar，遵循其 SKILL.md，维护与原始请求或 Human 已确认范围一致的完整 current Draft。material / cross-session work 落盘为唯一 canonical Taskbook；session handoff 只记录 Taskbook pointer、resume delta 与 next owner，不复制方案。Northstar 负责 specialist 取舍、material task/owner handoff 与结果 acceptance，但不执行 implementation，也不替 Verify 判断 proof sufficiency。已有 scoped authorization 不重复确认；worker 结果返回 Northstar 判卷后再更新 Taskbook / next task。"
