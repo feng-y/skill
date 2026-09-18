@@ -1,13 +1,13 @@
 ---
 name: northstar
-description: "Canonical engineering-intent control: keep the original or Human-authorized request aligned with one current Draft, route material gaps to the right owner, compose returned results, and maintain durable intended meaning as work evolves."
+description: "Canonical engineering-intent control: keep the Human-authorized request aligned with one current Draft, persist material work as one Taskbook, route execution without performing it, judge returned task results against Intent, and preserve continuity across sessions with delta-only handoffs."
 ---
 
 # Northstar · 工程 Intent 的 canonical owner
 
-Northstar 负责把 conversation、request、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。它维护一个 current canonical Draft，并持续检查它是否仍匹配原始 Intent 或 Human 已确认范围。需要跨 session、agent、Human 或执行环境流转时，同一语义 materialize 为 Drafted Issue；Issue 是 durable carrier，不是第二套语义阶段。
+Northstar 负责把 conversation、request、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。它维护一个 current canonical Draft，并持续检查它是否仍匹配原始 Intent 或 Human 已确认范围。对 material、跨 session / agent / execution-environment 的 work，同一语义必须落盘为一个 canonical **Taskbook**；Taskbook 是 current Draft 的 durable work surface，不是第二份 spec。
 
-Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof sufficiency judgment，也不持续监督实现者。PR 是 realized Change / Delivery surface。
+Northstar 不拥有独立 Goal 层，不执行 implementation，也不负责 proof sufficiency judgment。它持续拥有当前 work 的 semantic control：Taskbook、material next task / owner、执行结果相对 Intent / Acceptance 的 acceptance judgment，以及 Evidence 触发后的受影响修订。低层 execution start / pause / retry、implementation How 与 verifier backend 仍由各自执行系统负责；PR 是 realized Change / Delivery surface。
 
 核心规则：
 
@@ -28,7 +28,7 @@ Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof 
 
 对会反复出现在 Intent、repo 与 handoff 中的 material concept，优先复用 Human / repository 已有的 domain term，并保持 **one concept → one stable term**。多个名字实际指向同一概念时，在 current Draft 中收敛到一个 canonical term；名字相近但语义不同的概念必须明确边界，不能为了简洁合并。
 
-只有一个 recurring distinction 无法用现有语言稳定表达时才引入新 term；首次定义它与既有概念的关系，然后在 Draft、Issue 与 specialist invocation 中一致复用。稳定术语是 semantic compression / navigation anchor，不是 Evidence，也不能因为某个“好听的词”就反向决定 Architecture 或实现。
+只有一个 recurring distinction 无法用现有语言稳定表达时才引入新 term；首次定义它与既有概念的关系，然后在 Draft、Taskbook 与 specialist invocation 中一致复用。稳定术语是 semantic compression / navigation anchor，不是 Evidence，也不能因为某个“好听的词”就反向决定 Architecture 或实现。
 
 ## Intent convergence
 
@@ -57,7 +57,7 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 - **明确改变已授权 scope / commitment / accepted outcome** → 作为新的 Human authorization 更新 Draft；
 - **只讨论已经成立 Intent 下的 implementation How** → 实现者自治推进，Northstar 不介入。
 
-Northstar 保持 Intent continuity，不保持 execution control。没有新的 material semantic gap 时，不重复 convergence、不要求实现者逐步审批，也不为了“仍在 Northstar context”而制造 ceremony。
+Northstar 保持 Intent continuity 与 semantic control，但不亲自执行 task、也不接管低层 execution mechanics。没有新的 material semantic gap 时，不重复 convergence、不要求实现者逐步审批；执行者在 Taskbook 边界内自治 implementation How，结果与 Evidence 返回后由 Northstar 判断该 material task 是否可接受并推进 next task。
 
 当 Human 显式调用 `/northstar`（或明确要求 Northstar 持续处理某个 work item）时，这个 Intent context 对该 work item 保持有效，直到 Human 明确结束、切换到另一个独立 work item，或明确撤销该上下文。implementation start、Verify PASS、merge/ship、实现者自报 done 都不能由 Agent 单方面解释为 Northstar context 已结束。若 Human 明显开始了一个无关的新任务，可视为 work-context switch；不要要求额外 `/exit` 仪式。
 
@@ -67,13 +67,13 @@ Northstar 负责把 work 收敛到足够执行，但**不能因为已经知道�
 
 先从 Human 已经表达的**整体语义**恢复授权，不按关键词机械匹配，也不制造二次确认：
 
-- Human 的请求语义明确要求实际改变系统，例如要求完成修复、实现功能、执行迁移、删除旧路径、提交/合入已经确定的改动 → execution authorization 已存在；Intent 足够稳定后直接继续实现，不再问一次“要不要开始”；
+- Human 的请求语义明确要求实际改变系统，例如要求完成修复、实现功能、执行迁移、删除旧路径、提交/合入已经确定的改动 → execution authorization 已存在；Intent 足够稳定后直接 dispatch / continue 对应 execution task，不再问一次“要不要开始”；Northstar 本身不执行 implementation；
 - Human 只是要求分析、调研、评估、review、设计、收敛、给方案、产出 Draft/Issue，或询问“是否应该/是否可以实现、提交、合入” → 可以把 Intent 收敛到 execution-ready，但不开始持久产品实现，也不能因为句子里出现“实现/提交/合入”等词就推断已经授权；
-- Human 后续明确要求把当前方案实际落地，例如“开始实现 / 按这个改 / 执行这个方案” → 在**同一个 Northstar work context** 中获得 execution authorization 并继续推进；这不是退出 Northstar、另起 Executor lifecycle，也不需要重新确认已经成立的 Intent。
+- Human 后续明确要求把当前方案实际落地，例如“开始实现 / 按这个改 / 执行这个方案” → 在**同一个 Northstar work context** 中获得 execution authorization；Northstar 更新/落盘 Taskbook，并继续 dispatch 下一 execution task 给执行者。这不是退出 Northstar、另起 Executor lifecycle，也不需要重新确认已经成立的 Intent。
 
 为关闭 Intent gap 所需的 repo/source/runtime 调查、只读 probe，以及 Beacon 的 cheap/reversible/disposable sketch、experiment 或 minimal artifact，不等同于持久产品实现；它们仍应遵循各自 owner 的边界。没有 execution authorization 时，不应修改准备合入的产品代码、创建以落地为目的的 commit/PR、merge/ship 或 rollout。
 
-一旦 execution authorization 已存在，只要 Human 没有撤销或缩小它，就在当前授权 scope 内持续有效。授权同时受对象与动作范围约束：要求实现不自动等同于要求 commit、创建 PR、merge、ship 或 rollout；Northstar 只恢复 Human 已表达的范围，不扩大也不重新审批。实现过程中的普通 How 由实现者自治；只有 material Human clarification 或 Evidence 改变 Intent / Architecture / proof premise 时才回对应 semantic owner。
+一旦 execution authorization 已存在，只要 Human 没有撤销或缩小它，就在当前授权 scope 内持续有效。授权同时受对象与动作范围约束：要求实现不自动等同于要求 commit、创建 PR、merge、ship 或 rollout；Northstar 只恢复 Human 已表达的范围，不扩大也不重新审批。实现过程中的普通 How 由执行者自治；执行者提交 result / Evidence 后，Northstar 对照 Taskbook 判断 material task 是否满足当前 Intent / Acceptance，并据此接受、要求修订、保留 blocker 或更新后续 task。proof sufficiency 仍由 `$verify` 判断，Northstar 不因“worker 自报 done”直接关闭 task 或 Intent。
 
 ## Human scope 与 clarification
 
@@ -100,7 +100,7 @@ Northstar 拥有 Intent，不复制 specialist 的责任：
 
 Beacon 只处理一个 bounded/local material concrete decision，返回足以判断该局部问题的连贯表示，不按字段或文件机械拆分。prototype、minimal implementation、UI/config/API draft、experiment 等都只是 Beacon 可选 technique。**Beacon 不接受“把整个 Intent 做完整”或“组合这些局部结果”的委托。** 多个 Beacon artifact 的选择、相接与整体 coverage 由 Northstar 完成。
 
-specialist 结果不创建第二份 Intent SOT；只把 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到 current Draft / Issue。
+specialist 结果不创建第二份 Intent SOT；只把 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到 current Draft，并在 material / cross-session work 中同步落入 canonical Taskbook。
 
 specialist 的 scoped result 在 Northstar 完成取舍前只是 local input，不是 canonical Draft。调用 specialist 时，先让它单独返回 bounded result；该 return 成立后，Northstar 才恢复 caller judgment，明确采用、拒绝或继续路由，并把采用部分组合进 current Draft。不要让一段未分界的回答同时冒充 specialist return 和 Northstar final judgment，也不能把未经 caller judgment 的 specialist draft 直接当作 canonical handoff。这个短暂的 caller boundary 不物化成 persistent phase、workflow 或额外 artifact。
 
@@ -124,17 +124,39 @@ Northstar 定义“什么结果才算符合预期”；Verify 定义什么真实
 
 如果 Acceptance 已明确但 proof route、baseline/oracle 或 false-pass risk material，调用 `$verify`。不要因为 backend green 就宣布 Intent 正确，也不要把 proof 命令塞进 canonical Intent。
 
+## Taskbook：持久化方案与执行控制面
+
+当 work 已经 material 到需要多个 execution task、需要跨 session / agent / execution-environment 延续，或 Human 明确要求形成实施交接时，把 current canonical Draft 落盘为一个 **Taskbook**。简单的一次性请求不为了 ceremony 强制建文件；一旦已有 material 方案需要后续执行，Taskbook 就是该 work 的 canonical durable surface。
+
+Taskbook 只保存会改变后续 execution / acceptance 的 durable 状态：Problem / current Draft、binding Decisions / Constraints / Acceptance、已确认事实与 material blocker、最小充分的 execution tasks / dependency、task status、决定性 Evidence pointer、last Northstar judgment、next task / owner。不要复制 investigation transcript、具体命令流水或 implementation-local How。
+
+**Taskbook 不是 Northstar 自己的执行清单。** Northstar 只在 **material Taskbook boundary** 选择 next task / owner 并完成 handoff；worker / coder / specialist / external orchestration 拥有实现动作和局部 How，只提交 result、Evidence、residual。不要把 helper、file edit、commit、单个 test 或其他 implementation-local step 都升级成 Northstar checkpoint。Northstar 收到 material task return 后恢复 caller judgment：检查它是否兑现当前 Intent / Acceptance，更新 Taskbook 的 task status / next task，并只在 premise 真正变化时重开对应 semantic owner。执行者不能凭自己的 `done`、测试 green 或 PR 存在直接推进 canonical Taskbook。
+
+Northstar 的 acceptance judgment 与 Verify 的 proof judgment 必须分开：Northstar 判断“这个结果是否满足当前 Intent、是否可以推进下一 material task”；Verify 判断“支撑 completion / safety claim 的 Evidence 是否充分”。当后者 material 时，Northstar 调用 `$verify` 并消费 verdict，而不是自己从 backend green 推导 proven。
+
+这里的 `dispatch / handoff` 是 semantic ownership transfer，不自动表示创建了外部 worker。只有真实 delegation / orchestration tool 已调用并返回对应事件时，才能声称外部执行已启动或完成；没有这种能力时，Northstar 只落盘 Taskbook、标出 next owner / task，并让宿主在执行角色中继续或由下一 session 恢复。即使同一宿主随后承担 worker 角色，也必须保持 worker result 与 Northstar acceptance 两个边界，不能把实现动作冒充成 Northstar judgment。
+
+### Session handoff 只记录 delta
+
+跨 session 时，先确保 Taskbook 已落盘，然后生成一个**短 handoff**。handoff 只回答“从哪里恢复”：canonical Taskbook pointer、baseline / working context 中 fresh session 必须知道的最小状态、last completed / current task、仍 live 的 decision / blocker、next task / owner，以及哪个结果需要返回 Northstar 判卷。
+
+handoff **不得重新复制** Taskbook 中已经存在的 architecture、方案、完整 path mapping、改动面、Acceptance 或 out-of-scope。若这些内容在 handoff 中需要长篇重述，说明 durable 信息没有正确 fold back，应先更新 Taskbook。handoff 是 session delta，不是第二份缩略 Taskbook。
+
+下一 session 的启动 prompt 也只应指向 repo rules + Taskbook + handoff，并要求恢复 Northstar context 后继续 next task；不要把完整方案再次嵌入 prompt。fresh session 先读 canonical Taskbook，再消费 handoff delta。
+
 ## Drafted Issue
 
-Intent 需要脱离当前 conversation 流转时，Drafted Issue 是 canonical durable surface。Issue body 保存 current intended change；comments 保存讨论历史、probe、候选、阶段 Evidence 与 correction trail。
+Drafted Issue 是 tracker / 外部协作 carrier，不承担 canonical plan 或 session handoff 本身。material / cross-session work 先落盘 canonical Taskbook；Issue 只指向它并保存讨论历史 / probe / 阶段 Evidence / correction trail。durable intended change、material task state 与 Northstar judgment 始终 fold back 到 Taskbook。
 
-只有 fresh consumer 必须知道的信息才 fold back 到 body。已有 canonical Issue 时更新它，不创建平行 SOT。Issue 按 cohesive engineering outcome / responsibility boundary 切，不按 model context、文件或 agent session 切。
+Issue 按 cohesive engineering outcome / responsibility boundary 切，不按 model context、文件或 agent session 切。不要让 Issue body、Taskbook、handoff 各自复制一份方案并独立漂移。
 
 Execution orchestration / control plane 可以 start / route / pause / resume 工作，但不能定义或改写 Intent、material Graph、Architecture 或 Acceptance。
 
-## Material compile 只在真正需要时出现
+## Material compile 只展开真正需要的 task / dependency
 
-Clear Drafted Issue 已足以 execution-ready 时，不为了 planning ceremony 再编译 Taskbook/Graph。若当前 Human request 已包含 execution authorization，当前 Agent 可以在同一个 Northstar work context 下直接继续实现；若真实需要跨 session/agent/执行环境 transfer，则把同一 current Draft 作为 durable handoff。只有 material work / dependency 复杂到 fresh implementer 会被迫重新做高层判断时，才读取 [references/material-compile.md](references/material-compile.md)，从已成立 Intent 编译最小充分的 task / dependency handoff。Compile 不能反向发明 Intent、把探索过程膨胀成 issue graph，也不能产生 execution authorization。
+Taskbook 是 material work 的持久化 surface，不等于必须构建 Graph。Clear Draft 若只有一个线性 execution task，可以只落一个 compact task；只有 material work / dependency 复杂到 fresh implementer / worker 会被迫重新做高层判断时，才读取 [references/material-compile.md](references/material-compile.md)，把已成立 Intent 编译成 Taskbook 中最小充分的 task / dependency contract。
+
+Compile 不能反向发明 Intent、把探索过程膨胀成 issue graph、产生 execution authorization，也不能生成 session handoff。已有 scoped authorization 时 Northstar 直接 dispatch Taskbook 的 next execution task；没有时 Taskbook 可以 execution-ready 但不触发实现。
 
 ## Evidence feedback
 
@@ -163,8 +185,8 @@ Human clarification 按前述 Intent continuity 规则处理，不要求它先�
 - 该范围内会改变 intended outcome 的事实、结构、bounded concrete ambiguity 均已关闭，不能用“已记录 blocker”替代 closure；
 - 剩余未知只影响 implementation How。
 
-达到 readiness 后按已有 scoped authorization 决定是否实施；readiness 不产生授权，也不结束 Intent context。
+达到 readiness 后按已有 scoped authorization 决定是否 dispatch execution task；readiness 不产生授权，也不结束 Intent context。Northstar 本身不执行 implementation。
 
-Durable handoff 只在 work 真的需要离开当前 conversation/agent/执行环境，或 Human 明确要求形成 Issue/任务交接时出现；同一个已获授权的 Northstar work 不因为 readiness 自动“handoff 给 Executor”，而是可以直接继续实现。后续 material Human clarification 或 Evidence 仍按 Intent convergence / Evidence feedback 规则更新受影响 Draft。
+Session handoff 只在 work 真的需要离开当前 session / agent / execution environment，或 Human 明确要求交接时出现。handoff 前先把 durable semantic / task state fold back 到 canonical Taskbook；handoff 本身只保存 resume delta。下一 session 读取 Taskbook + handoff 后恢复同一个 Northstar work context，而不是从 handoff 重新推导方案。
 
-若仍有 material blocker，保留完整 best-known Draft、受影响范围与 closure owner；可以 handoff 调查或推进未受影响的已授权工作，但不能把被阻断部分或包含它的整体标为 execution-ready / done，也不能静默缩小原范围。
+若仍有 material blocker，保留完整 best-known Draft、受影响范围与 closure owner；可以 handoff 调查或 dispatch 未受影响的已授权 work，但不能把被阻断部分或包含它的整体标为 execution-ready / done，也不能静默缩小原范围。worker / specialist 返回后必须回到 Northstar judgment；只有 Northstar 更新 canonical Taskbook，才算对应 material task 被接受。

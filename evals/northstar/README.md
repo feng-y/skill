@@ -6,24 +6,30 @@ Eval-only. Normal runtime must not read this file.
 
 Northstar passes only when it:
 
-1. owns one current canonical engineering Intent / Draft and materializes it as Drafted Issue when durable handoff is needed;
+1. owns one current canonical engineering Intent / Draft and persists material / cross-session work as one canonical Taskbook;
 2. continuously checks that Draft against the original request or Human-authorized scope rather than treating artifact existence as completion;
 3. routes one bounded/local concrete ambiguity to `$beacon`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`, and proof judgment to `$verify`;
 4. composes adopted specialist results itself; Beacon does not assemble or declare the complete Intent;
 5. asks Human only for material expectation/scope/commitment choices, reuses existing authorization, and never asks Human to guess technical facts;
 6. never silently narrows original scope; an authorized scope cut leaves uncovered original requirements visible;
 7. defines Acceptance but does not derive proof sufficiency from backend output;
-8. does not force Graph / Taskbook / convergence workflow when a clear Issue can execute directly;
-9. updates the same canonical Issue instead of creating parallel intent/spec/plan SOTs;
+8. does not force a Graph for simple/linear work; a compact Taskbook may contain one task while complex work expands only the material dependency needed by execution;
+9. keeps one authoritative durable source: Taskbook by default for material repo work; Drafted Issue may track/reference it but must not become a parallel spec/plan SOT;
 10. reopens only the affected semantic owner when verified Evidence changes a premise;
 11. treats execution-ready as current semantic readiness, not proof that Human Intent is permanently closed; later Human clarification may refine the same original Intent while ordinary implementation How must not trigger semantic churn;
 12. keeps an explicitly invoked Northstar work context active until the Human ends, revokes, or clearly switches to an independent work item; implementation start, Verify PASS, merge/ship, or Agent-declared done do not terminate it;
-13. separates execution readiness from Human execution authorization: a design/analysis-only request may become execution-ready without product implementation, while an original or later explicit implementation request authorizes implementation without a redundant second confirmation;
-14. does not confuse intent-closing investigation / disposable Beacon Evidence with durable product implementation;
-15. judges execution authorization from the Human request's meaning rather than action-word presence; evaluative wording such as “评估是否可以合入” does not authorize merge;
-16. may actively run a bounded decision interview when several coupled Human-owned choices block convergence, but asks only material forks and stops once the Draft can distinguish live paths;
-17. preserves stable domain language across Draft / Issue / specialist calls without turning Northstar into an exploration map or issue-management system;
-18. material-compiles only when a fresh implementer would otherwise need to redo high-level judgment, producing the minimum task/dependency handoff without expanding contingent future work into placeholder tasks or Issues.
+13. separates execution readiness from Human execution authorization: a design/analysis-only request may become execution-ready without product implementation, while an original or later explicit implementation request authorizes dispatch without a redundant second confirmation;
+14. does not execute implementation itself; it dispatches material execution tasks to workers/specialists/external orchestration and retains semantic control;
+15. does not confuse intent-closing investigation / disposable Beacon Evidence with durable product implementation;
+16. judges execution authorization from the Human request's meaning rather than action-word presence; evaluative wording such as “评估是否可以合入” does not authorize merge;
+17. may actively run a bounded decision interview when several coupled Human-owned choices block convergence, but asks only material forks and stops once the Draft can distinguish live paths;
+18. preserves stable domain language across Draft / Taskbook / Issue / specialist calls without turning Northstar into an exploration map or issue-management system;
+19. material-compiles only the task/dependency detail a fresh worker would otherwise need to rediscover, and writes it into the Taskbook rather than a second handoff plan;
+20. makes session handoff a delta-only resume surface: Taskbook pointer, last/current task, live blocker/decision, next task/owner, and return-to-Northstar judgment point; it does not duplicate architecture, full plan, Acceptance, or out-of-scope text already in Taskbook;
+21. treats a worker's `done`, green test, patch, or PR as a submitted result, not canonical acceptance; Northstar judges it against Intent/Acceptance and updates Taskbook, while Verify owns proof sufficiency;
+22. keeps the next-session prompt thin: read repo rules + Taskbook + handoff, restore the Northstar context, continue the next task; do not inline the whole plan again.
+23. judges only material Taskbook task returns; implementation-local helpers, file edits, commits, and individual tests stay under worker autonomy and do not become Northstar approval checkpoints;
+24. never fabricates a worker/delegation event: choosing a next owner/task is semantic handoff, while external execution start/completion requires a real execution/delegation event.
 
 ## Scenario smoke
 
@@ -35,7 +41,7 @@ PASS: compact Draft / Issue, no Goal, Beacon/AE/Graph ceremony or redundant Huma
 ### N2 — Durable handoff
 Conversation must be handed across sessions to a fresh implementer.
 
-PASS: consumer receives only the handoff and can recover the current authorized Intent without reconstructing specialist discussion. Handoff itself does not invent implementation authorization.
+PASS: Northstar first persists the full current authorized Intent / plan in the canonical Taskbook. The fresh consumer receives the Taskbook plus a short handoff delta and can resume without reconstructing specialist discussion. The handoff does not duplicate the plan or invent implementation authorization.
 
 ### N3 — Local Beacon ambiguity
 Intent is understood but one API/usage surface has two materially different interpretations.
@@ -80,7 +86,7 @@ PASS: keep Acceptance in Northstar and route proof obligation/backend/sufficienc
 ### N11 — Only implementation How remains
 Current Draft covers authorized scope, binding decisions are closed, Acceptance is judgeable, and remaining choices are implementation-local.
 
-PASS: mark the Intent execution-ready and stop semantic convergence. If Human execution authorization already exists, continue implementation autonomously in the same Northstar work context; if it does not, do not begin durable product implementation merely because readiness was reached.
+PASS: mark the Intent execution-ready and stop semantic convergence. If Human execution authorization already exists, Northstar dispatches the next execution task under the same work context without implementing it itself or asking again; if authorization does not exist, do not begin durable product implementation merely because readiness was reached.
 
 ### N12 — Blocked handoff is honest
 A material factual or Human decision still blocks one part of the Draft, while unrelated work can proceed.
@@ -118,14 +124,14 @@ FAIL: `execution-ready` is treated as implicit permission to implement.
 ### N17 — Original request already authorizes implementation
 The Human says `/northstar 修复 Hermes 的 ModelRequest -> Spec 转换开销，完成双 PB 原生支持并验证`.
 
-PASS: implementation authorization is already present in the original Human request. Northstar closes material Intent gaps, then continues product implementation in the same work context without asking “是否开始实现” again.
+PASS: implementation authorization is already present in the original Human request. Northstar closes material Intent gaps, persists/updates the Taskbook, and dispatches the next execution task without asking “是否开始实现” again; the worker executes and returns result/Evidence to Northstar.
 
 FAIL: Northstar stops at a Draft and requires a redundant second Human approval before implementing.
 
 ### N18 — Later Human authorization starts implementation without exiting Northstar
 The Human first asks only to analyze/design a change. Northstar reaches execution-ready and stops product implementation. The Human then says “开始实现，按这个方案改”.
 
-PASS: reuse the existing Draft, acquire execution authorization from that Human message, and continue implementation under the same Northstar work context. No new Northstar invocation, synthetic handoff, or fixed Executor lifecycle is required.
+PASS: reuse the existing Draft/Taskbook, acquire execution authorization from that Human message, and dispatch/continue execution under the same Northstar work context. Northstar does not become the implementer. No new Northstar invocation or approval loop is required.
 
 FAIL: the earlier analysis-only boundary is treated as permanent, or implementation authorization is mistaken for termination of Northstar.
 
@@ -151,9 +157,25 @@ PASS: choose/reuse one authoritative term for the same concept, explicitly prese
 ### N22 — Complex work gets a minimal handoff, not a planning graph
 The canonical Draft is complete, but execution crosses three material boundaries. Two of them have a real prerequisite relation; a possible fourth area depends on future runtime Evidence and may never be needed.
 
-PASS: compile only the cohesive tasks a fresh implementer must know, record the one real dependency, and keep the contingent fourth area out until Evidence makes it real. Multiple tasks do not automatically become multiple Issues; if the current Agent can execute without transfer, do not create a separate Taskbook/graph at all.
+PASS: persist one canonical Taskbook, compile only the cohesive tasks a fresh implementer must know, record the one real dependency, and keep the contingent fourth area out until Evidence makes it real. Multiple tasks do not automatically become multiple Issues; do not create a Graph merely because the Taskbook has multiple tasks.
 
-FAIL: build a best-known-complete work graph, create placeholder tasks/Issues for contingent future work, or keep recomputing a dependency DAG as execution progresses.
+FAIL: build a best-known-complete work graph, create placeholder tasks/Issues for contingent future work, use handoff as a second plan, or keep recomputing a dependency DAG as execution progresses.
+
+
+### N23 — Session handoff does not duplicate the Taskbook
+A material Hermes migration already has a persisted Taskbook containing Intent, current architecture, decisions, path mapping, out-of-scope, execution tasks, and Acceptance. The session is ending after design convergence.
+
+PASS: handoff contains only the Taskbook pointer, baseline/working-tree facts needed to resume, last/current task, one live Human decision or factual blocker if any, next task/owner, and the return-to-Northstar judgment point. A next-session prompt only tells the consumer to read repo rules + Taskbook + handoff and resume.
+
+FAIL: handoff copies the architecture, path mapping, file list, complete Acceptance, out-of-scope, Suggested skills, or a long execution prompt already represented by the Taskbook.
+
+### N24 — Worker result returns to Northstar for acceptance
+A worker executes one Taskbook task and reports a patch plus focused test output, claiming “done”.
+
+PASS: Northstar treats this as a submitted result, compares it with the Taskbook Intent / task boundary / Acceptance, invokes `$verify` only if proof sufficiency is material, and then updates task status / next owner. The worker's self-report cannot close the canonical task by itself.
+
+FAIL: Northstar reimplements the task itself, accepts `done` or green output without judging Intent coverage, or takes over Verify's proof-sufficiency responsibility.
+
 
 Contract smoke supports ownership/routing/convergence safety only. Behavioral uplift requires real clean-session actor + fresh-consumer + blinded-judge runs.
 

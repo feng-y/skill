@@ -4,6 +4,20 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## 2026-09-18 — Northstar persistent Taskbook + delta-only session handoff
+
+Change: `fix/northstar-taskbook-handoff-20260918`
+
+Northstar previously kept the current Draft continuous but treated Drafted Issue / durable handoff as the main transfer surface and explicitly avoided a default Taskbook. In material multi-task work this let session handoff absorb the full design, and the runtime wording also blurred “execution is authorized under Northstar context” with “Northstar itself continues implementation”.
+
+- **Canonical durable surface:** material or cross-session Northstar work now persists as one Taskbook containing the current Draft, binding Decisions / Constraints / Acceptance, minimal material tasks / status, decisive Evidence pointers, last Northstar judgment, and next owner.
+- **Session handoff:** reduced to a resume delta that points to the Taskbook. Architecture, full plan, Acceptance, out-of-scope and other durable content belong in the Taskbook and must not be duplicated into handoff or the next-session prompt.
+- **Execution boundary:** Northstar owns semantic control, task dispatch and task acceptance, but does not execute implementation or low-level orchestration mechanics. Workers own implementation How and return result / Evidence.
+- **Judgment boundary:** worker `done`, patch, test green or PR existence are submissions, not canonical acceptance. Northstar decides whether the material task satisfies Intent / Acceptance and updates the Taskbook; Verify still owns proof obligation and Evidence sufficiency.
+- **Issue boundary:** Drafted Issue remains a tracker / external carrier. When a repo-local Taskbook exists it points to that canonical source instead of becoming a parallel plan.
+- **Preserved behavior:** execution-ready remains separate from Human execution authorization; existing scoped authorization is reused without approval loops; later material clarification and Evidence only reopen affected semantics.
+- **Retired semantics:** long-form handoff as a duplicate plan, session prompt as a copied execution spec, Northstar wording that implies it personally implements the authorized change, and worker self-report as sufficient task closure.
+
 ## 2026-09-16 — Northstar execution-ready ≠ execution authorization
 
 PR: #99 (`fix-northstar-execution-authorization`)

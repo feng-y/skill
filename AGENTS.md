@@ -28,7 +28,7 @@
 
 当前 canonical capability map：
 
-- **`northstar`**：conversation / request / incident → canonical engineering Intent；把 Intent 收敛到 `execution-ready` 不会制造 Human execution authorization，已有明确授权也不重复确认；需要 durable handoff 时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
+- **`northstar`**：conversation / request / incident → canonical engineering Intent；把 Intent 收敛到 `execution-ready` 不会制造 Human execution authorization，已有明确授权也不重复确认。对 material、跨 session / agent / execution-environment 的 work，Northstar 将 current Draft 与 material execution contract 落盘为一个 canonical **Taskbook**，持续维护 material task / status / next owner，并在执行结果返回后判断它是否满足 Intent / Acceptance。Northstar 不执行 implementation，也不判断 proof sufficiency；后者仍属于 Verify。Drafted Issue 可以作为 tracker / 外部 carrier，但不能与 Taskbook 形成平行 Intent SOT。
 - **`beacon`**：只拥有 already-understood semantic question 中一个 bounded/local part 的 concrete reaction / inspection surface；Core Path / Usage / Interface Draft / behavior example / config-schema shape / UI draft / minimal implementation / experiment / disposable prototype 都是手段，不拥有 caller 的 Intent / Architecture / Verification judgment。它是 **caller-neutral、主要由 model 按需调用的 specialist**，不绑定 Northstar。
 - **`architecture-evolution`**：拥有长期 Target Architecture judgment + Current → Target Evolution Program。两层 judgment 必须分开，但不拆成两个顶层 Skill。
 - **`verify`**：拥有 engineering verification；从 authoritative claim 推导 proof obligation，选择并驱动 real-artifact verifier/backend，收集 Evidence 并判断 proven / false / unproven。
@@ -59,7 +59,9 @@
 
 ## Artifact ownership
 
-- **Drafted Issue**：Northstar Intent 的 durable carrier / canonical intended change。
+- **Taskbook**：Northstar 对 material / cross-session work 的 canonical durable artifact；保存 current Draft、binding Decision / Constraint / Acceptance、material tasks / status、决定性 Evidence pointer、last Northstar judgment 与 next owner。它不是第二份 plan，而是 current Intent 的持久化 work surface。
+- **Session handoff**：只保存从 canonical Taskbook 恢复所需的 session delta：Taskbook pointer、last completed/current task、仍 live 的 blocker/decision、next task / owner、需要返回 Northstar 的 judgment point。不得复制 Taskbook 的架构、方案、验收全文；需要重述的 durable 内容应回写 Taskbook。
+- **Drafted Issue**：tracker / 外部协作 carrier。material / cross-session work 的 canonical state 始终在 Taskbook；Issue 只指向它并保留讨论历史 / 外部协作信息，禁止复制一份可独立漂移的方案。
 - **PR**：realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在 PR。
 - **Beacon artifact**：bounded reaction / inspection surface，可丢弃；durable correction / Evidence 返回原 caller，由 caller 决定是否需要 fold back。Prototype 只是其中一种可选 artifact technique。
 - **Architecture handoff**：只有独立调用或真实跨边界需要时持久化；被 Northstar 调用时优先 fold durable structural decision 回 Issue。
@@ -69,7 +71,7 @@
 ## Graph and loop
 
 - **Work is a graph.** Material engineering work 按 cohesive outcome 与真实 dependency 判断，而不是 prose list。简单/线性工作只是 Graph 的退化形式；不为了“使用 Graph”新增 Graph object/schema、node taxonomy、persistent state、scheduler 或 manager protocol。
-- **Compile only when earned.** Clear Drafted Issue 可以直接达到 execution-ready；已有 scoped Human execution authorization 时当前实现者可继续，没有时停在 Draft。只有复杂 material dependency 会迫使 fresh implementer 重新做高层判断时，Northstar 才按需 compile coarse material graph / execution contract；compile 不制造授权或 handoff。
+- **Compile only what execution needs.** Clear Draft 可以直接达到 execution-ready；material / cross-session work 把它持久化进 canonical Taskbook。只有 fresh implementer / worker 会因缺失 task boundary 或 dependency 而重新做高层判断时，Northstar 才展开 material task / dependency compile；简单线性工作保持 compact Taskbook，不强制 Graph。已有 scoped Human execution authorization 时可以直接选择并 handoff next material execution task / owner，没有时停在 Draft / Taskbook；真正的 start / pause / resume / retry 仍属于 execution system，compile 不制造授权，也不等同于 session handoff。
 - **Progress through a loop.** Research、execution、review、Verify 都可能产生 new verified Evidence。只有它真正改变 material work、dependency、Intent premise 或 architecture premise 时，才重开对应 owner / affected dependency cone；无关 branch、仍有效 work 与 Evidence 保持有效。
 - **Proof scales with claim.** 普通 implementation-local focused test 可以直接成为 Evidence；behavior-preservation、replacement、cross-boundary Acceptance、false-pass risk、perf 或 merge/ship gate 需要更强、更直接或更独立的 proof。Execution node 不与 verification claim 一一对应。
 - **Agent learning uses Eval, not product proof.** Skill/prompt/tool/harness change 若声称改善 agent behavior，必须通过可重复 behavioral eval；Replay/test green 只能证明对应产品/工程 claim，不能证明 agent 行为变好。Eval 发现稳定 behavior gap 后才驱动 runtime semantics / harness 改进，并使用同一 measurement 重跑。
