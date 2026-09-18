@@ -12,6 +12,22 @@ It intentionally does not reuse `northstar-paired`: that scorer measures
 fresh-consumer handoff quality, while these cases measure multi-turn continuity,
 side effects, and bounded artifact deltas.
 
+### Post-Taskbook controller boundary
+
+This harness predates the Northstar Taskbook/controller split. In `C1`, the
+product-source action cross-check proves only that the **overall actor** performed
+an authorized action after the Human request. It cannot distinguish whether
+implementation was executed by Northstar itself or by a worker operating under
+Northstar control. Therefore new revisions must **not** use
+`authorized_execution_success` as evidence that the Northstar
+controller/worker ownership boundary is correct.
+
+That boundary is evaluated separately by the focused Northstar contract cases:
+material work is persisted in the canonical Taskbook, execution is handed to a
+worker, and worker result/Evidence returns to Northstar for acceptance. A future
+behavioral harness may add an observable worker-dispatch fixture; until then this
+suite remains valid for authorization/continuity and Beacon refinement only.
+
 ## Historical accepted comparison
 
 The retained 2026-09-18 result compared:
