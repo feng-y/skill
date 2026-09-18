@@ -121,6 +121,27 @@ class CLITest(unittest.TestCase):
         self.assertIn("--attach", help_text)
         self.assertIn("prefer `rdr exec`", help_text)
 
+    def test_server_help_prefers_config_or_env_over_token_argument(self) -> None:
+        output = io.StringIO()
+        with redirect_stdout(output):
+            with self.assertRaises(SystemExit) as raised:
+                build_parser().parse_args(["server", "--help"])
+        self.assertEqual(raised.exception.code, 0)
+        help_text = output.getvalue()
+        self.assertIn("recommended token sources", help_text)
+        self.assertIn("/etc/rdr/access.json", help_text)
+        self.assertIn("shell history", help_text)
+        self.assertNotIn("quick start: rdr server start --token", help_text)
+
+        output = io.StringIO()
+        with redirect_stdout(output):
+            with self.assertRaises(SystemExit) as raised:
+                build_parser().parse_args(["server", "start", "--help"])
+        self.assertEqual(raised.exception.code, 0)
+        start_help = output.getvalue()
+        self.assertIn("compatibility option", start_help)
+        self.assertIn("prefer RDR_TOKEN", start_help)
+
 
 class EnvTokenTest(unittest.TestCase):
     def test_env_access_tokens_parses_rdr_token(self) -> None:
