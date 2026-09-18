@@ -120,9 +120,15 @@ async def start_upload(
 
 
 def write_upload(handle: UploadHandle, payload: bytes) -> None:
+    next_size = handle.bytes_written + len(payload)
+    if isinstance(handle.expected_size, int) and next_size > handle.expected_size:
+        raise ValueError(
+            f"upload exceeds declared size: expected {handle.expected_size} bytes, "
+            f"would write {next_size}"
+        )
     handle.file_obj.write(payload)
     handle.md5.update(payload)
-    handle.bytes_written += len(payload)
+    handle.bytes_written = next_size
 
 
 async def finish_upload(
