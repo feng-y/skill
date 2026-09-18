@@ -7,6 +7,7 @@ import unittest
 from pathlib import Path
 
 from rdr.client import RDRClient, RDRClientError
+from rdr.protocol import read_frame, write_frame
 from rdr.server import RDRServer
 
 
@@ -31,6 +32,18 @@ class RuntimeTest(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(RDRClientError) as raised:
             await client.connect()
         self.assertEqual(str(raised.exception), "invalid token")
+
+    async def test_auth_frame_payload_is_rejected_before_authentication(self) -> None:
+        reader, writer = await asyncio.open_connection("127.0.0.1", self.port)
+        try:
+            await write_frame(writer, {"type": "auth", "token": "secret"}, b"x")
+            header, payload = await asyncio.wait_for(read_frame(reader), timeout=2)
+            self.assertEqual(header["type"], "protocol.error")
+            self.assertIn("invalid payload size", header["error"])
+            self.assertEqual(payload, b"")
+        finally:
+            writer.close()
+            await writer.wait_closed()
 
     async def test_server_without_token_is_reported_distinctly(self) -> None:
         await self.server.set_tokens(())
@@ -143,6 +156,49 @@ class RuntimeTest(unittest.IsolatedAsyncioTestCase):
             downloaded = await client.download(str(remote), copy)
             self.assertEqual(downloaded, len(payload))
             self.assertEqual(copy.read_bytes(), payload)
+
+    async def test_upload_overflow_is_rejected_and_cleaned_without_disconnect(self) -> None:
+        reader, writer = await asyncio.open_connection("127.0.0.1", self.port)
+        try:
+            await write_frame(writer, {"type": "auth", "token": "secret"})
+            ready, _ = await asyncio.wait_for(read_frame(reader), timeout=2)
+            self.assertEqual(ready["type"], "ready")
+
+            with tempfile.TemporaryDirectory() as td:
+                root = Path(td)
+                remote = root / "remote.bin"
+                await write_frame(
+                    writer,
+                    {
+                        "type": "file.put.start",
+                        "request_id": "overflow",
+                        "path": str(remote),
+                        "size": 3,
+                    },
+                )
+                started, _ = await asyncio.wait_for(read_frame(reader), timeout=2)
+                self.assertEqual(started["type"], "file.put.ready")
+
+                await write_frame(
+                    writer,
+                    {"type": "file.put.data", "request_id": "overflow"},
+                    b"abcd",
+                )
+                error, _ = await asyncio.wait_for(read_frame(reader), timeout=2)
+                self.assertEqual(error["type"], "file.error")
+                self.assertIn("upload exceeds declared size", error["error"])
+                self.assertFalse(remote.exists())
+                self.assertEqual(list(root.glob(".rdr-upload-*")), [])
+
+                await write_frame(
+                    writer,
+                    {"type": "identity", "request_id": "still-alive"},
+                )
+                identity, _ = await asyncio.wait_for(read_frame(reader), timeout=2)
+                self.assertEqual(identity["type"], "identity.result")
+        finally:
+            writer.close()
+            await writer.wait_closed()
 
     async def test_download_resumes_from_existing_part(self) -> None:
         client = await self.connect()
