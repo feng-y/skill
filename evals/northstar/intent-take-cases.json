@@ -207,13 +207,16 @@
         "Northstar treats the worker report as a submitted result rather than authoritative task closure",
         "Northstar compares the result with the T2 boundary and current Intent/Acceptance before advancing the Taskbook",
         "if proof sufficiency is material, Northstar routes that judgment to Verify rather than inferring proven from green tests",
-        "after acceptance Northstar updates T2 status and next task/owner; if gaps remain it returns a concrete revision/blocker without implementing T2 itself"
+        "after acceptance Northstar updates T2 status and next task/owner; if gaps remain it returns a concrete revision/blocker without implementing T2 itself",
+        "Northstar judgement occurs at the material T2 boundary; worker-local helper edits/tests do not require separate Northstar approval"
       ],
       "fail_if": [
         "worker self-reported done directly closes T2 or the overall Intent",
         "Northstar starts rewriting the implementation itself instead of judging/dispatching",
         "Northstar claims proof sufficiency solely from focused test green",
-        "the next task advances without updating the canonical Taskbook"
+        "the next task advances without updating the canonical Taskbook",
+        "Northstar turns worker-local implementation steps into a per-step approval loop",
+        "the actor claims an external worker was started or completed without an observable delegation/execution event"
       ],
       "consumer_check": "The canonical Taskbook shows whether T2 was accepted, why, and what task/owner is next; the worker result remains Evidence/input rather than the task authority."
     }
