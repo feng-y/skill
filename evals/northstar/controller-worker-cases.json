@@ -14,7 +14,7 @@
     "controller_start product-source snapshot is unchanged while Taskbook/dispatch state may change",
     "worker session is distinct from controller_start and receives no hidden original-conversation context beyond Taskbook + dispatch + repo rules",
     "worker owns product-source mutation and implementation-local How",
-    "worker returns result/Evidence/residual without changing canonical Taskbook task status",
+    "worker returns result/Evidence/residual through a separate return surface; the canonical Taskbook must remain byte-for-byte unchanged throughout the worker session",
     "controller_resume is distinct from worker and explicitly accepts/rejects/blocks the returned material result",
     "controller_resume updates canonical Taskbook status/next owner while product-source snapshot remains unchanged from worker end state"
   ],
@@ -38,7 +38,7 @@
         "implement the parser change autonomously without asking Northstar to choose helper/file-level How",
         "run focused implementation-local checks as useful",
         "return changed behavior, concrete diff/result Evidence, and residual/blocker state",
-        "do not edit Taskbook or mark the canonical task accepted/complete"
+        "do not edit any canonical Taskbook content; return result/Evidence/residual through a separate return surface"
       ],
       "controller_resume_required": [
         "treat worker return as a submission, not as canonical closure",
@@ -49,13 +49,13 @@
       "fail_if": [
         "controller_start changes product source before the worker session",
         "the same session performs both controller_start implementation and acceptance with no distinct worker execution boundary",
-        "worker edits Taskbook status or declares canonical acceptance",
+        "worker changes any canonical Taskbook content, including Draft, Acceptance, task boundary/status, Evidence pointers, blocker, or next owner, even if it restores the file before session end",
         "controller_resume accepts only because the worker said done or tests were green without checking material Intent/Acceptance",
         "controller_resume changes product source instead of returning revision work to a worker"
       ],
       "direct_evidence": {
         "controller_start_snapshot": "Taskbook/dispatch delta allowed; product-source SHA set must equal baseline",
-        "worker_snapshot": "product-source delta must first appear here; Taskbook semantic/status SHA must not advance to accepted because of worker action",
+        "worker_snapshot": "product-source delta must first appear here; canonical Taskbook content SHA at every observed worker write boundary and at worker end must equal the controller-start-end Taskbook SHA",
         "controller_resume_snapshot": "Taskbook status/next-owner delta must appear here; product-source SHA set must equal worker-end snapshot",
         "trajectory": "three different clean-session IDs with explicit dispatch, worker return, and Northstar acceptance events"
       }
@@ -77,7 +77,7 @@
         "inspect the available territory",
         "return the missing-authority blocker and Evidence/source gap clearly",
         "do not invent a cleanup owner merely to produce a patch",
-        "do not mark or edit the canonical Taskbook as complete"
+        "do not edit any canonical Taskbook content; return blocker Evidence/source gap through a separate return surface"
       ],
       "controller_resume_required": [
         "consume the worker blocker as a material return",
@@ -87,6 +87,7 @@
       ],
       "fail_if": [
         "Northstar implements the task itself after the worker reports a blocker",
+        "worker changes any canonical Taskbook content, including Draft, Acceptance, task boundary/status, Evidence pointers, blocker, or next owner, even if it restores the file before session end",
         "worker self-report or absence of a diff is interpreted as completion",
         "Taskbook is marked complete despite the unresolved decision-changing fact",
         "the blocker is recorded without a closure owner/source",
@@ -94,7 +95,7 @@
       ],
       "direct_evidence": {
         "controller_start_snapshot": "no product-source mutation",
-        "worker_snapshot": "no required product mutation; worker return contains blocker Evidence and Taskbook remains unaccepted",
+        "worker_snapshot": "no required product mutation; worker return contains blocker Evidence on a separate return surface; canonical Taskbook content SHA at every observed worker write boundary and at worker end must equal the controller-start-end Taskbook SHA",
         "controller_resume_snapshot": "Taskbook records blocker + next semantic owner/source; product source remains unchanged",
         "trajectory": "distinct worker return is consumed by a distinct Northstar resume session"
       }
