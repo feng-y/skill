@@ -144,7 +144,7 @@ handoff **不得重新复制** Taskbook 中已经存在的 architecture、方案
 
 ## Drafted Issue
 
-Drafted Issue 是 tracker / 外部协作 carrier，不再默认承担 session handoff 本身。material work 已有 repo-local canonical Taskbook 时，Issue 指向它、保存讨论历史 / probe / 阶段 Evidence / correction trail；durable intended change、material task state 与 Northstar judgment fold back 到 Taskbook。若项目没有独立 Taskbook surface、Issue 本身就是唯一持久化 artifact，则它可以承载同样内容，但仍只能有一个 authoritative source。
+Drafted Issue 是 tracker / 外部协作 carrier，不承担 canonical plan 或 session handoff 本身。material / cross-session work 先落盘 canonical Taskbook；Issue 只指向它并保存讨论历史 / probe / 阶段 Evidence / correction trail。durable intended change、material task state 与 Northstar judgment 始终 fold back 到 Taskbook。
 
 Issue 按 cohesive engineering outcome / responsibility boundary 切，不按 model context、文件或 agent session 切。不要让 Issue body、Taskbook、handoff 各自复制一份方案并独立漂移。
 
