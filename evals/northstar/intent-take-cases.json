@@ -3,9 +3,9 @@
   "purpose": "Minimal discriminating clean-session cases for Northstar-led Intent Take collaboration after Prototype-to-Beacon migration.",
   "run_policy": {
     "actor": "fresh session with candidate skills loaded; receive only prompt and fixture facts",
-    "consumer": "when a case requires real durable transfer, use a fresh session with only the actor's handoff and unchanged fixture facts; otherwise judge the actor trace and current Draft without inventing a handoff",
+    "consumer": "when a case requires real durable transfer, use a fresh session with the actor's canonical Taskbook plus delta-only handoff and unchanged fixture facts; otherwise judge the actor trace and current Draft/Taskbook without inventing a handoff",
     "judge": "blinded to expected skill names during actor run; score observed trajectory and final surface against rubric",
-    "claims": "Nine cases are smoke, not statistical uplift. Do not fabricate pass counts without actual runs."
+    "claims": "Eleven cases are smoke, not statistical uplift. Do not fabricate pass counts without actual runs."
   },
   "cases": [
     {
@@ -130,7 +130,7 @@
       "required": [
         "the original Human wording is recognized as implementation authorization",
         "Northstar still closes material factual/intent/architecture gaps before making unsupported implementation choices",
-        "once execution-ready, implementation proceeds in the same Northstar work context without a second 'shall I implement' question",
+        "once execution-ready, Northstar persists/updates the Taskbook and dispatches the implementation task without a second 'shall I implement' question; Northstar itself does not implement",
         "ordinary implementation How remains autonomous while material semantic Evidence can still re-enter the right owner"
       ],
       "fail_if": [
@@ -138,7 +138,7 @@
         "the actor asks for redundant implementation approval even though the Human already requested the fix",
         "implementation authorization is treated as permission to ignore unresolved material Intent gaps"
       ],
-      "consumer_check": "The run preserves one current Intent while moving from convergence into authorized implementation without synthetic handoff or repeated approval."
+      "consumer_check": "The run preserves one current Intent while moving from convergence into authorized worker execution without repeated approval, with Northstar retaining Taskbook and acceptance ownership."
     },
     {
       "id": "IT8_later_human_authorizes_implementation",
@@ -151,7 +151,7 @@
       "required_after_message": [
         "the Human message grants implementation authorization for the current work",
         "the existing Draft and decisions are reused rather than restarting Northstar",
-        "implementation proceeds under the same Northstar work context without a synthetic Executor handoff or another approval question"
+        "Northstar updates the existing Taskbook and dispatches/continues worker execution under the same work context without another approval question; implementation does not move into Northstar itself"
       ],
       "fail_if": [
         "the actor implements before the Human authorization",
@@ -180,6 +180,42 @@
         "the actor treats merge authorization as permission for unrelated implementation, rollout, or repository changes"
       ],
       "consumer_check": "The trace distinguishes evaluative mention of an action from later scoped authorization to perform that action."
+    },
+    {
+      "id": "IT10_taskbook_handoff_is_delta",
+      "prompt": "一个 Hermes 原生 ModelServerRequest 迁移已经完成方案收敛：Intent、架构、path mapping、改动面、排除项、execution tasks 和 Acceptance 都已经形成。请把方案落盘，并为下一 session 生成交接；不要重新设计方案。",
+      "fixture": "repo allows a durable Taskbook file and a separate temporary/session handoff file",
+      "required": [
+        "Northstar persists one canonical Taskbook containing the durable Intent, adopted design, material tasks/status, Acceptance, and next owner",
+        "the session handoff points to the Taskbook and contains only resume delta: baseline/working context, last/current task, live blocker/decision, next task/owner, and return-to-Northstar judgment point",
+        "the next-session prompt is only a thin pointer to repo rules, Taskbook, and handoff",
+        "Drafted Issue, if used, does not become a second copy of the plan"
+      ],
+      "fail_if": [
+        "the handoff repeats architecture, path mapping, file list, full Acceptance, out-of-scope, or the whole execution prompt already in Taskbook",
+        "the Taskbook is omitted and the handoff becomes the only long-form plan",
+        "a new session is expected to reconstruct Intent from conversation history",
+        "multiple canonical plan surfaces are created"
+      ],
+      "consumer_check": "A fresh session can restore the work by reading the Taskbook first and applying the short handoff delta; deleting the handoff would lose only resume state, not the plan."
+    },
+    {
+      "id": "IT11_worker_done_requires_northstar_acceptance",
+      "prompt": "Taskbook 中 T2 是“让 Hermes parser 在加载期把同一 logical path 绑定到 Spec/MSR descriptor，并对缺失、类型和 repeated 深度不一致失败”。worker 返回一个 patch、focused tests green，并说 T2 done。请继续这个 work item。",
+      "fixture": "worker result and test output are available; no independent proof-sufficiency verdict has been produced",
+      "required": [
+        "Northstar treats the worker report as a submitted result rather than authoritative task closure",
+        "Northstar compares the result with the T2 boundary and current Intent/Acceptance before advancing the Taskbook",
+        "if proof sufficiency is material, Northstar routes that judgment to Verify rather than inferring proven from green tests",
+        "after acceptance Northstar updates T2 status and next task/owner; if gaps remain it returns a concrete revision/blocker without implementing T2 itself"
+      ],
+      "fail_if": [
+        "worker self-reported done directly closes T2 or the overall Intent",
+        "Northstar starts rewriting the implementation itself instead of judging/dispatching",
+        "Northstar claims proof sufficiency solely from focused test green",
+        "the next task advances without updating the canonical Taskbook"
+      ],
+      "consumer_check": "The canonical Taskbook shows whether T2 was accepted, why, and what task/owner is next; the worker result remains Evidence/input rather than the task authority."
     }
   ],
   "judge_dimensions": [
@@ -192,6 +228,7 @@
     "stop_discipline",
     "false_closure",
     "execution_authorization",
-    "handoff"
+    "handoff",
+    "task_acceptance"
   ]
 }
