@@ -12,11 +12,17 @@ It intentionally does not reuse `northstar-paired`: that scorer measures
 fresh-consumer handoff quality, while these cases measure multi-turn continuity,
 side effects, and bounded artifact deltas.
 
-## Fixed comparison
+## Historical accepted comparison
+
+The retained 2026-09-18 result compared:
 
 - base: `8ba940f9e7d72d2b33d8137420de14523772bc43`
 - candidate: `4d9e65c294f826b16451f006ac7c7bb0480ff4d6`
 - actor: `codex-cli 0.154.0`, `gpt-5.6-sol`, reasoning `high`
+
+Those SHAs describe the historical result only. New runs must pass explicit
+`--base-sha` and `--candidate-sha`; the runner never silently treats the
+historical candidate as current main.
 - sandbox: `danger-full-access`; approval policy: `never`
 - Human response policy: only the frozen case turns are sent; actor questions
   receive no extra answer.
@@ -67,6 +73,8 @@ Run three clean repeats per arm per case (18 actor runs):
 
 ```bash
 python3 evals/northstar-beacon-behavioral/run.py \
+  --base-sha <base-revision> \
+  --candidate-sha <candidate-revision> \
   --output-root /code/b/skill-eval-runs/measurement-YYYYMMDD
 ```
 
