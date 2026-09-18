@@ -7,6 +7,7 @@ import unittest
 from pathlib import Path
 
 from rdr.transfer import (
+    cleanup_upload,
     finish_upload,
     send_file,
     start_upload,
@@ -117,6 +118,24 @@ class UploadTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(sender.types(), ["file.put.ready", "file.error"])
         self.assertIn("size mismatch", sender.frames[1][0]["error"])
         self.assertFalse(destination.exists())
+        self.assertEqual(list(self.dir.glob(".rdr-upload-*")), [])
+
+    async def test_write_rejects_bytes_beyond_declared_size_before_writing(self) -> None:
+        destination = self.dir / "dst.bin"
+        sender = FakeSender()
+        handle = await start_upload(
+            sender, request_id="r1", path=str(destination), expected_size=3
+        )
+        assert handle is not None
+        try:
+            write_upload(handle, b"abc")
+            with self.assertRaisesRegex(ValueError, "upload exceeds declared size"):
+                write_upload(handle, b"d")
+            self.assertEqual(handle.bytes_written, 3)
+            handle.file_obj.flush()
+            self.assertEqual(handle.temp_path.read_bytes(), b"abc")
+        finally:
+            cleanup_upload(handle)
         self.assertEqual(list(self.dir.glob(".rdr-upload-*")), [])
 
     async def test_legacy_client_without_checksum_still_commits(self) -> None:
