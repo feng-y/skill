@@ -196,5 +196,5 @@ The minimum pair is deliberately asymmetric:
 - **CW1** requires an accepted worker result, so dispatch, worker-owned mutation, return consumption, Northstar acceptance, and Taskbook advancement are all observable.
 - **CW2** returns a decision-changing factual blocker, so a worker return cannot be mechanically converted into completion; Northstar must keep the task open and route the blocker to a real closure owner/source.
 
-Deterministic snapshot ownership is the primary evidence: the first product-source delta must occur in the worker session, and the acceptance/status delta must occur only in the resumed Northstar session. Role labels or self-report are insufficient.
+Deterministic snapshot ownership is the primary evidence: the first product-source delta must occur in the worker session, the canonical Taskbook must remain unchanged throughout that worker session, and the acceptance/status delta must occur only in the resumed Northstar session. Worker result/Evidence/residual uses a separate return surface; changing Draft, Acceptance, task state, blocker, Evidence pointers, or next owner is ownership takeover even if the worker later restores the Taskbook. Role labels or self-report are insufficient.
 
