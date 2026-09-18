@@ -47,4 +47,4 @@ Research、execution、review 或 `$verify` 的 verified Evidence 只有在它�
 
 默认把必要 task / dependency relation fold 回 canonical Taskbook；Taskbook 与 current Draft 是同一 Northstar work 的 durable surface，不再额外生成一份 session handoff 作为方案副本。需要跨 session 时另写短 handoff，只指向 Taskbook 并记录 resume delta。
 
-当 fresh implementer / worker 已能在 binding boundary 内继续、剩余未知只影响 implementation How 时停止 compile。已有 Human execution authorization 时由 Northstar dispatch next execution task；没有时 Taskbook 停在 execution-ready。worker 返回 result / Evidence 后回到 Northstar judgment，再决定是否推进 task state。
+当 fresh implementer / worker 已能在 binding boundary 内继续、剩余未知只影响 implementation How 时停止 compile。已有 Human execution authorization 时由 Northstar 选择并 handoff next material task / owner；真正启动执行由宿主 / worker / orchestration 负责。没有授权时 Taskbook 停在 execution-ready。worker 返回 material result / Evidence 后回到 Northstar judgment，再决定是否推进 task state；implementation-local substeps 不逐项回流 Northstar。
