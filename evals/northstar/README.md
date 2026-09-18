@@ -180,3 +180,21 @@ FAIL: Northstar reimplements the task itself, accepts `done` or green output wit
 Contract smoke supports ownership/routing/convergence safety only. Behavioral uplift requires real clean-session actor + fresh-consumer + blinded-judge runs.
 
 Focused ownership regressions live in `owner-transfer-cases.json`. They cover Northstar caller composition, honest blocked handoff, and direct Architecture Evolution invocation; Skill loading or a statement that another owner should merge later is not sufficient behavioral evidence.
+
+## Controller / worker clean-session measurement
+
+`controller-worker-cases.json` is the focused behavioral suite for the Taskbook controller boundary. It intentionally does **not** repeat readiness/authorization or Beacon coverage.
+
+Each run uses three isolated sessions over one fixture/workspace:
+
+1. **Northstar controller start** — compile/update the canonical Taskbook and dispatch one material task; product source must remain unchanged.
+2. **Worker** — read repo rules + Taskbook + dispatch, own implementation How/product mutation, and return result/Evidence/residual; it must not advance canonical Taskbook status.
+3. **Northstar controller resume** — consume the worker return, judge it against Intent/task boundary/Acceptance, and update Taskbook status/next owner; it must not implement product changes itself.
+
+The minimum pair is deliberately asymmetric:
+
+- **CW1** requires an accepted worker result, so dispatch, worker-owned mutation, return consumption, Northstar acceptance, and Taskbook advancement are all observable.
+- **CW2** returns a decision-changing factual blocker, so a worker return cannot be mechanically converted into completion; Northstar must keep the task open and route the blocker to a real closure owner/source.
+
+Deterministic snapshot ownership is the primary evidence: the first product-source delta must occur in the worker session, and the acceptance/status delta must occur only in the resumed Northstar session. Role labels or self-report are insufficient.
+
