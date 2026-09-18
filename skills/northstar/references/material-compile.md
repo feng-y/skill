@@ -2,9 +2,9 @@
 
 只在当前 Northstar Intent / Drafted Issue 已经成立，但 material work / dependency 复杂到 fresh implementer 或真实 transfer consumer **仍会被迫重新做高层判断**时读取。
 
-Compile 的目标不是建立完整 work graph，而是把已成立 Intent 编译成**最小充分的 task / dependency handoff**：让后续实现者知道必须兑现哪些 cohesive outcomes、哪些真实 dependency 不能打乱，以及哪些 Acceptance / Constraint 必须保持。能直接执行时不要 compile；没有真实 transfer 时不要为了 planning ceremony 生成额外 handoff。
+Compile 的目标不是建立完整 work graph，而是把已成立 Intent 编译成 canonical Taskbook 中**最小充分的 task / dependency contract**：让后续执行者知道必须兑现哪些 cohesive outcomes、哪些真实 dependency 不能打乱，以及哪些 Acceptance / Constraint 必须保持。简单线性 work 只需要 compact task，不为了 planning ceremony 构建 Graph；session handoff 是另一件事，只记录 resume delta。
 
-Compile 不重新定义 Intent，不产生或扩大 Human execution authorization，不设计 implementation How，不拥有 verification judgment，也不维护 execution progress / scheduler state。
+Compile 不重新定义 Intent，不产生或扩大 Human execution authorization，不设计 implementation How，不拥有 verification judgment。它可以维护 material task status / next owner，供 Northstar 判卷与续接；低层 execution progress / scheduler state 仍属于执行系统。
 
 ## 从 Intended delta 出发
 
@@ -23,7 +23,7 @@ Compile 不重新定义 Intent，不产生或扩大 Human execution authorizatio
 - 仍取决于未来 execution Evidence 的 contingent work 不提前创建 placeholder task；
 - verification claim 不因为可独立验证就自动成为 execution task。
 
-简单或线性的 work 不需要额外 Taskbook / graph。多个 task 也不自动等于多个 Issue；只有真实跨 session / agent / execution-environment transfer，或外部 orchestration 确实需要独立 carrier 时，才按最小必要边界 materialize。不要为了“完整规划”把探索过程展开成 issue graph。
+简单或线性的 material work 不需要 Graph，只在 canonical Taskbook 中保留一个或少量 cohesive task。多个 task 也不自动等于多个 Issue；Taskbook 按一个 engineering Intent 持久化，Issue / external orchestration 只有真实协作边界时才按最小必要范围 materialize。不要为了“完整规划”把探索过程展开成 issue graph。
 
 ## Verify boundary
 
@@ -33,11 +33,11 @@ Compile 只携带 Northstar 已定义的 Acceptance / completion claim identity 
 
 ## Evidence feedback
 
-Research、execution、review 或 `$verify` 的 verified Evidence 只有在它使**现有 task / dependency 不再成立**时才修订 handoff：
+Research、execution、review 或 `$verify` 的 verified Evidence 只有在它使**现有 task / dependency 不再成立**时才修订 Taskbook：
 
 - 新 reality 证明某个已记录 task 不需要或边界错误 → 删除 / 合并 / 修正对应 task；
 - prerequisite 或 conflict 改变 → 只修订受影响 dependency；
-- 只影响 implementation How → handoff 不变；
+- 只影响 implementation How → Taskbook 不变；
 - Evidence 推翻 Intent / Acceptance → 返回 Northstar；
 - Evidence 暴露新的长期 architecture fork → 返回 `$architecture-evolution`。
 
@@ -45,6 +45,6 @@ Research、execution、review 或 `$verify` 的 verified Evidence 只有在它�
 
 ## 交付与停止
 
-默认把必要 task / dependency relation fold 回 current Draft / Drafted Issue。只有复杂度或真实 transfer boundary 确实需要独立 execution contract 时，才生成额外 Taskbook；它不能成为第二份长期 Intent SOT。
+默认把必要 task / dependency relation fold 回 canonical Taskbook；Taskbook 与 current Draft 是同一 Northstar work 的 durable surface，不再额外生成一份 session handoff 作为方案副本。需要跨 session 时另写短 handoff，只指向 Taskbook 并记录 resume delta。
 
-当 fresh implementer 已能在 binding boundary 内继续、剩余未知只影响 implementation How 时停止 compile。已有 Human execution authorization 时继续实现；没有时停在 current Draft。
+当 fresh implementer / worker 已能在 binding boundary 内继续、剩余未知只影响 implementation How 时停止 compile。已有 Human execution authorization 时由 Northstar dispatch next execution task；没有时 Taskbook 停在 execution-ready。worker 返回 result / Evidence 后回到 Northstar judgment，再决定是否推进 task state。
