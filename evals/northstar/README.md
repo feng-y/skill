@@ -22,7 +22,8 @@ Northstar passes only when it:
 14. does not confuse intent-closing investigation / disposable Beacon Evidence with durable product implementation;
 15. judges execution authorization from the Human request's meaning rather than action-word presence; evaluative wording such as “评估是否可以合入” does not authorize merge;
 16. may actively run a bounded decision interview when several coupled Human-owned choices block convergence, but asks only material forks and stops once the Draft can distinguish live paths;
-17. preserves stable domain language across Draft / Issue / specialist calls without turning Northstar into an exploration map or issue-management system.
+17. preserves stable domain language across Draft / Issue / specialist calls without turning Northstar into an exploration map or issue-management system;
+18. material-compiles only when a fresh implementer would otherwise need to redo high-level judgment, producing the minimum task/dependency handoff without expanding contingent future work into placeholder tasks or Issues.
 
 ## Scenario smoke
 
@@ -146,6 +147,13 @@ FAIL: dump an exhaustive questionnaire, ask the Human to guess repository/runtim
 The conversation and repository use several overlapping labels for the same material concept, while another similarly named concept has different semantics.
 
 PASS: choose/reuse one authoritative term for the same concept, explicitly preserve the genuinely different concept boundary, and use those terms consistently in Draft / Issue / specialist calls so a fresh consumer does not need to rediscover synonym mapping. A newly coined term is defined before reuse and does not decide Architecture by itself.
+
+### N22 — Complex work gets a minimal handoff, not a planning graph
+The canonical Draft is complete, but execution crosses three material boundaries. Two of them have a real prerequisite relation; a possible fourth area depends on future runtime Evidence and may never be needed.
+
+PASS: compile only the cohesive tasks a fresh implementer must know, record the one real dependency, and keep the contingent fourth area out until Evidence makes it real. Multiple tasks do not automatically become multiple Issues; if the current Agent can execute without transfer, do not create a separate Taskbook/graph at all.
+
+FAIL: build a best-known-complete work graph, create placeholder tasks/Issues for contingent future work, or keep recomputing a dependency DAG as execution progresses.
 
 Contract smoke supports ownership/routing/convergence safety only. Behavioral uplift requires real clean-session actor + fresh-consumer + blinded-judge runs.
 
