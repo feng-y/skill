@@ -64,6 +64,26 @@ Beacon 只澄清 observable surface；**Verify 仍然拥有 proof obligation 与
 
 不要把 implementation step、task completion 或“命令成功”本身当 proof obligation。
 
+## 稀疏终局信号时构造最小 Evidence ladder
+
+如果唯一可用的验证是耗时很长、成本很高的 end-to-end benchmark / replay / integration，或者它只能告诉你“结果变差了”却无法定位哪一层假设失败，不要把这种稀疏 outcome 当作唯一迭代反馈。围绕同一个 authoritative claim，按需构造**最小 Evidence ladder**，给实现过程提供更密集的 credit assignment。
+
+每个中间 probe 必须尽量同时满足：
+
+- **local**：能隔离一个 material hypothesis、boundary 或 subsystem，而不是重复整个系统；
+- **cheap**：足够便宜，可以在一次实现迭代中重复运行；
+- **objective**：来自数值、trace、timeline、state、profile、artifact 或其他 machine-observable Evidence，不依赖 Agent 自我解释。
+
+按 claim 需要选择层次，不固定凑满：
+
+- **correctness**：值、invariant、equivalence、numerical drift、shape / state 是否正确；
+- **system behavior**：真实调用链、timeline、overlap、queue / wait、resource / synchronization、跨语言或跨进程边界行为是否符合假设；
+- **performance**：micro / component / representative workload 下的 latency、throughput、utilization、memory / bandwidth 等是否支持该方案。
+
+优先运行最便宜且有判别力的 falsifier，尽早淘汰错误 hypothesis。局部 probe 通过只说明对应 premise 获得支持；如果 authoritative claim 是 end-to-end outcome，最终仍必须用足够代表性的 outcome-level Evidence 才能判 `proven`。不要用 microbenchmark、局部 profile 或 synthetic check 偷换最终 claim，也不要为了形成“反馈系统”长期维护一套与 claim 脱离的指标树。
+
+这属于 engineering verification：它帮助 `$verify` 获得更高信息密度的 Evidence，不是 `$eval` 所拥有的 Agent behavioral measurement。
+
 ## 优先验证真实 artifact
 
 优先证明真实东西，而不是 proxy：
@@ -145,7 +165,7 @@ Verify 先给 verdict，再按 premise 路由：
 
 - **Claim**：正在验证什么；
 - **Proof obligation**：真实世界必须满足什么；
-- **Evidence basis**：source/backend、identity、inputs/config、关键 observation；
+- **Evidence basis**：source/backend、identity、inputs/config、关键 observation；必要时注明 outcome-level Evidence 与用于 credit assignment 的 local probes；
 - **Verdict**：proven / false / unproven；
 - **Gap / falsifier**：若未证明，缺什么；
 - **Next owner**：需要谁继续。
