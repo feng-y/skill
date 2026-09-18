@@ -344,7 +344,7 @@ def main():
     specs = []
     for case_id in cases:
         for repeat in range(1, 4):
-            for arm in ARMS:
+            for arm in revisions:
                 specs.append((case_id, arm, repeat, uuid.uuid4().hex[:12]))
 
     suite = {
