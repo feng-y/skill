@@ -1,6 +1,6 @@
 # Material Compile
 
-只在当前 Northstar Intent / Drafted Issue 已经成立，但 material work / dependency 复杂到 fresh implementer 或真实 transfer consumer **仍会被迫重新做高层判断**时读取。
+只在当前 Northstar Intent / canonical Taskbook 已经成立，但 material work / dependency 复杂到 fresh implementer 或真实 transfer consumer **仍会被迫重新做高层判断**时读取。
 
 Compile 的目标不是建立完整 work graph，而是把已成立 Intent 编译成 canonical Taskbook 中**最小充分的 task / dependency contract**：让后续执行者知道必须兑现哪些 cohesive outcomes、哪些真实 dependency 不能打乱，以及哪些 Acceptance / Constraint 必须保持。简单线性 work 只需要 compact task，不为了 planning ceremony 构建 Graph；session handoff 是另一件事，只记录 resume delta。
 
