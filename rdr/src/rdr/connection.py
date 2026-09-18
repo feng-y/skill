@@ -42,7 +42,9 @@ class ClientConnection:
 
     async def run(self) -> None:
         try:
-            header, _ = await asyncio.wait_for(read_frame(self.reader), timeout=10.0)
+            header, _ = await asyncio.wait_for(
+                read_frame(self.reader, max_payload_bytes=0), timeout=10.0
+            )
             if header.get("type") != "auth":
                 await self.sender.send({"type": "auth.error", "error": "auth required"})
                 return
@@ -389,7 +391,14 @@ class ClientConnection:
                 {"type": "file.error", "request_id": request_id, "error": "unknown upload"}
             )
             return
-        write_upload(handle, payload)
+        try:
+            write_upload(handle, payload)
+        except Exception as exc:
+            self.uploads.pop(request_id, None)
+            cleanup_upload(handle)
+            await self.sender.send(
+                {"type": "file.error", "request_id": request_id, "error": str(exc)}
+            )
 
     async def _file_put_end(self, header: dict[str, Any]) -> None:
         request_id = str(header.get("request_id") or "")
