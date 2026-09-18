@@ -24,6 +24,12 @@ Northstar 不拥有独立 Goal 层，不默认生成 Taskbook，不负责 proof 
 
 按需增加 Decisions、Evidence、Open Questions、Out of Scope。不要制造独立 Goal、spec、plan 或并行 Intent SOT。
 
+### Stable domain language
+
+对会反复出现在 Intent、repo 与 handoff 中的 material concept，优先复用 Human / repository 已有的 domain term，并保持 **one concept → one stable term**。多个名字实际指向同一概念时，在 current Draft 中收敛到一个 canonical term；名字相近但语义不同的概念必须明确边界，不能为了简洁合并。
+
+只有一个 recurring distinction 无法用现有语言稳定表达时才引入新 term；首次定义它与既有概念的关系，然后在 Draft、Issue 与 specialist invocation 中一致复用。稳定术语是 semantic compression / navigation anchor，不是 Evidence，也不能因为某个“好听的词”就反向决定 Architecture 或实现。
+
 ## Intent convergence
 
 Northstar 持续比较 **original / Human-authorized Intent** 与 **current canonical Draft**。这不是固定 lifecycle 或状态机；简单请求可以一次完成，只有真实 material gap 才触发下一轮。
@@ -75,6 +81,10 @@ Northstar 负责把 work 收敛到足够执行，但**不能因为已经知道�
 
 只有仍会 materially 改变 Intent，且答案真正属于 Human commitment 时才 Ask Human，例如 scope cut、产品行为、兼容承诺、投入/风险取舍或多个都合理但含义不同的 interpretation。技术事实从 repo/runtime/data/source 获取，不让 Human 猜。
 
+当一个模糊请求背后同时存在多个**相互关联的 Human-owned 决策**，被动一次补一个洞会让 Draft 来回漂移时，Northstar 可以主动做一个短的 **decision interview**：先给出 current best interpretation 与真正仍 live 的 alternatives、每个 fork 会改变什么；只有已有 Intent / Evidence 足以支持时才给 recommendation，不凭空设置 default。只问答案不同会改变 Draft / Constraint / Acceptance 的问题。相关选择可以一起问；若依赖关系不清，先问最高 leverage 的一个。Human 明确要求“grill me / challenge my assumptions”时可以更主动地寻找遗漏取舍，但仍不询问 repo 可查的技术事实、implementation trivia 或“为了完整”的问题清单。
+
+Decision interview 的产物是更新后的 Decision / Constraint / Draft / Acceptance，不是问答 transcript。能够区分 live paths 后立即停止；不要把 Northstar 变成默认采访流程，也不要用泛化的“还有什么要求？”替代具体 material fork。
+
 Intent 过大时可以建议收窄，也可以保留原范围并继续组合局部结果。**改变原始范围必须有 Human 明确确认或已有授权。** 收窄后 current Draft 必须显式保留未覆盖部分，不能把部分范围宣称为原始 Intent 已完成。已有回答或授权不重复确认。
 
 ## 按需调用 specialist
@@ -124,7 +134,7 @@ Execution orchestration / control plane 可以 start / route / pause / resume �
 
 ## Material compile 只在真正需要时出现
 
-Clear Drafted Issue 已足以 execution-ready 时，不为了 planning ceremony 再编译 Taskbook/Graph。若当前 Human request 已包含 execution authorization，当前 Agent 可以在同一个 Northstar work context 下直接继续实现；若真实需要跨 session/agent/执行环境 transfer，则把同一 current Draft 作为 durable handoff。只有 material work / dependency 复杂到 fresh implementer 会被迫重新做高层判断时，才读取 [references/material-compile.md](references/material-compile.md)，从已成立 Intent 编译 coarse material graph。Compile 不能反向发明 Intent，也不能产生 execution authorization。
+Clear Drafted Issue 已足以 execution-ready 时，不为了 planning ceremony 再编译 Taskbook/Graph。若当前 Human request 已包含 execution authorization，当前 Agent 可以在同一个 Northstar work context 下直接继续实现；若真实需要跨 session/agent/执行环境 transfer，则把同一 current Draft 作为 durable handoff。只有 material work / dependency 复杂到 fresh implementer 会被迫重新做高层判断时，才读取 [references/material-compile.md](references/material-compile.md)，从已成立 Intent 编译最小充分的 task / dependency handoff。Compile 不能反向发明 Intent、把探索过程膨胀成 issue graph，也不能产生 execution authorization。
 
 ## Evidence feedback
 
