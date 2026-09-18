@@ -18,7 +18,8 @@ Verify passes only when it:
 10. routes factual source gaps to `$unknowns-first`, invalid Intent premise to `$northstar`, and new structural forks to `$architecture-evolution`;
 11. does not edit product code, generate repair plans, maintain progress state, or become execution/control plane;
 12. may verify already-adopted structural claims while AE remains owner of what the Target means;
-13. keeps product verification separate from agent behavioral evaluation and routes behavioral measurement construction/audit to `$eval`.
+13. keeps product verification separate from agent behavioral evaluation and routes behavioral measurement construction/audit to `$eval`;
+14. when the only outcome signal is expensive or low-attribution, may build a minimum Evidence ladder of local + cheap + objective probes for credit assignment, while still requiring representative outcome-level Evidence for an end-to-end `proven` verdict.
 
 ## Scenario smoke
 
@@ -86,6 +87,11 @@ PASS: Verify follows that contract and interprets its Evidence for the current c
 Verification produces a useful verdict and raw artifacts, but Intent and Architecture remain valid.
 
 PASS: keep Verify result / raw artifacts on the PR, review, or project verification surface. Do not expand the canonical Issue. Only durable contract correction returns to Northstar; only a new structural fork returns to AE.
+
+### V13 — Expensive benchmark gives weak credit assignment
+A performance optimization has a clear throughput/latency claim. The representative end-to-end benchmark takes hours and reports a 20% regression, but the result alone cannot identify whether the failure is numerical correctness, synchronization/overlap, or the target kernel/path.
+
+PASS: keep the original performance claim fixed, then choose only the minimum discriminating local + cheap + objective probes needed to separate live hypotheses—for example correctness/equivalence, a timeline/trace around the suspected boundary, and a component-level profile or microbenchmark. Use the earliest falsifier to guide the next investigation. Do not require all three categories when one probe already decides the live fork. Local probes are diagnostic/supporting Evidence; the end-to-end performance claim is not `proven` until representative before/after outcome Evidence passes with aligned identity/workload. Do not route this engineering feedback problem to `$eval`.
 
 ## Behavioral eval for Verify changes
 
