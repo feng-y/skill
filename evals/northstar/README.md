@@ -22,7 +22,7 @@ Northstar passes only when it:
 14. does not confuse intent-closing investigation / disposable Beacon Evidence with durable product implementation;
 15. judges execution authorization from the Human request's meaning rather than action-word presence; evaluative wording such as “评估是否可以合入” does not authorize merge;
 16. may actively run a bounded decision interview when several coupled Human-owned choices block convergence, but asks only material forks and stops once the Draft can distinguish live paths;
-17. preserves stable domain language across Draft / Issue / specialist calls and, for multi-session convergence, carries only the current material decision frontier in existing Open Questions rather than creating a parallel exploration/decision-DAG SOT.
+17. preserves stable domain language across Draft / Issue / specialist calls without turning Northstar into an exploration map or issue-management system.
 
 ## Scenario smoke
 
@@ -146,11 +146,6 @@ FAIL: dump an exhaustive questionnaire, ask the Human to guess repository/runtim
 The conversation and repository use several overlapping labels for the same material concept, while another similarly named concept has different semantics.
 
 PASS: choose/reuse one authoritative term for the same concept, explicitly preserve the genuinely different concept boundary, and use those terms consistently in Draft / Issue / specialist calls so a fresh consumer does not need to rediscover synonym mapping. A newly coined term is defined before reuse and does not decide Architecture by itself.
-
-### N22 — Large intent carries a decision frontier, not a fake complete map
-A large work item cannot converge in one session. Several future areas are still unknown, but only two unresolved decisions currently change what the next session can validly do.
-
-PASS: keep the full best-known Draft and record those two current material decisions in existing Open Questions with consequence, closure owner, and necessary dependency. When one closes, fold it into the Draft and remove it from the frontier. Do not manufacture a parallel exploration/decision-DAG SOT, exhaustive future ticket graph, or claim the unseen remainder is fully mapped.
 
 Contract smoke supports ownership/routing/convergence safety only. Behavioral uplift requires real clean-session actor + fresh-consumer + blinded-judge runs.
 
