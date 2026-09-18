@@ -130,13 +130,11 @@ Intent 需要脱离当前 conversation 流转时，Drafted Issue 是 canonical d
 
 只有 fresh consumer 必须知道的信息才 fold back 到 body。已有 canonical Issue 时更新它，不创建平行 SOT。Issue 按 cohesive engineering outcome / responsibility boundary 切，不按 model context、文件或 agent session 切。
 
-当大 Intent 必须跨多个 session 才能继续收敛时，不需要额外 exploration / decision-DAG SOT；直接用现有 `Open Questions` 保存**当前 material decision frontier**：尚未关闭的决定、为什么不同答案会改变 current Draft、真实 closure owner，以及已知的必要依赖。已关闭的 frontier fold 回 Draft / Decision 后从 Open Questions 移除，历史过程留在 comments。只记录当前能看见且会改变下一步判断的 frontier，不提前枚举远处 tickets 或把未知未来伪装成完整 Graph。
-
 Execution orchestration / control plane 可以 start / route / pause / resume 工作，但不能定义或改写 Intent、material Graph、Architecture 或 Acceptance。
 
 ## Material compile 只在真正需要时出现
 
-Clear Drafted Issue 已足以 execution-ready 时，不为了 planning ceremony 再编译 Taskbook/Graph。若当前 Human request 已包含 execution authorization，当前 Agent 可以在同一个 Northstar work context 下直接继续实现；若真实需要跨 session/agent/执行环境 transfer，则把同一 current Draft 作为 durable handoff。只有 material work / dependency 复杂到 fresh implementer 会被迫重新做高层判断时，才读取 [references/material-compile.md](references/material-compile.md)，从已成立 Intent 编译 coarse material graph。Compile 不能反向发明 Intent，也不能产生 execution authorization。
+Clear Drafted Issue 已足以 execution-ready 时，不为了 planning ceremony 再编译 Taskbook/Graph。若当前 Human request 已包含 execution authorization，当前 Agent 可以在同一个 Northstar work context 下直接继续实现；若真实需要跨 session/agent/执行环境 transfer，则把同一 current Draft 作为 durable handoff。只有 material work / dependency 复杂到 fresh implementer 会被迫重新做高层判断时，才读取 [references/material-compile.md](references/material-compile.md)，从已成立 Intent 编译最小充分的 task / dependency handoff。Compile 不能反向发明 Intent、把探索过程膨胀成 issue graph，也不能产生 execution authorization。
 
 ## Evidence feedback
 
