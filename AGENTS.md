@@ -61,7 +61,7 @@
 
 - **Taskbook**：Northstar 对 material / cross-session work 的 canonical durable artifact；保存 current Draft、binding Decision / Constraint / Acceptance、material tasks / status、决定性 Evidence pointer、last Northstar judgment 与 next owner。它不是第二份 plan，而是 current Intent 的持久化 work surface。
 - **Session handoff**：只保存从 canonical Taskbook 恢复所需的 session delta：Taskbook pointer、last completed/current task、仍 live 的 blocker/decision、next task / owner、需要返回 Northstar 的 judgment point。不得复制 Taskbook 的架构、方案、验收全文；需要重述的 durable 内容应回写 Taskbook。
-- **Drafted Issue**：tracker / 外部协作 carrier。已有 canonical Taskbook 时 Issue 指向它并保留讨论历史；没有 Taskbook 且 Issue 本身承担 durable Intent 时也只能有一个 authoritative source，禁止与 repo 内 plan 并行漂移。
+- **Drafted Issue**：tracker / 外部协作 carrier。material / cross-session work 的 canonical state 始终在 Taskbook；Issue 只指向它并保留讨论历史 / 外部协作信息，禁止复制一份可独立漂移的方案。
 - **PR**：realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在 PR。
 - **Beacon artifact**：bounded reaction / inspection surface，可丢弃；durable correction / Evidence 返回原 caller，由 caller 决定是否需要 fold back。Prototype 只是其中一种可选 artifact technique。
 - **Architecture handoff**：只有独立调用或真实跨边界需要时持久化；被 Northstar 调用时优先 fold durable structural decision 回 Issue。
