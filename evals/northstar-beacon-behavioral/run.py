@@ -14,9 +14,8 @@ import uuid
 from pathlib import Path
 
 
-BASE_SHA = "8ba940f9e7d72d2b33d8137420de14523772bc43"
-CANDIDATE_SHA = "4d9e65c294f826b16451f006ac7c7bb0480ff4d6"
-ARMS = {"base": BASE_SHA, "candidate": CANDIDATE_SHA}
+HISTORICAL_BASE_SHA = "8ba940f9e7d72d2b33d8137420de14523772bc43"
+HISTORICAL_CANDIDATE_SHA = "4d9e65c294f826b16451f006ac7c7bb0480ff4d6"
 MODEL = "gpt-5.6-sol"
 REASONING = "high"
 CLI_VERSION = "codex-cli 0.154.0"
@@ -29,6 +28,7 @@ DISABLED_HOST_SKILLS = (
     "/root/.agents/skills/northstar/SKILL.md",
     "/root/.agents/skills/unknowns-first/SKILL.md",
     "/root/.agents/skills/verify/SKILL.md",
+    "/root/.agents/skills/eval/SKILL.md",
 )
 SKILLS_CONFIG = "skills.config=[" + ",".join(
     f'{{path="{path}",enabled=false}}' for path in DISABLED_HOST_SKILLS
@@ -256,13 +256,13 @@ def run_actor_turn(run_dir, home, repo, turn_number, prompt, thread_id=None):
     return meta
 
 
-def run_one(spec, output_root):
+def run_one(spec, output_root, revisions):
     case_id, arm, repeat, run_id = spec
     run_dir = output_root / "runs" / run_id
     home = run_dir / "codex-home"
     repo = run_dir / "workspace"
     run_dir.mkdir(parents=True)
-    skill_sha = ARMS[arm]
+    skill_sha = revisions[arm]
     install_skills(home, skill_sha)
     init_fixture_repo(repo, case_id)
     target_ref = git_output(repo, "rev-parse", "HEAD").strip()
@@ -320,6 +320,19 @@ def main():
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--max-workers", type=int, default=3)
     parser.add_argument("--case", choices=["all", *CASES], default="all")
+    parser.add_argument(
+        "--base-sha",
+        required=True,
+        help=f"Base skill revision. Historical accepted measurement used {HISTORICAL_BASE_SHA}.",
+    )
+    parser.add_argument(
+        "--candidate-sha",
+        required=True,
+        help=(
+            "Candidate skill revision. Historical accepted measurement used "
+            f"{HISTORICAL_CANDIDATE_SHA}."
+        ),
+    )
     args = parser.parse_args()
 
     output_root = args.output_root.resolve()
@@ -327,6 +340,7 @@ def main():
         raise SystemExit(f"output root must be empty or absent: {output_root}")
     output_root.mkdir(parents=True, exist_ok=True)
     cases = list(CASES) if args.case == "all" else [args.case]
+    revisions = {"base": args.base_sha, "candidate": args.candidate_sha}
     specs = []
     for case_id in cases:
         for repeat in range(1, 4):
@@ -334,8 +348,8 @@ def main():
                 specs.append((case_id, arm, repeat, uuid.uuid4().hex[:12]))
 
     suite = {
-        "base_sha": BASE_SHA,
-        "candidate_sha": CANDIDATE_SHA,
+        "base_sha": revisions["base"],
+        "candidate_sha": revisions["candidate"],
         "target_environment": "revision-independent executable fixtures",
         "model": MODEL,
         "reasoning": REASONING,
@@ -352,7 +366,7 @@ def main():
     failures = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.max_workers) as pool:
         futures = {
-            pool.submit(run_one, spec, output_root): spec
+            pool.submit(run_one, spec, output_root, revisions): spec
             for spec in specs
         }
         for future in concurrent.futures.as_completed(futures):
