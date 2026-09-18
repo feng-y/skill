@@ -28,6 +28,8 @@ Northstar passes only when it:
 20. makes session handoff a delta-only resume surface: Taskbook pointer, last/current task, live blocker/decision, next task/owner, and return-to-Northstar judgment point; it does not duplicate architecture, full plan, Acceptance, or out-of-scope text already in Taskbook;
 21. treats a worker's `done`, green test, patch, or PR as a submitted result, not canonical acceptance; Northstar judges it against Intent/Acceptance and updates Taskbook, while Verify owns proof sufficiency;
 22. keeps the next-session prompt thin: read repo rules + Taskbook + handoff, restore the Northstar context, continue the next task; do not inline the whole plan again.
+23. judges only material Taskbook task returns; implementation-local helpers, file edits, commits, and individual tests stay under worker autonomy and do not become Northstar approval checkpoints;
+24. never fabricates a worker/delegation event: choosing a next owner/task is semantic handoff, while external execution start/completion requires a real execution/delegation event.
 
 ## Scenario smoke
 
