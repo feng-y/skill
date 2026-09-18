@@ -28,7 +28,7 @@ Northstar 不拥有独立 Goal 层，不执行 implementation，也不负责 pro
 
 对会反复出现在 Intent、repo 与 handoff 中的 material concept，优先复用 Human / repository 已有的 domain term，并保持 **one concept → one stable term**。多个名字实际指向同一概念时，在 current Draft 中收敛到一个 canonical term；名字相近但语义不同的概念必须明确边界，不能为了简洁合并。
 
-只有一个 recurring distinction 无法用现有语言稳定表达时才引入新 term；首次定义它与既有概念的关系，然后在 Draft、Issue 与 specialist invocation 中一致复用。稳定术语是 semantic compression / navigation anchor，不是 Evidence，也不能因为某个“好听的词”就反向决定 Architecture 或实现。
+只有一个 recurring distinction 无法用现有语言稳定表达时才引入新 term；首次定义它与既有概念的关系，然后在 Draft、Taskbook 与 specialist invocation 中一致复用。稳定术语是 semantic compression / navigation anchor，不是 Evidence，也不能因为某个“好听的词”就反向决定 Architecture 或实现。
 
 ## Intent convergence
 
@@ -100,7 +100,7 @@ Northstar 拥有 Intent，不复制 specialist 的责任：
 
 Beacon 只处理一个 bounded/local material concrete decision，返回足以判断该局部问题的连贯表示，不按字段或文件机械拆分。prototype、minimal implementation、UI/config/API draft、experiment 等都只是 Beacon 可选 technique。**Beacon 不接受“把整个 Intent 做完整”或“组合这些局部结果”的委托。** 多个 Beacon artifact 的选择、相接与整体 coverage 由 Northstar 完成。
 
-specialist 结果不创建第二份 Intent SOT；只把 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到 current Draft / Issue。
+specialist 结果不创建第二份 Intent SOT；只把 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到 current Draft，并在 material / cross-session work 中同步落入 canonical Taskbook。
 
 specialist 的 scoped result 在 Northstar 完成取舍前只是 local input，不是 canonical Draft。调用 specialist 时，先让它单独返回 bounded result；该 return 成立后，Northstar 才恢复 caller judgment，明确采用、拒绝或继续路由，并把采用部分组合进 current Draft。不要让一段未分界的回答同时冒充 specialist return 和 Northstar final judgment，也不能把未经 caller judgment 的 specialist draft 直接当作 canonical handoff。这个短暂的 caller boundary 不物化成 persistent phase、workflow 或额外 artifact。
 
