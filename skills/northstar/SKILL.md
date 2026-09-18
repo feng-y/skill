@@ -130,9 +130,11 @@ Northstar 定义“什么结果才算符合预期”；Verify 定义什么真实
 
 Taskbook 只保存会改变后续 execution / acceptance 的 durable 状态：Problem / current Draft、binding Decisions / Constraints / Acceptance、已确认事实与 material blocker、最小充分的 execution tasks / dependency、task status、决定性 Evidence pointer、last Northstar judgment、next task / owner。不要复制 investigation transcript、具体命令流水或 implementation-local How。
 
-**Taskbook 不是 Northstar 自己的执行清单。** Northstar 把具体 execution task 交给 worker / coder / specialist / external orchestration；执行者拥有实现动作和局部 How，只提交 result、Evidence、residual。Northstar 收到返回后恢复 caller judgment：检查它是否兑现当前 Intent / Acceptance，更新 Taskbook 的 task status / next task，并只在 premise 真正变化时重开对应 semantic owner。执行者不能凭自己的 `done`、测试 green 或 PR 存在直接推进 canonical Taskbook。
+**Taskbook 不是 Northstar 自己的执行清单。** Northstar 只在 **material Taskbook boundary** 选择 next task / owner 并完成 handoff；worker / coder / specialist / external orchestration 拥有实现动作和局部 How，只提交 result、Evidence、residual。不要把 helper、file edit、commit、单个 test 或其他 implementation-local step 都升级成 Northstar checkpoint。Northstar 收到 material task return 后恢复 caller judgment：检查它是否兑现当前 Intent / Acceptance，更新 Taskbook 的 task status / next task，并只在 premise 真正变化时重开对应 semantic owner。执行者不能凭自己的 `done`、测试 green 或 PR 存在直接推进 canonical Taskbook。
 
 Northstar 的 acceptance judgment 与 Verify 的 proof judgment 必须分开：Northstar 判断“这个结果是否满足当前 Intent、是否可以推进下一 material task”；Verify 判断“支撑 completion / safety claim 的 Evidence 是否充分”。当后者 material 时，Northstar 调用 `$verify` 并消费 verdict，而不是自己从 backend green 推导 proven。
+
+这里的 `dispatch / handoff` 是 semantic ownership transfer，不自动表示创建了外部 worker。只有真实 delegation / orchestration tool 已调用并返回对应事件时，才能声称外部执行已启动或完成；没有这种能力时，Northstar 只落盘 Taskbook、标出 next owner / task，并让宿主在执行角色中继续或由下一 session 恢复。即使同一宿主随后承担 worker 角色，也必须保持 worker result 与 Northstar acceptance 两个边界，不能把实现动作冒充成 Northstar judgment。
 
 ### Session handoff 只记录 delta
 
