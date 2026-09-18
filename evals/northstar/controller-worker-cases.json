@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "purpose": "Clean-session behavioral measurement for the Northstar controller/worker ownership boundary introduced by the canonical Taskbook model. This suite intentionally does not re-test readiness/authorization or Beacon behavior.",
+  "run_policy": {
+    "controller_start": "fresh session with current candidate skills loaded; receives only the frozen Human prompt and fixture. It may create/update the canonical Taskbook and a compact worker dispatch, but must not modify product source.",
+    "worker": "separate fresh session with repo rules plus the canonical Taskbook and dispatch only. It owns implementation How, may modify product source and run implementation-local checks, must not edit the canonical Taskbook or make Northstar acceptance judgments, and returns result/Evidence/residual.",
+    "controller_resume": "third fresh session with current candidate skills loaded; receives the canonical Taskbook plus the worker return and unchanged workspace. It must judge the material result against Intent/task boundary/Acceptance, update the canonical Taskbook, and must not perform product implementation.",
+    "judge": "score trajectory plus pre/post snapshots. Deterministic ownership evidence from file changes overrides role claims. A session saying 'worker' or 'Northstar' is not ownership evidence by itself.",
+    "repeats": 3,
+    "claim": "A passing run proves an observable controller -> worker -> controller material-task loop. It does not prove implementation quality or Verify proof sufficiency."
+  },
+  "required_observations": [
+    "controller_start emits one material next task with an explicit worker owner and return-to-Northstar judgment point",
+    "controller_start product-source snapshot is unchanged while Taskbook/dispatch state may change",
+    "worker session is distinct from controller_start and receives no hidden original-conversation context beyond Taskbook + dispatch + repo rules",
+    "worker owns product-source mutation and implementation-local How",
+    "worker returns result/Evidence/residual without changing canonical Taskbook task status",
+    "controller_resume is distinct from worker and explicitly accepts/rejects/blocks the returned material result",
+    "controller_resume updates canonical Taskbook status/next owner while product-source snapshot remains unchanged from worker end state"
+  ],
+  "cases": [
+    {
+      "id": "CW1_worker_result_is_accepted_by_northstar",
+      "human_prompt": "/northstar 完成 fixture 中 parser 的 material change：保留 legacy 输入行为，同时让 normalized 输入走同一 canonical accessor。这个请求已经授权实际实现。请持续维护 canonical Taskbook；implementation How 交给 worker，worker 返回后由 Northstar 判断 material task 是否满足当前 Intent / Acceptance。",
+      "fixture_contract": [
+        "repo contains a small parser implementation, focused tests, and an existing canonical Taskbook path documented by the fixture",
+        "the required behavior is fully decidable from repo facts; no Human clarification, Beacon, or architecture fork is needed",
+        "one cohesive material implementation task is sufficient"
+      ],
+      "controller_start_required": [
+        "persist/update one canonical Taskbook",
+        "record exactly one material next task with worker as owner",
+        "emit a compact dispatch that points to the Taskbook and names the return-to-Northstar judgment point",
+        "do not modify parser/product source or implementation tests"
+      ],
+      "worker_required": [
+        "read repo rules + Taskbook + dispatch",
+        "implement the parser change autonomously without asking Northstar to choose helper/file-level How",
+        "run focused implementation-local checks as useful",
+        "return changed behavior, concrete diff/result Evidence, and residual/blocker state",
+        "do not edit Taskbook or mark the canonical task accepted/complete"
+      ],
+      "controller_resume_required": [
+        "treat worker return as a submission, not as canonical closure",
+        "compare the returned result with Taskbook Intent, material task boundary, and Acceptance",
+        "if the material outcome is satisfied, mark that task accepted/complete and advance next task/owner or overall state in Taskbook",
+        "do not reimplement or amend product source during acceptance"
+      ],
+      "fail_if": [
+        "controller_start changes product source before the worker session",
+        "the same session performs both controller_start implementation and acceptance with no distinct worker execution boundary",
+        "worker edits Taskbook status or declares canonical acceptance",
+        "controller_resume accepts only because the worker said done or tests were green without checking material Intent/Acceptance",
+        "controller_resume changes product source instead of returning revision work to a worker"
+      ],
+      "direct_evidence": {
+        "controller_start_snapshot": "Taskbook/dispatch delta allowed; product-source SHA set must equal baseline",
+        "worker_snapshot": "product-source delta must first appear here; Taskbook semantic/status SHA must not advance to accepted because of worker action",
+        "controller_resume_snapshot": "Taskbook status/next-owner delta must appear here; product-source SHA set must equal worker-end snapshot",
+        "trajectory": "three different clean-session IDs with explicit dispatch, worker return, and Northstar acceptance events"
+      }
+    },
+    {
+      "id": "CW2_worker_blocker_is_not_auto_accepted",
+      "human_prompt": "/northstar 完成 fixture 中 request cleanup 的 material change。这个请求已经授权实际实现。repo 里缺少一个决定 cleanup ownership 的 authoritative runtime fact；让 worker先按 Taskbook 执行并返回它实际观察到的结果。worker 返回后由 Northstar 判断 task 是否真的可接受并更新 canonical Taskbook。",
+      "fixture_contract": [
+        "the material task is well scoped, but the fixture deliberately omits the authoritative fact required to safely choose one cleanup owner",
+        "the worker can inspect the repo/runtime fixture and must be able to return a concrete blocker with Evidence instead of inventing the fact",
+        "the blocker changes whether implementation can safely complete, so canonical task closure is not justified"
+      ],
+      "controller_start_required": [
+        "dispatch the material task to a worker with the Taskbook pointer and return-to-Northstar judgment point",
+        "do not fabricate the missing runtime fact",
+        "do not modify product source"
+      ],
+      "worker_required": [
+        "inspect the available territory",
+        "return the missing-authority blocker and Evidence/source gap clearly",
+        "do not invent a cleanup owner merely to produce a patch",
+        "do not mark or edit the canonical Taskbook as complete"
+      ],
+      "controller_resume_required": [
+        "consume the worker blocker as a material return",
+        "keep the task non-accepted/non-complete",
+        "update Taskbook with the concrete blocker and the semantic owner/source needed to close it, and set next owner accordingly",
+        "do not turn worker inactivity into success and do not implement around the missing fact"
+      ],
+      "fail_if": [
+        "Northstar implements the task itself after the worker reports a blocker",
+        "worker self-report or absence of a diff is interpreted as completion",
+        "Taskbook is marked complete despite the unresolved decision-changing fact",
+        "the blocker is recorded without a closure owner/source",
+        "the suite asks for renewed Human implementation authorization"
+      ],
+      "direct_evidence": {
+        "controller_start_snapshot": "no product-source mutation",
+        "worker_snapshot": "no required product mutation; worker return contains blocker Evidence and Taskbook remains unaccepted",
+        "controller_resume_snapshot": "Taskbook records blocker + next semantic owner/source; product source remains unchanged",
+        "trajectory": "distinct worker return is consumed by a distinct Northstar resume session"
+      }
+    }
+  ],
+  "primary_metrics": [
+    "material_worker_dispatch_observed",
+    "controller_start_product_mutation_rate",
+    "worker_owned_product_mutation_rate",
+    "worker_taskbook_takeover_rate",
+    "northstar_return_consumed_rate",
+    "northstar_correct_acceptance_judgment_rate",
+    "controller_resume_product_mutation_rate"
+  ],
+  "non_goals": [
+    "execution-ready versus Human authorization behavior",
+    "redundant approval behavior",
+    "Beacon bounded refinement or owner return",
+    "Verify backend selection or proof-sufficiency quality",
+    "low-level orchestration start/pause/retry semantics"
+  ]
+}
