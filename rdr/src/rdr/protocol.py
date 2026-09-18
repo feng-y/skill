@@ -14,7 +14,11 @@ class ProtocolError(RuntimeError):
     pass
 
 
-async def read_frame(reader: asyncio.StreamReader) -> tuple[dict[str, Any], bytes]:
+async def read_frame(
+    reader: asyncio.StreamReader,
+    *,
+    max_payload_bytes: int = MAX_PAYLOAD_BYTES,
+) -> tuple[dict[str, Any], bytes]:
     raw_len = await reader.readexactly(_HEADER_LEN.size)
     (header_len,) = _HEADER_LEN.unpack(raw_len)
     if header_len <= 0 or header_len > MAX_HEADER_BYTES:
@@ -30,7 +34,11 @@ async def read_frame(reader: asyncio.StreamReader) -> tuple[dict[str, Any], byte
         raise ProtocolError("frame header must be a JSON object")
 
     payload_size = header.get("payload_size", 0)
-    if not isinstance(payload_size, int) or payload_size < 0 or payload_size > MAX_PAYLOAD_BYTES:
+    if (
+        not isinstance(payload_size, int)
+        or payload_size < 0
+        or payload_size > max_payload_bytes
+    ):
         raise ProtocolError(f"invalid payload size: {payload_size!r}")
 
     payload = await reader.readexactly(payload_size) if payload_size else b""
