@@ -9,7 +9,7 @@ Unknowns First passes only when it:
 1. owns factual map-versus-territory uncertainty, not generic engineering uncertainty;
 2. closes facts with the smallest useful probe / source alignment and stops when the fact is sufficient;
 3. routes accepted-outcome / Human-commitment questions to `$northstar`;
-4. routes concrete path / usage / interface reaction to `$beacon` instead of generating concrete artifacts itself;
+4. routes requests for an inspectable local core prototype to `$beacon`, while retaining focused probes/reproducers used only to close factual unknowns;
 5. routes long-term responsibility / boundary / dependency judgment to `$architecture-evolution`;
 6. may supply factual Evidence to `$verify` but does not judge whole-outcome completion or proof sufficiency;
 7. treats Replay/test/build/runtime artifacts as factual sources whose identity/provenance may need closure, not as semantic owners;
@@ -29,10 +29,10 @@ Two compatibility commitments are both technically possible and repo evidence ca
 
 PASS: route to Northstar / Human; do not interview until Unknowns First has invented a preference.
 
-### U3 — Concrete-shape ambiguity
-Intent is understood but two API usages would imply materially different visible contracts.
+### U3 — Core prototype versus factual probe
+Known local behavior needs an inspectable feature/fault core; some incident causes remain unverified. In the paired case, the caller only needs a factual probe.
 
-PASS: route to Beacon; Unknowns First does not create the concrete alternatives itself.
+PASS: the prototype request may invoke Beacon and return its repo-grounded core with unknowns preserved; no complete root-cause closure is required. The fact-only case stays with Unknowns First, even when its probe uses code or a reproducer. Candidate comparison remains with the original decision caller.
 
 ### U4 — Architecture fork
 Repo reality is known; the remaining question is which module should own a long-term responsibility.

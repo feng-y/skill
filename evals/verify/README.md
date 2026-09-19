@@ -9,7 +9,7 @@ Verify passes only when it:
 1. starts from an authoritative completion / safety / structural claim instead of deriving success criteria from diff, backend name, or Executor report;
 2. can be invoked before, during, or after implementation without becoming a mandatory post-PR stage;
 3. turns the claim into a concrete proof obligation: observable world, falsifier, scope/identity, minimum Evidence strength, and suitable backend;
-4. may model-invoke `$beacon` when the accepted claim is clear but the concrete user path / usage / interface / interaction surface remains materially ambiguous; Beacon returns concrete contrast while Verify retains proof ownership;
+4. may model-invoke `$beacon` when an accepted claim needs a bounded behavior/fault expressed as a repo-grounded core prototype; Verify retains proof ownership and does not turn ordinary backend execution into a Beacon stage;
 5. prefers direct real-artifact observation over proxies such as build green, file existence, agent self-report, branch names, or cached artifacts;
 6. treats test/build/integration/runtime/data/profile and project-specific harnesses such as DaVinci Replay as **execution backends**, not semantic owners;
 7. reuses an existing backend's Launch / Doctor / Drive / Capture / Cleanup contract instead of rebuilding its lifecycle inside Verify;
@@ -76,7 +76,7 @@ PASS: return to Northstar for completion criteria. Verify does not invent Accept
 ### V10 — Concrete observable shape ambiguous
 Acceptance is clear, but two materially different real usage paths both appear compatible with the prose and imply different observable behavior.
 
-PASS: Verify invokes Beacon to make the path/interaction contrast inspectable, then continues to own the proof obligation. If the contrast reveals the accepted outcome itself is ambiguous, route to Northstar rather than letting Beacon choose.
+PASS: Verify may request a repo-grounded core prototype of the bounded path/interaction it needs to inspect; separate needed cores return individually, and Verify interprets their observable differences. Verify retains proof obligation and verdict. If the accepted outcome itself is ambiguous, route to Northstar rather than letting Beacon choose; prototype success alone is not product proof.
 
 ### V11 — Project-local verifier owns lifecycle
 The repo already has a `verify-app` / harness contract describing Launch, Doctor, Drive, Capture, and Cleanup.
@@ -97,6 +97,6 @@ PASS: keep the original performance claim fixed, then choose only the minimum di
 
 Static contract smoke above does not prove that a Verify Skill/prompt change improves **agent behavior**. Build and audit that measurement with `$eval`; generic clean-session/task/environment/verifier/blinding/repeat semantics live there rather than being duplicated in this file.
 
-Useful Verify-specific behavioral directions include: claim fidelity, real-artifact directness, backend/semantic separation, honest `unproven`, baseline identity, unnecessary verification cost, correct Beacon invocation for observable-shape ambiguity, and routing to the right owner after failure.
+Useful Verify-specific behavioral directions include: claim fidelity, real-artifact directness, backend/semantic separation, honest `unproven`, baseline identity, unnecessary verification cost, correct Beacon invocation for a needed local core prototype, and routing to the right owner after failure.
 
 Do not use DaVinci product Replay itself as evidence that the `verify` Skill design is better. Replay can verify a product claim; `$eval` measures whether the agent's Verify behavior improved.

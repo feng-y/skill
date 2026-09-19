@@ -4,6 +4,17 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## 2026-09-19 — Beacon returns to repo-grounded core prototypes
+
+Change: `fix/beacon-core-prototype-20260919` (based on `4728ca5e1ffd04b434c58a9ba870297ede630f82`)
+
+- **Old surface:** generalized local decision closure / concrete contrast, with a prototype treated as only an optional technique and materially different alternatives as an invocation prerequisite.
+- **Current owner:** `beacon` builds one minimal, repo-grounded core prototype of a bounded feature intent or fault. A connected sketch, representative input/output, minimal implementation, or reproducer may express it; executable code is not mandatory.
+- **Preserved:** caller-neutral/model-invoked routing, bounded scope, local artifact refinement, explicit return, non-authoritative output, and no production implementation. Known fault behavior can be represented while root cause remains unverified.
+- **Responsibility boundaries:** selection/comparison/composition remain with the caller; factual closure with Unknowns First; Target judgment with AE; proof sufficiency with Verify. Evidence and questions support the prototype instead of replacing it.
+- **Retired:** the generalized question/experiment-service interpretation and multi-candidate comparison as Beacon output; evidence-only or decision-only completion; requiring an invented ambiguity or complete root-cause closure before a useful core prototype. The stale `$prototype` route in Unknowns First's full-map reference now points to `$beacon`; the old invocation identity stays retired. No new Skill or protocol is added.
+- **Evidence status:** focused eval specifications are updated, not a measured behavioral uplift.
+
 ## 2026-09-18 — Northstar persistent Taskbook + delta-only session handoff
 
 Change: `fix/northstar-taskbook-handoff-20260918`

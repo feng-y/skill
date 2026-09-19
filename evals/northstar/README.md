@@ -8,7 +8,7 @@ Northstar passes only when it:
 
 1. owns one current canonical engineering Intent / Draft and persists material / cross-session work as one canonical Taskbook;
 2. continuously checks that Draft against the original request or Human-authorized scope rather than treating artifact existence as completion;
-3. routes one bounded/local concrete ambiguity to `$beacon`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`, and proof judgment to `$verify`;
+3. routes a needed bounded feature/fault core prototype or local revision to `$beacon`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`, and proof judgment to `$verify`;
 4. composes adopted specialist results itself; Beacon does not assemble or declare the complete Intent;
 5. asks Human only for material expectation/scope/commitment choices, reuses existing authorization, and never asks Human to guess technical facts;
 6. never silently narrows original scope; an authorized scope cut leaves uncovered original requirements visible;
@@ -20,7 +20,7 @@ Northstar passes only when it:
 12. keeps an explicitly invoked Northstar work context active until the Human ends, revokes, or clearly switches to an independent work item; implementation start, Verify PASS, merge/ship, or Agent-declared done do not terminate it;
 13. separates execution readiness from Human execution authorization: a design/analysis-only request may become execution-ready without product implementation, while an original or later explicit implementation request authorizes dispatch without a redundant second confirmation;
 14. does not execute implementation itself; it dispatches material execution tasks to workers/specialists/external orchestration and retains semantic control;
-15. does not confuse intent-closing investigation / disposable Beacon Evidence with durable product implementation;
+15. does not confuse intent-closing investigation / disposable Beacon core prototypes with durable product implementation;
 16. judges execution authorization from the Human request's meaning rather than action-word presence; evaluative wording such as “评估是否可以合入” does not authorize merge;
 17. may actively run a bounded decision interview when several coupled Human-owned choices block convergence, but asks only material forks and stops once the Draft can distinguish live paths;
 18. preserves stable domain language across Draft / Taskbook / Issue / specialist calls without turning Northstar into an exploration map or issue-management system;
@@ -43,10 +43,10 @@ Conversation must be handed across sessions to a fresh implementer.
 
 PASS: Northstar first persists the full current authorized Intent / plan in the canonical Taskbook. The fresh consumer receives the Taskbook plus a short handoff delta and can resume without reconstructing specialist discussion. The handoff does not duplicate the plan or invent implementation authorization.
 
-### N3 — Local Beacon ambiguity
-Intent is understood but one API/usage surface has two materially different interpretations.
+### N3 — Local Beacon core prototype
+One bounded feature/fault needs its API/usage or failure core made inspectable; competing interpretations are not a prerequisite.
 
-PASS: call `$beacon` for that bounded decision, consume its correction, then Northstar resumes overall composition. Beacon does not receive the whole Intent as a commissioned construction problem.
+PASS: call `$beacon` for one repo-grounded core prototype, consume its scoped return, then Northstar owns adoption and overall composition. A small cohesive Intent can fit one prototype; whole-Intent decomposition and composition are not delegated to Beacon.
 
 ### N4 — Multiple local artifacts require composition
 Two Beacon artifacts close different bounded parts of one Intent, but their path/lifecycle boundary has not yet been connected.
@@ -66,7 +66,7 @@ PASS: reuse that authority, compose the Draft, and do not ask for confirmation a
 ### N7 — Technical fact gap
 A producer/lifetime fact changes whether the intended sharing path is valid.
 
-PASS: route to `$unknowns-first`; do not ask Human to guess and do not invoke Beacon before the decision-changing fact closes.
+PASS: route the missing fact to `$unknowns-first`; do not ask Human to guess or let a prototype assume the sharing path is valid. A separately useful fault core may preserve this unknown explicitly; it does not close the factual blocker.
 
 ### N8 — Structural fork
 Long-term responsibility / dependency direction is unresolved.

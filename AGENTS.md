@@ -29,7 +29,7 @@
 当前 canonical capability map：
 
 - **`northstar`**：conversation / request / incident → canonical engineering Intent；把 Intent 收敛到 `execution-ready` 不会制造 Human execution authorization，已有明确授权也不重复确认。对 material、跨 session / agent / execution-environment 的 work，Northstar 将 current Draft 与 material execution contract 落盘为一个 canonical **Taskbook**，持续维护 material task / status / next owner，并在执行结果返回后判断它是否满足 Intent / Acceptance。Northstar 不执行 implementation，也不判断 proof sufficiency；后者仍属于 Verify。Drafted Issue 可以作为 tracker / 外部 carrier，但不能与 Taskbook 形成平行 Intent SOT。
-- **`beacon`**：只拥有 already-understood semantic question 中一个 bounded/local part 的 concrete reaction / inspection surface；Core Path / Usage / Interface Draft / behavior example / config-schema shape / UI draft / minimal implementation / experiment / disposable prototype 都是手段，不拥有 caller 的 Intent / Architecture / Verification judgment。它是 **caller-neutral、主要由 model 按需调用的 specialist**，不绑定 Northstar。
+- **`beacon`**：基于真实 repo，为一个 bounded 功能 Intent 或故障构建最小、可检查的核心原型。接口与调用草图、代表性输入输出、最小实现或故障复现都可表达这个核心，不要求可执行代码；问题与 Evidence 服务于原型。它是 **caller-neutral、主要由 model 按需调用的 specialist**；原 caller 保留选择、比较、组合及 Intent / Architecture / Verification judgment。
 - **`architecture-evolution`**：拥有长期 Target Architecture judgment + Current → Target Evolution Program。两层 judgment 必须分开，但不拆成两个顶层 Skill。
 - **`verify`**：拥有 engineering verification；从 authoritative claim 推导 proof obligation，选择并驱动 real-artifact verifier/backend，收集 Evidence 并判断 proven / false / unproven。
 - **`eval`**：拥有 agent behavioral evaluation engineering；从真实 agent surface、repo 与可用 traces 中选择 material capability/failure，构建 Task + Environment + Verifier，驱动或消费 eval backend，检查 agent/verifier trajectories 并形成可重复 measurement。它不验证产品/工程 claim，也不把 Harbor 等 backend 变成 semantic owner。
@@ -37,9 +37,9 @@
 
 不要复制 owner：Northstar 不判 proof sufficiency；Verify 不重写 Intent、设计 Target 或承担 agent behavioral eval；Eval 不验证产品 outcome 或改写 engineering semantics；Beacon 不接管 caller 的 semantic ownership；AE 不用 Program convenience 反推 Intent；Unknowns First 不把 factual probe 扩成 intent interview、concrete shaping、architecture design、proof judgment 或 eval design。
 
-**Beacon routing rule:** Northstar、AE、Verify、Unknowns First 或其他 semantic caller 都可以在“当前语义已理解，但其中一个 bounded/local concrete path / usage / interface / interaction / artifact 仍存在 material ambiguity”时 model-invoke `$beacon`。Beacon 只返回 concrete contrast / correction / Evidence 给原 caller；原 caller继续做自己的 judgment。Northstar 负责多个局部 Beacon artifact 的组合与最终 Intent 编译。不要把 Beacon 做成 Human 必经入口或固定阶段。
+**Beacon routing rule:** Northstar、AE、Verify、Unknowns First 或其他 caller 在一个局部功能或故障需要核心原型、或已有原型需要局部修订时，可 model-invoke `$beacon`。不必先制造多个候选或查清全部故障根因。Beacon 返回一个基于 repo 的核心原型及必要 Evidence / correction；原 caller 继续判断，Northstar 负责完整 Intent 的组合与编译。不要把 Beacon 做成 Human 必经入口或固定阶段。
 
-`prototype` 不再是顶层 Skill identity 或 runtime route；prototype/mock/minimal implementation 仍可以是 Beacon 的 implementation technique。
+`prototype` 不再是顶层 Skill identity 或 runtime route；Beacon 的主体是核心原型，可执行 prototype/mock/minimal implementation 只是表达它的方式，不恢复 `$prototype`。
 
 `Goal` 不属于稳定跨 Skill semantic model。若一个抽象 outcome 真的增加 decision information，把它落到 Problem、Draft、Constraint、Decision 或 Acceptance；不要维护独立 Goal artifact / field / lifecycle。
 
@@ -63,7 +63,7 @@
 - **Session handoff**：只保存从 canonical Taskbook 恢复所需的 session delta：Taskbook pointer、last completed/current task、仍 live 的 blocker/decision、next task / owner、需要返回 Northstar 的 judgment point。不得复制 Taskbook 的架构、方案、验收全文；需要重述的 durable 内容应回写 Taskbook。
 - **Drafted Issue**：tracker / 外部协作 carrier。material / cross-session work 的 canonical state 始终在 Taskbook；Issue 只指向它并保留讨论历史 / 外部协作信息，禁止复制一份可独立漂移的方案。
 - **PR**：realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在 PR。
-- **Beacon artifact**：bounded reaction / inspection surface，可丢弃；durable correction / Evidence 返回原 caller，由 caller 决定是否需要 fold back。Prototype 只是其中一种可选 artifact technique。
+- **Beacon artifact**：基于 repo 的 bounded 核心原型，通常可丢弃；原型及必要 correction / Evidence 返回原 caller，由 caller 决定采用、组合与 durable fold back。
 - **Architecture handoff**：只有独立调用或真实跨边界需要时持久化；被 Northstar 调用时优先 fold durable structural decision 回 Issue。
 - **Verify result**：Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing；默认留在 PR / review / verification surface，不成为第二份 Intent SOT。
 - **Eval artifact**：Capability/failure + Task + Environment + Verifier + backend binding + Run Evidence/Trajectory + measurement status；默认进入 `evals/` 或项目已有 eval surface，不成为 canonical Intent、产品 verification SOT 或 implementation plan。
@@ -82,7 +82,7 @@
 
 - factual map-versus-territory gap → Unknowns First；
 - Intent premise / Constraint / Acceptance 被推翻 → Northstar；
-- 已理解语义的一个 bounded/local part 仍出现 materially different concrete shape → Beacon，结果返回当前 caller；
+- 一个 bounded 功能 Intent 或故障需要核心原型，或已有原型的局部表达需要修订 → Beacon，结果返回当前 caller；
 - 新的长期 responsibility / boundary / dependency fork → Architecture Evolution；
 - 当前 contract 的 material completion / safety claim 需要定义、补足或判断 proof → Verify；
 - Skill / prompt / tool / harness 的 agent behavior claim 需要构建、审计或解释可重复 measurement → Eval；

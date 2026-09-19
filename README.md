@@ -30,7 +30,7 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 ## Skills
 
 - `northstar` — canonical engineering-intent skill. 把 conversation / request / incident 收敛成 durable Intent；需要跨 session / agent / Human 或执行环境流转时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
-- `beacon` — caller-neutral、主要由 model 按需调用的 local intent-concretization specialist。当前 caller 已理解自己的语义，但一个 bounded/local part 在 path / usage / interface / interaction / artifact 上仍可能 materially different 时，用最便宜的 inspectable representation 暴露差异，再把 correction / Evidence 返回原 caller。Prototype 只是可选手段之一。
+- `beacon` — caller-neutral、主要由 model 按需调用的核心原型 specialist。基于真实 repo，把一个 bounded 功能 Intent 或故障具体化为最小、可检查的核心原型；可以是接口/调用草图、代表性输入输出、最小实现或故障复现，不要求可执行代码。原型是主体，问题和 Evidence 服务于原型；结果返回原 caller。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
 - `verify` — engineering verification skill. 从 authoritative completion/safety claim 出发定义 proof obligation，选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。
 - `eval` — agent behavioral evaluation engineering skill. 从 repo / agent surface / traces 中选择 material capability 或 failure，构建 Task + Environment + Verifier，运行并检查 agent/verifier trajectory，形成可重复 behavioral measurement。
@@ -47,10 +47,10 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 主要 model-invoked specialists：
 
-- `beacon` — 当前 caller 已理解语义，但一个 bounded/local part 需要被具体化为可检查 artifact；Human 很少需要主动调度。
+- `beacon` — 一个局部功能 Intent 或故障需要基于 repo 的核心原型，或已有原型需要局部修订；Human 很少需要主动调度。
 - `unknowns-first` — 当前判断依赖未核实事实时自动/按需关闭 factual gap；Human 也可以直接要求先查事实。
 
-`beacon` **不属于 Northstar 私有流程**。Northstar、Architecture Evolution、Verify、Unknowns First 或其他 semantic caller 都可以在遇到 material concrete-shape ambiguity 时调用它；Beacon 返回后，原 caller 继续拥有自己的 judgment。Northstar 负责把多个局部 Beacon 结果重新组合回完整 Intent。
+`beacon` **不属于 Northstar 私有流程**。Northstar、Architecture Evolution、Verify、Unknowns First 或其他 caller 都可以按需调用；不必先制造设计歧义或查清全部故障根因。Beacon 返回一个局部核心原型，原 caller 负责采用、比较与组合；Northstar 持续拥有完整 Intent。
 
 `eval` 与产品 engineering flow 正交。它可以由 Human 直接调用，也可以在 Skill/prompt/tool/harness 变更需要 behavioral Evidence 时由 model 按需调用；它观察 agent behavior，不取得被测 Skill 的 semantic ownership。
 
@@ -79,7 +79,7 @@ accepted completion / safety / structural claim
               ↓
             verify        # optional before / during / after execution
               │
-              ├── concrete observable shape unclear → beacon
+              ├── bounded behavior / fault needs core prototype → beacon
               ↓
       proof obligation
               ↓
@@ -107,7 +107,7 @@ agent / Skill / prompt / tool / harness behavior
  Skill / prompt / tool / harness improvement → rerun
 ```
 
-Northstar owns **meaning and composition**. Beacon owns **bounded concrete reaction surfaces only** and returns them to its caller. Architecture Evolution owns **structural judgment**. Unknowns First owns **factual uncertainty**. Verify owns **product/engineering verification and proof judgment**. Eval owns **agent behavioral measurement design and judgment**. Verify Evidence 和 Eval Run Evidence 都不是新的 semantic owner。
+Northstar owns **meaning and composition**. Beacon owns **repo-grounded core prototypes of bounded feature intents or faults** and returns them to its caller. Architecture Evolution owns **structural judgment**. Unknowns First owns **factual uncertainty**. Verify owns **product/engineering verification and proof judgment**. Eval owns **agent behavioral measurement design and judgment**. Verify Evidence 和 Eval Run Evidence 都不是新的 semantic owner。
 
 Verify is not a mandatory post-PR stage. It may be invoked before implementation to make a material proof route explicit, during implementation when verification premises change, or after implementation to judge realized results. Clear local changes can rely on an already-authoritative focused check without extra ceremony.
 
@@ -125,7 +125,7 @@ Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), inc
 
 - **Drafted Issue** — durable carrier for Northstar Intent / intended change.
 - **PR** — realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在这里。
-- **Beacon artifact** — bounded reaction / inspection surface, normally disposable; it may be a Core Path, usage/interface draft, behavior example, config/schema shape, UI draft, experiment, minimal implementation, or disposable prototype. Correction / Evidence returns to the caller, which decides whether anything durable should be persisted.
+- **Beacon artifact** — a minimal, repo-grounded core prototype of a bounded feature intent or fault, normally disposable. An interface/usage sketch, representative behavior, minimal implementation, or reproducer may express the core. The prototype and supporting correction / Evidence return to the caller; adoption, comparison, composition, and persistence remain there.
 - **Architecture handoff** — only when a durable structural handoff is independently useful; otherwise structural decisions fold back to the caller / Issue.
 - **Verify result** — Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing. It normally stays with the PR/review/verification surface unless it changes durable Intent or Architecture.
 - **Eval artifact** — Capability/failure + Task + Environment + Verifier + backend binding + Run Evidence/Trajectory + measurement status. It belongs under `evals/` or the project's existing eval surface, not in canonical Intent or product verification state.
@@ -155,7 +155,7 @@ After each run, inspect **both** the agent trajectory and verifier Evidence/traj
 
 ## Loop
 
-Research、execution、review 和 Verify 都可能产生 new verified engineering Evidence。Evidence 只重开真正受影响的 owner：Intent premise 回 Northstar，长期结构 fork 回 Architecture Evolution，factual uncertainty 回 Unknowns First；当任一 caller 已理解语义但一个 bounded/local concrete shape 又变得 materially ambiguous 时，可 model-invoke Beacon 并只重开对应 local surface；复杂 material work/dependency 变化但 Intent 仍成立时，只重算 Northstar material graph 的 affected cone。
+Research、execution、review 和 Verify 都可能产生 new verified engineering Evidence。Evidence 只重开真正受影响的 owner：Intent premise 回 Northstar，长期结构 fork 回 Architecture Evolution，factual uncertainty 回 Unknowns First；当一个局部功能或故障需要核心原型、或已有原型需修订时，可 model-invoke Beacon 并只处理对应 local surface；复杂 material work/dependency 变化但 Intent 仍成立时，只重算 Northstar material graph 的 affected cone。
 
 Agent improvement 走另一条反馈环：真实 task/trace → Eval → executable measurement → Skill/prompt/tool/harness 改进 → rerun。产品 Replay/test 结果不能替代这条 behavioral loop；Eval measurement 也不能替代产品 Verify。
 
