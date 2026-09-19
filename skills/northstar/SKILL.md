@@ -130,7 +130,11 @@ Northstar 定义“什么结果才算符合预期”；Verify 定义什么真实
 
 Taskbook 只保存会改变后续 execution / acceptance 的 durable 状态：Problem / current Draft、binding Decisions / Constraints / Acceptance、已确认事实与 material blocker、最小充分的 execution tasks / dependency、task status、决定性 Evidence pointer、last Northstar judgment、next task / owner。不要复制 investigation transcript、具体命令流水或 implementation-local How。
 
-**Taskbook 不是 Northstar 自己的执行清单。** Northstar 只在 **material Taskbook boundary** 选择 next task / owner 并完成 handoff；worker / coder / specialist / external orchestration 拥有实现动作和局部 How，只提交 result、Evidence、residual。不要把 helper、file edit、commit、单个 test 或其他 implementation-local step 都升级成 Northstar checkpoint。Northstar 收到 material task return 后恢复 caller judgment：检查它是否兑现当前 Intent / Acceptance，更新 Taskbook 的 task status / next task，并只在 premise 真正变化时重开对应 semantic owner。执行者不能凭自己的 `done`、测试 green 或 PR 存在直接推进 canonical Taskbook。
+**Taskbook 不是 Northstar 自己的执行清单。** Northstar 只在 **material Taskbook boundary** 选择 next task / owner 并完成 handoff；worker / coder / specialist / external orchestration 拥有实现动作和局部 How，只提交 result、Evidence、residual。不要把 helper、file edit、commit、单个 test 或其他 implementation-local step 都升级成 Northstar checkpoint。
+
+收到 material task return 后，先从已有 Taskbook / dispatch / artifact / 运行记录恢复对应 task、执行时的 binding context 与实际 result / Evidence；关联不清时先查可得事实，只保留仍影响判断的 blocker，不要求新增字段、receipt 或让 Human 猜技术事实。关联成立只说明这是哪次工作的结果，不证明当前 Intent / Acceptance 已满足。
+
+Northstar 始终按**当前 canonical Taskbook**恢复 caller judgment。dispatch 后若 binding Decision / Constraint / Acceptance 已实质变化，旧结果不能沿旧解释直接关闭当前 task；只重判受影响的 claim，保留仍有效的 work / Evidence。若结果已满足当前要求，直接接受，不因 Taskbook 版本、文字或无关 task 状态变化强制返工。把 judgment、仍需修订或补证的具体差异及 next task / owner 回写同一个 Taskbook；只有 premise 真正变化时才重开对应 semantic owner。执行者不能凭自己的 `done`、测试 green 或 PR 存在直接推进 canonical Taskbook。
 
 Northstar 的 acceptance judgment 与 Verify 的 proof judgment 必须分开：Northstar 判断“这个结果是否满足当前 Intent、是否可以推进下一 material task”；Verify 判断“支撑 completion / safety claim 的 Evidence 是否充分”。当后者 material 时，Northstar 调用 `$verify` 并消费 verdict，而不是自己从 backend green 推导 proven。
 
