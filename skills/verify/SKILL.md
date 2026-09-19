@@ -39,7 +39,7 @@ trivial/local change 若一个已有 authoritative focused test 已直接覆盖 
 
 先读取 authoritative contract，只恢复当前 verification 需要的 claim：
 
-- Northstar 的 Acceptance / binding Constraint / Decision；
+- Northstar current Draft / canonical Taskbook 中的 Acceptance / binding Constraint / Decision；已有 Taskbook 时，Issue 只提供引用；
 - 已存在的 Issue/spec/accepted request 中明确的 completion claim；
 - AE 已采用的 structural outcome；
 - performance / compatibility / safety 等已有明确 target。
@@ -170,7 +170,7 @@ Verify 先给 verdict，再按 premise 路由：
 - **Gap / falsifier**：若未证明，缺什么；
 - **Next owner**：需要谁继续。
 
-Verify result 默认留在当前 PR / review / verification surface。只有它证明 canonical Intent / Acceptance 本身失效，或形成后续 fresh consumer 必须知道的 durable correction，才 fold back 到 Northstar Issue；只有它暴露新的长期 structural fork 才回 AE。不要生成 repair plan、execution backlog、第二份 Intent 或第二份 verification SOT。
+Verify result 默认留在当前 PR / review / verification surface。只有它证明 canonical Intent / Acceptance 本身失效，或形成后续 fresh consumer 必须知道的 durable correction，才返回 Northstar，由其取舍后更新 current Draft，并在 material / cross-session work 中回写 canonical Taskbook；Issue 只引用它。只有它暴露新的长期 structural fork 才回 AE。不要生成 repair plan、execution backlog、第二份 Intent 或第二份 verification SOT。
 
 ## 与 Eval 的边界
 

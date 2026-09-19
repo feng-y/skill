@@ -29,7 +29,7 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `northstar` — canonical engineering-intent skill. 把 conversation / request / incident 收敛成 durable Intent；需要跨 session / agent / Human 或执行环境流转时 materialize 为 Drafted Issue。Issue 是 Intent carrier，不是独立 Skill。
+- `northstar` — canonical engineering-intent skill. 持续维护一个 current Draft；material / cross-session work 落盘为 canonical Taskbook。Northstar 交出执行但保留 Intent 与 material task acceptance；Issue 只作 tracker / 外部引用，session handoff 只保存恢复差量。
 - `beacon` — caller-neutral、主要由 model 按需调用的核心原型 specialist。基于真实 repo，把一个 bounded 功能 Intent 或故障具体化为最小、可检查的核心原型；可以是接口/调用草图、代表性输入输出、最小实现或故障复现，不要求可执行代码。原型是主体，问题和 Evidence 服务于原型；结果返回原 caller。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
 - `verify` — engineering verification skill. 从 authoritative completion/safety claim 出发定义 proof obligation，选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。
@@ -69,11 +69,13 @@ conversation / request / incident
    ▲          │                  │
    └──── model-invoked by any semantic caller ────┘
               ↓
-         Drafted Issue
+           Taskbook
               ↓
-          execution
+       worker execution
               ↓
-              PR
+       result / Evidence / PR
+              ↓
+ Northstar judgment → update Taskbook / next task
 
 accepted completion / safety / structural claim
               ↓
@@ -123,10 +125,12 @@ Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), inc
 
 ## Artifacts
 
-- **Drafted Issue** — durable carrier for Northstar Intent / intended change.
+- **Taskbook** — canonical durable surface for material / cross-session Northstar work: current Draft, binding decisions/acceptance, material task state and next owner.
+- **Session handoff** — Taskbook pointer plus resume delta, never a second plan.
+- **Drafted Issue** — tracker / external carrier pointing to the Taskbook, not a parallel Intent source.
 - **PR** — realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在这里。
 - **Beacon artifact** — a minimal, repo-grounded core prototype of a bounded feature intent or fault, normally disposable. An interface/usage sketch, representative behavior, minimal implementation, or reproducer may express the core. The prototype and supporting correction / Evidence return to the caller; adoption, comparison, composition, and persistence remain there.
-- **Architecture handoff** — only when a durable structural handoff is independently useful; otherwise structural decisions fold back to the caller / Issue.
+- **Architecture handoff** — only when a durable structural handoff is independently useful; otherwise return structural decisions to the caller. Northstar adopts durable corrections into its current Draft / canonical Taskbook; the Issue only references it.
 - **Verify result** — Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing. It normally stays with the PR/review/verification surface unless it changes durable Intent or Architecture.
 - **Eval artifact** — Capability/failure + Task + Environment + Verifier + backend binding + Run Evidence/Trajectory + measurement status. It belongs under `evals/` or the project's existing eval surface, not in canonical Intent or product verification state.
 
@@ -161,7 +165,7 @@ Agent improvement 走另一条反馈环：真实 task/trace → Eval → executa
 
 ## Architecture Evolution usage
 
-Use `architecture-evolution` directly when an engineering request or existing Intent creates structural pressure, or when a named subsystem must evolve toward clearer long-term responsibility. A prior Northstar invocation is not required; when a canonical Northstar Intent / Drafted Issue exists, AE treats it as the accepted boundary.
+Use `architecture-evolution` directly when an engineering request or existing Intent creates structural pressure, or when a named subsystem must evolve toward clearer long-term responsibility. A prior Northstar invocation is not required; when a canonical Northstar Draft / Taskbook exists, AE treats it as the accepted boundary and follows any Issue reference to that authority.
 
 Architecture Evolution first reuses or re-establishes the Target Architecture from current intent + authority + verified reality, then compares Current → Target and converges a focused Program with real exits. Program convenience cannot redefine Target. When structural completion itself is an accepted claim, Verify may check realized owner/dependency/authority facts against the already-adopted Target without redesigning it.
 

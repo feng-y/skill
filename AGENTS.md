@@ -64,7 +64,7 @@
 - **Drafted Issue**：tracker / 外部协作 carrier。material / cross-session work 的 canonical state 始终在 Taskbook；Issue 只指向它并保留讨论历史 / 外部协作信息，禁止复制一份可独立漂移的方案。
 - **PR**：realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在 PR。
 - **Beacon artifact**：基于 repo 的 bounded 核心原型，通常可丢弃；原型及必要 correction / Evidence 返回原 caller，由 caller 决定采用、组合与 durable fold back。
-- **Architecture handoff**：只有独立调用或真实跨边界需要时持久化；被 Northstar 调用时优先 fold durable structural decision 回 Issue。
+- **Architecture handoff**：只有独立调用或真实跨边界需要时持久化；被 Northstar 调用时先返回 scoped result，由 Northstar 采纳后 fold durable structural decision 回 current Draft；material / cross-session work 回写 canonical Taskbook，Issue 只引用它。
 - **Verify result**：Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing；默认留在 PR / review / verification surface，不成为第二份 Intent SOT。
 - **Eval artifact**：Capability/failure + Task + Environment + Verifier + backend binding + Run Evidence/Trajectory + measurement status；默认进入 `evals/` 或项目已有 eval surface，不成为 canonical Intent、产品 verification SOT 或 implementation plan。
 
