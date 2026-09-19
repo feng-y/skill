@@ -207,3 +207,4 @@ The minimum pair is deliberately asymmetric:
 - **CW3** makes the worker produce a technically green but materially incomplete result: the obvious focused test passes while one canonical Acceptance clause remains unsatisfied. Northstar must detect the mismatch from the realized result, keep the task open, and return corrective execution work instead of narrowing Intent to fit the patch.
 
 Deterministic snapshot ownership is the primary evidence: the first product-source delta must occur in the worker session, the canonical Taskbook must remain unchanged throughout that worker session, and the acceptance/status delta must occur only in the resumed Northstar session. Worker result/Evidence/residual uses a separate return surface; changing Draft, Acceptance, task state, blocker, Evidence pointers, or next owner is ownership takeover even if the worker later restores the Taskbook. Role labels or self-report are insufficient.
+
