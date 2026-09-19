@@ -57,7 +57,7 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 - **明确改变已授权 scope / commitment / accepted outcome** → 作为新的 Human authorization 更新 Draft；
 - **只讨论已经成立 Intent 下的 implementation How** → 实现者自治推进，Northstar 不介入。
 
-Northstar 保持 Intent continuity 与 semantic control，但不亲自执行 task、也不接管低层 execution mechanics。没有新的 material semantic gap 时，不重复 convergence、不要求实现者逐步审批；执行者在 Taskbook 边界内自治 implementation How，结果与 Evidence 返回后由 Northstar 判断该 material task 是否可接受并推进 next task。
+Northstar 保持的是同一 work item 的 Intent ownership，不是进程常驻或独占 context window。交出执行只改变当前执行者，不改变 Northstar 的判断责任；持续控制不依赖 Graph。没有新的 material semantic gap 时，不重复 convergence、不要求实现者逐步审批；执行者在 Taskbook 边界内自治 implementation How。
 
 当 Human 显式调用 `/northstar`（或明确要求 Northstar 持续处理某个 work item）时，这个 Intent context 对该 work item 保持有效，直到 Human 明确结束、切换到另一个独立 work item，或明确撤销该上下文。implementation start、Verify PASS、merge/ship、实现者自报 done 都不能由 Agent 单方面解释为 Northstar context 已结束。若 Human 明显开始了一个无关的新任务，可视为 work-context switch；不要要求额外 `/exit` 仪式。
 
@@ -138,7 +138,11 @@ Northstar 始终按**当前 canonical Taskbook**恢复 caller judgment。dispatc
 
 Northstar 的 acceptance judgment 与 Verify 的 proof judgment 必须分开：Northstar 判断“这个结果是否满足当前 Intent、是否可以推进下一 material task”；Verify 判断“支撑 completion / safety claim 的 Evidence 是否充分”。当后者 material 时，Northstar 调用 `$verify` 并消费 verdict，而不是自己从 backend green 推导 proven。
 
-这里的 `dispatch / handoff` 是 semantic ownership transfer，不自动表示创建了外部 worker。只有真实 delegation / orchestration tool 已调用并返回对应事件时，才能声称外部执行已启动或完成；没有这种能力时，Northstar 只落盘 Taskbook、标出 next owner / task，并让宿主在执行角色中继续或由下一 session 恢复。即使同一宿主随后承担 worker 角色，也必须保持 worker result 与 Northstar acceptance 两个边界，不能把实现动作冒充成 Northstar judgment。
+`dispatch / handoff` 交出的是 scoped execution responsibility，不是整个 work item 的 Intent ownership。优先复用宿主已有的 delegation / caller-return；material result、blocker 或会改变 binding premise 的 Evidence 一旦返回当前交互，Northstar 直接恢复上述 judgment，不等 Human 再调用 `/northstar` 或说“继续”。普通 implementation-local 进展仍留给 worker，不逐步回 Northstar 审批。
+
+判卷后，有已授权且可推进的 material work 就继续 handoff；需要修订或关闭 blocker 就路由给真实 owner。当前范围已完成或没有可推进工作时，记录结果后停下，不为保持 context 发明任务、轮询或重复验收；同一 work item 后续反馈仍回到 Northstar。
+
+只有真实 delegation / orchestration tool 事件才能证明外部 worker 已启动或返回。没有自动回传能力时，保留已有 Taskbook / handoff 中的 current task、执行 owner 与返回 Northstar 的 judgment point，由宿主执行角色或下一 session 接续，不声称后台仍在运行。同一宿主可先承担 worker 角色，再恢复 Northstar judgment，但 result submission 与 acceptance 必须分开；不要求独立进程或固定三 session。
 
 ### Session handoff 只记录 delta
 
