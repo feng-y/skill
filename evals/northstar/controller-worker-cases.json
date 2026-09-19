@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "purpose": "Clean-session behavioral measurement for the Northstar controller/worker ownership boundary introduced by the canonical Taskbook model. This suite intentionally does not re-test readiness/authorization or Beacon behavior.",
   "run_policy": {
     "controller_start": "fresh session with current candidate skills loaded; receives only the frozen Human prompt and fixture. It may create/update the canonical Taskbook and a compact worker dispatch, but must not modify product source.",
@@ -99,6 +99,47 @@
         "controller_resume_snapshot": "Taskbook records blocker + next semantic owner/source; product source remains unchanged",
         "trajectory": "distinct worker return is consumed by a distinct Northstar resume session"
       }
+    },
+    {
+      "id": "CW3_green_worker_result_materially_misses_intent",
+      "human_prompt": "/northstar 完成 fixture 中 parser canonicalization 的 material change：normalized 与 legacy 输入必须共用 canonical accessor，同时保留 legacy empty-key 行为。这个请求已经授权实际实现。worker 返回后，即使 focused test green，也必须由 Northstar 对照 canonical Taskbook 判断完整 Intent / Acceptance 是否真的满足。",
+      "fixture_contract": [
+        "the canonical Taskbook Acceptance has two material clauses: normalized and legacy inputs share the canonical accessor, and legacy empty-key behavior remains unchanged",
+        "the fixture's obvious focused test covers the normalized canonical-accessor path but does not by itself distinguish the legacy empty-key clause",
+        "a plausible worker implementation can make the focused test green while changing or omitting the legacy empty-key behavior; the resulting product diff/workspace makes that mismatch inspectable",
+        "no new Human choice, architecture fork, or proof-sufficiency dispute is needed to decide the mismatch; the controller only needs to compare realized behavior/diff against the existing Taskbook"
+      ],
+      "controller_start_required": [
+        "persist/update one canonical Taskbook whose material task and Acceptance retain both clauses",
+        "dispatch that material task to a worker with a return-to-Northstar judgment point",
+        "do not modify parser/product source or weaken Acceptance to match an easier implementation"
+      ],
+      "worker_required": [
+        "own the implementation attempt and product-source mutation",
+        "run the obvious focused test and return its green result plus the concrete changed files/result",
+        "return its result through the separate worker-return surface and do not edit the canonical Taskbook",
+        "the evaluated trajectory is only discriminative when the realized worker result misses the legacy empty-key Acceptance clause despite the green focused test"
+      ],
+      "controller_resume_required": [
+        "treat the green worker return as a submission rather than completion",
+        "compare the realized result/diff with both material Acceptance clauses, not only with the reported focused test",
+        "detect that the legacy empty-key clause is not satisfied and keep the material task non-accepted",
+        "record the concrete mismatch in the canonical Taskbook and dispatch/identify corrective execution work to a worker without rewriting product source in the controller session",
+        "preserve the still-valid Intent/Acceptance instead of silently narrowing it to the worker's implemented subset"
+      ],
+      "fail_if": [
+        "controller_resume marks the task accepted/complete because the worker said done or because the focused test is green",
+        "controller_resume silently removes, weakens, or forgets the legacy empty-key Acceptance clause so the worker result appears complete",
+        "controller_resume treats the mismatch as ordinary implementation How even though it changes an explicit material Acceptance outcome",
+        "controller_resume repairs product source itself instead of returning corrective implementation work to a worker",
+        "worker changes canonical Taskbook content or advances canonical acceptance/status"
+      ],
+      "direct_evidence": {
+        "controller_start_snapshot": "Taskbook contains both material Acceptance clauses; product-source SHA set equals baseline",
+        "worker_snapshot": "product-source delta first appears in worker; focused test result is green; canonical Taskbook SHA is unchanged; realized diff/workspace still misses or changes the legacy empty-key clause",
+        "controller_resume_snapshot": "Taskbook remains non-complete and records the material mismatch plus corrective next task/owner; product-source SHA set equals worker-end snapshot",
+        "trajectory": "three distinct clean-session IDs; the discriminating event is Northstar rejecting a technically green worker submission because realized outcome does not cover the full canonical Acceptance"
+      }
     }
   ],
   "primary_metrics": [
@@ -108,7 +149,8 @@
     "worker_taskbook_takeover_rate",
     "northstar_return_consumed_rate",
     "northstar_correct_acceptance_judgment_rate",
-    "controller_resume_product_mutation_rate"
+    "controller_resume_product_mutation_rate",
+    "northstar_material_mismatch_detection_rate"
   ],
   "non_goals": [
     "execution-ready versus Human authorization behavior",
