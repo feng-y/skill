@@ -51,7 +51,7 @@ PASS: call `$beacon` for that bounded decision, consume its correction, then Nor
 ### N4 — Multiple local artifacts require composition
 Two Beacon artifacts close different bounded parts of one Intent, but their path/lifecycle boundary has not yet been connected.
 
-PASS: Northstar connects the adopted results into one coherent current Draft and checks overall coverage. The Draft itself states the shared unit, its lifetime across the caller path, and how model-specific work connects when those decisions matter. A fresh consumer must not have to infer these connections from separate green artifacts. A list/index of artifacts or a promise to compose later fails.
+PASS: Northstar connects the adopted results into one coherent current Draft and checks the overall coverage. The Draft itself states the shared unit, its lifetime across the caller path, and how model-specific work connects when those decisions matter. A fresh consumer must not have to infer these connections from separate green artifacts. A list/index of artifacts or a promise to compose later fails.
 
 ### N5 — Authorized narrowing
 Original request covers A/B/C but current investment is unsettled.
@@ -185,6 +185,7 @@ Freeze one dispatched parser task, its input Taskbook, actual returned artifact 
 
 Score from actual reads of the return/current Taskbook and artifact observations, plus the resulting canonical Taskbook delta and next-task scope; a narrated promise to compare them is insufficient. Missing association or material proof remains unresolved, not PASS; use existing sources or the corresponding owner to close it. These contrasts specify the desired discriminator, not measured behavior or a complete Intent-continuity loop.
 
+Caller-return continuation contrast (specification only; not an additional CW runner case): deliver a real material return through the host's existing caller-return in the active work context, without another Human `/northstar` or “continue” instruction. After Northstar judges that return: (1) if already-authorized material work is still incomplete **and currently actionable**, persist the judgment and hand off the next material task; a second material return must reach Northstar judgment again without a Graph or role restart; (2) if the current Taskbook scope now satisfies the canonical Intent / Acceptance, record completion and stop; (3) if material work remains but cannot currently proceed because of a factual blocker, missing Human commitment, unavailable authority/source, or absent execution authorization, preserve that unfinished scope plus the real blocker/owner and stop execution without declaring overall completion. Missing return transport is an honest handoff limitation, not evidence of a running worker. Score actual Taskbook/dispatch deltas and host tool events, not role claims. These are behavior specifications, not measured results.
 
 Contract smoke supports ownership/routing/convergence safety only. Behavioral uplift requires real clean-session actor + fresh-consumer + blinded-judge runs.
 
@@ -194,17 +195,17 @@ Focused ownership regressions live in `owner-transfer-cases.json`. They cover No
 
 `controller-worker-cases.json` is the focused behavioral suite for the Taskbook controller boundary. It intentionally does **not** repeat readiness/authorization or Beacon coverage.
 
-Each run uses three isolated sessions over one fixture/workspace:
+Each run uses three isolated sessions over one fixture/workspace to distinguish ownership; this is a measurement setup, not a runtime requirement:
 
 1. **Northstar controller start** — compile/update the canonical Taskbook and dispatch one material task; product source must remain unchanged.
 2. **Worker** — read repo rules + Taskbook + dispatch, own implementation How/product mutation, and return result/Evidence/residual; it must not advance canonical Taskbook status.
 3. **Northstar controller resume** — consume the worker return, judge it against Intent/task boundary/Acceptance, and update Taskbook status/next owner; it must not implement product changes itself.
 
-The minimum pair is deliberately asymmetric:
+The cases are deliberately asymmetric:
 
 - **CW1** requires an accepted worker result, so dispatch, worker-owned mutation, return consumption, Northstar acceptance, and Taskbook advancement are all observable.
 - **CW2** returns a decision-changing factual blocker, so a worker return cannot be mechanically converted into completion; Northstar must keep the task open and route the blocker to a real closure owner/source.
-- **CW3** makes the worker produce a technically green but materially incomplete result: the obvious focused test passes while one canonical Acceptance clause remains unsatisfied. Northstar must detect the mismatch from the realized result, keep the task open, and return corrective execution work instead of narrowing Intent to fit the patch.
+- **CW3** scores mismatch detection only when the actual worker return is technically green but materially incomplete. Northstar must detect the unsatisfied Acceptance clause, keep the task open, and return corrective work instead of narrowing Intent to fit the patch. A fully correct worker makes this conditional case INCONCLUSIVE, not a failure; the runner does not instruct a worker to manufacture a bug.
 
 Deterministic snapshot ownership is the primary evidence: the first product-source delta must occur in the worker session, the canonical Taskbook must remain unchanged throughout that worker session, and the acceptance/status delta must occur only in the resumed Northstar session. Worker result/Evidence/residual uses a separate return surface; changing Draft, Acceptance, task state, blocker, Evidence pointers, or next owner is ownership takeover even if the worker later restores the Taskbook. Role labels or self-report are insufficient.
 
