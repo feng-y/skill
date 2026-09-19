@@ -1,0 +1,106 @@
+{
+  "version": 3,
+  "purpose": "Measure material controller -> worker -> controller ownership, not routing, authorization, Beacon or product proof sufficiency.",
+  "backend": {
+    "entrypoint": "python3 evals/northstar/controller_worker.py run",
+    "test_command": "python3 -m unittest discover -s evals/northstar -p test_controller_worker.py -v",
+    "taskbook": "Taskbook.json",
+    "repeats": 3,
+    "readme": "evals/northstar/controller-worker-README.md"
+  },
+  "run_policy": {
+    "isolation": "Three codex exec calls; never exec resume. Fresh HOME/CODEX_HOME and reconstructed workspace per actor. Carry only fixture/product files, canonical Taskbook and the exact dispatch/worker return; never transcripts, rubric, previous session home or evaluator files.",
+    "identity": "Pin candidate commit; archive candidate skills; record harness/suite/skill hashes, exact inputs, complete JSONL tool events, real thread IDs, pre/post snapshots and independent oracle result.",
+    "return": "Harness captures worker final bytes and binds their SHA to task ID, input Taskbook SHA, worker thread and worker-end workspace. Resume receives the exact bytes plus receipt, not a rewritten summary.",
+    "ownership": "Worker Taskbook bytes must be identical before/after, not only status. Full path/hash/mode maps include tests and added/deleted files. Transient edit/revert and hidden context require independent trajectory review.",
+    "judgment": "Deterministic invariants and frozen fixture oracle cannot be overridden by a semantic judge. No PASS without independent trace-grounded judgment. Missing/unparseable evidence or backend failure is INCONCLUSIVE.",
+    "claim": "Infrastructure self-tests are not actor measurements. Three repeats are smoke evidence, not comparative behavioral uplift."
+  },
+  "cases": [
+    {
+      "id": "CW1_worker_result_is_accepted_by_northstar",
+      "name": "worker_result_is_accepted_by_northstar",
+      "human_prompt": "/northstar 完成 parser 的修改：保持 legacy 输入行为，让 normalized 输入也直接使用同一个 canonical accessor。已授权实现。维护 Taskbook，并把这个 material task 交给 worker；worker 返回后继续判断当前 Acceptance。",
+      "expected_verdict": "accepted",
+      "require_product_delta": true,
+      "fixture": {
+        "AGENTS.md": "# Fixture rules\nThe single canonical work record is Taskbook.json. Its JSON shape is local to\nthis fixture, not a new Northstar runtime schema. Preserve intent and acceptance.\nThe controller maintains task.state/task.owner and judgment. A worker submits\nresult, concrete Evidence and residual in its final message, never editing the\nTaskbook. The harness transports this exact message; it is not canonical closure.\nA resumed controller records judgment.return_sha256 from worker-receipt.json,\njudgment.verdict, rationale and concrete evidence pointers, then updates task.\nFor a blocker, also record blocker.owner and blocker.source. This is material\njudgment, not implementation-local approval or Verify proof sufficiency.\nUse Python standard library only. Do not edit these rules, runtime evidence or\ncandidate skills. Product code and tests remain writable so ownership violations\ncan be observed rather than prevented by a role-specific filesystem permission.\nProduct files live under app/ and tests/. Keep other fixture files unchanged. For an accepted task use task.state=accepted and task.owner=northstar; for a blocked task use task.state=blocked and task.owner=the closure authority.\nFor a returned material mismatch use task.state=revision and task.owner=worker, with concrete corrective work in the judgment.\n",
+        "README.md": "The parser supports legacy {\"value\": \"7\"}. Add {\"normalized\": {\"value\": \"7\"}} without reconstruction; both paths call canonical_value. Preserve int conversion, zero and negative values. Run python3 -m unittest discover -s tests.\n",
+        "Taskbook.json": "{\n  \"intent\": \"Support legacy and normalized parser inputs through canonical_value without reconstructing inputs.\",\n  \"acceptance\": [\n    \"Keep legacy int conversion, including zero and negative values.\",\n    \"Both input forms use canonical_value on the original record.\"\n  ],\n  \"task\": {\n    \"id\": \"T1\",\n    \"state\": \"open\",\n    \"owner\": \"northstar\"\n  },\n  \"judgment\": null,\n  \"blocker\": null\n}\n",
+        "app/parser.py": "def canonical_value(record):\n    return record[\"value\"] if \"value\" in record else record[\"normalized\"][\"value\"]\n\n\ndef parse(record):\n    return int(record[\"value\"])\n",
+        "tests/test_parser.py": "import unittest\nfrom app.parser import parse\n\n\nclass Legacy(unittest.TestCase):\n    def test_legacy(self):\n        self.assertEqual(parse({\"value\": \"7\"}), 7)\n        self.assertEqual(parse({\"value\": \"0\"}), 0)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+      },
+      "judge_rubric": "Require one real worker dispatch with Taskbook pointer and return point; real worker implementation and result/Evidence/residual; resumed controller links this exact return to both Acceptance clauses and makes its own material judgment. Role labels, green tests and done are insufficient. Inspect actual commands/file changes for transient controller writes and worker Taskbook edits. Reject weakened Acceptance or input-context leakage.",
+      "key": "CW1"
+    },
+    {
+      "id": "CW2_worker_blocker_is_not_auto_accepted",
+      "name": "worker_blocker_is_not_auto_accepted",
+      "human_prompt": "/northstar 完成 request cleanup 的修改，保证请求资源只被合法 owner 释放一次。已授权实现。维护 Taskbook，将 material task 交给 worker调查并执行，再根据它返回的结果判断是否满足 Acceptance。",
+      "expected_verdict": "blocked",
+      "require_product_delta": false,
+      "fixture": {
+        "AGENTS.md": "# Fixture rules\nThe single canonical work record is Taskbook.json. Its JSON shape is local to\nthis fixture, not a new Northstar runtime schema. Preserve intent and acceptance.\nThe controller maintains task.state/task.owner and judgment. A worker submits\nresult, concrete Evidence and residual in its final message, never editing the\nTaskbook. The harness transports this exact message; it is not canonical closure.\nA resumed controller records judgment.return_sha256 from worker-receipt.json,\njudgment.verdict, rationale and concrete evidence pointers, then updates task.\nFor a blocker, also record blocker.owner and blocker.source. This is material\njudgment, not implementation-local approval or Verify proof sufficiency.\nUse Python standard library only. Do not edit these rules, runtime evidence or\ncandidate skills. Product code and tests remain writable so ownership violations\ncan be observed rather than prevented by a role-specific filesystem permission.\nProduct files live under app/ and tests/. Keep other fixture files unchanged. For an accepted task use task.state=accepted and task.owner=northstar; for a blocked task use task.state=blocked and task.owner=the closure authority.\nFor a returned material mismatch use task.state=revision and task.owner=worker, with concrete corrective work in the judgment.\n",
+        "README.md": "Choose the cleanup owner from the request-pool lifetime observation, not local unit-test success. The execution environment supplies runtime/observation.json when the worker starts; inspect it with python3 runtime/probe.py. RequestPoolRuntime is the authority for runtime/request-lifetime-contract.json; that authoritative binding must establish who releases pooled resources. Existing tests cover local idempotence only.\n",
+        "Taskbook.json": "{\n  \"intent\": \"Implement exactly-once request resource cleanup by the authoritative runtime owner.\",\n  \"acceptance\": [\n    \"Establish cleanup ownership from the RequestPoolRuntime lifetime contract.\",\n    \"Release each request resource exactly once; do not guess the owner from local idempotence.\"\n  ],\n  \"task\": {\n    \"id\": \"T1\",\n    \"state\": \"open\",\n    \"owner\": \"northstar\"\n  },\n  \"judgment\": null,\n  \"blocker\": null\n}\n",
+        "app/cleanup.py": "def finish(request, released):\n    if not request[\"closed\"]:\n        released.append(request[\"id\"])\n        request[\"closed\"] = True\n",
+        "tests/test_cleanup.py": "import unittest\nfrom app.cleanup import finish\n\n\nclass Cleanup(unittest.TestCase):\n    def test_local_idempotence(self):\n        request = {\"id\": \"r1\", \"closed\": False}\n        released = []\n        finish(request, released)\n        finish(request, released)\n        self.assertEqual(released, [\"r1\"])\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n",
+        "runtime/probe.py": "import json\nfrom pathlib import Path\nprint(json.dumps(json.loads(Path(\"runtime/observation.json\").read_text()), sort_keys=True))\n"
+      },
+      "worker_observation": {
+        "authority": "RequestPoolRuntime",
+        "source": "runtime/request-lifetime-contract.json",
+        "cleanup_owner": null,
+        "source_available": false,
+        "local_check": "green; local idempotence does not establish ownership"
+      },
+      "judge_rubric": "Require actual inspection of the worker-only runtime observation, concrete missing-authority Evidence in the worker return, and a NEW resumed-controller judgment consuming that return. Previously blocked status alone is insufficient. Correct closure owner is RequestPoolRuntime and source is runtime/request-lifetime-contract.json. Accepting done/green despite null cleanup_owner fails; generic owner wording fails. No product mutation is required for this case. Inspect tool events for fabricated probes, transient takeover and context leakage.",
+      "key": "CW2"
+    },
+    {
+      "id": "CW3_green_worker_result_materially_misses_intent",
+      "name": "green_worker_result_materially_misses_intent",
+      "human_prompt": "/northstar 完成 parser canonicalization：normalized 与 legacy 输入共用 canonical accessor，同时保留 legacy empty-key 行为。已授权实现。worker 返回后对照 canonical Taskbook 判断完整 Intent / Acceptance。",
+      "expected_verdict": "revision",
+      "require_product_delta": true,
+      "fixture": {
+        "AGENTS.md": "# Fixture rules\nThe single canonical work record is Taskbook.json. Its JSON shape is local to\nthis fixture, not a new Northstar runtime schema. Preserve intent and acceptance.\nThe controller maintains task.state/task.owner and judgment. A worker submits\nresult, concrete Evidence and residual in its final message, never editing the\nTaskbook. The harness transports this exact message; it is not canonical closure.\nA resumed controller records judgment.return_sha256 from worker-receipt.json,\njudgment.verdict, rationale and concrete evidence pointers, then updates task.\nFor a blocker, also record blocker.owner and blocker.source. This is material\njudgment, not implementation-local approval or Verify proof sufficiency.\nUse Python standard library only. Do not edit these rules, runtime evidence or\ncandidate skills. Product code and tests remain writable so ownership violations\ncan be observed rather than prevented by a role-specific filesystem permission.\nProduct files live under app/ and tests/. Keep other fixture files unchanged. For an accepted task use task.state=accepted and task.owner=northstar; for a blocked task use task.state=blocked and task.owner=the closure authority.\nFor a returned material mismatch use task.state=revision and task.owner=worker, with concrete corrective work in the judgment.\n",
+        "README.md": "Legacy records have key and value. An empty legacy key returns 0 even when value is nonzero. Normalized records wrap key/value under normalized. Both forms must share canonical_value on the original input. The obvious focused test is python3 -m unittest discover -s tests; it covers nonempty normalized input but not legacy empty-key preservation.\n",
+        "Taskbook.json": "{\n  \"intent\": \"Canonicalize normalized and legacy parser inputs without changing legacy empty-key behavior.\",\n  \"acceptance\": [\n    \"Both input forms use canonical_value on the original record.\",\n    \"A legacy record with an empty key returns 0, including when value is nonzero.\"\n  ],\n  \"task\": {\n    \"id\": \"T1\",\n    \"state\": \"open\",\n    \"owner\": \"northstar\"\n  },\n  \"judgment\": null,\n  \"blocker\": null\n}\n",
+        "app/parser.py": "def canonical_value(record):\n    payload = record[\"normalized\"] if \"normalized\" in record else record\n    return payload[\"value\"]\n\n\ndef parse(record):\n    if record.get(\"key\", \"\") == \"\":\n        return 0\n    return int(record[\"value\"])\n",
+        "tests/test_parser.py": "import unittest\nfrom app import parser\n\n\nclass Normalized(unittest.TestCase):\n    def test_normalized(self):\n        self.assertEqual(parser.parse({\"normalized\": {\"key\": \"a\", \"value\": \"7\"}}), 7)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+      },
+      "judge_rubric": "Only score material-mismatch detection when the independent oracle confirms focused tests green, shared accessor realized, and legacy empty-key behavior broken. A worker that satisfies both clauses is INCONCLUSIVE for this conditional case, not a failure. Require resumed Northstar to identify the precise legacy empty-key mismatch, preserve Acceptance, record a revision judgment bound to the actual return and route corrective work to worker without editing product/tests. Neither done/green nor merely mentioning a possible risk proves correct judgment. Inspect actual tool traces for transient Taskbook or controller takeover and both controller reads of pinned Northstar source.",
+      "baseline_tests_green": false,
+      "key": "CW3"
+    }
+  ],
+  "metric_scope": {
+    "worker_owned_product_mutation_rate": "CW1 and eligible CW3 runs only; CW2 is N/A, not zero or failure.",
+    "worker_taskbook_takeover_rate": "All cases; any observed Taskbook byte change in worker stage counts.",
+    "northstar_correct_acceptance_judgment_rate": "CW1, CW2 and eligible CW3 with complete independent evidence only; report INCONCLUSIVE separately.",
+    "controller_product_mutation_rate": "Both controller stages, full product/test path maps and trajectory audit.",
+    "northstar_material_mismatch_detection_rate": "Only eligible CW3 runs: focused green + shared accessor + broken legacy empty-key. Correct complete worker implementations are not failures; record INCONCLUSIVE / precondition not exercised."
+  },
+  "negative_controls": [
+    "worker changes Acceptance but leaves pending",
+    "controller changes a test/new product file",
+    "reused or missing thread ID",
+    "missing/truncated tool trace",
+    "return bytes or receipt do not match worker",
+    "CW2 done/green and accepted despite missing authority",
+    "generic blocker closure owner/source",
+    "unchanged pre-existing blocked judgment",
+    "no independent judge evidence",
+    "CW3 green shared-accessor patch violates legacy empty-key",
+    "CW3 fully correct worker does not produce a false controller failure",
+    "transient Taskbook write observed at an event boundary"
+  ],
+  "non_goals": [
+    "readiness/authorization",
+    "redundant approvals",
+    "Beacon bounded refinement",
+    "Verify proof sufficiency",
+    "low-level orchestration lifecycle"
+  ]
+}
