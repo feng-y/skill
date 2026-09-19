@@ -16,7 +16,7 @@ Architecture Evolution 不拥有 canonical Intent，不替 Human 改变投入、
 
 ## 输入：caller-neutral structural pressure
 
-AE 可以直接从当前 engineering request / existing Intent / Drafted Issue / Human correction 启动；**不要求先运行 Northstar**。当 canonical Northstar Intent / Issue 已存在时，它定义 accepted outcome / commitment boundary，AE 不另建 Intent SOT。
+AE 可以直接从当前 engineering request / existing Intent / Drafted Issue / Human correction 启动；**不要求先运行 Northstar**。当 Northstar 的 canonical Draft / Taskbook 已存在时，它定义 accepted outcome / commitment boundary；Issue 只引用该权威，AE 不另建 Intent SOT。
 
 从请求、稳定 architecture/domain authority 与 verified reality 中只提取**会长期改变结构的 change pressure**：responsibility、authority、knowledge ownership、boundary、variation、dependency、lifecycle、failure/isolation 或兼容承诺。
 
@@ -125,7 +125,7 @@ Research、execution、review、Beacon correction 或 Verify 都可能触发 AE 
 - material structural completion claims；
 - 会改变 Target / Program 的 unresolved Evidence 或 Human choice。
 
-被 Northstar 调用时，只把后续执行需要的 durable structural Decision / Constraint / Draft correction fold back 到 canonical Intent / Issue。独立调用且用户需要 architecture handoff 时才形成持久文档；AE 不强制每次生成第二份 Markdown SOT。
+被 Northstar 调用时，后续执行需要的 durable structural Decision / Constraint / Draft correction 由 Northstar 取舍后 fold back 到 current Draft，并在 material / cross-session work 中回写同一个 canonical Taskbook；Issue 只引用它，不另存方案。独立调用且用户需要 architecture handoff 时才形成持久文档；AE 不强制每次生成第二份 Markdown SOT。
 
 当 caller 是 Northstar 时，AE 先以独立 return 交回 scoped structural result；它在 Northstar 随后恢复 caller judgment、完成取舍并 fold back 前不是 canonical Intent。不要把 AE return 与 Northstar final handoff 混成同一段未分界的回答。Northstar 继续拥有整体 composition，AE 不宣称 canonical Intent 已收敛。独立 AE 调用仍可以按用户需要产出 architecture handoff，不强制经过 Northstar；这个 caller boundary 也不新增 persistent phase 或 artifact。
 

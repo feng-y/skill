@@ -69,7 +69,7 @@ Record one JSON object per run with the fields consumed by `score.py`:
 - `final_state_valid`: final handoff/verdict honestly represents what is executable/proven/blocked
 - `notes`: short judge rationale and decisive Evidence identities
 
-Boolean/null fields must reflect observed behavior. Do not infer PASS from the candidate mentioning Skill names.
+All metric fields must be present and boolean or `null` (not applicable), never strings or numeric substitutes. `variant` and `case_id` are non-empty trimmed labels; `repeat` is a positive integer. A `(variant, case_id, repeat)` identifies one run and must be unique. Do not infer PASS from the candidate mentioning Skill names.
 
 ## Decision rule
 
@@ -88,11 +88,34 @@ The primary result is not a single pass rate. Report per-capability rates across
 
 A candidate is not behaviorally better if it gains one capability by adding ceremony elsewhere. Treat any material regression in intent fidelity, final-state validity, targeted re-entry, or unnecessary owner calls as a guardrail failure.
 
-Use:
+Use Python 3.10+:
 
 ```bash
+# Single-arm or multi-arm descriptive counts, separated by variant and case.
 python3 evals/behavioral-loop/score.py <results.jsonl>
+
+# Explicit comparison; labels must match the recorded variant values.
+python3 evals/behavioral-loop/score.py <results.jsonl> --base base --candidate candidate
+
+python3 -m unittest discover -s evals/behavioral-loop -p test_score.py -v
 ```
+
+The scorer never pools variants or cases. Negative metrics retain the `clean`
+count (absence of the unwanted action), so a positive delta always means a higher
+success/clean rate. `null` is excluded, not counted as success or failure.
+
+A paired comparison requires identical `(case_id, repeat)` sets and matching
+per-metric applicability in the selected variants. Duplicate runs, malformed
+rows, missing pairs or applicability mismatches are errors (exit 2) before any
+rates are printed; unmatched runs are not silently dropped. Keep inconclusive
+measurements separate rather than disguising them as not-applicable metrics.
+
+Exit 0 means valid input was summarized, not that the candidate passed or improved.
+These are descriptive counts and per-case percentage-point deltas from judge
+rows. The scorer does not inspect trajectories, establish matched model/tool/repo
+identity, enforce the semantic guardrails above, or prove statistical uplift.
+The tests and `results.example.jsonl` are synthetic infrastructure examples, not
+agent behavioral Evidence.
 
 ## What to change after a failure
 
