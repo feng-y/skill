@@ -176,6 +176,15 @@ PASS: Northstar treats this as a submitted result, compares it with the Taskbook
 
 FAIL: Northstar reimplements the task itself, accepts `done` or green output without judging Intent coverage, or takes over Verify's proof-sufficiency responsibility.
 
+Return-context contrast for this same scenario (specification only; not an additional CW runner case):
+
+Freeze one dispatched parser task, its input Taskbook, actual returned artifact and Evidence pointers. The return preserves empty values (`parse_pair("k=") == ("k", "")`) but rejects empty keys (`parse_pair("=v") is None`); its green evidence covers only the dispatched Acceptance. Supply a current canonical Taskbook and independently inspectable observations for the realized artifact. Do not instruct a real worker to manufacture this mismatch or count a fixture as a worker session.
+
+- **Affected Acceptance changed:** after dispatch, a Human clarification requires preserving empty keys as well. Northstar must retain the current empty-key clause, identify the returned artifact's mismatch, leave that claim unaccepted, and hand the precise correction back to the worker. Preserve the still-valid empty-value work/Evidence and unrelated accepted tasks; do not accept the whole task, restore the old Acceptance, or restart all work.
+- **Only non-binding state changed:** use the identical return, but change only Taskbook wording or an unrelated task's status; the parser's binding contract remains satisfied. Northstar must accept the supported result without new product work or verification solely because Taskbook bytes/revision differ. Existing pointer/dispatch context suffices; absence of a newly invented receipt is not a blocker.
+
+Score from actual reads of the return/current Taskbook and artifact observations, plus the resulting canonical Taskbook delta and next-task scope; a narrated promise to compare them is insufficient. Missing association or material proof remains unresolved, not PASS; use existing sources or the corresponding owner to close it. These contrasts specify the desired discriminator, not measured behavior or a complete Intent-continuity loop.
+
 
 Contract smoke supports ownership/routing/convergence safety only. Behavioral uplift requires real clean-session actor + fresh-consumer + blinded-judge runs.
 
