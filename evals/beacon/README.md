@@ -1,69 +1,72 @@
 # Beacon contract eval
 
-Eval-only. Normal runtime must not read this file.
+Eval-only. Normal runtime must not read this file. These are evaluation specifications, not completed actor runs.
 
 Beacon passes only when it:
 
-1. is caller-neutral and primarily model-invoked; it does not require Northstar as the caller or become a mandatory Human-facing stage;
-2. activates only after the caller understands its semantic question enough to name one bounded material concrete ambiguity;
-3. uses the cheapest sufficient representation rather than assuming prototype code is required;
-4. treats every artifact as a reaction / inspection surface, not semantic authority or production path;
-5. returns factual gaps to `$unknowns-first`, long-term structural forks to `$architecture-evolution`, and proof-sufficiency questions to `$verify`;
-6. does not own canonical Intent / Issue, Architecture Target, Verify verdict, Taskbook, or production implementation;
-7. returns concrete contrast / correction / Evidence to the original caller, which keeps semantic ownership;
-8. leaves composition of multiple local artifacts to Northstar when Northstar owns the complete Intent;
-9. after correction, reopens only the affected local surface;
-10. stops expanding prose once prose no longer distinguishes the live concrete shapes, and uses the cheapest artifact / probe that can produce decision-relevant Evidence;
-11. does not prototype or multiply candidates for ceremony when one static representation, falsifier, or representative artifact is sufficient;
-12. may refine the same bounded decision from artifact-anchored Human/caller feedback without turning annotations into a workflow, semantic owner, or factual proof of runtime behavior.
+1. returns a minimal, repo-grounded core prototype for one bounded feature intent or fault; questions, options, and Evidence alone are not a substitute;
+2. remains caller-neutral and primarily model-invoked, without a mandatory Human stage or a requirement to invent alternatives before building a useful prototype;
+3. ties the core to real repository paths/types/callers and separates observed facts from proposed or unverified behavior;
+4. uses the smallest sufficient form, including a static sketch when that is enough, rather than always writing executable or production code;
+5. returns one cohesive primary prototype and leaves selection, comparison, complete-Intent composition, and semantic judgment to the caller;
+6. preserves valid artifact state under local feedback, changing connected clauses/examples only when the correction makes them inconsistent;
+7. keeps factual closure with Unknowns First, structural judgment with AE, and proof sufficiency with Verify; a fault prototype need not wait for every root-cause unknown to close.
 
 ## Scenario smoke
 
-### B1 — Northstar caller
-Intent is understood but one bounded API/usage area still has two materially different interpretations.
+### B1 — Northstar caller: feature core
+A bounded feature intent needs an inspectable interface and usage sketch in the current repo. Its meaning may already be clear; multiple alternatives are not a prerequisite.
 
-PASS: Beacon exposes the contrast as one coherent local result and returns it to Northstar. When judging this interface requires its signature, caller usage, and consequences of already-decided lifetime constraints, include them together rather than creating a separate invocation for each clause. Northstar still decides how it changes the complete Intent / Draft; an undecided ownership/lifetime commitment is not delegated to Beacon.
+PASS: read the relevant source and return one connected core prototype using actual repo types/call sites, marking proposed additions. Include the interface, representative input/output, and consequences of binding lifetime constraints needed to inspect it together. Northstar decides adoption and full-Intent composition.
+
+FAIL: a generic demo disconnected from the repo, prose/questions with no prototype, invented alternatives, or a separate invocation per field/file.
 
 ### B2 — Architecture Evolution caller
-The structural question is clear, but a concrete caller path is needed to inspect the consequence.
+AE supplies one candidate boundary and needs its concrete consumer path.
 
-PASS: Beacon renders the bounded path / usage surface; AE retains Target judgment.
+PASS: return one repo-grounded core prototype for that scope. AE owns comparison with other candidates and Target judgment; Beacon does not launch a design competition or adopt an owner itself.
 
 ### B3 — Verify caller
-The accepted claim is clear, but the concrete observable path is ambiguous.
+Verify has an accepted claim but needs a local behavior/fault expressed as a concrete usage path or minimal reproducer.
 
-PASS: Beacon exposes the observable surface; Verify retains proof obligation and verdict ownership.
+PASS: return the core prototype with observed behavior and unverified limits. Verify keeps proof obligation and verdict; neither the prototype nor its focused check automatically proves the product claim.
 
-### B4 — Unknowns First caller
-A factual ambiguity is closed; the remaining problem is concrete shape.
+### B4 — Unknowns First caller versus factual probe
+A factual investigation has enough known local behavior to request an inspectable core prototype. Other causes may remain unknown. In the paired case, only a focused fact query/probe is needed.
 
-PASS: Unknowns First may invoke Beacon and return the result to the original decision owner.
+PASS: the first case may call Beacon and return its prototype to the original decision owner, preserving unknowns. The paired fact-only case stays with Unknowns First; a probe/repro is not automatically a Beacon invocation.
 
-### B5 — Prototype is only a technique
-A static representation is insufficient and a disposable prototype is the cheapest way to answer the bounded question.
+### B5 — Static versus runnable core
+A repo-grounded interface/usage sketch is sufficient in one case. In the paired case, the requested behavior cannot be inspected without executing a small local reproduction.
 
-PASS: Beacon may use a disposable prototype, but the top-level owner and invocation identity remain Beacon.
+PASS: use the sufficient static core without ceremonial tests in the first case. In the second, use the smallest feasible reproducer and record actual execution before claiming it runs/reproduces. Both deliver a core prototype; executable code is a form, not an obligatory extra stage.
 
 ### B6 — Already concrete bypass
-The caller already has one stable concrete interpretation and only implementation How remains.
+The caller already has an adequate repo-grounded core in its code or description and only production implementation How remains. In the paired variant, no separate prototype file exists.
 
-PASS: do not invoke Beacon or stop immediately.
+PASS: do not invoke Beacon or stop immediately in either variant. File absence alone does not justify another prototype; do not manufacture ambiguity or production scaffolding.
 
-### B7 — Prose has stopped producing information
-Two bounded interface shapes remain plausible. Another prose comparison repeats the same assumptions, while a minimal compileable usage sketch would expose whether one shape needs caller-owned state that the other hides.
+### B7 — Fault core before root-cause closure
+A fault has a reported trigger/input and an implicated repo path; its root cause is not established. In a paired variant, the runtime needed to reproduce it is unavailable.
 
-PASS: Beacon stops abstract elaboration, creates only the cheapest same-scope concrete representation needed to expose that difference, returns the resulting Evidence, and does not turn the sketch into production implementation.
+PASS: inspect that path and build the smallest fault core linking trigger, expected versus reported/observed behavior, and relevant calls; distinguish a fault report from an actual execution observation. Run the reproducer when feasible; otherwise return an inspectable failure sketch with unverified steps and the concrete reproduction blocker. Return to the caller without claiming a proven cause/fix or requiring a full incident investigation first.
 
-### B8 — One falsifier is enough
-Three variants could be imagined, but checking one representative caller path can falsify the leading abstraction if it leaks ownership knowledge.
+FAIL: hypotheses/logs only with no fault core, a fabricated successful run, or a generic reproduction unrelated to the repo.
 
-PASS: run/inspect the single decisive representation first. If it closes the local decision, stop; do not generate three prototypes just because multiple options can be named.
+### B8 — One core, not an evidence-only answer
+One representative repo-grounded prototype is sufficient for the scoped request; several variants could be imagined. Compare an artifact-backed completion with an answer that gives the same analysis and evidence but omits the prototype.
+
+PASS: deliver the one core prototype and stop. The evidence-only answer fails even if its explanation is plausible. A source read or benchmark can support the core, not replace it; independent candidate selection/comparison stays with the caller.
 
 ### B9 — Artifact-anchored feedback
-Beacon produced a disposable interaction draft for one bounded ambiguity. The Human points to two exact elements: one expresses the wrong accepted meaning while the rest is still valid. No runtime fact or long-term ownership decision changed.
+Beacon produced a disposable core prototype. Human/caller feedback corrects one exact element; the remaining state is valid and no runtime fact or long-term ownership decision changed.
 
-PASS: preserve the still-valid artifact, revise the affected surface and only those connected clauses/examples made inconsistent by the correction, and return the delta with the reason for connected changes. A repeated-child correction may require changing its usage example, not the unrelated singular interface or general ownership policy. Treat desired meaning as Human intent/choice input, not as proof that production already behaves that way.
+PASS: revise that same prototype and only connected clauses/examples made inconsistent by the correction, preserve valid state, and return the delta with the reason for connected changes. A repeated-child correction may change its usage example, not the unrelated singular interface or general ownership policy. Desired meaning is Human intent/choice input, not proof of runtime behavior.
 
-FAIL: restart the whole Intent, create a persistent annotation/review lifecycle, silently treat the feedback as runtime Evidence, or let Beacon absorb a change that belongs to Northstar / AE / Verify.
+FAIL: restart the whole Intent, create a persistent annotation/review lifecycle, silently treat feedback as runtime Evidence, or absorb a change belonging to Northstar / AE / Verify.
 
-Static smoke checks the contract. Behavioral uplift is measured through `$eval`; organic tasks must not leak the expected Beacon route or artifact-feedback behavior.
+## Evidence boundary
+
+For a real run, pin repo revision, loaded Skill source, model/backend, and task; retain source reads, the actual prototype/output, execution observations when claimed, artifact delta, and the distinct caller return. Inspect the artifact and transcript, not declarations such as “I grounded this in the repo”. Organic routing tasks must not leak the expected Skill; direct Beacon tasks can isolate its output behavior but do not prove automatic routing.
+
+Static contract checks do not measure behavioral uplift. Use `$eval` for repeatable clean-session/trace-backed measurement; keep evaluator instructions and negative controls outside the actor context. Existing controller/worker, readiness/authorization, and product Verify coverage are not rerun or claimed as evidence for this change.

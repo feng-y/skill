@@ -1,4 +1,4 @@
 interface:
   display_name: "Beacon"
-  short_description: "把局部 Intent 变成可检查、可组合的具体落点"
-  default_prompt: "使用 $beacon。只处理当前 caller 已理解语义中一个仍会导致 materially different concrete shape 的 bounded/local intent；选择最便宜的可检查 representation，例如 Core Path、Usage / Interface Draft、behavior example、config/schema shape、UI draft、minimal implementation、experiment 或 disposable prototype。在更大调用中先把 bounded、non-authoritative local result 作为独立 return 交回 caller，再由 caller 继续采用与组合；不要把 Beacon return 和 caller final handoff 混成同一段回答，也不要接管 Intent、Architecture、verification judgment 或 implementation。"
+  short_description: "基于 repo 构建功能或故障的最小核心原型"
+  default_prompt: "使用 $beacon。围绕当前 caller 指定的一个 bounded 功能 Intent 或故障，先读相关 repo 路径、类型与调用，再交付一个最小、可检查的核心原型；可以是接口与调用草图、代表性输入输出、最小实现或故障复现，不要求可执行代码。标清现有事实、拟议形态与未验证部分；问题和 Evidence 服务于原型，不替代原型。反馈只修订受影响部分，保留仍有效内容。先把原型作为独立 local result 返回原 caller，由 caller 负责采用、比较、组合及完整 Intent；不接管通用调研、方案竞赛、Architecture、proof judgment 或生产实现。"

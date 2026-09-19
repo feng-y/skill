@@ -13,7 +13,7 @@ Architecture Evolution passes only when it:
 5. treats current modules / patches as reality Evidence, not Target authority;
 6. reuses a still-valid Target; migration cost or patch churn alone does not redesign Target;
 7. compares verified Current → Target gaps and selects only high-leverage structural moves with real exits;
-8. may model-invoke `$beacon` when the structural question is understood but one bounded caller path / usage / interface / boundary surface remains materially ambiguous; Beacon returns reaction Evidence and AE retains Target ownership;
+8. may model-invoke `$beacon` for one repo-grounded core prototype of a bounded candidate boundary or consumer path; AE retains candidate comparison and Target ownership;
 9. leaves implementation How to Executor; AE defines structural semantics while `$verify` may check already-adopted structural completion claims;
 10. does not treat behavior parity from Replay/test/build as proof of architecture improvement by itself;
 11. uses canonical Northstar Intent / Human commitments as accepted boundary when present, without maintaining an independent Goal layer;
@@ -53,7 +53,7 @@ PASS when facade/provider additions without old authority/knowledge exit are rej
 ### A9 — Beacon makes structural consequence inspectable
 AE has narrowed the structural question, but two candidate boundaries produce materially different caller paths that are hard to compare in prose.
 
-PASS: AE invokes Beacon for same-form Core Path / usage contrast, consumes the result as reaction Evidence, and still makes the Target decision itself. Beacon does not select long-term owner or compose the complete Intent.
+PASS: AE scopes each needed Beacon invocation to one repo-grounded core prototype, then compares the returned caller paths itself and makes the Target decision. Beacon does not run the competition, select a long-term owner, or compose the complete Intent.
 
 ### A10 — Behavior parity is not architecture proof
 A DaVinci Replay or equivalence backend reports behavior parity, but old owner remains authoritative.
@@ -81,7 +81,7 @@ PASS when a local change fully fits the current correct owner and AE returns loc
 ### A15 — First design is not privileged
 Two long-term boundary shapes both satisfy the prose-level responsibility statement, but they differ in whether callers must reconstruct private lifecycle knowledge.
 
-PASS: AE does not simply keep the first design. It asks Beacon for the minimum same-scope concrete caller/usage reactions needed to expose the discriminator, compares them under the same ownership/change-locality criteria, then adopts/rejects the Target itself. It does not require a fixed number of candidates or a tournament when one contrast is enough.
+PASS: AE does not simply keep the first design. It requests only the needed repo-grounded core prototypes, one cohesive candidate scope per Beacon invocation, compares them under the same ownership/change-locality criteria, then adopts/rejects the Target itself. Reuse existing adequate cores; do not require a fixed candidate count or tournament.
 
 ### A16 — Implementation friction falsifies the boundary
 A representative implementation of the adopted boundary repeatedly requires callers to pass owner-private state, duplicate normalization rules, add casts/escape hatches, and bypass the boundary for verification. These are not isolated coding mistakes and follow from the proposed ownership split.

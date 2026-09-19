@@ -24,9 +24,9 @@ AE 可以直接从当前 engineering request / existing Intent / Drafted Issue /
 
 ### 按需调用 Beacon
 
-如果 structural question 已经明确，但同一个候选 Target 在 caller path、usage、interface 或 boundary surface 上仍可能呈现为 materially different 的 concrete shapes，AE 可以 model-invoke `$beacon`，用最便宜的 Core Path / Usage / Interface Draft 或其他 inspectable artifact 把这个 bounded difference 变得可观察。
+如果一个候选 Target 需要用具体 caller path、usage、interface 或 boundary 表达其核心，AE 可以 model-invoke `$beacon`，为这个 bounded scope 构建一个基于 repo 的最小核心原型。
 
-Beacon 只返回 concrete contrast / reaction Evidence；**AE 仍然拥有 Target judgment**。不要让 Beacon 根据 current code convenience 选择长期 owner，也不要因为需要 concrete artifact 就把 structural decision 下放给它。若未知的是事实，先 `$unknowns-first`；若剩余只是 implementation How，不调用 Beacon。
+Beacon 返回原型及必要 Evidence；**AE 仍然拥有候选选择、比较与 Target judgment**。不要让 Beacon 根据 current code convenience 选择长期 owner。阻断原型表达的事实缺口交 `$unknowns-first`；已有原型足够且只剩生产实现 How 时，不调用 Beacon。
 
 ## Target gate
 
@@ -64,7 +64,7 @@ Beacon 只返回 concrete contrast / reaction Evidence；**AE 仍然拥有 Targe
 
 不要把第一个看起来合理的 Target shape 当成已证明设计，也不要为了“多方案”固定制造架构竞技场。只有当同一个 material structural question 仍存在多个会改变 ownership、boundary、dependency、lifecycle 或 change locality 的 live shapes，且继续 prose 无法可靠区分时，才比较多个 concrete reactions。
 
-此时让 `$beacon` 为足够少的 live candidates 产出同 scope、可直接比较的 Core Path / Usage / Interface / minimal implementation 等 representation，并用同一组 structural criteria 比较：knowledge 是否归位、caller 是否仍重组私有决定、dependency 是否需要补偿、旧 authority 是否能 real exit、代表性 change 是否更 locality。
+由 AE 选择最少必要的 live candidates；每次可让 `$beacon` 为一个候选的 bounded scope 产出一个 repo-grounded 核心原型，再由 AE 用同一组 structural criteria 比较：knowledge 是否归位、caller 是否仍重组私有决定、dependency 是否需要补偿、旧 authority 是否能 real exit、代表性 change 是否更 locality。候选竞赛与综合不交给 Beacon。
 
 实现本身也可以产生 reaction Evidence。若代表性实现反复要求意料外的跨边界参数/状态、caller workaround、type escape、duplicated knowledge、special path 或绕过 owner 的 proof path，先判断这些 friction 是否只是 local implementation defect；若它们稳定暴露 Target premise / boundary 错误，就丢弃或修正受影响 design，而不是继续堆 compensation。若 friction 只影响迁移成本或 implementation How，则保持 Target，只调整 Program / Executor。
 

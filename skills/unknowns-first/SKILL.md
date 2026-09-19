@@ -1,6 +1,6 @@
 ---
 name: unknowns-first
-description: "Close factual map-versus-territory unknowns with the smallest useful probe or source alignment. Route intent, concrete-shape, architecture, and verification-sufficiency questions to their semantic owners instead of solving them here."
+description: "Close factual map-versus-territory unknowns with the smallest useful probe or source alignment. Route intent, core-prototype, architecture, and verification-sufficiency requests to their semantic owners instead of solving them here."
 ---
 
 # Unknowns First · 只关闭事实未知
@@ -11,7 +11,7 @@ Unknowns First 是 engineering work 的 **factual uncertainty specialist**。它
 
 > **当下一步判断依赖一个尚未核实的事实时，不猜；用最小 probe 建立 Evidence，或明确这个问题其实属于别的 semantic owner。**
 
-Unknowns First 不拥有 Intent，不做 concrete-shape design，不决定 Target Architecture，不定义 completion contract，也不判断一个 engineering claim 是否已经被充分验证。
+Unknowns First 不拥有 Intent，不拥有核心原型设计，不决定 Target Architecture，不定义 completion contract，也不判断一个 engineering claim 是否已经被充分验证。
 
 ## 什么时候使用
 
@@ -32,13 +32,13 @@ Unknowns First 不拥有 Intent，不做 concrete-shape design，不决定 Targe
 
 - **事实是什么？** → Unknowns First；
 - **我们要什么 / Human commitment 是什么？** → `$northstar`；
-- **已理解语义，但具体 path / usage / interface / interaction 应长什么样？** → `$beacon`；
+- **需要把一个局部功能 Intent 或故障表达为基于 repo 的最小核心原型？** → `$beacon`；
 - **长期 responsibility / boundary / dependency 应是什么？** → `$architecture-evolution`；
 - **一个 accepted completion/safety claim 应如何验证、现有 Evidence 是否足够？** → `$verify`。
 
 Unknowns First 可以发现这些问题，但不把它们吞进自己的 full-map workflow。
 
-当 factual gap 已经关闭，而剩余问题明确变成 concrete-shape ambiguity 时，Unknowns First **可以 model-invoke `$beacon`**，让 Beacon 产生 bounded concrete contrast / reaction Evidence，再把结果返回原 decision caller。Unknowns First 不因此成为 shape owner，也不替 Northstar / AE / Verify 做最终 judgment。
+当需要将一个已知局部功能或故障路径表达为可检查的核心原型时，Unknowns First **可以 model-invoke `$beacon`**，再把原型与必要 Evidence 返回原 decision caller。没有依据的部分保持未验证，不要求全部根因已查清；Unknowns First 不因此获得 Intent / Architecture / Verify judgment。
 
 ## L1 · Light gate
 
@@ -72,7 +72,7 @@ Unknowns First 可以发现这些问题，但不把它们吞进自己的 full-ma
 | Runtime/data check | static repo 不能证明真实行为 | 最小 runtime/data observation |
 | Implementation note | work 可继续但存在保守事实假设 | assumption + evidence gap + impact |
 
-不要在这里生成候选设计、mock/prototype、architecture options、build plan、proof plan、review checklist 或 decision ledger；只有在事实已关闭且剩余问题已明确属于 concrete shape 时，才调用独立 `$beacon`，并把结果交回原 caller。
+不要在这里开展候选设计、architecture options、build/proof plan、review checklist 或 decision ledger；需要核心原型时调用独立 `$beacon`，结果交回原 caller。
 
 ## L3 · Full factual map
 
@@ -88,7 +88,7 @@ Unknowns First 不因为“某个事实已成立”就推导 whole-outcome PASS�
 
 ## 与 Beacon 的边界
 
-如果 unknown 不再是“真实系统现在是什么”，而是“已理解语义在具体 path / usage / interface / interaction 上到底如何呈现”，这不是 territory probe。Unknowns First 可以调用 `$beacon` 建立 reaction surface，但 Beacon 的结果必须返回原 decision owner；Unknowns First 不把 shape judgment 吞进 factual workflow。
+用于关闭事实的 focused probe / repro 仍由 Unknowns First 完成，不因出现代码或复现就自动转交。Beacon 的独立调用理由是交付可检查、可修订的局部核心原型；它可以保留尚未证实的故障原因，但不能用假定事实伪造复现或取代事实调查。原型返回原 decision owner。
 
 ## Feedback / fold back
 
@@ -99,8 +99,8 @@ Unknowns First 不因为“某个事实已成立”就推导 whole-outcome PASS�
 ## 常见错误
 
 - 把 unclear Intent 当 factual unknown，在这里重新采访需求。
-- 在事实尚未关闭时用 Beacon 猜 concrete shape。
-- 把 Beacon 的 reaction surface 当成 Unknowns First 自己的 design authority。
+- 把 Beacon 原型中尚未验证的故障原因或拟议行为当成事实。
+- 把 Beacon 的核心原型当成 Unknowns First 自己的 design authority。
 - 把 backend output 当成 whole-outcome verification judgment，而不是返回 Verify。
 - 为了完整感进入 L3，把 unknown mapping 扩成 implementation plan / verification workflow。
 - 事实已经足够后继续 inventory / research。

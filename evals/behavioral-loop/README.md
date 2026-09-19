@@ -9,7 +9,7 @@ The unit is a real engineering task, not an isolated Skill invocation. Start fro
 A good run should preserve four properties:
 
 1. **Intent fidelity** — Northstar keeps the current authorized Intent coherent instead of letting local artifacts or implementation convenience redefine it.
-2. **Evidence before assumption** — decision-changing factual unknowns are grounded from authoritative territory; concrete ambiguity uses Beacon only when an inspectable representation can add information; architecture decisions may use concrete reaction Evidence when prose cannot decide.
+2. **Evidence before assumption** — decision-changing factual unknowns are grounded from authoritative territory; Beacon supplies a repo-grounded core prototype only when a bounded feature/fault needs one; architecture decisions may use concrete reaction Evidence when prose cannot decide.
 3. **Claim-grounded verification** — Verify judges realized results against authoritative claims using real artifacts/backends rather than treating execution success as proof.
 4. **Targeted re-entry** — new Evidence reopens only the semantic premise it actually invalidates. Valid Intent, Target decisions, work, and Evidence outside the affected cone remain valid.
 
@@ -42,7 +42,7 @@ A DaVinci/Hermes-style example fits: two request messages appear to have equival
 
 A structural request admits at least two plausible boundary shapes in prose. A representative caller/usage/minimal implementation can expose a material ownership or dependency difference.
 
-Observe whether AE earns concrete competition instead of privileging its first design, whether Beacon produces only the minimum useful comparable reaction surfaces, and whether repeated structural implementation friction can overturn the affected Target premise.
+Observe whether AE earns concrete competition instead of privileging its first design, whether each Beacon invocation returns one needed repo-grounded core prototype and AE owns their comparison, and whether repeated structural implementation friction can overturn the affected Target premise.
 
 Do not prompt the agent to create N candidates. The test is whether it recognizes when concrete Evidence is needed.
 

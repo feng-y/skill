@@ -1,85 +1,44 @@
 ---
 name: beacon
-description: "Use when a caller already understands its semantic question but one bounded part of the intent still permits materially different concrete paths, usage, interfaces, interactions, or artifacts. Make that local intent concrete with the cheapest inspectable representation and return correction or Evidence to the original caller."
+description: "Build a minimal, repo-grounded core prototype for one bounded feature intent or fault so the caller can inspect and correct it. Use a concrete sketch, representative input/output, minimal implementation, or reproducer; return the prototype to the caller without taking over research, design selection, or canonical Intent."
 ---
 
 # Beacon
 
-Beacon is a caller-neutral, primarily model-invoked specialist for making one bounded part of an already-understood intent concrete enough to inspect and compose.
+Beacon is a caller-neutral, primarily model-invoked specialist that makes one bounded feature intent or fault concrete as a minimal, inspectable core prototype grounded in the real repository.
 
-Beacon does not require a prototype. It may use a Core Path, Usage / Interface Draft, behavior example, config or schema shape, UI draft, minimal implementation, experiment, or disposable prototype. Choose the cheapest representation that closes the current material local decision.
+The core prototype is the deliverable. Questions and Evidence support it; a research report, candidate comparison, or decision alone is not a substitute. A prototype need not be executable code: a connected interface and usage sketch, representative input/output, or a minimal failure path can be sufficient.
 
-The caller keeps semantic ownership. Beacon does not own canonical Intent / Issue, Target Architecture, verification judgment, execution planning, or production implementation.
+The caller keeps semantic ownership. Beacon does not own canonical Intent / Taskbook / Issue, Target Architecture, verification judgment, execution planning, or production implementation.
 
-## Invocation
+## Invocation and scope
 
-Beacon is model-invoked and not bound to Northstar. A semantic owner calls `$beacon` when its semantic question is already understood but one bounded concrete shape remains materially ambiguous.
+A caller uses `$beacon` when a bounded feature or fault needs a concrete core that can be inspected or corrected. The caller must identify the local scope, not manufacture competing alternatives or finish root-cause investigation first. If the caller's existing code or description already makes the core inspectable and only production implementation How remains, return to the caller / Executor; a separate prototype file is not required.
 
-Typical callers:
+Northstar, Architecture Evolution, Verify, Unknowns First, or another caller may invoke Beacon. Return to that caller, not automatically to Northstar. Produce one cohesive primary prototype per invocation; include its connected interface, usage, behavior, and binding constraints rather than splitting by field or file. Selection, comparison of independent prototypes, and composition of the complete Intent remain with the caller.
 
-- Northstar: a local part of Intent still has materially different core-path, usage, interface, or artifact interpretations.
-- Architecture Evolution: a structural question is clear, but a concrete consumer path or boundary surface is needed to judge the Target.
-- Verify: the claim is clear, but the concrete observable path is ambiguous.
-- Unknowns First: factual uncertainty is closed and the remaining question is concrete shape.
+## Ground the core in the repo
 
-Beacon returns its result to the original caller. It does not automatically transfer work to Northstar.
+Inspect the relevant repository entry point, types, caller path, or existing behavior before sketching. Make those connections visible in the prototype and distinguish existing symbols/behavior from proposed additions. Preserve the constraints needed to express the core; omit unrelated framework, infrastructure, and production scaffolding.
 
-## Boundary
+For a feature, show the intended core usage and behavior, with the inputs, outputs, and smallest implementation shape needed to make them inspectable. For a fault, show the known trigger or input, expected versus reported/observed behavior, and the implicated repo path, distinguishing reports from execution observations; make a minimal reproducer when feasible. A repo-grounded failure sketch is still useful when reproduction is blocked, but label unverified steps and do not claim a proven root cause or fix.
 
-Use Beacon only when a concrete difference can still change the caller's semantic judgment.
+Ordinary repo inspection belongs to constructing the prototype. If a missing territory fact blocks an honest representation, return that specific gap or use `$unknowns-first`; do not guess or require all incident unknowns to be closed first. Long-term structural choices remain with `$architecture-evolution`, and proof sufficiency remains with `$verify`.
 
-Route elsewhere when:
+## Build only what expresses the core
 
-- territory facts are unresolved and could change the shape: `$unknowns-first`;
-- long-term responsibility, ownership, dependency, or Target Architecture is undecided: `$architecture-evolution`;
-- the remaining problem is proof sufficiency: `$verify`;
-- only implementation How remains: return to the caller / Executor.
+Use the smallest sufficient form: a core-path/usage/interface sketch, representative behavior or config example, UI draft, minimal implementation, or reproducer. Keep it cheap, reversible, and disposable unless the caller requires a durable artifact. Stop when the scoped intent or fault is concrete enough to inspect and correct.
 
-## One bounded decision
-
-Close one material local decision at a time: one cohesive concrete question that can be returned to the caller. Include the connected interface, usage, and consequences of already-decided ownership/lifetime constraints needed to judge it; do not split mechanically by field, file, or individual clause. Independent questions and whole-Intent composition remain with the caller. If no material concrete difference remains, stop.
-
-## Representation
-
-Prefer the cheapest inspectable representation:
-
-1. Core Path for execution path, ownership surface, boundary, or dataflow.
-2. Usage / Interface Draft for API, CLI, schema, config, workflow, or interaction.
-3. Concrete Artifact when static representation is insufficient: behavior example, UI draft, minimal implementation, timing probe, experiment, or disposable prototype.
-
-Artifacts stay cheap, reversible, and disposable unless durability is itself part of the current decision.
-
-## Evidence concretization
-
-Beacon is not a prose-expansion stage. When another round of abstract explanation would not materially distinguish the remaining shapes, switch to the cheapest representation that can produce decision-relevant Evidence.
-
-Use the smallest move that can falsify or separate the live alternatives:
-
-- inspect a concrete caller/core path before inventing code;
-- sketch same-form usage or interface examples when the difference is contractual;
-- build a minimal/disposable implementation only when real type, lifecycle, state, performance, interaction, or integration behavior cannot be judged from a static shape;
-- run a focused experiment or timing probe when measurement, not argument, decides the bounded question.
-
-Do not prototype by default. Do not create several variants when one falsifier or one representative artifact can close the decision. When multiple live shapes remain materially different, compare only enough same-scope concrete representations to expose the deciding difference, then stop and return Evidence to the caller.
-
-A concrete artifact is useful only if it changes or closes the caller's judgment. More code, more screenshots, more variants, or a longer demo are not progress by themselves.
+Run a focused check only when it materially helps establish the prototype's behavior or limits. Static sketches need no ceremonial tests; a runnable claim needs actual execution Evidence. A probe or benchmark may support the prototype, but does not replace it or turn Beacon into a general experiment or unknown-resolution service. Do not expand into a competing-design exercise or production implementation.
 
 ## Artifact feedback
 
-When Human/caller feedback is anchored to a specific path, interaction, field, boundary, visual element, or behavior in the artifact, refine that same bounded decision instead of restarting shaping. Follow the semantic impact, not just the pointed-to text: update connected clauses or examples only where the correction makes them inconsistent, preserve still-valid parts, and return the material delta with the reason for any connected changes. Do not widen a local correction into a new general rule.
+When Human/caller feedback targets a path, field, interaction, or behavior, revise the same core prototype. Update connected clauses/examples only where the correction makes them inconsistent, preserve still-valid parts, and return the material delta with the reason for connected changes. Do not widen a local correction into a general rule.
 
-Human feedback about desired meaning is authoritative intent/choice input, not factual Evidence that runtime already behaves that way. Do not create a persistent annotation/review workflow or mandatory Human stage. If the feedback changes canonical Intent / Acceptance, long-term Architecture, or proof semantics rather than only the local concrete shape, return it to the corresponding semantic owner.
+Human feedback about desired meaning is intent/choice input, not proof of runtime behavior. A change to canonical Intent / Acceptance, long-term Architecture, or proof semantics returns to its owner. Do not create a persistent annotation workflow or mandatory Human stage.
 
 ## Return
 
-Return only what the caller needs:
+Lead with the core prototype and its repo anchors. Include only the explanation, observed Evidence, unverified limits, or feedback delta needed to inspect that prototype. Do not replace it with a list of questions, options, or a final decision.
 
-- the material local decision;
-- the concrete representation or candidate contrast;
-- decision-relevant path / boundary / usage / interface differences;
-- new Evidence;
-- unresolved points that still change the concrete shape.
-
-Do not announce the final semantic decision for the caller. Do not generate a second Intent SOT, Taskbook, issue graph, PR split, implementation checklist, or verification workflow.
-
-The Beacon result remains a bounded, non-authoritative input until the caller adopts it. In a wider model invocation, deliver the scoped result as a distinct return to the caller before caller judgment continues; do not collapse the Beacon return and the caller's final handoff into one undifferentiated answer. The caller still owns selection, composition, and the final semantic judgment. This transient return boundary is not a new persistent artifact or workflow stage.
+In a wider invocation, return this bounded, non-authoritative result distinctly before caller judgment resumes. The caller owns adoption, comparison, composition, and any durable fold-back. Do not create another Intent SOT, Taskbook, issue graph, PR split, implementation checklist, or verification workflow. This return boundary is not a new persistent artifact or phase.

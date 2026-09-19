@@ -18,7 +18,7 @@ Northstar 不拥有独立 Goal 层，不执行 implementation，也不负责 pro
 只保留会改变后续判断、实现边界或验收结果的 durable 信息：
 
 - **Problem**：当前什么需要改变，以及为什么现状不满足预期。
-- **Draft**：当前采用的完整 intended change；把采用的局部结果及其必要连接写成连贯方案，而不是 artifact 索引。它是整体语义权威，不限制局部 Beacon artifact / view / experiment 的数量。
+- **Draft**：当前采用的完整 intended change；把采用的局部结果及其必要连接写成连贯方案，而不是 artifact 索引。它是整体语义权威；Northstar 按需组合局部 Beacon 核心原型，不把一个局部产物当成完整 Intent。
 - **Constraints**：真正 binding、违反后会改变 accepted outcome、兼容、投入、风险或长期责任的约束。
 - **Acceptance**：能够区分“问题已解决”和“只是完成了某个手段”的 observable outcome / completion claim。
 
@@ -71,7 +71,7 @@ Northstar 负责把 work 收敛到足够执行，但**不能因为已经知道�
 - Human 只是要求分析、调研、评估、review、设计、收敛、给方案、产出 Draft/Issue，或询问“是否应该/是否可以实现、提交、合入” → 可以把 Intent 收敛到 execution-ready，但不开始持久产品实现，也不能因为句子里出现“实现/提交/合入”等词就推断已经授权；
 - Human 后续明确要求把当前方案实际落地，例如“开始实现 / 按这个改 / 执行这个方案” → 在**同一个 Northstar work context** 中获得 execution authorization；Northstar 更新/落盘 Taskbook，并继续 dispatch 下一 execution task 给执行者。这不是退出 Northstar、另起 Executor lifecycle，也不需要重新确认已经成立的 Intent。
 
-为关闭 Intent gap 所需的 repo/source/runtime 调查、只读 probe，以及 Beacon 的 cheap/reversible/disposable sketch、experiment 或 minimal artifact，不等同于持久产品实现；它们仍应遵循各自 owner 的边界。没有 execution authorization 时，不应修改准备合入的产品代码、创建以落地为目的的 commit/PR、merge/ship 或 rollout。
+为关闭 Intent gap 所需的 repo/source/runtime 调查、只读 probe，以及 Beacon 的 cheap/reversible/disposable 核心原型及必要检查，不等同于持久产品实现；它们仍应遵循各自 owner 的边界。没有 execution authorization 时，不应修改准备合入的产品代码、创建以落地为目的的 commit/PR、merge/ship 或 rollout。
 
 一旦 execution authorization 已存在，只要 Human 没有撤销或缩小它，就在当前授权 scope 内持续有效。授权同时受对象与动作范围约束：要求实现不自动等同于要求 commit、创建 PR、merge、ship 或 rollout；Northstar 只恢复 Human 已表达的范围，不扩大也不重新审批。实现过程中的普通 How 由执行者自治；执行者提交 result / Evidence 后，Northstar 对照 Taskbook 判断 material task 是否满足当前 Intent / Acceptance，并据此接受、要求修订、保留 blocker 或更新后续 task。proof sufficiency 仍由 `$verify` 判断，Northstar 不因“worker 自报 done”直接关闭 task 或 Intent。
 
@@ -92,13 +92,13 @@ Intent 过大时可以建议收窄，也可以保留原范围并继续组合局�
 Northstar 拥有 Intent，不复制 specialist 的责任：
 
 - factual territory unknown，且事实不同会改变 Intent → `$unknowns-first`；
-- 已理解 Intent 的一个 bounded/local part 仍允许 materially different concrete shape → `$beacon`；
+- 一个 bounded 功能 Intent 或故障需要基于 repo 的最小核心原型，或已有原型需要局部修订 → `$beacon`；
 - 长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断 → `$architecture-evolution`；
 - material completion / safety claim 需要 proof obligation、real-artifact verification 或 sufficiency judgment → `$verify`。
 
 这里的 model-invoke 表示在当前工作中应用 specialist 语义并接收它的 scoped return，不自动表示创建了外部 agent / thread。只有真实 delegation tool 已调用并返回对应结果时，才能声称外部委派成功或失败；否则直接在当前交互中完成 return，不虚构不存在的代理事件。
 
-Beacon 只处理一个 bounded/local material concrete decision，返回足以判断该局部问题的连贯表示，不按字段或文件机械拆分。prototype、minimal implementation、UI/config/API draft、experiment 等都只是 Beacon 可选 technique。**Beacon 不接受“把整个 Intent 做完整”或“组合这些局部结果”的委托。** 多个 Beacon artifact 的选择、相接与整体 coverage 由 Northstar 完成。
+Beacon 为一个 bounded 功能 Intent 或故障交付基于 repo 的核心原型，连同必要的接口、调用和行为表达，不按字段或文件机械拆分。原型可以是静态草图或最小实现/复现；Evidence 服务于原型。**Beacon 不组织复杂 Intent 的拆分、候选比较或局部结果组合。** 多个原型的选择、相接与整体 coverage 由 Northstar 完成。
 
 specialist 结果不创建第二份 Intent SOT；只把 fresh consumer 必须知道的 durable Decision、Draft correction、Constraint、Acceptance 或 Evidence fold back 到 current Draft，并在 material / cross-session work 中同步落入 canonical Taskbook。
 
@@ -114,7 +114,7 @@ specialist 的 scoped result 在 Northstar 完成取舍前只是 local input，�
 - 哪些候选、旧路径或旧 authority 已被替代，应明确退出；
 - 是否仍有 gap 应回 Human、Beacon、AE、Unknowns First 或 Verify。
 
-若组合暴露新的 bounded concrete ambiguity，可以再次调用 Beacon；返回后仍由 Northstar 继续组合。局部 Beacon/test/benchmark 全部 PASS 也不能推出 overall Intent complete。
+若组合暴露局部原型的缺失或需要修订，可以再次调用 Beacon；返回后仍由 Northstar 继续组合。局部原型及其检查成立也不能推出 overall Intent complete。
 
 若 specialist 返回的 deciding premise 仍未关闭，Northstar 只能把它保留为明确 blocker / conditional branch，并记录真实 closure owner / authority source：source / contract / territory fact 交 Unknowns First，Human commitment 才 Ask Human；不能留下 anonymous blocker，也不能一边把 conditional recommendation 写成 adopted Decision，一边把 work 标为 execution-ready。
 
@@ -168,7 +168,7 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 
 - factual premise 不清 → `$unknowns-first`；
 - verified reality 推翻 Draft / Constraint / Acceptance → 重开 Northstar 中受影响部分；
-- 已理解语义的 bounded/local concrete shape 再次 ambiguous → `$beacon`；
+- 局部功能/故障的核心原型缺失，或已有原型需修订 → `$beacon`；
 - 新的长期 structure fork → `$architecture-evolution`；
 - claim 需要 verification design / sufficiency judgment → `$verify`；
 - Intent 仍成立但复杂 material dependency 改变 → 只重算 material compile affected cone。
