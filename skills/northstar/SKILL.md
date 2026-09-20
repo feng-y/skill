@@ -136,6 +136,8 @@ Taskbook 只保存会改变后续 execution / acceptance 的 durable 状态：Pr
 
 Northstar 始终按**当前 canonical Taskbook**恢复 caller judgment。dispatch 后若 binding Decision / Constraint / Acceptance 已实质变化，旧结果不能沿旧解释直接关闭当前 task；只重判受影响的 claim，保留仍有效的 work / Evidence。若结果已满足当前要求，直接接受，不因 Taskbook 版本、文字或无关 task 状态变化强制返工。把 judgment、仍需修订或补证的具体差异及 next task / owner 回写同一个 Taskbook；只有 premise 真正变化时才重开对应 semantic owner。执行者不能凭自己的 `done`、测试 green 或 PR 存在直接推进 canonical Taskbook。
 
+如果这次 material return 还暴露了**值得后续复用的执行反馈**——例如此前 judgment / assumption 明显失误、worker return 暴露了意外但可泛化的 friction，或某个 bounded pattern 显著减少了返工——先完成 canonical Taskbook 的必要回写，再按需追加同 work item 的 **Feedback Log**。普通预期内的 green return、命令流水、implementation-local 细节不记录。Feedback Log 不参与当前 task 的 dispatch / resume / acceptance，也不能替代 Taskbook；需要落盘时按 [references/feedback-log.md](references/feedback-log.md) 保持最小、append-only。
+
 Northstar 的 acceptance judgment 与 Verify 的 proof judgment 必须分开：Northstar 判断“这个结果是否满足当前 Intent、是否可以推进下一 material task”；Verify 判断“支撑 completion / safety claim 的 Evidence 是否充分”。当后者 material 时，Northstar 调用 `$verify` 并消费 verdict，而不是自己从 backend green 推导 proven。
 
 `dispatch / handoff` 交出的是 scoped execution responsibility，不是整个 work item 的 Intent ownership。优先复用宿主已有的 delegation / caller-return；material result、blocker 或会改变 binding premise 的 Evidence 一旦返回当前交互，Northstar 直接恢复上述 judgment，不等 Human 再调用 `/northstar` 或说“继续”。普通 implementation-local 进展仍留给 worker，不逐步回 Northstar 审批。
@@ -176,6 +178,8 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 - 新的长期 structure fork → `$architecture-evolution`；
 - claim 需要 verification design / sufficiency judgment → `$verify`；
 - Intent 仍成立但复杂 material dependency 改变 → 只重算 material compile affected cone。
+
+Feedback Log 不改变上述 Evidence routing。它只记录已发生的 return、Northstar judgment、Taskbook material delta 与 learning candidate；不会自行证明 agent behavior、proof sufficiency 或长期 Skill rule。后续要据此改 Skill 时，把相关条目作为 trace-like input 交给 `$eval` 形成或解释可重复 measurement，而不是让 Northstar 在当前 work 中充当 evaluator。
 
 Human clarification 按前述 Intent continuity 规则处理，不要求它先成为 runtime Evidence。
 
