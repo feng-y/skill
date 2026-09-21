@@ -126,7 +126,7 @@ Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), inc
 ## Artifacts
 
 - **Taskbook** — canonical durable surface for material / cross-session Northstar work: current Draft, binding decisions/acceptance, material task state and next owner.
-- **Feedback Log** — optional append-only sidecar for material execution learning: returned result/Evidence pointer, Taskbook delta, Northstar judgment, and a reusable mistake/surprise/effective pattern. It never becomes current Intent, task state, an evaluator, or an execution controller.
+- **Feedback Log** — optional append-only cross-session execution-learning artifact. The worker session records its return/Evidence and execution observation; a later Northstar session may append its judgment and material Taskbook delta. It never becomes current Intent, task state, an evaluator, or an execution controller.
 - **Session handoff** — Taskbook pointer plus resume delta, never a second plan.
 - **Drafted Issue** — tracker / external carrier pointing to the Taskbook, not a parallel Intent source.
 - **PR** — realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在这里。
