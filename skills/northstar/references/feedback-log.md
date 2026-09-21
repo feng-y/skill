@@ -1,6 +1,6 @@
 # Feedback Log
 
-Feedback Log 是 Northstar-controlled material work 的**可选、append-only execution-learning sidecar**。它记录已经发生的 worker return 与 Northstar judgment 中值得后续复用的信号，供未来 Skill / prompt / tool / harness 改进时检索。
+Feedback Log 是 material work 的**可选、append-only、跨 session execution-learning artifact**。它把执行 session 的真实 return / observation 与后续 Northstar session 的 judgment / Taskbook delta 串在同一 work identity 下，供未来 Skill / prompt / tool / harness 改进时检索。它不是 Northstar session 内部日志。
 
 它不改变 artifact authority：
 
@@ -11,7 +11,7 @@ Feedback Log 是 Northstar-controlled material work 的**可选、append-only ex
 
 ## 什么时候记录
 
-只在一次 material return + Northstar judgment 之后，出现至少一个**可能跨当前局部步骤复用**的信号时追加：
+任一侧出现**可能跨当前局部步骤复用**的信号时追加，不要求 worker return 与 Northstar judgment 已发生在同一 session：
 
 - Northstar 之前的 judgment、assumption、routing 或 task boundary 被真实 return 明确纠正；
 - worker return 暴露了意外且可能重复出现的 friction / missing context / ownership confusion；
@@ -35,10 +35,9 @@ Feedback Log 是 Northstar-controlled material work 的**可选、append-only ex
 ```markdown
 ## <date/time> — <material task / return identity>
 
-- Return: <worker result + decisive Evidence / PR / artifact pointer>
-- Taskbook delta: <only the material before → after change; "none" is valid>
-- Northstar judgment: <accepted / revise / blocked + decisive reason>
-- Feedback: <the judgment mistake, surprise, friction, or effective pattern>
+- Worker return: <result + decisive Evidence / PR / artifact pointer>
+- Execution feedback: <worker-side surprise, friction, missing context, or effective pattern>
+- Northstar follow-up: <later accepted / revise / blocked judgment + material Taskbook delta, if available>
 - Reuse candidate: <what may be worth testing or changing later; "none" is valid>
 ```
 
@@ -46,10 +45,10 @@ Feedback Log 是 Northstar-controlled material work 的**可选、append-only ex
 
 ## 写入顺序
 
-1. 先按真实 return 和 current Intent 完成 Northstar judgment。
-2. 需要改变 current state 时，先更新 canonical Taskbook。
-3. 只有存在 reusable signal 时，再 append Feedback Log；`Taskbook delta` 只描述已经发生的 material change。
-4. Feedback Log 不能反向驱动当前 task 状态，也不能因为“值得学习”而阻塞已满足的 work。
+1. Worker session 完成 scoped execution 后，正常提交 return / Evidence / residual；若存在 reusable execution signal，同时 append Feedback Log。worker 不写 Taskbook，也不需要等待 Northstar。
+2. Northstar session 通过宿主 caller-return / handoff / artifact 恢复该 material return，按 current canonical Taskbook 完成 acceptance judgment。
+3. 需要改变 current state 时，Northstar 先更新 canonical Taskbook；若 judgment 本身产生 reusable learning，再 append 同一 Feedback Log 的 Northstar follow-up。
+4. 两侧都没有 reusable signal 时不写 Feedback Log。Feedback Log 不能反向驱动 task 状态，也不能因为“值得学习”而阻塞已满足的 work。
 
 ## 用于 Skill 改进
 
