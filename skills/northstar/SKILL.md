@@ -132,11 +132,13 @@ Taskbook 只保存会改变后续 execution / acceptance 的 durable 状态：Pr
 
 **Taskbook 不是 Northstar 自己的执行清单。** Northstar 只在 **material Taskbook boundary** 选择 next task / owner 并完成 handoff；worker / coder / specialist / external orchestration 拥有实现动作和局部 How，只提交 result、Evidence、residual。不要把 helper、file edit、commit、单个 test 或其他 implementation-local step 都升级成 Northstar checkpoint。
 
+material task 交给独立 worker session 时，在已有 scoped instruction / handoff 中携带 worker 可定位的同 work item 的 **Feedback Log** 路径（复用项目约定，否则使用 Taskbook 同目录的 `<taskbook-stem>.feedback.md`）和最小条件：仅在 material result / blocker 暴露 reusable surprise / friction / effective pattern 时，随 return append 简短 observation 与 decisive Evidence pointer；普通 green return、命令流水、implementation-local How 不记录，无信号不创建。不要假设 worker 加载过 Northstar 或本 repo `AGENTS.md`，也不增加 Taskbook field、预建日志或启用审批。worker 不改 canonical Taskbook。
+
 收到 material task return 后，先从已有 Taskbook / dispatch / artifact / 运行记录恢复对应 task、执行时的 binding context 与实际 result / Evidence；关联不清时先查可得事实，只保留仍影响判断的 blocker，不要求新增字段、receipt 或让 Human 猜技术事实。关联成立只说明这是哪次工作的结果，不证明当前 Intent / Acceptance 已满足。
 
 Northstar 始终按**当前 canonical Taskbook**恢复 caller judgment。dispatch 后若 binding Decision / Constraint / Acceptance 已实质变化，旧结果不能沿旧解释直接关闭当前 task；只重判受影响的 claim，保留仍有效的 work / Evidence。若结果已满足当前要求，直接接受，不因 Taskbook 版本、文字或无关 task 状态变化强制返工。把 judgment、仍需修订或补证的具体差异及 next task / owner 回写同一个 Taskbook；只有 premise 真正变化时才重开对应 semantic owner。执行者不能凭自己的 `done`、测试 green 或 PR 存在直接推进 canonical Taskbook。
 
-material execution 通常发生在另一个 worker session。worker return 若包含值得后续复用的执行观察，应由**执行侧随 return 一起**写入同 work item 的 **Feedback Log**，不等待 Northstar session，也不修改 canonical Taskbook。Northstar 后续 session 消费该 return 后，先按 current Intent 完成 judgment 与必要 Taskbook 回写；只有 judgment 本身产生新的 reusable learning 时，才在同一 Feedback Log 追加 judgment / material Taskbook delta。普通预期内的 green return、命令流水、implementation-local 细节不记录。Feedback Log 不参与当前 task 的 dispatch / resume / acceptance，也不能替代 Taskbook；需要落盘时按 [references/feedback-log.md](references/feedback-log.md) 保持最小、append-only。
+Northstar 后续消费 return 时，先按 current Intent 完成 judgment 与必要 Taskbook 回写；只有 judgment 本身产生新的 reusable learning，才在同一 Feedback Log **另起条目**，关联原 return，记录 judgment / material Taskbook delta；不回填 worker 的旧条目，也不要求 worker 等待 follow-up。Feedback Log 不参与当前 task 的 dispatch / resume / acceptance，缺少日志不阻塞工作；最小记录方式见 [references/feedback-log.md](references/feedback-log.md)。
 
 Northstar 的 acceptance judgment 与 Verify 的 proof judgment 必须分开：Northstar 判断“这个结果是否满足当前 Intent、是否可以推进下一 material task”；Verify 判断“支撑 completion / safety claim 的 Evidence 是否充分”。当后者 material 时，Northstar 调用 `$verify` 并消费 verdict，而不是自己从 backend green 推导 proven。
 
@@ -179,7 +181,7 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 - claim 需要 verification design / sufficiency judgment → `$verify`；
 - Intent 仍成立但复杂 material dependency 改变 → 只重算 material compile affected cone。
 
-Feedback Log 不改变上述 Evidence routing，也不要求 Northstar 与 worker 共处一个 session。worker-owned execution observation 与 Northstar-owned judgment 可以先后追加；只有 Northstar 能把 material state 写回 canonical Taskbook。Feedback Log 不会自行证明 agent behavior、proof sufficiency 或长期 Skill rule。后续要据此改 Skill 时，把相关条目作为 trace-like input 交给 `$eval` 形成或解释可重复 measurement，而不是让 Northstar 在当前 work 中充当 evaluator。
+Feedback Log 只提供 execution observation / judgment 的 trace-like input，不改变上述 owner routing，也不证明 proof sufficiency 或 agent behavior。后续要据此改 Skill 时，由 `$eval` 形成或解释可重复 measurement，不让 Northstar 在当前 work 中充当 evaluator。
 
 Human clarification 按前述 Intent continuity 规则处理，不要求它先成为 runtime Evidence。
 
