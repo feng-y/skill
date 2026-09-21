@@ -126,6 +126,7 @@ Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), inc
 ## Artifacts
 
 - **Taskbook** — canonical durable surface for material / cross-session Northstar work: current Draft, binding decisions/acceptance, material task state and next owner.
+- **Feedback Log** — optional append-only cross-session execution-learning artifact. The worker session records its return/Evidence and execution observation; a later Northstar session may append its judgment and material Taskbook delta. It never becomes current Intent, task state, an evaluator, or an execution controller.
 - **Session handoff** — Taskbook pointer plus resume delta, never a second plan.
 - **Drafted Issue** — tracker / external carrier pointing to the Taskbook, not a parallel Intent source.
 - **PR** — realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在这里。
@@ -161,7 +162,7 @@ After each run, inspect **both** the agent trajectory and verifier Evidence/traj
 
 Research、execution、review 和 Verify 都可能产生 new verified engineering Evidence。Evidence 只重开真正受影响的 owner：Intent premise 回 Northstar，长期结构 fork 回 Architecture Evolution，factual uncertainty 回 Unknowns First；当一个局部功能或故障需要核心原型、或已有原型需修订时，可 model-invoke Beacon 并只处理对应 local surface；复杂 material work/dependency 变化但 Intent 仍成立时，只重算 Northstar material graph 的 affected cone。
 
-Agent improvement 走另一条反馈环：真实 task/trace → Eval → executable measurement → Skill/prompt/tool/harness 改进 → rerun。产品 Replay/test 结果不能替代这条 behavioral loop；Eval measurement 也不能替代产品 Verify。
+Agent improvement 走另一条反馈环：material worker return / 真实 task/trace 可以先按需沉淀到 Feedback Log；只有值得复现或跨 case 验证的模式才进入 Eval → executable measurement → Skill/prompt/tool/harness 改进 → rerun。Feedback Log 不是 mandatory stage，也不能把单条经验直接升级成 runtime rule。产品 Replay/test 结果不能替代 behavioral Eval；Eval measurement 也不能替代产品 Verify。
 
 ## Architecture Evolution usage
 
