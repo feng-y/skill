@@ -60,7 +60,7 @@
 ## Artifact ownership
 
 - **Taskbook**：Northstar 对 material / cross-session work 的 canonical durable artifact；保存 current Draft、binding Decision / Constraint / Acceptance、material tasks / status、决定性 Evidence pointer、last Northstar judgment 与 next owner。它不是第二份 plan，而是 current Intent 的持久化 work surface。
-- **Feedback Log**：material work 的 append-only execution-learning sidecar；由 Northstar 在 material return judgment 后按需记录 worker return / decisive Evidence pointer、Taskbook 的 material delta、当次 judgment，以及值得后续复用的判断失误、surprise 或有效模式。它不是 current Intent / task state / Evidence sufficiency 的 authority，不参与 dispatch、resume 或 acceptance；后续 Skill 改进可把它当作 trace-like input，但 behavior claim 仍必须进入 Eval。
+- **Feedback Log**：跨 session 的 append-only execution-learning artifact。执行 session 在完成 scoped work 时记录 worker return / decisive Evidence pointer 与 execution observation；Northstar session 在消费 return、完成 judgment 并更新 canonical Taskbook 后，可补记 judgment / material Taskbook delta。它不是 current Intent / task state / Evidence sufficiency 的 authority，不要求两个角色共享 session，也不参与 dispatch、resume 或 acceptance；后续 Skill 改进可把它当作 trace-like input，但 behavior claim 仍必须进入 Eval。
 - **Session handoff**：只保存从 canonical Taskbook 恢复所需的 session delta：Taskbook pointer、last completed/current task、仍 live 的 blocker/decision、next task / owner、需要返回 Northstar 的 judgment point。不得复制 Taskbook 的架构、方案、验收全文；需要重述的 durable 内容应回写 Taskbook。
 - **Drafted Issue**：tracker / 外部协作 carrier。material / cross-session work 的 canonical state 始终在 Taskbook；Issue 只指向它并保留讨论历史 / 外部协作信息，禁止复制一份可独立漂移的方案。
 - **PR**：realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在 PR。
@@ -89,7 +89,7 @@
 - Skill / prompt / tool / harness 的 agent behavior claim 需要构建、审计或解释可重复 measurement → Eval；
 - 复杂 material graph 的 work/dependency 被 verified Evidence 改变、但 Intent 仍成立 → Northstar material compile 只重算 affected cone。
 
-Feedback Log 只保存已经发生的 return → judgment → Taskbook delta 与可复用观察，不创建新的 semantic owner，也不替代当前 work 的正常 feedback routing。若某条反馈说明 current Intent / task state 需要修正，先按上述 owner 更新 canonical Taskbook；若它被用于改进 Skill，则把它当作 observation / trace input，而不是直接把单条经验写成 runtime rule。
+Feedback Log 保存跨 session 的 execution return / observation，以及 Northstar 后续对该 return 的 judgment / Taskbook material delta；它不假设 worker 与 Northstar 在同一 session，也不创建新的 semantic owner。worker 不能写 canonical Taskbook，Northstar 也不需要重演 worker session 才能补充 feedback。若反馈说明 current Intent / task state 需要修正，仍先按上述 owner 更新 canonical Taskbook；若它被用于改进 Skill，则把它当作 observation / trace input，而不是直接把单条经验写成 runtime rule。
 
 Eval result 是对 agent behavior 的 measurement，不直接改写产品 Intent / Architecture / factual reality；只有 measurement 暴露对应 owner 的稳定 contract gap 时，才修改那个 runtime owner。
 
