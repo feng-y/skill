@@ -132,6 +132,10 @@ Taskbook 只保存会改变后续 execution / acceptance 的 durable 状态：Pr
 
 **Taskbook 不是 Northstar 自己的执行清单。** Northstar 只在 **material Taskbook boundary** 选择 next task / owner 并完成 handoff；worker / coder / specialist / external orchestration 拥有实现动作和局部 How，只提交 result、Evidence、residual。不要把 helper、file edit、commit、单个 test 或其他 implementation-local step 都升级成 Northstar checkpoint。
 
+**Routine execution decision 可以下沉，但不能带走 semantic judgment。** 当一个重复判断的所有可能结果都仍处于同一 material task 边界内，并且不会改变 Draft / Constraint / Acceptance、canonical Taskbook、material task status 或 next material owner 时，execution system 可以把它编译成 typed local decision，由 deterministic rule、small model、LLM 或其他可替换 backend 完成。typed output 只驱动当前 execution branch，不是新的 durable artifact，也不要求 Northstar session 参与。
+
+一旦某个 branch 可能改变上述 canonical semantic / task state、决定 material return 是否可接受、改变 next material task / owner，或当前无法可靠判断它是否 material，就必须把 result / blocker / Evidence 返回 Northstar。local decision 的 probability / confidence 只能帮助执行侧路由，不能成为 acceptance authority。不要为此新增 Decision Skill、Decision Log、Decision SOT、lifecycle state 或 Taskbook field；Feedback Log 也不升级成 decision history。
+
 material task 交给独立 worker session 时，在已有 scoped instruction / handoff 中携带 worker 可定位的同 work item 的 **Feedback Log** 路径（复用项目约定，否则使用 Taskbook 同目录的 `<taskbook-stem>.feedback.md`）和最小条件：仅在 material result / blocker 暴露 reusable surprise / friction / effective pattern 时，随 return append 简短 observation 与 decisive Evidence pointer；普通 green return、命令流水、implementation-local How 不记录，无信号不创建。不要假设 worker 加载过 Northstar 或本 repo `AGENTS.md`，也不增加 Taskbook field、预建日志或启用审批。worker 不改 canonical Taskbook。
 
 收到 material task return 后，先从已有 Taskbook / dispatch / artifact / 运行记录恢复对应 task、执行时的 binding context 与实际 result / Evidence；关联不清时先查可得事实，只保留仍影响判断的 blocker，不要求新增字段、receipt 或让 Human 猜技术事实。关联成立只说明这是哪次工作的结果，不证明当前 Intent / Acceptance 已满足。
@@ -142,7 +146,7 @@ Northstar 后续消费 return 时，先按 current Intent 完成 judgment 与必
 
 Northstar 的 acceptance judgment 与 Verify 的 proof judgment 必须分开：Northstar 判断“这个结果是否满足当前 Intent、是否可以推进下一 material task”；Verify 判断“支撑 completion / safety claim 的 Evidence 是否充分”。当后者 material 时，Northstar 调用 `$verify` 并消费 verdict，而不是自己从 backend green 推导 proven。
 
-`dispatch / handoff` 交出的是 scoped execution responsibility，不是整个 work item 的 Intent ownership。优先复用宿主已有的 delegation / caller-return；material result、blocker 或会改变 binding premise 的 Evidence 一旦返回当前交互，Northstar 直接恢复上述 judgment，不等 Human 再调用 `/northstar` 或说“继续”。普通 implementation-local 进展仍留给 worker，不逐步回 Northstar 审批。
+`dispatch / handoff` 交出的是 scoped execution responsibility，不是整个 work item 的 Intent ownership。优先复用宿主已有的 delegation / caller-return；同一 material task 边界内、不会改变 canonical semantic / task state 的 routine typed decision 与普通 implementation-local progress 留给 worker，不逐步唤醒 Northstar。material result、blocker、可能改变 binding premise / Acceptance / task state 的 Evidence，或 materiality 本身不确定的 return，必须回到 Northstar；一旦返回当前交互，Northstar 直接恢复上述 judgment，不等 Human 再调用 `/northstar` 或说“继续”。
 
 判卷后，有已授权且可推进的 material work 就继续 handoff；需要修订或关闭 blocker 就路由给真实 owner。当前范围已完成或没有可推进工作时，记录结果后停下，不为保持 context 发明任务、轮询或重复验收；同一 work item 后续反馈仍回到 Northstar。
 
