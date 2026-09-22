@@ -132,7 +132,7 @@ Taskbook 只保存会改变后续 execution / acceptance 的 durable 状态：Pr
 
 **Taskbook 不是 Northstar 自己的执行清单。** Northstar 只在 **material Taskbook boundary** 选择 next task / owner 并完成 handoff；worker / coder / specialist / external orchestration 拥有实现动作和局部 How，只提交 result、Evidence、residual。不要把 helper、file edit、commit、单个 test 或其他 implementation-local step 都升级成 Northstar checkpoint。
 
-**Routine execution decision 可以下沉，但不能带走 semantic judgment。** 当一个重复判断的所有可能结果都仍处于同一 material task 边界内，并且不会改变 Draft / Constraint / Acceptance、canonical Taskbook、material task status 或 next material owner 时，execution system 可以把它编译成 typed local decision，由 deterministic rule、small model、LLM 或其他可替换 backend 完成。typed output 只驱动当前 execution branch，不是新的 durable artifact，也不要求 Northstar session 参与。
+**Routine execution decision 可以下沉，但不能带走 semantic judgment。** 当一个重复判断的所有可能结果都仍处于同一 material task 边界内，并且不会改变 Draft / Constraint / Acceptance、canonical Taskbook、material task status 或 next material owner 时，execution system 可以把它表达为 typed local decision，由 deterministic rule、small model、LLM 或其他可替换 backend 完成。typed output 只驱动当前 execution branch，不是新的 durable artifact，也不要求 Northstar session 参与。
 
 一旦某个 branch 可能改变上述 canonical semantic / task state、决定 material return 是否可接受、改变 next material task / owner，或当前无法可靠判断它是否 material，就必须把 result / blocker / Evidence 返回 Northstar。local decision 的 probability / confidence 只能帮助执行侧路由，不能成为 acceptance authority。不要为此新增 Decision Skill、Decision Log、Decision SOT、lifecycle state 或 Taskbook field；Feedback Log 也不升级成 decision history。
 
