@@ -114,15 +114,17 @@
       "required": [
         "the actor may inspect code/runtime and close factual gaps needed for the Draft",
         "the actor may use cheap reversible/disposable Beacon artifacts if a concrete ambiguity needs Evidence",
-        "the actor can reach and report execution-ready without treating readiness as product implementation authorization",
+        "the actor can reach execution-ready without treating readiness as product implementation authorization",
+        "before presenting the Draft as the reusable plan, Northstar persists one real Markdown plan file in the repo/workspace; a chat/UI/canvas/container rendering is only a view, not the artifact",
         "no landable product-code change, delivery commit/PR, merge, ship, or rollout is performed"
       ],
       "fail_if": [
         "the actor starts durable product implementation merely because the Draft becomes execution-ready",
+        "the actor reports a reusable/execution-ready plan only in chat/UI without a persisted workspace/repo plan file",
         "the actor interprets /northstar itself as implicit implementation authorization",
         "the actor refuses all probes/experiments even when they are needed only to close Intent ambiguity"
       ],
-      "consumer_check": "The output is an execution-ready current Draft with decisive facts and remaining blockers, not an implemented product change."
+      "consumer_check": "A fresh consumer can open the persisted plan file and recover the execution-ready current Draft with decisive facts and remaining blockers; deleting the chat/UI rendering must not delete the plan."
     },
     {
       "id": "IT7_original_request_authorizes_implementation",
