@@ -29,7 +29,7 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
-- `northstar` — canonical engineering-intent skill. 持续维护一个 current Draft；material / cross-session work 落盘为 canonical Taskbook。Northstar 交出执行但保留 Intent 与 material task acceptance；Issue 只作 tracker / 外部引用，session handoff 只保存恢复差量。
+- `northstar` — canonical engineering-intent skill. 持续维护一个 current Draft；一旦形成可供后续 review / implementation / handoff 使用的方案，就把它作为 repo/workspace 中真实 Markdown 方案文件落盘。material / cross-session execution 在同一文件中继续维护 canonical Taskbook 状态。Northstar 交出执行但保留 Intent 与 material task acceptance；Issue 只作 tracker / 外部引用，session handoff 只保存恢复差量。
 - `beacon` — caller-neutral、主要由 model 按需调用的核心原型 specialist。基于真实 repo，把一个 bounded 功能 Intent 或故障具体化为最小、可检查的核心原型；可以是接口/调用草图、代表性输入输出、最小实现或故障复现，不要求可执行代码。原型是主体，问题和 Evidence 服务于原型；结果返回原 caller。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
 - `verify` — engineering verification skill. 从 authoritative completion/safety claim 出发定义 proof obligation，选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。
@@ -69,7 +69,7 @@ conversation / request / incident
    ▲          │                  │
    └──── model-invoked by any semantic caller ────┘
               ↓
-           Taskbook
+    persisted plan / Taskbook
               ↓
        worker execution
               ↓
@@ -125,7 +125,7 @@ Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), inc
 
 ## Artifacts
 
-- **Taskbook** — canonical durable surface for material / cross-session Northstar work: current Draft, binding decisions/acceptance, material task state and next owner.
+- **Northstar plan / Taskbook** — the primary Northstar artifact is a real Markdown plan file persisted in the repo/workspace. Once a Draft becomes reusable for review, implementation, or handoff, it must exist as that file; material / cross-session execution adds task state and next owner to the same file. Taskbook is the execution role of the plan, not a second artifact. Chat/UI/canvas/container views are non-authoritative.
 - **Feedback Log** — optional append-only cross-session execution-learning artifact. The worker session records its return/Evidence and execution observation; a later Northstar session may append its judgment and material Taskbook delta. It never becomes current Intent, task state, an evaluator, or an execution controller.
 - **Session handoff** — Taskbook pointer plus resume delta, never a second plan.
 - **Drafted Issue** — tracker / external carrier pointing to the Taskbook, not a parallel Intent source.
