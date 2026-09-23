@@ -55,6 +55,8 @@
 
 **Execution authorization 与 control plane 都正交。** `execution-ready` 只表示实现者无需发明 material Intent；是否实施、commit、建 PR、merge、ship 或 rollout 取决于 Human 已表达的对应对象与动作范围。已有授权直接沿用，缺失授权不能由 readiness、compile、handoff 或外部 orchestration 制造。外部 orchestration 可以 start / route / pause / resume / retry，但不能定义 Intent、material Graph、Architecture、Verify/Eval semantics 或 artifact authority。
 
+**Routine decision compression 也是 backend，不是新的 semantic owner。** 当一个 execution-side 判断的所有可能分支都保持在同一 material task 边界内，并且不会改变 Intent、Acceptance、canonical Taskbook、material task status 或 next material owner 时，执行系统可以用 deterministic rule、small model、LLM 或其他 typed decision function 直接处理；输出只服务当前执行分支，不形成新的 Decision SOT。只要判断可能改变 canonical semantic / task state、决定 material return 是否被接受、选择 next material task，或这个 materiality 边界本身不确定，就必须回到 Northstar judgment。不要新增 Decision Skill、Decision Log 或 persistent decision state；概率 / confidence 也不能替代 semantic authority。
+
 不要为了某个现有 backend 新增同名 Skill。执行能力和 semantic responsibility 分开演进。
 
 ## Artifact ownership
