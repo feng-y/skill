@@ -4,6 +4,20 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## 2026-09-23 — Northstar plan becomes a file-backed primary artifact
+
+Change: `fix/northstar-persisted-plan-artifact-20260923` (based on `c4de492bc3d2a8ea6433fbddf8564671dd5a8487`)
+
+Northstar previously required a canonical Taskbook only for material / cross-session work. A design-only or otherwise reusable current Draft could still be returned only in the active conversation or host UI, which made the actual plan disappear with the session and blurred the difference between durable artifact and presentation surface.
+
+- **Canonical plan artifact:** once a Northstar Draft is reusable for review, implementation, or handoff, it is persisted as one real Markdown plan file in the repo/workspace.
+- **Taskbook relation:** material execution does not create a second plan. The same plan file takes on the Taskbook role by adding material task/status, decisive Evidence pointers, last Northstar judgment, and next owner.
+- **UI boundary:** chat text, canvas/container/panel, or another host UI may summarize or render the plan but cannot be its only storage or authority.
+- **Handoff boundary:** session handoff points to the persisted plan/Taskbook and carries resume delta only; it never serializes a copy of the plan.
+- **Preserved:** current Draft semantics, Intent ownership, execution authorization boundary, worker autonomy, Northstar acceptance judgment, and Verify ownership of proof sufficiency.
+- **Retired:** session/UI-only reusable Drafts and the interpretation of Taskbook as a separate plan-like artifact created only when work becomes material.
+- **Evidence status:** the design-only Northstar eval now fails when an execution-ready reusable plan exists only in chat/UI without a persisted workspace/repo file.
+
 ## 2026-09-19 — Beacon returns to repo-grounded core prototypes
 
 Change: `fix/beacon-core-prototype-20260919` (based on `4728ca5e1ffd04b434c58a9ba870297ede630f82`)
