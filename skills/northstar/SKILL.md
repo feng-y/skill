@@ -1,11 +1,11 @@
 ---
 name: northstar
-description: "Canonical engineering-intent control: keep the Human-authorized request aligned with one current Draft, persist material work as one Taskbook, route execution without performing it, judge returned task results against Intent, and preserve continuity across sessions with delta-only handoffs."
+description: "Canonical engineering-intent control: keep the Human-authorized request aligned with one current Draft, persist every deliverable plan as one workspace/repo plan document, extend that same document with Taskbook state for material execution, route execution without performing it, judge returned task results against Intent, and preserve continuity across sessions with delta-only handoffs."
 ---
 
 # Northstar · 工程 Intent 的 canonical owner
 
-Northstar 负责把 conversation、request、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。它维护一个 current canonical Draft，并持续检查它是否仍匹配原始 Intent 或 Human 已确认范围。对 material、跨 session / agent / execution-environment 的 work，同一语义必须落盘为一个 canonical **Taskbook**；Taskbook 是 current Draft 的 durable work surface，不是第二份 spec。
+Northstar 负责把 conversation、request、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。它维护一个 current canonical Draft，并持续检查它是否仍匹配原始 Intent 或 Human 已确认范围。**一旦 Draft 成为可供后续 review、implementation 或 handoff 使用的方案，Northstar 的主产物必须是 repo/workspace 中一个真实、可寻址的 Markdown 方案文件。** 会话文本、UI artifact、canvas/container/panel 只能展示或摘要这个文件，不能成为唯一方案载体。对 material、跨 session / agent / execution-environment 的 work，这同一个方案文件继续承载 canonical **Taskbook** 状态；Taskbook 是方案文档在执行期的 durable work surface，不是第二份 spec 或第二份 plan。
 
 Northstar 不拥有独立 Goal 层，不执行 implementation，也不负责 proof sufficiency judgment。它持续拥有当前 work 的 semantic control：Taskbook、material next task / owner、执行结果相对 Intent / Acceptance 的 acceptance judgment，以及 Evidence 触发后的受影响修订。低层 execution start / pause / retry、implementation How 与 verifier backend 仍由各自执行系统负责；PR 是 realized Change / Delivery surface。
 
@@ -22,7 +22,7 @@ Northstar 不拥有独立 Goal 层，不执行 implementation，也不负责 pro
 - **Constraints**：真正 binding、违反后会改变 accepted outcome、兼容、投入、风险或长期责任的约束。
 - **Acceptance**：能够区分“问题已解决”和“只是完成了某个手段”的 observable outcome / completion claim。
 
-按需增加 Decisions、Evidence、Open Questions、Out of Scope。不要制造独立 Goal、spec、plan 或并行 Intent SOT。
+按需增加 Decisions、Evidence、Open Questions、Out of Scope。不要在 canonical 方案文件之外再制造独立 Goal、spec、plan 或并行 Intent SOT。
 
 ### Stable domain language
 
@@ -124,11 +124,13 @@ Northstar 定义“什么结果才算符合预期”；Verify 定义什么真实
 
 如果 Acceptance 已明确但 proof route、baseline/oracle 或 false-pass risk material，调用 `$verify`。不要因为 backend green 就宣布 Intent 正确，也不要把 proof 命令塞进 canonical Intent。
 
-## Taskbook：持久化方案与执行控制面
+## 方案文档 / Taskbook：Northstar 的落盘产物与执行控制面
 
-当 work 已经 material 到需要多个 execution task、需要跨 session / agent / execution-environment 延续，或 Human 明确要求形成实施交接时，把 current canonical Draft 落盘为一个 **Taskbook**。简单的一次性请求不为了 ceremony 强制建文件；一旦已有 material 方案需要后续执行，Taskbook 就是该 work 的 canonical durable surface。
+Northstar 可以在收敛过程中先在当前交互里讨论、追问和修订 Draft，但**不能把一个已经可交付的方案只留在会话或 UI 中**。一旦 current Draft 已经可以被后续 review、implementation 或 handoff 消费，先把它写入 repo/workspace 中一个真实 Markdown 文件，再把该文件作为 Northstar 的主产物返回。优先复用项目已有的 plan/design/task 文档约定；项目没有约定时，使用 `.northstar/<work-item>.md`。最终回复可以摘要方案并给出文件路径，但不能用 chat block、canvas、container/panel 或其他宿主 UI 代替落盘文件。
 
-Taskbook 只保存会改变后续 execution / acceptance 的 durable 状态：Problem / current Draft、binding Decisions / Constraints / Acceptance、已确认事实与 material blocker、最小充分的 execution tasks / dependency、task status、决定性 Evidence pointer、last Northstar judgment、next task / owner。不要复制 investigation transcript、具体命令流水或 implementation-local How。
+这个文件始终是同一份 canonical 方案文档。work 进入 material execution、需要多个 execution task、跨 session / agent / execution-environment 延续，或 Human 明确要求实施交接时，在**同一个文件**中加入/维护 Taskbook 所需的 execution state，而不是另建一份 Taskbook 去复制方案。Taskbook 是这份方案文件承担的执行期角色，不是第二个 artifact。
+
+方案文件只保存会改变后续 review / execution / acceptance 的 durable 状态：Problem / current Draft、binding Decisions / Constraints / Acceptance、已确认事实与 material blocker；进入 material execution 后再加入最小充分的 execution tasks / dependency、task status、决定性 Evidence pointer、last Northstar judgment、next task / owner。不要复制 investigation transcript、具体命令流水或 implementation-local How。
 
 **Taskbook 不是 Northstar 自己的执行清单。** Northstar 只在 **material Taskbook boundary** 选择 next task / owner 并完成 handoff；worker / coder / specialist / external orchestration 拥有实现动作和局部 How，只提交 result、Evidence、residual。不要把 helper、file edit、commit、单个 test 或其他 implementation-local step 都升级成 Northstar checkpoint。
 
@@ -150,11 +152,11 @@ Northstar 的 acceptance judgment 与 Verify 的 proof judgment 必须分开：N
 
 ### Session handoff 只记录 delta
 
-跨 session 时，先确保 Taskbook 已落盘，然后生成一个**短 handoff**。handoff 只回答“从哪里恢复”：canonical Taskbook pointer、baseline / working context 中 fresh session 必须知道的最小状态、last completed / current task、仍 live 的 decision / blocker、next task / owner，以及哪个结果需要返回 Northstar 判卷。
+跨 session 时，先确保 canonical 方案文件已经落盘；material execution 时它同时就是 Taskbook。然后生成一个**短 handoff**。handoff 只回答“从哪里恢复”：canonical plan/Taskbook pointer、baseline / working context 中 fresh session 必须知道的最小状态、last completed / current task、仍 live 的 decision / blocker、next task / owner，以及哪个结果需要返回 Northstar 判卷。
 
 handoff **不得重新复制** Taskbook 中已经存在的 architecture、方案、完整 path mapping、改动面、Acceptance 或 out-of-scope。若这些内容在 handoff 中需要长篇重述，说明 durable 信息没有正确 fold back，应先更新 Taskbook。handoff 是 session delta，不是第二份缩略 Taskbook。
 
-下一 session 的启动 prompt 也只应指向 repo rules + Taskbook + handoff，并要求恢复 Northstar context 后继续 next task；不要把完整方案再次嵌入 prompt。fresh session 先读 canonical Taskbook，再消费 handoff delta。
+下一 session 的启动 prompt 也只应指向 repo rules + canonical 方案文件/Taskbook + handoff，并要求恢复 Northstar context 后继续 next task；不要把完整方案再次嵌入 prompt。fresh session 先读落盘的 canonical 方案文件，再消费 handoff delta。
 
 ## Drafted Issue
 
@@ -191,7 +193,8 @@ Human clarification 按前述 Intent continuity 规则处理，不要求它先�
 
 只有以下条件在明确声明的范围内同时满足，才能标为 **execution-ready**；整体声明必须覆盖完整 current Draft：
 
-- fresh implementer 不依赖原 conversation，也不需要自己重新组合局部 artifact，就能理解 Problem 与完整 current Draft；
+- canonical 方案已经作为 repo/workspace 中可寻址的 Markdown 文件落盘；UI/chat 中只有摘要或视图不算 durable artifact；
+- fresh implementer 不依赖原 conversation，也不需要自己重新组合局部 artifact，就能从该方案文件理解 Problem 与完整 current Draft；
 - current Draft 匹配 original Intent 或 Human 已确认范围；若有 authorized scope cut，未覆盖部分明确可见；
 - 必要 Human choice 已关闭，已有授权直接沿用；
 - binding Constraint / Decision 足以防止 materially wrong interpretation；
