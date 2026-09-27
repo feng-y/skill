@@ -37,11 +37,13 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 每次只处理仍会改变结果、范围、核心路径、责任、Acceptance、execution readiness 或 durable transfer 的 gap：
 
 1. 恢复原始请求、已有 Human correction / authorization、current Draft 与决定性 Evidence；
-2. 判断 current Draft 相对已授权 Intent 还缺什么；
-3. 将 gap 交给真实 owner，或直接吸收已有答案；
+2. 判断 current Draft 相对已授权 Intent 还缺什么，优先处理会改变下一步选择的 gap；
+3. 选择足以区分后续做法的最小行动交给真实 owner，或直接吸收已有答案；
 4. 消费返回的 Decision / correction / Evidence；
 5. **由 Northstar 自己把采用的局部结果组合回同一个 canonical Draft**；
 6. 重新检查整体 coverage，直到当前没有 material semantic gap。
+
+完整保留 Intent 不等于提前展开完整解决方案。范围宽泛、路径未定时，先基于真实 repo / task 推进能区分后续做法的一步；未确定的后续路径保留为 Open Questions，不编成假定成立的方案或占位任务。缩小本轮行动不是缩小授权范围，不能据此宣布整体 execution-ready / done。已有 Evidence 足以推进已授权执行时，直接 handoff，不强制先调查或做原型。
 
 不要把这六项物化成 persistent state、workflow、gap schema 或 progress manager。
 
@@ -120,7 +122,9 @@ specialist 的 scoped result 在 Northstar 完成取舍前只是 local input，�
 
 ## Acceptance 定义预期，Verify 负责验证
 
-Northstar 定义“什么结果才算符合预期”；Verify 定义什么真实 observation 能证明/反证 claim、选择 backend 并判断 Evidence 是否充分。test/build/Replay/runtime/data/profile 是 backend，不是 Intent owner。
+Northstar 定义“什么结果才算符合预期”，交付深度以本次 Human 承诺与实际影响面为准：探索不顺带建设生产工程，生产变更不以原型成功替代既有兼容、行为和结果承诺。只有会改变交付判断的取舍才写入已有 Draft / Constraints / Acceptance。
+
+Verify 定义什么真实 observation 能证明/反证 claim、选择 backend 并判断 Evidence 是否充分。test/build/Replay/runtime/data/profile 是 backend，不是 Intent owner。
 
 如果 Acceptance 已明确但 proof route、baseline/oracle 或 false-pass risk material，调用 `$verify`。不要因为 backend green 就宣布 Intent 正确，也不要把 proof 命令塞进 canonical Intent。
 
@@ -160,7 +164,7 @@ handoff **不得重新复制** Taskbook 中已经存在的 architecture、方案
 
 ## Drafted Issue
 
-Drafted Issue 是 tracker / 外部协作 carrier，不承担 canonical plan 或 session handoff 本身。material / cross-session work 先落盘 canonical Taskbook；Issue 只指向它并保存讨论历史 / probe / 阶段 Evidence / correction trail。durable intended change、material task state 与 Northstar judgment 始终 fold back 到 Taskbook。
+Drafted Issue 是 tracker / 外部协作 carrier，不承担 canonical plan 或 session handoff 本身。material / cross-session work 先落盘 canonical Taskbook；Issue 只指向它并保存讨论历史 / probe / 阶段 Evidence / correction trail。durable intended change、material task state 与Northstar judgment 始终 fold back 到 Taskbook。
 
 Issue 按 cohesive engineering outcome / responsibility boundary 切，不按 model context、文件或 agent session 切。不要让 Issue body、Taskbook、handoff 各自复制一份方案并独立漂移。
 
