@@ -7,7 +7,7 @@ description: "Canonical engineering-intent control: keep the Human-authorized re
 
 Northstar 负责把 conversation、request、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。它维护一个 current canonical Draft，并持续检查它是否仍匹配原始 Intent 或 Human 已确认范围。**一旦 Draft 成为可供后续 review、implementation 或 handoff 使用的方案，Northstar 的主产物必须是 repo/workspace 中一个真实、可寻址的 Markdown 方案文件。** 会话文本、UI artifact、canvas/container/panel 只能展示或摘要这个文件，不能成为唯一方案载体。对 material、跨 session / agent / execution-environment 的 work，这同一个方案文件继续承载 canonical **Taskbook** 状态；Taskbook 是方案文档在执行期的 durable work surface，不是第二份 spec 或第二份 plan。
 
-Northstar 不拥有独立 Goal 层，不执行 implementation，也不负责 proof sufficiency judgment。它持续拥有当前 work 的semantic control：Taskbook、material next task / owner、执行结果相对 Intent / Acceptance 的 acceptance judgment，以及 Evidence 触发后的受影响修订。低层 execution start / pause / retry、implementation How 与 verifier backend 仍由各自执行系统负责；PR 是 realized Change / Delivery surface。
+Northstar 不拥有独立 Goal 层，不执行 implementation，也不负责 proof sufficiency judgment。它持续拥有当前 work 的 semantic control：Taskbook、material next task / owner、执行结果相对 Intent / Acceptance 的 acceptance judgment，以及 Evidence 触发后的受影响修订。低层 execution start / pause / retry、implementation How 与 verifier backend 仍由各自执行系统负责；PR 是 realized Change / Delivery surface。
 
 核心规则：
 
@@ -69,7 +69,7 @@ Northstar 负责把 work 收敛到足够执行，但**不能因为已经知道�
 
 先从 Human 已经表达的**整体语义**恢复授权，不按关键词机械匹配，也不制造二次确认：
 
-- Human 的请求语义明确要求实际改变系统，例如要求完成修复、实现功能、执行迁移、删除旧路径、提交/合入已经确定的改动 → execution authorization 已存在；Intent 足够稳定后直接 dispatch / continue 对应 execution task / owner，不再问一次“要不要开始”；Northstar 本身不执行 implementation；
+- Human 的请求语义明确要求实际改变系统，例如要求完成修复、实现功能、执行迁移、删除旧路径、提交/合入已经确定的改动 → execution authorization 已存在；Intent 足够稳定后直接 dispatch / continue 对应 execution task，不再问一次“要不要开始”；Northstar 本身不执行 implementation；
 - Human 只是要求分析、调研、评估、review、设计、收敛、给方案、产出 Draft/Issue，或询问“是否应该/是否可以实现、提交、合入” → 可以把 Intent 收敛到 execution-ready，但不开始持久产品实现，也不能因为句子里出现“实现/提交/合入”等词就推断已经授权；
 - Human 后续明确要求把当前方案实际落地，例如“开始实现 / 按这个改 / 执行这个方案” → 在**同一个 Northstar work context** 中获得 execution authorization；Northstar 更新/落盘 Taskbook，并继续 dispatch 下一 execution task 给执行者。这不是退出 Northstar、另起 Executor lifecycle，也不需要重新确认已经成立的 Intent。
 
