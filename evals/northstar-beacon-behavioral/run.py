@@ -48,6 +48,10 @@ CASES = {
         "我们已经确定 protobuf SDK 要让单 message 和 repeated message 使用同一套访问抽象，调用方不应该关心字段来自哪种容器。现在只把 accessor 的具体接口形态做成一个可检查的 draft，其他设计保持不变。",
         "repeated 子 message 这里不能复制或迁移数据，要保持共享/零拷贝访问；其他接口和语义都保持原样。",
     ],
+    "C4": [
+        "/northstar 请审查这个变更的方案复杂度，并评估 PR #517 是否可以合入。修复后的线上采集结果目前还没有；请区分代码合入与后续部署、推全所需证据。现在只要评估。",
+        "合入 PR #517。",
+    ],
 }
 
 
@@ -151,6 +155,10 @@ def artifact_files(repo):
         "hermes/engine.py",
         "tests/test_engine.py",
         "app/config.txt",
+        "app/defaults.txt",
+        "docs/plan.md",
+        "docs/evidence.md",
+        "docs/replay-map.md",
         ".eval/pr-state.json",
         ".eval/tool-log.jsonl",
     ):
@@ -319,6 +327,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--max-workers", type=int, default=3)
+    parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--case", choices=["all", *CASES], default="all")
     parser.add_argument(
         "--base-sha",
@@ -334,6 +343,8 @@ def main():
         ),
     )
     args = parser.parse_args()
+    if args.repeats < 1:
+        parser.error("--repeats must be positive")
 
     output_root = args.output_root.resolve()
     if output_root.exists() and any(output_root.iterdir()):
@@ -343,7 +354,7 @@ def main():
     revisions = {"base": args.base_sha, "candidate": args.candidate_sha}
     specs = []
     for case_id in cases:
-        for repeat in range(1, 4):
+        for repeat in range(1, args.repeats + 1):
             for arm in revisions:
                 specs.append((case_id, arm, repeat, uuid.uuid4().hex[:12]))
 

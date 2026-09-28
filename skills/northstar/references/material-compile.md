@@ -17,7 +17,7 @@ Compile 不重新定义 Intent，不产生或扩大 Human execution authorizatio
 只 materialize fresh implementer 若不知道就会重新做高层判断的 work：
 
 - 一个 task 对应一个 cohesive material outcome / responsibility / binding boundary，不按文件、helper、agent session 或 verifier 拆分；
-- 只有 prerequisite、共享 authoritative surface / conflict、或必须共同成立的 outcome 才记录 dependency；
+- 只有 prerequisite、共享 authoritative surface / conflict、或必须共同成立的 outcome 才记录 dependency；若一个修复去掉另一成果后仍可独立实现和验证，就不要仅因同属一个终态而把两者捆为本轮实现前提；
 - 文本顺序不形成 dependency，能够独立推进的 work 保持独立；
 - 省略某个 task / relation 会迫使 fresh implementer重新恢复 material Intent 时才保留；
 - 仍取决于未来 execution Evidence 的 contingent work 不提前创建 placeholder task；

@@ -124,6 +124,8 @@ specialist 的 scoped result 在 Northstar 完成取舍前只是 local input，�
 
 Northstar 定义“什么结果才算符合预期”，交付深度以本次 Human 承诺与实际影响面为准：探索不顺带建设生产工程，生产变更不以原型成功替代既有兼容、行为和结果承诺。只有会改变交付判断的取舍才写入已有 Draft / Constraints / Acceptance。
 
+为修复缺失产物或观测的工作，按因果顺序写 Acceptance：现状缺失是 Problem 的证据；修复后才能取得的真实产物属于部署后的结果验证。把代码交付、合入、部署、推全各自的授权与完成结论分开，不能让后一步才可能产生的证据循环阻断前一步。具体合入所需证据仍由 Verify 按变更风险判断。
+
 Verify 定义什么真实 observation 能证明/反证 claim、选择 backend 并判断 Evidence 是否充分。test/build/Replay/runtime/data/profile 是 backend，不是 Intent owner。
 
 如果 Acceptance 已明确但 proof route、baseline/oracle 或 false-pass risk material，调用 `$verify`。不要因为 backend green 就宣布 Intent 正确，也不要把 proof 命令塞进 canonical Intent。
@@ -143,6 +145,8 @@ material task 交给独立 worker session 时，在已有 scoped instruction / h
 收到 material task return 后，先从已有 Taskbook / dispatch / artifact / 运行记录恢复对应 task、执行时的 binding context 与实际 result / Evidence；关联不清时先查可得事实，只保留仍影响判断的 blocker，不要求新增字段、receipt 或让 Human 猜技术事实。关联成立只说明这是哪次工作的结果，不证明当前 Intent / Acceptance 已满足。
 
 Northstar 始终按**当前 canonical Taskbook**恢复 caller judgment。dispatch 后若 binding Decision / Constraint / Acceptance 已实质变化，旧结果不能沿旧解释直接关闭当前 task；只重判受影响的 claim，保留仍有效的 work / Evidence。若结果已满足当前要求，直接接受，不因 Taskbook 版本、文字或无关 task 状态变化强制返工。把 judgment、仍需修订或补证的具体差异及 next task / owner 回写同一个 Taskbook；只有 premise 真正变化时才重开对应 semantic owner。执行者不能凭自己的 `done`、测试 green 或 PR 存在直接推进 canonical Taskbook。
+
+回写 current state 时，同步改正文件前部仍用现在时表达的旧事实、任务状态和授权边界；历史观察可保留，但须标明其时点。只在文末追加新结论、让 fresh consumer 同时读到两个互相矛盾的“当前状态”，不算完成回写。
 
 Northstar 后续消费 return 时，先按 current Intent 完成 judgment 与必要 Taskbook 回写；只有 judgment 本身产生新的 reusable learning，才在同一 Feedback Log **另起条目**，关联原 return，记录 judgment / material Taskbook delta；不回填 worker 的旧条目，也不要求 worker 等待 follow-up。Feedback Log 不参与当前 task 的 dispatch / resume / acceptance，缺少日志不阻塞工作；最小记录方式见 [references/feedback-log.md](references/feedback-log.md)。
 
