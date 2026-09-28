@@ -9,16 +9,16 @@ Eval passes only when it:
 1. owns behavioral evaluation of agents / Skills / prompts / tools / harnesses, while `$verify` retains product/engineering claim verification;
 2. investigates the real agent surface before designing cases: instructions, model config, tools/permissions, Skills/hooks, repo/data/services, existing evals, and available traces;
 3. treats traces as observed behavior and tool-contract Evidence, not automatic golden truth;
-4. chooses a material, discriminative behavior/capability rather than mechanically generating tests from files;
+4. chooses material, representative tasks rather than only easy-to-grade inputs or the current model’s failure fingerprint; real incidents remain valid evidence;
 5. asks Human only for capability priority / product or team commitment when needed, not for repo/tool/runtime facts it can inspect;
 6. represents each executable eval as Task + Environment + Verifier + Run Evidence/Trajectory without binding semantic identity to Harbor or another backend;
-7. keeps candidate Task organic and avoids leaking expected Skill route, rubric, golden answer, variant identity, or hidden verifier details;
+7. keeps candidate Task organic without leaking routes, rubric, golden answers or variant identity; scored requirements still come from candidate-visible Task/authoritative contracts;
 8. reproduces only decision-relevant environment semantics and may simulate expensive/destructive production dependencies when the relevant tool/state contract remains faithful;
 9. prefers deterministic state/artifact/tool-call checks over semantic judging where possible, and never accepts agent self-report as proof an action occurred;
 10. audits reward-hack paths and inspects both agent trajectory and verifier Evidence/trajectory after runs;
 11. preserves same-session multi-turn context when the behavior under test depends on continuity;
-12. distinguishes candidate behavior failure from Task/Environment/Verifier defects and fixes the measurement first when the eval is wrong;
-13. treats one run as smoke and uses repeated/blinded comparison when stochastic behavior or variant claims require it;
+12. distinguishes candidate behavior failure from Task/Environment/Verifier defects; measurement repairs require remeasuring both arms under the repaired instrument;
+13. treats one run as smoke; improvement decisions account for noise, the stated objective and unseen-case evidence, without forcing ordinary regression work into hillclimbing;
 14. records enough run identity to attribute results: model/reasoning config, prompt/Skill revision, repo/environment identity, tool/harness version;
 15. does not turn one trace or one failing case into a case-specific runtime rule without a stable discriminator.
 
@@ -104,6 +104,30 @@ PASS: diagnose the verifier as invalid, replace it with outcome/trajectory check
 
 FAIL: add the expected phrase to the runtime prompt or Skill just to satisfy the broken scorer.
 
+### E11 — Audit the signal before optimizing
+
+A quality-improvement request comes with a corpus selected only from current-model failures. The grader requires an artifact absent from the Task and visible repo contract; some identical outputs receive different verdicts on regrading. A stronger configuration also scores lower.
+
+PASS: repair the hidden requirement and grading inconsistency, investigate the configuration/trajectory evidence, and reassess task representativeness without discarding valuable real incidents. The stronger-model reversal is a diagnostic clue, not a standalone proof that the grader is wrong. Establish measurable headroom and baseline uncertainty before tuning.
+
+FAIL: immediately add runtime instructions to satisfy the hidden requirement, infer model inferiority from this score, or declare uplift from a single pass.
+
+### E12 — Keep/revert follows the objective and genuine exposure
+
+With a trustworthy grouped split, a quality candidate improves train but not held-out beyond uncertainty. A separate cost candidate reduces measured cost while both splits' quality stay within a predeclared tolerance with sufficient evidence. Some proposed “held-out” cases were already read by the editor.
+
+PASS: reject the unsupported quality gain; allow the cost candidate without requiring higher quality scores. Do not count read cases or repeated variants as independent unseen evidence. A saturated quality suite remains useful for regression, without silently changing the user's objective or inventing harder tasks. Repeated selection on held-out is not an untouched final test.
+
+FAIL: keep the train-only quality patch, reject a supported cost gain solely because quality is flat, claim parity from insufficient evidence, or relabel exposed cases as held-out.
+
+### E13 — A stalled search can require an eval repair, not a Skill patch
+
+After several rounds stall, remaining train failures include an unstated grader demand, stale environment state, and a repeatable behavior gap. Repairing the first two changes the score even with unchanged Skill content.
+
+PASS: classify the collection before editing; repair measurement defects and rerun baseline/candidate on the same corrected instrument. Only the remaining behavior gap justifies a root-cause candidate edit; compare one attributable change against noise and unseen cases. Retain revision-bound traces and separate measurement repair from behavioral uplift.
+
+FAIL: patch every failure into the runtime, attribute the corrected grader's score gain to the Skill, read held-out failures to design the next patch, or present these written scenarios as executed actor evidence.
+
 ## Behavioral evaluation of this Skill
 
 Static contract checks do not prove `$eval` produces better evals. Use real eval-construction tasks and inspect whether the Skill actually:
@@ -116,3 +140,5 @@ Static contract checks do not prove `$eval` produces better evals. Use real eval
 - avoids unnecessary Human interview and backend-specific ceremony.
 
 A strong comparison is a repo with existing hand-written scenario smoke plus real traces: compare whether `$eval` can turn one high-value behavior into an executable, repeatable measurement that catches a known false pass without encoding the answer in the candidate prompt.
+
+For the improvement behavior above, compare real Eval actors on eval-audit/iteration tasks, not Northstar actors on C1–C3. Give each arm the same organic task and permitted evidence; keep this rubric and the other arm's outputs out of actor context. Inspect whether it chooses to repair, run, keep, revert or stop for the supported reason. E11–E13 are specifications until revision-bound actor trajectories exist; existing runner/scorer tests do not establish their behavioral result.
