@@ -91,9 +91,13 @@ of two business configurations. The judge checks the causal merge assessment;
 the scorer independently checks that merge happens only after the second Human
 turn. No real service, repository name, app ID, or model identity is included.
 
+C4 is an eval-only addition, not a Northstar runtime change. Its verified
+harness checks, unverified historical smoke, and pending head-bound actor run
+are separated in [`RESULTS-2026-09-28-C4.md`](RESULTS-2026-09-28-C4.md).
+
 ## Protocol
 
-Run three clean repeats per arm per case (18 actor runs):
+Run three clean repeats per arm per case (24 actor runs across C1–C4):
 
 ```bash
 python3 evals/northstar-beacon-behavioral/run.py \
