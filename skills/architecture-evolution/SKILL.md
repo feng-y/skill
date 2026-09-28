@@ -117,6 +117,10 @@ Research、execution、review、Beacon correction 或 Verify 都可能触发 AE 
 
 ## 返回与持久化
 
+交付前，AE 自审即将返回的结构方案：Target、gap、Program 与 completion claims 是否一致，实际 repo 能力、依赖和迁移前提是否支持该安排；新增边界与工作是否带来值得其成本的 ownership / change-locality 收益。以原始请求、已确认决定和已核实事实解决冲突，不以更详细的段落或架构形式感决定取舍。
+
+按本次交付深度判断，只修正会影响已约定结果或执行的具体问题；已有能力足够时返回 local / no-evolution，必要的责任归位、兼容边界与 real exit 不因追求简短而省略。保留有效决定和有意延期的内容，合格方案不为自审而改写。直接返回修订后的同一结果，不新建审阅流程或报告；caller adoption 与 Verify 的 proof judgment 保持原有边界。
+
 返回当前调用方所需的最小充分结果：
 
 - adopted / re-established Target Architecture 与 deciding Evidence；

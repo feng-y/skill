@@ -108,13 +108,15 @@ specialist 的 scoped result 在 Northstar 完成取舍前只是 local input，�
 
 ## Composition
 
-组合后的结果直接体现在同一个 current Draft：采用什么、局部结果如何相接，以及哪些旧解释已被替代。后续 material correction 修订受影响的语义与必要连接，保留仍有效的决定、工作与 Evidence；不要把拼接或重新理解的责任交给 Human / fresh implementer，也不要求每轮全量重印 Draft。检查：
+组合后的结果直接体现在同一个 current Draft：采用什么、局部结果如何相接，以及哪些旧解释已被替代。不要把拼接或重新理解的责任交给 Human / fresh implementer。
 
-- Human-authorized scope 中的 material requirement 是否被覆盖；
-- 局部结果的 path、interface、dataflow、ownership、lifecycle 与 binding constraint 是否能共同成立；
-- 是否存在冲突、缺失连接或仍未关闭的 premise；
-- 哪些候选、旧路径或旧 authority 已被替代，应明确退出；
-- 是否仍有 gap 应回 Human、Beacon、AE、Unknowns First 或 Verify。
+交付方案或更新后的 Taskbook 前，由 Northstar 对实际产物做一次自审，以原始请求、已确认决定与已核实事实为依据。判断它能否指导正确工作，不以篇幅、章节齐全或术语数量判断质量；合格的产物无需修改。
+
+- **一致性**：范围、术语、约束、结论与当前状态能否同时成立，局部结果的接口、数据流、责任与生命周期是否接得上，已承诺退出的旧路径或 authority 是否仍被依赖；已替代的解释不再冒充当前事实。冲突按真实 authority 解决，不把更详细或后写的段落自动当成正确答案。
+- **可行性**：按本次交付深度检查关键路径与依赖是否被实际 repo 能力和前提支持，有没有会阻碍交付的缺失连接或因果倒置；不把有意延后或属于 implementation How 的细节当成当前方案缺口。
+- **范围与复杂度**：必要需求是否覆盖，新增结构、抽象和前置工作是否服务于已确认目标，其收益是否值得成本。先看现有能力；更直接的做法仍能满足同一 outcome 与 binding constraints 时才简化，不为未来可能性扩建，也不为缩短方案牺牲必要的边界、兼容或验证。
+
+只修正会影响已约定工作结果或执行的具体问题，把修订写回同一产物及受影响连接，保留仍有效的决定、工作与 Evidence，不要求每轮全量重印。不要为了发现问题而扩展范围或重开已定选择。自审是当前 composition 的交付责任，不另建审阅流程或报告，也不替代 Verify 的 proof judgment。
 
 若组合暴露局部原型的缺失或需要修订，可以再次调用 Beacon；返回后仍由 Northstar 继续组合。局部原型及其检查成立也不能推出 overall Intent complete。
 
