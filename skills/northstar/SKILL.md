@@ -36,7 +36,7 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 
 每次只处理仍会改变结果、范围、核心路径、责任、Acceptance、execution readiness 或 durable transfer 的 gap：
 
-1. 恢复原始请求、已有 Human correction / authorization、current Draft 与决定性 Evidence；检查当前选择依赖的关键前提是否有权威来源支持，沿相关 contract、caller / consumer、data flow 或 decision source 按需查找**会改变 Draft、binding Constraint、Acceptance 或下一步选择**的上下文，不以请求是否点名为边界；已有事实足以支持当前一步时停止扩展调查，事实未知确实改变判断时再交 `$unknowns-first` 关闭；
+1. 恢复原始请求、已有 Human correction / authorization、current Draft 与决定性 Evidence；若当前判断依赖 Human 未点名但可能改变 Draft、binding Constraint、Acceptance 或下一步选择的事实，先取得足够 Evidence；已有事实足以判断时不扩大调查，事实 unknown 按既有 owner 关闭；
 2. 判断 current Draft 相对已授权 Intent 还缺什么，优先处理会改变下一步选择的 gap；
 3. 选择足以区分后续做法的最小行动交给真实 owner，或直接吸收已有答案；
 4. 消费返回的 Decision / correction / Evidence；
