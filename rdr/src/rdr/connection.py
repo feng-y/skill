@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 import uuid
 from typing import Any, TYPE_CHECKING
 
@@ -22,6 +23,9 @@ if TYPE_CHECKING:
     from .runtime import RDRServer
 
 
+logger = logging.getLogger(__name__)
+
+
 class ClientConnection:
     def __init__(
         self,
@@ -41,6 +45,8 @@ class ClientConnection:
         self.closed = False
 
     async def run(self) -> None:
+        peer = self.writer.get_extra_info("peername")
+        client_ip = peer[0] if isinstance(peer, tuple) and peer else "unknown"
         try:
             header, _ = await asyncio.wait_for(
                 read_frame(self.reader, max_payload_bytes=0), timeout=10.0
@@ -56,9 +62,11 @@ class ClientConnection:
                 )
                 return
             if not isinstance(token, str) or not self.server.authenticate(token):
+                logger.warning("RDR auth failed from %s", client_ip)
                 await self.sender.send({"type": "auth.error", "error": "invalid token"})
                 return
 
+            logger.info("RDR auth success from %s", client_ip)
             await self.sender.send(
                 {"type": "ready", "protocol": 1, "identity": runtime_identity()}
             )
