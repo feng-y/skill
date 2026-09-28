@@ -1,0 +1,27 @@
+{
+  "task": "What is the retry limit? Cite the relevant document.",
+  "document": {
+    "id": "ops/retry",
+    "content": "Requests are retried at most 3 times."
+  },
+  "tools": [
+    "read_document"
+  ],
+  "permissions": "read-only document access",
+  "configurations": {
+    "standard": {
+      "model": "doc-agent-v1",
+      "effort": "medium"
+    },
+    "extended": {
+      "model": "doc-agent-v2",
+      "effort": "high"
+    }
+  },
+  "sampler": "Last 4 failures from standard; no successes or other task families sampled.",
+  "desired_quality_gain_pp": 5,
+  "artifact_contract": [
+    "answer text",
+    "citation to the relevant document"
+  ]
+}

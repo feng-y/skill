@@ -142,3 +142,11 @@ Static contract checks do not prove `$eval` produces better evals. Use real eval
 A strong comparison is a repo with existing hand-written scenario smoke plus real traces: compare whether `$eval` can turn one high-value behavior into an executable, repeatable measurement that catches a known false pass without encoding the answer in the candidate prompt.
 
 For the improvement behavior above, compare real Eval actors on eval-audit/iteration tasks, not Northstar actors on C1–C3. Give each arm the same organic task and permitted evidence; keep this rubric and the other arm's outputs out of actor context. Inspect whether it chooses to repair, run, keep, revert or stop for the supported reason. E11–E13 are specifications until revision-bound actor trajectories exist; existing runner/scorer tests do not establish their behavioral result.
+
+## Executed diagnostic evidence
+
+[Behavioral adapter and reproduction](behavioral/README.md) bind E11–E13 to real
+Codex Eval actors. [PR #120 results](behavioral/RESULTS-2026-09-28.md) distinguish
+accepted runs, rejected measurement attempts, costs, and evidence limits. These
+constructed diagnostics do not turn the scenario specifications above into
+independent held-out generalization evidence.

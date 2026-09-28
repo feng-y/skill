@@ -1,0 +1,368 @@
+[
+  {
+    "id": "prior-format-1",
+    "configuration": "prior",
+    "source_task": "format",
+    "repeat": 1,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "prior-snapshot-1",
+    "configuration": "prior",
+    "source_task": "snapshot",
+    "repeat": 1,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "prior-behavior-1",
+    "configuration": "prior",
+    "source_task": "behavior",
+    "repeat": 1,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 5,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "prior-format-2",
+    "configuration": "prior",
+    "source_task": "format",
+    "repeat": 2,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "prior-snapshot-2",
+    "configuration": "prior",
+    "source_task": "snapshot",
+    "repeat": 2,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "prior-behavior-2",
+    "configuration": "prior",
+    "source_task": "behavior",
+    "repeat": 2,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 5,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "prior-format-3",
+    "configuration": "prior",
+    "source_task": "format",
+    "repeat": 3,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "prior-snapshot-3",
+    "configuration": "prior",
+    "source_task": "snapshot",
+    "repeat": 3,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "prior-behavior-3",
+    "configuration": "prior",
+    "source_task": "behavior",
+    "repeat": 3,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 5,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "trial-format-1",
+    "configuration": "trial",
+    "source_task": "format",
+    "repeat": 1,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "trial-snapshot-1",
+    "configuration": "trial",
+    "source_task": "snapshot",
+    "repeat": 1,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "trial-behavior-1",
+    "configuration": "trial",
+    "source_task": "behavior",
+    "repeat": 1,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 5,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "trial-format-2",
+    "configuration": "trial",
+    "source_task": "format",
+    "repeat": 2,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "trial-snapshot-2",
+    "configuration": "trial",
+    "source_task": "snapshot",
+    "repeat": 2,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "trial-behavior-2",
+    "configuration": "trial",
+    "source_task": "behavior",
+    "repeat": 2,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 5,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "trial-format-3",
+    "configuration": "trial",
+    "source_task": "format",
+    "repeat": 3,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "trial-snapshot-3",
+    "configuration": "trial",
+    "source_task": "snapshot",
+    "repeat": 3,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  },
+  {
+    "id": "trial-behavior-3",
+    "configuration": "trial",
+    "source_task": "behavior",
+    "repeat": 3,
+    "task": "Read ops/retry and answer with its retry limit and citation.",
+    "read_document": {
+      "id": "ops/retry",
+      "version": 2,
+      "retry_limit": 3
+    },
+    "answer": {
+      "retry_limit": 5,
+      "citation": "ops/retry"
+    },
+    "artifacts": [
+      "audit.md"
+    ],
+    "exit": 0,
+    "truncated": false
+  }
+]

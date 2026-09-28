@@ -1,0 +1,67 @@
+{
+  "quality": {
+    "objective": "Improve quality by at least 2 percentage points on representative unseen source tasks; no cost objective.",
+    "train": {
+      "independent_tasks": 400,
+      "runs_per_task": 3,
+      "gain_pp": 8,
+      "gain_95ci_pp": [
+        6,
+        10
+      ]
+    },
+    "selection": {
+      "independent_tasks": 400,
+      "runs_per_task": 3,
+      "gain_pp": 0.2,
+      "gain_95ci_pp": [
+        -0.8,
+        1.2
+      ]
+    },
+    "cost_ratio_95ci": [
+      0.98,
+      1.02
+    ]
+  },
+  "cost": {
+    "objective": "Reduce cost by at least 15%, with quality loss no more than 1 percentage point on each split.",
+    "train": {
+      "independent_tasks": 400,
+      "runs_per_task": 3,
+      "quality_delta_pp": -0.1,
+      "quality_delta_95ci_pp": [
+        -0.4,
+        0.2
+      ]
+    },
+    "selection": {
+      "independent_tasks": 400,
+      "runs_per_task": 3,
+      "quality_delta_pp": -0.2,
+      "quality_delta_95ci_pp": [
+        -0.5,
+        0.1
+      ]
+    },
+    "cost_ratio": 0.72,
+    "cost_ratio_95ci": [
+      0.69,
+      0.75
+    ]
+  },
+  "regression_pack": {
+    "tasks": 50,
+    "quality": 1.0,
+    "purpose": "Known release regressions; all have been inspected."
+  },
+  "measurement": {
+    "model": "agent-v3",
+    "config": "fixed",
+    "environment_hash": "env-71",
+    "verifier_hash": "v-9",
+    "paired": true,
+    "group_disjoint": true,
+    "invalid_runs": 0
+  }
+}

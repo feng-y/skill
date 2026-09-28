@@ -1,0 +1,5 @@
+{
+  "document": "ops/retry",
+  "version": 1,
+  "retry_limit": 2
+}
