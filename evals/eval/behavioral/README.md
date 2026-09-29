@@ -50,9 +50,10 @@ catch unconditional-pass repairs; they do not prove general verifier robustness.
 `judge.py` supplies the frozen case rubric to a fresh, independent Codex judge,
 reusing the existing judge executor and trajectory packaging. It consumes actual
 commands/results, changes, artifacts and independent checks, not only final prose.
-Skill-read outputs are omitted from the judge package to reduce treatment leakage;
-the unmodified complete original trajectory is retained. Main-agent review must
-also inspect those originals and confirm actual Skill loading and access scope.
+Skill-read outputs are omitted from the judge package, but command paths can still
+reveal a candidate-only reference read. The semantic judgments are therefore not
+fully blinded. The unmodified CLI event trajectories are retained; main-agent
+review must inspect them and confirm actual Skill loading and access scope.
 
 ## Exposure and claims
 
@@ -60,7 +61,8 @@ Prompts contain no expected route, rubric, PASS/FAIL answer or arm identity.
 Actors see only a neutral UUID workspace, ordinary task materials and the selected
 installed Skill. The host target Skill copies are disabled identically. Full
 `skills/` trees are installed by the existing runner; for these revisions only
-Eval runtime differs. Judges receive opaque IDs and no arm/SHA labels.
+Eval runtime differs. Judges receive opaque IDs and no explicit arm/SHA labels,
+but the observed reference-read path leaks treatment in some candidate runs.
 
 This backend has full filesystem access, not an enforced security boundary:
 external manifests and sibling directories are physically accessible. Inspect
