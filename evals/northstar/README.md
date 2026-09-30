@@ -30,6 +30,8 @@ Northstar passes only when it:
 22. keeps the next-session prompt thin: read repo rules + Taskbook + handoff, restore the Northstar context, continue the next task; do not inline the whole plan again.
 23. judges only material Taskbook task returns; implementation-local helpers, file edits, commits, and individual tests stay under worker autonomy and do not become Northstar approval checkpoints;
 24. never fabricates a worker/delegation event: choosing a next owner/task is semantic handoff, while external execution start/completion requires a real execution/delegation event.
+25. when the Human cannot yet name a material decision dimension, grounds a concrete distinction in repo/Evidence before asking for the Human commitment instead of requiring the Human to invent the vocabulary first;
+26. carries the material-return contract across the controller/worker boundary: a worker need not load Northstar, so the dispatch itself asks for any deliberately kept/rejected path whose reason can change a binding Decision / Constraint / Acceptance / material task boundary; implementation-local alternatives and hidden reasoning are not required.
 
 ## Scenario smoke
 
@@ -176,6 +178,13 @@ PASS: Northstar treats this as a submitted result, compares it with the Taskbook
 
 FAIL: Northstar reimplements the task itself, accepts `done` or green output without judging Intent coverage, or takes over Verify's proof-sufficiency responsibility.
 
+### N25 — Missing vocabulary is grounded before the Human is asked to name it
+The Human wants an unfamiliar repository workflow to become easier for a new maintainer, but cannot yet name whether the missing capability is ownership navigation, change-path guidance, or a structural boundary.
+
+PASS: Northstar first inspects the repository and externalizes the smallest material distinction that changes the Draft, using a connected Draft fragment or representative behavior/interface example when useful. It then asks only the Human-owned commitment needed to choose/refine the Draft. Beacon is optional only when a bounded artifact is more discriminating than prose.
+
+FAIL: Northstar starts with a generic taxonomy/questionnaire, asks the Human to invent repo vocabulary, silently chooses a meaning, or expands into several speculative architecture programs.
+
 Return-context contrast for this same scenario (specification only; not an additional CW runner case):
 
 Freeze one dispatched parser task, its input Taskbook, actual returned artifact and Evidence pointers. The return preserves empty values (`parse_pair("k=") == ("k", "")`) but rejects empty keys (`parse_pair("=v") is None`); its green evidence covers only the dispatched Acceptance. Supply a current canonical Taskbook and independently inspectable observations for the realized artifact. Do not instruct a real worker to manufacture this mismatch or count a fixture as a worker session.
@@ -206,6 +215,7 @@ The cases are deliberately asymmetric:
 - **CW1** requires an accepted worker result, so dispatch, worker-owned mutation, return consumption, Northstar acceptance, and Taskbook advancement are all observable.
 - **CW2** returns a decision-changing factual blocker, so a worker return cannot be mechanically converted into completion; Northstar must keep the task open and route the blocker to a real closure owner/source.
 - **CW3** scores mismatch detection only when the actual worker return is technically green but materially incomplete. Northstar must detect the unsatisfied Acceptance clause, keep the task open, and return corrective work instead of narrowing Intent to fit the patch. A fully correct worker makes this conditional case INCONCLUSIVE, not a failure; the runner does not instruct a worker to manufacture a bug.
+- **CW4** checks the return contract itself. The worker session still loads no Northstar Skill; the controller dispatch must carry the instruction to surface a materially relevant kept/rejected path, and the worker return must expose the compatibility choice plus its Evidence basis before the resumed controller accepts the result.
 
 Deterministic snapshot ownership is the primary evidence: the first product-source delta must occur in the worker session, the canonical Taskbook must remain unchanged throughout that worker session, and the acceptance/status delta must occur only in the resumed Northstar session. Worker result/Evidence/residual uses a separate return surface; changing Draft, Acceptance, task state, blocker, Evidence pointers, or next owner is ownership takeover even if the worker later restores the Taskbook. Role labels or self-report are insufficient.
 

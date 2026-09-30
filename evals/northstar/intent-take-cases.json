@@ -5,7 +5,7 @@
     "actor": "fresh session with candidate skills loaded; receive only prompt and fixture facts",
     "consumer": "when a case requires real durable transfer, use a fresh session with the actor's canonical Taskbook plus delta-only handoff and unchanged fixture facts; otherwise judge the actor trace and current Draft/Taskbook without inventing a handoff",
     "judge": "blinded to expected skill names during actor run; score observed trajectory and final surface against rubric",
-    "claims": "Eleven cases are smoke, not statistical uplift. Do not fabricate pass counts without actual runs."
+    "claims": "Twelve cases are smoke, not statistical uplift. Do not fabricate pass counts without actual runs."
   },
   "cases": [
     {
@@ -221,6 +221,25 @@
         "the actor claims an external worker was started or completed without an observable delegation/execution event"
       ],
       "consumer_check": "The canonical Taskbook shows whether T2 was accepted, why, and what task/owner is next; the worker result remains Evidence/input rather than the task authority."
+    },
+    {
+      "id": "IT12_missing_vocabulary_is_grounded_before_questioning",
+      "prompt": "/northstar 我想让一个没维护过 DaVinci 的工程师也能顺利完成常见模型接入。现在新人会在 repo 里来回找很多地方，我也不确定问题到底出在哪里。请把这个目标收敛成下一位工程师能继续的方案。",
+      "fixture": "Repo inspection shows that one common model-input change requires recovering three disconnected anchors: capability/owner, the actual input-binding change path, and the acceptance/verification surface. Existing docs mostly expose scattered file names. The Human has not decided whether this work should only improve discoverability or also change repository structure.",
+      "required": [
+        "Northstar inspects/uses repo Evidence rather than asking the Human to invent repository vocabulary",
+        "before asking for a Human commitment, Northstar externalizes the smallest concrete distinction that changes the Draft, including what discoverability-only versus structural change would mean in this repo",
+        "the concrete expression stays grounded in the observed change journey rather than expanding into a generic taxonomy or architecture program",
+        "Beacon is optional only if one bounded example/artifact would materially improve discrimination",
+        "Northstar asks only the remaining Human-owned scope/commitment question and folds the answer into the same canonical Draft"
+      ],
+      "fail_if": [
+        "the actor starts with a broad questionnaire asking the Human to choose guide/repo-identity/architecture terminology",
+        "the actor silently chooses discoverability-only or structural change before Human commitment",
+        "the actor creates many speculative capabilities or Skills because the Human vocabulary is incomplete",
+        "the elicitation expression becomes a second Intent authority"
+      ],
+      "consumer_check": "A fresh consumer can recover the selected intended developer experience and its repo-grounded material anchors without needing the Human to know the original terminology."
     }
   ],
   "judge_dimensions": [

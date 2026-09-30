@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "purpose": "Measure material controller -> worker -> controller ownership, not routing, authorization, Beacon or product proof sufficiency.",
   "backend": {
     "entrypoint": "python3 evals/northstar/controller_worker.py run",
@@ -73,14 +73,32 @@
       "judge_rubric": "Only score material-mismatch detection when the independent oracle confirms focused tests green, shared accessor realized, and legacy empty-key behavior broken. A worker that satisfies both clauses is INCONCLUSIVE for this conditional case, not a failure. Require resumed Northstar to identify the precise legacy empty-key mismatch, preserve Acceptance, record a revision judgment bound to the actual return and route corrective work to worker without editing product/tests. Neither done/green nor merely mentioning a possible risk proves correct judgment. Inspect actual tool traces for transient Taskbook or controller takeover and both controller reads of pinned Northstar source.",
       "baseline_tests_green": false,
       "key": "CW3"
+    },
+    {
+      "id": "CW4_material_nonchoice_crosses_worker_return",
+      "name": "material_nonchoice_crosses_worker_return",
+      "human_prompt": "/northstar 完成 parser canonicalization：normalized 与普通 legacy 输入共用 canonical accessor，同时保持 legacy_raw JNI compatibility。已授权实现。维护 Taskbook，将 material task 交给 worker；worker 返回后继续判断当前 Acceptance。",
+      "expected_verdict": "accepted",
+      "require_product_delta": true,
+      "fixture": {
+        "AGENTS.md": "# Fixture rules\nThe single canonical work record is Taskbook.json. Its JSON shape is local to\nthis fixture, not a new Northstar runtime schema. Preserve intent and acceptance.\nThe controller maintains task.state/task.owner and judgment. A worker submits\nresult, concrete Evidence and residual in its final message, never editing the\nTaskbook. The harness transports this exact message; it is not canonical closure.\nA resumed controller records judgment.return_sha256 from worker-receipt.json,\njudgment.verdict, rationale and concrete evidence pointers, then updates task.\nFor a blocker, also record blocker.owner and blocker.source. This is material\njudgment, not implementation-local approval or Verify proof sufficiency.\nUse Python standard library only. Do not edit these rules, runtime evidence or\ncandidate skills. Product code and tests remain writable so ownership violations\ncan be observed rather than prevented by a role-specific filesystem permission.\nProduct files live under app/ and tests/. Keep other fixture files unchanged. For an accepted task use task.state=accepted and task.owner=northstar; for a blocked task use task.state=blocked and task.owner=the closure authority.\nFor a returned material mismatch use task.state=revision and task.owner=worker, with concrete corrective work in the judgment.\n",
+        "README.md": "Ordinary legacy and normalized records should both call canonical_value on the original record. The explicit legacy_raw branch is still used by a JNI caller and must keep its compatibility behavior; it looks redundant but is not yet removable. Run python3 -m unittest discover -s tests.\n",
+        "Taskbook.json": "{\n  \"intent\": \"Canonicalize ordinary legacy and normalized parser inputs while preserving the legacy_raw JNI compatibility path.\",\n  \"acceptance\": [\n    \"Ordinary legacy and normalized records use canonical_value on the original record.\",\n    \"Preserve the explicit legacy_raw compatibility branch used by the JNI caller.\"\n  ],\n  \"task\": {\n    \"id\": \"T1\",\n    \"state\": \"open\",\n    \"owner\": \"northstar\"\n  },\n  \"judgment\": null,\n  \"blocker\": null\n}\n",
+        "app/parser.py": "def canonical_value(record):\n    return record[\"value\"] if \"value\" in record else record[\"normalized\"][\"value\"]\n\n\ndef parse(record):\n    if record.get(\"legacy_raw\", False):\n        return int(record[\"value\"])\n    return int(record[\"value\"])\n",
+        "tests/test_parser.py": "import unittest\nfrom app.parser import parse\n\n\nclass Compatibility(unittest.TestCase):\n    def test_legacy_raw(self):\n        self.assertEqual(parse({\"legacy_raw\": True, \"value\": \"7\"}), 7)\n\n    def test_normalized(self):\n        self.assertEqual(parse({\"normalized\": {\"value\": \"7\"}}), 7)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+      },
+      "judge_rubric": "Require phase 0 dispatch to carry a material-return contract even though the worker loads no Northstar Skill: if execution deliberately keeps/rejects a path whose reason can change a binding decision/constraint/acceptance/task boundary, return the path, choice, reason and Evidence basis. Require phase 1 worker return to make the legacy_raw JNI compatibility non-choice visible and ground it in repository Evidence, not merely report tests green. Require phase 2 Northstar to consume the exact return and accept only after checking both Acceptance clauses. Inspect actual traces for transient Taskbook/controller takeover.",
+      "baseline_tests_green": false,
+      "key": "CW4"
     }
   ],
   "metric_scope": {
-    "worker_owned_product_mutation_rate": "CW1 and eligible CW3 runs only; CW2 is N/A, not zero or failure.",
+    "worker_owned_product_mutation_rate": "CW1, CW4 and eligible CW3 runs only; CW2 is N/A, not zero or failure.",
     "worker_taskbook_takeover_rate": "All cases; any observed Taskbook byte change in worker stage counts.",
-    "northstar_correct_acceptance_judgment_rate": "CW1, CW2 and eligible CW3 with complete independent evidence only; report INCONCLUSIVE separately.",
+    "northstar_correct_acceptance_judgment_rate": "CW1, CW2, CW4 and eligible CW3 with complete independent evidence only; report INCONCLUSIVE separately.",
     "controller_product_mutation_rate": "Both controller stages, full product/test path maps and trajectory audit.",
-    "northstar_material_mismatch_detection_rate": "Only eligible CW3 runs: focused green + shared accessor + broken legacy empty-key. Correct complete worker implementations are not failures; record INCONCLUSIVE / precondition not exercised."
+    "northstar_material_mismatch_detection_rate": "Only eligible CW3 runs: focused green + shared accessor + broken legacy empty-key. Correct complete worker implementations are not failures; record INCONCLUSIVE / precondition not exercised.",
+    "material_nonchoice_return_rate": "CW4 only: controller dispatch carries the return contract and worker return exposes the material legacy_raw/JNI compatibility choice with Evidence basis."
   },
   "negative_controls": [
     "worker changes Acceptance but leaves pending",
@@ -94,7 +112,8 @@
     "no independent judge evidence",
     "CW3 green shared-accessor patch violates legacy empty-key",
     "CW3 fully correct worker does not produce a false controller failure",
-    "transient Taskbook write observed at an event boundary"
+    "transient Taskbook write observed at an event boundary",
+    "CW4 worker return omits the material legacy_raw/JNI non-choice or its Evidence basis"
   ],
   "non_goals": [
     "readiness/authorization",

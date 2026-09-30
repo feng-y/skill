@@ -70,7 +70,13 @@ class MeasurementTests(unittest.TestCase):
                         # The CW3 test double deliberately submits a focused-green material mismatch.
                         source = source.replace('    if record.get("key", "") == "":\n        return 0\n', '')
                         p.write_text(source)
-                        final = 'Result: both input forms use canonical_value on the original record. Evidence: app/parser.py. Residual: none.'
+                        if 'legacy_raw' in book['intent']:
+                            final = ('Result: ordinary legacy and normalized inputs use canonical_value. '
+                                     'Material choice: kept the legacy_raw JNI compatibility branch instead of collapsing it; '
+                                     'README.md says the JNI caller still depends on that path. '
+                                     'Evidence: app/parser.py, README.md, tests/test_parser.py. Residual: none.')
+                        else:
+                            final = 'Result: both input forms use canonical_value on the original record. Evidence: app/parser.py. Residual: none.'
                     else:
                         observation = json.loads((work / 'runtime/observation.json').read_text())
                         final = 'Result: blocked. Evidence: ' + json.dumps(observation) + '. Residual: missing authoritative owner.'
@@ -79,7 +85,12 @@ class MeasurementTests(unittest.TestCase):
                     assert not (work / 'runtime/observation.json').exists()
                     book['task'].update(state='in_progress', owner='worker')
                     (work / cw.BOOK).write_text(json.dumps(book))
-                    final = 'Taskbook.json, material task T1, owner worker; return result to Northstar.'
+                    if 'legacy_raw' in book['intent']:
+                        final = ('Taskbook.json, material task T1, owner worker; return result to Northstar. '
+                                 'If execution deliberately keeps or rejects a path whose reason can change Acceptance, '
+                                 'surface the path, choice, reason and Evidence basis in the return.')
+                    else:
+                        final = 'Taskbook.json, material task T1, owner worker; return result to Northstar.'
             Path(command[command.index('--output-last-message') + 1]).write_text(final)
             events = [{'type': 'thread.started', 'thread_id': 'synthetic-' + str(len(cls.homes))},
                 {'type': 'item.completed', 'item': {'id': 'tool-1', 'type': 'command_execution',
@@ -99,7 +110,7 @@ class MeasurementTests(unittest.TestCase):
                 run = json.loads((cls.root / summary['run_id'] / 'run.json').read_text())
                 assert summary['status'] == 'PASS', summary
                 cls.bundles[key] = run
-        assert len(set(cls.homes)) == 12  # 9 synthetic actors + 3 independent test-double judges.
+        assert len(set(cls.homes)) == 16  # 12 synthetic actors + 4 independent test-double judges.
         assert not any(Path(h).exists() for h in cls.homes)
 
     def bundle(self, key='CW1'):
@@ -273,6 +284,14 @@ class MeasurementTests(unittest.TestCase):
         write_book(run['stages'][2]['after'], accept)
         run['judge']['binding'] = cw.sha(cw.evidence_package(run, case))
         self.assert_not_pass(run, case, 'incorrect canonical task transition')
+
+    def test_cw4_requires_material_nonchoice_in_worker_return(self):
+        run, case = self.bundle('CW4')
+        worker = run['stages'][1]
+        worker['final'] = 'Result: implementation complete. Evidence: app/parser.py and tests. Residual: none.'
+        worker['events'][-2]['item']['text'] = worker['final']
+        worker['stdout'] = '\n'.join(json.dumps(e) for e in worker['events'])
+        self.assert_not_pass(run, case, 'CW4 material non-choice missing from worker return')
 
     def test_cw3_correct_worker_is_inconclusive_not_bad_behavior(self):
         run, case = self.bundle('CW3')

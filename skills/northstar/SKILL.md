@@ -83,7 +83,7 @@ Northstar 负责把 work 收敛到足够执行，但**不能因为已经知道�
 
 只有仍会 materially 改变 Intent，且答案真正属于 Human commitment 时才 Ask Human，例如 scope cut、产品行为、兼容承诺、投入/风险取舍或多个都合理但含义不同的 interpretation。技术事实从 repo/runtime/data/source 获取，不让 Human 猜。
 
-当一个模糊请求背后同时存在多个**相互关联的 Human-owned 决策**，被动一次补一个洞会让 Draft 来回漂移时，Northstar 可以主动做一个短的 **decision interview**：先给出 current best interpretation 与真正仍 live 的 alternatives、每个 fork 会改变什么；只有已有 Intent / Evidence 足以支持时才给 recommendation，不凭空设置 default。只问答案不同会改变 Draft / Constraint / Acceptance 的问题。相关选择可以一起问；若依赖关系不清，先问最高 leverage 的一个。Human 明确要求“grill me / challenge my assumptions”时可以更主动地寻找遗漏取舍，但仍不询问 repo 可查的技术事实、implementation trivia 或“为了完整”的问题清单。
+当一个模糊请求背后同时存在多个**相互关联的 Human-owned 决策**，被动一次补一个洞会让 Draft 来回漂移，或 Human 尚缺少足够领域词汇去命名会改变 Draft 的 material decision dimension 时，Northstar 可以主动做一个短的 **decision interview**：先基于 repo / Evidence 给出 current best interpretation 与真正仍 live 的 material fork、每个 fork 会改变什么；Human 还无法命名这个维度时，优先用 connected Draft fragment 或代表性 behavior / interface example 把差异具体化，而不是让 Human 先选择术语。只有 prose 仍不足以区分、且一个 bounded core artifact 会明显提高判断质量时才调用 `$beacon`。只有已有 Intent / Evidence 足以支持时才给 recommendation，不凭空设置 default。只问答案不同会改变 Draft / Constraint / Acceptance 的问题。相关选择可以一起问；若依赖关系不清，先问最高 leverage 的一个。Human 明确要求“grill me / challenge my assumptions”时可以更主动地寻找遗漏取舍，但仍不询问 repo 可查的技术事实、implementation trivia 或“为了完整”的问题清单。
 
 Decision interview 的产物是更新后的 Decision / Constraint / Draft / Acceptance，不是问答 transcript。能够区分 live paths 后立即停止；不要把 Northstar 变成默认采访流程，也不要用泛化的“还有什么要求？”替代具体 material fork。
 
@@ -138,7 +138,7 @@ Northstar 可以在收敛过程中先在当前交互里讨论、追问和修订 
 
 方案文件只保存会改变后续 review / execution / acceptance 的 durable 状态：Problem / current Draft、binding Decisions / Constraints / Acceptance、已确认事实与 material blocker；进入 material execution 后再加入最小充分的 execution tasks / dependency、task status、决定性 Evidence pointer、last Northstar judgment、next task / owner。不要复制 investigation transcript、具体命令流水或 implementation-local How。
 
-**Taskbook 不是 Northstar 自己的执行清单。** Northstar 只在 **material Taskbook boundary** 选择 next task / owner 并完成 handoff；worker / coder / specialist / external orchestration 拥有实现动作和局部 How，只提交 result、Evidence、residual。不要把 helper、file edit、commit、单个 test 或其他 implementation-local step 都升级成 Northstar checkpoint。
+**Taskbook 不是 Northstar 自己的执行清单。** Northstar 只在 **material Taskbook boundary** 选择 next task / owner 并完成 handoff；worker / coder / specialist / external orchestration 拥有实现动作和局部 How，只提交 result、Evidence、residual。Northstar 的 material worker handoff 还必须明确：若执行中主动舍弃或保留一条路径，且理由可能改变 binding Decision / Constraint / Acceptance / material task boundary，则 return 简短写明该 path、实际 choice、reason 与 Evidence basis；这是可审查的 material decision residue，不要求完整思维过程。helper、library、局部数据结构等 implementation-local alternatives 不记录，也不要把 helper、file edit、commit、单个 test 或其他 implementation-local step 升级成 Northstar checkpoint。
 
 material task 交给独立 worker session 时，在已有 scoped instruction / handoff 中携带 worker 可定位的同 work item 的 **Feedback Log** 路径（复用项目约定，否则使用 Taskbook 同目录的 `<taskbook-stem>.feedback.md`）和最小条件：仅在 material result / blocker 暴露 reusable surprise / friction / effective pattern 时，随 return append 简短 observation 与 decisive Evidence pointer；普通 green return、命令流水、implementation-local How 不记录，无信号不创建。不要假设 worker 加载过 Northstar 或本 repo `AGENTS.md`，也不增加 Taskbook field、预建日志或启用审批。worker 不改 canonical Taskbook。
 

@@ -359,6 +359,13 @@ def deterministic(run, case):
         if case["key"] == "CW3" and not run.get("oracle", {}).get("eligible"):
             missing.append("CW3 green material-mismatch precondition not exercised")
             return sorted(set(failures)), sorted(set(missing))
+        if case["key"] == "CW4":
+            worker_return = worker.get("final", "").lower()
+            worker_source = text(worker["after"]["app/parser.py"])
+            if "legacy_raw" not in worker_return or "jni" not in worker_return:
+                failures.append("CW4 material non-choice missing from worker return")
+            if 'if record.get("legacy_raw"' not in worker_source:
+                failures.append("CW4 legacy_raw compatibility branch was removed")
         b = books[2]
         j = b["judgment"]
         if j == books[1].get("judgment") or not j:
