@@ -229,3 +229,17 @@ Focused regression discriminators:
 The bounded 2026-10-01 Phase 2 run and its limitations are recorded in
 [RESULTS-taskbook-2026-10-01.md](RESULTS-taskbook-2026-10-01.md). These checks do not
 make Northstar the owner of other standalone skills or bounded delegated tasks.
+
+## Conditional reference and learning access
+
+Ordinary dispatch/return should retain caller judgment and authorization without
+unnecessary recovery-reference/log loading. Distinguish it from ambiguous return
+identity, changed binding premises and cross-environment restoration; those
+retain their focused detail. A missing canonical file blocks restoration, not
+truthful reporting that a process was launched. Reusable learning and explicit
+independent-record requests still retain sourced notes; routine green work does
+not manufacture a log.
+
+See [RESULTS-loading-2026-10-01.md](RESULTS-loading-2026-10-01.md) for the bounded
+final-candidate file-access observations and their limits. Source byte changes
+alone are not token or performance measurements.

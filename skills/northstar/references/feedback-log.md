@@ -13,14 +13,14 @@ Feedback Log 是 material work 的**可选、append-only、跨 session execution
 
 ## 什么时候记录
 
-任一侧出现**可能跨当前局部步骤复用**的信号时追加，不要求 worker return 与 Northstar judgment 已发生在同一 session：
+当正常 return / judgment 中的信号**值得跨 session 复用**，或 Human 明确要求独立记录时，再使用此日志；不要求 worker return 与 Northstar judgment 发生在同一 session。值得记录的信号包括：
 
 - Northstar 之前的 judgment、assumption、routing 或 task boundary 被真实 return 明确纠正；
 - worker return 暴露了意外且可能重复出现的 friction / missing context / ownership confusion；
 - 某个 bounded prompt、handoff、artifact shape 或 context choice 明显减少了歧义、返工或错误判断；
 - Taskbook 因 return 发生 material delta，而这个 delta 的原因对未来类似 work 有学习价值。
 
-不要为普通 green return、每次 handoff、命令流水、逐文件修改、test output 或 implementation-local How 写条目。没有 reusable signal 就不创建或不追加。
+没有明确记录要求时，不为普通 green return、每次 handoff、命令流水、逐文件修改、test output 或 implementation-local How 写条目。没有 reusable signal 且无明确记录要求就不创建或不追加。
 
 ## 放在哪里
 
@@ -30,7 +30,7 @@ Feedback Log 是 material work 的**可选、append-only、跨 session execution
 <taskbook-stem>.feedback.md
 ```
 
-Northstar 在已有 scoped instruction / handoff 中直接携带 worker 可定位的路径与最小触发条件，不能只给 reference 链接或依赖 worker 继承 Northstar 上下文。不预建日志，也不要求 Taskbook 增加 lifecycle field 或每次维护 pointer；fresh maintainer 能从 work identity 找到它即可。
+仅当本轮确实需要 worker 独立记录时，Northstar 在 scoped instruction / handoff 中携带可定位路径与记录范围，不只给 reference 链接或依赖 worker 继承上下文。普通 dispatch 不预分配路径；意外信号先随正常 return 带回，由接收方按需持久化。不要求 Taskbook 增加 lifecycle field 或每次维护 pointer。
 
 ## 最小条目
 
@@ -49,10 +49,10 @@ Northstar 在已有 scoped instruction / handoff 中直接携带 worker 可定�
 
 ## 写入顺序
 
-1. Worker session 返回 material result / blocker 时，正常提交 return / Evidence / residual；若存在 reusable execution signal，同时 append Feedback Log。worker 不写 Taskbook，也不需要等待 Northstar。
+1. Worker 正常提交 return / Evidence / residual，并附本次可复用信号；已明确要求独立记录时，再按给定路径与范围 append Feedback Log。worker 不写 Taskbook，也不需要等待 Northstar 才能返回。
 2. Northstar session 通过宿主 caller-return / handoff / artifact 恢复该 material return，按 current canonical Taskbook 完成 acceptance judgment。
-3. 需要改变 current state 时，Northstar 先更新 canonical Taskbook；若 judgment 本身产生 reusable learning，再在同一 Feedback Log 另起 Northstar follow-up 条目。
-4. 两侧都没有 reusable signal 时不写 Feedback Log。Feedback Log 不能反向驱动 task 状态，也不能因为“值得学习”而阻塞已满足的 work。
+3. Northstar 先更新需要改变的 canonical Taskbook 状态；return 或 judgment 中值得保留的 learning 再进入 Feedback Log。保留 worker observation 的来源；若 worker 已写日志，不重复其条目，有新增 judgment learning 才另起 follow-up。
+4. 两侧都没有 reusable signal 且无明确记录要求时不写 Feedback Log。Feedback Log 不能反向驱动 task 状态，也不能因为“值得学习”而阻塞已满足的 work。
 
 ## 用于 Skill 改进
 

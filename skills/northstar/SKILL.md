@@ -145,11 +145,11 @@ current Draft 一旦可供后续 review、implementation 或 handoff 消费，�
 Northstar 持续负责这些边界：
 
 - **执行 ownership**：只在 material task boundary 选择 next task / owner；worker 自治 implementation How，只返回 result / Evidence / residual，不能改 canonical Taskbook。helper、file edit、commit、单个 test 不升级成 Northstar checkpoint。
-- **返回 judgment**：material result / blocker / binding-premise Evidence 返回后，直接恢复 Northstar，按**当前 Taskbook**判断，不等 Human 再调用或说“继续”。先恢复 return 对应 task 与执行 context；旧结果不能沿已失效的 binding premise 关闭 task，仍有效 work / Evidence 保留。worker `done`、测试 green 或 PR 存在不等于 Acceptance 满足；material proof sufficiency 交 `$verify`。
+- **返回 judgment**：material result / blocker / binding-premise Evidence 返回后，直接恢复 Northstar，按**当前 Taskbook**判断，不等 Human 再调用或说“继续”。先恢复 return 对应 task 与执行 context；旧结果不能沿已失效的 binding premise 关闭 task，仍有效 work / Evidence 保留；已满足当前要求的结果直接接受，不因版本、文字或无关状态变化强制返工。worker `done`、测试 green 或 PR 存在不等于 Acceptance 满足；material proof sufficiency 交 `$verify`。
 - **续接与停止**：把 acceptance judgment、具体 residual 与 next task / owner 回写同一 Taskbook；有可推进的已授权 material work 就继续 handoff，blocked work 路由给真实 owner。当前范围已完成或无可推进工作则记录后停下，不发明任务或轮询；这不结束同一 work item 的 Intent context。
 - **真实 execution**：复用宿主 caller-return，只有真实 delegation / orchestration tool 事件才能声称外部 worker 已启动或返回；宿主无自动回传时保留恢复指针，不假称后台运行。同一宿主可先执行再恢复 Northstar，但 result submission 与 acceptance 分开。
-- **按需恢复细节**：material dispatch / return 或跨 session handoff 时，读取 [references/material-compile.md](references/material-compile.md) 的对应执行/恢复段落；只有复杂 dependency 迫使 fresh consumer 重做高层判断时才展开其中 compile。session handoff 只保留 Taskbook pointer 与 resume delta，fresh session 先读 canonical 文件，不复制方案或 Acceptance。
-- **可选 learning**：独立 worker dispatch 时读取 [references/feedback-log.md](references/feedback-log.md)，在 scoped handoff 携带可定位的 Feedback Log 路径和 reusable-signal 触发条件；无信号不创建。Northstar 先 judgment / 回写 Taskbook，有新 learning 才另起条目。日志不参与 dispatch / resume / acceptance，缺失不阻塞工作。
+- **按需恢复细节**：普通 dispatch / return 直接按上述边界处理。只有复杂 dependency、return 关联不清 / binding premise 实质变化，或跨 session / environment 恢复时，读取 [references/material-compile.md](references/material-compile.md) 的对应段落。handoff 只保留 canonical pointer 与 resume delta；接收方先读得到同一 canonical 文件，不能仅凭发出 pointer 宣称恢复成功。
+- **可选 learning**：worker 默认在正常 return 中报告可复用信号，不为普通 dispatch 预分配日志路径。信号值得跨 session 保留，或明确要求 worker 独立记录时，才读取 [references/feedback-log.md](references/feedback-log.md)；需要 worker 写日志时随 scoped handoff 提供可定位路径。Northstar 先 judgment / 回写 Taskbook，再持久化值得保留的 learning。日志不参与 dispatch / resume / acceptance，缺失不阻塞工作。
 
 ## Drafted Issue
 
