@@ -19,7 +19,7 @@ Eval 负责一个独立问题：**Agent / Skill / prompt / tool / harness 的行
 
 先恢复会决定目标行为的真实 agent surface：instructions、model config、tools / permissions / side effects、Skills / harness、repo / data / services、existing evals，以及可用 trace 中的 messages、tool calls、results / errors、state changes 与 artifacts。
 
-Trace 是 observed Evidence，不是 golden truth。取样应代表要改善的实际任务，保留有价值的真实失败与必要的 should-not-fire case；不要只因当前模型失败或容易生成/评分而选入。难例应能说明它为何真实且难。没有 trace 时可以从 repo contract + real task shape 构建第一版，但不要虚构 production pattern 或 frequency。
+Trace 是 observed Evidence，不是 golden truth。没有 trace 时可以从 repo contract + real task shape 构建第一版，但不要虚构 production pattern 或 frequency。
 
 目标 capability / failure 必须 material、可区分、可重复观察。只有“什么能力值得长期测”或 tradeoff 真正属于 Human commitment 时才 Ask Human；repo / tool / runtime 事实自己调查。
 
@@ -47,11 +47,9 @@ Harbor、clean-session runner、trajectory recorder、containerized task runner 
 
 运行后同时检查 agent trajectory 与 verifier Evidence / trajectory；不能只看 final reward 或 agent 自我解释。
 
-失败先判断来自 **candidate behavior** 还是 **Task / Environment / Verifier**。measurement 有问题时先修 eval，base 与 candidate 都在修正后重测；不能把换题或改分产生的上涨归于 candidate。measurement 可信且暴露稳定 behavior gap 后，才改 Skill / prompt / tool / harness，并用同一 eval 重新比较。
+失败先判断来自 **candidate behavior** 还是 **Task / Environment / Verifier**。measurement 有问题时先修 eval，base 与 candidate 都用同一套修正后的测量重测；不能把换题或改分产生的上涨归于 candidate。measurement 可信且暴露稳定 behavior gap 后，才改 Skill / prompt / tool / harness，并用同一 eval 重新比较。
 
 不要把 case-specific answer 写进 runtime prompt。One-shot PASS 只是 smoke；有 stochasticity 或 behavioral-uplift claim 时，需要重复、尽量 blinded / sanitized 的对比，并记录 model / prompt / Skill / repo / tool / harness identity 与必要成本 guardrail。
-
-需要判断 improvement 是否足以支持决策，或开展多轮优化时，按需读取 [可信改进](references/credible-improvement.md)：先确认目标与可测信号，再用未供编辑者读取的样本检查泛化；保留、回退或停止由 Evidence 决定，不把普通 smoke 升级成必经优化流程。
 
 ## 边界与输出
 
