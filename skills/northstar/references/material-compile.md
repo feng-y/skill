@@ -10,7 +10,7 @@
 
 Compile 的目标不是建立完整 work graph，而是把已成立 Intent 编译成 canonical Taskbook 中**最小充分的 task / dependency contract**：让后续执行者知道必须兑现哪些 cohesive outcomes、哪些真实 dependency 不能打乱，以及哪些 Acceptance / Constraint 必须保持。简单线性 work 只需要 compact task，不为了 planning ceremony 构建 Graph；session handoff 是另一件事，只记录 resume delta。
 
-Compile 不重新定义 Intent，不产生或扩大 Human execution authorization，不设计 implementation How，不拥有 verification judgment。它可以维护 material task status / next owner，供 Northstar 判卷与续接；低层 execution progress / scheduler state 仍属于执行系统。
+Compile 不重新定义 Intent，不产生或扩大 Human execution authorization，不设计 implementation How，不拥有 verification judgment。它展开的是兑现完整方案所需的 task / dependency 结构；Northstar 消费 material return 后维护 status / judgment / next owner，不以重编结构为前提。低层 execution progress / scheduler state 仍属于执行系统。
 
 ## 从 Intended delta 出发
 
@@ -39,12 +39,12 @@ Compile 只携带 Northstar 已定义的 Acceptance / completion claim identity 
 
 ## Evidence feedback
 
-Research、execution、review 或 `$verify` 的 verified Evidence 只有在它使**现有 task / dependency 不再成立**时才修订 Taskbook：
+Research、execution、review 或 `$verify` 的 verified Evidence 只有在它使**现有 task / dependency 不再成立**时才重编这部分任务结构；普通 completion / blocker / acceptance 仍按下文“执行与返回”更新同一 Taskbook 的状态与 judgment：
 
 - 新 reality 证明某个已记录 task 不需要或边界错误 → 删除 / 合并 / 修正对应 task；
 - prerequisite 或 conflict 改变 → 只修订受影响 dependency；
-- 只影响 implementation How → Taskbook 不变；
-- Evidence 推翻 Intent / Acceptance → 返回 Northstar；
+- 只影响 implementation How → task / dependency 结构不变，不阻止 material return 后的状态与 judgment 更新；
+- Evidence 推翻 Intent / Acceptance → Northstar 重开受影响的完整方案判断；修订成立后只调整因此变化的 task / dependency，保留无关方案、任务与有效 Evidence；
 - Evidence 暴露新的长期 architecture fork → 返回 `$architecture-evolution`。
 
 不要维护“持续演进的完整 Graph”，也不要因为局部 Evidence 变化重算无关 work。

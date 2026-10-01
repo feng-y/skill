@@ -209,3 +209,23 @@ The cases are deliberately asymmetric:
 
 Deterministic snapshot ownership is the primary evidence: the first product-source delta must occur in the worker session, the canonical Taskbook must remain unchanged throughout that worker session, and the acceptance/status delta must occur only in the resumed Northstar session. Worker result/Evidence/residual uses a separate return surface; changing Draft, Acceptance, task state, blocker, Evidence pointers, or next owner is ownership takeover even if the worker later restores the Taskbook. Role labels or self-report are insufficient.
 
+
+## Full plan, task structure and return status
+
+The same Northstar-owned plan remains recoverable through material returns; a
+Taskbook is its execution role, not a task-list substitute for intended change.
+Focused regression discriminators:
+
+- An ordinary completed return updates status/judgment/next owner even though
+  task boundaries and dependencies remain valid; no recompilation ceremony
+- A contradicted Draft premise reopens only affected plan judgment and the
+  task/dependency structure that genuinely changes; unaffected outcomes and
+  valid evidence remain intact
+- A focused-green partial result cannot erase remaining Acceptance or close the
+  whole request; preserve the full intended change and route concrete residual
+- Fresh readers recover intended behavior and constraints from the same plan,
+  rather than reconstructing meaning from status labels or execution tasks
+
+The bounded 2026-10-01 Phase 2 run and its limitations are recorded in
+[RESULTS-taskbook-2026-10-01.md](RESULTS-taskbook-2026-10-01.md). These checks do not
+make Northstar the owner of other standalone skills or bounded delegated tasks.

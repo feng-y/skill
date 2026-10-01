@@ -140,7 +140,7 @@ Verify 定义什么真实 observation 能证明/反证 claim、选择 backend �
 
 current Draft 一旦可供后续 review、implementation 或 handoff 消费，先写入 repo/workspace 中真实、可寻址的 Markdown 方案文件，再作为主产物返回；优先复用项目 plan/design/task 约定，否则用 `.northstar/<work-item>.md`。chat / UI 只能展示或摘要该文件。进入 material execution、跨 session / agent / execution-environment 或明确实施交接时，在**同一个文件**维护 Taskbook，不另建方案副本。
 
-方案文件保留 Problem / current Draft、binding Decisions / Constraints / Acceptance、已确认事实与 material blocker；执行期再保留最小充分的 material tasks / dependency、status、决定性 Evidence pointer、last Northstar judgment、next task / owner，不复制 transcript、命令流水或 implementation-local How。
+方案文件以可独立恢复的完整 intended change 为中心：Problem / current Draft、binding Decisions / Constraints / Acceptance、已确认事实与 material blocker。执行期在同一文件补充最小充分的 material tasks / dependency 及其 status、决定性 Evidence pointer、last Northstar judgment、next task / owner；任务结构表达如何兑现方案，不能用 task list 或完成状态替代完整方案。不复制 transcript、命令流水或 implementation-local How。
 
 Northstar 持续负责这些边界：
 
