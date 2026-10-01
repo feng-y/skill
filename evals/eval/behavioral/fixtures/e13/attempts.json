@@ -1,0 +1,20 @@
+{
+  "rounds": [
+    {
+      "round": 1,
+      "change": "Add a reminder to be precise",
+      "score": 0
+    },
+    {
+      "round": 2,
+      "change": "Add a reminder to double-check",
+      "score": 0
+    },
+    {
+      "round": 3,
+      "change": "Add a reminder to follow instructions",
+      "score": 0
+    }
+  ],
+  "selection": "All available task inputs and traces have been read. No independent unseen sample is supplied."
+}

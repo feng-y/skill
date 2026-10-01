@@ -36,7 +36,7 @@ Harbor、clean-session runner、trajectory recorder、containerized task runner 
 
 ## 设计约束
 
-- Task 不泄漏 expected Skill / tool / route、rubric、golden 或 variant identity；一个 case 优先暴露少量 decisive discriminator。
+- Task 不泄漏 expected Skill / tool / route、rubric、golden 或 variant identity；Verifier 检查的行为要求须来自 candidate 可见的 Task / authoritative contract，不能暗加要求。一个 case 优先暴露少量 decisive discriminator。
 - multi-turn behavior 必须保留同一 agent context；不要把连续 Human clarification 拆成互不相关的 clean sessions。
 - Environment 只复现会改变目标 behavior 的现实；高成本或 production-write dependency 可以 simulate，但必须保留相关 contract 与 observable consequence。
 - 比较 base / candidate 时，除被测配置外尽量固定 Task、Environment、tool semantics 与 run policy；环境 identity 不可信时结果是 `inconclusive`。
@@ -47,7 +47,7 @@ Harbor、clean-session runner、trajectory recorder、containerized task runner 
 
 运行后同时检查 agent trajectory 与 verifier Evidence / trajectory；不能只看 final reward 或 agent 自我解释。
 
-失败先判断来自 **candidate behavior** 还是 **Task / Environment / Verifier**。measurement 有问题时先修 eval 并重跑；measurement 可信且暴露稳定 behavior gap 后，才改 Skill / prompt / tool / harness，并用同一 eval 重新比较。
+失败先判断来自 **candidate behavior** 还是 **Task / Environment / Verifier**。measurement 有问题时先修 eval，base 与 candidate 都用同一套修正后的测量重测；不能把换题或改分产生的上涨归于 candidate。measurement 可信且暴露稳定 behavior gap 后，才改 Skill / prompt / tool / harness，并用同一 eval 重新比较。
 
 不要把 case-specific answer 写进 runtime prompt。One-shot PASS 只是 smoke；有 stochasticity 或 behavioral-uplift claim 时，需要重复、尽量 blinded / sanitized 的对比，并记录 model / prompt / Skill / repo / tool / harness identity 与必要成本 guardrail。
 

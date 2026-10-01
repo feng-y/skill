@@ -1,0 +1,6 @@
+{
+  "train": "Editor inspected inputs, outputs and failure traces.",
+  "selection": "Inputs hidden from editor; only aggregates returned. These aggregates selected versions in 5 previous rounds.",
+  "archive": "Editor read every task last week. 30 paraphrases derive from 10 source tasks; proposed relabel: new held-out.",
+  "final_test": "None run or supplied."
+}

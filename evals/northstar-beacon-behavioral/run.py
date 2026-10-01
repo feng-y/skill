@@ -319,6 +319,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--max-workers", type=int, default=3)
+    parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--case", choices=["all", *CASES], default="all")
     parser.add_argument(
         "--base-sha",
@@ -334,6 +335,8 @@ def main():
         ),
     )
     args = parser.parse_args()
+    if args.repeats < 1:
+        parser.error("--repeats must be positive")
 
     output_root = args.output_root.resolve()
     if output_root.exists() and any(output_root.iterdir()):
@@ -343,7 +346,7 @@ def main():
     revisions = {"base": args.base_sha, "candidate": args.candidate_sha}
     specs = []
     for case_id in cases:
-        for repeat in range(1, 4):
+        for repeat in range(1, args.repeats + 1):
             for arm in revisions:
                 specs.append((case_id, arm, repeat, uuid.uuid4().hex[:12]))
 

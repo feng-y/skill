@@ -1,0 +1,322 @@
+[
+  {
+    "id": "standard-0",
+    "source_task": "retry-0",
+    "configuration": "standard",
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "trajectory": [
+      {
+        "tool": "read_document",
+        "result": {
+          "id": "ops/retry",
+          "retry_limit": 3
+        }
+      },
+      {
+        "final": {
+          "retry_limit": 3,
+          "citation": "ops/retry"
+        }
+      }
+    ],
+    "verifier_regrades": [
+      {
+        "output_hash": "same-output",
+        "pass": true
+      },
+      {
+        "output_hash": "same-output",
+        "pass": false
+      }
+    ],
+    "run": {
+      "exit": 0,
+      "truncated": false,
+      "config_applied": true
+    }
+  },
+  {
+    "id": "standard-1",
+    "source_task": "retry-1",
+    "configuration": "standard",
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "trajectory": [
+      {
+        "tool": "read_document",
+        "result": {
+          "id": "ops/retry",
+          "retry_limit": 3
+        }
+      },
+      {
+        "final": {
+          "retry_limit": 3,
+          "citation": "ops/retry"
+        }
+      }
+    ],
+    "verifier_regrades": [
+      {
+        "output_hash": "same-output",
+        "pass": true
+      },
+      {
+        "output_hash": "same-output",
+        "pass": false
+      }
+    ],
+    "run": {
+      "exit": 0,
+      "truncated": false,
+      "config_applied": true
+    }
+  },
+  {
+    "id": "standard-2",
+    "source_task": "retry-2",
+    "configuration": "standard",
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "trajectory": [
+      {
+        "tool": "read_document",
+        "result": {
+          "id": "ops/retry",
+          "retry_limit": 3
+        }
+      },
+      {
+        "final": {
+          "retry_limit": 3,
+          "citation": "ops/retry"
+        }
+      }
+    ],
+    "verifier_regrades": [
+      {
+        "output_hash": "same-output",
+        "pass": true
+      },
+      {
+        "output_hash": "same-output",
+        "pass": false
+      }
+    ],
+    "run": {
+      "exit": 0,
+      "truncated": false,
+      "config_applied": true
+    }
+  },
+  {
+    "id": "standard-3",
+    "source_task": "retry-3",
+    "configuration": "standard",
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "trajectory": [
+      {
+        "tool": "read_document",
+        "result": {
+          "id": "ops/retry",
+          "retry_limit": 3
+        }
+      },
+      {
+        "final": {
+          "retry_limit": 3,
+          "citation": "ops/retry"
+        }
+      }
+    ],
+    "verifier_regrades": [
+      {
+        "output_hash": "same-output",
+        "pass": true
+      },
+      {
+        "output_hash": "same-output",
+        "pass": false
+      }
+    ],
+    "run": {
+      "exit": 0,
+      "truncated": false,
+      "config_applied": true
+    }
+  },
+  {
+    "id": "extended-0",
+    "source_task": "retry-0",
+    "configuration": "extended",
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "trajectory": [
+      {
+        "tool": "read_document",
+        "result": {
+          "id": "ops/retry",
+          "retry_limit": 3
+        }
+      },
+      {
+        "final": {
+          "retry_limit": 3,
+          "citation": "ops/retry"
+        }
+      }
+    ],
+    "verifier_regrades": [
+      {
+        "output_hash": "same-output",
+        "pass": true
+      },
+      {
+        "output_hash": "same-output",
+        "pass": false
+      }
+    ],
+    "run": {
+      "exit": 0,
+      "truncated": false,
+      "config_applied": true
+    }
+  },
+  {
+    "id": "extended-1",
+    "source_task": "retry-1",
+    "configuration": "extended",
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "trajectory": [
+      {
+        "tool": "read_document",
+        "result": {
+          "id": "ops/retry",
+          "retry_limit": 3
+        }
+      },
+      {
+        "final": {
+          "retry_limit": 3,
+          "citation": "ops/retry"
+        }
+      }
+    ],
+    "verifier_regrades": [
+      {
+        "output_hash": "same-output",
+        "pass": true
+      },
+      {
+        "output_hash": "same-output",
+        "pass": false
+      }
+    ],
+    "run": {
+      "exit": 0,
+      "truncated": false,
+      "config_applied": true
+    }
+  },
+  {
+    "id": "extended-2",
+    "source_task": "retry-2",
+    "configuration": "extended",
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "trajectory": [
+      {
+        "tool": "read_document",
+        "result": {
+          "id": "ops/retry",
+          "retry_limit": 3
+        }
+      },
+      {
+        "final": {
+          "retry_limit": 3,
+          "citation": "ops/retry"
+        }
+      }
+    ],
+    "verifier_regrades": [
+      {
+        "output_hash": "same-output",
+        "pass": true
+      },
+      {
+        "output_hash": "same-output",
+        "pass": false
+      }
+    ],
+    "run": {
+      "exit": 0,
+      "truncated": false,
+      "config_applied": true
+    }
+  },
+  {
+    "id": "extended-3",
+    "source_task": "retry-3",
+    "configuration": "extended",
+    "answer": {
+      "retry_limit": 3,
+      "citation": "ops/retry"
+    },
+    "artifacts": [],
+    "trajectory": [
+      {
+        "tool": "read_document",
+        "result": {
+          "id": "ops/retry",
+          "retry_limit": 3
+        }
+      },
+      {
+        "final": {
+          "retry_limit": 3,
+          "citation": "ops/retry"
+        }
+      }
+    ],
+    "verifier_regrades": [
+      {
+        "output_hash": "same-output",
+        "pass": true
+      },
+      {
+        "output_hash": "same-output",
+        "pass": false
+      }
+    ],
+    "run": {
+      "exit": 0,
+      "truncated": false,
+      "config_applied": true
+    }
+  }
+]
