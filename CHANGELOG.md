@@ -4,6 +4,16 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## 2026-10-01 — Scope ownership to the actual invocation
+
+Change: `fix/caller-neutral-skill-ownership-20261001` (based on `ed8e0f53c47b9dd4c7e8f2fa50c3f8dc5e9fc32a`)
+
+- **Old ambiguity:** a bounded Northstar question could activate whole-work Draft / Taskbook control; Verify conflated ordinary caller return with reopening invalid Intent; AE restricted standalone final delivery to architecture handoffs.
+- **Current owner:** each independently invoked Skill completes its requested responsibility. A delegated Skill answers its bounded question and returns to the actual caller; the caller retains the enclosing task and artifact authority.
+- **Preserved:** Northstar-owned plans remain file-backed and material work retains one Taskbook; explicit authorization, worker autonomy, honest delegation events, Target versus Program, and Verify proof versus caller acceptance remain distinct.
+- **Retired:** implicit whole-work takeover from a scoped Northstar invocation, universal Taskbook assumptions for other independent Skills, and suppressing ordinary verification returns because Intent remains valid.
+- **Evidence boundary:** bounded native-agent smoke and source review are reported with retained artifacts; they do not establish statistical uplift or production-backend coverage.
+
 ## 2026-09-23 — Northstar plan becomes a file-backed primary artifact
 
 Change: `fix/northstar-persisted-plan-artifact-20260923` (based on `c4de492bc3d2a8ea6433fbddf8564671dd5a8487`)

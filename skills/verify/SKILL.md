@@ -170,7 +170,7 @@ Verify 先给 verdict，再按 premise 路由：
 - **Gap / falsifier**：若未证明，缺什么；
 - **Next owner**：需要谁继续。
 
-Verify result 默认留在当前 PR / review / verification surface。只有它证明 canonical Intent / Acceptance 本身失效，或形成后续 fresh consumer 必须知道的 durable correction，才返回 Northstar，由其取舍后更新 current Draft，并在 material / cross-session work 中回写 canonical Taskbook；Issue 只引用它。只有它暴露新的长期 structural fork 才回 AE。不要生成 repair plan、execution backlog、第二份 Intent 或第二份 verification SOT。
+Verify 独立调用时直接交付当前 verification result；被委托时始终把 scoped verdict / Evidence / gap 返回实际 caller，包括 claim 仍有效时向 Northstar 返回。result 默认留在当前 PR / review / verification surface；普通 return 不转移 caller 的任务或 artifact ownership。只有 Evidence 推翻 Intent / Acceptance、需要 durable Intent correction 时才重开 Northstar 的受影响判断；只有暴露新的长期 structural fork 才重开 AE。caller 负责采用结果并按自己的 canonical surface 持久化；已有 Northstar Taskbook 时由 Northstar 更新，Issue 只引用它。不要生成 repair plan、execution backlog、第二份 Intent 或第二份 verification SOT。
 
 ## 与 Eval 的边界
 

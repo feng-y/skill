@@ -1,5 +1,7 @@
 # Material execution / compile
 
+本 reference 适用于 Northstar 已承接完整 Intent 的工作；受委托的局部 Intent 问题按 SKILL.md 返回实际 caller，不因此启动 Taskbook execution / learning flow。
+
 按当前边界读取，不把下列内容当作固定阶段：
 
 - material dispatch / return → [执行与返回](#执行与返回)；

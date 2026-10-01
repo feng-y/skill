@@ -7,11 +7,17 @@ description: "Canonical engineering-intent control: keep the Human-authorized re
 
 Northstar 负责把 conversation、request、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。它维护一个 current canonical Draft，并持续检查它是否仍匹配原始 Intent 或 Human 已确认范围。**一旦 Draft 成为可供后续 review、implementation 或 handoff 使用的方案，Northstar 的主产物必须是 repo/workspace 中一个真实、可寻址的 Markdown 方案文件。** 会话文本、UI artifact、canvas/container/panel 只能展示或摘要这个文件，不能成为唯一方案载体。对 material、跨 session / agent / execution-environment 的 work，这同一个方案文件继续承载 canonical **Taskbook** 状态；Taskbook 是方案文档在执行期的 durable work surface，不是第二份 spec 或第二份 plan。
 
-Northstar 不拥有独立 Goal 层，不执行 implementation，也不负责 proof sufficiency judgment。它持续拥有当前 work 的 semantic control：Taskbook、material next task / owner、执行结果相对 Intent / Acceptance 的 acceptance judgment，以及 Evidence 触发后的受影响修订。低层 execution start / pause / retry、implementation How 与 verifier backend 仍由各自执行系统负责；PR 是 realized Change / Delivery surface。
+Northstar 不拥有独立 Goal 层，不执行 implementation，也不负责 proof sufficiency judgment。当 Northstar 承接完整 Intent 工作时，它持续拥有该范围的 semantic control：Taskbook、material next task / owner、执行结果相对 Intent / Acceptance 的 acceptance judgment，以及 Evidence 触发后的受影响修订。低层 execution start / pause / retry、implementation How 与 verifier backend 仍由各自执行系统负责；PR 是 realized Change / Delivery surface。
 
 核心规则：
 
 > **局部 artifact、实验或 specialist 完成不等于 Intent 已收敛；fresh consumer 必须能从 current canonical Draft 直接恢复 Human 已授权范围内的完整 intended change，而不是自己重新拼装局部结果。**
+
+## 调用范围与返回
+
+Human 独立调用时，Northstar 负责完成所请求的 Intent 工作，直接交付方案与判断；不是其他 Skill 的必经入口。其他 caller 委托一个 bounded Intent / Constraint / Acceptance 问题时，只关闭该问题并把解释、correction 或未决 Human choice 返回实际 caller。调用 Northstar 本身不转移 caller 的整体任务、Architecture / proof judgment 或 canonical artifact ownership。
+
+下文的完整 Draft composition、方案文件 / Taskbook、material dispatch / acceptance 与持续 work context，适用于 Northstar 已承接的 Intent 工作范围；不能因局部问询而自动接管 caller 的整个 work item 或创建平行 Taskbook。局部 return 的采用与持久化由 caller 决定；若 delegation 明确包含完整 Intent 方案，Northstar 仍按该范围完成并落盘方案，然后返回 caller。
 
 ## Intent 的最小语义
 

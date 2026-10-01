@@ -26,6 +26,8 @@
 
 ## One semantic owner per skill
 
+六个 Skill 都可以独立工作，独立调用时拥有并直接完成所请求的本职任务；被委托时只拥有 bounded question，并返回实际 caller。semantic owner 不等于所有任务的全局 owner；Northstar 不是总入口，调用它也不自动转移完整 work / canonical artifact ownership。下述 Northstar plan / Taskbook 约定适用于由它承接的 Intent work，不强制其他独立 Skill 创建 Taskbook。
+
 当前 canonical capability map：
 
 - **`northstar`**：conversation / request / incident → canonical engineering Intent；把 Intent 收敛到 `execution-ready` 不会制造 Human execution authorization，已有明确授权也不重复确认。Northstar 一旦形成可供后续 review / implementation / handoff 使用的方案，必须把 current Draft 落盘为 repo/workspace 中一个真实、可寻址的 Markdown **方案文档**；chat/UI/canvas/container 只能是视图，不能成为唯一方案载体。对 material、跨 session / agent / execution-environment 的 work，这同一个方案文件继续承担 canonical **Taskbook** 角色，维护 material task / status / next owner，并在执行结果返回后判断它是否满足 Intent / Acceptance。Northstar 不执行 implementation，也不判断 proof sufficiency；后者仍属于 Verify。Drafted Issue 可以作为 tracker / 外部 carrier，但不能与方案文档形成平行 Intent SOT。

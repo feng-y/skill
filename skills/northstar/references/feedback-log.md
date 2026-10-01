@@ -1,5 +1,7 @@
 # Feedback Log
 
+本 reference 适用于 Northstar 已承接完整 Intent 的工作；受委托的局部 Intent 问题按 SKILL.md 返回实际 caller，不因此启动 Taskbook execution / learning flow。
+
 Feedback Log 是 material work 的**可选、append-only、跨 session execution-learning artifact**。它把执行 session 的真实 return / observation 与后续 Northstar session 的 judgment / Taskbook delta 串在同一 work identity 下，供未来 Skill / prompt / tool / harness 改进时检索。它不是 Northstar session 内部日志。
 
 它不改变 artifact authority：

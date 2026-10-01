@@ -57,7 +57,7 @@ Unknowns First 可以发现这些问题，但不把它们吞进自己的 full-ma
 - `route: <owner>; reason: <why this is not a factual unknown>`：问题属于其他 semantic owner；
 - `full-map: <why coupled factual unknowns block work>`：多个事实 unknown 相互耦合，需要 L3。
 
-只有 `continue` 可以保持静默；其他结果应让 caller 知道 next owner / probe。
+被委托时，只有不需要额外结果的 `continue` 可以保持静默；其他结果应让实际 caller 知道 fact / Evidence 或 next owner / probe。Human 独立请求查事实时，直接交付所请求的事实答案与依据，不以静默或转给 Northstar 代替完成。
 
 ## L2 · Local moves
 

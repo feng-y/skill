@@ -59,6 +59,60 @@
         "Beacon chooses the long-term owner"
       ],
       "consumer_check": "A fresh architecture consumer can recover the discriminator, conditional branches, closer, and non-executable status without the original discussion."
+    },
+    {
+      "id": "OT4_ae_calls_northstar_for_bounded_intent",
+      "prompt": "Architecture Evolution 正在判断 header normalization 的长期 owner。用户已说明：查询不区分大小写，枚举保留输入拼写，空字符串名字继续有效；这次只做结构判断。请 Northstar 解释这段已接受请求约束了什么，供当前 architecture judgment 使用。",
+      "required": [
+        "Northstar returns the bounded meaning and constraints to the actual Architecture Evolution caller",
+        "the result does not adopt the Target or take over the enclosing architecture task",
+        "caller-owned architecture and product files remain unchanged; no parallel whole-work Taskbook is created"
+      ],
+      "fail_if": [
+        "invoking Northstar transfers the enclosing task or canonical artifact to Northstar",
+        "Northstar launches implementation or requires a redundant interview despite a settled bounded request"
+      ],
+      "consumer_check": "Architecture Evolution can consume the returned constraint without rebuilding Intent or surrendering Target judgment."
+    },
+    {
+      "id": "OT5_northstar_receives_ordinary_verify_verdict",
+      "prompt": "Northstar 的当前 task 正等待验证结果。请 Verify 检查现有 header 实现是否满足已接受的大小写查询、原名枚举与空字符串兼容约定，给出继续该工作的结果。",
+      "required": [
+        "Verify returns verdict and evidence to the actual Northstar caller even when Intent remains valid",
+        "proof sufficiency stays with Verify and task acceptance remains with Northstar",
+        "verification result uses the existing verification surface and leaves Taskbook authority unchanged"
+      ],
+      "fail_if": [
+        "ordinary verdict is withheld because Intent was not invalidated",
+        "Verify edits canonical Taskbook status or invents an Intent correction merely to return"
+      ],
+      "consumer_check": "Northstar receives sufficient scoped result/Evidence to make its own task acceptance judgment without reopening valid Intent."
+    },
+    {
+      "id": "OT6_verify_receives_unknowns_first_fact",
+      "prompt": "Verify 正在评估 header claim，需要查清枚举实际读取原始拼写表还是归一化索引，以及空字符串是否能到达查询。请 Unknowns First 查当前代码并取得必要事实。",
+      "required": [
+        "Unknowns First closes the requested source/runtime facts and returns evidence to Verify",
+        "Verify retains whole-claim proof judgment"
+      ],
+      "fail_if": [
+        "factual closure becomes whole-outcome PASS or automatically routes the enclosing task through Northstar"
+      ],
+      "consumer_check": "Verify can use the returned source identity and observation for proof judgment."
+    },
+    {
+      "id": "OT7_direct_ae_diagnosis_finishes",
+      "prompt": "这里 header normalization 的长期职责和依赖有没有必要再演进？请 Architecture Evolution 检查当前实现与 accepted contract，给出结构判断；这次不实施产品改动。",
+      "required": [
+        "AE delivers the requested structural judgment, including local/no-evolution when supported",
+        "Target and Program remain distinct; no invented migration or Northstar/Taskbook prerequisite",
+        "product and accepted contract remain unchanged"
+      ],
+      "fail_if": [
+        "AE cannot finish because no architecture handoff was requested",
+        "independent invocation is interpreted as authority to implement or deploy"
+      ],
+      "consumer_check": "The direct user receives the requested architecture answer without adopting an unrelated workflow."
     }
   ]
 }
