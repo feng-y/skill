@@ -49,6 +49,8 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 5. **由 Northstar 自己把采用的局部结果组合回同一个 canonical Draft**；
 6. 重新检查整体 coverage，直到当前没有 material semantic gap。
 
+若请求只表达“改善 / 完善 / 优化”方向而尚未形成可推进的 target，不能把第一个容易修复或验证的 gap 当作整体 target。先基于重要使用 / 变更场景与已核实限制形成 current best improvement target：明确值得改变什么、完成后的 target state、解除当前限制的机制、必须共同成立的变化与 Acceptance；若其中仍取决于事实，只关闭会改变 target、方案或投入判断的决定性 unknown。
+
 完整保留 Intent 不等于提前展开完整解决方案。范围宽泛、路径未定时，先基于真实 repo / task 推进能区分后续做法的一步；未确定的后续路径保留为 Open Questions，不编成假定成立的方案或占位任务。缩小本轮行动不是缩小授权范围，不能据此宣布整体 execution-ready / done。已有 Evidence 足以推进已授权执行时，直接 handoff，不强制先调查或做原型。
 
 不要把这六项物化成 persistent state、workflow、gap schema 或 progress manager。
