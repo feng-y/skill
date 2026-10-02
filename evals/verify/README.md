@@ -100,3 +100,5 @@ Static contract smoke above does not prove that a Verify Skill/prompt change imp
 Useful Verify-specific behavioral directions include: claim fidelity, real-artifact directness, backend/semantic separation, honest `unproven`, baseline identity, unnecessary verification cost, correct Beacon invocation for a needed local core prototype, and routing to the right owner after failure.
 
 Do not use DaVinci product Replay itself as evidence that the `verify` Skill design is better. Replay can verify a product claim; `$eval` measures whether the agent's Verify behavior improved.
+
+Focused observations: [binding constraints in claim scope (2026-10-02)](RESULTS-constraint-scope-2026-10-02.md) retains the original false passes, a one-sentence candidate, and authorized/corrected/uncommitted controls. These bounded runs do not establish general reliability.
