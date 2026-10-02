@@ -1,52 +1,49 @@
-# 宽泛改进请求的价值与演化选择
+# 从开放改进请求发现可采纳机会
 
-## Problem / Target
+## Current Intent / Target
 
-用户要求在新分支执行已讨论方案，再对照评估。Current main 已有完整 Draft / Taskbook、反馈修订、AE Target / Program、高杠杆与真实退出能力；不将它们重复包装成新缺口。待验证的窄假设是：在具体改进对象被采用之前，Northstar 的选择动作能以重要场景、现有方向和实际能力判断结果价值及演化贡献，而不先选容易落地的缺陷再补理由。
+用户要求继续在独立分支实现并实测。当前优先目标：用户只说“完善这个 repo”，体系就能沿重要使用场景、演进热点和真实摩擦发现有价值的机会，比较收益与投入，主动推荐能力目标，再形成完整目标状态、必要变化和渐进路线。
 
-目标状态是得到一项有根据、可修订的采用判断，并能沿现有 composition 形成目标状态、机制、相依变化、Acceptance 和剩余范围完整相接的方案。允许局部修复、风险必要项、复用现状和 no-op；不以更多规则或更长输出作为改善。
+这不要求每次强行推荐，也不以生产故障或量化 ROI 为提案门槛；可以由直接观察、适用外部先例、清楚的因果推理形成有依据的暂定提案。真正会翻转采用判断的未知仍需先关闭。效果与推广需实证，但不能让“先证明选题能力有问题”成为给出有内容方案的必经前置。
 
-## Current → Delta
+## Current → v2 Delta
 
-- 基线：feng-y/skill main b3612ee82261ff65132d21ce8503b13e223c66fb，2026-10-02 13:25 UTC 经连接器核对
-- 独立分支：northstar-evolution-value-selection-20261002-1325
-- 仅调整 Northstar 的 Intent convergence 第 2 项及其既有宽泛请求解释；价值判断前移到采用对象前，随后直接接回既有完整 Draft
-- 不改 AE、Beacon、Unknowns First、Verify，不新增 Skill / Goal / schema / controller / scorer。Northstar 不实施；其他 skill caller-neutral
-- 不恢复旧 no-op 分支，不覆盖 fix/northstar-strategic-target-20261002 或其他工作
-- 不做 breaking semantic migration：既有 owner 与 artifact authority 不变，无需历史迁移条目
+- current main：b3612ee82261ff65132d21ce8503b13e223c66fb；同一实验分支的已有head：45b352876b13d31fa3f13f5ccf27284908d15e14
+- 替换 v1 常驻的泛化价值段；Northstar main 只保留改进对象未定时的条件入口与完整方案/未知/停止边界
+- 新增一个按需 reference：沿真实工作取材 → 因果提案 → 用当前实现、最近修复、完整已有路径及成本反驳 → 给有根据的推荐 → 接回同一个完整 Draft
+- 已有路径是竞争证据，不是默认正确答案；不把总能力与子能力伪装为替代。真实新能力可以胜出，旧 roadmap 也可被新事实修正
+- 明确局部修复不重新选题；Northstar仍不实现。AE、Beacon、Unknowns First、Verify、Eval及AGENTS全部不改，不加Skill/Goal/schema/controller/scorer、候选配额或新持久artifact
 
-## Adoption reasoning
+## Why this change
 
-借鉴 CE 的真实候选与价值压力测试、DORA outcome-first、Thoughtworks 以业务能力和演化路线连接技术选择。仅吸收决策区别，不复制候选定额、流程或模板。
+v1只有采用前的价值标准，缺少如何取得候选、如何沿实际工作发现摩擦、如何用完整路径和最近修复反驳机会的操作。v2将具体方法下沉到条件reference，替换泛化要求，不在多个章节复制标准。
 
-来源：[CE 机会筛选](https://github.com/EveryInc/compound-engineering-plugin/blob/9af474a70e7f2a844338519ad9e92aafbd92d4fb/skills/ce-ideate/references/post-ideation-workflow.md)、[CE 价值压力测试](https://github.com/EveryInc/compound-engineering-plugin/blob/9af474a70e7f2a844338519ad9e92aafbd92d4fb/skills/ce-brainstorm/references/product-pressure-test.md)、[DORA outcome-first](https://dora.dev/guides/value-stream-management/)、[整合技术战略](https://martinfowler.com/articles/creating-integrated-tech-strategy.html)、[渐进替代](https://martinfowler.com/articles/patterns-legacy-displacement/)。这些是方法依据，不是本候选的行为证据。
-
-实际贡献假设：把容易被工具、目录或眼前失败主导的选择，变成重要结果驱动的取舍；复用现有语义比新 Strategy skill 成本低，也不要求所有工作先制定战略。反向成本是更多前置比较和泛化论述，须由行为输出直接检验。
+这复用 CE 的 grounded ideation / pressure test、Matt 的真实变化与工作摩擦取材，保留现有 Northstar/AE 的采用、结构与完整方案职责。它是待验证的方法假设，不是已证实能力。
 
 ## Acceptance
 
-1. Runtime diff 只改变上述选择段，原有 owner、授权、完整方案与持续上下文边界保持
-2. 冻结相同原始请求“完善 skill 体系”及既有目标背景，使用 current baseline 与 candidate 的真实 fresh actors，对实际选题、因果贡献、完整方案、可推进性及无用前置做独立比较；不将字数、字段或自报动作作为结果
-3. 所有结果包括 no-op/不利结果保留；最多两组成对 broad runs，另做明确局部修复和反证返回的 candidate-only 轻量守卫。若输出无实际增益，明确建议不推广
-4. 运行 repo 相关静态 / instrument 回归与 skill validator，区分其通过与行为改善证据
-5. 给出 commit / 分支、实际 delta、方案符合性、证据局限与保留/撤回建议；不得自动 PR / merge / deploy
+1. 当前runtime仅上述Northstar两文件变化；入口为对象未定的开放改进请求，其他工作不强制加载或执行新方法
+2. 双方在同一当前source、真实main变更历史、用户用途和外部参考权限下处理原始请求；actor看不到v2设计、旧四次结论或本轮判据
+3. 判断实际产物：是否形成内容具体、有依据的可采用机会；淘汰已具备/已修/伪必要投入；推荐及完整目标、必要变化、渐进路线相接。只返回“以后诊断要改什么”不算该目标完成；有事实支持的no-change或decisive blocker仍有效
+4. 不以字数、章节、指定候选数或术语给分；不把无量化收益等同不能提案，不把存在workaround等同只能维持现状
+5. 预先冻结两组成对重放与两个轻量边界守卫；不按结果换题。真实对照和独立评审决定保留或撤回，无增益要直报
+6. 校验skill、引用、既有instrument回归与文件完整性。只推同一分支，不PR/merge/deploy
 
-## Work / status
+## Fixed environment correction
 
-- Source / scope：已核对；runtime candidate 在 commit cd06d63b8c1a382a061cb52ad9ca496e126edb7a，未按输出修订
-- Runtime candidate：仅 Northstar convergence；净增 511 字符 / 1,415 UTF-8 bytes
-- Behavioral comparison：两组固定成对真实 actor 全部完成。四次都选择先检验宽泛改进选题能力，再决定是否修既有 owner；两 baseline 也有成本替代、连贯诊断交接、后续条件分支与保留范围
-- Independent judgment：两对均无可采用的实际优势。候选语言更明确不计为增益，四者仍未确立值得采用的具体能力改动，不能据无差异宣布 main 已完成原始诉求
-- Guards：局部 parser planning/handoff 通过所测边界；真实 RDR 反证返回已完成，实质改变采用 / 依赖 / Acceptance并保留完整原始目标。两者均 candidate-only，不是成对 uplift
-- Checks：6 个 skill validator、51 个既有 instrument 回归与 diff --check 通过；独立审查重跑 51 项亦通过。均不冒充行为改善
-- Branch publication：首版实现已在独立分支远端核验；最终结果和可重现证据已完成，随同一分支交付；main 未改
+v1双方无Git history、禁外部、缺当前usage资料，而repo含大量eval内容且AGENTS要求行为证据；这个组合可能把选题诱导成再诊断。不能将其直接归因runtime本体。
 
-## Current acceptance judgment
+v2给双方同一main近期20个真实commit及diff，并允许读其祖先历史和相关外部一手源码/文档。保留正常repo资料，全部来源同等可达，历史不是当前使用频率统计；不提供某个推荐答案，不移入本方案或v1实验输出。外部读取记录来源与证据，独立审查差异。仍是planning输出，不因实施权限影响高层采用判断。
 
-方案在源码层符合既有选择责任与边界，但本轮成对观察没有证明它比 current main 选得更好、形成更有用的路线或减少有害前置。四个产物都把具体能力改动推迟到后续“先发现缺口再修 owner”，未证明这笔诊断投入优于其他现实机会；它们形成了可推进的有界诊断交接，但未达成用户期望的实际有价值能力目标方案。保留主线的决定依赖实际收益，不依赖实现是否写完。
+## Status / next owner
 
-目前建议不推广 runtime 增量；保留未合入分支供对照检查，不为获得正结果增加新题、平台或提醒。后续没有独立的 matched no-op 测量，也没有实际产品战略/演化执行验证；不从文本推断这些能力已可靠。
+- v2 runtime：已实现并冻结，独立源码与协议评审通过
+- v2 paired runs：四个actor已启动；两个已冻结轻量guards在其后运行
+- 当前下一责任：运行冻结对照与guard，独立审实际产物，回写采用判断；不按结果修稿或换题
+- 所有后续执行继续沿用户对本分支的授权，不扩大到PR、主线或部署
 
-## Evidence / next owner
+## v1 retained history
 
-详细事实、局限与原始产物入口见 [成对结果](../evals/northstar/RESULTS-evolution-value-selection-2026-10-02.md)。已冻结比较与守卫全部完成；本轮实现和评估交付已完成，不再追加测试。最终建议保留分支作为负面实验记录、撤回 runtime 进入主线的采用建议；本轮不再有待执行的实验或实现工作。本轮不 PR、合入或部署。
+v1源码commit cd06d63，结果commit 45b3528。两组旧条件下四个actor都转为诊断交接，没有确立具体能力改变；候选无可见增益，未推荐合入。两轻量守卫未观察到所测回归；其成功不等于uplift。
+
+v1[结果与证据](../evals/northstar/RESULTS-evolution-value-selection-2026-10-02.md)保持原样，旧commit和归档不重写。v2不能改环境后把跨轮差异全归给新方法，采用判断只看v2同条件baseline/candidate。

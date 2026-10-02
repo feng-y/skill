@@ -43,17 +43,13 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 每次只处理仍会改变结果、范围、核心路径、责任、Acceptance、execution readiness 或 durable transfer 的 gap：
 
 1. 恢复原始请求、已有 Human correction / authorization、current Draft 与决定性 Evidence；若当前判断依赖 Human 未点名但可能改变 Draft、binding Constraint、Acceptance 或下一步选择的事实，先取得足够 Evidence；已有事实足以判断时不扩大调查，事实 unknown 按既有 owner 关闭；
-2. 判断 current Draft 相对已授权 Intent 还缺什么。宽泛改进请求尚未选定对象时，先从重要使用 / 变化场景、已有战略 / Target 与 current 能力形成真正可选的目标，按实际结果、改善机制、演化贡献与成本 / 替代取舍，再采用具体改进对象；不能先选易修问题，再补价值理由。对象与结果已明确时，直接处理会改变下一步选择的 gap；
+2. 判断 current Draft 相对已授权 Intent 还缺什么，优先处理会改变下一步选择的 gap；宽泛改进请求尚未选定对象时，按 [机会发现与推荐](references/opportunity-discovery.md) 沿重要工作、真实变化和实际摩擦形成并筛排具体改进提案；
 3. 选择足以区分后续做法的最小行动交给真实 owner，或直接吸收已有答案；
 4. 消费返回的 Decision / correction / Evidence；
 5. **由 Northstar 自己把采用的局部结果组合回同一个 canonical Draft**；
 6. 重新检查整体 coverage，直到当前没有 material semantic gap。
 
-选择改进目标时，说明它通过什么机制兑现重要结果，以及它是交付目标能力、解除必要前置、降低后续同类变化成本，还是有退出条件的过渡；收益要与投入、维护负担和机会成本相称。与不做、复用已有能力或更小改变等仍成立的替代比较，不凑候选数量，不把推测收益写成已测事实。必要的安全 / 可靠性修复可以由风险本身成立，不硬编战略贡献；已明确的局部修复也不重新战略化。
-
-方向缺失时，从已授权诉求和现实能力提出有依据的暂定方向及会改变判断的未知，不用无边界找缺陷代替方向形成；只有真正的投入、兼容、风险或目标承诺取舍才 Ask Human。已有方向仍有效时复用它；新 Evidence 推翻前提或揭示更有价值的机会时，修正受影响方向，不机械服从旧 roadmap。长期结构判断仍交 AE。
-
-选定目标后，把目标状态、改善机制、必要的相依变化与 Acceptance 连成同一个完整 Draft，保留剩余原始范围；不能用首个增量或任务清单代替方案。完整保留 Intent 不等于提前展开未知路径：只推进能区分后续做法的最小行动，未确定部分保留为 Open Questions。局部 no-op 或完成不自动关闭完整 Intent，也不为保持推进而发明工作；无可推进的有依据行动时记录判断与重开的条件后停下。已有 Evidence 足以推进已授权执行时，直接 handoff，不强制先调查或做原型。
+完整保留 Intent 不等于提前展开未知路径。已有依据足以提出具体主张时，形成有取舍理由的暂定推荐，并接成目标状态、必要变化与渐进路线；不能以“将来诊断后再决定增强什么”代替本轮方案。真正可能翻转采用判断的未知仍先关闭；没有值得采用的提案时，可以保留现状并说明重开条件。未定后续保留为 Open Questions，不编成假定成立的方案或占位任务。缩小本轮行动不是缩小授权范围，局部完成或 no-op 不自动关闭整体 Intent，也不要求发明后续工作。已有 Evidence 足以推进已授权执行时，直接 handoff，不强制先调查或做原型。
 
 不要把这六项物化成 persistent state、workflow、gap schema 或 progress manager。
 
