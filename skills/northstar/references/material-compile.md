@@ -1,14 +1,16 @@
 # Material execution / compile
 
+本 reference 适用于 Northstar 已承接完整 Intent 的工作；受委托的局部 Intent 问题按 SKILL.md 返回实际 caller，不因此启动 Taskbook execution / learning flow。
+
 按当前边界读取，不把下列内容当作固定阶段：
 
-- material dispatch / return → [执行与返回](#执行与返回)；
+- return 关联不清或 binding premise 实质变化 → [返回关联与当前前提](#返回关联与当前前提)；
 - 跨 session / agent / execution-environment 恢复 → [Session handoff 只记录 delta](#session-handoff-只记录-delta)；
 - 当前 Intent / canonical Taskbook 已成立，但复杂 work / dependency 仍迫使 fresh consumer 重做高层判断 → 下列 compile 内容。简单线性 task 不展开 Graph。
 
 Compile 的目标不是建立完整 work graph，而是把已成立 Intent 编译成 canonical Taskbook 中**最小充分的 task / dependency contract**：让后续执行者知道必须兑现哪些 cohesive outcomes、哪些真实 dependency 不能打乱，以及哪些 Acceptance / Constraint 必须保持。简单线性 work 只需要 compact task，不为了 planning ceremony 构建 Graph；session handoff 是另一件事，只记录 resume delta。
 
-Compile 不重新定义 Intent，不产生或扩大 Human execution authorization，不设计 implementation How，不拥有 verification judgment。它可以维护 material task status / next owner，供 Northstar 判卷与续接；低层 execution progress / scheduler state 仍属于执行系统。
+Compile 不重新定义 Intent，不产生或扩大 Human execution authorization，不设计 implementation How，不拥有 verification judgment。它展开的是兑现完整方案所需的 task / dependency 结构；Northstar 消费 material return 后维护 status / judgment / next owner，不以重编结构为前提。低层 execution progress / scheduler state 仍属于执行系统。
 
 ## 从 Intended delta 出发
 
@@ -37,12 +39,12 @@ Compile 只携带 Northstar 已定义的 Acceptance / completion claim identity 
 
 ## Evidence feedback
 
-Research、execution、review 或 `$verify` 的 verified Evidence 只有在它使**现有 task / dependency 不再成立**时才修订 Taskbook：
+Research、execution、review 或 `$verify` 的 verified Evidence 只有在它使**现有 task / dependency 不再成立**时才重编这部分任务结构；普通 completion / blocker / acceptance 仍按 SKILL.md 的返回边界更新同一 Taskbook 的状态与 judgment：
 
 - 新 reality 证明某个已记录 task 不需要或边界错误 → 删除 / 合并 / 修正对应 task；
 - prerequisite 或 conflict 改变 → 只修订受影响 dependency；
-- 只影响 implementation How → Taskbook 不变；
-- Evidence 推翻 Intent / Acceptance → 返回 Northstar；
+- 只影响 implementation How → task / dependency 结构不变，不阻止 material return 后的状态与 judgment 更新；
+- Evidence 推翻 Intent / Acceptance → Northstar 重开受影响的完整方案判断；修订成立后只调整因此变化的 task / dependency，保留无关方案、任务与有效 Evidence；
 - Evidence 暴露新的长期 architecture fork → 返回 `$architecture-evolution`。
 
 不要维护“持续演进的完整 Graph”，也不要因为局部 Evidence 变化重算无关 work。
@@ -53,21 +55,15 @@ Research、execution、review 或 `$verify` 的 verified Evidence 只有在它�
 
 当 fresh implementer / worker 已能在 binding boundary 内继续、剩余未知只影响 implementation How 时停止 compile。已有 Human execution authorization 时由 Northstar 选择并 handoff next material task / owner；真正启动执行由宿主 / worker / orchestration 负责。没有授权时 Taskbook 停在 execution-ready。worker 返回 material result / Evidence 后回到 Northstar judgment，再决定是否推进 task state；implementation-local substeps 不逐项回流 Northstar。
 
-## 执行与返回
+## 返回关联与当前前提
 
-收到 material task return 后，先从已有 Taskbook / dispatch / artifact / 运行记录恢复对应 task、执行时的 binding context 与实际 result / Evidence；关联不清时先查可得事实，只保留仍影响判断的 blocker，不要求新增字段、receipt 或让 Human 猜技术事实。关联成立只说明这是哪次工作的结果，不证明当前 Intent / Acceptance 已满足。
+return 关联不清时，从已有 Taskbook / dispatch / artifact / 运行记录恢复对应 task、执行时的 binding context 与实际 result / Evidence。先查可得事实，只保留仍影响判断的 blocker；不要求新增字段、receipt 或让 Human 猜技术事实。关联成立只说明这是哪次工作的结果，不证明当前 Intent / Acceptance 已满足。
 
-Northstar 始终按**当前 canonical Taskbook**恢复 caller judgment。dispatch 后若 binding Decision / Constraint / Acceptance 已实质变化，旧结果不能沿旧解释直接关闭当前 task；只重判受影响的 claim，保留仍有效的 work / Evidence。若结果已满足当前要求，直接接受，不因 Taskbook 版本、文字或无关 task 状态变化强制返工。把 judgment、仍需修订或补证的具体差异及 next task / owner 回写同一个 Taskbook；只有 premise 真正变化时才重开对应 semantic owner。执行者不能凭自己的 `done`、测试 green 或 PR 存在直接推进 canonical Taskbook。
-
-`dispatch / handoff` 交出的是 scoped execution responsibility，不是整个 work item 的 Intent ownership。优先复用宿主已有的 delegation / caller-return；material result、blocker 或会改变 binding premise 的 Evidence 一旦返回当前交互，Northstar 直接恢复上述 judgment，不等 Human 再调用 `/northstar` 或说“继续”。普通 implementation-local 进展仍留给 worker，不逐步回 Northstar 审批。
-
-判卷后，有已授权且可推进的 material work 就继续 handoff；需要修订或关闭 blocker 就路由给真实 owner。当前范围已完成或没有可推进工作时，记录结果后停下，不为保持 context 发明任务、轮询或重复验收；同一 work item 后续反馈仍回到 Northstar。
-
-只有真实 delegation / orchestration tool 事件才能证明外部 worker 已启动或返回。没有自动回传能力时，保留已有 Taskbook / handoff 中的 current task、执行 owner 与返回 Northstar 的 judgment point，由宿主执行角色或下一 session 接续，不声称后台仍在运行。同一宿主可先承担 worker 角色，再恢复 Northstar judgment，但 result submission 与 acceptance 必须分开；不要求独立进程或固定三 session。
+dispatch 后若 binding Decision / Constraint / Acceptance 已实质变化，按当前 canonical Taskbook 只重判受影响的 claim：旧结果不能沿旧解释关闭当前 task，仍有效 work / Evidence 保留。若只是版本、文字或无关 task 状态变化，不重做成立的工作。把实际差异与 judgment 回写同一方案文件，再按 SKILL.md 的已授权续接 / 停止边界处理。
 
 ## Session handoff 只记录 delta
 
-跨 session 时，先确保 canonical 方案文件已经落盘；material execution 时它同时就是 Taskbook。然后生成一个**短 handoff**。handoff 只回答“从哪里恢复”：canonical plan/Taskbook pointer、baseline / working context 中 fresh session 必须知道的最小状态、last completed / current task、仍 live 的 decision / blocker、next task / owner，以及哪个结果需要返回 Northstar 判卷。
+跨 session 时，先确保 canonical 方案文件已经落盘；material execution 时它同时就是 Taskbook。跨环境只提供 pointer 不等于恢复成功：接收方须实际读到该 canonical 文件，才能继续依赖它的工作。若路径不可达或文件缺失，保留恢复 blocker，通过已有可用方式解决访问，不复制方案来冒充恢复；真实启动事件可如实报告为已启动但恢复受阻。生成的**短 handoff**只保留恢复所需 delta。handoff 只回答“从哪里恢复”：canonical plan/Taskbook pointer、baseline / working context 中 fresh session 必须知道的最小状态、last completed / current task、仍 live 的 decision / blocker、next task / owner，以及哪个结果需要返回 Northstar 判卷。
 
 handoff **不得重新复制** Taskbook 中已经存在的 architecture、方案、完整 path mapping、改动面、Acceptance 或 out-of-scope。若这些内容在 handoff 中需要长篇重述，说明 durable 信息没有正确 fold back，应先更新 Taskbook。handoff 是 session delta，不是第二份缩略 Taskbook。
 

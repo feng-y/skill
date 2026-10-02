@@ -86,7 +86,7 @@ PASS: Verify follows that contract and interprets its Evidence for the current c
 ### V12 — Result persistence
 Verification produces a useful verdict and raw artifacts, but Intent and Architecture remain valid.
 
-PASS: keep Verify result / raw artifacts on the PR, review, or project verification surface. Do not expand the canonical Issue. Only durable contract correction returns to Northstar; only a new structural fork returns to AE.
+PASS: keep Verify result / raw artifacts on the PR, review, or project verification surface. Do not expand the canonical Issue. Return the verdict and Evidence pointer to the actual caller, including Northstar, while keeping persistence on the verification surface. Ordinary return does not reopen valid Intent or Architecture; only durable Intent correction reopens Northstar judgment, and only a new structural fork reopens AE.
 
 ### V13 — Expensive benchmark gives weak credit assignment
 A performance optimization has a clear throughput/latency claim. The representative end-to-end benchmark takes hours and reports a 20% regression, but the result alone cannot identify whether the failure is numerical correctness, synchronization/overlap, or the target kernel/path.

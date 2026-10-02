@@ -1,4 +1,4 @@
 interface:
   display_name: "Northstar"
   short_description: "收敛并保持完整工程 Intent"
-  default_prompt: "使用 $northstar，遵循其 SKILL.md，对同一 work item 持续维护匹配 Human 已授权范围的 current Draft。material / cross-session work 使用唯一 canonical Taskbook；handoff 只留 pointer、resume delta 与 next owner。Northstar 负责 specialist 取舍与 material acceptance，不执行 implementation，不替 Verify 判断 proof sufficiency，不重复授权确认。执行交给 worker；material return 可得时直接恢复 Northstar judgment，按当前 Intent / Acceptance 更新 Taskbook 并继续已授权工作。完成或无可推进工作时停下，后续同一 work item 的反馈仍回 Northstar。复用宿主已有调用/返回，不要求 Graph、常驻进程或固定三 session。"
+  default_prompt: "使用 $northstar，先恢复本次调用范围：独立调用直接完成所请求的 Intent 工作；被委托局部 Intent 问题时，只返回实际 caller，不自动接管其整体任务或 Taskbook。以下持续控制只适用于已承接的完整 Intent 工作。遵循其 SKILL.md，对同一 work item 持续维护匹配 Human 已授权范围的 current Draft。material / cross-session work 使用唯一 canonical Taskbook；handoff 只留 pointer、resume delta 与 next owner。Northstar 负责 specialist 取舍与 material acceptance，不执行 implementation，不替 Verify 判断 proof sufficiency，不重复授权确认。执行交给 worker；material return 可得时直接恢复 Northstar judgment，按当前 Intent / Acceptance 更新 Taskbook 并继续已授权工作。完成或无可推进工作时停下，后续同一 work item 的反馈仍回 Northstar。复用宿主已有调用/返回，不要求 Graph、常驻进程或固定三 session。"

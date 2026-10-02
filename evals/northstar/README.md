@@ -209,3 +209,37 @@ The cases are deliberately asymmetric:
 
 Deterministic snapshot ownership is the primary evidence: the first product-source delta must occur in the worker session, the canonical Taskbook must remain unchanged throughout that worker session, and the acceptance/status delta must occur only in the resumed Northstar session. Worker result/Evidence/residual uses a separate return surface; changing Draft, Acceptance, task state, blocker, Evidence pointers, or next owner is ownership takeover even if the worker later restores the Taskbook. Role labels or self-report are insufficient.
 
+
+## Full plan, task structure and return status
+
+The same Northstar-owned plan remains recoverable through material returns; a
+Taskbook is its execution role, not a task-list substitute for intended change.
+Focused regression discriminators:
+
+- An ordinary completed return updates status/judgment/next owner even though
+  task boundaries and dependencies remain valid; no recompilation ceremony
+- A contradicted Draft premise reopens only affected plan judgment and the
+  task/dependency structure that genuinely changes; unaffected outcomes and
+  valid evidence remain intact
+- A focused-green partial result cannot erase remaining Acceptance or close the
+  whole request; preserve the full intended change and route concrete residual
+- Fresh readers recover intended behavior and constraints from the same plan,
+  rather than reconstructing meaning from status labels or execution tasks
+
+The bounded 2026-10-01 Phase 2 run and its limitations are recorded in
+[RESULTS-taskbook-2026-10-01.md](RESULTS-taskbook-2026-10-01.md). These checks do not
+make Northstar the owner of other standalone skills or bounded delegated tasks.
+
+## Conditional reference and learning access
+
+Ordinary dispatch/return should retain caller judgment and authorization without
+unnecessary recovery-reference/log loading. Distinguish it from ambiguous return
+identity, changed binding premises and cross-environment restoration; those
+retain their focused detail. A missing canonical file blocks restoration, not
+truthful reporting that a process was launched. Reusable learning and explicit
+independent-record requests still retain sourced notes; routine green work does
+not manufacture a log.
+
+See [RESULTS-loading-2026-10-01.md](RESULTS-loading-2026-10-01.md) for the bounded
+final-candidate file-access observations and their limits. Source byte changes
+alone are not token or performance measurements.

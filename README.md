@@ -38,6 +38,8 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Invocation model
 
+六个 Skill 均可独立调用并直接交付各自职责范围内的结果。委托调用只交出 bounded question，结果返回实际 caller；不会自动转移整体任务或 canonical artifact ownership，也不要求先经过 Northstar 或创建通用 Taskbook。
+
 主要 Human-facing / direct capabilities：
 
 - `northstar` — “我们到底要什么？”
@@ -50,11 +52,13 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 - `beacon` — 一个局部功能 Intent 或故障需要基于 repo 的核心原型，或已有原型需要局部修订；Human 很少需要主动调度。
 - `unknowns-first` — 当前判断依赖未核实事实时自动/按需关闭 factual gap；Human 也可以直接要求先查事实。
 
-`beacon` **不属于 Northstar 私有流程**。Northstar、Architecture Evolution、Verify、Unknowns First 或其他 caller 都可以按需调用；不必先制造设计歧义或查清全部故障根因。Beacon 返回一个局部核心原型，原 caller 负责采用、比较与组合；Northstar 持续拥有完整 Intent。
+`beacon` **不属于 Northstar 私有流程**。Northstar、Architecture Evolution、Verify、Unknowns First 或其他 caller 都可以按需调用；不必先制造设计歧义或查清全部故障根因。Beacon 返回一个局部核心原型，原 caller 负责采用、比较与组合；Northstar 仅在承接该 Intent 工作时持续拥有其完整 Intent。
 
 `eval` 与产品 engineering flow 正交。它可以由 Human 直接调用，也可以在 Skill/prompt/tool/harness 变更需要 behavioral Evidence 时由 model 按需调用；它观察 agent behavior，不取得被测 Skill 的 semantic ownership。
 
 ## Capability map
+
+下图的 Northstar 分支只描述由 Northstar 承接的 Intent work，不是所有请求的总入口或固定流程。
 
 ```text
 conversation / request / incident

@@ -26,6 +26,8 @@
 
 ## One semantic owner per skill
 
+六个 Skill 都可以独立工作，独立调用时拥有并直接完成所请求的本职任务；被委托时只拥有 bounded question，并返回实际 caller。semantic owner 不等于所有任务的全局 owner；Northstar 不是总入口，调用它也不自动转移完整 work / canonical artifact ownership。下述 Northstar plan / Taskbook 约定适用于由它承接的 Intent work，不强制其他独立 Skill 创建 Taskbook。
+
 当前 canonical capability map：
 
 - **`northstar`**：conversation / request / incident → canonical engineering Intent；把 Intent 收敛到 `execution-ready` 不会制造 Human execution authorization，已有明确授权也不重复确认。Northstar 一旦形成可供后续 review / implementation / handoff 使用的方案，必须把 current Draft 落盘为 repo/workspace 中一个真实、可寻址的 Markdown **方案文档**；chat/UI/canvas/container 只能是视图，不能成为唯一方案载体。对 material、跨 session / agent / execution-environment 的 work，这同一个方案文件继续承担 canonical **Taskbook** 角色，维护 material task / status / next owner，并在执行结果返回后判断它是否满足 Intent / Acceptance。Northstar 不执行 implementation，也不判断 proof sufficiency；后者仍属于 Verify。Drafted Issue 可以作为 tracker / 外部 carrier，但不能与方案文档形成平行 Intent SOT。
@@ -60,7 +62,7 @@
 ## Artifact ownership
 
 - **Northstar 方案文档 / Taskbook**：Northstar 的 primary durable artifact 是 repo/workspace 中真实落盘的 Markdown 方案文件。current Draft 一旦成为可复用方案就写入该文件；material / cross-session execution 继续在同一文件中维护 binding Decision / Constraint / Acceptance、material tasks / status、决定性 Evidence pointer、last Northstar judgment 与 next owner。`Taskbook` 是这份方案文件在执行期承担的角色，不是第二份 plan。宿主 UI、chat block、canvas/container/panel 只能引用或展示它。
-- **Feedback Log**：跨 session 的 append-only execution-learning artifact。执行 session 在完成 scoped work 时记录 worker return / decisive Evidence pointer 与 execution observation；Northstar session 在消费 return、完成 judgment 并更新 canonical Taskbook 后，可补记 judgment / material Taskbook delta。它不是 current Intent / task state / Evidence sufficiency 的 authority，不要求两个角色共享 session，也不参与 dispatch、resume 或 acceptance；后续 Skill 改进可把它当作 trace-like input，但 behavior claim 仍必须进入 Eval。
+- **Feedback Log**：按需保留可复用信号的 append-only、跨 session execution-learning artifact。worker 默认在正常 return 中报告信号；值得持久化或明确要求独立记录时，再记录 decisive Evidence pointer 与 execution observation；Northstar session 在消费 return、完成 judgment 并更新 canonical Taskbook 后，可补记 judgment / material Taskbook delta。它不是 current Intent / task state / Evidence sufficiency 的 authority，不要求两个角色共享 session，也不参与 dispatch、resume 或 acceptance；后续 Skill 改进可把它当作 trace-like input，但 behavior claim 仍必须进入 Eval。
 - **Session handoff**：只保存从 canonical 方案文档 / Taskbook 恢复所需的 session delta：plan pointer、last completed/current task、仍 live 的 blocker/decision、next task / owner、需要返回 Northstar 的 judgment point。不得复制方案文件中的架构、方案、验收全文；需要重述的 durable 内容应回写同一方案文件。
 - **Drafted Issue**：tracker / 外部协作 carrier。material / cross-session work 的 canonical state 始终在 Taskbook；Issue 只指向它并保留讨论历史 / 外部协作信息，禁止复制一份可独立漂移的方案。
 - **PR**：realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在 PR。

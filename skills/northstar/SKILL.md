@@ -7,11 +7,17 @@ description: "Canonical engineering-intent control: keep the Human-authorized re
 
 Northstar 负责把 conversation、request、incident 或已有讨论收敛成**稳定、可交接的工程 Intent**。它维护一个 current canonical Draft，并持续检查它是否仍匹配原始 Intent 或 Human 已确认范围。**一旦 Draft 成为可供后续 review、implementation 或 handoff 使用的方案，Northstar 的主产物必须是 repo/workspace 中一个真实、可寻址的 Markdown 方案文件。** 会话文本、UI artifact、canvas/container/panel 只能展示或摘要这个文件，不能成为唯一方案载体。对 material、跨 session / agent / execution-environment 的 work，这同一个方案文件继续承载 canonical **Taskbook** 状态；Taskbook 是方案文档在执行期的 durable work surface，不是第二份 spec 或第二份 plan。
 
-Northstar 不拥有独立 Goal 层，不执行 implementation，也不负责 proof sufficiency judgment。它持续拥有当前 work 的 semantic control：Taskbook、material next task / owner、执行结果相对 Intent / Acceptance 的 acceptance judgment，以及 Evidence 触发后的受影响修订。低层 execution start / pause / retry、implementation How 与 verifier backend 仍由各自执行系统负责；PR 是 realized Change / Delivery surface。
+Northstar 不拥有独立 Goal 层，不执行 implementation，也不负责 proof sufficiency judgment。当 Northstar 承接完整 Intent 工作时，它持续拥有该范围的 semantic control：Taskbook、material next task / owner、执行结果相对 Intent / Acceptance 的 acceptance judgment，以及 Evidence 触发后的受影响修订。低层 execution start / pause / retry、implementation How 与 verifier backend 仍由各自执行系统负责；PR 是 realized Change / Delivery surface。
 
 核心规则：
 
 > **局部 artifact、实验或 specialist 完成不等于 Intent 已收敛；fresh consumer 必须能从 current canonical Draft 直接恢复 Human 已授权范围内的完整 intended change，而不是自己重新拼装局部结果。**
+
+## 调用范围与返回
+
+Human 独立调用时，Northstar 负责完成所请求的 Intent 工作，直接交付方案与判断；不是其他 Skill 的必经入口。其他 caller 委托一个 bounded Intent / Constraint / Acceptance 问题时，只关闭该问题并把解释、correction 或未决 Human choice 返回实际 caller。调用 Northstar 本身不转移 caller 的整体任务、Architecture / proof judgment 或 canonical artifact ownership。
+
+下文的完整 Draft composition、方案文件 / Taskbook、material dispatch / acceptance 与持续 work context，适用于 Northstar 已承接的 Intent 工作范围；不能因局部问询而自动接管 caller 的整个 work item 或创建平行 Taskbook。局部 return 的采用与持久化由 caller 决定；若 delegation 明确包含完整 Intent 方案，Northstar 仍按该范围完成并落盘方案，然后返回 caller。
 
 ## Intent 的最小语义
 
@@ -134,16 +140,16 @@ Verify 定义什么真实 observation 能证明/反证 claim、选择 backend �
 
 current Draft 一旦可供后续 review、implementation 或 handoff 消费，先写入 repo/workspace 中真实、可寻址的 Markdown 方案文件，再作为主产物返回；优先复用项目 plan/design/task 约定，否则用 `.northstar/<work-item>.md`。chat / UI 只能展示或摘要该文件。进入 material execution、跨 session / agent / execution-environment 或明确实施交接时，在**同一个文件**维护 Taskbook，不另建方案副本。
 
-方案文件保留 Problem / current Draft、binding Decisions / Constraints / Acceptance、已确认事实与 material blocker；执行期再保留最小充分的 material tasks / dependency、status、决定性 Evidence pointer、last Northstar judgment、next task / owner，不复制 transcript、命令流水或 implementation-local How。
+方案文件以可独立恢复的完整 intended change 为中心：Problem / current Draft、binding Decisions / Constraints / Acceptance、已确认事实与 material blocker。执行期在同一文件补充最小充分的 material tasks / dependency 及其 status、决定性 Evidence pointer、last Northstar judgment、next task / owner；任务结构表达如何兑现方案，不能用 task list 或完成状态替代完整方案。不复制 transcript、命令流水或 implementation-local How。
 
 Northstar 持续负责这些边界：
 
 - **执行 ownership**：只在 material task boundary 选择 next task / owner；worker 自治 implementation How，只返回 result / Evidence / residual，不能改 canonical Taskbook。helper、file edit、commit、单个 test 不升级成 Northstar checkpoint。
-- **返回 judgment**：material result / blocker / binding-premise Evidence 返回后，直接恢复 Northstar，按**当前 Taskbook**判断，不等 Human 再调用或说“继续”。先恢复 return 对应 task 与执行 context；旧结果不能沿已失效的 binding premise 关闭 task，仍有效 work / Evidence 保留。worker `done`、测试 green 或 PR 存在不等于 Acceptance 满足；material proof sufficiency 交 `$verify`。
+- **返回 judgment**：material result / blocker / binding-premise Evidence 返回后，直接恢复 Northstar，按**当前 Taskbook**判断，不等 Human 再调用或说“继续”。先恢复 return 对应 task 与执行 context；旧结果不能沿已失效的 binding premise 关闭 task，仍有效 work / Evidence 保留；已满足当前要求的结果直接接受，不因版本、文字或无关状态变化强制返工。worker `done`、测试 green 或 PR 存在不等于 Acceptance 满足；material proof sufficiency 交 `$verify`。
 - **续接与停止**：把 acceptance judgment、具体 residual 与 next task / owner 回写同一 Taskbook；有可推进的已授权 material work 就继续 handoff，blocked work 路由给真实 owner。当前范围已完成或无可推进工作则记录后停下，不发明任务或轮询；这不结束同一 work item 的 Intent context。
 - **真实 execution**：复用宿主 caller-return，只有真实 delegation / orchestration tool 事件才能声称外部 worker 已启动或返回；宿主无自动回传时保留恢复指针，不假称后台运行。同一宿主可先执行再恢复 Northstar，但 result submission 与 acceptance 分开。
-- **按需恢复细节**：material dispatch / return 或跨 session handoff 时，读取 [references/material-compile.md](references/material-compile.md) 的对应执行/恢复段落；只有复杂 dependency 迫使 fresh consumer 重做高层判断时才展开其中 compile。session handoff 只保留 Taskbook pointer 与 resume delta，fresh session 先读 canonical 文件，不复制方案或 Acceptance。
-- **可选 learning**：独立 worker dispatch 时读取 [references/feedback-log.md](references/feedback-log.md)，在 scoped handoff 携带可定位的 Feedback Log 路径和 reusable-signal 触发条件；无信号不创建。Northstar 先 judgment / 回写 Taskbook，有新 learning 才另起条目。日志不参与 dispatch / resume / acceptance，缺失不阻塞工作。
+- **按需恢复细节**：普通 dispatch / return 直接按上述边界处理。只有复杂 dependency、return 关联不清 / binding premise 实质变化，或跨 session / environment 恢复时，读取 [references/material-compile.md](references/material-compile.md) 的对应段落。handoff 只保留 canonical pointer 与 resume delta；接收方先读得到同一 canonical 文件，不能仅凭发出 pointer 宣称恢复成功。
+- **可选 learning**：worker 默认在正常 return 中报告可复用信号，不为普通 dispatch 预分配日志路径。信号值得跨 session 保留，或明确要求 worker 独立记录时，才读取 [references/feedback-log.md](references/feedback-log.md)；需要 worker 写日志时随 scoped handoff 提供可定位路径。Northstar 先 judgment / 回写 Taskbook，再持久化值得保留的 learning。日志不参与 dispatch / resume / acceptance，缺失不阻塞工作。
 
 ## Drafted Issue
 
