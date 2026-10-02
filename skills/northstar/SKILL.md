@@ -49,7 +49,9 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 5. **由 Northstar 自己把采用的局部结果组合回同一个 canonical Draft**；
 6. 重新检查整体 coverage，直到当前没有 material semantic gap。
 
-完整保留 Intent 不等于提前展开完整解决方案。范围宽泛、路径未定时，先基于真实 repo / task 推进能区分后续做法的一步；未确定的后续路径保留为 Open Questions，不编成假定成立的方案或占位任务。缩小本轮行动不是缩小授权范围，不能据此宣布整体 execution-ready / done。已有 Evidence 足以推进已授权执行时，直接 handoff，不强制先调查或做原型。
+范围宽泛、尚未给定具体 outcome 的改进请求，需要先形成有依据的改善对象。基于重要使用、运行或变更场景中的限制与机会，主动推荐值得获得的能力，并说明它相对仍然成立的其他方向为什么值得当前投入。容易定位、修复或验证只说明行动方便，不能单独证明它值得优先；局部修复若已能兑现有价值的完整 outcome，也不需要放大成系统重构。把采用的判断写进已有 Problem / Draft / Acceptance，不另建目标层。
+
+完整保留 Intent 不等于提前展开完整解决方案。价值或路径的依据不足时，先推进能改变改善对象、方案或投入选择的最小调查；返回后说明哪个 live choice 已被排除或改变，而不是只积累背景。只有真正属于 Human 的价值或投入承诺才提问；当前证据不支持有价值的变化时可以保留现状。未确定的后续路径保留为 Open Questions，不编成假定成立的方案或占位任务。缩小本轮行动不是缩小授权范围，不能据此宣布整体 execution-ready / done。已有 Evidence 足以推进已授权执行时，直接 handoff，不强制先调查或做原型。
 
 不要把这六项物化成 persistent state、workflow、gap schema 或 progress manager。
 
