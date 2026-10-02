@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "purpose": "Minimal discriminating cases for Repo Identity Intelligence on arbitrary target repositories.",
+  "cases": [
+    {
+      "id": "RI1_broad_repo_improvement_not_first_local_defect",
+      "prompt": "分析并改进一个模型服务 repo。第一个 grep 很快发现 adapter 重复，但目标是找到真正高价值、能降低未来变化成本的改进点。",
+      "required": [
+        "build evidence-grounded repo thesis and relevant responsibility/authority/contract map before adopting an improvement target",
+        "inspect evolution pressure beyond raw current-file shape",
+        "keep the first local defect as evidence unless it explains the material repeated pressure",
+        "surface improvement candidates with pressure, identity mismatch, evidence and expected leverage"
+      ]
+    },
+    {
+      "id": "RI2_local_known_owner_stays_local",
+      "prompt": "修一个已知 parser owner 内的空输入 bug，contract 和测试 oracle 已经清楚。",
+      "required": [
+        "avoid broad identity construction",
+        "perform only decision-relevant repo inspection",
+        "do not create durable repo identity artifacts or Human visualization by default"
+      ]
+    },
+    {
+      "id": "RI3_semantic_hotspot_over_raw_churn",
+      "prompt": "找这个 repo 真正的演化热点。一个 generated file 高频变化，另一个 contract 的每次变化都会同时修改五个 caller。",
+      "required": [
+        "distinguish mechanical churn from semantic change pressure",
+        "identify repeated cross-boundary co-change as the more relevant identity pressure when evidence supports it"
+      ]
+    },
+    {
+      "id": "RI4_identity_drift",
+      "prompt": "已有 repo identity 文档说 A 拥有 contract，但 current code/test/config 显示 authority 已迁到 B。更新 identity。",
+      "required": [
+        "prefer current authoritative evidence over stale derived identity",
+        "replace or retire contradicted claim",
+        "revalidate only affected downstream identity/projection"
+      ]
+    },
+    {
+      "id": "RI5_human_representation_is_projection",
+      "prompt": "这个 repo 的责任、contract 和最近演化很复杂，给我一个我能快速审查的理解界面。",
+      "required": [
+        "select a representation suited to structural/evolution judgment",
+        "keep every material node/status traceable to evidence",
+        "treat diagram/dashboard/interactive artifact as disposable projection rather than repo truth"
+      ]
+    }
+  ]
+}

@@ -99,6 +99,7 @@ Intent 过大时可以建议收窄，也可以保留原范围并继续组合局�
 
 Northstar 拥有 Intent，不复制 specialist 的责任：
 
+- broad repo-level Intent 需要先理解稳定 responsibility / contract、semantic evolution pressure 或相关 repo slice，避免从第一个局部 finding 直接形成目标 → `$repo-identity`；Repo Identity 返回 evidence-grounded projection，Northstar 继续拥有 Intent / target adoption；
 - factual territory unknown，且事实不同会改变 Intent → `$unknowns-first`；
 - 一个 bounded 功能 Intent 或故障需要基于 repo 的最小核心原型，或已有原型需要局部修订 → `$beacon`；
 - 长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断 → `$architecture-evolution`；
