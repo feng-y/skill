@@ -107,6 +107,8 @@ Repo Identity 不把“经常改的文件”直接称为 hotspot。目标是找 
 
 高 churn generated file、vendor code、机械 rename、格式化不是 semantic hotspot。
 
+在解释 co-change 前，先把 touched surfaces 区分为 **authority / derived projection/index / consumer**。一次 source change 合理地同步更新 index、log、generated view 或其他 derived surface，不自动说明 responsibility 错位。若 semantic authority 仍单一、传播只是机械维护成本，优先把它识别为 derivation/lint/automation opportunity，而不是 structural ownership problem。
+
 一个真正值得关注的 hotspot 应该能表达为：
 
 > **repeated change pressure → touched identity surfaces → recurring friction / authority drift → Evidence**

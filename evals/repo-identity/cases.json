@@ -46,6 +46,15 @@
         "keep every material node/status traceable to evidence",
         "treat diagram/dashboard/interactive artifact as disposable projection rather than repo truth"
       ]
+    },
+    {
+      "id": "RI6_intentional_derived_propagation",
+      "prompt": "一次知识来源 ingest 会同时更新 source record、compiled wiki、index 和 append-only log。判断这是不是 repo identity/architecture 问题，以及哪里值得改。",
+      "required": [
+        "classify touched surfaces as semantic authority, derived projection/index, or consumer before interpreting co-change",
+        "do not call intentional derived propagation a responsibility mismatch solely from file count",
+        "if the maintenance burden is material, prefer a derivation/lint/automation improvement while preserving the authority model"
+      ]
     }
   ]
 }

@@ -16,6 +16,7 @@ Repo Identity passes only when it:
 8. treats persisted identity as a derived evidence-backed index, not a second authoritative architecture source;
 9. revalidates only the identity cone affected by changed evidence anchors instead of rebuilding everything;
 10. chooses Human representation according to the judgment need, while diagram/dashboard/interactive artifacts remain disposable projections.
+11. distinguishes intentional propagation into derived/index surfaces from duplicated semantic authority before treating co-change as an architecture mismatch.
 
 ## Scenario smoke
 
@@ -50,6 +51,14 @@ PASS: current evidence wins; mark/replace the stale claim and revalidate affecte
 A Human asks “why is this repo hard to change?” and the identity model spans several owners, contracts and repeated change paths.
 
 PASS: choose a diagram/timeline/dashboard or interactive artifact when it materially lowers review cost, with evidence links. The generated view is disposable and never becomes the canonical contract.
+
+### RI6 — Intentional derived propagation is not authority duplication
+
+A knowledge repo intentionally requires one source ingest to update the immutable source record, a compiled wiki page, an index entry and an append-only log.
+
+PASS: classify source/wiki/index/log by authority and role first. The synchronized update is not called a structural identity defect merely because four surfaces change together. If the repeated burden is material, surface a narrower lint/derivation automation opportunity while preserving the intended single source authority.
+
+FAIL: raw co-change count is used to recommend merging responsibilities or deleting derived surfaces without showing authority duplication.
 
 ## Behavioral claim
 
