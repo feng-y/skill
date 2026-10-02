@@ -20,6 +20,7 @@ Install one skill:
 
 ```bash
 npx skills@latest add feng-y/skill --skill northstar
+npx skills@latest add feng-y/skill --skill repo-identity
 npx skills@latest add feng-y/skill --skill beacon
 npx skills@latest add feng-y/skill --skill architecture-evolution
 npx skills@latest add feng-y/skill --skill verify
@@ -29,6 +30,7 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Skills
 
+- `repo-identity` — repository identity intelligence skill. 直接作用于目标 repo：建立稳定 capability / responsibility / authority、boundary / contract、关键 flow 与 Evidence anchor；从 git/code/test/docs 中提取 semantic evolution pressure，并按当前 Intent 生成最小相关 repo projection。它帮助回答“这个 repo 是什么、为什么这样、哪里正在承压、哪里值得改”，复杂理解可生成 diagram/dashboard/interactive projection，但不接管产品 Intent、Target Architecture 或 proof judgment。
 - `northstar` — canonical engineering-intent skill. 持续维护一个 current Draft；一旦形成可供后续 review / implementation / handoff 使用的方案，就把它作为 repo/workspace 中真实 Markdown 方案文件落盘。material / cross-session execution 在同一文件中继续维护 canonical Taskbook 状态。Northstar 交出执行但保留 Intent 与 material task acceptance；Issue 只作 tracker / 外部引用，session handoff 只保存恢复差量。
 - `beacon` — caller-neutral、主要由 model 按需调用的核心原型 specialist。基于真实 repo，把一个 bounded 功能 Intent 或故障具体化为最小、可检查的核心原型；可以是接口/调用草图、代表性输入输出、最小实现或故障复现，不要求可执行代码。原型是主体，问题和 Evidence 服务于原型；结果返回原 caller。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
@@ -38,10 +40,11 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Invocation model
 
-六个 Skill 均可独立调用并直接交付各自职责范围内的结果。委托调用只交出 bounded question，结果返回实际 caller；不会自动转移整体任务或 canonical artifact ownership，也不要求先经过 Northstar 或创建通用 Taskbook。
+七个 Skill 均可独立调用并直接交付各自职责范围内的结果。委托调用只交出 bounded question，结果返回实际 caller；不会自动转移整体任务或 canonical artifact ownership，也不要求先经过 Northstar 或创建通用 Taskbook。
 
 主要 Human-facing / direct capabilities：
 
+- `repo-identity` — “这个 repo 到底是谁、怎么演化、当前 Intent 应看哪里、哪里最值得改？”
 - `northstar` — “我们到底要什么？”
 - `architecture-evolution` — “长期结构应该怎么归位？”
 - `verify` — “产品/工程结果是否真的符合 claim？”
@@ -61,6 +64,14 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 下图的 Northstar 分支只描述由 Northstar 承接的 Intent work，不是所有请求的总入口或固定流程。
 
 ```text
+target repository
+      ↓
+ repo-identity
+ stable identity + evolution pressure + intent-conditioned projection
+      │
+      ├── Human understanding → text / diagram / dashboard / interactive artifact
+      └── semantic caller → Northstar / Architecture Evolution / Executor / reviewer
+
 conversation / request / incident
               ↓
           northstar
@@ -129,6 +140,7 @@ Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), inc
 
 ## Artifacts
 
+- **Repo Identity artifact** — evidence-backed derived model/index of a target repository. It points to authoritative code/test/config/contracts/docs/history and may be persisted only when repeated use warrants it. Intent-specific maps and Human-facing diagrams/dashboard/interactive pages are disposable projections; they are never a second repo truth.
 - **Northstar plan / Taskbook** — the primary Northstar artifact is a real Markdown plan file persisted in the repo/workspace. Once a Draft becomes reusable for review, implementation, or handoff, it must exist as that file; material / cross-session execution adds task state and next owner to the same file. Taskbook is the execution role of the plan, not a second artifact. Chat/UI/canvas/container views are non-authoritative.
 - **Feedback Log** — optional append-only cross-session execution-learning artifact. The worker session records its return/Evidence and execution observation; a later Northstar session may append its judgment and material Taskbook delta. It never becomes current Intent, task state, an evaluator, or an execution controller.
 - **Session handoff** — Taskbook pointer plus resume delta, never a second plan.

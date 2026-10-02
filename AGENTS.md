@@ -26,10 +26,11 @@
 
 ## One semantic owner per skill
 
-六个 Skill 都可以独立工作，独立调用时拥有并直接完成所请求的本职任务；被委托时只拥有 bounded question，并返回实际 caller。semantic owner 不等于所有任务的全局 owner；Northstar 不是总入口，调用它也不自动转移完整 work / canonical artifact ownership。下述 Northstar plan / Taskbook 约定适用于由它承接的 Intent work，不强制其他独立 Skill 创建 Taskbook。
+七个 Skill 都可以独立工作，独立调用时拥有并直接完成所请求的本职任务；被委托时只拥有 bounded question，并返回实际 caller。semantic owner 不等于所有任务的全局 owner；Northstar 不是总入口，调用它也不自动转移完整 work / canonical artifact ownership。下述 Northstar plan / Taskbook 约定适用于由它承接的 Intent work，不强制其他独立 Skill 创建 Taskbook。
 
 当前 canonical capability map：
 
+- **`repo-identity`**：面向一个目标 repository 建立 evidence-grounded **Repo Identity Intelligence**：识别稳定 capability / responsibility / authority、boundary / contract、关键 entry/flow、semantic evolution pressure 与 Evidence anchor；按当前 Intent 编译 decision-relevant repo projection，并从 repeated change friction / authority drift / contract leakage / cross-boundary co-change 中暴露可检查的 improvement opportunities。它描述 current repo identity 与 evolution，不拥有 Human 产品 Intent、Target Architecture 或 proof sufficiency；Human-facing diagram/dashboard/interactive artifact 只是 projection，不是新的 repo truth。
 - **`northstar`**：conversation / request / incident → canonical engineering Intent；把 Intent 收敛到 `execution-ready` 不会制造 Human execution authorization，已有明确授权也不重复确认。Northstar 一旦形成可供后续 review / implementation / handoff 使用的方案，必须把 current Draft 落盘为 repo/workspace 中一个真实、可寻址的 Markdown **方案文档**；chat/UI/canvas/container 只能是视图，不能成为唯一方案载体。对 material、跨 session / agent / execution-environment 的 work，这同一个方案文件继续承担 canonical **Taskbook** 角色，维护 material task / status / next owner，并在执行结果返回后判断它是否满足 Intent / Acceptance。Northstar 不执行 implementation，也不判断 proof sufficiency；后者仍属于 Verify。Drafted Issue 可以作为 tracker / 外部 carrier，但不能与方案文档形成平行 Intent SOT。
 - **`beacon`**：基于真实 repo，为一个 bounded 功能 Intent 或故障构建最小、可检查的核心原型。接口与调用草图、代表性输入输出、最小实现或故障复现都可表达这个核心，不要求可执行代码；问题与 Evidence 服务于原型。它是 **caller-neutral、主要由 model 按需调用的 specialist**；原 caller 保留选择、比较、组合及 Intent / Architecture / Verification judgment。
 - **`architecture-evolution`**：拥有长期 Target Architecture judgment + Current → Target Evolution Program。两层 judgment 必须分开，但不拆成两个顶层 Skill。
@@ -38,6 +39,8 @@
 - **`unknowns-first`**：只拥有 map-versus-territory 的**事实未知关闭**；它可以做 probe / source alignment，但不替其他 owner 关闭 Intent、concrete shape、Architecture、engineering verification 或 agent behavioral eval judgment。
 
 不要复制 owner：Northstar 不判 proof sufficiency；Verify 不重写 Intent、设计 Target 或承担 agent behavioral eval；Eval 不验证产品 outcome 或改写 engineering semantics；Beacon 不接管 caller 的 semantic ownership；AE 不用 Program convenience 反推 Intent；Unknowns First 不把 factual probe 扩成 intent interview、concrete shaping、architecture design、proof judgment 或 eval design。
+
+**Repo Identity routing rule:** Repo Identity 是 broad repo understanding / evolution projection 的 semantic owner。Northstar、AE 或其他 caller 可以为了理解“这个 repo 当前到底由哪些稳定 responsibility / contract 承载、变化压力落在哪里、一个 Intent 应看哪些区域”调用它；caller 继续拥有 Intent / Target / proof judgment。其他 Skill 可以做完成本职判断所需的局部 repo inspection，但不要各自维护一份 broad identity map、hotspot taxonomy 或长期 repo profile。
 
 **Beacon routing rule:** Northstar、AE、Verify、Unknowns First 或其他 caller 在一个局部功能或故障需要核心原型、或已有原型需要局部修订时，可 model-invoke `$beacon`。不必先制造多个候选或查清全部故障根因。Beacon 返回一个基于 repo 的核心原型及必要 Evidence / correction；原 caller 继续判断，Northstar 负责完整 Intent 的组合与编译。不要把 Beacon 做成 Human 必经入口或固定阶段。
 
@@ -61,6 +64,7 @@
 
 ## Artifact ownership
 
+- **Repo Identity artifact**：默认是从 current repo reality 编译出的 derived index / projection，不是 authoritative source。一次性分析不要求持久化；Human 明确要求“构建/维护 repo identity”或重复使用价值明确时，优先更新项目已有 architecture/domain docs 的索引/映射；没有合适 surface 时才使用项目内一个可寻址 identity 文档。每个 durable identity claim 必须指向 authoritative code/test/config/contract/doc/history anchor，并记录校验基线；source 变化后只重验 affected identity cone。diagram/dashboard/interactive page 只作为可丢弃 Human projection，不能成为第二份 SOT。
 - **Northstar 方案文档 / Taskbook**：Northstar 的 primary durable artifact 是 repo/workspace 中真实落盘的 Markdown 方案文件。current Draft 一旦成为可复用方案就写入该文件；material / cross-session execution 继续在同一文件中维护 binding Decision / Constraint / Acceptance、material tasks / status、决定性 Evidence pointer、last Northstar judgment 与 next owner。`Taskbook` 是这份方案文件在执行期承担的角色，不是第二份 plan。宿主 UI、chat block、canvas/container/panel 只能引用或展示它。
 - **Feedback Log**：按需保留可复用信号的 append-only、跨 session execution-learning artifact。worker 默认在正常 return 中报告信号；值得持久化或明确要求独立记录时，再记录 decisive Evidence pointer 与 execution observation；Northstar session 在消费 return、完成 judgment 并更新 canonical Taskbook 后，可补记 judgment / material Taskbook delta。它不是 current Intent / task state / Evidence sufficiency 的 authority，不要求两个角色共享 session，也不参与 dispatch、resume 或 acceptance；后续 Skill 改进可把它当作 trace-like input，但 behavior claim 仍必须进入 Eval。
 - **Session handoff**：只保存从 canonical 方案文档 / Taskbook 恢复所需的 session delta：plan pointer、last completed/current task、仍 live 的 blocker/decision、next task / owner、需要返回 Northstar 的 judgment point。不得复制方案文件中的架构、方案、验收全文；需要重述的 durable 内容应回写同一方案文件。
@@ -83,6 +87,7 @@
 
 任何 research / execution / review / verification finding 都按 semantic owner 回流：
 
+- repo 的 stable identity / responsibility map、semantic evolution pressure、intent-conditioned repo projection 或 identity drift 需要建立/修正 → Repo Identity；
 - factual map-versus-territory gap → Unknowns First；
 - Intent premise / Constraint / Acceptance 被推翻 → Northstar；
 - 一个 bounded 功能 Intent 或故障需要核心原型，或已有原型的局部表达需要修订 → Beacon，结果返回当前 caller；

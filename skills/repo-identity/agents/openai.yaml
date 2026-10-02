@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repo Identity"
+  short_description: "理解任意 repo 的稳定身份、演化压力与高价值改进点"
+  default_prompt: "使用 $repo-identity 直接分析当前目标 repository。先读项目级 AGENTS/规则和 current code/test/config/docs，建立 evidence-grounded repo thesis、capability/responsibility/authority、boundary/contract 与必要 key flow；再从真实 history/co-change/authority drift 中区分 semantic evolution pressure 与 raw churn。若有当前 Intent，只编译与它相关的 identity slice；若目标是找改进点，输出 pressure → identity mismatch → Evidence → improvement direction → expected leverage，并把 structural Target fork 留给 Architecture Evolution。复杂 repo understanding 根据 Human 判断任务自动选择 text/table、diagram、dashboard、timeline 或 disposable interactive artifact；任何 view 都不是新的 repo truth。"

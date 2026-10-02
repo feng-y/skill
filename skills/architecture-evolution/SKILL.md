@@ -22,6 +22,12 @@ AE 可以直接从当前 engineering request / existing Intent / Drafted Issue /
 
 不要求也不维护独立 `Goal` artifact。若一个抽象 outcome 真正影响结构判断，它应体现在 authoritative intent / request 的 Problem、Draft、Constraint、Decision 或 Acceptance 中。
 
+### 按需调用 Repo Identity
+
+如果 structural pressure 横跨多个 subsystem，当前 repo 的稳定 responsibility / authority、contract boundary 或 semantic evolution pressure 尚未形成可用地图，AE 可以 model-invoke `$repo-identity` 先得到 evidence-grounded current-repo projection。Repo Identity 只描述 current identity、change pressure 与 Evidence anchor；**AE 继续拥有 Target Architecture judgment**，不能让 current implementation identity 或 raw git hotspot 直接决定长期 Target。
+
+已有局部事实足够判断 structural fork 时不要为了完整感构建全 repo identity；只取会改变 owner / boundary / dependency / lifecycle judgment 的 slice。
+
 ### 按需调用 Beacon
 
 如果一个候选 Target 需要用具体 caller path、usage、interface 或 boundary 表达其核心，AE 可以 model-invoke `$beacon`，为这个 bounded scope 构建一个基于 repo 的最小核心原型。
