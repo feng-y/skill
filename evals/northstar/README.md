@@ -243,3 +243,7 @@ not manufacture a log.
 See [RESULTS-loading-2026-10-01.md](RESULTS-loading-2026-10-01.md) for the bounded
 final-candidate file-access observations and their limits. Source byte changes
 alone are not token or performance measurements.
+
+## Focused evolution-value selection observations
+
+[2026-10-02 selection comparison](RESULTS-evolution-value-selection-2026-10-02.md) retains two frozen selected-Northstar planning pairs on this repository and two candidate-only guards. It distinguishes source-design conformance from behavioral gain; the compared runtime increment did not establish a practical advantage.

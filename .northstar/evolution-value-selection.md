@@ -33,12 +33,20 @@
 
 ## Work / status
 
-- Source / scope：已核对
-- Runtime candidate：已冻结；独立源码与成对设计评审通过
-- Behavioral comparison：两组固定成对真实 actor 已启动；actor inputs、source hashes、返回策略与停止条件已冻结；不能按结果换题
-- Checks：6 个 skill validator、51 个既有 instrument 回归与 diff --check 通过；独立结果评审待产出
-- Branch publication：已在远端建立独立分支；完成评估后提交 / push 并远端回读验证
+- Source / scope：已核对；runtime candidate 在 commit cd06d63b8c1a382a061cb52ad9ca496e126edb7a，未按输出修订
+- Runtime candidate：仅 Northstar convergence；净增 511 字符 / 1,415 UTF-8 bytes
+- Behavioral comparison：两组固定成对真实 actor 全部完成。四次都选择先检验宽泛改进选题能力，再决定是否修既有 owner；两 baseline 也有成本替代、连贯诊断交接、后续条件分支与保留范围
+- Independent judgment：两对均无可采用的实际优势。候选语言更明确不计为增益，四者仍未确立值得采用的具体能力改动，不能据无差异宣布 main 已完成原始诉求
+- Guards：局部 parser planning/handoff 通过所测边界；真实 RDR 反证返回已完成，实质改变采用 / 依赖 / Acceptance并保留完整原始目标。两者均 candidate-only，不是成对 uplift
+- Checks：6 个 skill validator、51 个既有 instrument 回归与 diff --check 通过；独立审查重跑 51 项亦通过。均不冒充行为改善
+- Branch publication：首版实现已在独立分支远端核验；最终结果和可重现证据已完成，随同一分支交付；main 未改
+
+## Current acceptance judgment
+
+方案在源码层符合既有选择责任与边界，但本轮成对观察没有证明它比 current main 选得更好、形成更有用的路线或减少有害前置。四个产物都把具体能力改动推迟到后续“先发现缺口再修 owner”，未证明这笔诊断投入优于其他现实机会；它们形成了可推进的有界诊断交接，但未达成用户期望的实际有价值能力目标方案。保留主线的决定依赖实际收益，不依赖实现是否写完。
+
+目前建议不推广 runtime 增量；保留未合入分支供对照检查，不为获得正结果增加新题、平台或提醒。后续没有独立的 matched no-op 测量，也没有实际产品战略/演化执行验证；不从文本推断这些能力已可靠。
 
 ## Evidence / next owner
 
-当前详细试验设计在工作区 review/protocol.md；通过后将实际结果与可重现证据留在 evals/northstar/，本文件继续更新 status 和最终采用判断。下一责任为独立设计评审，随后实施者运行冻结试验；评审不向 actor 泄漏候选目的或预期答案。
+详细事实、局限与原始产物入口见 [成对结果](../evals/northstar/RESULTS-evolution-value-selection-2026-10-02.md)。已冻结比较与守卫全部完成；本轮实现和评估交付已完成，不再追加测试。最终建议保留分支作为负面实验记录、撤回 runtime 进入主线的采用建议；本轮不再有待执行的实验或实现工作。本轮不 PR、合入或部署。
