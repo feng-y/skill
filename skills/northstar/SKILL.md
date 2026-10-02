@@ -43,13 +43,13 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 每次只处理仍会改变结果、范围、核心路径、责任、Acceptance、execution readiness 或 durable transfer 的 gap：
 
 1. 恢复原始请求、已有 Human correction / authorization、current Draft 与决定性 Evidence；若当前判断依赖 Human 未点名但可能改变 Draft、binding Constraint、Acceptance 或下一步选择的事实，先取得足够 Evidence；已有事实足以判断时不扩大调查，事实 unknown 按既有 owner 关闭；
-2. 判断 current Draft 相对已授权 Intent 还缺什么，优先处理会改变下一步选择的 gap；
+2. 判断 current Draft 相对已授权 Intent 还缺什么，优先处理会改变下一步选择的 gap；宽泛改进请求尚未选定对象时，按 [机会发现与推荐](references/opportunity-discovery.md) 沿重要工作、真实变化和实际摩擦形成并筛排具体改进提案；
 3. 选择足以区分后续做法的最小行动交给真实 owner，或直接吸收已有答案；
 4. 消费返回的 Decision / correction / Evidence；
 5. **由 Northstar 自己把采用的局部结果组合回同一个 canonical Draft**；
 6. 重新检查整体 coverage，直到当前没有 material semantic gap。
 
-完整保留 Intent 不等于提前展开完整解决方案。范围宽泛、路径未定时，先基于真实 repo / task 推进能区分后续做法的一步；未确定的后续路径保留为 Open Questions，不编成假定成立的方案或占位任务。缩小本轮行动不是缩小授权范围，不能据此宣布整体 execution-ready / done。已有 Evidence 足以推进已授权执行时，直接 handoff，不强制先调查或做原型。
+完整保留 Intent 不等于提前展开未知路径。已有依据足以提出具体主张时，形成有取舍理由的暂定推荐，并接成目标状态、必要变化与渐进路线；不能以“将来诊断后再决定增强什么”代替本轮方案。真正可能翻转采用判断的未知仍先关闭；没有值得采用的提案时，可以保留现状并说明重开条件。未定后续保留为 Open Questions，不编成假定成立的方案或占位任务。缩小本轮行动不是缩小授权范围，局部完成或 no-op 不自动关闭整体 Intent，也不要求发明后续工作。已有 Evidence 足以推进已授权执行时，直接 handoff，不强制先调查或做原型。
 
 不要把这六项物化成 persistent state、workflow、gap schema 或 progress manager。
 
