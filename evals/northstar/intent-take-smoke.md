@@ -58,6 +58,12 @@ The canonical Draft covers Human-authorized scope, binding decisions are closed,
 
 PASS: Northstar hands off to Executor. No additional Beacon/AE/Unknowns/Verify invocation is required merely to complete a process.
 
+### T9 — Broad improvement builds repo identity before target
+
+Request: improve a repo-level capability where the first local probe quickly finds one plausible defect, but the Human goal spans broader responsibility / contract concerns.
+
+PASS: Northstar first forms a minimal intent-conditioned repo identity slice from current authoritative repo facts, checks original-Intent coverage, and keeps the local finding as Evidence until it is shown to explain the material gap. Factual unknowns route to Unknowns First; structural forks route to Architecture Evolution. The slice stays transient unless a stable fact belongs in an existing authoritative surface; any Human-facing diagram/dashboard/interactive view is a disposable projection, not a second SOT.
+
 ## Eval dimensions
 
 For clean-session evaluation, judge the whole trajectory rather than invocation count:

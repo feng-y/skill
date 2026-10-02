@@ -5,7 +5,7 @@
     "actor": "fresh session with candidate skills loaded; receive only prompt and fixture facts",
     "consumer": "when a case requires real durable transfer, use a fresh session with the actor's canonical Taskbook plus delta-only handoff and unchanged fixture facts; otherwise judge the actor trace and current Draft/Taskbook without inventing a handoff",
     "judge": "blinded to expected skill names during actor run; score observed trajectory and final surface against rubric",
-    "claims": "Eleven cases are smoke, not statistical uplift. Do not fabricate pass counts without actual runs."
+    "claims": "Twelve cases are smoke, not statistical uplift. Do not fabricate pass counts without actual runs."
   },
   "cases": [
     {
@@ -221,6 +221,31 @@
         "the actor claims an external worker was started or completed without an observable delegation/execution event"
       ],
       "consumer_check": "The canonical Taskbook shows whether T2 was accepted, why, and what task/owner is next; the worker result remains Evidence/input rather than the task authority."
+    },
+    {
+      "id": "IT12_broad_improvement_builds_repo_identity_before_target",
+      "prompt": "请改进这个 skill repo：宽泛 improvement intent 不要被第一个容易证明的局部问题带走；先基于当前 repo 形成完整、有价值、可推进的 target。不要为了这个问题新增通用平台或新 Skill。",
+      "fixture_repo_facts": {
+        "northstar": "Northstar already owns overall Intent composition, stable domain language, whole-Draft coverage review, and canonical Draft/Taskbook.",
+        "architecture_evolution": "Architecture Evolution owns long-term responsibility, boundary, dependency, Target Architecture, and Current-to-Target structural judgment.",
+        "unknowns_first": "Unknowns First owns factual map-versus-territory closure and current-source alignment.",
+        "first_easy_local_finding": "A single local prompt/checklist weakness can be observed, but current repo already contains self-review and coverage semantics, so that observation alone does not establish the complete improvement target."
+      },
+      "required": [
+        "before adopting a target, the actor builds an intent-conditioned repo identity slice grounded in current authoritative repo facts",
+        "the slice covers only target-changing stable concepts/terms, responsibilities/authority, boundaries/contracts, relevant evolution pressure, and evidence anchors",
+        "the first easy local finding remains Evidence/input until overall Intent coverage shows that it represents the material gap",
+        "factual unknowns route to Unknowns First and long-term structural forks to Architecture Evolution rather than becoming guessed identity",
+        "repo identity remains a transient projection or folds stable facts back into existing authoritative surfaces; it does not become a new semantic owner, knowledge graph, mandatory workflow, or parallel SOT",
+        "when complex repo understanding must be presented to Human, representation is selected for the judgment need (text/table/diagram/dashboard/interactive artifact) without making the generated view authoritative"
+      ],
+      "fail_if": [
+        "the actor selects the target directly from the first local issue without checking repo-level material coverage",
+        "repo identity becomes a new top-level Skill, graph/schema/database, mandatory phase, or second canonical artifact without independent evidence",
+        "historical explanation or unverified narrative is recorded as current repo identity",
+        "a Human-facing HTML/diagram/dashboard is treated as durable repo truth rather than a disposable projection"
+      ],
+      "consumer_check": "A fresh consumer can see why the chosen target follows from current repo responsibility/boundary/contract Evidence and which Intent dimensions remain unknown, without reading an exhaustive repo inventory."
     }
   ],
   "judge_dimensions": [

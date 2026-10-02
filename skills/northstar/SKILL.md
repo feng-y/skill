@@ -49,6 +49,8 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 5. **由 Northstar 自己把采用的局部结果组合回同一个 canonical Draft**；
 6. 重新检查整体 coverage，直到当前没有 material semantic gap。
 
+对于宽泛、repo-grounded 的 improvement / refactor / capability request，如果第一个局部发现不足以代表整体问题，形成 material target 前读取 [references/repo-identity.md](references/repo-identity.md)，先构造一个 **intent-conditioned repo identity slice**。这个 slice 只覆盖会改变 target 的 stable concept、responsibility / authority、boundary / contract、evolution pressure 与 Evidence anchor；它是当前 reasoning projection，不是新的 persistent identity store、semantic owner 或 canonical artifact。只有当原始 Intent 的 material dimensions 都已被该 slice 覆盖或明确标为 factual / structural unknown，才把局部 finding 提升为 adopted target；否则继续关闭最有 leverage 的缺口。
+
 完整保留 Intent 不等于提前展开完整解决方案。范围宽泛、路径未定时，先基于真实 repo / task 推进能区分后续做法的一步；未确定的后续路径保留为 Open Questions，不编成假定成立的方案或占位任务。缩小本轮行动不是缩小授权范围，不能据此宣布整体 execution-ready / done。已有 Evidence 足以推进已授权执行时，直接 handoff，不强制先调查或做原型。
 
 不要把这六项物化成 persistent state、workflow、gap schema 或 progress manager。

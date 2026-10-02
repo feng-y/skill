@@ -30,6 +30,7 @@ Northstar passes only when it:
 22. keeps the next-session prompt thin: read repo rules + Taskbook + handoff, restore the Northstar context, continue the next task; do not inline the whole plan again.
 23. judges only material Taskbook task returns; implementation-local helpers, file edits, commits, and individual tests stay under worker autonomy and do not become Northstar approval checkpoints;
 24. never fabricates a worker/delegation event: choosing a next owner/task is semantic handoff, while external execution start/completion requires a real execution/delegation event.
+25. for a broad repo-grounded improvement/refactor/capability Intent, builds a decision-relevant intent-conditioned repo identity slice before promoting the first local finding into the material target; the slice is a projection over current repo Evidence, not a new semantic owner or parallel SOT.
 
 ## Scenario smoke
 
@@ -186,6 +187,14 @@ Freeze one dispatched parser task, its input Taskbook, actual returned artifact 
 Score from actual reads of the return/current Taskbook and artifact observations, plus the resulting canonical Taskbook delta and next-task scope; a narrated promise to compare them is insufficient. Missing association or material proof remains unresolved, not PASS; use existing sources or the corresponding owner to close it. These contrasts specify the desired discriminator, not measured behavior or a complete Intent-continuity loop.
 
 Caller-return continuation contrast (specification only; not an additional CW runner case): deliver a real material return through the host's existing caller-return in the active work context, without another Human `/northstar` or “continue” instruction. After Northstar judges that return: (1) if already-authorized material work is still incomplete **and currently actionable**, persist the judgment and hand off the next material task; a second material return must reach Northstar judgment again without a Graph or role restart; (2) if the current Taskbook scope now satisfies the canonical Intent / Acceptance, record completion and stop; (3) if material work remains but cannot currently proceed because of a factual blocker, missing Human commitment, unavailable authority/source, or absent execution authorization, preserve that unfinished scope plus the real blocker/owner and stop execution without declaring overall completion. Missing return transport is an honest handoff limitation, not evidence of a running worker. Score actual Taskbook/dispatch deltas and host tool events, not role claims. These are behavior specifications, not measured results.
+
+### N25 — Broad improvement target is grounded in repo identity before local solutioning
+
+The Human asks to improve a repo-level capability and the first search/probe quickly exposes one easy local defect, while the original Intent spans multiple responsibilities or contracts.
+
+PASS: before adopting that local defect as the target, Northstar builds only the decision-relevant repo identity slice: stable concepts, responsibility/authority, boundary/contracts, relevant evolution pressure, and current Evidence anchors. Factual unknowns return to Unknowns First; long-term structural forks return to Architecture Evolution. The local defect becomes the target only if this coverage shows it explains the material Intent. Complex Human review may use a diagram/dashboard/interactive projection, but that view is disposable and does not become a second repo truth.
+
+FAIL: the first provable local issue becomes the whole target without coverage, or Repo Identity is materialized as a mandatory new Skill/workflow/graph/database/SOT merely to support this reasoning step.
 
 Contract smoke supports ownership/routing/convergence safety only. Behavioral uplift requires real clean-session actor + fresh-consumer + blinded-judge runs.
 
