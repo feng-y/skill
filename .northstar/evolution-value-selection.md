@@ -27,7 +27,7 @@ v1只有采用前的价值标准，缺少如何取得候选、如何沿实际工
 3. 判断实际产物：是否形成内容具体、有依据的可采用机会；淘汰已具备/已修/伪必要投入；推荐及完整目标、必要变化、渐进路线相接。只返回“以后诊断要改什么”不算该目标完成；有事实支持的no-change或decisive blocker仍有效
 4. 不以字数、章节、指定候选数或术语给分；不把无量化收益等同不能提案，不把存在workaround等同只能维持现状
 5. 预先冻结两组成对重放与两个轻量边界守卫；不按结果换题。真实对照和独立评审决定保留或撤回，无增益要直报
-6. 校验skill、引用、既有instrument回归与文件完整性。只推同一分支，不PR/merge/deploy
+6. 校验skill、引用、既有instrument回归与文件完整性。在同一分支交付；用户后续已授权创建Draft PR供最终评估，仍不merge/deploy
 
 ## Fixed environment correction
 
@@ -46,7 +46,7 @@ v2给双方同一main近期20个真实commit及diff，并允许读其祖先历�
 
 观察到的是更可采用的具体规划进展。环境已较 v1 修正，跨轮差异不能全归于方法；这又是self-repo任务，改动同时影响active instruction和可见机会集，不能声称纯instruction因果、战略最优、实际ROI或一般可靠性已证。
 
-本轮实现/比较已结束，不增加样本、平台或后续backend实施。结果与必要证据见 [v2评估](../evals/northstar/RESULTS-opportunity-discovery-v2-2026-10-02.md)。所有交付仅在同一分支，未PR、merge或deploy。
+本轮实现/比较已结束，不增加样本、平台或后续backend实施。结果与必要证据见 [v2评估](../evals/northstar/RESULTS-opportunity-discovery-v2-2026-10-02.md)。用户后续已授权公开评估资料并创建 [Draft PR #125](https://github.com/feng-y/skill/pull/125)，当前进入最终合入评估；未merge或deploy。
 
 ## v1 retained history
 
