@@ -1,5 +1,7 @@
 # 从开放改进请求发现可采纳机会
 
+当前结论（解耦验证后）：v2不推荐合入；两对结果为有限、混合的规划差异，未重复证明有用的增量。保持Draft PR，结束本候选实验。历史结果与源码保留，未merge/deploy。
+
 ## Current Intent / Target
 
 用户要求继续在独立分支实现并实测。当前优先目标：用户只说“完善这个 repo”，体系就能沿重要使用场景、演进热点和真实摩擦发现有价值的机会，比较收益与投入，主动推荐能力目标，再形成完整目标状态、必要变化和渐进路线。
@@ -35,7 +37,7 @@ v1双方无Git history、禁外部、缺当前usage资料，而repo含大量eval
 
 v2给双方同一main近期20个真实commit及diff，并允许读其祖先历史和相关外部一手源码/文档。保留正常repo资料，全部来源同等可达，历史不是当前使用频率统计；不提供某个推荐答案，不移入本方案或v1实验输出。外部读取记录来源与证据，独立审查差异。仍是planning输出，不因实施权限影响高层采用判断。
 
-## Status / current adoption judgment
+## v2 coupled comparison：历史观察
 
 - v2 runtime：source commit c544a0f34f6f31d2b46777084151c18433912322，冻结后未按结果修稿
 - 两组成对运行已完成：两 candidate 从实际维护路径采用“可移植、可信、可重跑的既有评测证据链”能力，明确当前机制、复用、相依变化、渐进路线和验收；两 baseline 仍把具体改变留给后续选题诊断
@@ -53,3 +55,13 @@ v2给双方同一main近期20个真实commit及diff，并允许读其祖先历�
 v1源码commit cd06d63，结果commit 45b3528。两组旧条件下四个actor都转为诊断交接，没有确立具体能力改变；候选无可见增益，未推荐合入。两轻量守卫未观察到所测回归；其成功不等于uplift。
 
 v1[结果与证据](../evals/northstar/RESULTS-evolution-value-selection-2026-10-02.md)保持原样，旧commit和归档不重写。v2不能改环境后把跨轮差异全归给新方法，采用判断只看v2同条件baseline/candidate。
+
+## 解耦验证（用户继续授权）
+
+2026-10-02 用户要求继续唯一决定性对照修正。Target：在相同被改进 repo 上判断 v2 方法是否改变机会形成、反驳、采用与完整推进方案。Delta 仅为测量输入布局：target 固定 current main b3612ee，双方外置 active-skills，只有 active Northstar 两文件不同；runtime 不修稿，既有证据不改写。
+
+Acceptance：两组预定 fresh pairs；同一131-file target、20条真实history、task/context与外部资料权限；target Skill 是产品事实，active Skill 是执行指令，不能互换。独审输入放行后运行，不增加无关guards或事后新题。以实际目标及其价值/因果/替代/完整路线判断，无增益如实保留，不能把方法相似文字或易修bug自动计胜。结果先报告，再更新同一Draft PR；未授权merge/deploy。
+
+当前：四个fresh runs已完成、解耦成立。四者都选择Northstar宽泛改进选题；Pine→Quartz有具体提案成熟度改善，Spruce baseline已提出有依据的机制、替换段落与条件路线，Rowan的增量主要是更清楚分开推荐与效果证明。结果是mixed/modest planning difference，未建立两对重复的实质采用优势。
+
+当前采用判断：不推荐v2合入，结束此候选实验，不追追加样本；保留Draft PR及v1/v2原始历史。旧coupled观察并未作废，但不再支撑“2对明确优势”的当前结论，也不能把无充分分离说成main已满足用户完整目标。runtime保持未合入且不再修稿。详见[解耦结果](../evals/northstar/RESULTS-opportunity-discovery-decoupled-2026-10-02.md)。
