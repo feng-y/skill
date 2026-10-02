@@ -35,12 +35,18 @@ v1双方无Git history、禁外部、缺当前usage资料，而repo含大量eval
 
 v2给双方同一main近期20个真实commit及diff，并允许读其祖先历史和相关外部一手源码/文档。保留正常repo资料，全部来源同等可达，历史不是当前使用频率统计；不提供某个推荐答案，不移入本方案或v1实验输出。外部读取记录来源与证据，独立审查差异。仍是planning输出，不因实施权限影响高层采用判断。
 
-## Status / next owner
+## Status / current adoption judgment
 
-- v2 runtime：已实现并冻结，独立源码与协议评审通过
-- v2 paired runs：四个actor已启动；两个已冻结轻量guards在其后运行
-- 当前下一责任：运行冻结对照与guard，独立审实际产物，回写采用判断；不按结果修稿或换题
-- 所有后续执行继续沿用户对本分支的授权，不扩大到PR、主线或部署
+- v2 runtime：source commit c544a0f34f6f31d2b46777084151c18433912322，冻结后未按结果修稿
+- 两组成对运行已完成：两 candidate 从实际维护路径采用“可移植、可信、可重跑的既有评测证据链”能力，明确当前机制、复用、相依变化、渐进路线和验收；两 baseline 仍把具体改变留给后续选题诊断
+- 独立复核：旧 multi-turn runner 仍在当前 README 和 Eval adapter 中使用，新 CW 的 fresh 三段不能替代它。identity负控可复现；RDR大文件probe仅支持已知普通文件路径，非任意stdout/退出后/严格时序保证
+- 两guard已完成：明确局部任务不加载机会方法；生产契约缺失时保留条件与实际closure owner、不宣称whole-ready。它们不代表所有开放发现中的未知情况
+- 校验完成：6个Skill validator、51个既有instrument回归、diff检查、输入/记录完整性及独立源码/结果审读。静态测试不算行为提升
+- 建议条件保留 v2 作为未合入的方法候选；不恢复 v1，不依据两对就直接推广合入。backend方案尚未实施，未扩大本轮任务
+
+观察到的是更可采用的具体规划进展。环境已较 v1 修正，跨轮差异不能全归于方法；这又是self-repo任务，改动同时影响active instruction和可见机会集，不能声称纯instruction因果、战略最优、实际ROI或一般可靠性已证。
+
+本轮实现/比较已结束，不增加样本、平台或后续backend实施。结果与必要证据见 [v2评估](../evals/northstar/RESULTS-opportunity-discovery-v2-2026-10-02.md)。所有交付仅在同一分支，未PR、merge或deploy。
 
 ## v1 retained history
 

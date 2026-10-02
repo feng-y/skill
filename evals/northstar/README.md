@@ -247,3 +247,5 @@ alone are not token or performance measurements.
 ## Focused evolution-value selection observations
 
 [2026-10-02 selection comparison](RESULTS-evolution-value-selection-2026-10-02.md) retains two frozen selected-Northstar planning pairs on this repository and two candidate-only guards. It distinguishes source-design conformance from behavioral gain; the compared runtime increment did not establish a practical advantage.
+
+[Opportunity discovery v2 (2026-10-02)](RESULTS-opportunity-discovery-v2-2026-10-02.md) compares two fixed pairs with equal real history and external-source access. It records concrete candidate adoption proposals and two bounded guards, while retaining the self-repo causal limitation and v1 negative evidence.
