@@ -37,7 +37,7 @@ trivial/local change 若一个已有 authoritative focused test 已直接覆盖 
 
 ## Claim first
 
-先读取 authoritative contract，只恢复当前 verification 需要的 claim：
+先读取 authoritative contract，由适用的 Acceptance 与 binding Constraint / Decision 共同限定当前 claim；局部验收范围不能豁免已约定不改变的行为，未承诺的行为也不自动成为新 claim：
 
 - Northstar current Draft / canonical Taskbook 中的 Acceptance / binding Constraint / Decision；已有 Taskbook 时，Issue 只提供引用；
 - 已存在的 Issue/spec/accepted request 中明确的 completion claim；
