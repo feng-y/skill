@@ -40,7 +40,7 @@
 
 不要复制 owner：Northstar 不判 proof sufficiency，也不把“什么 improvement 值得推进”的开放判断隐式吞进 Intent maintenance；Bearing 不接管 canonical Intent / Taskbook、Human commitment、Target Architecture、proof 或 implementation；Verify 不重写 Intent、设计 Target 或承担 agent behavioral eval；Eval 不验证产品 outcome 或改写 engineering semantics；Beacon 不接管 caller 的 semantic ownership；AE 不用 Program convenience 反推 Intent；Unknowns First 不把 factual probe 扩成 intent interview、concrete shaping、architecture design、proof judgment 或 eval design。
 
-**Beacon routing rule:** Northstar、AE、Verify、Unknowns First 或其他 caller 在一个局部功能或故障需要核心原型、或已有原型需要局部修订时，可 model-invoke `$beacon`。不必先制造多个候选或查清全部故障根因。Beacon 返回一个基于 repo 的核心原型及必要 Evidence / correction；原 caller 继续判断，Northstar 负责完整 Intent 的组合与编译。不要把 Beacon 做成 Human 必经入口或固定阶段。
+**Beacon routing rule:** Northstar、Bearing、AE、Verify、Unknowns First 或其他 caller 在一个局部功能或故障需要核心原型、或已有原型需要局部修订时，可 model-invoke `$beacon`。不必先制造多个候选或查清全部故障根因。Beacon 返回一个基于 repo 的核心原型及必要 Evidence / correction；原 caller 继续判断，Northstar 负责完整 Intent 的组合与编译。不要把 Beacon 做成 Human 必经入口或固定阶段。
 
 `prototype` 不再是顶层 Skill identity 或 runtime route；Beacon 的主体是核心原型，可执行 prototype/mock/minimal implementation 只是表达它的方式，不恢复 `$prototype`。
 
