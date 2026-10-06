@@ -43,7 +43,7 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 每次只处理仍会改变结果、范围、核心路径、责任、Acceptance、execution readiness 或 durable transfer 的 gap：
 
 1. 恢复原始请求、已有 Human correction / authorization、current Draft 与决定性 Evidence；若当前判断依赖 Human 未点名但可能改变 Draft、binding Constraint、Acceptance 或下一步选择的事实，先取得足够 Evidence；已有事实足以判断时不扩大调查，事实 unknown 按既有 owner 关闭；
-2. 判断 current Draft 相对已授权 Intent 还缺什么，优先处理会改变下一步选择的 gap；
+2. 判断 current Draft 相对已授权 Intent 还缺什么，优先处理会改变下一步选择的 gap；若真正未决的是“什么 improvement 值得推进、为什么”，把这个 bounded judgment 交 `$bearing`，Northstar 不在 Intent maintenance 中自行发明 improvement target；
 3. 选择足以区分后续做法的最小行动交给真实 owner，或直接吸收已有答案；
 4. 消费返回的 Decision / correction / Evidence；
 5. **由 Northstar 自己把采用的局部结果组合回同一个 canonical Draft**；
@@ -174,6 +174,7 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 
 - factual premise 不清 → `$unknowns-first`；
 - verified reality 推翻 Draft / Constraint / Acceptance → 重开 Northstar 中受影响部分；
+- new Evidence 使 material improvement pressure / causal mechanism / target value 重新未决 → `$bearing`；
 - 局部功能/故障的核心原型缺失，或已有原型需修订 → `$beacon`；
 - 新的长期 structure fork → `$architecture-evolution`；
 - claim 需要 verification design / sufficiency judgment → `$verify`；
