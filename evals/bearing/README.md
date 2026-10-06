@@ -25,7 +25,7 @@ Bearing passes only when it:
 
 A Human asks to "improve repo identity" without naming the concrete deficiency.
 
-PASS: inspect current repo/usage/change pressures, identify the material deficiency, recommend a target capability and explain the causal mechanism and why it matters. Do not pick the first easy-to-prove local defect or emit an issue inventory.
+PASS: inspect current repo/usage/change pressures, identify the material deficiency, recommend a target capability and explain the causal mechanism and why it matters. Challenge the recommendation against the current complete capability path, recent fixes and still-valid strategic / Target direction under the same outcome and binding constraints; a workaround that transfers cost or misses constraints does not establish that the target is already met. Distinguish verified facts, causal inference and unverified expected gains; a grounded tentative recommendation need not wait for demonstrated uplift. Do not pick the first easy-to-prove local defect or emit an issue inventory.
 
 ### B2 — Target already clear
 

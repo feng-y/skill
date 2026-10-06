@@ -78,6 +78,10 @@ Bearing 必须形成推荐，而不是只列问题。
 
 只比较会 materially 改变 target capability、收益机制、投入或风险的 live alternatives，包括“维持现状 / 做局部修复”在确实合理时的基线。
 
+推荐前，在同一 outcome 与 binding constraints 下，用当前完整能力路径、最近修复和仍有效的战略 / Target 反驳候选：问题是否仍存在，已有能力是否足够，这项改变为何值得当前投入。既有方向可被新 Evidence 修订；workaround 若转移代价或遗漏约束，不算目标已满足。
+
+区分已核实事实、因果推断与尚未验证的预期收益。有依据时可以给暂定推荐，只关闭会 materially 翻转方向的未知，不把效果尚未证明变成无法提出推荐的理由。
+
 不要为了显得完整制造三方案。若一个方向已经被事实 falsify，直接退出；若现状已经足够，允许返回 **no material improvement now**。
 
 ### 4. 给出 complete target capability
