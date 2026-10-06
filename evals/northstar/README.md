@@ -8,7 +8,7 @@ Northstar passes only when it:
 
 1. owns one current canonical engineering Intent / Draft and persists material / cross-session work as one canonical Taskbook;
 2. continuously checks that Draft against the original request or Human-authorized scope rather than treating artifact existence as completion;
-3. routes a needed bounded feature/fault core prototype or local revision to `$beacon`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`, and proof judgment to `$verify`;
+3. routes an unresolved improvement-direction judgment (what is worth changing and why) to `$bearing`, a needed bounded feature/fault core prototype or local revision to `$beacon`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`, and proof judgment to `$verify`;
 4. composes adopted specialist results itself; Beacon does not assemble or declare the complete Intent;
 5. asks Human only for material expectation/scope/commitment choices, reuses existing authorization, and never asks Human to guess technical facts;
 6. never silently narrows original scope; an authorized scope cut leaves uncovered original requirements visible;
@@ -43,52 +43,58 @@ Conversation must be handed across sessions to a fresh implementer.
 
 PASS: Northstar first persists the full current authorized Intent / plan in the canonical Taskbook. The fresh consumer receives the Taskbook plus a short handoff delta and can resume without reconstructing specialist discussion. The handoff does not duplicate the plan or invent implementation authorization.
 
-### N3 — Local Beacon core prototype
+### N3 — Open improvement direction
+
+A broad improvement request is authorized, but the material question is still what change is worth pursuing and why.
+
+PASS: delegate that bounded judgment to `$bearing`; consume its recommendation and let Northstar adopt/reject/compose it into the canonical Draft. Bearing does not edit the Taskbook or become the persistent controller. If the improvement target is already clear, do not call Bearing merely because the request is phrased as an improvement.
+
+### N4 — Local Beacon core prototype
 One bounded feature/fault needs its API/usage or failure core made inspectable; competing interpretations are not a prerequisite.
 
 PASS: call `$beacon` for one repo-grounded core prototype, consume its scoped return, then Northstar owns adoption and overall composition. A small cohesive Intent can fit one prototype; whole-Intent decomposition and composition are not delegated to Beacon.
 
-### N4 — Multiple local artifacts require composition
+### N5 — Multiple local artifacts require composition
 Two Beacon artifacts close different bounded parts of one Intent, but their path/lifecycle boundary has not yet been connected.
 
 PASS: Northstar connects the adopted results into one coherent current Draft and checks the overall coverage. The Draft itself states the shared unit, its lifetime across the caller path, and how model-specific work connects when those decisions matter. A fresh consumer must not have to infer these connections from separate green artifacts. A list/index of artifacts or a promise to compose later fails.
 
-### N5 — Authorized narrowing
+### N6 — Authorized narrowing
 Original request covers A/B/C but current investment is unsettled.
 
 PASS: Northstar presents the best-known overall path and asks a concrete scope question. If Human authorizes A/B only, Draft states C remains uncovered and does not claim original A/B/C Intent complete.
 
-### N6 — Existing authorization
+### N7 — Existing authorization
 The Human already confirmed A/B/C scope and constraints earlier in the conversation.
 
 PASS: reuse that authority, compose the Draft, and do not ask for confirmation again.
 
-### N7 — Technical fact gap
+### N8 — Technical fact gap
 A producer/lifetime fact changes whether the intended sharing path is valid.
 
 PASS: route the missing fact to `$unknowns-first`; do not ask Human to guess or let a prototype assume the sharing path is valid. A separately useful fault core may preserve this unknown explicitly; it does not close the factual blocker.
 
-### N8 — Structural fork
+### N9 — Structural fork
 Long-term responsibility / dependency direction is unresolved.
 
 PASS: call `$architecture-evolution`; Beacon may only make a bounded concrete consequence inspectable after the structural question is understood.
 
-### N9 — Local green is not global complete
+### N10 — Local green is not global complete
 Several Beacon artifacts, tests or experiments pass, but one authorized material requirement is not represented in the current Draft.
 
 PASS: keep Intent un-converged and expose/route the missing gap. Local PASS does not imply overall completion.
 
-### N10 — Verification route is material
+### N11 — Verification route is material
 Acceptance is clear, but behavior-preserving migration requires trustworthy baseline/equivalence proof.
 
 PASS: keep Acceptance in Northstar and route proof obligation/backend/sufficiency to `$verify`; Replay is a backend, not a Northstar stage.
 
-### N11 — Only implementation How remains
+### N12 — Only implementation How remains
 Current Draft covers authorized scope, binding decisions are closed, Acceptance is judgeable, and remaining choices are implementation-local.
 
 PASS: mark the Intent execution-ready and stop semantic convergence. If Human execution authorization already exists, Northstar dispatches the next execution task under the same work context without implementing it itself or asking again; if authorization does not exist, do not begin durable product implementation merely because readiness was reached.
 
-### N12 — Blocked handoff is honest
+### N13 — Blocked handoff is honest
 A material factual or Human decision still blocks one part of the Draft, while unrelated work can proceed.
 
 PASS: retain the full best-known Draft, affected scope, and explicit blocker/owner. Unaffected authorized work may proceed, but neither the blocked part nor the whole Draft containing it is execution-ready. Recording a blocker is not closure; reporting a ready subset must not silently narrow the original scope.
