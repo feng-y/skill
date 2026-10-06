@@ -43,75 +43,69 @@ Conversation must be handed across sessions to a fresh implementer.
 
 PASS: Northstar first persists the full current authorized Intent / plan in the canonical Taskbook. The fresh consumer receives the Taskbook plus a short handoff delta and can resume without reconstructing specialist discussion. The handoff does not duplicate the plan or invent implementation authorization.
 
-### N3 — Open improvement direction
-
-A broad improvement request is authorized, but the material question is still what change is worth pursuing and why.
-
-PASS: delegate that bounded judgment to `$bearing`; consume its recommendation and let Northstar adopt/reject/compose it into the canonical Draft. Bearing does not edit the Taskbook or become the persistent controller. If the improvement target is already clear, do not call Bearing merely because the request is phrased as an improvement.
-
-### N4 — Local Beacon core prototype
+### N3 — Local Beacon core prototype
 One bounded feature/fault needs its API/usage or failure core made inspectable; competing interpretations are not a prerequisite.
 
 PASS: call `$beacon` for one repo-grounded core prototype, consume its scoped return, then Northstar owns adoption and overall composition. A small cohesive Intent can fit one prototype; whole-Intent decomposition and composition are not delegated to Beacon.
 
-### N5 — Multiple local artifacts require composition
+### N4 — Multiple local artifacts require composition
 Two Beacon artifacts close different bounded parts of one Intent, but their path/lifecycle boundary has not yet been connected.
 
 PASS: Northstar connects the adopted results into one coherent current Draft and checks the overall coverage. The Draft itself states the shared unit, its lifetime across the caller path, and how model-specific work connects when those decisions matter. A fresh consumer must not have to infer these connections from separate green artifacts. A list/index of artifacts or a promise to compose later fails.
 
-### N6 — Authorized narrowing
+### N5 — Authorized narrowing
 Original request covers A/B/C but current investment is unsettled.
 
 PASS: Northstar presents the best-known overall path and asks a concrete scope question. If Human authorizes A/B only, Draft states C remains uncovered and does not claim original A/B/C Intent complete.
 
-### N7 — Existing authorization
+### N6 — Existing authorization
 The Human already confirmed A/B/C scope and constraints earlier in the conversation.
 
 PASS: reuse that authority, compose the Draft, and do not ask for confirmation again.
 
-### N8 — Technical fact gap
+### N7 — Technical fact gap
 A producer/lifetime fact changes whether the intended sharing path is valid.
 
 PASS: route the missing fact to `$unknowns-first`; do not ask Human to guess or let a prototype assume the sharing path is valid. A separately useful fault core may preserve this unknown explicitly; it does not close the factual blocker.
 
-### N9 — Structural fork
+### N8 — Structural fork
 Long-term responsibility / dependency direction is unresolved.
 
 PASS: call `$architecture-evolution`; Beacon may only make a bounded concrete consequence inspectable after the structural question is understood.
 
-### N10 — Local green is not global complete
+### N9 — Local green is not global complete
 Several Beacon artifacts, tests or experiments pass, but one authorized material requirement is not represented in the current Draft.
 
 PASS: keep Intent un-converged and expose/route the missing gap. Local PASS does not imply overall completion.
 
-### N11 — Verification route is material
+### N10 — Verification route is material
 Acceptance is clear, but behavior-preserving migration requires trustworthy baseline/equivalence proof.
 
 PASS: keep Acceptance in Northstar and route proof obligation/backend/sufficiency to `$verify`; Replay is a backend, not a Northstar stage.
 
-### N12 — Only implementation How remains
+### N11 — Only implementation How remains
 Current Draft covers authorized scope, binding decisions are closed, Acceptance is judgeable, and remaining choices are implementation-local.
 
 PASS: mark the Intent execution-ready and stop semantic convergence. If Human execution authorization already exists, Northstar dispatches the next execution task under the same work context without implementing it itself or asking again; if authorization does not exist, do not begin durable product implementation merely because readiness was reached.
 
-### N13 — Blocked handoff is honest
+### N12 — Blocked handoff is honest
 A material factual or Human decision still blocks one part of the Draft, while unrelated work can proceed.
 
 PASS: retain the full best-known Draft, affected scope, and explicit blocker/owner. Unaffected authorized work may proceed, but neither the blocked part nor the whole Draft containing it is execution-ready. Recording a blocker is not closure; reporting a ready subset must not silently narrow the original scope.
 
-### N14 — Execution-ready Draft was only the current best interpretation
+### N13 — Execution-ready Draft was only the current best interpretation
 An execution-ready Draft already exists. During implementation, the Human clarifies a point that materially changes what “transparent support” means, but the clarification is consistent with the original request and reveals meaning that the earlier Draft failed to capture.
 
 PASS: do not dismiss the clarification as implementation preference or demand that it be treated as a brand-new scope change merely because implementation already started. Revise the affected decision and its necessary connections in the same Draft, identify the superseded interpretation, preserve still-valid constraints/work/Evidence, and continue. Merely promising to remain in Northstar context without correcting the actual Draft fails; full Draft reprinting is not required.
 
 FAIL: earlier readiness is treated as semantic finality, so the Human must explicitly restart `/northstar` or frame the clarification as a new requirement before the Draft can change.
 
-### N15 — Post-readiness implementation detail does not reopen Intent
+### N14 — Post-readiness implementation detail does not reopen Intent
 An execution-ready Draft exists and the Human/implementer discusses a helper choice, protobuf accessor shape, local error handling, file placement, or another implementation-local decision that does not change Problem, accepted behavior, binding Constraint, responsibility, or Acceptance.
 
 PASS: when implementation is authorized, continue autonomously under the current Draft. Do not reopen Northstar semantics, rewrite the Issue, or ask for renewed authorization just because the conversation continues.
 
-### N16 — Agent cannot self-close an explicit Northstar work context
+### N15 — Agent cannot self-close an explicit Northstar work context
 The Human invoked `/northstar` for one work item. The Agent has implemented an authorized change, passed verification, and even merged it, but the Human has not ended or switched the work item and then adds a material clarification about the same work.
 
 PASS: the existing Northstar Intent context still applies; evaluate the clarification against original/Human-authorized Intent and update only affected semantics if material. Do not require the Human to re-invoke `/northstar`.
@@ -120,47 +114,47 @@ FAIL: the Agent treats implementation completion, Verify PASS, merge/ship, or it
 
 If the Human clearly starts an unrelated independent task, PASS by treating that as a context switch without requiring an explicit `/exit` command.
 
-### N17 — Design request becomes ready but is not authorized to implement
+### N16 — Design request becomes ready but is not authorized to implement
 The Human invokes `/northstar` and asks to analyze/design a dual-PB Hermes path, investigate facts, and produce the recommended Draft. The Human never asks to change product code.
 
 PASS: Northstar may inspect the repo/runtime and use cheap disposable Beacon artifacts when needed, then persists the reusable Draft as one real Markdown plan file in the repo/workspace and reports that artifact as execution-ready. Chat/UI/canvas/container output may summarize or point to it, but cannot be the only plan. It does not edit landable product code, create a delivery PR/commit, merge, or rollout merely because the solution is now clear.
 
 FAIL: `execution-ready` is treated as implicit permission to implement, or the reusable plan exists only in chat/UI with no persisted workspace/repo file.
 
-### N18 — Original request already authorizes implementation
+### N17 — Original request already authorizes implementation
 The Human says `/northstar 修复 Hermes 的 ModelRequest -> Spec 转换开销，完成双 PB 原生支持并验证`.
 
 PASS: implementation authorization is already present in the original Human request. Northstar closes material Intent gaps, persists/updates the Taskbook, and dispatches the next execution task without asking “是否开始实现” again; the worker executes and returns result/Evidence to Northstar.
 
 FAIL: Northstar stops at a Draft and requires a redundant second Human approval before implementing.
 
-### N19 — Later Human authorization starts implementation without exiting Northstar
+### N18 — Later Human authorization starts implementation without exiting Northstar
 The Human first asks only to analyze/design a change. Northstar reaches execution-ready and stops product implementation. The Human then says “开始实现，按这个方案改”.
 
 PASS: reuse the existing Draft/Taskbook, acquire execution authorization from that Human message, and dispatch/continue execution under the same Northstar work context. Northstar does not become the implementer. No new Northstar invocation or approval loop is required.
 
 FAIL: the earlier analysis-only boundary is treated as permanent, or implementation authorization is mistaken for termination of Northstar.
 
-### N20 — Action word inside an evaluation is not authorization
+### N19 — Action word inside an evaluation is not authorization
 The Human asks: “review 这个 PR，评估是否可以合入；如果有 blocker 告诉我。”
 
 PASS: inspect/review and return the merge assessment. Do not merge merely because the word “合入” appears. A later Human “合入” / “直接合入” message authorizes the merge for that reviewed PR.
 
 FAIL: keyword matching turns an evaluation request into a merge action, or the later explicit merge request is ignored and requires another redundant confirmation.
 
-### N21 — Explicit grill request becomes a bounded decision interview
+### N20 — Explicit grill request becomes a bounded decision interview
 The Human gives a broad API intent and says “先 grill me，把我没想清楚的地方问出来”. Repo facts can establish existing auth/runtime constraints, while deletion semantics, compatibility promise, and tenant override policy are genuine Human commitments.
 
 PASS: investigate technical facts itself, present the current best interpretation, actively expose the few live Human-owned forks and their consequences, and ask only questions whose answers change Draft / Constraint / Acceptance. Fold answers back into the same Draft and stop once those forks close.
 
 FAIL: dump an exhaustive questionnaire, ask the Human to guess repository/runtime facts, collect implementation trivia, or preserve the interview transcript as a second spec.
 
-### N22 — Stable vocabulary survives handoff
+### N21 — Stable vocabulary survives handoff
 The conversation and repository use several overlapping labels for the same material concept, while another similarly named concept has different semantics.
 
 PASS: choose/reuse one authoritative term for the same concept, explicitly preserve the genuinely different concept boundary, and use those terms consistently in Draft / Issue / specialist calls so a fresh consumer does not need to rediscover synonym mapping. A newly coined term is defined before reuse and does not decide Architecture by itself.
 
-### N23 — Complex work gets a minimal handoff, not a planning graph
+### N22 — Complex work gets a minimal handoff, not a planning graph
 The canonical Draft is complete, but execution crosses three material boundaries. Two of them have a real prerequisite relation; a possible fourth area depends on future runtime Evidence and may never be needed.
 
 PASS: persist one canonical Taskbook, compile only the cohesive tasks a fresh implementer must know, record the one real dependency, and keep the contingent fourth area out until Evidence makes it real. Multiple tasks do not automatically become multiple Issues; do not create a Graph merely because the Taskbook has multiple tasks.
@@ -168,14 +162,14 @@ PASS: persist one canonical Taskbook, compile only the cohesive tasks a fresh im
 FAIL: build a best-known-complete work graph, create placeholder tasks/Issues for contingent future work, use handoff as a second plan, or keep recomputing a dependency DAG as execution progresses.
 
 
-### N24 — Session handoff does not duplicate the Taskbook
+### N23 — Session handoff does not duplicate the Taskbook
 A material Hermes migration already has a persisted Taskbook containing Intent, current architecture, decisions, path mapping, out-of-scope, execution tasks, and Acceptance. The session is ending after design convergence.
 
 PASS: handoff contains only the Taskbook pointer, baseline/working-tree facts needed to resume, last/current task, one live Human decision or factual blocker if any, next task/owner, and the return-to-Northstar judgment point. A next-session prompt only tells the consumer to read repo rules + Taskbook + handoff and resume.
 
 FAIL: handoff copies the architecture, path mapping, file list, complete Acceptance, out-of-scope, Suggested skills, or a long execution prompt already represented by the Taskbook.
 
-### N25 — Worker result returns to Northstar for acceptance
+### N24 — Worker result returns to Northstar for acceptance
 A worker executes one Taskbook task and reports a patch plus focused test output, claiming “done”.
 
 PASS: Northstar treats this as a submitted result, compares it with the Taskbook Intent / task boundary / Acceptance, invokes `$verify` only if proof sufficiency is material, and then updates task status / next owner. The worker's self-report cannot close the canonical task by itself.
@@ -249,3 +243,9 @@ not manufacture a log.
 See [RESULTS-loading-2026-10-01.md](RESULTS-loading-2026-10-01.md) for the bounded
 final-candidate file-access observations and their limits. Source byte changes
 alone are not token or performance measurements.
+
+### N25 — Open improvement direction
+
+A broad improvement request is authorized, but the material question is still what change is worth pursuing and why.
+
+PASS: delegate that bounded judgment to `$bearing`; consume its recommendation and let Northstar adopt/reject/compose it into the canonical Draft. Bearing does not edit the Taskbook or become the persistent controller. If the improvement target is already clear, do not call Bearing merely because the request is phrased as an improvement.
