@@ -26,18 +26,19 @@
 
 ## One semantic owner per skill
 
-六个 Skill 都可以独立工作，独立调用时拥有并直接完成所请求的本职任务；被委托时只拥有 bounded question，并返回实际 caller。semantic owner 不等于所有任务的全局 owner；Northstar 不是总入口，调用它也不自动转移完整 work / canonical artifact ownership。下述 Northstar plan / Taskbook 约定适用于由它承接的 Intent work，不强制其他独立 Skill 创建 Taskbook。
+七个 Skill 都可以独立工作，独立调用时拥有并直接完成所请求的本职任务；被委托时只拥有 bounded question，并返回实际 caller。semantic owner 不等于所有任务的全局 owner；Northstar 不是总入口，调用它也不自动转移完整 work / canonical artifact ownership。下述 Northstar plan / Taskbook 约定适用于由它承接的 Intent work，不强制其他独立 Skill 创建 Taskbook。
 
 当前 canonical capability map：
 
 - **`northstar`**：conversation / request / incident → canonical engineering Intent；把 Intent 收敛到 `execution-ready` 不会制造 Human execution authorization，已有明确授权也不重复确认。Northstar 一旦形成可供后续 review / implementation / handoff 使用的方案，必须把 current Draft 落盘为 repo/workspace 中一个真实、可寻址的 Markdown **方案文档**；chat/UI/canvas/container 只能是视图，不能成为唯一方案载体。对 material、跨 session / agent / execution-environment 的 work，这同一个方案文件继续承担 canonical **Taskbook** 角色，维护 material task / status / next owner，并在执行结果返回后判断它是否满足 Intent / Acceptance。Northstar 不执行 implementation，也不判断 proof sufficiency；后者仍属于 Verify。Drafted Issue 可以作为 tracker / 外部 carrier，但不能与方案文档形成平行 Intent SOT。
+- **`bearing`**：当“什么改变值得推进”本身尚未形成时，从当前 Intent / request、重要 usage/change 场景、verified reality 与相关 feedback 中形成有依据的 improvement direction + complete target capability；解释 material pressure、causal mechanism、why now / tradeoff 与会修订 recommendation 的 premise。它不拥有 canonical Intent / Taskbook，不决定 Target Architecture，不证明 claim，也不执行 implementation；结果返回实际 caller，由 caller 采纳与持久化。
 - **`beacon`**：基于真实 repo，为一个 bounded 功能 Intent 或故障构建最小、可检查的核心原型。接口与调用草图、代表性输入输出、最小实现或故障复现都可表达这个核心，不要求可执行代码；问题与 Evidence 服务于原型。它是 **caller-neutral、主要由 model 按需调用的 specialist**；原 caller 保留选择、比较、组合及 Intent / Architecture / Verification judgment。
 - **`architecture-evolution`**：拥有长期 Target Architecture judgment + Current → Target Evolution Program。两层 judgment 必须分开，但不拆成两个顶层 Skill。
 - **`verify`**：拥有 engineering verification；从 authoritative claim 推导 proof obligation，选择并驱动 real-artifact verifier/backend，收集 Evidence 并判断 proven / false / unproven。
 - **`eval`**：拥有 agent behavioral evaluation engineering；从真实 agent surface、repo 与可用 traces 中选择 material capability/failure，构建 Task + Environment + Verifier，驱动或消费 eval backend，检查 agent/verifier trajectories 并形成可重复 measurement。它不验证产品/工程 claim，也不把 Harbor 等 backend 变成 semantic owner。
 - **`unknowns-first`**：只拥有 map-versus-territory 的**事实未知关闭**；它可以做 probe / source alignment，但不替其他 owner 关闭 Intent、concrete shape、Architecture、engineering verification 或 agent behavioral eval judgment。
 
-不要复制 owner：Northstar 不判 proof sufficiency；Verify 不重写 Intent、设计 Target 或承担 agent behavioral eval；Eval 不验证产品 outcome 或改写 engineering semantics；Beacon 不接管 caller 的 semantic ownership；AE 不用 Program convenience 反推 Intent；Unknowns First 不把 factual probe 扩成 intent interview、concrete shaping、architecture design、proof judgment 或 eval design。
+不要复制 owner：Northstar 不判 proof sufficiency，也不把“什么 improvement 值得推进”的开放判断隐式吞进 Intent maintenance；Bearing 不接管 canonical Intent / Taskbook、Human commitment、Target Architecture、proof 或 implementation；Verify 不重写 Intent、设计 Target 或承担 agent behavioral eval；Eval 不验证产品 outcome 或改写 engineering semantics；Beacon 不接管 caller 的 semantic ownership；AE 不用 Program convenience 反推 Intent；Unknowns First 不把 factual probe 扩成 intent interview、concrete shaping、architecture design、proof judgment 或 eval design。
 
 **Beacon routing rule:** Northstar、AE、Verify、Unknowns First 或其他 caller 在一个局部功能或故障需要核心原型、或已有原型需要局部修订时，可 model-invoke `$beacon`。不必先制造多个候选或查清全部故障根因。Beacon 返回一个基于 repo 的核心原型及必要 Evidence / correction；原 caller 继续判断，Northstar 负责完整 Intent 的组合与编译。不要把 Beacon 做成 Human 必经入口或固定阶段。
 
@@ -85,6 +86,7 @@
 
 - factual map-versus-territory gap → Unknowns First；
 - Intent premise / Constraint / Acceptance 被推翻 → Northstar；
+- material improvement pressure、causal mechanism、target value 或 live alternative 被新 Evidence 推翻，而“什么值得推进”重新成为未决问题 → Bearing；
 - 一个 bounded 功能 Intent 或故障需要核心原型，或已有原型的局部表达需要修订 → Beacon，结果返回当前 caller；
 - 新的长期 responsibility / boundary / dependency fork → Architecture Evolution；
 - 当前 contract 的 material completion / safety claim 需要定义、补足或判断 proof → Verify；
