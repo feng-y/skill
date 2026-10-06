@@ -31,7 +31,7 @@ PASS: inspect current repo/usage/change pressures, identify the material deficie
 
 The accepted Intent already states a specific behavior change and only implementation details remain.
 
-PASS: do not reopen strategy. Return to the caller/Executor.
+PASS: do not invoke or reopen Bearing. Return to the caller/Executor.
 
 ### B3 — Structural direction is the unresolved question
 
