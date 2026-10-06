@@ -4,6 +4,17 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## 2026-10-06 — Add Bearing for improvement-direction judgment
+
+Change: `feat/bearing-improvement-direction-20261006`
+
+- **Gap:** broad improvement requests could enter Northstar convergence or AE structural judgment before the system had independently established which improvement was worth pursuing and why, leaving the Human to supply the material problem/target judgment.
+- **New owner:** `bearing` owns the bounded judgment “what engineering improvement is worth pursuing now and why”: material pressure, causal mechanism, complete target capability, relative value/tradeoff, and premises that would revise the recommendation.
+- **Preserved:** Northstar retains canonical Intent / Taskbook, adoption/composition and continuity; Architecture Evolution retains Target Architecture + structural Program; Unknowns First, Beacon, Verify and Eval retain factual closure, bounded core prototype, engineering proof and agent behavioral measurement respectively; Human retains investment/scope/compatibility/risk commitments.
+- **Retired ambiguity:** treating every broad improvement request as if the target were already known, or letting local issue discovery / architecture work implicitly stand in for improvement-value judgment.
+- **No mandatory stage:** clear Intent, local implementation, structural-only questions and ordinary execution feedback do not pass through Bearing. It re-enters only when evidence materially changes the improvement pressure, mechanism, target value or live alternatives.
+- **Evidence boundary:** this change establishes the semantic contract and focused eval scenarios; behavioral uplift still requires executable Eval evidence before being claimed.
+
 ## 2026-10-01 — Scope ownership to the actual invocation
 
 Change: `fix/caller-neutral-skill-ownership-20261001` (based on `ed8e0f53c47b9dd4c7e8f2fa50c3f8dc5e9fc32a`)
