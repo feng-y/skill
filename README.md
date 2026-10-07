@@ -20,6 +20,7 @@ Install one skill:
 
 ```bash
 npx skills@latest add feng-y/skill --skill northstar
+npx skills@latest add feng-y/skill --skill bearing
 npx skills@latest add feng-y/skill --skill beacon
 npx skills@latest add feng-y/skill --skill architecture-evolution
 npx skills@latest add feng-y/skill --skill verify
@@ -30,6 +31,7 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 ## Skills
 
 - `northstar` — canonical engineering-intent skill. 持续维护一个 current Draft；一旦形成可供后续 review / implementation / handoff 使用的方案，就把它作为 repo/workspace 中真实 Markdown 方案文件落盘。material / cross-session execution 在同一文件中继续维护 canonical Taskbook 状态。Northstar 交出执行但保留 Intent 与 material task acceptance；Issue 只作 tracker / 外部引用，session handoff 只保存恢复差量。
+- `bearing` — improvement-direction judgment skill. 当“什么改变值得推进”尚未形成时，从重要 usage/change 场景、verified reality 与相关 feedback 中推荐值得推进的 improvement direction，给出 complete target capability、causal mechanism、tradeoff 与 revision premise；不接管 canonical Intent、Architecture、proof 或 implementation。
 - `beacon` — caller-neutral、主要由 model 按需调用的核心原型 specialist。基于真实 repo，把一个 bounded 功能 Intent 或故障具体化为最小、可检查的核心原型；可以是接口/调用草图、代表性输入输出、最小实现或故障复现，不要求可执行代码。原型是主体，问题和 Evidence 服务于原型；结果返回原 caller。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
 - `verify` — engineering verification skill. 从 authoritative completion/safety claim 出发定义 proof obligation，选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。
@@ -38,11 +40,12 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 ## Invocation model
 
-六个 Skill 均可独立调用并直接交付各自职责范围内的结果。委托调用只交出 bounded question，结果返回实际 caller；不会自动转移整体任务或 canonical artifact ownership，也不要求先经过 Northstar 或创建通用 Taskbook。
+七个 Skill 均可独立调用并直接交付各自职责范围内的结果。委托调用只交出 bounded question，结果返回实际 caller；不会自动转移整体任务或 canonical artifact ownership，也不要求先经过 Northstar 或创建通用 Taskbook。
 
 主要 Human-facing / direct capabilities：
 
 - `northstar` — “我们到底要什么？”
+- `bearing` — “基于当前 reality，什么改变现在最值得推进，为什么？”
 - `architecture-evolution` — “长期结构应该怎么归位？”
 - `verify` — “产品/工程结果是否真的符合 claim？”
 - `eval` — “这个 Agent / Skill / prompt / harness 行为是否真的变好，怎么稳定测？”
@@ -66,10 +69,10 @@ conversation / request / incident
           northstar
       canonical Intent
               │
-   ┌──────────┼──────────────────┐
-   │          │                  │
-   ▼          ▼                  ▼
- beacon   architecture-evolution  unknowns-first
+   ┌──────────┼───────────┬──────────────────┐
+   │          │           │                  │
+   ▼          ▼           ▼                  ▼
+ bearing    beacon   architecture-evolution  unknowns-first
    ▲          │                  │
    └──── model-invoked by any semantic caller ────┘
               ↓
@@ -113,7 +116,7 @@ agent / Skill / prompt / tool / harness behavior
  Skill / prompt / tool / harness improvement → rerun
 ```
 
-Northstar owns **meaning and composition**. Beacon owns **repo-grounded core prototypes of bounded feature intents or faults** and returns them to its caller. Architecture Evolution owns **structural judgment**. Unknowns First owns **factual uncertainty**. Verify owns **product/engineering verification and proof judgment**. Eval owns **agent behavioral measurement design and judgment**. Verify Evidence 和 Eval Run Evidence 都不是新的 semantic owner。
+Northstar owns **meaning and composition**. Bearing owns **improvement direction judgment** when what is worth changing is still unresolved, and returns its recommendation to the caller without taking canonical ownership. Beacon owns **repo-grounded core prototypes of bounded feature intents or faults** and returns them to its caller. Architecture Evolution owns **structural judgment**. Unknowns First owns **factual uncertainty**. Verify owns **product/engineering verification and proof judgment**. Eval owns **agent behavioral measurement design and judgment**. Verify Evidence 和 Eval Run Evidence 都不是新的 semantic owner。
 
 Verify is not a mandatory post-PR stage. It may be invoked before implementation to make a material proof route explicit, during implementation when verification premises change, or after implementation to judge realized results. Clear local changes can rely on an already-authoritative focused check without extra ceremony.
 
@@ -164,7 +167,7 @@ After each run, inspect **both** the agent trajectory and verifier Evidence/traj
 
 ## Loop
 
-Research、execution、review 和 Verify 都可能产生 new verified engineering Evidence。Evidence 只重开真正受影响的 owner：Intent premise 回 Northstar，长期结构 fork 回 Architecture Evolution，factual uncertainty 回 Unknowns First；当一个局部功能或故障需要核心原型、或已有原型需修订时，可 model-invoke Beacon 并只处理对应 local surface；复杂 material work/dependency 变化但 Intent 仍成立时，只重算 Northstar material graph 的 affected cone。
+Research、execution、review 和 Verify 都可能产生 new verified engineering Evidence。Evidence 只重开真正受影响的 owner：Intent premise 回 Northstar；material improvement pressure / mechanism / value 重新未决时回 Bearing；长期结构 fork 回 Architecture Evolution，factual uncertainty 回 Unknowns First；当一个局部功能或故障需要核心原型、或已有原型需修订时，可 model-invoke Beacon 并只处理对应 local surface；复杂 material work/dependency 变化但 Intent 仍成立时，只重算 Northstar material graph 的 affected cone。
 
 Agent improvement 走另一条反馈环：material worker return / 真实 task/trace 可以先按需沉淀到 Feedback Log；只有值得复现或跨 case 验证的模式才进入 Eval → executable measurement → Skill/prompt/tool/harness 改进 → rerun。Feedback Log 不是 mandatory stage，也不能把单条经验直接升级成 runtime rule。产品 Replay/test 结果不能替代 behavioral Eval；Eval measurement 也不能替代产品 Verify。
 

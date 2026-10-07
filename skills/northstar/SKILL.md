@@ -43,7 +43,7 @@ Northstar 持续比较 **original / Human-authorized Intent** 与 **current cano
 每次只处理仍会改变结果、范围、核心路径、责任、Acceptance、execution readiness 或 durable transfer 的 gap：
 
 1. 恢复原始请求、已有 Human correction / authorization、current Draft 与决定性 Evidence；若当前判断依赖 Human 未点名但可能改变 Draft、binding Constraint、Acceptance 或下一步选择的事实，先取得足够 Evidence；已有事实足以判断时不扩大调查，事实 unknown 按既有 owner 关闭；
-2. 判断 current Draft 相对已授权 Intent 还缺什么，优先处理会改变下一步选择的 gap；
+2. 判断 current Draft 相对已授权 Intent 还缺什么，优先处理会改变下一步选择的 gap；若真正未决的是“什么 improvement 值得推进、为什么”，把这个 bounded judgment 交 `$bearing`，Northstar 不在 Intent maintenance 中自行发明 improvement target；
 3. 选择足以区分后续做法的最小行动交给真实 owner，或直接吸收已有答案；
 4. 消费返回的 Decision / correction / Evidence；
 5. **由 Northstar 自己把采用的局部结果组合回同一个 canonical Draft**；
@@ -99,12 +99,15 @@ Intent 过大时可以建议收窄，也可以保留原范围并继续组合局�
 
 Northstar 拥有 Intent，不复制 specialist 的责任：
 
+- improvement request 中真正未决的是“什么改变值得推进、为什么”，而不是已经明确目标下的 implementation / architecture → `$bearing`；
 - factual territory unknown，且事实不同会改变 Intent → `$unknowns-first`；
 - 一个 bounded 功能 Intent 或故障需要基于 repo 的最小核心原型，或已有原型需要局部修订 → `$beacon`；
 - 长期 responsibility、knowledge ownership、boundary、variation、dependency 或 Target Architecture 需要判断 → `$architecture-evolution`；
 - material completion / safety claim 需要 proof obligation、real-artifact verification 或 sufficiency judgment → `$verify`。
 
 这里的 model-invoke 表示在当前工作中应用 specialist 语义并接收它的 scoped return，不自动表示创建了外部 agent / thread。只有真实 delegation tool 已调用并返回对应结果时，才能声称外部委派成功或失败；否则直接在当前交互中完成 return，不虚构不存在的代理事件。
+
+Bearing 只在 improvement direction 本身尚未形成时返回 scoped recommendation：material pressure、causal mechanism、complete target capability、tradeoff 与 revision premise。Northstar 保留 current Intent、Human commitment、完整方案组合与持续控制；若目标方向已明确，不为“改进类”标签重复调用 Bearing。
 
 Beacon 为一个 bounded 功能 Intent 或故障交付基于 repo 的核心原型，连同必要的接口、调用和行为表达，不按字段或文件机械拆分。原型可以是静态草图或最小实现/复现；Evidence 服务于原型。**Beacon 不组织复杂 Intent 的拆分、候选比较或局部结果组合。** 多个原型的选择、相接与整体 coverage 由 Northstar 完成。
 
@@ -171,6 +174,7 @@ Research、execution、review 和 verifier/backend 都可能产生 observation�
 
 - factual premise 不清 → `$unknowns-first`；
 - verified reality 推翻 Draft / Constraint / Acceptance → 重开 Northstar 中受影响部分；
+- new Evidence 使 material improvement pressure / causal mechanism / target value 重新未决 → `$bearing`；
 - 局部功能/故障的核心原型缺失，或已有原型需修订 → `$beacon`；
 - 新的长期 structure fork → `$architecture-evolution`；
 - claim 需要 verification design / sufficiency judgment → `$verify`；

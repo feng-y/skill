@@ -8,7 +8,7 @@ Northstar passes only when it:
 
 1. owns one current canonical engineering Intent / Draft and persists material / cross-session work as one canonical Taskbook;
 2. continuously checks that Draft against the original request or Human-authorized scope rather than treating artifact existence as completion;
-3. routes a needed bounded feature/fault core prototype or local revision to `$beacon`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`, and proof judgment to `$verify`;
+3. routes an unresolved improvement-direction judgment (what is worth changing and why) to `$bearing`, a needed bounded feature/fault core prototype or local revision to `$beacon`, long-term structural judgment to `$architecture-evolution`, factual territory unknowns to `$unknowns-first`, and proof judgment to `$verify`;
 4. composes adopted specialist results itself; Beacon does not assemble or declare the complete Intent;
 5. asks Human only for material expectation/scope/commitment choices, reuses existing authorization, and never asks Human to guess technical facts;
 6. never silently narrows original scope; an authorized scope cut leaves uncovered original requirements visible;
@@ -243,3 +243,9 @@ not manufacture a log.
 See [RESULTS-loading-2026-10-01.md](RESULTS-loading-2026-10-01.md) for the bounded
 final-candidate file-access observations and their limits. Source byte changes
 alone are not token or performance measurements.
+
+### N25 — Open improvement direction
+
+A broad improvement request is authorized, but the material question is still what change is worth pursuing and why.
+
+PASS: delegate that bounded judgment to `$bearing`; consume its recommendation and let Northstar adopt/reject/compose it into the canonical Draft. Bearing does not edit the Taskbook or become the persistent controller. If the improvement target is already clear, do not call Bearing merely because the request is phrased as an improvement.

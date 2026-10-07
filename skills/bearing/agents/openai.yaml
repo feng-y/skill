@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bearing"
+  short_description: "判断当前最值得推进的改进方向"
+  default_prompt: "使用 $bearing。先判断当前 caller 缺的是不是“什么改变值得推进”这一 improvement-direction judgment；若目标方向已明确，只剩 implementation How、Architecture、fact closure、proof 或 behavioral measurement，则返回对应 caller/owner，不重复分析。需要 Bearing 时，从当前 request/Intent、重要 usage/change 场景、verified repo/runtime reality 与相关 feedback 中形成一个有依据的 recommendation：material pressure、causal mechanism、complete target capability、why now/tradeoff，以及会推翻或修订它的 premise。必要事实交 $unknowns-first，bounded concrete core 可调用 $beacon，长期 structural judgment 交 $architecture-evolution，engineering proof 交 $verify，agent behavior measurement 交 $eval。若 caller 是 Northstar，先独立返回 scoped recommendation，由 Northstar 决定是否采纳并 fold back 到同一个 Draft/Taskbook；Bearing 不拥有 canonical Intent、不创建第二份 plan、不执行 implementation。"

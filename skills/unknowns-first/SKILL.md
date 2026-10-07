@@ -32,6 +32,7 @@ Unknowns First 不拥有 Intent，不拥有核心原型设计，不决定 Target
 
 - **事实是什么？** → Unknowns First；
 - **我们要什么 / Human commitment 是什么？** → `$northstar`；
+- **什么 engineering improvement 现在值得推进、为什么？** → `$bearing`；
 - **需要把一个局部功能 Intent 或故障表达为基于 repo 的最小核心原型？** → `$beacon`；
 - **长期 responsibility / boundary / dependency 应是什么？** → `$architecture-evolution`；
 - **一个 accepted completion/safety claim 应如何验证、现有 Evidence 是否足够？** → `$verify`。
