@@ -64,9 +64,9 @@ Beacon 返回原型及必要 Evidence；**AE 仍然拥有候选选择、比较�
 
 不要把第一个看起来合理的 Target shape 当成已证明设计，也不要为了“多方案”固定制造架构竞技场。当一个结构决定会 materially 改变 ownership、boundary、dependency、lifecycle 或 change locality，调研后仍存在多个 live shapes，且采用后反悔代价高时，或 caller / Human 明确要求比较时，比较多个 concrete reactions，而不是在 prose 中选定第一个可行形状。routine 选择或已被 authority / Human commitment 决定的选择不开竞争。
 
-由 AE 选择最少必要的 live candidates，并写出共享 brief：同一 outcome、binding constraints、repo grounding 与各候选要表达的结构前提；比较标准留在 AE，不交给生成方。比较一旦成立，各候选必须在独立的 fresh context 中**并行**调用 `$beacon` 产出 repo-grounded 核心原型，可用时给每个候选不同的设计约束或模型；不要在同一上下文中逐个生成，也不要让一个上下文扮演多个设计者或自写对比表代替候选。当前环境有任何委派能力即视为可用；repo 小、事实可读或已有倾向都不是跳过独立生成的理由。只有完全没有委派能力时，才在同一上下文中比较，并在结果中标明独立性受限。
+由 AE 选择最少必要的 live candidates，并写出共享 brief：同一 outcome、binding constraints、repo grounding 与各候选要表达的结构前提；比较标准留在 AE，不交给生成方。比较一旦成立，各候选必须在独立的 fresh context 中**并行**调用 `$beacon` 产出 repo-grounded 核心原型，可用时给每个候选不同的设计约束或模型；不要在同一上下文中逐个生成，也不要让一个上下文扮演多个设计者或自写对比表代替候选。是否可用以当前能否实际创建所需的独立 fresh context 为准：委派工具存在但受并发配额、嵌套深度限制或只能续接已有会话而无法创建时，不算可用；repo 小、事实可读或已有倾向都不是跳过独立生成的理由。无法创建时，同一上下文中的比较只能作为 provisional 结果，明确标为未完成独立比较，并把这个限制作为 blocker 返回 caller；不要把它表述为已完成的独立比较。
 
-候选返回后，先并列呈现，再由 AE 用同一组 structural criteria 比较：knowledge 是否归位、caller 是否仍重组私有决定、dependency 是否需要补偿、旧 authority 是否能 real exit、代表性 change 是否更 locality。选定一个 base，只在保持单一连贯 ownership 模型时吸收其他候选的部分，并保留关键 rejection 理由。比较风险高或 AE 自评偏差 material 时，用一个独立 judge（不同 context，可用时不同模型）按同一标准评估，按 Evidence 而非票数调和分歧。决定性因素只属于 Human commitment（投入、兼容、风险、产品偏好）时，把这个具体依赖交回 Northstar / Human，而不是硬选。候选竞赛与综合不交给 Beacon。
+候选返回后，先并列呈现，再由 AE 用同一组 structural criteria 比较：knowledge 是否归位、caller 是否仍重组私有决定、dependency 是否需要补偿、旧 authority 是否能 real exit、代表性 change 是否更 locality。选定一个 base，只在保持单一连贯 ownership 模型时吸收其他候选的部分，并保留关键 rejection 理由。比较风险高或 AE 自评偏差 material 时，用一个独立 judge（实际可创建的不同 context，可用时不同模型）按同一标准评估，按 Evidence 而非票数调和分歧；无法创建独立 judge 时，同样只返回 provisional 推荐并标明缺少独立评估，不以自评代替。决定性因素只属于 Human commitment（投入、兼容、风险、产品偏好）时，把这个具体依赖交回 Northstar / Human，而不是硬选。候选竞赛与综合不交给 Beacon。
 
 实现本身也可以产生 reaction Evidence。若代表性实现反复要求意料外的跨边界参数/状态、caller workaround、type escape、duplicated knowledge、special path 或绕过 owner 的 proof path，先判断这些 friction 是否只是 local implementation defect；若它们稳定暴露 Target premise / boundary 错误，就丢弃或修正受影响 design，而不是继续堆 compensation。若 friction 只影响迁移成本或 implementation How，则保持 Target，只调整 Program / Executor。
 

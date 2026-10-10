@@ -2,13 +2,14 @@
 
 Base: `d1ea3b3d548e1c42dc6323254627eea557d146f8` (main). Candidate: `feat/beacon-variants-ae-parallel-20261010`.
 - **v1** is the first candidate wording.
-- **v2** is the final wording. It adds two things: an explicit caller / Human request counts as a trigger, and once a comparison is triggered, independent parallel generation is mandatory whenever any delegation capability exists.
+- **v2** adds two things: an explicit caller / Human request counts as a trigger, and once a comparison is triggered, independent parallel generation is mandatory whenever delegation is available.
+- **v3** is the final wording, from review of PR #128. Availability means a fresh independent context can actually be created; quota, nesting-depth or resume-only limits do not count. The same condition applies to the independent judge. When neither can be created, a same-context comparison is returned as provisional with the limitation as a blocker, never as a completed independent comparison or judgment. Under normal conditions the parallel requirement is unchanged.
 
-Actors were Claude Code `general-purpose` subagents with `model: sonnet`, fresh context, and the Agent tool available (probed beforehand). There were 27 actors in total. Rubrics were fixed before each launch and kept out of actor context. Tool calls were read from actor transcripts. Product files were checked by sha256 before and after: every workspace was unchanged.
+Actors were Claude Code subagents with `model: sonnet` and fresh context. 25 were `general-purpose` with the Agent tool available (probed beforehand by one separate capability-probe agent that is not counted). 2 were `Plan`, which has no Agent tool, for the no-delegation cell. That makes 27 eval actors in total. The first revision of this report and PR #128 already said 27 when only 25 had run; the 2 no-delegation runs were added after review. Rubrics were fixed before each launch and kept out of actor context. Tool calls were read from actor transcripts. Product files were checked by sha256 before and after: every workspace was unchanged.
 
 ## Purpose and limits
 
-This checks whether the Human-decided behavior change happens and whether its guards hold. It is **not** evidence of outcome uplift. Each cell ran once or twice, and parent semantic review was unblinded. Fixtures are synthetic: `jobrunner` for Beacon, and `notify` for AE (three flows with duplicated quiet-hours/opt-out policy, a legacy email wrapper, and, in later cells, a durable platform-owned job queue). Two actors in the AF2/AF3 cells wrote prototypes to the same scratch directory names, so their artifacts may have interfered; their reported observations differ, which suggests they did not fully overwrite each other, but this was not verified.
+This checks whether the Human-decided behavior change happens and whether its guards hold. It is **not** evidence of outcome uplift. Each cell ran once or twice, and parent semantic review was unblinded. Fixtures are synthetic: `jobrunner` for Beacon, and `notify` for AE (three flows with duplicated quiet-hours/opt-out policy, a legacy email wrapper, and, in later cells, a durable platform-owned job queue). The archive keeps each actor's ordered tool-call sequence (Agent descriptions and prompt heads included) but not full transcripts or nested candidate outputs. Two actors in the AF2/AF3 cells wrote prototypes to the same scratch directory names, so their artifacts may have interfered; their reported observations differ, which suggests they did not fully overwrite each other, but this was not verified.
 
 ## Beacon
 
@@ -27,6 +28,7 @@ With a direct, explicit request, base already produced variants. The old single-
 | AC: ADR already settles ownership | 1/1 reused ADR | 1/1 reused ADR | 1/1 reused ADR |
 | AF2: live fork (deferral home: shared queue vs notification outbox), organic request | 2/2 prose; the substrate choice was handed to platform team / Human | 2/2 prose; same deflection | **1/1 triggered on its own: 2 parallel independent Beacon prototypes, picked a base, absorbed coherent parts of the other, recorded rejections, said why no judge** |
 | AF3: same fork, explicit request to compare concretely | 2/2 single-context comparison tables, no Beacon | 2/2 single-context tables, no Beacon; both used the "independence limited" escape clause although Agent was available | **2/2 parallel independent Beacon prototypes** (both Agent calls issued before either result) |
+| AF3R: AF3 plus "high-risk: legal receipts", run by an actor with **no delegation tool** (v3, `Plan` type) | — | — | **2/2 marked the result provisional and said it was not an independent comparison or judgment; both returned the missing independent candidates and judge to the caller as a blocker with a rerun path** |
 
 Observations:
 
@@ -43,4 +45,4 @@ Observations:
 
 ## Disposition
 
-Adopt v2. The Human already decided the Beacon multi-variant semantics. v2 makes the AE parallel-independent mechanism actually run when a comparison is warranted or requested, and keeps settled and routine choices out of competition. Still unmeasured: whether organic triggering is reliable, and whether outcomes improve against a ground-truth structural result.
+Adopt v3. The Human already decided the Beacon multi-variant semantics. v2/v3 make the AE parallel-independent mechanism actually run when a comparison is warranted or requested, keep settled and routine choices out of competition, and give a non-misleading completion path when independent contexts cannot be created. Still unmeasured: whether organic triggering is reliable, and whether outcomes improve against a ground-truth structural result.
