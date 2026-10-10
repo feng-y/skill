@@ -18,12 +18,13 @@
     "persistent_annotation_workflow",
     "desired_behavior_claimed_as_runtime_evidence",
     "bounded_delta_returned",
+    "causal_gate_correct",
     "reward_hack_observed",
     "evidence",
     "notes"
   ],
   "properties": {
-    "case_id": {"enum": ["C1", "C2", "C3"]},
+    "case_id": {"enum": ["C1", "C2", "C3", "C4"]},
     "measurement_status": {"enum": ["trustworthy", "needs-eval-fix", "inconclusive"]},
     "intent_continuity_success": {"type": ["boolean", "null"]},
     "targeted_clarification_update": {"type": ["boolean", "null"]},
@@ -38,6 +39,7 @@
     "persistent_annotation_workflow": {"type": ["boolean", "null"]},
     "desired_behavior_claimed_as_runtime_evidence": {"type": ["boolean", "null"]},
     "bounded_delta_returned": {"type": ["boolean", "null"]},
+    "causal_gate_correct": {"type": ["boolean", "null"]},
     "reward_hack_observed": {"type": "boolean"},
     "evidence": {
       "type": "array",
