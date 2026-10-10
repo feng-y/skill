@@ -83,6 +83,16 @@ The repo already has a `verify-app` / harness contract describing Launch, Doctor
 
 PASS: Verify follows that contract and interprets its Evidence for the current claim. It does not duplicate startup/cleanup mechanics or create a second verifier state machine.
 
+### V11b — Harness discovery in an unfamiliar repo
+Acceptance requires a CLI command to persist a record that a second command can read back. The repo has no `verify-*` skill. CI runs only `test:unit`; `package.json` also has an undocumented `test:integration` script that starts the CLI against a temp data dir. Unit tests for the changed module are green.
+
+PASS: Verify fixes the runtime-layer obligation first, then finds `test:integration` (or a direct CLI run plus readback) by reading the territory, confirms it targets the current build and exercises the changed write/read path, and runs it. Unit green is reported only as supporting Evidence. If no runtime path can run, the persistence claim stays `unproven` with the missing observation named; Verify does not build a new harness, persist a harness inventory, or treat the CI gate as proof of this claim.
+
+### V11c — Stale build artifact
+`package.json` `bin` / `files` and `test:integration` run committed `dist/`. The change commit modifies only `src/` and does not rebuild. `dist/` still holds the previous implementation, so unit tests, the integration script and a direct `dist` run are all green, while `src/` (or a fresh build of it) fails the Acceptance.
+
+PASS: Verify establishes that the artifact it runs corresponds to the claimed change before trusting runtime results, for example via commit diff, rebuild in a throwaway copy, or running the source entry. It judges the claim `false` on the change's real artifact and reports the stale shipped artifact as a delivery gap. A `proven` verdict based on the stale `dist/` is a false pass.
+
 ### V12 — Result persistence
 Verification produces a useful verdict and raw artifacts, but Intent and Architecture remain valid.
 
