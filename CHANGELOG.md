@@ -4,6 +4,20 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## 2026-10-10 — Beacon variants and parallel independent AE candidates
+
+Change: `feat/beacon-variants-ae-parallel-20261010`
+
+- **Old surface:** Beacon produced exactly one primary prototype per invocation and was barred from any multi-candidate output (retired 2026-09-19). AE could request one Beacon candidate at a time and compared concrete candidates only when prose could not decide.
+- **Human decision:** the single-prototype constraint is excessive, and serial one-by-one candidate generation in AE is wrong.
+- **New semantics:**
+  - **Beacon:** when the caller names a live fork inside the scope, one prototype expresses its variants side by side on shared repo anchors, labels the premise each tests, and returns without a verdict.
+  - **AE:** the comparison trigger is a consequential, still-open, costly-to-reverse structural decision. Candidates come from one shared brief and are generated in parallel fresh contexts. AE presents them before recommending, then selects a base and absorbs coherent parts of the others. For high-risk comparisons it may use an independent judge. A Human-owned deciding preference is returned as that dependency. AE also returns implementation-time reaction tells, which the Executor must report back as deviations rather than absorb.
+  - **Northstar:** observable forks go to Beacon variants instead of asking the Human, unless the experience or preference itself is the Human commitment.
+- **Preserved:** callers own selection, comparison, synthesis and composition; Beacon still does not invent alternatives, choose a winner, or launch a competition; routine or authority-settled choices get no competition; Target versus Program, factual closure, and proof ownership are unchanged.
+- **Still retired:** Beacon as a candidate-comparison or decision service; one context impersonating several independent designers.
+- **Evidence boundary:** the change is a Human decision informed by pstack (`architect` / `arena` / prototype playbook), Matt (`prototype` UI variants, Design It Twice) and Compound Engineering (`ce-bakeoff` / `ce-prototype`). [The 27-actor sonnet smoke](evals/architecture-evolution/RESULTS-beacon-variants-ae-parallel-2026-10-10.md) found that the first AE wording left an "independence limited" escape clause that both explicit-comparison actors used. The final wording closes it: the explicit-comparison runs produced parallel independent candidates in 2/2, and the routine/ADR controls did not over-trigger. When independent contexts cannot be created, both no-delegation runs returned a provisional result with the limitation as a blocker. Outcome uplift is not established.
+
 ## 2026-10-06 — Add Bearing for improvement-direction judgment
 
 Change: `feat/bearing-improvement-direction-20261006`

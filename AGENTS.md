@@ -32,7 +32,7 @@
 
 - **`northstar`**：conversation / request / incident → canonical engineering Intent；把 Intent 收敛到 `execution-ready` 不会制造 Human execution authorization，已有明确授权也不重复确认。Northstar 一旦形成可供后续 review / implementation / handoff 使用的方案，必须把 current Draft 落盘为 repo/workspace 中一个真实、可寻址的 Markdown **方案文档**；chat/UI/canvas/container 只能是视图，不能成为唯一方案载体。对 material、跨 session / agent / execution-environment 的 work，这同一个方案文件继续承担 canonical **Taskbook** 角色，维护 material task / status / next owner，并在执行结果返回后判断它是否满足 Intent / Acceptance。Northstar 不执行 implementation，也不判断 proof sufficiency；后者仍属于 Verify。Drafted Issue 可以作为 tracker / 外部 carrier，但不能与方案文档形成平行 Intent SOT。
 - **`bearing`**：当“什么改变值得推进”本身尚未形成时，从当前 Intent / request、重要 usage/change 场景、verified reality 与相关 feedback 中形成有依据的 improvement direction + complete target capability；解释 material pressure、causal mechanism、why now / tradeoff 与会修订 recommendation 的 premise。它不拥有 canonical Intent / Taskbook，不决定 Target Architecture，不证明 claim，也不执行 implementation；结果返回实际 caller，由 caller 采纳与持久化。
-- **`beacon`**：基于真实 repo，为一个 bounded 功能 Intent 或故障构建最小、可检查的核心原型。接口与调用草图、代表性输入输出、最小实现或故障复现都可表达这个核心，不要求可执行代码；问题与 Evidence 服务于原型。它是 **caller-neutral、主要由 model 按需调用的 specialist**；原 caller 保留选择、比较、组合及 Intent / Architecture / Verification judgment。
+- **`beacon`**：基于真实 repo，为一个 bounded 功能 Intent 或故障构建最小、可检查的核心原型。接口与调用草图、代表性输入输出、最小实现或故障复现都可表达这个核心，不要求可执行代码；caller 指出 live fork 时，可在同一原型中基于相同 repo 锚点并列表达其变体；问题与 Evidence 服务于原型。它是 **caller-neutral、主要由 model 按需调用的 specialist**；原 caller 保留选择、比较、组合及 Intent / Architecture / Verification judgment。
 - **`architecture-evolution`**：拥有长期 Target Architecture judgment + Current → Target Evolution Program。两层 judgment 必须分开，但不拆成两个顶层 Skill。
 - **`verify`**：拥有 engineering verification；从 authoritative claim 推导 proof obligation，选择并驱动 real-artifact verifier/backend，收集 Evidence 并判断 proven / false / unproven。
 - **`eval`**：拥有 agent behavioral evaluation engineering；从真实 agent surface、repo 与可用 traces 中选择 material capability/failure，构建 Task + Environment + Verifier，驱动或消费 eval backend，检查 agent/verifier trajectories 并形成可重复 measurement。它不验证产品/工程 claim，也不把 Harbor 等 backend 变成 semantic owner。
@@ -40,7 +40,7 @@
 
 不要复制 owner：Northstar 不判 proof sufficiency，也不把“什么 improvement 值得推进”的开放判断隐式吞进 Intent maintenance；Bearing 不接管 canonical Intent / Taskbook、Human commitment、Target Architecture、proof 或 implementation；Verify 不重写 Intent、设计 Target 或承担 agent behavioral eval；Eval 不验证产品 outcome 或改写 engineering semantics；Beacon 不接管 caller 的 semantic ownership；AE 不用 Program convenience 反推 Intent；Unknowns First 不把 factual probe 扩成 intent interview、concrete shaping、architecture design、proof judgment 或 eval design。
 
-**Beacon routing rule:** Northstar、Bearing、AE、Verify、Unknowns First 或其他 caller 在一个局部功能或故障需要核心原型、或已有原型需要局部修订时，可 model-invoke `$beacon`。不必先制造多个候选或查清全部故障根因。Beacon 返回一个基于 repo 的核心原型及必要 Evidence / correction；原 caller 继续判断，Northstar 负责完整 Intent 的组合与编译。不要把 Beacon 做成 Human 必经入口或固定阶段。
+**Beacon routing rule:** Northstar、Bearing、AE、Verify、Unknowns First 或其他 caller 在一个局部功能或故障需要核心原型、或已有原型需要局部修订时，可 model-invoke `$beacon`。不必先制造多个候选或查清全部故障根因；需要独立结构候选时，caller 在独立 context 中并行调用 Beacon，而不是串行逐个生成。Beacon 返回一个基于 repo 的核心原型（可含 caller 指定的变体）及必要 Evidence / correction；原 caller 继续判断，Northstar 负责完整 Intent 的组合与编译。不要把 Beacon 做成 Human 必经入口或固定阶段。
 
 `prototype` 不再是顶层 Skill identity 或 runtime route；Beacon 的主体是核心原型，可执行 prototype/mock/minimal implementation 只是表达它的方式，不恢复 `$prototype`。
 

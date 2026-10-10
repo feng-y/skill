@@ -32,7 +32,7 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 
 - `northstar` — canonical engineering-intent skill. 持续维护一个 current Draft；一旦形成可供后续 review / implementation / handoff 使用的方案，就把它作为 repo/workspace 中真实 Markdown 方案文件落盘。material / cross-session execution 在同一文件中继续维护 canonical Taskbook 状态。Northstar 交出执行但保留 Intent 与 material task acceptance；Issue 只作 tracker / 外部引用，session handoff 只保存恢复差量。
 - `bearing` — improvement-direction judgment skill. 当“什么改变值得推进”尚未形成时，从重要 usage/change 场景、verified reality 与相关 feedback 中推荐值得推进的 improvement direction，给出 complete target capability、causal mechanism、tradeoff 与 revision premise；不接管 canonical Intent、Architecture、proof 或 implementation。
-- `beacon` — caller-neutral、主要由 model 按需调用的核心原型 specialist。基于真实 repo，把一个 bounded 功能 Intent 或故障具体化为最小、可检查的核心原型；可以是接口/调用草图、代表性输入输出、最小实现或故障复现，不要求可执行代码。原型是主体，问题和 Evidence 服务于原型；结果返回原 caller。
+- `beacon` — caller-neutral、主要由 model 按需调用的核心原型 specialist。基于真实 repo，把一个 bounded 功能 Intent 或故障具体化为最小、可检查的核心原型；可以是接口/调用草图、代表性输入输出、最小实现或故障复现，不要求可执行代码；caller 指出 live fork 时，在同一原型中并列表达变体。原型是主体，问题和 Evidence 服务于原型；结果返回原 caller。
 - `architecture-evolution` — long-term Target Architecture judgment + Current → Target structural Evolution Program。Target 与 Program 是两层不同 judgment，但由一个外部 Skill 承担。
 - `verify` — engineering verification skill. 从 authoritative completion/safety claim 出发定义 proof obligation，选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。
 - `eval` — agent behavioral evaluation engineering skill. 从 repo / agent surface / traces 中选择 material capability 或 failure，构建 Task + Environment + Verifier，运行并检查 agent/verifier trajectory，形成可重复 behavioral measurement。
@@ -55,7 +55,7 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 - `beacon` — 一个局部功能 Intent 或故障需要基于 repo 的核心原型，或已有原型需要局部修订；Human 很少需要主动调度。
 - `unknowns-first` — 当前判断依赖未核实事实时自动/按需关闭 factual gap；Human 也可以直接要求先查事实。
 
-`beacon` **不属于 Northstar 私有流程**。Northstar、Architecture Evolution、Verify、Unknowns First 或其他 caller 都可以按需调用；不必先制造设计歧义或查清全部故障根因。Beacon 返回一个局部核心原型，原 caller 负责采用、比较与组合；Northstar 仅在承接该 Intent 工作时持续拥有其完整 Intent。
+`beacon` **不属于 Northstar 私有流程**。Northstar、Architecture Evolution、Verify、Unknowns First 或其他 caller 都可以按需调用；不必先制造设计歧义或查清全部故障根因。Beacon 返回一个局部核心原型（可含 caller 指定的变体），原 caller 负责选择、采用、比较与组合；需要独立结构候选时，caller 并行发起独立的 Beacon 调用；Northstar 仅在承接该 Intent 工作时持续拥有其完整 Intent。
 
 `eval` 与产品 engineering flow 正交。它可以由 Human 直接调用，也可以在 Skill/prompt/tool/harness 变更需要 behavioral Evidence 时由 model 按需调用；它观察 agent behavior，不取得被测 Skill 的 semantic ownership。
 
@@ -137,7 +137,7 @@ Breaking semantic migrations are recorded in [`CHANGELOG.md`](CHANGELOG.md), inc
 - **Session handoff** — Taskbook pointer plus resume delta, never a second plan.
 - **Drafted Issue** — tracker / external carrier pointing to the Taskbook, not a parallel Intent source.
 - **PR** — realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在这里。
-- **Beacon artifact** — a minimal, repo-grounded core prototype of a bounded feature intent or fault, normally disposable. An interface/usage sketch, representative behavior, minimal implementation, or reproducer may express the core. The prototype and supporting correction / Evidence return to the caller; adoption, comparison, composition, and persistence remain there.
+- **Beacon artifact** — a minimal, repo-grounded core prototype of a bounded feature intent or fault, normally disposable. An interface/usage sketch, representative behavior, minimal implementation, or reproducer may express the core; when the caller names a live fork, its variants sit side by side on the same repo anchors. The prototype and supporting correction / Evidence return to the caller; variant selection, adoption, comparison, composition, and persistence remain there.
 - **Architecture handoff** — only when a durable structural handoff is independently useful; otherwise return structural decisions to the caller. Northstar adopts durable corrections into its current Draft / canonical Taskbook; the Issue only references it.
 - **Verify result** — Claim + proof obligation + Evidence basis + proven/false/unproven verdict + owner routing. It normally stays with the PR/review/verification surface unless it changes durable Intent or Architecture.
 - **Eval artifact** — Capability/failure + Task + Environment + Verifier + backend binding + Run Evidence/Trajectory + measurement status. It belongs under `evals/` or the project's existing eval surface, not in canonical Intent or product verification state.

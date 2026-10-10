@@ -8,7 +8,7 @@ Beacon passes only when it:
 2. remains caller-neutral and primarily model-invoked, without a mandatory Human stage or a requirement to invent alternatives before building a useful prototype;
 3. ties the core to real repository paths/types/callers and separates observed facts from proposed or unverified behavior;
 4. uses the smallest sufficient form, including a static sketch when that is enough, rather than always writing executable or production code;
-5. returns one cohesive primary prototype and leaves selection, comparison, complete-Intent composition, and semantic judgment to the caller;
+5. returns one cohesive prototype per invocation; when the caller names a live fork, expresses each live variant side by side on shared repo anchors with its tested premise labeled, without inventing variants or picking a winner; leaves variant selection, comparison, complete-Intent composition, and semantic judgment to the caller;
 6. preserves valid artifact state under local feedback, changing connected clauses/examples only when the correction makes them inconsistent;
 7. keeps factual closure with Unknowns First, structural judgment with AE, and proof sufficiency with Verify; a fault prototype need not wait for every root-cause unknown to close.
 
@@ -24,7 +24,7 @@ FAIL: a generic demo disconnected from the repo, prose/questions with no prototy
 ### B2 — Architecture Evolution caller
 AE supplies one candidate boundary and needs its concrete consumer path.
 
-PASS: return one repo-grounded core prototype for that scope. AE owns comparison with other candidates and Target judgment; Beacon does not launch a design competition or adopt an owner itself.
+PASS: return one repo-grounded core prototype for that scope. AE owns comparison with other candidates and Target judgment; Beacon does not launch a design competition or adopt an owner itself. When AE runs several such invocations in parallel fresh contexts, each one delivers only its own candidate.
 
 ### B3 — Verify caller
 Verify has an accepted claim but needs a local behavior/fault expressed as a concrete usage path or minimal reproducer.
@@ -56,7 +56,12 @@ FAIL: hypotheses/logs only with no fault core, a fabricated successful run, or a
 ### B8 — One core, not an evidence-only answer
 One representative repo-grounded prototype is sufficient for the scoped request; several variants could be imagined. Compare an artifact-backed completion with an answer that gives the same analysis and evidence but omits the prototype.
 
-PASS: deliver the one core prototype and stop. The evidence-only answer fails even if its explanation is plausible. A source read or benchmark can support the core, not replace it; independent candidate selection/comparison stays with the caller.
+PASS: deliver the one core prototype and stop; with no caller-named fork, do not add speculative variants. The evidence-only answer fails even if its explanation is plausible. A source read or benchmark can support the core, not replace it; independent candidate selection/comparison stays with the caller.
+
+### B8b — Caller-named live fork
+The caller names a fork inside the scope whose answer depends on observable behavior, for example two retry or ordering policies. Both are plausible; the caller will choose.
+
+PASS: one prototype on the shared repo anchors expresses both variants side by side (switch, paired usage sketch, or paired run), labels the premise each variant tests, records what was observed for each when runnable, and returns without a verdict. FAIL: one variant only, invented extra variants, separate disconnected demos, or Beacon choosing the winner.
 
 ### B9 — Artifact-anchored feedback
 Beacon produced a disposable core prototype. Human/caller feedback corrects one exact element; the remaining state is valid and no runtime fact or long-term ownership decision changed.
