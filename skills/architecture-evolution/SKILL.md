@@ -24,7 +24,7 @@ AE 可以直接从当前 engineering request / existing Intent / Drafted Issue /
 
 ### 按需调用 Beacon
 
-如果一个候选 Target 需要用具体 caller path、usage、interface 或 boundary 表达其核心，AE 可以 model-invoke `$beacon`，为这个 bounded scope 构建一个基于 repo 的最小核心原型。
+如果一个候选 Target 需要用具体 caller path、usage、interface 或 boundary 表达其核心，AE 可以 model-invoke `$beacon`，为这个 bounded scope 构建一个基于 repo 的最小核心原型；同一 scope 内可由观察区分的 live 变体，可以在同一个原型里并列表达。
 
 Beacon 返回原型及必要 Evidence；**AE 仍然拥有候选选择、比较与 Target judgment**。不要让 Beacon 根据 current code convenience 选择长期 owner。阻断原型表达的事实缺口交 `$unknowns-first`；已有原型足够且只剩生产实现 How 时，不调用 Beacon。
 
@@ -62,9 +62,11 @@ Beacon 返回原型及必要 Evidence；**AE 仍然拥有候选选择、比较�
 
 ### Design competition / reaction Evidence
 
-不要把第一个看起来合理的 Target shape 当成已证明设计，也不要为了“多方案”固定制造架构竞技场。只有当同一个 material structural question 仍存在多个会改变 ownership、boundary、dependency、lifecycle 或 change locality 的 live shapes，且继续 prose 无法可靠区分时，才比较多个 concrete reactions。
+不要把第一个看起来合理的 Target shape 当成已证明设计，也不要为了“多方案”固定制造架构竞技场。当一个结构决定会 materially 改变 ownership、boundary、dependency、lifecycle 或 change locality，调研后仍存在多个 live shapes，且采用后反悔代价高时，或 caller / Human 明确要求比较时，比较多个 concrete reactions，而不是在 prose 中选定第一个可行形状。routine 选择或已被 authority / Human commitment 决定的选择不开竞争。
 
-由 AE 选择最少必要的 live candidates；每次可让 `$beacon` 为一个候选的 bounded scope 产出一个 repo-grounded 核心原型，再由 AE 用同一组 structural criteria 比较：knowledge 是否归位、caller 是否仍重组私有决定、dependency 是否需要补偿、旧 authority 是否能 real exit、代表性 change 是否更 locality。候选竞赛与综合不交给 Beacon。
+由 AE 选择最少必要的 live candidates，并写出共享 brief：同一 outcome、binding constraints、repo grounding 与各候选要表达的结构前提；比较标准留在 AE，不交给生成方。比较一旦成立，各候选必须在独立的 fresh context 中**并行**调用 `$beacon` 产出 repo-grounded 核心原型，可用时给每个候选不同的设计约束或模型；不要在同一上下文中逐个生成，也不要让一个上下文扮演多个设计者或自写对比表代替候选。当前环境有任何委派能力即视为可用；repo 小、事实可读或已有倾向都不是跳过独立生成的理由。只有完全没有委派能力时，才在同一上下文中比较，并在结果中标明独立性受限。
+
+候选返回后，先并列呈现，再由 AE 用同一组 structural criteria 比较：knowledge 是否归位、caller 是否仍重组私有决定、dependency 是否需要补偿、旧 authority 是否能 real exit、代表性 change 是否更 locality。选定一个 base，只在保持单一连贯 ownership 模型时吸收其他候选的部分，并保留关键 rejection 理由。比较风险高或 AE 自评偏差 material 时，用一个独立 judge（不同 context，可用时不同模型）按同一标准评估，按 Evidence 而非票数调和分歧。决定性因素只属于 Human commitment（投入、兼容、风险、产品偏好）时，把这个具体依赖交回 Northstar / Human，而不是硬选。候选竞赛与综合不交给 Beacon。
 
 实现本身也可以产生 reaction Evidence。若代表性实现反复要求意料外的跨边界参数/状态、caller workaround、type escape、duplicated knowledge、special path 或绕过 owner 的 proof path，先判断这些 friction 是否只是 local implementation defect；若它们稳定暴露 Target premise / boundary 错误，就丢弃或修正受影响 design，而不是继续堆 compensation。若 friction 只影响迁移成本或 implementation How，则保持 Target，只调整 Program / Executor。
 
@@ -127,6 +129,7 @@ Research、execution、review、Beacon correction 或 Verify 都可能触发 AE 
 - material Current → Target gap；
 - focused Evolution Program、real exits / migration boundary；
 - material structural completion claims；
+- 会推翻 Target premise 的实现期 reaction tell，要求 Executor 遇到时作为 deviation 返回而不是吸收；
 - 会改变 Target / Program 的 unresolved Evidence 或 Human choice。
 
 被 Northstar 调用时，后续执行需要的 durable structural Decision / Constraint / Draft correction 由 Northstar 取舍后 fold back 到 current Draft，并在 material / cross-session work 中回写同一个 canonical Taskbook；Issue 只引用它，不另存方案。独立调用且用户需要 architecture handoff 时才形成持久文档；AE 不强制每次生成第二份 Markdown SOT。

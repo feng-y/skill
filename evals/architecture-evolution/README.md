@@ -13,7 +13,7 @@ Architecture Evolution passes only when it:
 5. treats current modules / patches as reality Evidence, not Target authority;
 6. reuses a still-valid Target; migration cost or patch churn alone does not redesign Target;
 7. compares verified Current → Target gaps and selects only high-leverage structural moves with real exits;
-8. may model-invoke `$beacon` for one repo-grounded core prototype of a bounded candidate boundary or consumer path; AE retains candidate comparison and Target ownership;
+8. may model-invoke `$beacon` for repo-grounded core prototypes of bounded candidate boundaries or consumer paths; independent structural candidates are generated in parallel fresh contexts from one shared brief, not serially in one context; AE retains comparison, base selection/synthesis and Target ownership;
 9. leaves implementation How to Executor; AE defines structural semantics while `$verify` may check already-adopted structural completion claims;
 10. does not treat behavior parity from Replay/test/build as proof of architecture improvement by itself;
 11. uses canonical Northstar Intent / Human commitments as accepted boundary when present, without maintaining an independent Goal layer;
@@ -53,7 +53,7 @@ PASS when facade/provider additions without old authority/knowledge exit are rej
 ### A9 — Beacon makes structural consequence inspectable
 AE has narrowed the structural question, but two candidate boundaries produce materially different caller paths that are hard to compare in prose.
 
-PASS: AE scopes each needed Beacon invocation to one repo-grounded core prototype, then compares the returned caller paths itself and makes the Target decision. Beacon does not run the competition, select a long-term owner, or compose the complete Intent.
+PASS: AE scopes each needed Beacon invocation to one repo-grounded candidate, launches them in parallel independent contexts, then compares the returned caller paths itself and makes the Target decision. Beacon does not run the competition, select a long-term owner, or compose the complete Intent.
 
 ### A10 — Behavior parity is not architecture proof
 A DaVinci Replay or equivalence backend reports behavior parity, but old owner remains authoritative.
@@ -81,7 +81,17 @@ PASS when a local change fully fits the current correct owner and AE returns loc
 ### A15 — First design is not privileged
 Two long-term boundary shapes both satisfy the prose-level responsibility statement, but they differ in whether callers must reconstruct private lifecycle knowledge.
 
-PASS: AE does not simply keep the first design. It requests only the needed repo-grounded core prototypes, one cohesive candidate scope per Beacon invocation, compares them under the same ownership/change-locality criteria, then adopts/rejects the Target itself. Reuse existing adequate cores; do not require a fixed candidate count or tournament.
+PASS: AE does not simply keep the first design. When the decision is consequential, still open after research, and costly to reverse, it writes one shared brief, generates the needed repo-grounded candidates in parallel independent contexts, presents them before recommending, compares them under the same ownership/change-locality criteria, selects a base and absorbs only coherent parts of the others, then adopts/rejects the Target itself. A Human-owned deciding preference is returned as that specific dependency. Reuse existing adequate cores; do not require a fixed candidate count or tournament.
+
+### A15c — Explicit comparison request uses independent candidates
+The caller or Human asks AE to compare two structural homes concretely before recommending. The delegation tool is available and the repo is small.
+
+PASS: AE launches independent fresh-context Beacon candidates in parallel from one shared brief, then compares, selects a base, and records what it absorbed and rejected. FAIL: a single-context comparison table, or citing repo size, readable facts or "independence limited" while delegation is available.
+
+### A15b — Routine choice gets no competition
+The structural choice is already decided by an authoritative ADR, or it is cheap to reverse and does not change ownership/boundary/dependency.
+
+PASS: AE decides directly or reuses the authority without generating candidates. FAIL: launching parallel candidates or an independent judge for a settled or routine choice.
 
 ### A16 — Implementation friction falsifies the boundary
 A representative implementation of the adopted boundary repeatedly requires callers to pass owner-private state, duplicate normalization rules, add casts/escape hatches, and bypass the boundary for verification. These are not isolated coding mistakes and follow from the proposed ownership split.
