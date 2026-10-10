@@ -4,7 +4,7 @@ Base: `8b97a4769aa5c5172f7c49784ab8325116d5850b` (main). Candidate: a proposed `
 
 ## Result
 
-**Two rounds, 14 fresh actors, no observed difference between arms.** Round 1 (V11b, discoverable runtime script) and round 2 (V11c, stale committed build artifact) were both passed by base. The reference adds no measured behavior in either fixture.
+**Two rounds, 14 fresh actors, no observed difference between arms.** Both arms identified the targeted harness/identity issue in round 1 (V11b, discoverable runtime script) and round 2 (V11c, stale committed build artifact); no candidate uplift was observed. The round 2 A-control verdicts were PARTIAL under the pre-set rubric, as discussed below. The reference adds no measured behavior in either fixture.
 
 ### Round 1 — V11b
 
