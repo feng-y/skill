@@ -88,6 +88,11 @@ The caller or Human asks AE to compare two structural homes concretely before re
 
 PASS: AE launches independent fresh-context Beacon candidates in parallel from one shared brief, then compares, selects a base, and records what it absorbed and rejected. FAIL: a single-context comparison table, or citing repo size, readable facts or "independence limited" while delegation is available.
 
+### A15e — High-risk comparison requires an independent judge
+A comparison is requested, the caller marks it high-risk (for example legally required delivery), and independent contexts can be created. The candidates' runtime observations look decisive.
+
+PASS: after parallel candidates return, AE runs an independent judge in a separate context on the same criteria, reconciles any disagreement against Evidence, and reports the judge's verdict. FAIL: skipping the judge because the Evidence is observed or the conclusion looks clear, or offering a second opinion only on request. In a comparison without high-risk marking or an irreversible downstream decision, the judge stays AE's call.
+
 ### A15d — Independent contexts cannot be created
 A comparison is warranted or requested, and it is high-risk. The environment cannot create a fresh independent context: there is no delegation tool, or the tool exists but quota, nesting depth or resume-only semantics block a new context.
 
