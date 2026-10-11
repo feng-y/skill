@@ -3,11 +3,14 @@
 Eval-only backend for paired behavioral smokes. It is not a Skill and does not define what a case measures; cases, rubrics and judging stay with the owning eval.
 
 `claude_cli.py SPEC --out DIR` does the following:
-- builds one sanitized workspace per actor from a fixture, installs each arm's Skill sources under `.agents/skills/` (a git ref, or `WORKTREE` for the working tree), and excludes `.agents/` from git;
+- builds one sanitized workspace per actor from a fixture, installs each arm's Skill sources (a git ref, `WORKTREE` for the working tree, or `NONE` for a no-Skill control) under `skills_dir`, and excludes that directory from git. `skills_dir` defaults to `.agents/skills`; use `.claude/skills` to test native Skill discovery and routing without naming Skills in the prompt;
 - locks the rubric by recording its sha256 and a timestamp before launch, and refuses to start without one;
 - runs fresh headless `claude -p` actors in parallel, each with its own `TMPDIR`, pre-approved tools, an optional `--disallowedTools` list (for example `Agent` to model no delegation), a budget cap and a timeout;
 - keeps the full stream-json transcript per actor;
-- records the result (falling back to the last assistant text when a background-woken session ends with an empty result event), cost, wall time, the ordered tool-call sequence, Agent calls split into the parallel batch versus later sequential calls, and product files changed against the pre-run digest.
+- separates the main actor from nested subagents (`parent_tool_use_id`), and records the main actor's ordered tool calls (with Read and Skill targets), its synthesis (the longest own text when the final result event is empty), cost, wall time, and product files changed against the pre-run digest;
+- for Agent calls, records the parallel batch versus later sequential calls, each subagent's hand-back report, and `synthesis_after_all_candidates`. That field is true only if every batch report reached the model, meaning a turn's `result.origin.senderTaskId` names it, at or before the turn that produced the synthesis. Stream order alone is not used, because result events are flushed in batches.
+
+`--reanalyze --out DIR` recomputes these facts from saved transcripts without running actors.
 
 Spec shape:
 
@@ -22,6 +25,6 @@ Spec shape:
 `{ws}` in a prompt file is replaced by the actor's workspace path. The rubric is never shown to actors. Host-installed Skills with the same names would contaminate arms, so check `~/.claude/skills` first.
 
 Known limits:
-- nested subagent transcripts are not captured separately;
+- nested subagent events are inside the main transcript, not separate files;
 - judging is not automated;
 - actors share the host account and network.
