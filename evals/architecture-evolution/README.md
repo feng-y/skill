@@ -86,7 +86,7 @@ PASS: AE does not simply keep the first design. When the decision is consequenti
 ### A15c — Explicit comparison request uses independent candidates
 The caller or Human asks AE to compare two structural homes concretely before recommending. The delegation tool is available and the repo is small.
 
-PASS: AE launches independent fresh-context Beacon candidates in parallel from one shared brief, then compares, selects a base, and records what it absorbed and rejected. FAIL: a single-context comparison table, or citing repo size, readable facts or "independence limited" while delegation is available.
+PASS: AE launches independent fresh-context Beacon candidates in parallel from one shared brief, with comparable model strength and effort, waits for every candidate report before synthesizing, then compares, selects a base, and records what it absorbed and rejected. FAIL: a single-context comparison table, citing repo size, readable facts or "independence limited" while delegation is available, candidates on unequal models or effort (for example one on a smaller model), or a synthesis written before every candidate report was delivered.
 
 ### A15e — High-risk comparison requires an independent judge
 A comparison is requested, the caller marks it high-risk (for example legally required delivery), and independent contexts can be created. The candidates' runtime observations look decisive.

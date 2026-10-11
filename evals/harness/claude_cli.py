@@ -38,7 +38,7 @@ def tree_digest(root):
     out = {}
     for p in sorted(Path(root).rglob("*")):
         rel = p.relative_to(root).as_posix()
-        if p.is_file() and not rel.startswith((".git/", ".agents/")):
+        if p.is_file() and not rel.startswith((".git/", ".agents/", ".claude/")):
             out[rel] = sha256_file(p)
     return out
 
@@ -48,8 +48,11 @@ def git(*args, cwd=REPO):
 
 
 def install_arm(dest, ref, skills):
-    """Copy Skill sources for one arm. ref='WORKTREE' uses the working tree."""
+    """Copy Skill sources for one arm. ref='WORKTREE' uses the working tree;
+    ref='NONE' installs nothing (a no-Skill control arm)."""
     blobs = {}
+    if ref == "NONE":
+        return blobs
     for skill in skills:
         target = dest / skill
         target.mkdir(parents=True, exist_ok=True)
@@ -79,8 +82,9 @@ def prepare(spec, out):
                 subprocess.run(["git", "init", "-q"], cwd=ws, check=True)
                 subprocess.run(["git", "add", "-A"], cwd=ws, check=True)
                 subprocess.run(["git", "-c", "user.email=dev@example.com", "-c", "user.name=dev", "commit", "-qm", "init"], cwd=ws, check=True)
-                (ws / ".git" / "info" / "exclude").write_text(".agents/\n")
-                blobs = install_arm(ws / ".agents" / "skills", spec["arms"][arm], cell.get("skills", spec["skills"]))
+                skills_dir = cell.get("skills_dir", spec.get("skills_dir", ".agents/skills"))
+                (ws / ".git" / "info" / "exclude").write_text(skills_dir.split("/")[0] + "/\n")
+                blobs = install_arm(ws / skills_dir, spec["arms"][arm], cell.get("skills", spec["skills"]))
                 actors.append({
                     "name": name, "cell": cell["id"], "arm": arm, "ws": str(ws),
                     "prompt": prompt.replace("{ws}", str(ws)),
@@ -114,55 +118,93 @@ def run_actor(actor, spec, out):
 
 
 def analyze(actor):
-    calls, results, final, texts = [], {}, {}, []
-    order = 0
-    for line in open(actor["transcript"]):
+    """Extract main-actor facts. Nested subagent events carry parent_tool_use_id
+    and are kept out of the actor's own calls and texts; their completions and
+    hand-back reports are read from task_notification events."""
+    calls, acks, texts, completions, handbacks, final = [], {}, [], {}, {}, {}
+    turns = []  # (line, origin sender task id, result text) for each turn-ending result event
+    for idx, line in enumerate(open(actor["transcript"]), 1):
         try:
             ev = json.loads(line)
         except json.JSONDecodeError:
             continue
-        if ev.get("type") == "result":
+        kind = ev.get("type")
+        if kind == "result" and (ev.get("result") or "").strip():
             final = {k: ev.get(k) for k in ("result", "total_cost_usd", "num_turns", "is_error", "session_id")}
+        elif kind == "result" and not final:
+            final = {k: ev.get(k) for k in ("total_cost_usd", "num_turns", "is_error", "session_id")}
+        if kind == "result":
+            turns.append((idx, (ev.get("origin") or {}).get("senderTaskId"), ev.get("result") or ""))
+        if kind == "system" and ev.get("subtype") == "task_notification":
+            completions[ev.get("tool_use_id")] = {"line": idx, "status": ev.get("status"), "task_id": ev.get("task_id")}
+        parent = ev.get("parent_tool_use_id")
+        if parent is not None:
+            for item in ((ev.get("message") or {}).get("content") or []):
+                if isinstance(item, dict) and item.get("type") == "tool_use" and item.get("name") == "SubagentHandback":
+                    handbacks[parent] = (item.get("input") or {}).get("message")
+            continue
         content = (ev.get("message") or {}).get("content") or []
         for item in content if isinstance(content, list) else []:
             if not isinstance(item, dict):
                 continue
-            order += 1
-            if item.get("type") == "text" and ev.get("type") == "assistant":
-                texts.append(item.get("text") or "")
-            if item.get("type") == "tool_use":
+            if kind == "assistant" and item.get("type") == "text":
+                texts.append((idx, item.get("text") or ""))
+            elif item.get("type") == "tool_use":
                 inp = item.get("input") or {}
-                entry = {"order": order, "id": item["id"], "name": item["name"]}
+                entry = {"line": idx, "id": item["id"], "name": item["name"]}
                 if item["name"] in ("Agent", "Task"):
                     entry["description"] = inp.get("description")
                     entry["prompt"] = inp.get("prompt")
                 elif item["name"] == "Bash":
                     entry["command"] = (inp.get("command") or "")[:400]
+                elif item["name"] in ("Read", "Skill"):
+                    entry["target"] = inp.get("file_path") or inp.get("skill") or inp.get("name")
                 calls.append(entry)
             elif item.get("type") == "tool_result":
-                results.setdefault(item.get("tool_use_id"), order)
-    if texts and not (final.get("result") or "").strip():
-        # A session woken by background-task notifications ends with an empty
-        # result event; the actor's real answer is its last assistant text.
-        final["result"] = texts[-1]
-        final["result_source"] = "last_assistant_text"
+                acks.setdefault(item.get("tool_use_id"), idx)
+    # The synthesis is the actor's longest own text; short trailing texts are
+    # status lines written after late notifications.
+    synthesis = max(texts, key=lambda t: len(t[1]), default=(None, ""))
+    if not (final.get("result") or "").strip():
+        final["result"] = synthesis[1]
+        final["result_source"] = "longest_assistant_text"
     agents = [c for c in calls if c["name"] in ("Agent", "Task")]
-    first_result = min((results.get(a["id"], 10**9) for a in agents), default=None)
-    # Agents issued before any Agent result returned form the parallel batch
-    # (e.g. candidates); later calls such as an independent judge are sequential.
-    parallel_batch = [a["description"] for a in agents if first_result is not None and a["order"] < first_result]
-    post = tree_digest(actor["ws"])
+    for a in agents:
+        a["completed_line"] = (completions.get(a["id"]) or {}).get("line")
+        a["report"] = handbacks.get(a["id"])
+    first_ack = min((acks.get(a["id"], 10**9) for a in agents), default=None)
+    batch = [a for a in agents if first_ack is not None and a["line"] < first_ack]
+    # A report reaches the model when a turn is triggered by that subagent's
+    # hand-back (result origin.senderTaskId); stream order of system events
+    # alone does not prove the model had read it.
+    # Result events can be flushed after later texts, so match the synthesis
+    # turn by its result text rather than by line position.
+    head = synthesis[1][:200]
+    synth_turn = next((ln for ln, _, text in turns if head and text.startswith(head)), None)
+    delivered = {}
+    for ln, sender, _ in turns:
+        if sender and sender not in delivered:
+            delivered[sender] = ln
+    for a in agents:
+        tid = (completions.get(a["id"]) or {}).get("task_id")
+        a["delivered_turn_line"] = delivered.get(tid)
     actor.update({
         "final": final,
+        "synthesis_line": synthesis[0],
         "tool_counts": {n: sum(1 for c in calls if c["name"] == n) for n in sorted({c["name"] for c in calls})},
         "agent_calls": agents,
-        "agents_parallel": len(parallel_batch) >= 2,
-        "parallel_batch": parallel_batch,
-        "sequential_agents": [a["description"] for a in agents if a["description"] not in parallel_batch],
-        "product_changed": sorted(k for k in set(actor["pre"]) | set(post) if actor["pre"].get(k) != post.get(k)),
+        "agents_parallel": len(batch) >= 2,
+        "parallel_batch": [a["description"] for a in batch],
+        "sequential_agents": [a["description"] for a in agents if a not in batch],
+        "synthesis_after_all_candidates": (None if not batch else
+                                           all(a["delivered_turn_line"] is not None and synth_turn is not None
+                                               and a["delivered_turn_line"] <= synth_turn for a in batch)),
         "tool_calls": calls,
     })
-    del actor["pre"]
+    if "pre" in actor:
+        post = tree_digest(actor["ws"])
+        actor["product_changed"] = sorted(k for k in set(actor["pre"]) | set(post) if actor["pre"].get(k) != post.get(k))
+        del actor["pre"]
     return actor
 
 
@@ -171,7 +213,17 @@ def main():
     ap.add_argument("spec")
     ap.add_argument("--out", required=True)
     ap.add_argument("--max-workers", type=int, default=6)
+    ap.add_argument("--reanalyze", action="store_true", help="re-run analysis on an existing --out directory")
     args = ap.parse_args()
+    if args.reanalyze:
+        out = Path(args.out).resolve()
+        record = json.loads((out / "outcomes.json").read_text())
+        record["actors"] = [analyze(a) for a in record["actors"]]
+        (out / "outcomes.json").write_text(json.dumps(record, ensure_ascii=False, indent=1))
+        for a in record["actors"]:
+            print(a["name"], a["cell"], a["arm"], "batch", a["parallel_batch"], "sequential", a["sequential_agents"],
+                  "synthesis_after_all", a["synthesis_after_all_candidates"], "tools", a["tool_counts"])
+        return
     spec = json.loads(Path(args.spec).read_text())
     out = Path(args.out).resolve()
     if out.exists():
@@ -185,7 +237,8 @@ def main():
     (out / "outcomes.json").write_text(json.dumps(record, ensure_ascii=False, indent=1))
     for a in done:
         print(a["name"], a["cell"], a["arm"], "exit", a["exit_code"], "cost", (a["final"] or {}).get("total_cost_usd"),
-              "agents", len(a["agent_calls"]), "parallel", a["agents_parallel"], "changed", len(a["product_changed"]))
+              "agents", len(a["agent_calls"]), "parallel", a["agents_parallel"],
+              "synthesis_after_all", a["synthesis_after_all_candidates"], "changed", len(a["product_changed"]))
 
 
 if __name__ == "__main__":
