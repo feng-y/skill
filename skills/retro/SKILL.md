@@ -12,8 +12,8 @@ Retro 回答一个独立问题：**这段真实工作里，agent 在哪些具体
 
 ## 读什么
 
-- **Session**：默认当前 session；Human 指定时读具名的 Claude Code / Codex transcript。用 `python3 scripts/session_turns.py --current` 或 `python3 scripts/session_turns.py <transcript>...` 列出每个 Human turn、它之前的 assistant 结论，以及之后到下一个 Human turn 之间的 tool 调用、失败与中断；再按行号回读需要的原文。复盘覆盖全部 Human turn，被截断的长 turn（粘贴的 review、日志）读全文，输出开头写明读过的行范围。只读被复盘的工作，不跨 workspace 或其他 session 搜索。
-- **项目 feedback log**（项目已有 work-notes 位置，否则 `.agents/feedback-log.md`）：存在就读，未收录的条目一并处理。
+- **Session**：默认当前 session；Human 指定时读具名的 Claude Code / Codex transcript。用 `python3 scripts/session_turns.py --current` 或 `python3 scripts/session_turns.py <transcript>...` 列出每个 Human turn、它之前的 assistant 结论，以及之后到下一个 Human turn 之间的 tool 调用、失败与中断；再按行号回读需要的原文。复盘覆盖全部 Human turn，被截断的长 turn（粘贴的 review、日志）读全文，输出开头写明读过的行范围。`--current` 按宿主导出的 session id 绑定调用方 session；识别不了就请 Human 指定 transcript，不按修改时间猜。只读被复盘的工作，不跨 workspace 或其他 session 搜索。
+- **项目 feedback log**（项目已有 work-notes 位置，否则 `.agents/feedback-log.md`）：各 Skill 在现场写入的条目，存在就读；与 transcript 中同一时刻合并，不重复提出。
 - **项目 contract**：当时生效的 AGENTS.md / CLAUDE.md、已加载的 Skill、项目文档与 check 命令（lint / test / hook / CI）。Human 要求时再读 commit / revert / review 历史。
 
 ## 找时刻

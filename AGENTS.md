@@ -64,7 +64,7 @@
 ## Artifact ownership
 
 - **Northstar 方案文档 / Taskbook**：Northstar 的 primary durable artifact 是 repo/workspace 中真实落盘的 Markdown 方案文件。current Draft 一旦成为可复用方案就写入该文件；material / cross-session execution 继续在同一文件中维护 binding Decision / Constraint / Acceptance、material tasks / status、决定性 Evidence pointer、last Northstar judgment 与 next owner。`Taskbook` 是这份方案文件在执行期承担的角色，不是第二份 plan。宿主 UI、chat block、canvas/container/panel 只能引用或展示它。
-- **Feedback Log**：项目内按需保留可复用信号的 append-only、跨 session learning artifact，各 Skill 共用同一文件。`$retro` 在 Human 选中 `skill` / `pending` 候选且 workspace 中没有本 repo ledger 时追加；Northstar material work 中，worker 默认在正常 return 中报告信号；值得持久化或明确要求独立记录时，再记录 decisive Evidence pointer 与 execution observation；Northstar session 在消费 return、完成 judgment 并更新 canonical Taskbook 后，可补记 judgment / material Taskbook delta。它不是 current Intent / task state / Evidence sufficiency 的 authority，不要求两个角色共享 session，也不参与 dispatch、resume 或 acceptance；后续 Skill 改进可把它当作 trace-like input，但 behavior claim 仍必须进入 Eval。
+- **Feedback Log**：项目内按需保留可复用信号的 append-only、跨 session learning artifact，各 Skill 共用同一文件。任一 Skill 的 judgment / output 被 Human correction、review finding 或后续 verified Evidence 推翻时在使用现场追加；Northstar material work 中，worker 默认在正常 return 中报告信号；值得持久化或明确要求独立记录时，再记录 decisive Evidence pointer 与 execution observation；Northstar session 在消费 return、完成 judgment 并更新 canonical Taskbook 后，可补记 judgment / material Taskbook delta。它不是 current Intent / task state / Evidence sufficiency 的 authority，不要求两个角色共享 session，也不参与 dispatch、resume 或 acceptance；后续 Skill 改进可把它当作 trace-like input，但 behavior claim 仍必须进入 Eval。
 - **Session handoff**：只保存从 canonical 方案文档 / Taskbook 恢复所需的 session delta：plan pointer、last completed/current task、仍 live 的 blocker/decision、next task / owner、需要返回 Northstar 的 judgment point。不得复制方案文件中的架构、方案、验收全文；需要重述的 durable 内容应回写同一方案文件。
 - **Drafted Issue**：tracker / 外部协作 carrier。material / cross-session work 的 canonical state 始终在 Taskbook；Issue 只指向它并保留讨论历史 / 外部协作信息，禁止复制一份可独立漂移的方案。
 - **PR**：realized Change / Delivery；implementation How、diff、implementation-local validation 与 review 默认留在 PR。
@@ -96,9 +96,9 @@
 
 Feedback Log 保存跨 session 的 execution return / observation，以及 Northstar 后续对该 return 的 judgment / Taskbook material delta；它不假设 worker 与 Northstar 在同一 session，也不创建新的 semantic owner。worker 不能写 canonical Taskbook，Northstar 也不需要重演 worker session 才能补充 feedback。若反馈说明 current Intent / task state 需要修正，仍先按上述 owner 更新 canonical Taskbook；若它被用于改进 Skill，则把它当作 observation / trace input，而不是直接把单条经验写成 runtime rule。
 
-**改进本 Skill system 的反馈必须闭环。** 入口是 Human 调用的 `$retro`：它读真实 transcript（Claude Code / Codex）与项目 feedback log，Human 选中的 `skill` / `pending` 候选直接追加到 ledger，或先进入项目 feedback log（与 Northstar Feedback Log 同一文件）。Eval 只度量，不是反馈入口。闭环是：
+**改进本 Skill system 的反馈必须闭环。** 入口在用户实际使用的 Skill：每个 Skill 的 judgment / output 被 Human correction、review finding 或后续 verified Evidence 推翻时，按该 Skill 的 Correction feedback 规则写入项目 feedback log（与 Northstar Feedback Log 同一文件）。Eval 只度量，不是反馈入口。现场记录之外，Human 可调用 `$retro` 复盘具名 transcript（Claude Code / Codex）与项目 log：它补上没有 Skill 在用、未被纠正的吃亏和跨条目的模式，Human 选中的 `skill` / `pending` 候选进入 ledger 或项目 log。闭环是：
 
-1. **Intake**：只有落点为 `skill` 或 `pending`（已有规定未被执行）的 retro 候选与项目 log 条目进入本 repo；`pending` 是 adherence 信号，复发时先测量为什么没被执行或寻找结构化手段，不补同义 prose；`target-repo` 条目留在项目内由项目自己处理，`none` 不进入。它们在 [`evals/feedback/LEDGER.md`](evals/feedback/LEDGER.md) 各记一行抽象 shape 与 source pointer，能追溯到具体时刻；raw transcript、项目 log 原文与私有上下文留在原处，不能追溯的候选丢弃。
+1. **Intake**：只有落点为 `skill` 或 `pending`（已有规定未被执行）的项目 log 条目与 retro 候选进入本 repo；`pending` 是 adherence 信号，复发时先测量为什么没被执行或寻找结构化手段，不补同义 prose；`target-repo` 条目留在项目内由项目自己处理，`none` 不进入。它们在 [`evals/feedback/LEDGER.md`](evals/feedback/LEDGER.md) 各记一行抽象 shape 与 source pointer，能追溯到具体时刻；raw transcript、项目 log 原文与私有上下文留在原处，不能追溯的候选丢弃。
 2. **Disposition**：`skill` / `pending` 是修正落点，不是处置结论。按 owner 归类后给出 `no-gap`（一次性、偏好、本体系之外，或 base 已表现正确）、`eval`、`structural`（check / harness / tool 可以不靠 prose 解决，优先）或 `runtime`；`runtime` 只能来自 Eval 证明的稳定 gap。
 3. **Close**：只有带指针才关闭——测过 base 并用同一 measurement 重跑修复的 RESULTS / PR，或 `no-gap` 的理由。base 已通过的纠正只能算 contract 修正，不能记为 behavior uplift。
 4. **Recurrence**：同类新信号链接已关闭行；复发是 cross-case Evidence，也是重开该 owner 的依据。

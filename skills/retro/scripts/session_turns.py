@@ -9,7 +9,7 @@ interrupts mark struggles that no Human corrected. The default output is one
 compact line per turn with a coverage header; --json gives full rows.
 
 It does not classify or judge. Pass only transcripts of the work under review,
-or --current for the newest transcript of this working directory. Output can
+or --current for the calling session's own transcript. Output can
 contain private context; keep it local.
 """
 
@@ -97,7 +97,7 @@ def turns(path, tail):
             last = value
         elif kind == "human" and not value.startswith(SKIP_PREFIXES):
             close(idx - 1)
-            row = {"source": str(path), "line": idx, "human": value[:2000], "preceding_assistant": last[-tail:],
+            row = {"source": str(path), "line": idx, "human": value, "preceding_assistant": last[-tail:],
                    "work": {"tool_calls": 0, "tool_errors": 0, "interrupts": 0, "_tools": Counter()}}
         elif row is not None and kind == "tool":
             row["work"]["tool_calls"] += 1
@@ -110,35 +110,37 @@ def turns(path, tail):
     return rows
 
 
-def current_transcript(cwd):
-    """Newest transcript whose session ran in cwd; never reads other projects' content."""
+def current_transcript():
+    """Transcript of the calling session, bound by the session id its host exports.
+
+    Never guesses by modification time: another session in the same directory
+    may have written more recently.
+    """
+    home = Path.home()
+    ids = {"claude": os.environ.get("CLAUDE_CODE_SESSION_ID"),
+           "codex": os.environ.get("CODEX_THREAD_ID") or os.environ.get("CODEX_SESSION_ID")}
     found = []
-    claude_dir = Path.home() / ".claude" / "projects" / "".join(c if c.isalnum() else "-" for c in str(cwd))
-    found += list(claude_dir.glob("*.jsonl"))
-    codex = sorted((Path.home() / ".codex" / "sessions").glob("*/*/*/rollout-*.jsonl"), key=os.path.getmtime)[-50:]
-    for f in codex:
-        try:
-            first = json.loads(open(f).readline())
-        except (json.JSONDecodeError, OSError):
-            continue
-        if (first.get("payload") or {}).get("cwd") == str(cwd):
-            found.append(f)
-    if not found:
-        sys.exit(f"no Claude Code or Codex transcript found for {cwd}; name one explicitly")
-    return max(found, key=os.path.getmtime)
+    if ids["claude"]:
+        found += [("claude", f) for f in (home / ".claude" / "projects").glob(f"*/{ids['claude']}.jsonl")]
+    if ids["codex"]:
+        found += [("codex", f) for f in (home / ".codex" / "sessions").glob(f"*/*/*/rollout-*-{ids['codex']}.jsonl")]
+    if len(found) != 1:
+        hosts = ", ".join(f"{h}={v}" for h, v in ids.items() if v) or "no session id in the environment"
+        sys.exit(f"cannot identify the calling session ({hosts}; {len(found)} matching transcripts); name the transcript explicitly")
+    return found[0][1]
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("transcripts", nargs="*", help="explicit transcript paths of the work under review")
-    ap.add_argument("--current", action="store_true", help="use the newest transcript of the current directory")
+    ap.add_argument("--current", action="store_true", help="use the calling session's transcript (bound by the host's session id)")
     ap.add_argument("--json", action="store_true", help="full JSON rows instead of the compact listing")
     ap.add_argument("--width", type=int, default=200, help="chars of Human text per turn in the compact listing")
     ap.add_argument("--tail", type=int, default=160, help="chars of preceding assistant text to keep")
     args = ap.parse_args()
     paths = [Path(t) for t in args.transcripts]
     if args.current:
-        paths.append(current_transcript(Path.cwd().resolve()))
+        paths.append(current_transcript())
     if not paths:
         ap.error("name a transcript or pass --current")
     for t in paths:

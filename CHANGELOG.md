@@ -4,15 +4,15 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
-## 2026-10-11 — Retro replaces point-of-use correction capture
+## 2026-10-11 — Add Retro for Human-invoked review of real work
 
 Change: `feat/retro-skill-20261011`
 
-- **Old surface:** each of the seven Skills carried a `## Correction feedback` section that appended to the project feedback log in the same turn its judgment was overturned (#131). It fired only when a Skill was in use; its trigger wording was fragile (3/3 → 3/6 → 6/6 across rewordings); outside the eval workspaces no project log was ever written. `evals/harness/harvest_corrections.py` back-filled corrections from named transcripts.
-- **New owner:** `retro`, a Human-invoked Skill (`disable-model-invocation`). It reads the transcript of the work under review (current session by default, Claude Code or Codex) plus the project feedback log, traces every candidate to a moment, attributes it against what was in effect at that moment (`pending` only for a rule that was loaded and not followed), and routes it: `target-repo` (strongest fix that holds: structure > type > check > test > pointer > prose), `skill` (abstracted ledger row) or `none`. It writes only items the Human picks. The transcript reader moved to `skills/retro/scripts/session_turns.py` and now also reports tool calls, failures and interrupts between Human turns.
-- **Preserved:** the fix-location vocabulary (`pending` / `target-repo` / `skill` / `none`); `pending` as an adherence signal, never a reason for synonymous prose; the shared project feedback log and Northstar's worker-return / judgment entries; ledger intake → disposition → close → recurrence; Eval measures only.
-- **Not kept:** always-on capture text in every Skill; recording without a Human asking; the separate eval-only harvest script.
-- **Evidence boundary:** see [RESULTS-retro](evals/feedback/RESULTS-retro-2026-10-11.md).
+- **Gap:** point-of-use capture (#131) fires only when a Skill in use is overturned. Corrections in sessions with no Skill in use, struggles nobody corrected, and patterns across sessions were never captured, and nothing let the Human say "review this session now". `target-repo` findings had no owner.
+- **New owner:** `retro`, a Human-invoked Skill (`disable-model-invocation`). It reads the calling session's transcript (bound by the host's session id, never guessed by modification time) or named Claude Code / Codex transcripts, plus the project feedback log. It traces every candidate to a moment, attributes it against what was in effect at that moment (`pending` only for a rule that was loaded and not followed), and routes it to `target-repo` (strongest fix that holds), `skill` (ledger row) or `none`. It writes only items the Human picks.
+- **Moved:** transcript back-fill. The eval-only `evals/harness/harvest_corrections.py` becomes retro's runtime reader `skills/retro/scripts/session_turns.py`.
+- **Preserved:** each Skill's Correction feedback stays the point-of-use entry; the fix-location vocabulary; the shared project log; ledger intake → disposition → close → recurrence; Eval measures only.
+- **Evidence boundary:** [RESULTS-retro](evals/feedback/RESULTS-retro-2026-10-11.md) shows routing and actionability gains over an unprompted review, with recall at parity. It does not show that retro replaces point-of-use capture.
 
 ## 2026-10-11 — Feedback Log becomes the shared correction entry point
 

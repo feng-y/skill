@@ -1,10 +1,10 @@
 # Skill feedback ledger
 
-Intake for signals that may change this Skill system. The entry point is the Human-invoked `retro` Skill: it reads the transcript of real work and the project feedback log, and the `skill` / `pending` candidates the Human picks land here (directly, or via the project feedback log when this repo is not in the workspace). Rules live in [AGENTS.md](../../AGENTS.md#feedback-routing); this file only records rows.
+Intake for signals that may change this Skill system. The primary source is each project's feedback log, written by the Skill in use when a Human correction, review finding or later Evidence overturned it. The Human-invoked `retro` Skill adds candidates the Human picks from named transcripts and the project log, including sessions where no Skill was in use. Rules live in [AGENTS.md](../../AGENTS.md#feedback-routing); this file only records rows.
 
 Rows keep an abstracted shape and a source pointer. Raw transcripts and private context stay where they were produced. List the Human turns of a transcript with [`session_turns.py`](../../skills/retro/scripts/session_turns.py).
 
-Fix location (set by retro, checked against what was in effect at the moment): only `skill` and `pending` rows enter; `pending` means an existing rule covered the case but was not followed, so measure adherence or find a structural fix, never add a synonymous rule. `target-repo` stays in the project; `none` is not recorded here.
+Fix location (set by the Skill in use, or by retro against what was in effect at that moment): only `skill` and `pending` rows enter; `pending` means an existing rule covered the case but was not followed, so measure adherence or find a structural fix, never add a synonymous rule. `target-repo` stays in the project; `none` is not recorded here.
 
 Disposition: `open` (not triaged) · `no-gap` (one-off, preference, outside this system, or base already behaves) · `eval` (needs a captured case to tell) · `structural` (a check / harness / tool fixes it without prose) · `runtime` (a measured stable gap in an owner contract). A row closes only with a pointer: the RESULTS / PR that measured base and reran the fix, or the reason for `no-gap`. A new row in the same class as a closed one links to it; that recurrence is cross-case Evidence, not a duplicate.
 
