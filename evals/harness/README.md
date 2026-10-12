@@ -28,3 +28,9 @@ Known limits:
 - nested subagent events are inside the main transcript, not separate files;
 - judging is not automated;
 - actors share the host account and network.
+
+A cell may set `env` (extra environment variables for that cell's actors; never `ANTHROPIC_*`, which the actor itself uses) and `followup_files` (later Human turns, each sent with `--resume` into the same session and appended to one transcript).
+
+## Feedback harvest
+
+`harvest_corrections.py TRANSCRIPT...` prints each Human turn from the named Claude Code or Codex JSONL transcripts, with the tail of the preceding assistant text, as JSON lines. Use it to trace ledger rows in [`evals/feedback/LEDGER.md`](../feedback/LEDGER.md) to a specific moment. It does not classify or write the ledger; name only transcripts of the work under review, and keep raw output local.

@@ -1,0 +1,29 @@
+# Skill feedback ledger
+
+Intake for signals that may change this Skill system. The primary source is each project's feedback log, written by the Skill in use when a Human correction, review finding or later Evidence overturned it. Corrections from sessions without a log are back-filled from named transcripts. Rules live in [AGENTS.md](../../AGENTS.md#feedback-routing); this file only records rows.
+
+Rows keep an abstracted shape and a source pointer. Raw transcripts and private context stay where they were produced. Harvest Human turns from named transcripts with [`harvest_corrections.py`](../harness/harvest_corrections.py).
+
+Fix location (set by the Skill in use): only `skill` and `pending` rows enter; `pending` means an existing rule covered the case but was not followed, so measure adherence or find a structural fix, never add a synonymous rule. `target-repo` stays in the project; `none` is not recorded here.
+
+Disposition: `open` (not triaged) · `no-gap` (one-off, preference, outside this system, or base already behaves) · `eval` (needs a captured case to tell) · `structural` (a check / harness / tool fixes it without prose) · `runtime` (a measured stable gap in an owner contract). A row closes only with a pointer: the RESULTS / PR that measured base and reran the fix, or the reason for `no-gap`. A new row in the same class as a closed one links to it; that recurrence is cross-case Evidence, not a duplicate.
+
+| id | date | source | shape (abstracted) | class → owner hypothesis | disposition | closure / link |
+|---|---|---|---|---|---|---|
+| F1 | 2026-10-10 | local session d089c9b3 | Human: Verify should bind to the repo's own harness as entry plus code-level proof | skill identity → verify | no-gap (base already found harness and stale-artifact identity) | [RESULTS-harness-discovery](../verify/RESULTS-harness-discovery-2026-10-10.md); V11b/V11c kept as regression |
+| F2 | 2026-10-10 | local session d089c9b3 | Human: Beacon's single-prototype constraint is over-strict | skill identity → beacon | runtime (contract contradicted observed behavior; no uplift claimed) | #128, [RESULTS](../architecture-evolution/RESULTS-beacon-variants-ae-parallel-2026-10-10.md) |
+| F3 | 2026-10-10 | local session d089c9b3 | Human: AE generating candidates one by one is wrong | candidate independence → architecture-evolution | runtime (v1 loophole reproduced 2/2, v2 fixed 2/2) | #128, #129, #130 |
+| F4 | 2026-10-10 | external review of #128 | report claimed 27 actors while 25 ran; capability-boundary dead end in contract | retro: report honesty, contract hole → eval reporting, architecture-evolution | runtime + report fix | b9ad979 |
+| F5 | 2026-10-11 | local session d089c9b3 | parent flagged premature synthesis, retracted, re-confirmed false alarm | retro: measurement defect (stream order) → eval | structural (runner uses result origin + synthesis turn) | #130 |
+| F6 | 2026-09-28 | local codex session (no repo Skills installed) | agent read its own inherited process env and a shell snapshot as the user's separate terminal env; later admitted the inference was wrong | object / environment identity → verify scope-identity, unknowns-first | no-gap (sonnet: oracle 3/3 without Skills; identity overreach 1/3 in both arms; watch) | [RESULTS-closed-loop](RESULTS-closed-loop-2026-10-11.md) |
+| F7 | 2026-09-28 | local codex session (no repo Skills installed) | wrote configuration to a location other than the file the target program reads; Human repeated the correction twice | target artifact identity → verify scope-identity | eval | — |
+| F8 | 2026-10-04 | local codex session (no repo Skills installed) | mixed outage evidence before a restart with recovery observed after it | evidence time window identity → verify, unknowns-first | eval | — |
+| F9 | 2026-10-01 | local codex session (no repo Skills installed) | assumed the user's location when advising on latency | user / environment premise → unknowns-first | eval | — |
+| F10 | 2026-09-28 | local codex session (no repo Skills installed) | asserted a distinguishability claim without evidence; retreated to "conclusion too strong" only after Human pushback | overclaim → verify three-state | eval | — |
+| F11 | 2026-10-04 | local codex session (no repo Skills installed) | concluded from logs where a real reachability check was available | proof by proxy → verify real-artifact | eval | — |
+| F12 | 2026-10-04 | local codex session (no repo Skills installed) | debated an application-layer cause while basic IP reachability was failing | decisive fact order → unknowns-first | eval | — |
+| F13 | 2026-09-18..28 | local claude and codex sessions | handed commands back to the Human although the agent had access to run them (4 occurrences) | stopping short → verify self-drive | eval | — |
+| F14 | 2026-09-28 | local codex session (no repo Skills installed) | substituted the stated goal three times across corrections (reuse a stored credential directly → proxy → fresh official login) | Intent continuity under repeated correction → northstar | eval (needs multi-turn replay) | — |
+| F15 | 2026-09-28 | local codex session | dropped a premise established earlier in the same session | context continuity → northstar | eval (needs multi-turn replay) | — |
+| F16 | 2026-09-26 | local claude session | added an unrequested alias while tuning a shell | unwanted scope / preference | no-gap (outside Skill semantics; user preference) | — |
+| F17 | 2026-10-04 | local codex session | security hardening risked closing the access path the Human relies on | Human Constraint → northstar; enforcement belongs to host | no-gap for runtime prose (host enforcement) | — |
