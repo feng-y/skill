@@ -1,6 +1,0 @@
-interface:
-  display_name: "Retro"
-  short_description: "Human 调用的真实工作复盘：可追溯、已归因、已分流的改进候选"
-  default_prompt: "使用 $retro 复盘当前 session 或指定的 Claude Code / Codex transcript。用 scripts/session_turns.py 定位 Human turn 与其间的 tool 失败、中断和长路径，读项目 feedback log 与当时生效的 contract。每个候选给出具体时刻（行号 + 原话），先判断当时生效的规则是否已覆盖（pending），再分流到 target-repo（最强可成立修复：结构 > 类型 > check > test > pointer > prose）、skill（抽象 shape + source pointer）或 none。按严重度列出，等 Human 逐条选择后才落地；不编造通用建议，不 commit。"
-policy:
-  allow_implicit_invocation: false

@@ -33,4 +33,4 @@ Known limits:
 
 ## Transcript turns
 
-The transcript reader moved into the `retro` Skill, which uses it at runtime: [`skills/retro/scripts/session_turns.py`](../../skills/retro/scripts/session_turns.py). Evals can call it the same way to trace a ledger row to a specific moment; keep raw output local.
+The transcript reader moved into the `wake` Skill, which uses it at runtime: [`skills/wake/scripts/session_turns.py`](../../skills/wake/scripts/session_turns.py). Evals can call it the same way to trace a ledger row to a specific moment; keep raw output local.

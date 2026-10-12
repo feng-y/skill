@@ -1,12 +1,12 @@
 ---
-name: retro
+name: wake
 description: "Human-invoked retrospective on real agent work. Read the session transcript (current by default, or named Claude Code / Codex transcripts) and the project feedback log, find the moments where the agent was corrected or struggled, check what was already in effect, and propose traced fixes routed to the target repo or to this Skill system. Nothing is applied until the Human picks."
 disable-model-invocation: true
 ---
 
-# Retro · 复盘真实工作
+# Wake · 复盘真实工作
 
-Retro 回答一个独立问题：**这段真实工作里，agent 在哪些具体时刻被纠正或吃了亏，下次靠改什么让它不再发生。**
+Wake 回答一个独立问题：**这段真实工作里，agent 在哪些具体时刻被纠正或吃了亏，下次靠改什么让它不再发生。**
 
 它只在 Human 调用时运行。它改环境，不改这次工作的产物：不修本次的 bug，不做 code review，不证明 behavior uplift。
 
@@ -28,7 +28,7 @@ Retro 回答一个独立问题：**这段真实工作里，agent 在哪些具体
 
 - **`pending`**：当时生效的规则已覆盖但没被执行。引用该条款，不提议同义规则；提议的是结构化手段（check、harness、tool）或测量为什么没被执行。规则只存在于当时未加载的 Skill 或文件中时不是 `pending`，写明覆盖在哪，由 Eval 判断装上后是否有效。
 - **`target-repo`**：项目缺 check、pointer、文档、权限或信息访问。给出能成立的最强修复：结构（唯一 owner、删掉旧路径）> 类型 > check / lint / hook / CI > test > 导航 pointer > prose。已有但没接上或已坏的 check，修复就是接上它。AGENTS.md / CLAUDE.md 只放 pointer，不堆规则。新 check 必须能在这次真实错误上失败。
-- **`skill`**：本 Skill system 的指引缺失或误导，换个 repo 也会犯。写抽象 shape 与 source pointer，不带私有上下文。单条是 hypothesis；runtime 改动只能来自 Eval 证明的稳定 gap，retro 不给 disposition。
+- **`skill`**：本 Skill system 的指引缺失或误导，换个 repo 也会犯。写抽象 shape 与 source pointer，不带私有上下文。单条是 hypothesis；runtime 改动只能来自 Eval 证明的稳定 gap，wake 不给 disposition。
 - **`none`**：一次性失误、偏好、agent 控制之外。
 
 ## 输出
@@ -44,6 +44,6 @@ Retro 回答一个独立问题：**这段真实工作里，agent 在哪些具体
 
 ## 边界
 
-- Eval 只度量：retro 不声称 behavior 变好，ledger 行的 disposition 与关闭仍属于 repo 维护流程。
-- Bearing 可以把 retro 输出或 ledger 当作 feedback 信号判断改进方向；retro 不排定投资。
-- Northstar 的 Taskbook 与 worker return 流程不变；retro 读 feedback log，不写 Taskbook。
+- Eval 只度量：wake 不声称 behavior 变好，ledger 行的 disposition 与关闭仍属于 repo 维护流程。
+- Bearing 可以把 wake 输出或 ledger 当作 feedback 信号判断改进方向；wake 不排定投资。
+- Northstar 的 Taskbook 与 worker return 流程不变；wake 读 feedback log，不写 Taskbook。

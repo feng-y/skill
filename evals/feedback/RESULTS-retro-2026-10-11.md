@@ -1,5 +1,7 @@
 # Retro Skill — paired review of real sessions (2026-10-11)
 
+> Rename note (2026-10-12, [PR #132](https://github.com/feng-y/skill/pull/132)): Retro is now [Wake](../../skills/wake/SKILL.md), invoked as `$wake`. The runs below used `/retro`; the report and filename retain that historical identity. The name-only change did not rerun behavioral actors or establish a new `/wake` measurement.
+
 Base: Skills at `84faa9e` (the seven Skills with #131 Correction feedback, no retro), prompt `复盘这个 session：<transcript>`. Candidate: working tree of `feat/retro-skill-20261011` (Correction feedback retired, `retro` added), prompt `/retro <transcript>`. Both arms install their Skills natively under `.claude/skills`. Actors: fresh headless Claude Code, `--model sonnet`, run by [`claude_cli.py`](../harness/claude_cli.py) with the new per-arm `skills` / `prompt_files`. Rubric and oracle were locked before run1; the run2–run4 sections were appended before each launch. 38 actors, about $6.2 of actor cost. Transcripts, rubric, verdicts and blind keys stay local because the sessions contain private operations context.
 
 ## Material

@@ -37,7 +37,7 @@
 - **`verify`**：拥有 engineering verification；从 authoritative claim 推导 proof obligation，选择并驱动 real-artifact verifier/backend，收集 Evidence 并判断 proven / false / unproven。
 - **`eval`**：拥有 agent behavioral evaluation engineering；从真实 agent surface、repo 与可用 traces 中选择 material capability/failure，构建 Task + Environment + Verifier，驱动或消费 eval backend，检查 agent/verifier trajectories 并形成可重复 measurement。它不验证产品/工程 claim，也不把 Harbor 等 backend 变成 semantic owner。
 - **`unknowns-first`**：只拥有 map-versus-territory 的**事实未知关闭**；它可以做 probe / source alignment，但不替其他 owner 关闭 Intent、concrete shape、Architecture、engineering verification 或 agent behavioral eval judgment。
-- **`retro`**：只由 Human 调用；把一段真实工作的 transcript 与项目 feedback log 变成可追溯到具体时刻、先对照当时生效 contract 归因（`pending`）、再分流到 `target-repo` / `skill` / `none` 的改进候选。它只提议，Human 逐条选中后才落地；不修本次产物，不声称 behavior uplift，不给 ledger disposition。
+- **`wake`**：只由 Human 调用；把一段真实工作的 transcript 与项目 feedback log 变成可追溯到具体时刻、先对照当时生效 contract 归因（`pending`）、再分流到 `target-repo` / `skill` / `none` 的改进候选。它只提议，Human 逐条选中后才落地；不修本次产物，不声称 behavior uplift，不给 ledger disposition。
 
 不要复制 owner：Northstar 不判 proof sufficiency，也不把“什么 improvement 值得推进”的开放判断隐式吞进 Intent maintenance；Bearing 不接管 canonical Intent / Taskbook、Human commitment、Target Architecture、proof 或 implementation；Verify 不重写 Intent、设计 Target 或承担 agent behavioral eval；Eval 不验证产品 outcome 或改写 engineering semantics；Beacon 不接管 caller 的 semantic ownership；AE 不用 Program convenience 反推 Intent；Unknowns First 不把 factual probe 扩成 intent interview、concrete shaping、architecture design、proof judgment 或 eval design。
 
@@ -96,9 +96,9 @@
 
 Feedback Log 保存跨 session 的 execution return / observation，以及 Northstar 后续对该 return 的 judgment / Taskbook material delta；它不假设 worker 与 Northstar 在同一 session，也不创建新的 semantic owner。worker 不能写 canonical Taskbook，Northstar 也不需要重演 worker session 才能补充 feedback。若反馈说明 current Intent / task state 需要修正，仍先按上述 owner 更新 canonical Taskbook；若它被用于改进 Skill，则把它当作 observation / trace input，而不是直接把单条经验写成 runtime rule。
 
-**改进本 Skill system 的反馈必须闭环。** 入口在用户实际使用的 Skill：每个 Skill 的 judgment / output 被 Human correction、review finding 或后续 verified Evidence 推翻时，按该 Skill 的 Correction feedback 规则写入项目 feedback log（与 Northstar Feedback Log 同一文件）。Eval 只度量，不是反馈入口。现场记录之外，Human 可调用 `$retro` 复盘具名 transcript（Claude Code / Codex）与项目 log：它补上没有 Skill 在用、未被纠正的吃亏和跨条目的模式，Human 选中的 `skill` / `pending` 候选进入 ledger 或项目 log。闭环是：
+**改进本 Skill system 的反馈必须闭环。** 入口在用户实际使用的 Skill：每个 Skill 的 judgment / output 被 Human correction、review finding 或后续 verified Evidence 推翻时，按该 Skill 的 Correction feedback 规则写入项目 feedback log（与 Northstar Feedback Log 同一文件）。Eval 只度量，不是反馈入口。现场记录之外，Human 可调用 `$wake` 复盘具名 transcript（Claude Code / Codex）与项目 log：它补上没有 Skill 在用、未被纠正的吃亏和跨条目的模式，Human 选中的 `skill` / `pending` 候选进入 ledger 或项目 log。闭环是：
 
-1. **Intake**：只有落点为 `skill` 或 `pending`（已有规定未被执行）的项目 log 条目与 retro 候选进入本 repo；`pending` 是 adherence 信号，复发时先测量为什么没被执行或寻找结构化手段，不补同义 prose；`target-repo` 条目留在项目内由项目自己处理，`none` 不进入。它们在 [`evals/feedback/LEDGER.md`](evals/feedback/LEDGER.md) 各记一行抽象 shape 与 source pointer，能追溯到具体时刻；raw transcript、项目 log 原文与私有上下文留在原处，不能追溯的候选丢弃。
+1. **Intake**：只有落点为 `skill` 或 `pending`（已有规定未被执行）的项目 log 条目与 wake 候选进入本 repo；`pending` 是 adherence 信号，复发时先测量为什么没被执行或寻找结构化手段，不补同义 prose；`target-repo` 条目留在项目内由项目自己处理，`none` 不进入。它们在 [`evals/feedback/LEDGER.md`](evals/feedback/LEDGER.md) 各记一行抽象 shape 与 source pointer，能追溯到具体时刻；raw transcript、项目 log 原文与私有上下文留在原处，不能追溯的候选丢弃。
 2. **Disposition**：`skill` / `pending` 是修正落点，不是处置结论。按 owner 归类后给出 `no-gap`（一次性、偏好、本体系之外，或 base 已表现正确）、`eval`、`structural`（check / harness / tool 可以不靠 prose 解决，优先）或 `runtime`；`runtime` 只能来自 Eval 证明的稳定 gap。
 3. **Close**：只有带指针才关闭——测过 base 并用同一 measurement 重跑修复的 RESULTS / PR，或 `no-gap` 的理由。base 已通过的纠正只能算 contract 修正，不能记为 behavior uplift。
 4. **Recurrence**：同类新信号链接已关闭行；复发是 cross-case Evidence，也是重开该 owner 的依据。
