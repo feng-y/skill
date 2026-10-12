@@ -1,0 +1,1 @@
+我记得 debug 链路是不是有了？FeatureResult 好像可以共享同一个对象？确认下是否可以把它的生命周期扩大到 response。
