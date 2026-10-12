@@ -44,11 +44,3 @@ Human feedback about desired meaning is intent/choice input, not proof of runtim
 Lead with the core prototype and its repo anchors. Include only the explanation, observed Evidence, unverified limits, or feedback delta needed to inspect that prototype. For variants, state what each one shows or what was observed for it, without a verdict. Do not replace the prototype with a list of questions, options, or a final decision.
 
 In a wider invocation, return this bounded, non-authoritative result distinctly before caller judgment resumes. The caller owns adoption, comparison, composition, and any durable fold-back. Do not create another Intent SOT, Taskbook, issue graph, PR split, implementation checklist, or verification workflow. This return boundary is not a new persistent artifact or phase.
-
-## Correction feedback
-
-When a Human correction, a review finding, or later verified Evidence overturns this Skill's judgment or output (including a claim it retracts), append one entry to the project feedback log in the same turn that gives the corrected result (the project's existing work-notes location, otherwise `.agents/feedback-log.md`). Skip only one-off slips, pure preferences, and ordinary clarification; failing to follow an existing rule is still recorded.
-
-- **Content**: what was concluded, the correction and its source, the decisive Evidence pointer, and the likely cause (missing context, wrong object / source / time window, contract gap, or other).
-- **Fix location**: check this Skill's current contract first. If an existing rule already covered the case and was not followed, quote it and write `pending` instead of proposing a synonymous rule; otherwise write `target-repo` (the project lacks a check, pointer, doc or information access), `skill` (existing guidance was missing or misleading and the error would recur in another repo), or `none`.
-- Recording never blocks the current work, changes owner judgment, or counts as behavior proof.

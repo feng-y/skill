@@ -24,7 +24,7 @@ Feedback Log 是 material work 的**可选、append-only、跨 session execution
 
 ## 放在哪里
 
-与各 Skill 的 correction feedback 共用同一个项目 feedback log：优先复用项目已有的 work-artifact / notes 位置，否则 `.agents/feedback-log.md`。条目标题带 Taskbook / return identity，使同一 work 的条目可检索。
+与 `$retro` 经 Human 选中后写入的条目共用同一个项目 feedback log：优先复用项目已有的 work-artifact / notes 位置，否则 `.agents/feedback-log.md`。条目标题带 Taskbook / return identity，使同一 work 的条目可检索。
 
 仅当本轮确实需要 worker 独立记录时，Northstar 在 scoped instruction / handoff 中携带可定位路径与记录范围，不只给 reference 链接或依赖 worker 继承上下文。普通 dispatch 不预分配路径；意外信号先随正常 return 带回，由接收方按需持久化。不要求 Taskbook 增加 lifecycle field 或每次维护 pointer。
 

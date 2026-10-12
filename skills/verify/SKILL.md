@@ -177,11 +177,3 @@ Verify 独立调用时直接交付当前 verification result；被委托时始�
 Verify 验证**产品/工程 claim**。Skill / prompt / tool / harness 变更是否改善 **agent behavior**，交 `$eval` 构建或审计可重复 behavioral measurement：从真实 agent surface / traces 形成 Task + Environment + Verifier，在 clean / representative environment 中运行，检查 agent trajectory 与 verifier Evidence，而不是拿产品 Replay 代替，也不是相信 candidate 自报“我遵守了规则”。
 
 同一个 change 可以同时需要两者：产品 behavior/equivalence 由 Verify 判断；agent routing、authorization、multi-turn intent fidelity、tool-use 等行为变化由 Eval 测量。两种 Evidence 不能互相替代。
-
-## Correction feedback
-
-本 Skill 的 judgment / output 被 Human correction、review finding 或后续 verified Evidence 推翻（包括自己撤回的 claim）时，在给出修正结论的同一轮，向项目 feedback log 追加一条（优先项目已有的 work-notes 位置，否则 `.agents/feedback-log.md`）。只有一次性笔误、纯偏好或正常 clarification 不记录；没有执行已有规定也要记录。
-
-- **内容**：当时的结论、纠正及其来源、决定性 Evidence pointer、可能原因（缺失 context、认错对象 / 来源 / 时间窗、契约不足或其他）。
-- **落点**：先对照本 Skill 现有 contract。已有规定但未执行时，引用该条款并写 `pending`，不建议补同义规则；否则写 `target-repo`（项目缺 check、pointer、文档或信息访问）、`skill`（现有指引缺失或误导，换个 repo 也会犯）或 `none`。
-- 记录不阻塞当前 work，不改变 owner 判断，也不是 behavior proof。

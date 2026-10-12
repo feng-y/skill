@@ -73,8 +73,13 @@ def prepare(spec, out):
     actors = []
     for cell in spec["cells"]:
         fixture = Path(cell["fixture"]).resolve()
-        prompt = Path(cell["prompt_file"]).read_text()
         for arm, count in cell["arms"].items():
+            # A cell may give each arm its own prompt or Skill list, e.g. a slash
+            # command in one arm and a plain request in the control.
+            prompt_file = cell.get("prompt_files", {}).get(arm, cell.get("prompt_file"))
+            prompt = Path(prompt_file).read_text()
+            skills = cell.get("skills", spec["skills"])
+            skills = skills[arm] if isinstance(skills, dict) else skills
             for _ in range(count):
                 name = names.pop()
                 ws = out / "ws" / name
@@ -84,7 +89,7 @@ def prepare(spec, out):
                 subprocess.run(["git", "-c", "user.email=dev@example.com", "-c", "user.name=dev", "commit", "-qm", "init"], cwd=ws, check=True)
                 skills_dir = cell.get("skills_dir", spec.get("skills_dir", ".agents/skills"))
                 (ws / ".git" / "info" / "exclude").write_text(skills_dir.split("/")[0] + "/\n")
-                blobs = install_arm(ws / skills_dir, spec["arms"][arm], cell.get("skills", spec["skills"]))
+                blobs = install_arm(ws / skills_dir, spec["arms"][arm], skills)
                 actors.append({
                     "name": name, "cell": cell["id"], "arm": arm, "ws": str(ws),
                     "prompt": prompt.replace("{ws}", str(ws)),

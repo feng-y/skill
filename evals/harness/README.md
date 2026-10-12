@@ -29,8 +29,8 @@ Known limits:
 - judging is not automated;
 - actors share the host account and network.
 
-A cell may set `env` (extra environment variables for that cell's actors; never `ANTHROPIC_*`, which the actor itself uses) and `followup_files` (later Human turns, each sent with `--resume` into the same session and appended to one transcript).
+`skills` (top level or per cell) may be a map from arm to Skill list, and a cell may set `prompt_files` (arm → prompt file) instead of `prompt_file`, so one arm can get a slash command and another a plain request. A cell may set `env` (extra environment variables for that cell's actors; never `ANTHROPIC_*`, which the actor itself uses) and `followup_files` (later Human turns, each sent with `--resume` into the same session and appended to one transcript).
 
-## Feedback harvest
+## Transcript turns
 
-`harvest_corrections.py TRANSCRIPT...` prints each Human turn from the named Claude Code or Codex JSONL transcripts, with the tail of the preceding assistant text, as JSON lines. Use it to trace ledger rows in [`evals/feedback/LEDGER.md`](../feedback/LEDGER.md) to a specific moment. It does not classify or write the ledger; name only transcripts of the work under review, and keep raw output local.
+The transcript reader moved into the `retro` Skill, which uses it at runtime: [`skills/retro/scripts/session_turns.py`](../../skills/retro/scripts/session_turns.py). Evals can call it the same way to trace a ledger row to a specific moment; keep raw output local.

@@ -58,11 +58,3 @@ Harbor、clean-session runner、trajectory recorder、containerized task runner 
 - Northstar / Beacon / AE / Unknowns First 继续拥有各自 engineering semantics；Eval 只测它们的 agent behavior，不替它们做 semantic judgment。
 
 返回最小充分 Eval artifact：Capability / failure、Task、Environment、Verifier、backend binding、Run Evidence / Trajectory，以及 `trustworthy / needs-eval-fix / inconclusive` measurement status。持久化到 `evals/` 或项目既有 eval surface，不创建第二份 Intent、implementation plan 或 product verification SOT。
-
-## Correction feedback
-
-本 Skill 的 judgment / output 被 Human correction、review finding 或后续 verified Evidence 推翻（包括自己撤回的 claim）时，在给出修正结论的同一轮，向项目 feedback log 追加一条（优先项目已有的 work-notes 位置，否则 `.agents/feedback-log.md`）。只有一次性笔误、纯偏好或正常 clarification 不记录；没有执行已有规定也要记录。
-
-- **内容**：当时的结论、纠正及其来源、决定性 Evidence pointer、可能原因（缺失 context、认错对象 / 来源 / 时间窗、契约不足或其他）。
-- **落点**：先对照本 Skill 现有 contract。已有规定但未执行时，引用该条款并写 `pending`，不建议补同义规则；否则写 `target-repo`（项目缺 check、pointer、文档或信息访问）、`skill`（现有指引缺失或误导，换个 repo 也会犯）或 `none`。
-- 记录不阻塞当前 work，不改变 owner 判断，也不是 behavior proof。
