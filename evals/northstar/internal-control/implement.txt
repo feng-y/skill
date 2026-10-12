@@ -1,0 +1,3 @@
+Read .agents/skills/northstar/SKILL.md and apply Northstar to this work item. The repository is a small executable model of a feature/embedding request path. You have local read and write tools.
+
+$northstar 请实现 model_server.py Request.only_return_fea_sign：值为 true 时，不请求 qserver（原始 item embedding 链路），并且把 feasign 返回 response。默认 false 保持当前行为，debug=false 也必须返回 feasign。请在当前会话直接完成，不用外部 agent，不要 commit、push 或创建 PR。
