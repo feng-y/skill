@@ -26,6 +26,7 @@ npx skills@latest add feng-y/skill --skill architecture-evolution
 npx skills@latest add feng-y/skill --skill verify
 npx skills@latest add feng-y/skill --skill eval
 npx skills@latest add feng-y/skill --skill unknowns-first
+npx skills@latest add feng-y/skill --skill wake
 ```
 
 ## Skills
@@ -37,10 +38,11 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 - `verify` — engineering verification skill. 从 authoritative completion/safety claim 出发定义 proof obligation，选择并驱动最直接的 real-artifact verification backend，收集 Evidence 并判断 proven / false / unproven。
 - `eval` — agent behavioral evaluation engineering skill. 从 repo / agent surface / traces 中选择 material capability 或 failure，构建 Task + Environment + Verifier，运行并检查 agent/verifier trajectory，形成可重复 behavioral measurement。
 - `unknowns-first` — factual map-versus-territory specialist. 只关闭会改变下一步判断的 repo/runtime/data/source fact，不接管 Intent、Beacon、Architecture、engineering proof 或 agent behavioral eval judgment。
+- `wake` — Human-invoked review of the trail left by past work. Wake 指工作留下的航迹： 读真实 session transcript（Claude Code / Codex）与项目 feedback log，找出被纠正或吃亏的具体时刻，先对照当时生效的 contract 归因，再把改进候选分流到目标 repo（最强可成立修复）或本 Skill system 的 ledger；Human 逐条选中前不改任何东西。
 
 ## Invocation model
 
-七个 Skill 均可独立调用并直接交付各自职责范围内的结果。委托调用只交出 bounded question，结果返回实际 caller；不会自动转移整体任务或 canonical artifact ownership，也不要求先经过 Northstar 或创建通用 Taskbook。
+八个 Skill 均可独立调用并直接交付各自职责范围内的结果。委托调用只交出 bounded question，结果返回实际 caller；不会自动转移整体任务或 canonical artifact ownership，也不要求先经过 Northstar 或创建通用 Taskbook。
 
 主要 Human-facing / direct capabilities：
 
@@ -49,6 +51,7 @@ npx skills@latest add feng-y/skill --skill unknowns-first
 - `architecture-evolution` — “长期结构应该怎么归位？”
 - `verify` — “产品/工程结果是否真的符合 claim？”
 - `eval` — “这个 Agent / Skill / prompt / harness 行为是否真的变好，怎么稳定测？”
+- `wake` — “这段工作哪里被纠正或吃了亏，下次改什么让它不再发生？”（只由 Human 调用）
 
 主要 model-invoked specialists：
 

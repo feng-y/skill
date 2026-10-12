@@ -4,6 +4,25 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## 2026-10-12 — Rename Retro to Wake
+
+Change: [PR #132](https://github.com/feng-y/skill/pull/132), on the existing `feat/retro-skill-20261011` branch.
+
+- **Old surface → new owner:** `retro` / `$retro`, display name Retro, and `skills/retro/` → `wake` / `$wake`, display name Wake, and `skills/wake/`. Wake means the wake or trail left by past work, used to find corrections and friction and propose improvements. The old name conflicts with Matt's Skill.
+- **Preserved:** Human-only invocation; explicit Human selection before applying proposed improvements; transcript/session binding, attribution and routing; all seven existing point-of-use Correction feedback sections. The reader moves unchanged to `skills/wake/scripts/session_turns.py`.
+- **Not kept:** the old install/invocation identity and runtime path. No behavior or responsibility is retired, and no alias or new semantic surface is added.
+- **Evidence boundary:** the historical [Retro evaluation](evals/feedback/RESULTS-retro-2026-10-11.md) used `/retro`; its names, prompts and findings remain historical provenance, not a claim that `/wake` was behaviorally tested. This name-only migration uses structural validation; paid behavioral actors are not rerun.
+
+## 2026-10-11 — Add Retro for Human-invoked review of real work
+
+Change: `feat/retro-skill-20261011`
+
+- **Gap:** point-of-use capture (#131) fires only when a Skill in use is overturned. Corrections in sessions with no Skill in use, struggles nobody corrected, and patterns across sessions were never captured, and nothing let the Human say "review this session now". `target-repo` findings had no owner.
+- **New owner:** `retro`, a Human-invoked Skill (`disable-model-invocation`). It reads the calling session's transcript (bound by the host's session id, never guessed by modification time) or named Claude Code / Codex transcripts, plus the project feedback log. It traces every candidate to a moment, attributes it against what was in effect at that moment (`pending` only for a rule that was loaded and not followed), and routes it to `target-repo` (strongest fix that holds), `skill` (ledger row) or `none`. It writes only items the Human picks.
+- **Moved:** transcript back-fill. The eval-only `evals/harness/harvest_corrections.py` becomes retro's runtime reader `skills/retro/scripts/session_turns.py`.
+- **Preserved:** each Skill's Correction feedback stays the point-of-use entry; the fix-location vocabulary; the shared project log; ledger intake → disposition → close → recurrence; Eval measures only.
+- **Evidence boundary:** [RESULTS-retro](evals/feedback/RESULTS-retro-2026-10-11.md) shows routing and actionability gains over an unprompted review, with recall at parity. It does not show that retro replaces point-of-use capture.
+
 ## 2026-10-11 — Feedback Log becomes the shared correction entry point
 
 - **Old surface:** Northstar Feedback Log, written only from material worker returns and Northstar judgment, stored as `<taskbook-stem>.feedback.md` beside the Taskbook. No log was ever produced on the maintainer machine; none of 17 captured Human corrections across real sessions qualified under it.
