@@ -150,4 +150,8 @@ Human 独立调用时，Bearing 直接交付当前最小充分的 improvement ju
 
 ## Correction feedback
 
-本 Skill 的 judgment / output 被 Human correction、review finding 或后续 verified Evidence 明确推翻（包括自己撤回的 claim），且同类错误可能在其他 work 中复现时，在项目 feedback log 追加一条：当时的结论、纠正及其来源、决定性 Evidence pointer、可能原因（缺失 context、认错对象 / 来源 / 时间窗、契约不足或其他）与修正落点：`target-repo`（项目缺 check、pointer、文档或信息访问）、`skill`（本 Skill 的指引缺失或误导，换个 repo 也会犯）或 `none`。优先使用项目已有的 work-notes 位置，否则写 `.agents/feedback-log.md`。一次性笔误、纯偏好或正常 clarification 不记录；记录不阻塞当前 work，不改变 owner 判断，也不是 behavior proof。
+本 Skill 的 judgment / output 被 Human correction、review finding 或后续 verified Evidence 推翻（包括自己撤回的 claim）时，在给出修正结论的同一轮，向项目 feedback log 追加一条（优先项目已有的 work-notes 位置，否则 `.agents/feedback-log.md`）。只有一次性笔误、纯偏好或正常 clarification 不记录；没有执行已有规定也要记录。
+
+- **内容**：当时的结论、纠正及其来源、决定性 Evidence pointer、可能原因（缺失 context、认错对象 / 来源 / 时间窗、契约不足或其他）。
+- **落点**：先对照本 Skill 现有 contract。已有规定但未执行时，引用该条款并写 `pending`，不建议补同义规则；否则写 `target-repo`（项目缺 check、pointer、文档或信息访问）、`skill`（现有指引缺失或误导，换个 repo 也会犯）或 `none`。
+- 记录不阻塞当前 work，不改变 owner 判断，也不是 behavior proof。

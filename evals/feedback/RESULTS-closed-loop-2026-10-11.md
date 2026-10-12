@@ -36,3 +36,15 @@ The original failure came from a different model with no Skills. With sonnet the
 - **Capture mechanism:** works on a real overturn (3/3 vs 0/2) and holds its guard (0/7 records when nothing was overturned, including 0/2 on ordinary follow-ups). Adopt.
 - **F6:** closed `no-gap` for sonnet; R2 overreach stays on watch, and a recurrence links back to F6.
 - **Still unmeasured:** recording in Skills other than Verify; whether entries written in real projects reach the ledger; the triage of `skill` vs `target-repo`.
+
+## Addendum: attribution against the existing contract (after review of #131)
+
+Review of #131 pointed out that all three run3 entries tagged the fix location `skill` and proposed "confirm the authoritative definition before verifying", while Verify's *Claim first* already says not to infer the claim from diff or test names. The failure was non-adherence, and the log steered maintainers toward a synonymous rule. The rule now checks the Skill's current contract first: an existing rule that was not followed is quoted and tagged `pending`; `skill` is reserved for missing or misleading guidance. AGENTS.md treats `pending` as an adherence signal (measure why it was not followed or find a structural fix), never as a reason to add prose.
+
+| Run | Wording | capture3+ recorded | attribution | guards (no entry expected) |
+| --- | --- | --- | --- | --- |
+| run3 | original | 3/3 | 0/3 `pending` (3/3 `skill` + synonymous rule) | — |
+| run4–5 | contract check appended to the one-sentence rule | 3/6 | 3/3 `pending`, citing Claim first | capture− 0/2 |
+| run6 | split into trigger sentence + bullets; "not following an existing rule is still recorded" | **6/6** | **6/6 `pending`**, citing Claim first | capture− 0/2, capture+ 0/2 |
+
+In run4–5, the three actors that skipped the log had explicitly retracted their earlier verdict; one even named the Verify rule it had broken. The longer single sentence appears to have buried the trigger. Adopt the run6 wording. Same limits as above: Verify only, synthetic fixture, unblinded parent judging.
