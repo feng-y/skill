@@ -15,7 +15,7 @@ Feedback Log 是 material work 的**可选、append-only、跨 session execution
 
 当正常 return / judgment 中的信号**值得跨 session 复用**，或 Human 明确要求独立记录时，再使用此日志；不要求 worker return 与 Northstar judgment 发生在同一 session。值得记录的信号包括：
 
-- Northstar 之前的 judgment、assumption、routing 或 task boundary 被真实 return 明确纠正；
+- Northstar 之前的 judgment、assumption、routing 或 task boundary 被真实 return、Human correction 或 review finding 明确纠正，尤其是同一纠正需要重复给出时；
 - worker return 暴露了意外且可能重复出现的 friction / missing context / ownership confusion；
 - 某个 bounded prompt、handoff、artifact shape 或 context choice 明显减少了歧义、返工或错误判断；
 - Taskbook 因 return 发生 material delta，而这个 delta 的原因对未来类似 work 有学习价值。
@@ -24,11 +24,7 @@ Feedback Log 是 material work 的**可选、append-only、跨 session execution
 
 ## 放在哪里
 
-优先复用项目已有的 work-artifact / notes 位置；没有现成约定时，与 Taskbook 放在同一目录，使用可推导的 sibling 名称，例如：
-
-```text
-<taskbook-stem>.feedback.md
-```
+与各 Skill 的 correction feedback 共用同一个项目 feedback log：优先复用项目已有的 work-artifact / notes 位置，否则 `.agents/feedback-log.md`。条目标题带 Taskbook / return identity，使同一 work 的条目可检索。
 
 仅当本轮确实需要 worker 独立记录时，Northstar 在 scoped instruction / handoff 中携带可定位路径与记录范围，不只给 reference 链接或依赖 worker 继承上下文。普通 dispatch 不预分配路径；意外信号先随正常 return 带回，由接收方按需持久化。不要求 Taskbook 增加 lifecycle field 或每次维护 pointer。
 

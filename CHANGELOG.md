@@ -4,6 +4,13 @@ This file records **breaking semantic migrations** in the Skill system: Skill re
 
 It is not the runtime contract and not a commit-by-commit release log. Current semantics live in `AGENTS.md`, each `SKILL.md`, and focused evals. This file answers one historical question: **when a surface disappeared, where did its responsibility go, or was it intentionally retired?**
 
+## 2026-10-11 — Feedback Log becomes the shared correction entry point
+
+- **Old surface:** Northstar Feedback Log, written only from material worker returns and Northstar judgment, stored as `<taskbook-stem>.feedback.md` beside the Taskbook. No log was ever produced on the maintainer machine; none of 17 captured Human corrections across real sessions qualified under it.
+- **New owner:** every Skill appends to one project feedback log (existing work-notes location, otherwise `.agents/feedback-log.md`) when a Human correction, review finding or later verified Evidence overturns its judgment or output. Northstar keeps its worker / judgment entry flow in the same file. Repo maintenance closes the loop in `evals/feedback/LEDGER.md` (intake → disposition → close with a measurement or reason pointer → recurrence links), per `AGENTS.md`.
+- **Preserved:** the log is append-only observation; it never drives dispatch, resume, acceptance, owner judgment or proof, and a single entry never becomes a runtime rule without Eval.
+- **Not kept:** the Taskbook-sibling default path; the idea that only Northstar material work produces learning signals. Eval is not a feedback entry point; it only measures cases the ledger routes to it.
+
 ## 2026-10-10 — Beacon variants and parallel independent AE candidates
 
 Change: `feat/beacon-variants-ae-parallel-20261010`

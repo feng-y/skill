@@ -204,3 +204,7 @@ Human clarification 按前述 Intent continuity 规则处理，不要求它先�
 Session handoff 只在 work 真的需要离开当前 session / agent / execution environment，或 Human 明确要求交接时出现。handoff 前先把 durable semantic / task state fold back 到 canonical Taskbook；handoff 本身只保存 resume delta。下一 session 读取 Taskbook + handoff 后恢复同一个 Northstar work context，而不是从 handoff 重新推导方案。
 
 若仍有 material blocker，保留完整 best-known Draft、受影响范围与 closure owner；可以 handoff 调查或 dispatch 未受影响的已授权 work，但不能把被阻断部分或包含它的整体标为 execution-ready / done，也不能静默缩小原范围。worker / specialist 返回后必须回到 Northstar judgment；只有 Northstar 更新 canonical Taskbook，才算对应 material task 被接受。
+
+## Correction feedback
+
+本 Skill 的 judgment / output 被 Human correction、review finding 或后续 verified Evidence 明确推翻（包括自己撤回的 claim），且同类错误可能在其他 work 中复现时，在项目 feedback log 追加一条：当时的结论、纠正及其来源、决定性 Evidence pointer、可能原因（缺失 context、认错对象 / 来源 / 时间窗、契约不足或其他）与修正落点：`target-repo`（项目缺 check、pointer、文档或信息访问）、`skill`（本 Skill 的指引缺失或误导，换个 repo 也会犯）或 `none`。优先使用项目已有的 work-notes 位置，否则写 `.agents/feedback-log.md`。一次性笔误、纯偏好或正常 clarification 不记录；记录不阻塞当前 work，不改变 owner 判断，也不是 behavior proof。

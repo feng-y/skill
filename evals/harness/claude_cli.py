@@ -89,16 +89,30 @@ def prepare(spec, out):
                     "name": name, "cell": cell["id"], "arm": arm, "ws": str(ws),
                     "prompt": prompt.replace("{ws}", str(ws)),
                     "disallowed_tools": cell.get("disallowed_tools", []),
+                    "env": cell.get("env", {}),
+                    "followups": [Path(f).read_text().replace("{ws}", str(ws)) for f in cell.get("followup_files", [])],
                     "skill_sha256": blobs, "pre": tree_digest(ws),
                 })
     lock = {"rubric": str(rubric), "rubric_sha256": sha256_file(rubric), "locked_at": datetime.now(timezone.utc).isoformat()}
     return actors, lock
 
 
+def session_id(transcript):
+    sid = None
+    for line in open(transcript):
+        try:
+            ev = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if ev.get("type") == "result" and ev.get("session_id"):
+            sid = ev["session_id"]
+    return sid
+
+
 def run_actor(actor, spec, out):
     tmp = out / "tmp" / actor["name"]
     tmp.mkdir(parents=True, exist_ok=True)
-    env = {**os.environ, "TMPDIR": str(tmp)}
+    env = {**os.environ, **actor.get("env", {}), "TMPDIR": str(tmp)}
     allowed = [t for t in spec.get("allowed_tools", DEFAULT_TOOLS).split() if t not in actor["disallowed_tools"]]
     cmd = [sys.executable, spec.get("claude", "/root/.claude/launch-direct.py"), "-p", actor["prompt"],
            "--model", spec["model"], "--output-format", "stream-json", "--verbose",
@@ -108,8 +122,19 @@ def run_actor(actor, spec, out):
         cmd += ["--disallowedTools", " ".join(actor["disallowed_tools"])]
     transcript = out / "transcripts" / f"{actor['name']}.jsonl"
     start = time.time()
+    # Follow-up turns resume the same session, so a Human correction lands in
+    # the same agent context; all turns append to one transcript.
     with open(transcript, "w") as fh:
         proc = subprocess.run(cmd, cwd=actor["ws"], env=env, stdout=fh, stderr=subprocess.PIPE, text=True, timeout=spec.get("timeout_s", 1200))
+    for followup in actor.get("followups", []):
+        sid = session_id(transcript)
+        if proc.returncode != 0 or not sid:
+            break
+        turn = cmd[:]
+        turn[turn.index("-p") + 1] = followup
+        turn += ["--resume", sid]
+        with open(transcript, "a") as fh:
+            proc = subprocess.run(turn, cwd=actor["ws"], env=env, stdout=fh, stderr=subprocess.PIPE, text=True, timeout=spec.get("timeout_s", 1200))
     actor["exit_code"] = proc.returncode
     actor["wall_s"] = round(time.time() - start, 1)
     actor["stderr_tail"] = proc.stderr[-2000:]

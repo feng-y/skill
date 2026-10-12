@@ -105,3 +105,7 @@ Unknowns First 不因为“某个事实已成立”就推导 whole-outcome PASS�
 - 把 backend output 当成 whole-outcome verification judgment，而不是返回 Verify。
 - 为了完整感进入 L3，把 unknown mapping 扩成 implementation plan / verification workflow。
 - 事实已经足够后继续 inventory / research。
+
+## Correction feedback
+
+本 Skill 的 judgment / output 被 Human correction、review finding 或后续 verified Evidence 明确推翻（包括自己撤回的 claim），且同类错误可能在其他 work 中复现时，在项目 feedback log 追加一条：当时的结论、纠正及其来源、决定性 Evidence pointer、可能原因（缺失 context、认错对象 / 来源 / 时间窗、契约不足或其他）与修正落点：`target-repo`（项目缺 check、pointer、文档或信息访问）、`skill`（本 Skill 的指引缺失或误导，换个 repo 也会犯）或 `none`。优先使用项目已有的 work-notes 位置，否则写 `.agents/feedback-log.md`。一次性笔误、纯偏好或正常 clarification 不记录；记录不阻塞当前 work，不改变 owner 判断，也不是 behavior proof。
