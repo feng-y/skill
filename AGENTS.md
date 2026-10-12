@@ -98,7 +98,7 @@ Feedback Log 保存跨 session 的 execution return / observation，以及 North
 **改进本 Skill system 的反馈必须闭环。** 入口在用户实际使用的 Skill：每个 Skill 的 judgment / output 被 Human correction、review finding 或后续 verified Evidence 推翻时，按该 Skill 的 Correction feedback 规则写入项目 feedback log（与 Northstar Feedback Log 同一文件）。Eval 只度量，不是反馈入口。项目 log 缺失时，可从具名 transcript 事后补收（`evals/harness/harvest_corrections.py`）。闭环是：
 
 1. **Intake**：只有落点为 `skill` 或 `pending`（已有规定未被执行）的项目 log 条目与补收的纠正进入本 repo；`pending` 是 adherence 信号，复发时先测量为什么没被执行或寻找结构化手段，不补同义 prose；`target-repo` 条目留在项目内由项目自己处理，`none` 不进入。它们在 [`evals/feedback/LEDGER.md`](evals/feedback/LEDGER.md) 各记一行抽象 shape 与 source pointer，能追溯到具体时刻；raw transcript、项目 log 原文与私有上下文留在原处，不能追溯的候选丢弃。
-2. **Disposition**：按 owner 归类后给出 `no-gap`（一次性、偏好、本体系之外，或 base 已表现正确）、`eval`、`structural`（check / harness / tool 可以不靠 prose 解决，优先）或 `runtime`；`runtime` 只能来自 Eval 证明的稳定 gap。
+2. **Disposition**：`skill` / `pending` 是修正落点，不是处置结论。按 owner 归类后给出 `no-gap`（一次性、偏好、本体系之外，或 base 已表现正确）、`eval`、`structural`（check / harness / tool 可以不靠 prose 解决，优先）或 `runtime`；`runtime` 只能来自 Eval 证明的稳定 gap。
 3. **Close**：只有带指针才关闭——测过 base 并用同一 measurement 重跑修复的 RESULTS / PR，或 `no-gap` 的理由。base 已通过的纠正只能算 contract 修正，不能记为 behavior uplift。
 4. **Recurrence**：同类新信号链接已关闭行；复发是 cross-case Evidence，也是重开该 owner 的依据。
 

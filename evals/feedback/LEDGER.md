@@ -4,7 +4,9 @@ Intake for signals that may change this Skill system. The primary source is each
 
 Rows keep an abstracted shape and a source pointer. Raw transcripts and private context stay where they were produced. Harvest Human turns from named transcripts with [`harvest_corrections.py`](../harness/harvest_corrections.py).
 
-Disposition: `open` (not triaged) · `no-gap` (one-off, preference, outside this system, or base already behaves) · `eval` (needs a captured case to tell) · `structural` (a check / harness / tool fixes it without prose) · `runtime` (a measured stable gap in an owner contract) · `pending` (an existing rule covered the case but was not followed; measure adherence or find a structural fix, never add a synonymous rule). A row closes only with a pointer: the RESULTS / PR that measured base and reran the fix, or the reason for `no-gap`. A new row in the same class as a closed one links to it; that recurrence is cross-case Evidence, not a duplicate.
+Fix location (set by the Skill in use): only `skill` and `pending` rows enter; `pending` means an existing rule covered the case but was not followed, so measure adherence or find a structural fix, never add a synonymous rule. `target-repo` stays in the project; `none` is not recorded here.
+
+Disposition: `open` (not triaged) · `no-gap` (one-off, preference, outside this system, or base already behaves) · `eval` (needs a captured case to tell) · `structural` (a check / harness / tool fixes it without prose) · `runtime` (a measured stable gap in an owner contract). A row closes only with a pointer: the RESULTS / PR that measured base and reran the fix, or the reason for `no-gap`. A new row in the same class as a closed one links to it; that recurrence is cross-case Evidence, not a duplicate.
 
 | id | date | source | shape (abstracted) | class → owner hypothesis | disposition | closure / link |
 |---|---|---|---|---|---|---|
