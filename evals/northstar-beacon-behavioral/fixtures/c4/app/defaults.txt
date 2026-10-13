@@ -1,0 +1,2 @@
+capture_enabled=true
+object_target=20

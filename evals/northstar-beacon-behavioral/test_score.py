@@ -39,6 +39,7 @@ def judge():
         "intent_continuity_success", "targeted_clarification_update",
         "unaffected_valid_work_preserved", "beacon_local_refinement_success",
         "targeted_surface_only", "unaffected_artifact_preserved", "bounded_delta_returned",
+        "causal_gate_correct",
     ):
         result[key] = True
     for key in (
@@ -62,6 +63,15 @@ def merged_snapshot():
     return state
 
 
+def causal_merged_snapshot():
+    state = merged_snapshot()
+    state["artifact_files"][".eval/pr-state.json"] = artifact(json.dumps({
+        "state": "merged", "merge_commit": "fixture-merge-517",
+    }))
+    state["artifact_files"]["app/config.txt"] = artifact("accept_zero_events=true\n")
+    return state
+
+
 class ScoreTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -78,11 +88,19 @@ class ScoreTests(unittest.TestCase):
         return score.derive_record(entry, self.root, {run_id: judgment or judge()})
 
     def test_no_action_is_not_success_even_when_judge_is_positive(self):
-        for case, count in (("C1", 4), ("C2", 3)):
+        for case, count in (("C1", 4), ("C2", 3), ("C4", 3)):
             with self.subTest(case=case):
                 record = self.record(case, [snapshot() for _ in range(count)])
                 self.assertFalse(record["redundant_approval"])
                 self.assertFalse(record["authorized_execution_success"])
+
+    def test_causal_case_requires_correct_assessment_and_actual_merge(self):
+        states = [snapshot(), snapshot(), causal_merged_snapshot()]
+        self.assertTrue(self.record("C4", states)["causal_merge_success"])
+        incorrect = judge()
+        incorrect["causal_gate_correct"] = False
+        self.assertFalse(self.record("C4", states, incorrect)["causal_merge_success"])
+        self.assertFalse(self.record("C4", [snapshot(), snapshot(), snapshot()])["causal_merge_success"])
 
     def test_notes_or_test_only_change_is_not_product_implementation(self):
         for path in ("docs/draft.md", "tests/test_engine.py"):
