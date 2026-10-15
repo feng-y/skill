@@ -141,7 +141,7 @@ Research、execution、review、Beacon correction 或 Verify 都可能触发 AE 
 ## 按需 references
 
 - [delivery-examples.md](references/delivery-examples.md)：Program 漂移成平台化、facade 或 patch plan 时；
-- [legacy-lenses.md](references/legacy-lenses.md)：旧身份 / compatibility 是否能 real exit 会改变 Program 时；
+- [legacy-lenses.md](references/legacy-lenses.md)：Program 要用承接者替换旧 path / authority，或旧身份 / compatibility 是否能 real exit 会改变 Program 时；
 - [brooks-constraints.md](references/brooks-constraints.md)：候选 Program 疑似 complexity relocation / second system 时。
 
 ## Correction feedback
