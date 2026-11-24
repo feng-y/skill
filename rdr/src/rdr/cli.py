@@ -7,9 +7,10 @@ import re
 import shutil
 import signal
 import sys
+from pathlib import Path
 
 from .client import RDRClient, RDRClientError
-from .config import ConfigError, resolve_access_token
+from .config import ConfigError, import_installer_token, resolve_access_token
 from .deploy import default_log_file, default_state_dir, run_server_command
 
 DEFAULT_ACCESS_CONFIG = "~/.config/rdr/access.json"
@@ -56,8 +57,8 @@ def _add_access_config(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--access-config",
         help=(
-            "client access config JSON; defaults to RDR_ACCESS_CONFIG or "
-            "~/.config/rdr/access.json. RDR_TOKEN overrides the file token"
+            "use the first token in this file. Without this flag, use RDR_TOKEN "
+            "or fall back to RDR_ACCESS_CONFIG or ~/.config/rdr/access.json"
         ),
     )
 
@@ -136,6 +137,18 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_access_config(put_parser)
 
+    config_parser = sub.add_parser("config", help="manage a local access config")
+    config_sub = config_parser.add_subparsers(dest="config_command", required=True)
+    import_parser = config_sub.add_parser(
+        "import-token",
+        help="import an RDR installer's token from stdin",
+        description="Read the installer from stdin and put its token first in a local access config.",
+    )
+    import_parser.add_argument(
+        "--access-config",
+        help="destination JSON; defaults to RDR_ACCESS_CONFIG or ~/.config/rdr/access.json",
+    )
+
     server_parser = sub.add_parser(
         "server",
         help="manage the local rdr-server (start/status/stop)",
@@ -195,12 +208,23 @@ async def _connect(
     host, port = endpoint
     access_path = resolve_access_config_path(access_config)
     try:
-        token = resolve_access_token(access_path)
+        token = resolve_access_token(access_path, config_only=access_config is not None)
     except ConfigError as exc:
-        raise SystemExit(str(exc)) from exc
+        raise SystemExit(f"{exc}\nSee 'rdr config import-token --help' for Token import.") from exc
 
     client = RDRClient(host, port, token)
-    await client.connect()
+    try:
+        await client.connect()
+    except RDRClientError as exc:
+        if (
+            str(exc) == "invalid token"
+            and access_config is None
+            and os.environ.get("RDR_TOKEN", "").strip()
+        ):
+            raise RDRClientError(
+                "invalid token (using RDR_TOKEN; use --access-config to select a file)"
+            ) from exc
+        raise
     return client
 
 
@@ -320,6 +344,16 @@ async def _run_connect(client: RDRClient, args: argparse.Namespace) -> int:
 async def run(args: argparse.Namespace) -> int:
     if args.command == "server":
         return await run_server_command(args)
+    if args.command == "config":
+        path = Path(resolve_access_config_path(args.access_config))
+        try:
+            import_installer_token(sys.stdin.buffer.read().decode("utf-8"), path)
+        except UnicodeError as exc:
+            raise SystemExit("rdr: expected UTF-8 text in the RDR installer") from exc
+        except (ConfigError, OSError) as exc:
+            raise SystemExit(f"rdr: {exc}") from exc
+        print(f"RDR access config updated: {path}")
+        return 0
 
     if args.command == "get":
         endpoint, remote_path = args.remote

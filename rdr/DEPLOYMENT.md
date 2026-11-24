@@ -119,9 +119,7 @@ Managed CLI 的 `--token` 仅保留兼容；推荐使用 access config 或 `RDR_
 
 Client token 解析：
 
-```text
-RDR_TOKEN > client access config 的第一个 token
-```
+显式传入 `--access-config` 时，client 使用指定文件的第一个 token。省略该参数时，client 先读 `RDR_TOKEN`，再读 access config 的第一个 token。需要使用目标 server 的安装脚本恢复 token 时，参见 [从安装脚本恢复 token](GUIDE.md#从安装脚本恢复-token)。
 
 认证失败区分：
 
