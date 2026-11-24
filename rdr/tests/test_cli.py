@@ -4,6 +4,9 @@ import asyncio
 import io
 import json
 import os
+import stat
+import subprocess
+import sys
 import tempfile
 import unittest
 from contextlib import redirect_stdout
@@ -140,7 +143,7 @@ class CLITest(unittest.TestCase):
         self.assertEqual(raised.exception.code, 0)
         start_help = output.getvalue()
         self.assertIn("compatibility option", start_help)
-        self.assertIn("prefer RDR_TOKEN", start_help)
+        self.assertIn("prefer RDR_TOKEN", " ".join(start_help.split()))
 
 
 class EnvTokenTest(unittest.TestCase):
@@ -186,6 +189,15 @@ class ConnectTokenSourceTest(unittest.IsolatedAsyncioTestCase):
             client = await _connect(("host.example", 19090), None)
         self.assertEqual(client.token, "file-token")
 
+    async def test_explicit_access_config_selects_file_despite_inherited_token(self) -> None:
+        with patch.dict(os.environ, {"RDR_TOKEN": "stale-token"}), patch(
+            "rdr.cli.RDRClient", _StubClient
+        ):
+            client = await _connect(("host.example", 19090), str(self.access))
+            self.assertEqual(client.token, "file-token")
+            with self.assertRaisesRegex(SystemExit, "cannot read config"):
+                await _connect(("host.example", 19090), str(self.access.with_suffix(".missing")))
+
     async def test_missing_config_and_no_env_token_fails(self) -> None:
         env = dict(os.environ)
         env.pop("RDR_TOKEN", None)
@@ -195,6 +207,55 @@ class ConnectTokenSourceTest(unittest.IsolatedAsyncioTestCase):
         ):
             with self.assertRaises(SystemExit):
                 await _connect(("host.example", 19090), None)
+
+
+class ImportTokenTest(unittest.TestCase):
+    INSTALLER = """#!/bin/bash
+exit 42
+cat >"$config_tmp" <<'JSON'
+{"tokens": ["installer-fixture"]}
+JSON
+"""
+
+    def setUp(self) -> None:
+        root = tempfile.TemporaryDirectory()
+        self.addCleanup(root.cleanup)
+        self.access = Path(root.name) / "access.json"
+
+    def import_token(self, installer: str = INSTALLER) -> subprocess.CompletedProcess[str]:
+        result = subprocess.run(
+            [sys.executable, "-m", "rdr.cli", "config", "import-token", "--access-config", str(self.access)],
+            input=installer, capture_output=True, text=True,
+        )
+        self.assertNotIn("installer-fixture", result.stdout + result.stderr)
+        return result
+
+    def test_import_repairs_missing_tokens_and_preserves_other_fields(self) -> None:
+        self.access.write_text('{"enabled": true}')
+        self.import_token().check_returncode()
+        self.assertEqual(json.loads(self.access.read_text()), {"enabled": True, "tokens": ["installer-fixture"]})
+
+        self.access.write_text('{"tokens": ["other", "installer-fixture"]}')
+        for _ in range(2):
+            self.import_token().check_returncode()
+            self.assertEqual(json.loads(self.access.read_text()), {"tokens": ["installer-fixture", "other"]})
+            self.assertEqual(stat.S_IMODE(self.access.stat().st_mode), 0o600)
+
+    def test_import_refuses_invalid_config_or_ambiguous_installer(self) -> None:
+        self.access.write_text('{"tokens": null}')
+        self.assertIn("requires array 'tokens'", self.import_token().stderr)
+        self.assertEqual(self.access.read_text(), '{"tokens": null}')
+        self.assertIn("expected one", self.import_token(self.INSTALLER * 2).stderr)
+        self.assertEqual(self.access.read_text(), '{"tokens": null}')
+
+    @unittest.skipUnless(os.geteuid() == 0, "requires chown to another UID and GID")
+    def test_import_preserves_existing_owner_and_group(self) -> None:
+        self.access.write_text('{"tokens": []}')
+        os.chown(self.access, 65534, 65534)
+        self.import_token().check_returncode()
+        metadata = self.access.stat()
+        self.assertEqual((metadata.st_uid, metadata.st_gid), (65534, 65534))
+        self.assertEqual(stat.S_IMODE(metadata.st_mode), 0o600)
 
 
 if __name__ == "__main__":

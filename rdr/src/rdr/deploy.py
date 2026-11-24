@@ -212,13 +212,13 @@ def _target_port(args) -> tuple[int, str | None, str | None]:
     return args.port, None, None
 
 
-async def _auth_check(port: int, access_config: str | None) -> str:
+async def _auth_check(port: int, access_config: str | None, *, config_only: bool = False) -> str:
     from .cli import resolve_access_config_path
     from .config import resolve_access_token
 
     client_token_configured = True
     try:
-        token = resolve_access_token(resolve_access_config_path(access_config))
+        token = resolve_access_token(resolve_access_config_path(access_config), config_only=config_only)
     except (ConfigError, SystemExit):
         # An empty token cannot be configured, so it is safe as a probe. The
         # server can then distinguish "no server token" from "client has no
@@ -273,7 +273,7 @@ async def _server_status(args) -> int:
         return 1
 
     status_access_config = args.access_config or record.get("access_config")
-    auth = await _auth_check(port, status_access_config)
+    auth = await _auth_check(port, status_access_config, config_only=args.access_config is not None)
     print(f"auth: {auth}")
     return 0 if auth == "ok" else 1
 

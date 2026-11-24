@@ -131,13 +131,31 @@ EOF
 chmod 600 ~/.config/rdr/access.json
 ```
 
-`RDR_TOKEN` 优先于 client access config 的第一个 token。
+显式传入 `--access-config` 时，client 使用指定文件的第一个 token。省略该参数时，client 优先读取当前进程的 `RDR_TOKEN`，再读取 `RDR_ACCESS_CONFIG` 或 `~/.config/rdr/access.json`。注释 shell 启动文件中的 `export RDR_TOKEN` 后，已启动的 shell 仍可能保留旧值。
+
+### 从安装脚本恢复 token
+
+使用目标 server 对应的 `install_rdr.sh`。哪一端缺少 token，就把同一份安装脚本导入哪一端实际读取的 access config。新建文件时，用读取该文件的进程用户执行导入。指定该用户拥有的私有 access config。
+
+```bash
+# client
+rdr config import-token --access-config ~/.config/rdr/access.json < install_rdr.sh
+rdr identity HOST:19090 --access-config ~/.config/rdr/access.json
+
+# server 所在的机器或容器，路径以该 server 的启动配置为准
+rdr config import-token --access-config /path/to/server-access.json < install_rdr.sh
+```
+
+`rdr config import-token` 从 stdin 读取配置块，把 token 写入 `tokens[0]`。命令保留其他 token、字段和已有文件的所有者及所属组，并以 `0600` 原子写入。运行中的 server 重读配置后，从实际 client 对同一 endpoint 复验 `rdr identity`。如果 server 因配置错误退出，先按原托管方式启动 server。
 
 认证失败明确区分：
 
-- client 本地没有可用 token：CLI 在连接前直接报本地 token/config 错误
-- server effective token 为空：`server token not configured`
-- server 已配置 token，但 client token 不匹配：`invalid token`
+| 错误 | 修复 |
+| --- | --- |
+| `cannot read config` | 核对报错路径和读取权限。文件缺失时导入 token。 |
+| `requires array 'tokens'` 或 `contains no token` | 字段缺失或数组为空时导入 token。已有字段类型错误时先修复该字段。 |
+| `server token not configured` | 导入 server 实际读取的 access config，等待重读后复验。 |
+| `invalid token` | 核对 endpoint 和两端的 token 来源。用 `--access-config` 显式指定 client 文件。 |
 
 ## 4. 基础验证
 
@@ -305,7 +323,7 @@ rdr exec HOST:19090 "perf report -i /tmp/perf.data --stdio --percent-limit 0.5"
 |---|---|
 | connection refused | `rdr server status` → `ss -tlnp \| grep 19090` → 网络可达性 |
 | server token not configured | server 已启动但 effective token 为空；检查 local/global/env 三个来源 |
-| invalid token | server 已有 token；检查 client 实际使用的 `RDR_TOKEN`（否则文件第一个）是否在 server effective token 集合里 |
+| invalid token | 检查 client 实际使用的 token 是否在 server effective token 集合里。用 `--access-config` 指定 client 文件。 |
 | `terminal attachment limit reached (N)` | terminal 已达到 server 的 attachment 上限；等待一个 attachment detach，或调整 `RDR_TERMINAL_MAX_ATTACHMENTS` 后重启 server |
 | `unknown terminal` | terminal 已退出、被 close、token revoke/server shutdown 清理，或 RDR server 已重启 |
 | reconnect 后提示 replay truncated | terminal 曾处于 0 attachment 且 detached output 超过 4 MiB；state 仍在，但最旧 output 已丢弃 |

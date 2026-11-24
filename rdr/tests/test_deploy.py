@@ -109,6 +109,13 @@ class AuthCheckTest(unittest.IsolatedAsyncioTestCase):
                 "server token not configured",
             )
 
+    async def test_explicit_access_config_selects_file_for_status_probe(self) -> None:
+        config = Path(self.root.name) / "access.json"
+        config.write_text('{"tokens": ["secret"]}', encoding="utf-8")
+        with patch.dict(os.environ, {"RDR_TOKEN": "wrong"}):
+            self.assertEqual(await _auth_check(self.port, str(config)), "invalid token")
+            self.assertEqual(await _auth_check(self.port, str(config), config_only=True), "ok")
+
 
 class PidFileTest(unittest.TestCase):
     def test_read_valid_and_invalid(self) -> None:
