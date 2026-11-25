@@ -117,6 +117,18 @@ npx wrangler deploy --assets ./public --name lemon-pages --compatibility-date 20
 
 保存后重新构建，检查构建结果，将实际生产地址写入 `cloudflare.base_url`。
 
+## 生成图表
+
+已有 HTML 或 SVG 可直接用于发布。图表助手使用 Node.js 20+，首次 `setup` 需要 npm。
+
+```bash
+node "<skill-dir>/scripts/diagram.mjs" setup
+node "<skill-dir>/scripts/diagram.mjs" doctor
+node "<skill-dir>/scripts/diagram.mjs" render ./chart.mmd --out ./prepared-chart
+```
+
+输出目录包含查看页、原始 Mermaid、跟随系统明暗偏好的 SVG 和来源校验记录。确认其中的所有内容都允许公开后，可把该目录作为静态报告发布。生成图表的详细流程、pstack statechart 安装与 TLC 说明见 [图表制作与交付](references/diagrams.md)。日常静态发布使用 Python 和 Git。
+
 ## 发布报告
 
 单个 HTML 会保存为目标目录的 `index.html`。带图片、CSS 或脚本时使用静态目录，并在其中提供 `index.html`。脚本会递归上传该目录，不会自动收集 HTML 引用的外部本地资源。
@@ -205,6 +217,8 @@ python3 <skill-dir>/scripts/to_pages.py index publish
 ```bash
 python3 <skill-dir>/scripts/test_to_pages.py -v
 ```
+
+运行过图表助手的 `setup` 后，可运行 `node --test "<skill-dir>/scripts/diagram.test.mjs"` 验证渲染。
 
 | 现象 | 检查项 |
 | --- | --- |

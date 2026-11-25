@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' file:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <title>{{TITLE}}</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f8fa;
+      --surface: #fff;
+      --fg: #1c2633;
+      --line: #8793a3;
+      --link: #144ba0;
+      font: 100%/1.5 system-ui, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #16191e;
+        --surface: #1f1f1f;
+        --fg: #edf1f6;
+        --line: #747e8d;
+        --link: #a5c8ff;
+      }
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; background: var(--bg); color: var(--fg); }
+    main { max-width: 91rem; margin-inline: auto; padding: clamp(.75rem, 2.5vw, 2.5rem); }
+    h1 { margin: 0 0 1rem; font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1.2; overflow-wrap: anywhere; }
+    a { color: var(--link); }
+    :focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .5rem 1.25rem;
+      margin-bottom: .75rem;
+    }
+    .controls, .files { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+    .files { gap: .75rem; }
+    button {
+      min-width: 2.75rem;
+      min-height: 2.75rem;
+      border: 1px solid var(--line);
+      border-radius: .4rem;
+      padding: .4rem .65rem;
+      background: var(--surface);
+      color: var(--fg);
+      cursor: pointer;
+      font: inherit;
+    }
+    button:disabled { opacity: .55; cursor: default; }
+    output { width: 4.5rem; text-align: center; font-variant-numeric: tabular-nums; }
+    .viewport {
+      display: grid;
+      place-items: safe center;
+      grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+      height: clamp(12rem, 66vh, 52rem);
+      overflow: auto;
+      padding: .75rem;
+      border: 1px solid var(--line);
+      border-radius: .5rem;
+      background: var(--surface);
+    }
+    #diagram { display: block; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+    #diagram.sized { max-width: none; max-height: none; }
+    details { margin-top: 1rem; }
+    summary { width: fit-content; cursor: pointer; font-weight: 600; }
+    pre {
+      max-height: 28rem;
+      overflow: auto;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: .5rem;
+      background: var(--surface);
+      font: .875rem/1.5 ui-monospace, monospace;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>{{TITLE}}</h1>
+    <div class="toolbar">
+      <div class="controls" role="group" aria-label="Diagram zoom">
+        <button type="button" id="fit" aria-controls="viewport" disabled>Fit</button>
+        <button type="button" id="out" aria-controls="viewport" aria-label="Zoom out" disabled>−</button>
+        <button type="button" id="in" aria-controls="viewport" aria-label="Zoom in" disabled>+</button>
+        <button type="button" id="reset" aria-controls="viewport" title="Reset to 100%" disabled>Reset</button>
+        <output id="zoom" aria-live="polite" aria-label="Zoom level"></output>
+      </div>
+      <nav class="files" aria-label="Diagram files">
+        <a href="?view=full" target="_blank" rel="noopener" title="Opens the diagram at 100% in a new tab">Full-size SVG</a>
+        <a href="{{SVG_URL}}" download>Download SVG</a>
+        <a href="{{SOURCE_URL}}" download>Download source</a>
+      </nav>
+    </div>
+    <div class="viewport" id="viewport" role="region" aria-label="Diagram viewport" tabindex="0">
+      <img id="diagram" src="{{SVG_URL}}" alt="{{TITLE}}">
+      <p id="diagram-error" role="alert" hidden>The SVG could not be displayed. Check the SVG file or read the Mermaid source below.</p>
+    </div>
+    <details>
+      <summary>Mermaid source</summary>
+      <pre id="source" aria-label="Mermaid source" tabindex="0"><code>{{SOURCE}}</code></pre>
+    </details>
+  </main>
+  <script>
+    const svg = document.getElementById('diagram');
+    const viewport = document.getElementById('viewport');
+    const zoom = document.getElementById('zoom');
+    const controls = document.querySelectorAll('.controls button');
+    let fitted = new URLSearchParams(location.search).get('view') !== 'full';
+    let scale = 1;
+
+    function fitScale() {
+      const style = getComputedStyle(viewport);
+      const width = viewport.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      const height = viewport.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+      return Math.min(1, width / svg.naturalWidth, height / svg.naturalHeight);
+    }
+
+    function size(nextScale) {
+      scale = nextScale;
+      svg.style.width = (svg.naturalWidth * scale) + 'px';
+      zoom.value = Math.round(scale * 100) + '%';
+    }
+
+    function fit() {
+      fitted = true;
+      svg.classList.remove('sized');
+      size(fitScale());
+      svg.classList.add('sized');
+      viewport.scrollTo(0, 0);
+    }
+
+    function reset() {
+      fitted = false;
+      size(1);
+      viewport.scrollTo(0, 0);
+    }
+
+    function changeZoom(factor) {
+      fitted = false;
+      const minimum = Math.min(.125, fitScale());
+      size(Math.max(minimum, Math.min(8, scale * factor)));
+    }
+
+    function enableDiagram() {
+      svg.classList.add('sized');
+      if (fitted) fit();
+      else reset();
+      controls.forEach((button) => { button.disabled = false; });
+      new ResizeObserver(() => { if (fitted) fit(); }).observe(viewport);
+    }
+
+    function showError() {
+      svg.hidden = true;
+      document.getElementById('diagram-error').hidden = false;
+    }
+
+    document.getElementById('fit').addEventListener('click', fit);
+    document.getElementById('out').addEventListener('click', () => changeZoom(.8));
+    document.getElementById('in').addEventListener('click', () => changeZoom(1.25));
+    document.getElementById('reset').addEventListener('click', reset);
+    viewport.addEventListener('keydown', (event) => {
+      if (controls[0].disabled || event.ctrlKey || event.metaKey || event.altKey) return;
+      switch (event.key) {
+        case '+':
+        case '=': changeZoom(1.25); break;
+        case '-': changeZoom(.8); break;
+        case '0': reset(); break;
+        case 'f':
+        case 'F': fit(); break;
+        default: return;
+      }
+      event.preventDefault();
+    });
+
+    if (svg.complete) {
+      if (svg.naturalWidth) enableDiagram();
+      else showError();
+    } else {
+      svg.addEventListener('load', enableDiagram, { once: true });
+      svg.addEventListener('error', showError, { once: true });
+    }
+  </script>
+</body>
+</html>
