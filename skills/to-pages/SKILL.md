@@ -11,7 +11,7 @@ description: 将本地 HTML 或静态目录推送到配置的 GitHub 仓库，�
 
 ## 准备报告
 
-- 确认源文件和目标路径。新报告使用 `reports/<slug>`；已有报告沿用原路径。未获更新授权时选择新路径。
+- 确认源文件和目标路径。新报告使用 `reports/<slug>`。已有报告用 `catalog` 查主题 ID、路径和版本。为同一主题保留新版本时指定原 `--topic` 和新路径，脚本自动分配版本号。
 - 单个 HTML 的外部本地资源不会自动收集。包含资源时准备只含发布内容的目录，保留相对路径，并包含 `index.html`。
 - HTML 源文件使用 UTF-8。脚本为发布副本补齐编码声明和「返回导航」链接，保留源文件、资源基准地址和 CSP。回链通常指向当前域名的站点首页。若报告含有效的 `<base href>` 且脚本被禁用或被 CSP 阻止，回链使用配置的生产首页。
 - 检查 HTML、注释、JSON 和资源是否允许公开，排除凭据及未授权的内部数据。脚本的文件名检查不能替代内容检查。
@@ -27,7 +27,9 @@ python3 <skill-dir>/scripts/to_pages.py plan /path/report.html --path reports/to
 python3 <skill-dir>/scripts/to_pages.py publish /path/report.html --path reports/topic
 ```
 
-用户授权更新已有报告时加 `--replace`。脚本保留其他报告及旧资源。它根据站点里的 `index.html` 报告入口生成导航首页。站点已有自定义首页时保留原样。权限、保护分支或并发 push 错误需检查后处理，不 force push，不改用其他站点或其他身份。
+新主题可用 `--title`、`--category`、`--project` 指定显示信息，省略分类时使用「未分类」。已有主题沿用已记录的分类。按需要用 `--summary` 记录版本变更。用户授权更新原路径时加 `--replace`，其他版本仍可打开。
+
+脚本在同一提交中更新报告、目录元数据和受管理的月度首页。首页支持分类、搜索、分页和版本选择。自定义首页保留原样。权限、保护分支或并发 push 错误需检查后处理，不 force push，不改用其他站点或其他身份。目录格式与历史迁移见 [README.md](README.md)。
 
 用户只要求 GitHub 推送时使用 `push`。报告含有效的 `<base href>` 时，`push` 也需要配置 `cloudflare.base_url`。若已连接 Cloudflare，推送仍会触发自动部署。
 
