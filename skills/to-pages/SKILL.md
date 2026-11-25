@@ -27,7 +27,7 @@ python3 <skill-dir>/scripts/to_pages.py plan /path/report.html --path reports/to
 python3 <skill-dir>/scripts/to_pages.py publish /path/report.html --path reports/topic
 ```
 
-新主题可用 `--title`、`--category`、`--project` 指定显示信息，省略分类时使用「未分类」。已有主题沿用已记录的分类。按需要用 `--summary` 记录版本变更。用户授权更新原路径时加 `--replace`，其他版本仍可打开。
+首次发布新主题时，根据用户指定或内容用途选择分类，优先使用「设计原型」「技术方案」「分析报告」「使用文档」；依据不足时使用「未分类」。通过 `--title`、`--category`、`--project` 保存显示信息，已有主题沿用已记录的分类，不因再次发布重新猜测。按需要用 `--summary` 记录版本变更。用户授权更新原路径时加 `--replace`，其他版本仍可打开。
 
 脚本在同一提交中更新报告、目录元数据和受管理的月度首页。首页支持分类、搜索、分页和版本选择。自定义首页保留原样。权限、保护分支或并发 push 错误需检查后处理，不 force push，不改用其他站点或其他身份。目录格式与历史迁移见 [README.md](README.md)。
 
