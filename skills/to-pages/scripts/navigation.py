@@ -1,13 +1,17 @@
 """Prepare report copies and render the site catalog without rewriting source HTML."""
 
-from dataclasses import dataclass
 from html import escape, unescape
 from html.parser import HTMLParser
+import json
 import os
 from pathlib import Path
 import re
 from string import Template
 from urllib.parse import quote, urlsplit
+
+from catalog import (
+    UNCATEGORIZED, PagesError, available_topic_id, parse_timestamp, relative_path, validate_catalog,
+)
 
 
 BACK_START = "<!-- to-pages:back-link:start -->"
@@ -39,18 +43,15 @@ BACK_LINK = """
 <script>
 (() => {
   const link = document.getElementById("to-pages-back-link");
-  const sitePath = link.dataset.sitePath;
-  link.href = new URL(sitePath, window.location.href).href;
+  const home = new URL(link.dataset.sitePath, window.location.href);
+  const referrer = document.referrer && new URL(document.referrer);
+  if (referrer && referrer.origin === home.origin && referrer.pathname === home.pathname) {
+    home.search = referrer.search;
+  }
+  link.href = home.href;
 })();
 </script>
 """
-
-
-@dataclass(frozen=True)
-class Page:
-    path: str
-    title: str
-    description: str
 
 
 class MissingBaseURL(ValueError):
@@ -209,7 +210,83 @@ def prepare_html(data: bytes, base_url: str) -> bytes:
     return "".join(chunks).encode("utf-8")
 
 
-def render_homepage(site_root: Path, *, adopt: bool = False) -> bytes | None:
+def report_details(data: bytes, path: str) -> tuple[str, str]:
+    document = Document(data.decode("utf-8", errors="replace"))
+    title = " ".join(document.title.split())
+    heading = " ".join(document.heading.split())
+    return title or heading or path, document.description or (heading if heading != title else "")
+
+
+def archive_topics(site_root: Path, catalog: dict | None) -> list[dict]:
+    registered = catalog["topics"] if catalog is not None else []
+    known_paths = {version["path"] for topic in registered for version in topic["versions"]}
+    known_ids = {topic["id"] for topic in registered}
+    topics = list(registered)
+    for directory, children, files in os.walk(site_root):
+        folder = Path(directory)
+        children[:] = sorted(name for name in children
+                             if not name.startswith(".") and name not in ("node_modules", "__pycache__")
+                             and not (folder / name).is_symlink())
+        entry = folder / "index.html"
+        if folder == site_root or "index.html" not in files or entry.is_symlink() or not entry.is_file():
+            continue
+        path = folder.relative_to(site_root).as_posix()
+        if path in known_paths:
+            continue
+        try:
+            relative_path(path)
+        except PagesError:
+            continue
+        title, description = report_details(entry.read_bytes(), path)
+        topic_id = available_topic_id(path, known_ids)
+        known_ids.add(topic_id)
+        topics.append({"id": topic_id, "title": title, "description": description, "category": UNCATEGORIZED,
+                       "project": "", "versions": [{"path": path, "label": "v1", "published_at": None,
+                                                    "updated_at": None, "summary": ""}]})
+
+    archive = []
+    for topic in topics:
+        versions = []
+        # Reverse registration order breaks ties in known or unrecorded publication dates.
+        registered_versions = sorted(reversed(topic["versions"]),
+                                     key=lambda version: date_key(version["published_at"]), reverse=True)
+        for version in registered_versions:
+            path = version["path"]
+            stamp = version["updated_at"] or version["published_at"]
+            versions.append({"path": path, "href": "./" + quote(path, safe="/") + "/",
+                             "label": version["label"], "date": stamp, "summary": version["summary"]})
+        updated = max((version["date"] for version in versions), key=date_key)
+        archive.append({**topic, "updated": updated, "versions": versions})
+    archive.sort(key=lambda topic: (topic["id"], topic["versions"][0]["path"]))
+    archive.sort(key=lambda topic: date_key(topic["updated"]), reverse=True)
+    return archive
+
+
+def date_key(value):
+    stamp = parse_timestamp(value)
+    return stamp is not None, stamp
+
+
+def static_topics(topics):
+    cards = []
+    for topic in topics:
+        title = escape(topic["title"])
+        latest = topic["versions"][0]
+        description = escape(topic["description"])
+        details = f'<p class="doc-description">{description}</p>' if description else ""
+        links = "".join(
+            f'<li><a href="{escape(version["href"])}">{escape(version["label"])}</a></li>'
+            for version in topic["versions"]
+        )
+        history = f"<ul>{links}</ul>" if len(topic["versions"]) > 1 else ""
+        cards.append(
+            f'<li><a href="{escape(latest["href"])}"><h2>{title}</h2></a>{details}'
+            f'<p class="project">{escape(topic["category"])} · {escape(latest["path"])}/</p>{history}</li>'
+        )
+    return "\n".join(cards)
+
+
+def render_homepage(site_root: Path, *, adopt: bool = False, catalog: dict | None = None) -> bytes | None:
     """Return generated bytes for a missing or managed homepage, or None for a custom one."""
     index = site_root / "index.html"
     if index.is_symlink() or (index.exists() and not index.is_file()):
@@ -218,31 +295,10 @@ def render_homepage(site_root: Path, *, adopt: bool = False) -> bytes | None:
         with index.open("rb") as existing:
             if not existing.read(len(HOME_PREFIX_CRLF)).startswith((HOME_PREFIX, HOME_PREFIX_CRLF)):
                 return None
+    if catalog is not None:
+        validate_catalog(catalog, site_root)
 
-    pages = []
-    for directory, children, files in os.walk(site_root):
-        folder = Path(directory)
-        children[:] = [name for name in children
-                       if not name.startswith(".") and name not in ("node_modules", "__pycache__")
-                       and not (folder / name).is_symlink()]
-        entry = folder / "index.html"
-        if folder == site_root or "index.html" not in files or entry.is_symlink() or not entry.is_file():
-            continue
-        path = folder.relative_to(site_root).as_posix()
-        document = Document(entry.read_text(encoding="utf-8", errors="replace"))
-        title = " ".join(document.title.split())
-        heading = " ".join(document.heading.split())
-        pages.append(Page(path, title or heading or path,
-                          document.description or (heading if heading != title else "")))
-    pages.sort(key=lambda page: (page.title.casefold(), page.path))
-
-    cards = []
-    for page in pages:
-        href = escape("./" + quote(page.path, safe="/") + "/")
-        description = f'<p class="description">{escape(page.description)}</p>' if page.description else ""
-        cards.append(
-            f'<li><a href="{href}"><h2>{escape(page.title)}</h2>{description}'
-            f'<span class="path">{escape(page.path)}/</span></a></li>'
-        )
+    topics = archive_topics(site_root, catalog)
+    data = json.dumps(topics, ensure_ascii=True, sort_keys=True, separators=(",", ":")).replace("<", r"\u003c")
     template = Template(Path(__file__).with_name("navigation.html").read_text(encoding="utf-8"))
-    return template.substitute(marker=HOME_MARKER, count=len(pages), cards="\n      ".join(cards)).encode("utf-8")
+    return template.substitute(marker=HOME_MARKER, count=len(topics), cards=static_topics(topics), data=data).encode("utf-8")

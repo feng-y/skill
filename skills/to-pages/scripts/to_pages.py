@@ -5,7 +5,7 @@ import argparse
 from contextlib import contextmanager
 import json
 import os
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 import re
 import stat
 import subprocess
@@ -16,26 +16,21 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
-from navigation import MissingBaseURL, prepare_html, render_homepage
+from catalog import (
+    CATALOG_PATH, PagesError, directory_path, load_catalog, relative_path, update_catalog, write_catalog,
+)
+from navigation import MissingBaseURL, prepare_html, render_homepage, report_details
 
 
 MAX_FILE_BYTES = 25 * 1024 * 1024
-
-
-class PagesError(Exception):
-    pass
-
-
-def relative_path(value, allow_root=False):
-    if not isinstance(value, str) or not value:
-        raise PagesError("Expected a nonempty relative path")
-    if value == "." and allow_root:
-        return value
-    parts = value.split("/")
-    if any(not p or p.startswith(".") or p in ("node_modules", "__pycache__")
-           or "\\" in p or any(ord(c) < 32 for c in p) for p in parts):
-        raise PagesError("Paths must be relative, without hidden or parent components")
-    return str(PurePosixPath(value))
+METADATA_OPTIONS = {
+    "topic": "Stable topic id",
+    "title": "Topic title",
+    "category": "Topic category",
+    "project": "Topic project",
+    "version": "Version label",
+    "summary": "Version change summary",
+}
 
 
 def private_file(path):
@@ -167,38 +162,31 @@ def checkout(config):
         yield repo, env
 
 
-def target_directory(repo, config, destination):
-    target = repo / config["output_dir"] / destination
-    current = repo
-    for part in target.relative_to(repo).parts:
-        current = current / part
-        if current.is_symlink() or (current.exists() and not current.is_dir()):
-            raise PagesError("Destination contains a symlink or a file where a directory is required")
-    return target
-
-
-def stage(config, repo, env, destination, files, replace):
-    target = target_directory(repo, config, destination)
-    conflicts = []
+def stage(config, repo, env, destination, files, replace, *, catalog=None):
+    target = directory_path(repo, (Path(config["output_dir"]) / destination).as_posix())
+    prefix = destination + "/"
+    nested_reports = [
+        version["path"][len(prefix):] + "/"
+        for topic in (catalog["topics"] if catalog is not None else [])
+        for version in topic["versions"]
+        if version["path"].startswith(prefix)
+    ]
     changes = []
     for name, data in files.items():
-        out = target / name
-        current = out
-        while current != repo:
-            if current.is_symlink():
-                raise PagesError("Destination contains a symlink")
-            current = current.parent
+        resource = Path(name)
+        out = directory_path(target, resource.parent.as_posix()) / resource.name
+        if out.is_symlink():
+            raise PagesError("Destination contains a symlink")
         if out.exists():
             if not out.is_file():
                 raise PagesError("Destination file collides with a directory")
             if out.read_bytes() == data:
                 continue
-            conflicts.append(name)
+        if any(name.startswith(report) for report in nested_reports):
+            raise PagesError("Report resources overlap another catalog version")
         changes.append(name)
     if changes and target.exists() and any(target.iterdir()) and not replace:
         raise PagesError("Report path already exists; choose another --path or authorize its update with --replace")
-    if conflicts and not replace:
-        raise PagesError("Refusing to overwrite existing files without --replace")
     for name in changes:
         out = target / name
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -215,6 +203,7 @@ def public_url(config, path):
 
 def verify(config, destination, files, timeout, *, homepage=None):
     checks = {destination + "/" + name: data for name, data in files.items()}
+    url_path = destination + "/" if destination else ""
     if homepage is not None:
         checks["index.html"] = homepage
     deadline = time.monotonic() + timeout
@@ -236,7 +225,7 @@ def verify(config, destination, files, timeout, *, homepage=None):
             except (URLError, TimeoutError, OSError) as exc:
                 failures.append(name + " unavailable" + (" HTTP " + str(exc.code) if isinstance(exc, HTTPError) else ""))
         if not failures:
-            return {"status": "verified", "url": public_url(config, destination + "/"), "files_verified": len(checks)}
+            return {"status": "verified", "url": public_url(config, url_path), "files_verified": len(checks)}
         remaining = deadline - time.monotonic()
         if remaining > 0:
             time.sleep(min(5, remaining))
@@ -253,12 +242,18 @@ def main():
         "TO_PAGES_CONFIG", "~/.config/to-pages/config.json")).expanduser())
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("doctor", help="Read authentication and repository metadata without writing")
+    commands.add_parser("catalog", help="Read the recorded topic and version metadata")
+    index = commands.add_parser("index", help="Rebuild the catalog and managed homepage without publishing a report")
+    index.add_argument("mode", choices=("plan", "push", "publish"))
+    index.add_argument("--timeout", type=int, default=300)
     for command in ("plan", "push", "publish", "verify"):
         sub = commands.add_parser(command)
         sub.add_argument("source", type=Path)
         sub.add_argument("--path", required=True, help="Report directory relative to the site root")
         if command in ("plan", "push", "publish"):
             sub.add_argument("--replace", action="store_true")
+            for option, help_text in METADATA_OPTIONS.items():
+                sub.add_argument("--" + option, help=help_text)
         if command in ("publish", "verify"):
             sub.add_argument("--timeout", type=int, default=300)
     args = parser.parse_args()
@@ -271,13 +266,21 @@ def main():
               "token_write_verified": False, "branch": config["branch"],
               "base_url": config["base_url"] or None, "output_dir": config["output_dir"]})
         return
-    destination = relative_path(args.path)
-    if args.command in ("publish", "verify"):
+    if args.command == "catalog":
+        with checkout(config) as (repo, _):
+            emit(load_catalog(repo, config["output_dir"]))
+        return
+
+    index_only = args.command == "index"
+    action = args.mode if index_only else args.command
+    destination = "" if index_only else relative_path(args.path)
+    url_path = destination + "/" if destination else ""
+    if action in ("publish", "verify"):
         if not config["base_url"]:
             raise PagesError("Set cloudflare.base_url to the actual production URL before publishing or verifying")
         if args.timeout < 1 or args.timeout > 3600:
             raise PagesError("--timeout must be between 1 and 3600 seconds")
-    files = source_files(args.source.expanduser())
+    files = {} if index_only else source_files(args.source.expanduser())
     for name, data in files.items():
         if Path(name).suffix.lower() in (".html", ".htm"):
             try:
@@ -288,37 +291,49 @@ def main():
                 raise PagesError(f"{name} {exc}") from exc
             if len(files[name]) > MAX_FILE_BYTES:
                 raise PagesError(name + " exceeds 25 MiB after preparing the HTML")
-    if args.command == "verify":
+    if action == "verify":
         emit(verify(config, destination, files, args.timeout))
         return
+
     with checkout(config) as (repo, env):
-        changes = stage(config, repo, env, destination, files, args.replace)
+        catalog = load_catalog(repo, config["output_dir"])
+        changes = []
+        if not index_only:
+            changes = stage(config, repo, env, destination, files, args.replace, catalog=catalog)
+            title, description = report_details(files["index.html"], destination)
+            metadata = {option: getattr(args, option) for option in METADATA_OPTIONS}
+            update_catalog(catalog, destination, files, changed=bool(changes), title=title,
+                           description=description, metadata=metadata)
+        if write_catalog(repo, catalog):
+            git(config, repo, env, "add", "--", CATALOG_PATH.as_posix())
+            changes.append(CATALOG_PATH.as_posix())
         site_root = repo / config["output_dir"]
-        homepage = render_homepage(site_root)
+        homepage = render_homepage(site_root, catalog=catalog)
         if homepage is not None:
             if len(homepage) > MAX_FILE_BYTES:
                 raise PagesError("Generated index.html exceeds 25 MiB")
             index = site_root / "index.html"
             if not index.exists() or index.read_bytes() != homepage:
+                site_root.mkdir(parents=True, exist_ok=True)
                 index.write_bytes(homepage)
                 name = str(index.relative_to(repo))
                 git(config, repo, env, "add", "--", name)
                 changes.append(name)
-        if args.command == "plan":
+        if action == "plan":
             emit({"status": "planned", "repo": config["repo"], "branch": config["branch"],
-                  "changed_files": changes, "url": public_url(config, destination + "/")})
+                  "changed_files": changes, "url": public_url(config, url_path)})
             return
         if changes:
             git(config, repo, env, "-c", "user.name=to-pages", "-c", "user.email=to-pages@users.noreply.github.com",
-                "commit", "-m", "Publish " + destination)
+                "commit", "-m", "Rebuild report index" if index_only else "Publish " + destination)
             sha = git(config, repo, env, "rev-parse", "HEAD")
             git(config, repo, env, "push", "origin", "HEAD:refs/heads/" + config["branch"])
         else:
             sha = git(config, repo, env, "rev-parse", "HEAD")
         emit({"status": "pushed" if changes else "unchanged", "commit": sha,
               "commit_url": "https://github.com/" + config["repo"] + "/commit/" + sha,
-              "url": public_url(config, destination + "/")})
-    if args.command == "publish":
+              "url": public_url(config, url_path)})
+    if action == "publish" and (files or homepage is not None):
         emit(verify(config, destination, files, args.timeout, homepage=homepage))
 
 
