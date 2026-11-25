@@ -45,4 +45,4 @@ python3 <skill-dir>/scripts/to_pages.py push /path/report.html --path reports/to
 python3 <skill-dir>/scripts/to_pages.py verify /path/report.html --path reports/topic --timeout 300
 ```
 
-`verified` 才表示公网内容已逐个核对，`pushed` 只表示 GitHub 接收成功。Cloudflare 转换 HTML 导致字节不同时，明确说明未通过字节核对；不能称为验证成功。最终返回已验证的页面链接；若未完成，说明阻塞并附已推送的提交链接。
+`verified` 才表示公网内容已逐个核对，`pushed` 只表示 GitHub 接收成功。Cloudflare 转换 HTML 导致字节不同时，明确说明未通过字节核对；不能称为验证成功。成功后，最终回复必须以可点击的完整公网链接收尾：发布报告返回已验证的报告链接，仅重建导航返回已验证的首页链接，不只返回状态、路径或提交号。若未完成，说明阻塞并附已推送的提交链接。
