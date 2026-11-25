@@ -26,7 +26,7 @@
 
 ## One semantic owner per skill
 
-八个 Skill 都可以独立工作，独立调用时拥有并直接完成所请求的本职任务；被委托时只拥有 bounded question，并返回实际 caller。semantic owner 不等于所有任务的全局 owner；Northstar 不是总入口，调用它也不自动转移完整 work / canonical artifact ownership。下述 Northstar plan / Taskbook 约定适用于由它承接的 Intent work，不强制其他独立 Skill 创建 Taskbook。
+各 Skill 都可以独立工作，独立调用时拥有并直接完成所请求的本职任务；被委托时只拥有 bounded question，并返回实际 caller。semantic owner 不等于所有任务的全局 owner；Northstar 不是总入口，调用它也不自动转移完整 work / canonical artifact ownership。下述 Northstar plan / Taskbook 约定适用于由它承接的 Intent work，不强制其他独立 Skill 创建 Taskbook。
 
 当前 canonical capability map：
 
@@ -38,6 +38,8 @@
 - **`eval`**：拥有 agent behavioral evaluation engineering；从真实 agent surface、repo 与可用 traces 中选择 material capability/failure，构建 Task + Environment + Verifier，驱动或消费 eval backend，检查 agent/verifier trajectories 并形成可重复 measurement。它不验证产品/工程 claim，也不把 Harbor 等 backend 变成 semantic owner。
 - **`unknowns-first`**：只拥有 map-versus-territory 的**事实未知关闭**；它可以做 probe / source alignment，但不替其他 owner 关闭 Intent、concrete shape、Architecture、engineering verification 或 agent behavioral eval judgment。
 - **`wake`**：只由 Human 调用；把一段真实工作的 transcript 与项目 feedback log 变成可追溯到具体时刻、先对照当时生效 contract 归因（`pending`）、再分流到 `target-repo` / `skill` / `none` 的改进候选。它只提议，Human 逐条选中后才落地；不修本次产物，不声称 behavior uplift，不给 ledger disposition。
+
+- **`to-pages`**：拥有静态报告发布操作，将选定内容推送到配置的 GitHub 仓库，由 Cloudflare 托管，并确认公网内容。配置与凭证来源由调用者选择；它的文件核对服务于本次发布。
 
 不要复制 owner：Northstar 不判 proof sufficiency，也不把“什么 improvement 值得推进”的开放判断隐式吞进 Intent maintenance；Bearing 不接管 canonical Intent / Taskbook、Human commitment、Target Architecture、proof 或 implementation；Verify 不重写 Intent、设计 Target 或承担 agent behavioral eval；Eval 不验证产品 outcome 或改写 engineering semantics；Beacon 不接管 caller 的 semantic ownership；AE 不用 Program convenience 反推 Intent；Unknowns First 不把 factual probe 扩成 intent interview、concrete shaping、architecture design、proof judgment 或 eval design。
 

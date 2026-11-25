@@ -1,0 +1,48 @@
+---
+name: to-pages
+description: 将本地 HTML 或静态目录推送到配置的 GitHub 仓库，由 Cloudflare Pages 或 Workers 静态资源托管，并核对公网内容。用于 to-pages、发布静态报告到 Cloudflare、更新已发布报告。
+---
+
+# to-pages
+
+将用户选定的静态报告发布到配置的 GitHub 仓库，由已连接的 Cloudflare 项目自动部署，返回核对过的公网链接。用户要求发布即授权该次发布。仅安装或修改 skill 时执行只读检查，不推送测试页面。
+
+首次使用、凭证缺失或 Cloudflare 尚未连接时，读取 [README.md](README.md) 中的配置说明。默认配置为当前用户的 `$HOME/.config/to-pages/config.json`。沿用实际配置的仓库、生产分支和站点地址，不从机器用户名或仓库名推断目标。
+
+## 准备报告
+
+- 确认源文件和目标路径。新报告使用 `reports/<slug>`；已有报告沿用原路径。未获更新授权时选择新路径。
+- 单个 HTML 的外部本地资源不会自动收集。包含资源时准备只含发布内容的目录，保留相对路径，并包含 `index.html`。
+- UTF-8 HTML 的前 1024 字节应包含 `<meta charset="utf-8">`。缺失时在发布副本中补上，保留用户正在编辑的源文件。
+- 检查 HTML、注释、JSON 和资源是否允许公开，排除凭据及未授权的内部数据。脚本的文件名检查不能替代内容检查。
+- 源文件仍在修改时，固定本次发布快照，以该快照核对，说明发布版本，不循环追赶其他进程的修改。
+
+## 推送与核对
+
+将 `<skill-dir>` 替换为当前 `SKILL.md` 所在目录。
+
+```bash
+python3 <skill-dir>/scripts/to_pages.py doctor
+python3 <skill-dir>/scripts/to_pages.py plan /path/report.html --path reports/topic
+python3 <skill-dir>/scripts/to_pages.py publish /path/report.html --path reports/topic
+```
+
+用户授权更新已有报告时加 `--replace`。脚本只添加所选资源，保留其他报告，不删除旧资源。权限、保护分支或并发 push 错误需检查后处理，不 force push，不改用其他站点或其他身份。
+
+用户只要求 GitHub 推送时使用 `push`。Cloudflare 地址未配置时也可运行；若已连接 Cloudflare，推送仍会触发自动部署。
+
+```bash
+python3 <skill-dir>/scripts/to_pages.py push /path/report.html --path reports/topic
+```
+
+脚本默认使用 token 通过 HTTPS 推送。HTTPS 传输失败时，可使用目标机器上已配置且核实为同一 GitHub 账号的 SSH 凭证完成推送，并核对远端文件。SSH 成功不能证明 token 有写权限，`doctor` 返回的仓库角色也不能证明 token 的写入范围。
+
+首次建站时检查根地址。报告子目录不会自动生成首页。用户要求导航页时，将其保存为站点目录中的 `index.html`；新增报告时同步维护已有导航入口，保留其他链接。导航页可使用普通 Git 提交，核对根地址和实际跳转。
+
+`publish` 会在推送后逐个比较公网文件，内容相同而未产生新提交时也会核对。等待超时后使用只读复核，不创建空提交。
+
+```bash
+python3 <skill-dir>/scripts/to_pages.py verify /path/report.html --path reports/topic --timeout 300
+```
+
+`verified` 才表示公网内容已逐个核对，`pushed` 只表示 GitHub 接收成功。Cloudflare 转换 HTML 导致字节不同时，明确说明未通过字节核对；不能称为验证成功。最终返回已验证的页面链接；若未完成，说明阻塞并附已推送的提交链接。
