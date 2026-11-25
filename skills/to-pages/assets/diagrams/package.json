@@ -1,0 +1,8 @@
+{
+  "name": "to-pages-diagrams",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "pele": "1.9.0"
+  }
+}
