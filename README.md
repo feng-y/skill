@@ -27,6 +27,7 @@ npx skills@latest add feng-y/skill --skill verify
 npx skills@latest add feng-y/skill --skill eval
 npx skills@latest add feng-y/skill --skill unknowns-first
 npx skills@latest add feng-y/skill --skill wake
+npx skills@latest add feng-y/skill --skill to-pages
 ```
 
 ## Skills
@@ -40,9 +41,11 @@ npx skills@latest add feng-y/skill --skill wake
 - `unknowns-first` — factual map-versus-territory specialist. 只关闭会改变下一步判断的 repo/runtime/data/source fact，不接管 Intent、Beacon、Architecture、engineering proof 或 agent behavioral eval judgment。
 - `wake` — Human-invoked review of the trail left by past work. Wake 指工作留下的航迹： 读真实 session transcript（Claude Code / Codex）与项目 feedback log，找出被纠正或吃亏的具体时刻，先对照当时生效的 contract 归因，再把改进候选分流到目标 repo（最强可成立修复）或本 Skill system 的 ledger；Human 逐条选中前不改任何东西。
 
+- [`to-pages`](skills/to-pages/) — 将 HTML 或静态目录发布到配置的 GitHub / Cloudflare 站点，核对公网内容；配置方法见独立的 [README](skills/to-pages/README.md)。
+
 ## Invocation model
 
-八个 Skill 均可独立调用并直接交付各自职责范围内的结果。委托调用只交出 bounded question，结果返回实际 caller；不会自动转移整体任务或 canonical artifact ownership，也不要求先经过 Northstar 或创建通用 Taskbook。
+各 Skill 均可独立调用并直接交付各自职责范围内的结果。委托调用只交出 bounded question，结果返回实际 caller；不会自动转移整体任务或 canonical artifact ownership，也不要求先经过 Northstar 或创建通用 Taskbook。
 
 主要 Human-facing / direct capabilities：
 

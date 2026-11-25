@@ -1,0 +1,11 @@
+{
+  "github": {
+    "repo": "feng-y/lemon-pages",
+    "branch": "main",
+    "token_env": "GITHUB_TOKEN"
+  },
+  "cloudflare": {
+    "base_url": "",
+    "output_dir": "public"
+  }
+}
