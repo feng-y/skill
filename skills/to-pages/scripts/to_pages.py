@@ -16,6 +16,11 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
+from navigation import MissingBaseURL, prepare_html, render_homepage
+
+
+MAX_FILE_BYTES = 25 * 1024 * 1024
+
 
 class PagesError(Exception):
     pass
@@ -103,7 +108,7 @@ def source_files(source):
             raise PagesError("Static directory must contain index.html")
     else:
         raise PagesError("Source does not exist")
-    if any(len(data) > 25 * 1024 * 1024 for data in files.values()):
+    if any(len(data) > MAX_FILE_BYTES for data in files.values()):
         raise PagesError("Cloudflare Pages assets must not exceed 25 MiB per file")
     return files
 
@@ -202,24 +207,26 @@ def stage(config, repo, env, destination, files, replace):
     return [str((target / name).relative_to(repo)) for name in changes]
 
 
-def public_url(config, destination, name=""):
+def public_url(config, path):
     if not config["base_url"]:
         return None
-    path = destination + "/" + name
     return config["base_url"] + "/" + quote(path, safe="/")
 
 
-def verify(config, destination, files, timeout):
+def verify(config, destination, files, timeout, *, homepage=None):
+    checks = {destination + "/" + name: data for name, data in files.items()}
+    if homepage is not None:
+        checks["index.html"] = homepage
     deadline = time.monotonic() + timeout
-    failures = []
-    while True:
+    failures = ["verification deadline reached"]
+    while time.monotonic() < deadline:
         failures = []
-        for name, data in files.items():
+        for name, data in checks.items():
             remaining = deadline - time.monotonic()
             if remaining <= 0:
                 failures.append("verification deadline reached")
                 break
-            url = public_url(config, destination, name)
+            url = public_url(config, "" if name == "index.html" else name)
             try:
                 request = Request(url, headers={"Cache-Control": "no-cache", "User-Agent": "to-pages-verify"})
                 with urlopen(request, timeout=min(20, remaining)) as response:
@@ -229,11 +236,11 @@ def verify(config, destination, files, timeout):
             except (URLError, TimeoutError, OSError) as exc:
                 failures.append(name + " unavailable" + (" HTTP " + str(exc.code) if isinstance(exc, HTTPError) else ""))
         if not failures:
-            return {"status": "verified", "url": public_url(config, destination), "files_verified": len(files)}
+            return {"status": "verified", "url": public_url(config, destination + "/"), "files_verified": len(checks)}
         remaining = deadline - time.monotonic()
-        if remaining <= 0:
-            raise PagesError("Public content not verified: " + "; ".join(failures[:5]))
-        time.sleep(min(5, remaining))
+        if remaining > 0:
+            time.sleep(min(5, remaining))
+    raise PagesError("Public content not verified: " + "; ".join(failures[:5]))
 
 
 def emit(value):
@@ -271,14 +278,35 @@ def main():
         if args.timeout < 1 or args.timeout > 3600:
             raise PagesError("--timeout must be between 1 and 3600 seconds")
     files = source_files(args.source.expanduser())
+    for name, data in files.items():
+        if Path(name).suffix.lower() in (".html", ".htm"):
+            try:
+                files[name] = prepare_html(data, config["base_url"])
+            except UnicodeDecodeError as exc:
+                raise PagesError(name + " must use UTF-8 encoding") from exc
+            except MissingBaseURL as exc:
+                raise PagesError(f"{name} {exc}") from exc
+            if len(files[name]) > MAX_FILE_BYTES:
+                raise PagesError(name + " exceeds 25 MiB after preparing the HTML")
     if args.command == "verify":
         emit(verify(config, destination, files, args.timeout))
         return
     with checkout(config) as (repo, env):
         changes = stage(config, repo, env, destination, files, args.replace)
+        site_root = repo / config["output_dir"]
+        homepage = render_homepage(site_root)
+        if homepage is not None:
+            if len(homepage) > MAX_FILE_BYTES:
+                raise PagesError("Generated index.html exceeds 25 MiB")
+            index = site_root / "index.html"
+            if not index.exists() or index.read_bytes() != homepage:
+                index.write_bytes(homepage)
+                name = str(index.relative_to(repo))
+                git(config, repo, env, "add", "--", name)
+                changes.append(name)
         if args.command == "plan":
             emit({"status": "planned", "repo": config["repo"], "branch": config["branch"],
-                  "changed_files": changes, "url": public_url(config, destination)})
+                  "changed_files": changes, "url": public_url(config, destination + "/")})
             return
         if changes:
             git(config, repo, env, "-c", "user.name=to-pages", "-c", "user.email=to-pages@users.noreply.github.com",
@@ -289,9 +317,9 @@ def main():
             sha = git(config, repo, env, "rev-parse", "HEAD")
         emit({"status": "pushed" if changes else "unchanged", "commit": sha,
               "commit_url": "https://github.com/" + config["repo"] + "/commit/" + sha,
-              "url": public_url(config, destination)})
+              "url": public_url(config, destination + "/")})
     if args.command == "publish":
-        emit(verify(config, destination, files, args.timeout))
+        emit(verify(config, destination, files, args.timeout, homepage=homepage))
 
 
 if __name__ == "__main__":

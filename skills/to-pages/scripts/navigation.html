@@ -1,0 +1,120 @@
+<!doctype html>
+$marker
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>报告导航</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --canvas: #f5f7f5;
+      --surface: #fff;
+      --text: #1b312e;
+      --muted: #536760;
+      --border: #ced8d3;
+      --accent: #13604e;
+      --tint: #e7f4ee;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --canvas: #111916;
+        --surface: #192720;
+        --text: #edf6f0;
+        --muted: #a5bab0;
+        --border: #384b41;
+        --accent: #91ddc0;
+        --tint: #234135;
+      }
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0; background: var(--canvas); color: var(--text);
+      font: 1rem/1.55 system-ui, -apple-system, sans-serif;
+    }
+    .frame { width: min(100% - 2.5rem, 64rem); margin-inline: auto; }
+    header { padding-block: clamp(1.75rem, 5vw, 3.5rem) 1.5rem; }
+    .toolbar {
+      display: flex; align-items: end; justify-content: space-between;
+      gap: 1.25rem; flex-wrap: wrap;
+      border-bottom: 1px solid var(--border); padding-bottom: 1.25rem;
+    }
+    h1, h2, p { margin: 0; }
+    h1 { font-size: clamp(1.85rem, 4vw, 2.75rem); line-height: 1.15; }
+    #count { color: var(--muted); margin-top: .45rem; font-size: .875rem; }
+    input {
+      min-height: 44px; width: min(100%, 20rem); padding: .55rem .85rem;
+      border: 1px solid var(--border); border-radius: .5rem;
+      background: var(--surface); color: var(--text); font: inherit;
+    }
+    input::placeholder { color: var(--muted); opacity: 1; }
+    ul {
+      list-style: none; padding: 0; margin: 0 0 3rem;
+      display: grid; gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    }
+    li a {
+      display: flex; flex-direction: column; height: 100%; gap: .65rem;
+      border: 1px solid var(--border); border-radius: .75rem; padding: 1.15rem;
+      background: var(--surface); color: inherit; text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+    li a:hover { border-color: var(--accent); }
+    li a:hover h2 { text-decoration: underline; text-underline-offset: .18em; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    h2 { font-size: 1.15rem; line-height: 1.35; }
+    .description { color: var(--muted); font-size: .9rem; }
+    .path {
+      align-self: flex-start; margin-top: auto;
+      border-radius: .3rem; padding: .2rem .42rem; background: var(--tint);
+      color: var(--accent); font: .78rem/1.4 ui-monospace, monospace;
+    }
+    #empty { padding: 1.5rem 0; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header class="frame">
+    <div class="toolbar">
+      <div>
+        <h1>报告导航</h1>
+        <p id="count" role="status">$count 份报告</p>
+      </div>
+      <input id="search" type="search" aria-label="搜索报告" placeholder="搜索标题、描述或路径" hidden>
+    </div>
+  </header>
+  <main class="frame">
+    <ul id="reports">
+      $cards
+    </ul>
+    <p id="empty" hidden></p>
+  </main>
+  <script>
+    const search = document.getElementById('search');
+    const count = document.getElementById('count');
+    const empty = document.getElementById('empty');
+    const cards = Array.from(document.querySelectorAll('#reports li'), card => ({
+      card,
+      text: card.innerText.toLocaleLowerCase(),
+    }));
+
+    function filterReports() {
+      const query = search.value.trim().toLocaleLowerCase();
+      let visible = 0;
+      for (const { card, text } of cards) {
+        const matches = text.includes(query);
+        card.hidden = !matches;
+        if (matches) visible++;
+      }
+      count.textContent = query ? '显示 ' + visible + ' / ' + cards.length + ' 份报告'
+                                : cards.length + ' 份报告';
+      empty.textContent = query ? '没有匹配的报告。' : '暂无报告。';
+      empty.hidden = visible > 0;
+    }
+
+    search.hidden = cards.length === 0;
+    search.addEventListener('input', filterReports);
+    filterReports();
+  </script>
+</body>
+</html>

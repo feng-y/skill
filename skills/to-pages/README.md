@@ -54,7 +54,7 @@ chmod 600 "$HOME/.config/to-pages/config.json"
 | `github.token_env` | 凭证环境变量名，默认 `GITHUB_TOKEN`。 |
 | `github.token_file` | 可替代 `token_env`。纯文本凭证文件，可用绝对路径；相对路径基于配置文件目录。 |
 | `github.token` | 可替代环境变量或文件，直接放在配置中。配置文件必须归当前用户所有且权限为 `600`。 |
-| `cloudflare.base_url` | 实际生产 HTTPS 地址。支持 `pages.dev`、`workers.dev` 或自定义域名。 |
+| `cloudflare.base_url` | 实际生产 HTTPS 地址。站点挂载在子路径时包含该路径。支持 `pages.dev`、`workers.dev` 或自定义域名。 |
 | `cloudflare.output_dir` | 仓库内的静态目录，默认 `public`；仓库根目录用 `.`。 |
 
 `token_env`、`token_file` 和 `token` 只能配置一个。环境变量方式不会把 Token 复制到配置文件或仓库。凭证文件也必须归当前用户所有且权限为 `600`。
@@ -121,7 +121,7 @@ npx wrangler deploy --assets ./public --name lemon-pages --compatibility-date 20
 
 单个 HTML 会保存为目标目录的 `index.html`。带图片、CSS 或脚本时使用静态目录，并在其中提供 `index.html`。脚本会递归上传该目录，不会自动收集 HTML 引用的外部本地资源。
 
-确认 HTML 使用 UTF-8，并在前 1024 字节声明 `<meta charset="utf-8">`。脚本逐字节复制文件，不会自动修改编码或生成导航页。
+HTML 源文件使用 UTF-8。脚本在发布副本中补齐编码声明和「返回导航」链接。回链通常指向当前域名的站点首页，包括预览域名。若报告含有效的 `<base href>` 且脚本被禁用或被 CSP 阻止，回链使用 `cloudflare.base_url` 指定的生产首页。源文件、非 HTML 资源以及报告原有的资源基准地址和 CSP 均保留原样。
 
 ```bash
 python3 <skill-dir>/scripts/to_pages.py doctor
@@ -129,7 +129,7 @@ python3 <skill-dir>/scripts/to_pages.py plan /path/report.html --path reports/to
 python3 <skill-dir>/scripts/to_pages.py publish /path/report.html --path reports/topic
 ```
 
-发布后的相对 URL 为 `/reports/topic/`，对应仓库中的 `public/reports/topic/index.html`。`--path` 相对于站点目录，不要重复包含 `public`。
+例如 `--path reports/topic` 的页面位于站点地址下的 `reports/topic/`，对应仓库中的 `public/reports/topic/index.html`。`--path` 相对于站点目录，不要重复包含 `public`。
 
 授权更新已有报告时使用 `--replace`：
 
@@ -137,23 +137,27 @@ python3 <skill-dir>/scripts/to_pages.py publish /path/report.html --path reports
 python3 <skill-dir>/scripts/to_pages.py publish /path/static-dir --path reports/topic --replace
 ```
 
-脚本保留其他报告，不删除目标目录的旧资源。相同内容不会创建新提交。并发 push 被拒时，重新检查远端变更，再预览和推送，不 force push。
+脚本保留其他报告和目标目录里的旧资源。相同内容不会创建新提交。并发 push 被拒时，重新检查远端变更，再预览和推送，不 force push。
 
-仅推送到 GitHub：
+仅推送到 GitHub 时使用 `push`。报告含有效的 `<base href>` 时，`push` 也需要配置 `cloudflare.base_url`。
 
 ```bash
 python3 <skill-dir>/scripts/to_pages.py push /path/report.html --path reports/topic
 ```
 
-推送成功不等于 Cloudflare 已部署。等待超时后只读核对：
+等待 Cloudflare 部署超时后，只读核对所选报告及其资源。
 
 ```bash
 python3 <skill-dir>/scripts/to_pages.py verify /path/report.html --path reports/topic --timeout 300
 ```
 
-`publish` 和 `verify` 需要配置站点地址。`verify` 会逐个比较公网文件，失败时返回非零退出码。`push` 不要求站点地址，也不做公网核对。
+`publish` 和 `verify` 需要配置站点地址。两条命令逐字节核对准备后的报告及资源，`publish` 还会核对受脚本管理的导航首页。核对失败时返回非零退出码。
 
-脚本拒绝把 `.` 用作报告路径。站点根目录的导航页应通过普通 Git 提交为 `public/index.html`，保留已有内容。新增报告时同步添加导航入口，并验证根地址和跳转。
+## 导航首页
+
+`plan`、`push` 和 `publish` 根据站点目录下的报告入口 `index.html` 生成导航。首页显示标题、描述和相对路径，支持搜索。
+
+站点根目录的 `index.html` 缺失时，脚本创建带 `<!-- to-pages:managed-index -->` 标记的首页。后续发布会更新带标记的首页。无标记的自定义首页保留原样，报告回链仍指向站点根地址。
 
 ## 验证与排错
 
@@ -169,7 +173,7 @@ python3 <skill-dir>/scripts/test_to_pages.py -v
 | GitHub 返回 403 | Token 是否包含目标仓库，并有 `Contents: Read and write`；账号角色不能代替 Token 权限。 |
 | 无法检测静态目录 | Workers 部署命令或 Wrangler 配置是否指定了 `public`。 |
 | 缺少兼容日期 | Workers 部署命令或 Wrangler 配置是否设置兼容日期。 |
-| 根地址 404、报告地址正常 | 站点目录缺少 `index.html`，需要首页或导航页。 |
+| 根地址 404、报告地址正常 | 检查 Cloudflare 静态目录是否包含本次发布提交里的首页 `index.html`。 |
 | 中文乱码 | HTML 是否声明 UTF-8，浏览器实际编码是否正确。 |
 | 已推送但未 `verified` | 查看 Cloudflare 构建结果，并检查公网是否仍为旧版本，或是否转换了 HTML。 |
 
