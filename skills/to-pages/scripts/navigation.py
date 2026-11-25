@@ -14,6 +14,7 @@ BACK_START = "<!-- to-pages:back-link:start -->"
 BACK_END = "<!-- to-pages:back-link:end -->"
 HOME_MARKER = "<!-- to-pages:managed-index -->"
 HOME_PREFIX = ("<!doctype html>\n" + HOME_MARKER + "\n").encode("utf-8")
+HOME_PREFIX_CRLF = HOME_PREFIX.replace(b"\n", b"\r\n")
 CHARSET = '<meta charset="utf-8">'
 BACK_LINK = """
 <style>
@@ -34,7 +35,14 @@ BACK_LINK = """
 }
 @media print { #to-pages-back-link { display: none !important; } }
 </style>
-<a id="to-pages-back-link" href="$href"><span aria-hidden="true">←</span>返回导航</a>
+<a id="to-pages-back-link" href="$href" data-site-path="$href" target="_self"><span aria-hidden="true">←</span>返回导航</a>
+<script>
+(() => {
+  const link = document.getElementById("to-pages-back-link");
+  const sitePath = link.dataset.sitePath;
+  link.href = new URL(sitePath, window.location.href).href;
+})();
+</script>
 """
 
 
@@ -71,7 +79,15 @@ class Document(HTMLParser):
         self.saw_heading = False
         self.reading_heading = False
         self.feed(text)
-        self.close()
+        self.link_fallback = len(text)
+        if self.inert:
+            self.link_fallback = self.inert[0][1]
+        elif self.cdata_elem:
+            self.link_fallback = self.raw_start
+        if not self.cdata_elem and self.rawdata.startswith("<!--"):
+            self.link_fallback = min(self.link_fallback, len(text) - len(self.rawdata))
+        else:
+            self.close()
 
     def source_offset(self):
         line, column = self.getpos()
@@ -86,7 +102,7 @@ class Document(HTMLParser):
         if tag in self.CDATA_CONTENT_ELEMENTS:
             self.raw_start = start
         if tag in ("template", "svg", "math"):
-            self.inert.append(tag)
+            self.inert.append((tag, start))
         if self.inert:
             return
         if tag in ("html", "head"):
@@ -106,7 +122,7 @@ class Document(HTMLParser):
 
     def handle_endtag(self, tag):
         if self.inert:
-            if tag == self.inert[-1]:
+            if tag == self.inert[-1][0]:
                 self.inert.pop()
             return
         if tag in ("body", "html"):
@@ -139,7 +155,11 @@ def prepare_html(data: bytes, base_url: str) -> bytes:
     text = data.decode("utf-8")
     document = Document(text)
     edits = []
-    _, charset_end, charset = next(iter(document.encodings), (0, 0, None))
+    encodings = [
+        (start, end, charset) for start, end, charset in document.encodings
+        if not any(link_start <= start < link_end for link_start, link_end in document.back_links)
+    ]
+    _, charset_end, charset = next(iter(encodings), (0, 0, None))
     if charset != "utf-8" or len(text[:charset_end].encode("utf-8")) > 1024:
         bom_end = int(text.startswith("\ufeff"))
         candidates = (
@@ -151,7 +171,7 @@ def prepare_html(data: bytes, base_url: str) -> bytes:
                            and len(text[:offset].encode("utf-8")) + len(CHARSET) <= 1024),
                           candidates[-1])
         edits.append((charset_at, charset_at, CHARSET))
-        edits.extend((start, end, "") for start, end, _ in document.encodings)
+        edits.extend((start, end, "") for start, end, _ in encodings)
         if not bom_end and len(text[:charset_at].encode("utf-8")) + len(CHARSET) > 1024:
             # A long prologue can put the declaration past the browser's prescan.
             edits.append((0, 0, "\ufeff"))
@@ -164,8 +184,7 @@ def prepare_html(data: bytes, base_url: str) -> bytes:
         edits.append((start, end, link))
         edits.extend((start, end, "") for start, end in document.back_links[1:])
     else:
-        fallback = document.raw_start if document.cdata_elem else len(text)
-        link_at = document.tag_closes.get("body", document.tag_closes.get("html", fallback))
+        link_at = document.tag_closes.get("body", document.tag_closes.get("html", document.link_fallback))
         edits.append((link_at, link_at, link))
 
     chunks = []
@@ -184,7 +203,7 @@ def render_homepage(site_root: Path, *, adopt: bool = False) -> bytes | None:
         return None
     if index.is_file() and not adopt:
         with index.open("rb") as existing:
-            if existing.read(len(HOME_PREFIX)) != HOME_PREFIX:
+            if not existing.read(len(HOME_PREFIX_CRLF)).startswith((HOME_PREFIX, HOME_PREFIX_CRLF)):
                 return None
 
     pages = []

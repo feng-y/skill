@@ -292,6 +292,52 @@ class NavigationTests(unittest.TestCase):
         self.assertNotIn(b"latin1", updated)
         self.assertEqual(prepare_html(updated, ""), updated)
 
+    def test_back_link_precedes_unclosed_comment_or_template(self):
+        doctype = b"<!doctype html>"
+        body = b"<title>Report</title><h1>Visible</h1>"
+        for extra, tail in (
+            (b"", b"<!-- build metadata"),
+            (b"", b"<template><div>Saved content"),
+            (b'<script>const metadata = "<!--";</script>', b"<!-- build metadata </body>"),
+        ):
+            with self.subTest(tail=tail):
+                prepared = prepare_html(doctype + body + extra + tail, "")
+                before, _, after = prepared.partition(b"<!-- to-pages:back-link:start -->")
+                self.assertEqual(before, doctype + b'<meta charset="utf-8">' + body + extra)
+                self.assertTrue(after.endswith(b"<!-- to-pages:back-link:end -->" + tail))
+                self.assertEqual(prepare_html(prepared, ""), prepared)
+
+    def test_replacing_a_back_link_also_replaces_encoding_metadata_inside_it(self):
+        prefix = b"<!doctype html><head>"
+        suffix = b"</head><body><h1>Report</h1></body>"
+        start = b"<!-- to-pages:back-link:start -->"
+        end = b"<!-- to-pages:back-link:end -->"
+        for encoding in (b"latin1", b"utf-8"):
+            with self.subTest(encoding=encoding):
+                source = prefix + start + b'<meta charset="' + encoding + b'">Stale link' + end + suffix
+                prepared = prepare_html(source, "")
+                self.assertTrue(prepared.startswith(prefix + b'<meta charset="utf-8">' + start))
+                self.assertTrue(prepared.endswith(end + suffix))
+                self.assertEqual(prepared.count(end), 1)
+                self.assertNotIn(b"Stale link", prepared)
+                self.assertEqual(prepare_html(prepared, ""), prepared)
+
+    def test_catalog_refreshes_a_homepage_with_crlf_ownership_marker(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "index.html").write_bytes(
+                b"<!doctype html>\r\n<!-- to-pages:managed-index -->\r\n<title>Old catalog</title>"
+            )
+            report = root / "new-report"
+            report.mkdir()
+            (report / "index.html").write_bytes(b"<title>New report</title>")
+
+            homepage = render_homepage(root)
+
+            self.assertIsNotNone(homepage)
+            self.assertIn(b'<a href="./new-report/"><h2>New report</h2>', homepage)
+            self.assertNotIn(b"Old catalog", homepage)
+
     def test_catalog_ignores_hidden_and_linked_entries_and_can_adopt_a_custom_home(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "public"
