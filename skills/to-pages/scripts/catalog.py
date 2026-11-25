@@ -1,8 +1,7 @@
-"""Validate and update the Git-tracked report catalog."""
-
 from datetime import datetime, timezone
 from hashlib import sha256
 import json
+import os
 from pathlib import Path
 import re
 
@@ -47,17 +46,26 @@ def parse_timestamp(value):
     raise PagesError("Catalog dates must be ISO UTC timestamps or null")
 
 
+def exact_entry(path: Path) -> Path:
+    if path.exists() or path.is_symlink():
+        with os.scandir(path.parent) as entries:
+            if not any(entry.name == path.name for entry in entries):
+                raise PagesError(f"Path spelling conflicts with an existing entry: {path.name!r}")
+    return path
+
+
 def directory_path(repo: Path, path: str) -> Path:
     current = repo
     for part in Path(path).parts:
-        current = current / part
+        current = exact_entry(current / part)
         if current.is_symlink() or (current.exists() and not current.is_dir()):
             raise PagesError("Destination contains a symlink or a file where a directory is required")
     return current
 
 
 def catalog_file(repo: Path) -> Path:
-    path = directory_path(repo, CATALOG_PATH.parent.as_posix()) / CATALOG_PATH.name
+    parent = directory_path(repo, CATALOG_PATH.parent.as_posix())
+    path = exact_entry(parent / CATALOG_PATH.name)
     if path.is_symlink() or (path.exists() and not path.is_file()):
         raise PagesError("Catalog must be a regular file without symlinks")
     return path
@@ -110,7 +118,7 @@ def validate_catalog(catalog: dict, site_root: Path):
                 raise PagesError("Duplicate catalog path or topic version label")
             paths.add(path)
             labels.add(version["label"])
-            entry = directory_path(site_root, path) / "index.html"
+            entry = exact_entry(directory_path(site_root, path) / "index.html")
             if entry.is_symlink() or not entry.is_file():
                 raise PagesError("Catalog version requires an existing index.html without symlinks")
 

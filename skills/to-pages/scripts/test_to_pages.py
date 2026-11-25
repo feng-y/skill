@@ -115,6 +115,10 @@ class PublishTests(unittest.TestCase):
                 "commit", "-m", "Site update")
         run_git("-C", checkout, "push", "origin", "main")
 
+    def require_case_insensitive_checkout(self):
+        if not self.source.with_name(self.source.name.upper()).exists():
+            self.skipTest("Temporary checkout filesystem is case-sensitive")
+
     def test_plan_is_read_only_and_publish_verifies_prepared_files_and_homepage(self):
         static = self.root / "static"
         static.mkdir()
@@ -267,6 +271,81 @@ class PublishTests(unittest.TestCase):
                 self.command("push", *options, destination=destination)
         self.assertEqual(run_git("--git-dir", self.remote, "rev-parse", "main"), initial)
 
+    def test_report_path_alias_preserves_published_tree_and_catalog(self):
+        self.require_case_insensitive_checkout()
+        original_path = "reports/Case"
+        result = self.command("publish", "--topic", "original", "--timeout", "3", destination=original_path)
+        self.assertEqual(result[-1]["status"], "verified")
+        tree = run_git("--git-dir", self.remote, "ls-tree", "-r", "main")
+        catalog = self.published(CATALOG_PATH)
+        report_path = f"public/{original_path}/index.html"
+        report = self.published(report_path)
+        edited = self.root / "edited.html"
+        edited.write_text("<title>Edited report</title>")
+
+        for destination, source, replace in (
+            ("reports/case", self.source, False),
+            ("reports/case", self.source, True),
+            ("reports/case", edited, False),
+            ("reports/case", edited, True),
+            ("Reports/Case", edited, True),
+        ):
+            options = ("--replace",) if replace else ()
+            with self.subTest(destination=destination, source=source.name, replace=replace):
+                with self.assertRaisesRegex(pages.PagesError, "Path spelling conflicts"):
+                    self.command("publish", "--topic", "other", "--timeout", "1", *options,
+                                 destination=destination, source=source)
+
+        self.assertEqual(run_git("--git-dir", self.remote, "rev-parse", "main"), result[0]["commit"])
+        self.assertEqual(run_git("--git-dir", self.remote, "ls-tree", "-r", "main"), tree)
+        self.assertEqual(self.published(CATALOG_PATH), catalog)
+        self.assertEqual(self.published(report_path), report)
+
+    def test_asset_filename_alias_does_not_replace_published_file(self):
+        self.require_case_insensitive_checkout()
+        static = self.root / "static"
+        static.mkdir()
+        (static / "index.html").write_bytes(self.source.read_bytes())
+        asset = static / "Image.png"
+        asset.write_bytes(b"original image")
+        initial = self.command("push", source=static)[0]["commit"]
+        asset.rename(static / "image.png").write_bytes(b"edited image")
+
+        with self.assertRaisesRegex(pages.PagesError, "Path spelling conflicts"):
+            self.command("push", "--replace", source=static)
+        self.assertEqual(run_git("--git-dir", self.remote, "rev-parse", "main"), initial)
+        self.assertEqual(self.published("public/reports/example/Image.png"), b"original image")
+
+    def test_source_asset_aliases_are_rejected_before_git_staging(self):
+        self.require_case_insensitive_checkout()
+        config = pages.load_config(self.config)
+        with pages.checkout(config) as (repo, env):
+            files = {"index.html": b"report", "Asset.png": b"first", "asset.png": b"second"}
+            with self.assertRaisesRegex(pages.PagesError, "Path spelling conflicts"):
+                pages.stage(config, repo, env, "reports/example", files, False)
+            self.assertEqual(run_git("-C", repo, "ls-files"), "")
+
+    def test_catalog_and_homepage_reject_aliased_entry_names(self):
+        self.require_case_insensitive_checkout()
+        self.command("push")
+        repo = self.root / "site"
+        run_git("clone", "--branch", "main", self.remote, repo)
+        site = repo / "public"
+
+        for path in (CATALOG_PATH.parent, CATALOG_PATH, Path("public/reports/example/index.html"),
+                     Path("public/index.html")):
+            with self.subTest(path=path):
+                entry = repo / path
+                alias = entry.rename(entry.with_name(entry.name.upper()))
+                try:
+                    with self.assertRaisesRegex(pages.PagesError, "Path spelling conflicts"):
+                        if path == Path("public/index.html"):
+                            render_homepage(site)
+                        else:
+                            load_catalog(repo, "public")
+                finally:
+                    alias.rename(entry)
+
     def test_replace_cannot_write_another_version_inside_the_report_directory(self):
         self.command("push", "--topic", "rook", destination="reports/rook")
         second_path = "reports/rook/detail"
@@ -307,7 +386,6 @@ class PublishTests(unittest.TestCase):
         self.assertEqual({topic["versions"][0]["href"] for topic in legacy},
                          {"./reports/legacy/", "./reports/legacy-v2/"})
 
-        # A newly registered topic may use an id that matches an uncataloged directory.
         self.command("push", "--topic", "reports/legacy", destination="reports/new")
         archive = archive_data(self.published("public/index.html"))
         self.assertEqual(len({topic["id"] for topic in archive}), 3)

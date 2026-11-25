@@ -17,7 +17,7 @@ from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
 from catalog import (
-    CATALOG_PATH, PagesError, directory_path, load_catalog, relative_path, update_catalog, write_catalog,
+    CATALOG_PATH, PagesError, directory_path, exact_entry, load_catalog, relative_path, update_catalog, write_catalog,
 )
 from navigation import MissingBaseURL, prepare_html, render_homepage, report_details
 
@@ -164,6 +164,7 @@ def checkout(config):
 
 def stage(config, repo, env, destination, files, replace, *, catalog=None):
     target = directory_path(repo, (Path(config["output_dir"]) / destination).as_posix())
+    protected = not replace and target.exists() and any(target.iterdir())
     prefix = destination + "/"
     nested_reports = [
         version["path"][len(prefix):] + "/"
@@ -174,7 +175,8 @@ def stage(config, repo, env, destination, files, replace, *, catalog=None):
     changes = []
     for name, data in files.items():
         resource = Path(name)
-        out = directory_path(target, resource.parent.as_posix()) / resource.name
+        parent = directory_path(target, resource.parent.as_posix())
+        out = exact_entry(parent / resource.name)
         if out.is_symlink():
             raise PagesError("Destination contains a symlink")
         if out.exists():
@@ -184,15 +186,14 @@ def stage(config, repo, env, destination, files, replace, *, catalog=None):
                 continue
         if any(name.startswith(report) for report in nested_reports):
             raise PagesError("Report resources overlap another catalog version")
-        changes.append(name)
-    if changes and target.exists() and any(target.iterdir()) and not replace:
-        raise PagesError("Report path already exists; choose another --path or authorize its update with --replace")
+        if protected:
+            raise PagesError("Report path already exists; choose another --path or authorize its update with --replace")
+        parent.mkdir(parents=True, exist_ok=True)
+        out.write_bytes(data)
+        changes.append(out.relative_to(repo).as_posix())
     for name in changes:
-        out = target / name
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_bytes(files[name])
-        git(config, repo, env, "add", "--", str(out.relative_to(repo)))
-    return [str((target / name).relative_to(repo)) for name in changes]
+        git(config, repo, env, "add", "--", name)
+    return changes
 
 
 def public_url(config, path):
