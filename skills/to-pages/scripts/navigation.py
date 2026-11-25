@@ -251,10 +251,10 @@ def archive_topics(site_root: Path, catalog: dict | None) -> list[dict]:
         for version in sorted(newest_registrations_first,
                               key=lambda item: date_key(item["published_at"]), reverse=True):
             path = version["path"]
-            stamp = version["updated_at"] or version["published_at"]
             versions.append({"path": path, "href": "./" + quote(path, safe="/") + "/",
-                             "label": version["label"], "date": stamp, "summary": version["summary"]})
-        updated = max((version["date"] for version in versions), key=date_key)
+                             "label": version["label"], "date": version["published_at"], "summary": version["summary"]})
+        updated = max((version["updated_at"] or version["published_at"]
+                       for version in topic["versions"]), key=date_key)
         archive.append({**topic, "updated": updated, "versions": versions})
     archive.sort(key=lambda topic: (topic["id"], topic["versions"][0]["path"]))
     archive.sort(key=lambda topic: date_key(topic["updated"]), reverse=True)

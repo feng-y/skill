@@ -248,6 +248,8 @@ class PublishTests(unittest.TestCase):
         archive = archive_data(self.published("public/index.html"))
         self.assertEqual([v["label"] for v in archive[0]["versions"]], ["v2", "v1"])
         self.assertEqual(archive[0]["updated"], edited["updated_at"])
+        self.assertEqual([v["date"] for v in archive[0]["versions"]],
+                         [second["published_at"], first["published_at"]])
 
     def test_metadata_only_edit_keeps_report_time_and_content_digest(self):
         self.command("push")
