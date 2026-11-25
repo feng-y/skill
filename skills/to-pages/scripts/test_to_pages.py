@@ -295,13 +295,19 @@ class NavigationTests(unittest.TestCase):
         self.assertEqual(repeated, prepared)
         self.assertEqual(len(links), 1)
         self.assertEqual(links[0]["href"], "https://reports.example/sub%20folder&copy;/")
-        self.assertEqual(links[0]["data-site-path"], "/sub%20folder%26copy%3B/")
+        self.assertEqual(links[0]["data-site-path"], "/sub%20folder&copy;/")
         self.assertEqual(links[0]["target"], "_self")
         self.assertEqual([attrs for tag, attrs in tags if tag == "base"], [
             {"href": "https://cdn.example/assets/", "target": "_blank"},
         ])
         self.assertEqual(policies, ["script-src 'none'"])
         self.assertIn(("img", {"src": "report.png"}), tags)
+
+    def test_site_path_preserves_reserved_url_characters(self):
+        prepared = prepare_html(b"<title>Report</title>", "https://reports.example/collection;v1/a@b+c/")
+        links = [attrs for tag, attrs in HTMLTags(prepared).tags if tag == "a"]
+        self.assertEqual(links[0]["href"], "/collection;v1/a@b+c/")
+        self.assertEqual(links[0]["data-site-path"], "/collection;v1/a@b+c/")
 
     def test_static_fallback_stays_on_the_preview_without_an_active_base_href(self):
         for source in (b"<title>Report</title>", b'<base target="_blank">',

@@ -184,7 +184,7 @@ def prepare_html(data: bytes, base_url: str) -> bytes:
             edits.append((0, 0, "\ufeff"))
 
     site_path = "/" + urlsplit(base_url).path.strip("/")
-    site_path = quote(site_path.rstrip("/") + "/", safe="/%")
+    site_path = quote(site_path.rstrip("/") + "/", safe="/%!$&'()*+,;=:@")
     href = site_path
     if document.has_base_href:
         if not base_url:
