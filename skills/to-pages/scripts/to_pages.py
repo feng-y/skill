@@ -16,7 +16,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
-from navigation import prepare_html, render_homepage
+from navigation import MissingBaseURL, prepare_html, render_homepage
 
 
 MAX_FILE_BYTES = 25 * 1024 * 1024
@@ -284,6 +284,8 @@ def main():
                 files[name] = prepare_html(data, config["base_url"])
             except UnicodeDecodeError as exc:
                 raise PagesError(name + " must use UTF-8 encoding") from exc
+            except MissingBaseURL as exc:
+                raise PagesError(f"{name} {exc}") from exc
             if len(files[name]) > MAX_FILE_BYTES:
                 raise PagesError(name + " exceeds 25 MiB after preparing the HTML")
     if args.command == "verify":

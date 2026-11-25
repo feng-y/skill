@@ -13,7 +13,7 @@ description: 将本地 HTML 或静态目录推送到配置的 GitHub 仓库，�
 
 - 确认源文件和目标路径。新报告使用 `reports/<slug>`；已有报告沿用原路径。未获更新授权时选择新路径。
 - 单个 HTML 的外部本地资源不会自动收集。包含资源时准备只含发布内容的目录，保留相对路径，并包含 `index.html`。
-- HTML 源文件使用 UTF-8。脚本为发布副本补齐编码声明和「返回导航」链接，保留源文件。
+- HTML 源文件使用 UTF-8。脚本为发布副本补齐编码声明和「返回导航」链接，保留源文件、资源基准地址和 CSP。回链通常指向当前域名的站点首页。若报告含有效的 `<base href>` 且脚本被禁用或被 CSP 阻止，回链使用配置的生产首页。
 - 检查 HTML、注释、JSON 和资源是否允许公开，排除凭据及未授权的内部数据。脚本的文件名检查不能替代内容检查。
 - 源文件仍在修改时，固定本次发布快照，以该快照核对，说明发布版本，不循环追赶其他进程的修改。
 
@@ -29,7 +29,7 @@ python3 <skill-dir>/scripts/to_pages.py publish /path/report.html --path reports
 
 用户授权更新已有报告时加 `--replace`。脚本保留其他报告及旧资源。它根据站点里的 `index.html` 报告入口生成导航首页。站点已有自定义首页时保留原样。权限、保护分支或并发 push 错误需检查后处理，不 force push，不改用其他站点或其他身份。
 
-用户只要求 GitHub 推送时使用 `push`。Cloudflare 地址未配置时也可运行；若已连接 Cloudflare，推送仍会触发自动部署。
+用户只要求 GitHub 推送时使用 `push`。报告含有效的 `<base href>` 时，`push` 也需要配置 `cloudflare.base_url`。若已连接 Cloudflare，推送仍会触发自动部署。
 
 ```bash
 python3 <skill-dir>/scripts/to_pages.py push /path/report.html --path reports/topic

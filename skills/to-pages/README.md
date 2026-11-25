@@ -121,7 +121,7 @@ npx wrangler deploy --assets ./public --name lemon-pages --compatibility-date 20
 
 单个 HTML 会保存为目标目录的 `index.html`。带图片、CSS 或脚本时使用静态目录，并在其中提供 `index.html`。脚本会递归上传该目录，不会自动收集 HTML 引用的外部本地资源。
 
-HTML 源文件使用 UTF-8。脚本在发布副本中补齐编码声明和「返回导航」链接。回链指向当前域名下的站点根路径，可在预览域名中使用。源文件和非 HTML 资源保留原样。
+HTML 源文件使用 UTF-8。脚本在发布副本中补齐编码声明和「返回导航」链接。回链通常指向当前域名的站点首页，包括预览域名。若报告含有效的 `<base href>` 且脚本被禁用或被 CSP 阻止，回链使用 `cloudflare.base_url` 指定的生产首页。源文件、非 HTML 资源以及报告原有的资源基准地址和 CSP 均保留原样。
 
 ```bash
 python3 <skill-dir>/scripts/to_pages.py doctor
@@ -139,7 +139,7 @@ python3 <skill-dir>/scripts/to_pages.py publish /path/static-dir --path reports/
 
 脚本保留其他报告和目标目录里的旧资源。相同内容不会创建新提交。并发 push 被拒时，重新检查远端变更，再预览和推送，不 force push。
 
-仅推送到 GitHub：
+仅推送到 GitHub 时使用 `push`。报告含有效的 `<base href>` 时，`push` 也需要配置 `cloudflare.base_url`。
 
 ```bash
 python3 <skill-dir>/scripts/to_pages.py push /path/report.html --path reports/topic

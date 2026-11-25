@@ -2,6 +2,7 @@
 """Exercise publication with a real local Git remote and anonymous HTTP server."""
 
 from contextlib import redirect_stdout
+from html.parser import HTMLParser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import io
 import json
@@ -21,6 +22,17 @@ from navigation import prepare_html, render_homepage
 
 def run_git(*args):
     return subprocess.run(["git", *map(str, args)], check=True, capture_output=True, text=True).stdout.strip()
+
+
+class HTMLTags(HTMLParser):
+    def __init__(self, data):
+        super().__init__()
+        self.tags = []
+        self.feed(data.decode("utf-8"))
+        self.close()
+
+    def handle_starttag(self, tag, attrs):
+        self.tags.append((tag, dict(attrs)))
 
 
 class PublishTests(unittest.TestCase):
@@ -212,6 +224,16 @@ class PublishTests(unittest.TestCase):
         self.assertIn(b'href="./reports/example/"', self.published("public/index.html"))
         self.assertEqual(self.requested_paths, [])
 
+    def test_push_requires_a_site_url_when_the_report_has_a_base_href(self):
+        config = json.loads(self.config.read_text())
+        config["cloudflare"]["base_url"] = ""
+        self.config.write_text(json.dumps(config))
+        self.source.write_text('<base href="https://cdn.example/assets/">')
+
+        with self.assertRaisesRegex(pages.PagesError, r"index\.html.*cloudflare\.base_url"):
+            self.command("push")
+        self.assertFalse((self.remote / "refs/heads/main").exists())
+
     def test_path_traversal_hidden_files_and_symlinks_are_rejected(self):
         for path in ("../outside", "/absolute", "reports/../outside", ".git/hooks", "reports//topic"):
             with self.assertRaises(pages.PagesError):
@@ -256,6 +278,42 @@ class PublishTests(unittest.TestCase):
 
 
 class NavigationTests(unittest.TestCase):
+    def test_report_with_base_and_csp_has_an_absolute_static_fallback(self):
+        source = (
+            b'<!doctype html><head><meta http-equiv="Content-Security-Policy" content="script-src \'none\'">'
+            b'<base href="https://cdn.example/assets/" target="_blank"></head>'
+            b'<body><img src="report.png"></body>'
+        )
+        base_url = "https://reports.example/sub%20folder&copy;/"
+        prepared = prepare_html(source, base_url)
+        repeated = prepare_html(prepared, base_url)
+        tags = HTMLTags(repeated).tags
+        links = [attrs for tag, attrs in tags if tag == "a"]
+        policies = [attrs.get("content") for tag, attrs in tags
+                    if tag == "meta" and attrs.get("http-equiv") == "Content-Security-Policy"]
+
+        self.assertEqual(repeated, prepared)
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0]["href"], "https://reports.example/sub%20folder&copy;/")
+        self.assertEqual(links[0]["data-site-path"], "/sub%20folder%26copy%3B/")
+        self.assertEqual(links[0]["target"], "_self")
+        self.assertEqual([attrs for tag, attrs in tags if tag == "base"], [
+            {"href": "https://cdn.example/assets/", "target": "_blank"},
+        ])
+        self.assertEqual(policies, ["script-src 'none'"])
+        self.assertIn(("img", {"src": "report.png"}), tags)
+
+    def test_static_fallback_stays_on_the_preview_without_an_active_base_href(self):
+        for source in (b"<title>Report</title>", b'<base target="_blank">',
+                       b'<template><base href="https://cdn.example/assets/"></template>'):
+            with self.subTest(source=source):
+                prepared = prepare_html(source, "https://reports.example/collection")
+                links = [attrs for tag, attrs in HTMLTags(prepared).tags if tag == "a"]
+                self.assertEqual(len(links), 1)
+                self.assertEqual(links[0]["href"], "/collection/")
+                self.assertEqual(links[0]["data-site-path"], "/collection/")
+                self.assertEqual(links[0]["target"], "_self")
+
     def test_preparation_preserves_markup_and_ignores_fake_tags_inside_raw_text(self):
         first = b'<!DOCTYPE html>\r\n<html lang="zh"><head>'
         body = (

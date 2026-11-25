@@ -35,7 +35,7 @@ BACK_LINK = """
 }
 @media print { #to-pages-back-link { display: none !important; } }
 </style>
-<a id="to-pages-back-link" href="$href" data-site-path="$href" target="_self"><span aria-hidden="true">←</span>返回导航</a>
+<a id="to-pages-back-link" href="$href" data-site-path="$site_path" target="_self"><span aria-hidden="true">←</span>返回导航</a>
 <script>
 (() => {
   const link = document.getElementById("to-pages-back-link");
@@ -53,6 +53,10 @@ class Page:
     description: str
 
 
+class MissingBaseURL(ValueError):
+    pass
+
+
 class Document(HTMLParser):
     """Collect metadata and source offsets so edits leave the original markup intact."""
 
@@ -68,6 +72,7 @@ class Document(HTMLParser):
         self.tag_ends = {}
         self.tag_closes = {}
         self.encodings = []
+        self.has_base_href = False
         self.back_links = []
         self.back_start = None
         self.inert = []
@@ -107,6 +112,8 @@ class Document(HTMLParser):
             return
         if tag in ("html", "head"):
             self.tag_ends.setdefault(tag, start + len(self.get_starttag_text()))
+        if tag == "base" and any(name == "href" for name, _ in attrs):
+            self.has_base_href = True
         if tag == "meta":
             attrs = dict(attrs)
             charset = attrs.get("charset")
@@ -177,8 +184,14 @@ def prepare_html(data: bytes, base_url: str) -> bytes:
             edits.append((0, 0, "\ufeff"))
 
     site_path = "/" + urlsplit(base_url).path.strip("/")
-    href = quote(site_path.rstrip("/") + "/", safe="/%")
-    link = BACK_START + Template(BACK_LINK).substitute(href=escape(href)) + BACK_END
+    site_path = quote(site_path.rstrip("/") + "/", safe="/%")
+    href = site_path
+    if document.has_base_href:
+        if not base_url:
+            raise MissingBaseURL("contains <base href> and requires cloudflare.base_url")
+        href = base_url.rstrip("/") + "/"
+    link = Template(BACK_LINK).substitute(href=escape(href), site_path=escape(site_path))
+    link = BACK_START + link + BACK_END
     if document.back_links:
         start, end = document.back_links[0]
         edits.append((start, end, link))
