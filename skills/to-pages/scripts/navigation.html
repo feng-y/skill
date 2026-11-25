@@ -2,119 +2,490 @@
 $marker
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>报告导航</title>
-  <style>
-    :root {
-      color-scheme: light dark;
-      --canvas: #f5f7f5;
-      --surface: #fff;
-      --text: #1b312e;
-      --muted: #536760;
-      --border: #ced8d3;
-      --accent: #13604e;
-      --tint: #e7f4ee;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --canvas: #111916;
-        --surface: #192720;
-        --text: #edf6f0;
-        --muted: #a5bab0;
-        --border: #384b41;
-        --accent: #91ddc0;
-        --tint: #234135;
-      }
-    }
-    * { box-sizing: border-box; }
-    [hidden] { display: none !important; }
-    body {
-      margin: 0; background: var(--canvas); color: var(--text);
-      font: 1rem/1.55 system-ui, -apple-system, sans-serif;
-    }
-    .frame { width: min(100% - 2.5rem, 64rem); margin-inline: auto; }
-    header { padding-block: clamp(1.75rem, 5vw, 3.5rem) 1.5rem; }
-    .toolbar {
-      display: flex; align-items: end; justify-content: space-between;
-      gap: 1.25rem; flex-wrap: wrap;
-      border-bottom: 1px solid var(--border); padding-bottom: 1.25rem;
-    }
-    h1, h2, p { margin: 0; }
-    h1 { font-size: clamp(1.85rem, 4vw, 2.75rem); line-height: 1.15; }
-    #count { color: var(--muted); margin-top: .45rem; font-size: .875rem; }
-    input {
-      min-height: 44px; width: min(100%, 20rem); padding: .55rem .85rem;
-      border: 1px solid var(--border); border-radius: .5rem;
-      background: var(--surface); color: var(--text); font: inherit;
-    }
-    input::placeholder { color: var(--muted); opacity: 1; }
-    ul {
-      list-style: none; padding: 0; margin: 0 0 3rem;
-      display: grid; gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    }
-    li a {
-      display: flex; flex-direction: column; height: 100%; gap: .65rem;
-      border: 1px solid var(--border); border-radius: .75rem; padding: 1.15rem;
-      background: var(--surface); color: inherit; text-decoration: none;
-      overflow-wrap: anywhere;
-    }
-    li a:hover { border-color: var(--accent); }
-    li a:hover h2 { text-decoration: underline; text-underline-offset: .18em; }
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    h2 { font-size: 1.15rem; line-height: 1.35; }
-    .description { color: var(--muted); font-size: .9rem; }
-    .path {
-      align-self: flex-start; margin-top: auto;
-      border-radius: .3rem; padding: .2rem .42rem; background: var(--tint);
-      color: var(--accent); font: .78rem/1.4 ui-monospace, monospace;
-    }
-    #empty { padding: 1.5rem 0; color: var(--muted); }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>页面档案</title>
+<style>
+:root {
+  --canvas: #fbfaf7;
+  --ink: #373327;
+  --muted: #726a57;
+  --line: #e6e3db;
+  --accent: #6f684f;
+  --soft: #eeeadd;
+  font: 14px/1.55 system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  background: var(--canvas);
+}
+* { box-sizing: border-box; }
+body, h1, h2, h3, p { margin: 0; }
+[hidden] { display: none !important; }
+button, input { font: inherit; color: inherit; }
+button { border: 0; background: none; cursor: pointer; }
+button:disabled { cursor: default; opacity: .45; }
+a { color: inherit; text-underline-offset: .2em; }
+:focus-visible { outline: 2px solid #887a49; outline-offset: 3px; }
+.topbar {
+  display: flex; align-items: center; gap: 10px; height: 72px; padding: 0 40px;
+  background: #fff; border-bottom: 1px solid var(--line); font-size: 16px; font-weight: 650;
+}
+.logo {
+  display: grid; place-items: center; width: 29px; height: 29px; border-radius: 9px;
+  color: #46502b; background: #eaf19c; font-size: 17px;
+}
+.archive { max-width: 1220px; margin: auto; padding: 45px 40px 70px; }
+.hero {
+  display: flex; justify-content: space-between; align-items: end; gap: 18px;
+  border-bottom: 1px solid #dedacf; padding-bottom: 27px; margin-bottom: 28px;
+}
+h1 { font: 600 36px/1.25 "Songti SC", STSong, Georgia, serif; letter-spacing: 2px; }
+.search {
+  display: flex; align-items: center; gap: 9px; width: min(280px, 100%); min-height: 40px;
+  padding: 0 12px; border: 1px solid #dedacf; border-radius: 7px; color: var(--muted);
+}
+.search:focus-within { outline: 2px solid #887a49; }
+.search svg { width: 16px; height: 16px; flex: none; }
+.search input { width: 100%; min-width: 0; border: 0; background: transparent; color: var(--ink); outline: 0; }
+.archive-grid { display: grid; grid-template-columns: 155px minmax(0, 1fr); gap: 45px; }
+.months { position: sticky; top: 28px; align-self: start; max-height: calc(100vh - 56px); overflow: auto; }
+.archive-content { min-width: 0; }
+.year-label { font: 25px Georgia, serif; color: #665d49; margin: 19px 0 8px; }
+.month-button {
+  display: flex; align-items: center; justify-content: space-between; gap: 7px; width: 100%;
+  min-height: 42px; padding: 8px 0; border-bottom: 1px solid var(--line);
+  color: var(--muted); text-align: left; font-size: 12px;
+}
+.month-button span:last-child { font-size: 11px; font-variant-numeric: tabular-nums; }
+.month-button[aria-pressed="true"] { color: #51432a; font-weight: 700; }
+.month-button[aria-pressed="true"]::before { content: "•"; color: #827944; }
+.month-button[aria-pressed="true"] span:last-child { margin-left: auto; }
+.filters, .result-toolbar, .pagination {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+.filters { margin-bottom: 15px; }
+.pills { display: flex; flex-wrap: wrap; gap: 5px; }
+.pills button { min-height: 35px; color: var(--muted); padding: 5px 10px; border-radius: 5px; font-size: 12px; }
+.pills button[aria-pressed="true"] { background: var(--soft); color: #54462d; font-weight: 700; }
+.sort-label, .result-toolbar, .pagination { color: var(--muted); font-size: 12px; }
+.result-toolbar { margin-bottom: 24px; }
+.compact-pager, .page-buttons { display: flex; align-items: center; gap: 6px; }
+.compact-pager span { margin-right: 5px; font-variant-numeric: tabular-nums; }
+.compact-pager button, .page-buttons button {
+  min-width: 33px; min-height: 33px; padding: 3px 6px; border: 1px solid #ddd6c4;
+  border-radius: 5px; background: #fffdf8; color: #6c5d41;
+}
+.page-buttons button[aria-current] { background: #797356; color: #fff; border-color: #797356; }
+.pills button:hover, .compact-pager button:not(:disabled):hover,
+.page-buttons button:not(:disabled):not([aria-current]):hover { background: var(--soft); }
+.month-group { margin-bottom: 30px; }
+.month-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 9px; margin-bottom: 16px; }
+.month-title h2 { font: 400 24px Georgia, "Songti SC", serif; color: #4c483d; }
+.month-title small, .month-title p { font: 11px system-ui, sans-serif; color: var(--muted); }
+.archive-head, .archive-row {
+  display: grid; grid-template-columns: 62px minmax(0, 1fr) 90px 100px; gap: 15px; align-items: center;
+}
+.archive-head { padding: 10px 0; border-block: 1px solid #dfdacf; font-size: 11px; color: var(--muted); }
+.archive-row { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.archive-head > :last-child, .archive-row > :last-child { justify-self: end; }
+.archive-date { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: var(--muted); }
+.archive-date strong { font: 22px/1 Georgia, serif; color: #776d54; }
+.doc-title { padding: 0; font-weight: 650; text-align: left; text-decoration: none; overflow-wrap: anywhere; }
+.doc-title:hover, .history:hover { text-decoration: underline; }
+.doc-description, .project, .category-tag {
+  font-size: 12px; color: var(--muted); margin-top: 4px; overflow-wrap: anywhere;
+}
+.category-tag { margin: 0; }
+.history {
+  min-height: 34px; padding: 4px 0; font-size: 12px; color: var(--muted); white-space: nowrap;
+}
+.single-version { font: 12px ui-monospace, monospace; color: var(--muted); overflow-wrap: anywhere; text-align: right; }
+.pagination { padding-top: 20px; border-top: 1px solid #dfdacf; }
+.empty { padding: 24px 0; }
+.empty button { margin-top: 8px; padding: 6px 0; text-decoration: underline; }
+.static-list { padding-left: 21px; }
+.static-list > li { margin-bottom: 18px; overflow-wrap: anywhere; }
+.static-list h2 { font-size: 16px; }
+dialog {
+  position: fixed; inset: 0 0 0 auto; margin: 0; width: min(480px, 100%); height: 100dvh;
+  max-width: 100%; max-height: 100dvh; padding: 38px 34px; border: 0; background: #fff;
+  box-shadow: -12px 0 60px #1d302026; color: var(--ink);
+}
+dialog::backdrop { background: #18251c40; backdrop-filter: blur(2px); }
+.dialog-close { float: right; min-width: 40px; min-height: 40px; border-radius: 5px; }
+.dialog-close:hover { background: var(--soft); }
+.drawer-title { margin: 15px 46px 12px 0; font-size: 23px; overflow-wrap: anywhere; }
+.drawer-description, .drawer-meta { color: var(--muted); overflow-wrap: anywhere; }
+.drawer-meta { margin: 14px 0 22px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.history-heading { font-size: 14px; margin: 0 0 21px; }
+.revisions { list-style: none; padding: 0; margin: 0 0 0 6px; }
+.revision { position: relative; border-left: 1px solid #e1e8d8; padding: 0 0 28px 21px; overflow-wrap: anywhere; }
+.revision:last-child { border-color: transparent; }
+.revision::before {
+  content: ""; position: absolute; width: 7px; height: 7px; border-radius: 50%;
+  background: #bccba5; left: -4px; top: 7px;
+}
+.revision:first-child::before { background: #728951; }
+.revision h4 { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 0 0 4px; }
+.latest { font-size: 11px; background: #edf3e5; color: #506439; padding: 2px 6px; border-radius: 3px; }
+.revision time, .revision-date, .revision p { color: var(--muted); font-size: 12px; }
+.revision p { margin: 7px 0; white-space: pre-wrap; }
+.revision a { display: inline-block; padding: 7px 0; color: #4d6335; }
+@media (max-width: 900px) {
+  .archive-grid { grid-template-columns: 120px minmax(0, 1fr); gap: 28px; }
+  .archive-head, .archive-row { grid-template-columns: 45px minmax(0, 1fr) 72px 78px; gap: 10px; }
+}
+@media (max-width: 680px) {
+  .topbar { height: 62px; padding-inline: 20px; }
+  .archive { padding: 28px 20px 56px; }
+  .hero { display: block; padding-bottom: 22px; margin-bottom: 20px; }
+  h1 { font-size: 29px; }
+  .search { width: 100%; margin-top: 19px; }
+  .archive-grid { display: block; }
+  .months, .month-year { display: flex; align-items: baseline; gap: 16px; }
+  .months {
+    position: static; max-height: none; overflow-x: auto; padding: 4px 4px 8px;
+    margin: 0 -4px 18px; border-bottom: 1px solid var(--line);
+  }
+  .year-label { font-size: 17px; margin: 0; }
+  .month-button { width: auto; flex: none; border: 0; white-space: nowrap; }
+  .month-button[aria-pressed="true"]::before { content: none; }
+  .archive-head, .archive-row { grid-template-columns: 36px minmax(0, 1fr) 68px; gap: 10px; }
+  .archive-head > :nth-child(3), .archive-row > :nth-child(3) { display: none; }
+  .archive-date strong { font-size: 20px; }
+  .doc-title { font-size: 13px; }
+  .doc-description, .project, .history { font-size: 11px; }
+  .sort-label { display: none; }
+  .pagination { justify-content: center; }
+  .page-total { width: 100%; text-align: center; }
+  .page-buttons { flex-wrap: wrap; justify-content: center; }
+  dialog { padding: 28px 23px; }
+}
+</style>
 </head>
 <body>
-  <header class="frame">
-    <div class="toolbar">
-      <div>
-        <h1>报告导航</h1>
-        <p id="count" role="status">$count 份报告</p>
-      </div>
-      <input id="search" type="search" aria-label="搜索报告" placeholder="搜索标题、描述或路径" hidden>
-    </div>
-  </header>
-  <main class="frame">
-    <ul id="reports">
+<header class="topbar"><span class="logo" aria-hidden="true">▤</span>页面资料库</header>
+<main class="archive">
+  <div class="hero">
+    <h1>页面档案</h1>
+    <label class="search" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
+      <input type="search" id="search" aria-label="搜索页面" placeholder="搜索标题、描述或项目">
+    </label>
+  </div>
+  <section id="static-archive">
+    <p>$count 个主题</p>
+    <ul class="static-list">
       $cards
     </ul>
-    <p id="empty" hidden></p>
-  </main>
-  <script>
-    const search = document.getElementById('search');
-    const count = document.getElementById('count');
-    const empty = document.getElementById('empty');
-    const cards = Array.from(document.querySelectorAll('#reports li'), card => ({
-      card,
-      text: card.innerText.toLocaleLowerCase(),
-    }));
+  </section>
+  <div class="archive-grid" hidden>
+    <nav class="months" aria-label="按月查看"></nav>
+    <section class="archive-content" aria-label="主题列表" tabindex="-1">
+      <div class="filters"><div class="pills" role="group" aria-label="内容分类"></div><span class="sort-label">最近更新优先 · UTC</span></div>
+      <div class="result-toolbar">
+        <p id="result-count" role="status"></p>
+        <nav class="compact-pager" aria-label="快速分页"></nav>
+      </div>
+      <div id="month-groups"></div>
+      <nav class="pagination" aria-label="主题分页" hidden></nav>
+    </section>
+  </div>
+</main>
+<dialog id="history-dialog" aria-labelledby="drawer-title">
+  <form method="dialog"><button class="dialog-close" aria-label="关闭版本历史" autofocus>✕</button></form>
+  <div id="drawer"></div>
+</dialog>
+<script id="archive-data" type="application/json">$data</script>
+<script>
+(() => {
+  const PAGE_SIZE = 20;
+  const topics = JSON.parse(document.getElementById("archive-data").textContent);
+  const search = document.getElementById("search");
+  const months = document.querySelector(".months");
+  const pills = document.querySelector(".pills");
+  const resultsLabel = document.getElementById("result-count");
+  const compact = document.querySelector(".compact-pager");
+  const pagination = document.querySelector(".pagination");
+  const archive = document.getElementById("month-groups");
+  const content = document.querySelector(".archive-content");
+  const dialog = document.getElementById("history-dialog");
+  const drawer = document.getElementById("drawer");
 
-    function filterReports() {
-      const query = search.value.trim().toLocaleLowerCase();
-      let visible = 0;
-      for (const { card, text } of cards) {
-        const matches = text.includes(query);
-        card.hidden = !matches;
-        if (matches) visible++;
+  function element(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  function action(text, className, handler) {
+    const button = element("button", className, text);
+    button.type = "button";
+    button.addEventListener("click", handler);
+    return button;
+  }
+
+  function link(text, className, version) {
+    const anchor = element("a", className, text);
+    anchor.href = version.href;
+    return anchor;
+  }
+
+  function monthOf(topic) {
+    return topic.updated ? topic.updated.slice(0, 7) : "unknown";
+  }
+
+  function monthLabel(month) {
+    return month === "unknown" ? "时间未记录" : Number(month.slice(5)) + " 月";
+  }
+
+  const categories = [...new Set(topics.map(topic => topic.category))].sort();
+  const archiveMonths = [...new Set(topics.map(monthOf))];
+
+  function readState() {
+    const params = new URLSearchParams(location.search);
+    const page = Number(params.get("page"));
+    return {
+      category: categories.includes(params.get("category")) ? params.get("category") : null,
+      month: archiveMonths.includes(params.get("month")) ? params.get("month") : null,
+      query: params.get("q") || "",
+      page: Number.isSafeInteger(page) && page > 0 ? page : 1
+    };
+  }
+
+  let state = readState();
+  let editingSearch = false;
+
+  function writeURL(replace) {
+    const url = new URL(location.href);
+    for (const [key, value] of Object.entries({
+      month: state.month, category: state.category, q: state.query, page: state.page > 1 ? state.page : null
+    })) {
+      if (value) url.searchParams.set(key, value);
+      else url.searchParams.delete(key);
+    }
+    if (url.href === location.href) return;
+    if (replace) history.replaceState(null, "", url);
+    else history.pushState(null, "", url);
+  }
+
+  function changeFilters(filters) {
+    editingSearch = false;
+    state = { ...state, ...filters, page: 1 };
+    render();
+    writeURL(false);
+    content.focus({ preventScroll: true });
+  }
+
+  function addMonthButton(parent, month, label, count) {
+    const button = action(undefined, "month-button", () => changeFilters({ month }));
+    button.setAttribute("aria-pressed", String(month === state.month));
+    button.append(element("span", "", label), element("span", "", count));
+    parent.append(button);
+  }
+
+  function renderFilters(filtered) {
+    const monthCounts = new Map();
+    for (const topic of filtered) {
+      const month = monthOf(topic);
+      monthCounts.set(month, (monthCounts.get(month) || 0) + 1);
+    }
+    const monthScroll = months.scrollLeft;
+    months.replaceChildren();
+    addMonthButton(months, null, "全部月份", filtered.length);
+    let year, yearGroup;
+    for (const month of archiveMonths) {
+      if (month === "unknown") {
+        addMonthButton(months, month, monthLabel(month), monthCounts.get(month) || 0);
+        continue;
       }
-      count.textContent = query ? '显示 ' + visible + ' / ' + cards.length + ' 份报告'
-                                : cards.length + ' 份报告';
-      empty.textContent = query ? '没有匹配的报告。' : '暂无报告。';
-      empty.hidden = visible > 0;
+      if (month.slice(0, 4) !== year) {
+        year = month.slice(0, 4);
+        yearGroup = element("div", "month-year");
+        yearGroup.append(element("h2", "year-label", year));
+        months.append(yearGroup);
+      }
+      addMonthButton(yearGroup, month, monthLabel(month), monthCounts.get(month) || 0);
+    }
+    months.scrollLeft = monthScroll;
+    pills.replaceChildren();
+    for (const category of [null, ...categories]) {
+      const button = action(category ?? "全部", "", () => changeFilters({ category }));
+      button.setAttribute("aria-pressed", String(category === state.category));
+      pills.append(button);
+    }
+  }
+
+  function pageButton(page, label, name, disabled = false) {
+    const button = action(label, "", () => {
+      if (state.page === page) return;
+      state.page = page;
+      render();
+      writeURL(false);
+      window.scrollTo(0, 0);
+      content.focus({ preventScroll: true });
+    });
+    button.disabled = disabled;
+    button.setAttribute("aria-label", name);
+    if (page === state.page) button.setAttribute("aria-current", "page");
+    return button;
+  }
+
+  function renderPagination(total, pages) {
+    compact.replaceChildren();
+    pagination.replaceChildren();
+    pagination.hidden = !total;
+    if (!total) return;
+    const previous = () => pageButton(state.page - 1, "‹", "上一页", state.page === 1);
+    const next = () => pageButton(state.page + 1, "›", "下一页", state.page === pages);
+    compact.append(element("span", "", "第 " + state.page + " / " + pages + " 页"), previous(), next());
+
+    const numbers = pages <= 7 ? Array.from({ length: pages }, (_, index) => index + 1)
+      : [1, ...[state.page - 1, state.page, state.page + 1].filter(page => page > 1 && page < pages), pages];
+    const buttons = element("div", "page-buttons");
+    buttons.append(previous());
+    let last = 0;
+    for (const page of numbers) {
+      if (page - last > 1) buttons.append(element("span", "", "…"));
+      buttons.append(pageButton(page, page, "第 " + page + " 页"));
+      last = page;
+    }
+    buttons.append(next());
+    pagination.append(element("span", "page-total", "共 " + total + " 个主题 · " + pages + " 页"), buttons);
+  }
+
+  function showVersions(topic) {
+    const title = element("h2", "drawer-title", topic.title);
+    title.id = "drawer-title";
+    const details = [topic.category, topic.project].filter(Boolean).join(" / ");
+    const list = element("ol", "revisions");
+    topic.versions.forEach((version, index) => {
+      const item = element("li", "revision");
+      const label = element("h4", "", version.label);
+      if (!index) label.append(element("span", "latest", "最新版"));
+      const date = version.date
+        ? element("time", "", version.date.slice(0, 16).replace("T", " ") + " UTC")
+        : element("span", "revision-date", "时间未记录");
+      if (version.date) date.dateTime = version.date;
+      item.append(label, date);
+      if (version.summary) item.append(element("p", "", version.summary));
+      item.append(link("打开 " + version.label + " ↗", "", version));
+      list.append(item);
+    });
+    drawer.replaceChildren(title);
+    if (topic.description) drawer.append(element("p", "drawer-description", topic.description));
+    drawer.append(element("p", "drawer-meta", details),
+      element("h3", "history-heading", topic.versions.length + " 个版本"), list);
+    dialog.showModal();
+  }
+
+  function reportRow(topic) {
+    const row = element("article", "archive-row");
+    const date = topic.updated ? element("time", "archive-date") : element("span", "archive-date", "—");
+    if (topic.updated) {
+      date.dateTime = topic.updated;
+      date.title = "UTC";
+      date.append(element("strong", "", topic.updated.slice(8, 10)), element("span", "", topic.updated.slice(11, 16)));
+    }
+    const body = element("div");
+    const latest = topic.versions[0];
+    const multiple = topic.versions.length > 1;
+    const title = multiple ? action(topic.title, "doc-title", () => showVersions(topic))
+      : link(topic.title, "doc-title", latest);
+    const version = multiple ? action(topic.versions.length + " 个版本", "history", () => showVersions(topic))
+      : element("span", "single-version", latest.label);
+    if (multiple) {
+      title.setAttribute("aria-haspopup", "dialog");
+      version.setAttribute("aria-haspopup", "dialog");
+      version.setAttribute("aria-label", "查看 " + topic.title + " 的版本历史");
+    }
+    body.append(title);
+    if (topic.description) body.append(element("p", "doc-description", topic.description));
+    if (topic.project) body.append(element("p", "project", topic.project));
+    row.append(date, body, element("span", "category-tag", topic.category), version);
+    return row;
+  }
+
+  function render() {
+    const query = state.query.toLowerCase().trim();
+    const filtered = topics.filter(topic => (!state.category || topic.category === state.category)
+      && [topic.title, topic.description, topic.project].some(value => value.toLowerCase().includes(query)));
+    const results = state.month ? filtered.filter(topic => monthOf(topic) === state.month) : filtered;
+    const pages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
+    state.page = Math.min(state.page, pages);
+    const start = (state.page - 1) * PAGE_SIZE;
+    const end = Math.min(start + PAGE_SIZE, results.length);
+
+    renderFilters(filtered);
+    renderPagination(results.length, pages);
+    resultsLabel.textContent = results.length
+      ? "显示 " + (start + 1) + "–" + end + "，共 " + results.length + " 个主题"
+      : "没有匹配的主题";
+    archive.replaceChildren();
+    if (!results.length) {
+      const empty = element("div", "empty");
+      empty.append(element("p", "", topics.length ? "没有符合条件的页面" : "暂无页面"));
+      if (topics.length) empty.append(action("清除筛选", "", () => {
+        search.value = "";
+        changeFilters({ category: null, month: null, query: "" });
+      }));
+      archive.append(empty);
+      return;
     }
 
-    search.hidden = cards.length === 0;
-    search.addEventListener('input', filterReports);
-    filterReports();
-  </script>
+    const groups = new Map();
+    const counts = new Map();
+    results.forEach((topic, index) => {
+      const month = monthOf(topic);
+      counts.set(month, (counts.get(month) || 0) + 1);
+      if (index >= start && index < end) {
+        if (!groups.has(month)) groups.set(month, []);
+        groups.get(month).push(topic);
+      }
+    });
+    for (const [month, rows] of groups) {
+      const section = element("section", "month-group");
+      section.dataset.monthGroup = month;
+      const header = element("div", "month-title");
+      const label = element("h2", "", monthLabel(month));
+      if (start && monthOf(results[start - 1]) === month) label.append(element("small", "", " · 续"));
+      const count = counts.get(month);
+      const info = (month === "unknown" ? "" : month.slice(0, 4) + " / ") + count + " 个主题";
+      header.append(label, element("p", "", info + (rows.length < count ? " · 此页 " + rows.length + " 个" : "")));
+      const columns = element("div", "archive-head");
+      for (const name of ["更新日期", "内容主题", "内容分类", "版本"]) columns.append(element("span", "", name));
+      section.append(header, columns, ...rows.map(reportRow));
+      archive.append(section);
+    }
+  }
+
+  dialog.addEventListener("click", event => {
+    if (event.target === dialog && event.clientX < dialog.getBoundingClientRect().left) dialog.close();
+  });
+  search.value = state.query;
+  search.addEventListener("input", () => {
+    state.query = search.value;
+    state.page = 1;
+    render();
+    writeURL(editingSearch);
+    editingSearch = true;
+  });
+  search.addEventListener("blur", () => { editingSearch = false; });
+  window.addEventListener("popstate", () => {
+    if (dialog.open) dialog.close();
+    editingSearch = false;
+    state = readState();
+    search.value = state.query;
+    render();
+    writeURL(true);
+  });
+
+  render();
+  writeURL(true);
+  document.getElementById("static-archive").hidden = true;
+  search.parentElement.hidden = false;
+  document.querySelector(".archive-grid").hidden = false;
+})();
+</script>
 </body>
 </html>

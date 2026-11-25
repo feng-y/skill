@@ -2,6 +2,7 @@
 """Exercise publication with a real local Git remote and anonymous HTTP server."""
 
 from contextlib import redirect_stdout
+from datetime import datetime, timezone
 from html.parser import HTMLParser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import io
@@ -17,6 +18,7 @@ from unittest.mock import patch
 from urllib.parse import unquote, urlsplit
 
 import to_pages as pages
+from catalog import CATALOG_PATH, content_digest, load_catalog, parse_timestamp
 from navigation import prepare_html, render_homepage
 
 
@@ -33,6 +35,11 @@ class HTMLTags(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         self.tags.append((tag, dict(attrs)))
+
+
+def archive_data(homepage):
+    start = b'<script id="archive-data" type="application/json">'
+    return json.loads(homepage.split(start, 1)[1].split(b"</script>", 1)[0])
 
 
 class PublishTests(unittest.TestCase):
@@ -89,8 +96,10 @@ class PublishTests(unittest.TestCase):
             self.addCleanup(context.stop)
 
     def command(self, name, *extra, source=None, destination="reports/example"):
-        args = ["to_pages.py", "--config", str(self.config), name, str(source or self.source),
-                "--path", destination, *extra]
+        args = ["to_pages.py", "--config", str(self.config), name]
+        if name in ("plan", "push", "publish", "verify"):
+            args.extend((str(source or self.source), "--path", destination))
+        args.extend(extra)
         output = io.StringIO()
         with patch.object(sys, "argv", args), redirect_stdout(output):
             pages.main()
@@ -106,6 +115,10 @@ class PublishTests(unittest.TestCase):
                 "commit", "-m", "Site update")
         run_git("-C", checkout, "push", "origin", "main")
 
+    def require_case_insensitive_checkout(self):
+        if not self.source.with_name(self.source.name.upper()).exists():
+            self.skipTest("Temporary checkout filesystem is case-sensitive")
+
     def test_plan_is_read_only_and_publish_verifies_prepared_files_and_homepage(self):
         static = self.root / "static"
         static.mkdir()
@@ -118,7 +131,7 @@ class PublishTests(unittest.TestCase):
         self.assertEqual(plan[0]["status"], "planned")
         self.assertCountEqual(plan[0]["changed_files"], [
             "public/index.html", "public/reports/example/index.html",
-            "public/reports/example/details.htm", "public/reports/example/image.png",
+            "public/reports/example/details.htm", "public/reports/example/image.png", str(CATALOG_PATH),
         ])
         self.assertFalse((self.remote / "refs/heads/main").exists())
         result = self.command("publish", "--timeout", "3", source=static)
@@ -167,7 +180,7 @@ class PublishTests(unittest.TestCase):
             self.command("publish", "--timeout", "1")
         self.assertIn(b"<title>Version one</title>", self.published("public/reports/example/index.html"))
 
-    def test_catalog_adds_versions_and_preserves_existing_report_bytes(self):
+    def test_equal_titles_and_version_suffixes_remain_separate_topics(self):
         self.source.write_text(
             '<title>Rook &lt;iframe&gt; &amp; 工作台</title><h1>适用 <em>版本一</em></h1><h1>多余正文标题</h1>',
             encoding="utf-8",
@@ -181,7 +194,7 @@ class PublishTests(unittest.TestCase):
         )
         self.command("publish", "--timeout", "3", destination="reports/rook-v2 & notes")
         homepage = self.published("public/index.html").decode("utf-8")
-        self.assertIn("2 份报告", homepage)
+        self.assertIn("2 个主题", homepage)
         self.assertEqual(homepage.count("<h2>Rook &lt;iframe&gt; &amp; 工作台</h2>"), 2)
         self.assertIn('href="./reports/rook-v1/"', homepage)
         self.assertIn('href="./reports/rook-v2%20%26%20notes/"', homepage)
@@ -190,6 +203,235 @@ class PublishTests(unittest.TestCase):
         self.assertNotIn("多余正文标题", homepage)
         self.assertIn("说明 &lt;script&gt; &amp; &quot;版本二&quot;", homepage)
         self.assertEqual(first_report, self.published("public/reports/rook-v1/index.html"))
+
+    def test_explicit_topic_preserves_versions_and_replaces_only_the_selected_path(self):
+        first_path = "reports/rook-v1"
+        second_path = "reports/rook-v2"
+        started = datetime.now(timezone.utc)
+        self.command("push", "--topic", "rook", "--title", "Rook", "--category", "技术方案",
+                     "--project", "发布", "--summary", "首版", destination=first_path)
+        self.source.write_text("<title>Version two</title>")
+        self.command("push", "--topic", "rook", "--summary", "新增搜索", destination=second_path)
+        old_report = self.published(f"public/{second_path}/index.html")
+        baseline = self.command("catalog")[0]
+        first, second = baseline["topics"][0]["versions"]
+        self.assertEqual(baseline["topics"][0]["id"], "rook")
+        self.assertEqual(baseline["topics"][0]["category"], "技术方案")
+        self.assertEqual(baseline["topics"][0]["project"], "发布")
+        self.assertEqual([(v["label"], v["path"]) for v in (first, second)],
+                         [("v1", first_path), ("v2", second_path)])
+        self.assertEqual(first["summary"], "首版")
+        self.assertEqual(second["summary"], "新增搜索")
+        self.assertEqual(second["digest"], content_digest({"index.html": old_report}))
+        published = parse_timestamp(first["published_at"])
+        self.assertLessEqual(started, published)
+        self.assertLessEqual(published, datetime.now(timezone.utc))
+        self.assertEqual(first["published_at"], first["updated_at"])
+        archive = archive_data(self.published("public/index.html"))
+        self.assertEqual([v["label"] for v in archive[0]["versions"]], ["v2", "v1"])
+
+        self.source.write_text("<title>Amended first version</title>")
+        replaced = self.command("push", "--replace", "--summary", "修订首版", destination=first_path)[0]
+        recorded = self.command("catalog")[0]
+        edited, kept = recorded["topics"][0]["versions"]
+        self.assertEqual(kept, second)
+        self.assertEqual(edited["published_at"], first["published_at"])
+        self.assertGreater(parse_timestamp(edited["updated_at"]), published)
+        self.assertNotEqual(edited["digest"], first["digest"])
+        self.assertEqual(edited["summary"], "修订首版")
+        self.assertEqual(self.published(f"public/{second_path}/index.html"), old_report)
+
+        repeated = self.command("push", destination=first_path)[0]
+        self.assertEqual(repeated["status"], "unchanged")
+        self.assertEqual(repeated["commit"], replaced["commit"])
+        self.assertEqual(self.command("catalog")[0], recorded)
+        archive = archive_data(self.published("public/index.html"))
+        self.assertEqual([v["label"] for v in archive[0]["versions"]], ["v2", "v1"])
+        self.assertEqual(archive[0]["updated"], edited["updated_at"])
+        self.assertEqual([v["date"] for v in archive[0]["versions"]],
+                         [second["published_at"], first["published_at"]])
+
+    def test_metadata_only_edit_keeps_report_time_and_content_digest(self):
+        self.command("push")
+        original = self.command("catalog")[0]["topics"][0]["versions"][0]
+        old_body = self.published("public/reports/example/index.html")
+        self.command("push", "--title", "New title", "--category", "使用文档", "--summary", "New summary")
+        topic = self.command("catalog")[0]["topics"][0]
+        self.assertEqual(topic["title"], "New title")
+        self.assertEqual(topic["category"], "使用文档")
+        self.assertEqual(topic["versions"], [{**original, "summary": "New summary"}])
+        self.assertEqual(self.published("public/reports/example/index.html"), old_body)
+
+    def test_conflicting_topic_or_label_does_not_mutate_remote(self):
+        initial = self.command("push", "--topic", "rook", "--version", "draft")[0]["commit"]
+        for options, destination in (
+            (("--topic", "other"), "reports/example"),
+            (("--version", "stable"), "reports/example"),
+            (("--topic", "rook", "--version", "draft"), "reports/other"),
+        ):
+            with self.subTest(options=options), self.assertRaisesRegex(pages.PagesError, "already belongs"):
+                self.command("push", *options, destination=destination)
+        self.assertEqual(run_git("--git-dir", self.remote, "rev-parse", "main"), initial)
+
+    def test_report_path_alias_preserves_published_tree_and_catalog(self):
+        self.require_case_insensitive_checkout()
+        original_path = "reports/Case"
+        result = self.command("publish", "--topic", "original", "--timeout", "3", destination=original_path)
+        self.assertEqual(result[-1]["status"], "verified")
+        tree = run_git("--git-dir", self.remote, "ls-tree", "-r", "main")
+        catalog = self.published(CATALOG_PATH)
+        report_path = f"public/{original_path}/index.html"
+        report = self.published(report_path)
+        edited = self.root / "edited.html"
+        edited.write_text("<title>Edited report</title>")
+
+        for destination, source, replace in (
+            ("reports/case", self.source, False),
+            ("reports/case", self.source, True),
+            ("reports/case", edited, False),
+            ("reports/case", edited, True),
+            ("Reports/Case", edited, True),
+        ):
+            options = ("--replace",) if replace else ()
+            with self.subTest(destination=destination, source=source.name, replace=replace):
+                with self.assertRaisesRegex(pages.PagesError, "Path spelling conflicts"):
+                    self.command("publish", "--topic", "other", "--timeout", "1", *options,
+                                 destination=destination, source=source)
+
+        self.assertEqual(run_git("--git-dir", self.remote, "rev-parse", "main"), result[0]["commit"])
+        self.assertEqual(run_git("--git-dir", self.remote, "ls-tree", "-r", "main"), tree)
+        self.assertEqual(self.published(CATALOG_PATH), catalog)
+        self.assertEqual(self.published(report_path), report)
+
+    def test_asset_filename_alias_does_not_replace_published_file(self):
+        self.require_case_insensitive_checkout()
+        static = self.root / "static"
+        static.mkdir()
+        (static / "index.html").write_bytes(self.source.read_bytes())
+        asset = static / "Image.png"
+        asset.write_bytes(b"original image")
+        initial = self.command("push", source=static)[0]["commit"]
+        asset.rename(static / "image.png").write_bytes(b"edited image")
+
+        with self.assertRaisesRegex(pages.PagesError, "Path spelling conflicts"):
+            self.command("push", "--replace", source=static)
+        self.assertEqual(run_git("--git-dir", self.remote, "rev-parse", "main"), initial)
+        self.assertEqual(self.published("public/reports/example/Image.png"), b"original image")
+
+    def test_source_asset_aliases_are_rejected_before_git_staging(self):
+        self.require_case_insensitive_checkout()
+        config = pages.load_config(self.config)
+        with pages.checkout(config) as (repo, env):
+            files = {"index.html": b"report", "Asset.png": b"first", "asset.png": b"second"}
+            with self.assertRaisesRegex(pages.PagesError, "Path spelling conflicts"):
+                pages.stage(config, repo, env, "reports/example", files, False)
+            self.assertEqual(run_git("-C", repo, "ls-files"), "")
+
+    def test_catalog_and_homepage_reject_aliased_entry_names(self):
+        self.require_case_insensitive_checkout()
+        self.command("push")
+        repo = self.root / "site"
+        run_git("clone", "--branch", "main", self.remote, repo)
+        site = repo / "public"
+
+        for path in (CATALOG_PATH.parent, CATALOG_PATH, Path("public/reports/example/index.html"),
+                     Path("public/index.html")):
+            with self.subTest(path=path):
+                entry = repo / path
+                alias = entry.rename(entry.with_name(entry.name.upper()))
+                try:
+                    with self.assertRaisesRegex(pages.PagesError, "Path spelling conflicts"):
+                        if path == Path("public/index.html"):
+                            render_homepage(site)
+                        else:
+                            load_catalog(repo, "public")
+                finally:
+                    alias.rename(entry)
+
+    def test_replace_cannot_write_another_version_inside_the_report_directory(self):
+        self.command("push", "--topic", "rook", destination="reports/rook")
+        second_path = "reports/rook/detail"
+        second = self.command("push", "--topic", "rook", destination=second_path)[0]["commit"]
+        static = self.root / "replacement"
+        (static / "detail").mkdir(parents=True)
+        (static / "index.html").write_text("<title>Edited first version</title>")
+        (static / "detail" / "index.html").write_text("<title>Do not replace the second version</title>")
+        with self.assertRaisesRegex(pages.PagesError, "overlap another catalog version"):
+            self.command("push", "--replace", source=static, destination="reports/rook")
+        self.assertEqual(run_git("--git-dir", self.remote, "rev-parse", "main"), second)
+
+    def test_index_bootstrap_preserves_separate_legacy_reports_with_unknown_dates(self):
+        checkout = self.root / "legacy-site"
+        run_git("clone", self.remote, checkout)
+        run_git("-C", checkout, "checkout", "--orphan", "main")
+        legacy_body = b"<title>Same legacy title</title>"
+        for path in ("reports/legacy", "reports/legacy-v2"):
+            entry = checkout / "public" / path / "index.html"
+            entry.parent.mkdir(parents=True)
+            entry.write_bytes(legacy_body)
+        self.commit_checkout(checkout)
+
+        before = run_git("--git-dir", self.remote, "rev-parse", "main")
+        self.assertEqual(self.command("catalog"), [{"schema": 1, "output_dir": "public", "topics": []}])
+        plan = self.command("index", "plan")[0]
+        self.assertCountEqual(plan["changed_files"], ["public/index.html", str(CATALOG_PATH)])
+        self.assertEqual(run_git("--git-dir", self.remote, "rev-parse", "main"), before)
+        result = self.command("index", "publish", "--timeout", "3")
+        self.assertEqual(result[-1]["files_verified"], 1)
+        self.assertEqual(self.requested_paths, ["/collection/"])
+        self.assertEqual(self.published("public/reports/legacy/index.html"), legacy_body)
+        self.assertEqual(json.loads(self.published(CATALOG_PATH))["topics"], [])
+        legacy = archive_data(self.published("public/index.html"))
+        self.assertEqual(len(legacy), 2)
+        self.assertEqual({topic["category"] for topic in legacy}, {"未分类"})
+        self.assertEqual({topic["updated"] for topic in legacy}, {None})
+        self.assertEqual({topic["versions"][0]["href"] for topic in legacy},
+                         {"./reports/legacy/", "./reports/legacy-v2/"})
+
+        self.command("push", "--topic", "reports/legacy", destination="reports/new")
+        archive = archive_data(self.published("public/index.html"))
+        self.assertEqual(len({topic["id"] for topic in archive}), 3)
+        self.assertEqual(self.published("public/reports/legacy-v2/index.html"), legacy_body)
+
+    def test_root_output_directory_still_generates_homepage_and_catalog(self):
+        config = json.loads(self.config.read_text())
+        config["cloudflare"]["output_dir"] = "."
+        self.config.write_text(json.dumps(config))
+        self.command("push")
+        record = self.command("catalog")[0]
+        self.assertEqual(record["output_dir"], ".")
+        self.assertEqual(json.loads(self.published(CATALOG_PATH)), record)
+        self.assertIn(b'href="./reports/example/"', self.published("index.html"))
+        self.assertIn(b"<title>Version one</title>", self.published("reports/example/index.html"))
+
+    def test_catalog_corruption_stops_the_publish_before_remote_changes(self):
+        self.command("push")
+        checkout = self.root / "corrupt-catalog"
+        run_git("clone", "--branch", "main", self.remote, checkout)
+        catalog_file = checkout / CATALOG_PATH
+        catalog = json.loads(catalog_file.read_bytes())
+        catalog["topics"][0]["versions"][0]["updated_at"] = "2026-02-30T12:00:00Z"
+        catalog_file.write_text(json.dumps(catalog))
+        self.commit_checkout(checkout)
+
+        before = run_git("--git-dir", self.remote, "rev-parse", "main")
+        with self.assertRaisesRegex(pages.PagesError, "ISO UTC timestamps"):
+            self.command("push", destination="reports/new")
+        self.assertEqual(run_git("--git-dir", self.remote, "rev-parse", "main"), before)
+
+    def test_generated_archive_escapes_metadata_and_encodes_relative_links(self):
+        title = '</script><img src=x onerror="example()">'
+        self.command("push", "--title", title, "--category", "<category>",
+                     "--summary", title, destination="reports/javascript:report#notes?")
+        homepage = self.published("public/index.html")
+        self.assertNotIn(title.encode(), homepage)
+        self.assertIn(b'&lt;/script&gt;&lt;img src=x onerror=&quot;example()&quot;&gt;', homepage)
+        self.assertIn(b'href="./reports/javascript%3Areport%23notes%3F/"', homepage)
+        self.assertFalse(any(tag == "img" for tag, attrs in HTMLTags(homepage).tags))
+        data = archive_data(homepage)[0]
+        self.assertEqual(data["title"], title)
+        self.assertEqual(data["category"], "<category>")
+        self.assertEqual(data["versions"][0]["summary"], title)
 
     def test_existing_custom_homepage_is_preserved_during_report_publish(self):
         checkout = self.root / "custom-site"
@@ -385,6 +627,15 @@ class NavigationTests(unittest.TestCase):
                 self.assertEqual(prepared.count(end), 1)
                 self.assertNotIn(b"Stale link", prepared)
                 self.assertEqual(prepare_html(prepared, ""), prepared)
+
+    def test_catalog_rejects_symlink_to_metadata_file(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            file = root / CATALOG_PATH
+            file.parent.mkdir()
+            file.symlink_to(root / "external.json")
+            with self.assertRaisesRegex(pages.PagesError, "without symlinks"):
+                load_catalog(root, "public")
 
     def test_catalog_refreshes_a_homepage_with_crlf_ownership_marker(self):
         with tempfile.TemporaryDirectory() as temporary:

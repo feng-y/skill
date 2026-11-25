@@ -1,6 +1,6 @@
 # to-pages 配置与使用
 
-把 HTML 报告或静态目录推送到 GitHub，由 Cloudflare Pages 或 Workers Builds 自动部署。脚本使用 Python 标准库和 Git，支持 Mac 与 Linux。
+把 HTML 报告或静态目录推送到 GitHub，由 Cloudflare Pages 或 Workers Builds 自动部署。脚本使用 Python 3.10+ 标准库和 Git，支持 Mac 与 Linux。
 
 ## 安装
 
@@ -55,7 +55,7 @@ chmod 600 "$HOME/.config/to-pages/config.json"
 | `github.token_file` | 可替代 `token_env`。纯文本凭证文件，可用绝对路径；相对路径基于配置文件目录。 |
 | `github.token` | 可替代环境变量或文件，直接放在配置中。配置文件必须归当前用户所有且权限为 `600`。 |
 | `cloudflare.base_url` | 实际生产 HTTPS 地址。站点挂载在子路径时包含该路径。支持 `pages.dev`、`workers.dev` 或自定义域名。 |
-| `cloudflare.output_dir` | 仓库内的静态目录，默认 `public`；仓库根目录用 `.`。 |
+| `cloudflare.output_dir` | 仓库内的静态目录，默认 `public`。根目录用 `.`，此时报告目录元数据也可能被托管。 |
 
 `token_env`、`token_file` 和 `token` 只能配置一个。环境变量方式不会把 Token 复制到配置文件或仓库。凭证文件也必须归当前用户所有且权限为 `600`。
 
@@ -121,7 +121,7 @@ npx wrangler deploy --assets ./public --name lemon-pages --compatibility-date 20
 
 单个 HTML 会保存为目标目录的 `index.html`。带图片、CSS 或脚本时使用静态目录，并在其中提供 `index.html`。脚本会递归上传该目录，不会自动收集 HTML 引用的外部本地资源。
 
-HTML 源文件使用 UTF-8。脚本在发布副本中补齐编码声明和「返回导航」链接。回链通常指向当前域名的站点首页，包括预览域名。若报告含有效的 `<base href>` 且脚本被禁用或被 CSP 阻止，回链使用 `cloudflare.base_url` 指定的生产首页。源文件、非 HTML 资源以及报告原有的资源基准地址和 CSP 均保留原样。
+HTML 源文件使用 UTF-8。脚本在发布副本中补齐编码声明和「返回导航」链接。从同域名的首页打开报告时，回链会保留首页筛选和页码。若报告含有效的 `<base href>` 且脚本被禁用或被 CSP 阻止，回链使用 `cloudflare.base_url` 指定的生产首页。源文件、非 HTML 资源以及报告原有的资源基准地址和 CSP 均保留原样。
 
 ```bash
 python3 <skill-dir>/scripts/to_pages.py doctor
@@ -153,11 +153,50 @@ python3 <skill-dir>/scripts/to_pages.py verify /path/report.html --path reports/
 
 `publish` 和 `verify` 需要配置站点地址。两条命令逐字节核对准备后的报告及资源，`publish` 还会核对受脚本管理的导航首页。核对失败时返回非零退出码。
 
+## 主题与版本
+
+`catalog` 只读查询目标分支的已登记主题、分类、报告路径和版本。发布前可用它确认已有主题的 ID。
+
+```bash
+python3 <skill-dir>/scripts/to_pages.py catalog
+python3 <skill-dir>/scripts/to_pages.py publish /path/rook.html --path reports/rook \
+  --topic rook --title "Rook 部署方案" --category "技术方案" --project Rook --summary "首次发布"
+python3 <skill-dir>/scripts/to_pages.py publish /path/rook-updated.html --path reports/rook-v2 \
+  --topic rook --summary "补充回滚步骤"
+```
+
+`plan`、`push` 和 `publish` 接受相同的可选元数据。
+
+| 参数 | 用途 |
+| --- | --- |
+| `--topic` | 稳定的主题 ID。同一主题用相同 ID 与不同报告路径。省略时，已有路径沿用登记的 ID，新路径创建独立主题。 |
+| `--title` | 主题标题。新主题默认取报告的 `<title>`、首个 `<h1>` 或路径。主题描述取首次登记时的 HTML 描述或与标题不同的首个 `<h1>`。 |
+| `--category`、`--project` | 主题分类和项目。新主题缺少分类时使用「未分类」，已有主题沿用已登记字段。 |
+| `--version` | 主题内唯一的版本标签。新路径默认分配下一个 `vN`；既有路径沿用标签。 |
+| `--summary` | 当前版本的变更说明。 |
+
+同一主题的两个版本各有自己的 URL。加 `--replace` 会更新所选路径的报告和资源。需要继续打开旧正文时，用新路径发布新版本。旧路径和已使用的版本标签不能改派。仅改元数据时保留报告日期。重复提交相同发布内容和元数据时沿用已有提交。
+
 ## 导航首页
 
-`plan`、`push` 和 `publish` 根据站点目录下的报告入口 `index.html` 生成导航。首页显示标题、描述和相对路径，支持搜索。
+受管理的首页按主题最新更新时间归档，月份和时间使用 UTC，每页 20 个主题。点单版本标题直接打开报告。多版本标题和版本数按钮都会打开版本选择，按发布时间排列，同一时间优先显示后登记的版本。在地址中保留月份、分类、搜索和页码。禁用 JavaScript 时仍可通过静态链接打开报告。
 
-站点根目录的 `index.html` 缺失时，脚本创建带 `<!-- to-pages:managed-index -->` 标记的首页。后续发布会更新带标记的首页。无标记的自定义首页保留原样，报告回链仍指向站点根地址。
+首页缺失时，脚本创建带 `<!-- to-pages:managed-index -->` 标记的首页。后续发布更新带标记的首页，自定义首页保留。可以在不发布报告的情况下初始化或重建目录和受管理的首页。
+
+```bash
+python3 <skill-dir>/scripts/to_pages.py index plan
+python3 <skill-dir>/scripts/to_pages.py index publish
+```
+
+`index push` 仅推送 Git 提交。目标分支尚无目录时，读取得到空目录；未登记的报告仍在首页各自展示，归为「未分类」和「时间未记录」，标题或路径后缀相同也会独立展示。
+
+## 目录格式与历史迁移
+
+`.to-pages/catalog.json` 位于仓库根目录。静态目录用 `public` 等子目录时，目录文件留在静态资源外。静态目录用 `.` 时，文件和资源同处仓库根目录，可能被公开托管。目录的标题、描述、分类、项目、摘要等都是公开内容；凭证保存在各机器的配置或环境变量中。
+
+格式为 `schema: 1`，包含 `output_dir` 和 `topics`。主题字段为 `id`、`title`、`description`、`category`、`project` 和 `versions`。每个版本有 `label`、`path`、`published_at`、`updated_at`、`digest` 和 `summary`。路径相对静态目录，填写报告目录，省略末尾斜线和 `index.html`。日期用 ISO 8601 UTC 时间或 `null`。以该版本首次与最后一次已证实的发布为准；只有可靠历史证据时才为旧版本补日期。目录记录的主题描述、分类和版本归属也需有证据，未核实的旧报告可继续由首页发现。
+
+在站点检出目录里迁移时，将 `scripts/` 加入 Python 导入路径，调用 `catalog.load_catalog(repo, output_dir)` 读取已有记录，按可靠历史补日期和关联。用 `catalog.content_digest(files)` 计算已发布文件集合的内容摘要，`files` 为 report-relative 文件名到实际发布字节的映射（摘要为这些文件名及逐文件 SHA-256 的 SHA-256）。`catalog.write_catalog(repo, catalog)` 校验实际报告路径并写入目录。调用 `navigation.render_homepage(repo / output_dir, catalog=catalog)` 生成首页字节；返回 `None` 表示当前是自定义首页。检查各版本的实际链接和 Git diff，再将目录和首页一同提交。
 
 ## 验证与排错
 
