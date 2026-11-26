@@ -41,7 +41,7 @@ chmod 600 "$HOME/.config/to-pages/config.json"
     "token_env": "GITHUB_TOKEN"
   },
   "cloudflare": {
-    "base_url": "https://lemon-pages.lemonsun224.workers.dev",
+    "base_url": "https://pages.lemonyhn.top",
     "output_dir": "public"
   }
 }
