@@ -97,6 +97,8 @@ class PublishTests(unittest.TestCase):
 
     def command(self, name, *extra, source=None, destination="reports/example"):
         args = ["to_pages.py", "--config", str(self.config), name]
+        if name == "preflight":
+            args.append(str(source))
         if name in ("plan", "push", "publish", "verify"):
             args.extend((str(source or self.source), "--path", destination))
         args.extend(extra)
@@ -104,6 +106,11 @@ class PublishTests(unittest.TestCase):
         with patch.object(sys, "argv", args), redirect_stdout(output):
             pages.main()
         return [json.loads(line) for line in output.getvalue().splitlines()]
+
+    def reviewed(self, source):
+        manifest = self.root / "reviewed.json"
+        manifest.write_text(json.dumps(self.command("preflight", source=source)[0]))
+        return "--reviewed-assets", str(manifest)
 
     def published(self, path):
         return subprocess.run(["git", "--git-dir", str(self.remote), "show", f"main:{path}"],
@@ -127,14 +134,14 @@ class PublishTests(unittest.TestCase):
         (static / "index.html").write_bytes(html)
         (static / "image.png").write_bytes(image)
         (static / "details.htm").write_bytes(b"<h1>Details</h1>")
-        plan = self.command("plan", source=static)
+        plan = self.command("plan", *self.reviewed(static), source=static)
         self.assertEqual(plan[0]["status"], "planned")
         self.assertCountEqual(plan[0]["changed_files"], [
             "public/index.html", "public/reports/example/index.html",
             "public/reports/example/details.htm", "public/reports/example/image.png", str(CATALOG_PATH),
         ])
         self.assertFalse((self.remote / "refs/heads/main").exists())
-        result = self.command("publish", "--timeout", "3", source=static)
+        result = self.command("publish", "--timeout", "3", *self.reviewed(static), source=static)
         self.assertEqual(result[-1]["status"], "verified")
         self.assertEqual(result[-1]["files_verified"], 4)
         self.assertIn("/collection/", self.requested_paths)
@@ -144,6 +151,49 @@ class PublishTests(unittest.TestCase):
         self.assertIn(b'href="/collection/"', self.published("public/reports/example/details.htm"))
         self.assertEqual(self.published("public/reports/example/image.png"), image)
         self.assertEqual((static / "index.html").read_bytes(), html)
+
+    def test_raw_screenshot_blocks_both_write_entrypoints_before_checkout(self):
+        static = self.root / "static"
+        static.mkdir()
+        (static / "index.html").write_text("<title>Public report</title>")
+        image = static / "unreferenced.png"
+        image.write_bytes(b"test screenshot")
+        with patch.object(pages, "checkout", side_effect=AssertionError("checkout must not run")):
+            for entry in ("plan", "push", "publish"):
+                with self.assertRaisesRegex(pages.PagesError, "assets require review"):
+                    self.command(entry, source=static)
+            receipt = self.reviewed(static)
+            image.write_bytes(b"new screenshot")
+            with self.assertRaisesRegex(pages.PagesError, "do not match"):
+                self.command("push", *receipt, source=static)
+        self.assertFalse((self.remote / "refs/heads/main").exists())
+
+    def test_text_and_metadata_block_without_exposing_matched_content(self):
+        self.source.write_text("<!-- user&#64;example-enterprise.invalidcorp -->")
+        with patch.object(pages, "checkout", side_effect=AssertionError("checkout must not run")):
+            with self.assertRaisesRegex(pages.PagesError, "^Public preflight blocked: non-example email in index.html$"):
+                self.command("push")
+            self.source.write_text("<!-- " + "ghp_" + "a" * 32 + " -->")
+            with self.assertRaisesRegex(pages.PagesError, "^Public preflight blocked: credential-like content in index.html$"):
+                self.command("push")
+            self.source.write_text("<title>Public</title>")
+            with self.assertRaisesRegex(pages.PagesError, "internal hostname in publication metadata"):
+                self.command("publish", "--summary", "https://service.internal")
+            self.source.write_text('<script>{"embedded":"data:image/png;base64,ZmFrZQ=="}</script>')
+            with self.assertRaisesRegex(pages.PagesError, "assets require review"):
+                self.command("push")
+
+    def test_replace_does_not_silently_keep_omitted_images(self):
+        static = self.root / "static"
+        static.mkdir()
+        (static / "index.html").write_text("<title>Public report</title>")
+        image = static / "old.png"
+        image.write_bytes(b"test screenshot")
+        old = self.command("push", *self.reviewed(static), source=static)[0]["commit"]
+        image.unlink()
+        with self.assertRaisesRegex(pages.PagesError, "omitted reviewable asset"):
+            self.command("push", "--replace", source=static)
+        self.assertEqual(run_git("--git-dir", self.remote, "rev-parse", "main"), old)
 
     def test_replace_preserves_other_paths_and_identical_publish_has_no_commit(self):
         first = self.command("publish", "--timeout", "3")
@@ -310,11 +360,11 @@ class PublishTests(unittest.TestCase):
         (static / "index.html").write_bytes(self.source.read_bytes())
         asset = static / "Image.png"
         asset.write_bytes(b"original image")
-        initial = self.command("push", source=static)[0]["commit"]
+        initial = self.command("push", *self.reviewed(static), source=static)[0]["commit"]
         asset.rename(static / "image.png").write_bytes(b"edited image")
 
         with self.assertRaisesRegex(pages.PagesError, "Path spelling conflicts"):
-            self.command("push", "--replace", source=static)
+            self.command("push", "--replace", *self.reviewed(static), source=static)
         self.assertEqual(run_git("--git-dir", self.remote, "rev-parse", "main"), initial)
         self.assertEqual(self.published("public/reports/example/Image.png"), b"original image")
 

@@ -20,6 +20,7 @@ from catalog import (
     CATALOG_PATH, PagesError, directory_path, exact_entry, load_catalog, relative_path, update_catalog, write_catalog,
 )
 from navigation import MissingBaseURL, prepare_html, render_homepage, report_details
+from publication_review import require_review, review_inputs, scan_text
 
 
 MAX_FILE_BYTES = 25 * 1024 * 1024
@@ -172,6 +173,15 @@ def stage(config, repo, env, destination, files, replace, *, catalog=None):
         for version in topic["versions"]
         if version["path"].startswith(prefix)
     ]
+    if replace and target.is_dir():
+        for path in target.rglob("*"):
+            name = path.relative_to(target).as_posix()
+            if any(name.startswith(report) for report in nested_reports) or name in files:
+                continue
+            if path.is_symlink():
+                raise PagesError("Report contains an omitted symlink; remove it before replacing the report")
+            if path.is_file() and review_inputs({name: path.read_bytes()}, ()):
+                raise PagesError("Report contains an omitted reviewable asset; include and review it or remove it before replacing")
     changes = []
     for name, data in files.items():
         resource = Path(name)
@@ -244,6 +254,8 @@ def main():
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("doctor", help="Read authentication and repository metadata without writing")
     commands.add_parser("catalog", help="Read the recorded topic and version metadata")
+    preflight = commands.add_parser("preflight", help="Scan source and list assets requiring review; no Git/network")
+    preflight.add_argument("source", type=Path)
     index = commands.add_parser("index", help="Rebuild the catalog and managed homepage without publishing a report")
     index.add_argument("mode", choices=("plan", "push", "publish"))
     index.add_argument("--timeout", type=int, default=300)
@@ -253,11 +265,15 @@ def main():
         sub.add_argument("--path", required=True, help="Report directory relative to the site root")
         if command in ("plan", "push", "publish"):
             sub.add_argument("--replace", action="store_true")
+            sub.add_argument("--reviewed-assets", type=Path, help="Local review manifest matching preflight output")
             for option, help_text in METADATA_OPTIONS.items():
                 sub.add_argument("--" + option, help=help_text)
         if command in ("publish", "verify"):
             sub.add_argument("--timeout", type=int, default=300)
     args = parser.parse_args()
+    if args.command == "preflight":
+        emit({"reviewed_assets": review_inputs(source_files(args.source.expanduser()), ())})
+        return
     config = load_config(args.config.expanduser())
     if args.command == "doctor":
         user = github_read(config, "user")
@@ -282,6 +298,14 @@ def main():
         if args.timeout < 1 or args.timeout > 3600:
             raise PagesError("--timeout must be between 1 and 3600 seconds")
     files = {} if index_only else source_files(args.source.expanduser())
+    metadata = {} if index_only or action == "verify" else {
+        option: getattr(args, option) for option in METADATA_OPTIONS
+    }
+    if not index_only and action != "verify":
+        manifest = args.reviewed_assets
+        if manifest and args.source.is_dir() and manifest.resolve().is_relative_to(args.source.resolve()):
+            raise PagesError("Keep --reviewed-assets outside the published source directory")
+        require_review(review_inputs(files, [destination, *metadata.values()]), manifest)
     for name, data in files.items():
         if Path(name).suffix.lower() in (".html", ".htm"):
             try:
@@ -300,9 +324,10 @@ def main():
         catalog = load_catalog(repo, config["output_dir"])
         changes = []
         if not index_only:
-            changes = stage(config, repo, env, destination, files, args.replace, catalog=catalog)
             title, description = report_details(files["index.html"], destination)
-            metadata = {option: getattr(args, option) for option in METADATA_OPTIONS}
+            scan_text(title, "report title")
+            scan_text(description, "report description")
+            changes = stage(config, repo, env, destination, files, args.replace, catalog=catalog)
             update_catalog(catalog, destination, files, changed=bool(changes), title=title,
                            description=description, metadata=metadata)
         if write_catalog(repo, catalog):

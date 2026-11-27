@@ -149,7 +149,7 @@ python3 <skill-dir>/scripts/to_pages.py publish /path/report.html --path reports
 python3 <skill-dir>/scripts/to_pages.py publish /path/static-dir --path reports/topic --replace
 ```
 
-脚本保留其他报告和目标目录里的旧资源。相同内容不会创建新提交。并发 push 被拒时，重新检查远端变更，再预览和推送，不 force push。
+脚本保留其他报告。若目标目录里还有本次未提供且需复核的旧资源，`--replace` 会拒绝，避免旧截图继续被公开；须先从当前站点移除旧资源，或提供其已脱密的替代文件。相同内容不会创建新提交。并发 push 被拒时，重新检查远端变更，再预览和推送，不 force push。
 
 仅推送到 GitHub 时使用 `push`。报告含有效的 `<base href>` 时，`push` 也需要配置 `cloudflare.base_url`。
 
@@ -164,6 +164,24 @@ python3 <skill-dir>/scripts/to_pages.py verify /path/report.html --path reports/
 ```
 
 `publish` 和 `verify` 需要配置站点地址。两条命令逐字节核对准备后的报告及资源，`publish` 还会核对受脚本管理的导航首页。核对失败时返回非零退出码。
+
+## 发布前脱密
+
+1. 用独立目录准备公开副本。正文、注释、隐藏数据、文件名和目录元数据都应去掉真实的个人信息和未授权内部数据。真实截图优先改用合成数据重拍；否则用裁剪或不透明遮盖，扁平化导出并移除元数据，不保留原图、图层或原始数据文件。不要用 CSS 隐藏敏感内容。
+2. 在本地执行扫描并生成待复核清单。不需要 GitHub 凭证，也不访问网络：
+
+   ```bash
+   python3 <skill-dir>/scripts/to_pages.py preflight /path/public-copy > /path/reviewed-assets.json
+   ```
+
+3. 逐项打开最终附件和页面，确认可对外公开后再传入清单：
+
+   ```bash
+   python3 <skill-dir>/scripts/to_pages.py plan /path/public-copy --path reports/topic --reviewed-assets /path/reviewed-assets.json
+   python3 <skill-dir>/scripts/to_pages.py publish /path/public-copy --path reports/topic --reviewed-assets /path/reviewed-assets.json
+   ```
+
+含图片、SVG、其他非文本附件或常见内嵌媒体时，`plan`、`push` 和 `publish` 都要求匹配的清单，哪怕图片没有被 HTML 引用。清单放在发布目录外；附件内容或路径变动后须重做。没有待复核附件时可省略参数。文本规则命中时须修正公开副本，清单不能豁免。规则只覆盖常见可识别特征，不做 OCR、不替人判断截图或内部语义，也不能控制远程引用今后的内容。私有内容不要交给公开发布；此保护不清理旧提交或旧部署。
 
 ## 主题与版本
 
